@@ -2,39 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* GigExecs Design System - Executive-focused platform colors and gradients */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 98%;
+    --foreground: 215 25% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 215 25% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 215 25% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 214 84% 56%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 214 100% 70%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 210 14% 89%;
+    --secondary-foreground: 215 25% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 14% 95%;
+    --muted-foreground: 215 13% 54%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 214 84% 56%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 210 14% 89%;
+    --input: 210 14% 89%;
+    --ring: 214 84% 56%;
+
+    /* Executive brand gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(214 84% 56%), hsl(214 100% 70%));
+    --gradient-hero: linear-gradient(135deg, hsl(215 25% 15%), hsl(210 20% 25%));
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 98%), hsl(210 14% 95%));
+    
+    /* Professional shadows */
+    --shadow-elegant: 0 10px 30px -10px hsl(214 84% 56% / 0.3);
+    --shadow-soft: 0 4px 20px -4px hsl(215 25% 15% / 0.1);
+    --shadow-card: 0 2px 10px -2px hsl(215 25% 15% / 0.08);
+
+    /* Executive typography */
+    --font-executive: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
     --radius: 0.5rem;
 
@@ -56,33 +68,43 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 215 25% 8%;
+    --foreground: 210 14% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 215 20% 12%;
+    --card-foreground: 210 14% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 215 20% 12%;
+    --popover-foreground: 210 14% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 214 100% 70%;
+    --primary-foreground: 215 25% 8%;
+    --primary-glow: 214 100% 80%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 215 15% 20%;
+    --secondary-foreground: 210 14% 95%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 215 15% 16%;
+    --muted-foreground: 215 13% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 214 100% 70%;
+    --accent-foreground: 215 25% 8%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 210 14% 95%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 215 15% 20%;
+    --input: 215 15% 20%;
+    --ring: 214 100% 70%;
+
+    /* Dark mode gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(214 100% 70%), hsl(214 100% 80%));
+    --gradient-hero: linear-gradient(135deg, hsl(215 25% 8%), hsl(215 20% 12%));
+    --gradient-subtle: linear-gradient(180deg, hsl(215 25% 8%), hsl(215 15% 16%));
+    
+    --shadow-elegant: 0 10px 30px -10px hsl(214 100% 70% / 0.4);
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.3);
+    --shadow-card: 0 2px 10px -2px hsl(0 0% 0% / 0.2);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -100,6 +122,23 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-executive antialiased;
+  }
+
+  /* Executive button variants */
+  .btn-hero {
+    @apply bg-gradient-to-r from-primary to-primary-glow text-primary-foreground px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:shadow-elegant hover:scale-105;
+  }
+  
+  .btn-executive {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:bg-primary/90 shadow-soft;
+  }
+
+  .card-elegant {
+    @apply bg-card border border-border rounded-xl shadow-card transition-all duration-300 hover:shadow-soft;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent;
   }
 }
