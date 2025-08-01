@@ -122,8 +122,16 @@
   }
 
   body {
-    @apply bg-background text-foreground font-executive antialiased;
+    @apply text-foreground font-executive antialiased;
+    background-color: hsl(var(--background));
+    background-image: url('/background/Background.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    
   }
+  
+  
 
   /* Executive button variants */
   .btn-hero {
@@ -141,4 +149,14 @@
   .text-gradient {
     @apply bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent;
   }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
 }

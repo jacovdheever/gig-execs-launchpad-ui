@@ -1,85 +1,109 @@
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Star, Users, TrendingUp } from "lucide-react"
-import heroImage from "@/assets/hero-executive.jpg"
+import React from "react"
 
 const Hero = () => {
   return (
-    <section className="min-h-screen flex items-center bg-gradient-subtle">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Content */}
-          <div className="space-y-8">
-            <Badge variant="outline" className="w-fit">
-              <Star className="h-3 w-3 mr-2 text-primary" />
-              Trusted by Fortune 500 Companies
-            </Badge>
-            
-            <div className="space-y-6">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                Connect with
-                <span className="text-gradient block">Top Executive Talent</span>
-              </h1>
-              
-              <p className="text-lg text-muted-foreground max-w-xl">
-                Access a curated network of experienced executives for your most critical projects. 
-                From strategy to transformation, find the expertise that drives results.
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="hero" size="xl">
-                Find Executives
-              </Button>
-              <Button variant="outline" size="xl">
-                Join as Executive
-              </Button>
-            </div>
-
-            {/* Stats */}
-            <div className="flex items-center gap-8 pt-8">
-              <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-primary" />
-                <div>
-                  <div className="font-semibold">500+</div>
-                  <div className="text-sm text-muted-foreground">Executives</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-primary" />
-                <div>
-                  <div className="font-semibold">98%</div>
-                  <div className="text-sm text-muted-foreground">Success Rate</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Star className="h-5 w-5 text-primary" />
-                <div>
-                  <div className="font-semibold">4.9/5</div>
-                  <div className="text-sm text-muted-foreground">Rating</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Image */}
-          <div className="relative">
-            <div className="card-elegant p-8 bg-gradient-hero">
-              <img 
-                src={heroImage}
-                alt="Executive professional"
-                className="w-full h-auto rounded-lg shadow-soft"
-              />
-            </div>
-            
-            {/* Floating elements */}
-            <div className="absolute -top-4 -right-4 card-elegant p-4 bg-card max-w-48">
-              <div className="text-sm font-medium">Latest Project</div>
-              <div className="text-xs text-muted-foreground">Digital Transformation</div>
-              <div className="text-lg font-bold text-primary mt-1">$2.5M Value</div>
-            </div>
-          </div>
+    <section style={{ width: 1440, height: 760, position: "relative" }}>
+      <div
+        data-property-1="Homepage"
+        style={{
+          width: 1440,
+          height: 760,
+          left: 0,
+          top: 0,
+          position: "absolute",
+          background:
+            "linear-gradient(0deg, rgba(27, 54, 93, 0.4), rgba(27, 54, 93, 0.4)), url('/images/HeroPictureHome 1.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+      <div
+        style={{
+          width: 800,
+          padding: 32,
+          left: 80,
+          top: 218.5,
+          position: "absolute",
+          background:
+            "linear-gradient(136deg, rgba(255, 255, 255, 0.21) 0%, rgba(0, 0, 0, 0.12) 50%, rgba(255, 255, 255, 0.21) 100%)",
+          borderRadius: 24,
+          outline: "1px rgba(255, 255, 255, 0.30) solid",
+          outlineOffset: -1,
+          backdropFilter: "blur(5px)",
+          flexDirection: "column",
+          justifyContent: "flex-start",
+          alignItems: "flex-end",
+          gap: 32,
+          display: "inline-flex",
+        }}
+      >
+        <div
+          style={{
+            alignSelf: "stretch",
+            color: "white",
+            fontSize: 40,
+            fontFamily: "Montserrat, sans-serif",
+            fontWeight: 700,
+            lineHeight: "48px",
+            wordWrap: "break-word",
+          }}
+        >
+          GigExecs: The Premier Freelance Hub for Top Professionals
         </div>
+        <div
+          style={{
+            alignSelf: "stretch",
+            color: "white",
+            fontSize: 18,
+            fontFamily: "Montserrat, sans-serif",
+            fontWeight: 400,
+            lineHeight: "21.60px",
+            wordWrap: "break-word",
+          }}
+        >
+          Connecting senior talent with high-quality global projects through a secure and trusted platform.
+        </div>
+        <a href="https://gigexecs.com/signup" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+          <div
+            data-content="Icons & Text"
+            data-hierarchy="Secondary"
+            data-left-icon="false"
+            data-right-icon="false"
+            data-size="Large"
+            data-state="Default"
+            data-style="Filled"
+            style={{
+              width: 302,
+              height: "100%",
+              paddingLeft: 24,
+              paddingRight: 24,
+              paddingTop: 16,
+              paddingBottom: 16,
+              background: "#CC9B0A",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 8,
+              display: "inline-flex",
+              borderRadius: 8,
+              cursor: "pointer",
+            }}
+          >
+            <div
+              style={{
+                textAlign: "center",
+                color: "white",
+                fontSize: 18,
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: 700,
+                lineHeight: "21.60px",
+                wordWrap: "break-word",
+              }}
+            >
+              Join GigExecs
+            </div>
+          </div>
+        </a>
       </div>
     </section>
   )
