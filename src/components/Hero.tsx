@@ -2,108 +2,42 @@ import React from "react"
 
 const Hero = () => {
   return (
-    <section style={{ width: 1440, height: 760, position: "relative" }}>
+    <section className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[760px]">
       <div
-        data-property-1="Homepage"
+        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
-          width: 1440,
-          height: 760,
-          left: 0,
-          top: 0,
-          position: "absolute",
           background:
             "linear-gradient(0deg, rgba(27, 54, 93, 0.4), rgba(27, 54, 93, 0.4)), url('/images/HeroPictureHome 1.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
         }}
       />
-      <div
-        style={{
-          width: 800,
-          padding: 32,
-          left: 80,
-          top: 218.5,
-          position: "absolute",
-          background:
-            "linear-gradient(136deg, rgba(255, 255, 255, 0.21) 0%, rgba(0, 0, 0, 0.12) 50%, rgba(255, 255, 255, 0.21) 100%)",
-          borderRadius: 24,
-          outline: "1px rgba(255, 255, 255, 0.30) solid",
-          outlineOffset: -1,
-          backdropFilter: "blur(5px)",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-          alignItems: "flex-end",
-          gap: 32,
-          display: "inline-flex",
-        }}
-      >
+      <div className="absolute left-4 sm:left-8 md:left-16 lg:left-20 top-1/2 transform -translate-y-1/2 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl p-4 sm:p-6 md:p-8">
         <div
+          className="p-4 sm:p-6 md:p-8 rounded-3xl backdrop-blur-sm border border-white/30"
           style={{
-            alignSelf: "stretch",
-            color: "white",
-            fontSize: 40,
-            fontFamily: "Montserrat, sans-serif",
-            fontWeight: 700,
-            lineHeight: "48px",
-            wordWrap: "break-word",
+            background:
+              "linear-gradient(136deg, rgba(255, 255, 255, 0.21) 0%, rgba(0, 0, 0, 0.12) 50%, rgba(255, 255, 255, 0.21) 100%)",
           }}
         >
-          GigExecs: The Premier Freelance Hub for Top Professionals
-        </div>
-        <div
-          style={{
-            alignSelf: "stretch",
-            color: "white",
-            fontSize: 18,
-            fontFamily: "Montserrat, sans-serif",
-            fontWeight: 400,
-            lineHeight: "21.60px",
-            wordWrap: "break-word",
-          }}
-        >
-          Connecting senior talent with high-quality global projects through a secure and trusted platform.
-        </div>
-        <a href="https://gigexecs.com/signup" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-        <div
-          data-content="Icons & Text"
-          data-hierarchy="Secondary"
-          data-left-icon="false"
-          data-right-icon="false"
-          data-size="Large"
-          data-state="Default"
-          data-style="Filled"
-          style={{
-            width: 302,
-            height: "100%",
-            paddingLeft: 24,
-            paddingRight: 24,
-            paddingTop: 16,
-            paddingBottom: 16,
-            background: "#CC9B0A",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 8,
-            display: "inline-flex",
-            borderRadius: 8,
-            cursor: "pointer",
-          }}
-        >
-          <div
-            style={{
-              textAlign: "center",
-              color: "white",
-              fontSize: 18,
-              fontFamily: "Montserrat, sans-serif",
-              fontWeight: 700,
-              lineHeight: "21.60px",
-              wordWrap: "break-word",
-            }}
-          >
-            Join GigExecs
+          <div className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold font-montserrat leading-tight mb-4">
+            <span className="text-[#012E46]">GigExecs: The</span>{" "}
+            <span className="text-white">Premium</span>{" "}
+            <span className="text-white">Freelance</span>{" "}
+            <span className="text-white">Marketplace</span>{" "}
+            <span className="text-[#012E46]">for</span>{" "}
+            <span className="text-white">Experienced</span>{" "}
+            <span className="text-[#012E46]">Professionals</span>
           </div>
+          <div className="text-white text-sm sm:text-base md:text-lg lg:text-[18px] font-normal font-montserrat leading-relaxed mb-6">
+            Connecting highly experienced freelancing professionals to global clients through a trusted and secure platform.
+          </div>
+          <a href="https://gigexecs.com/signup" target="_blank" rel="noopener noreferrer" className="text-decoration-none">
+            <div className="inline-flex items-center justify-center px-6 py-4 bg-[#012E46] rounded-lg cursor-pointer hover:bg-[#001A2D] transition-colors">
+              <div className="text-center text-white font-bold text-sm sm:text-base">
+                Get Started
+              </div>
+            </div>
+          </a>
         </div>
-        </a>
       </div>
     </section>
   )
