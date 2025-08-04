@@ -90,7 +90,7 @@ const Footer = () => {
                         case "about us":
                           return <Link to="/about" className="text-white hover:text-[#CC9B0A] transition-colors">{linkText}</Link>;
                         case "help":
-                          return <a href="#" className="text-white hover:text-[#CC9B0A] transition-colors">{linkText}</a>;
+                          return <Link to="/help" className="text-white hover:text-[#CC9B0A] transition-colors">{linkText}</Link>;
                         default:
                           return <a href="#" className="text-white hover:text-[#CC9B0A] transition-colors">{linkText}</a>;
                       }

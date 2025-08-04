@@ -24,7 +24,7 @@ const Hero = () => {
             <span className="text-white">Freelance</span>{" "}
             <span className="text-white">Marketplace</span>{" "}
             <span className="text-[#012E46]">for</span>{" "}
-            <span className="text-[#012E46]">Experienced</span>{" "}
+            <span className="text-white">Experienced</span>{" "}
             <span className="text-[#012E46]">Professionals</span>
           </div>
           <div className="text-white text-sm sm:text-base md:text-lg lg:text-[18px] font-normal font-montserrat leading-relaxed mb-6">

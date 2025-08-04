@@ -556,7 +556,7 @@ const FindingPurpose = () => {
         {/* Data Privacy Policy */}
         <a href="/data-privacy-policy" style={{
           color: "rgba(255, 255, 255, 0.8)",
-          fontSize: 14,
+          fontSize: 14, 
           fontFamily: "Open Sans, sans-serif",
           fontWeight: 400,
           textDecoration: "none"
@@ -574,7 +574,7 @@ const FindingPurpose = () => {
         {/* Terms and Conditions */}
         <a href="/terms-and-conditions" style={{
           color: "rgba(255, 255, 255, 0.8)",
-          fontSize: 14,
+          fontSize: 14, 
           fontFamily: "Open Sans, sans-serif",
           fontWeight: 400,
           textDecoration: "none"

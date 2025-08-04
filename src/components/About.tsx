@@ -53,7 +53,7 @@ const About = () => {
               Helping People Succeed
             </div>
             <div style={{ color: "white", fontSize: 16, fontFamily: "Open Sans, sans-serif", fontWeight: 400, wordWrap: "break-word" }}>
-              GigExecs is an exclusive freelancing platform for senior professionals with a proven track record and at least 15 years of experience. We curate our network to maintain a high-quality ecosystem, ensuring the right skills meet the right opportunities.
+              GigExecs is an exclusive freelancing platform for senior professionals with a proven track record and minimum 15 years of experience. We curate our network to maintain a high-quality ecosystem, ensuring the right skills meet the right opportunities.
             </div>
           </div>
         </div>
@@ -86,11 +86,11 @@ const About = () => {
               </div>
             ))}
             <a href="https://gigexecs.com/signup" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-              <div style={{ alignSelf: "stretch", height: 42, paddingLeft: 24, paddingRight: 24, paddingTop: 16, paddingBottom: 16, background: "#CC9B0A", justifyContent: "center", alignItems: "center", gap: 8, display: "inline-flex" }}>
-                <div style={{ textAlign: "center", color: "white", fontSize: 18, fontFamily: "Montserrat, sans-serif", fontWeight: 700, lineHeight: "21.60px", wordWrap: "break-word" }}>
-                  Sign Up
-                </div>
+            <div style={{ alignSelf: "stretch", height: 42, paddingLeft: 24, paddingRight: 24, paddingTop: 16, paddingBottom: 16, background: "#CC9B0A", justifyContent: "center", alignItems: "center", gap: 8, display: "inline-flex" }}>
+              <div style={{ textAlign: "center", color: "white", fontSize: 18, fontFamily: "Montserrat, sans-serif", fontWeight: 700, lineHeight: "21.60px", wordWrap: "break-word" }}>
+                Sign Up
               </div>
+            </div>
             </a>
           </div>
         </div>
