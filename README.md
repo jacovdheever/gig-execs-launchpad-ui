@@ -29,19 +29,13 @@ npm run dev
 
 ## How can I edit this code?
 
-There are several ways of editing your application.
+### Development Guidelines
 
-### Use Lovable
+**Keep code as simple as possible** - prioritize readability and maintainability over complexity. Use clear, descriptive names and avoid over-engineering solutions.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/561d5d9a-d14e-4554-8ac7-900e078556f5) and start prompting.
+### Development Setup
 
-Changes made via Lovable will be committed automatically to this repo.
-
-### Use your preferred IDE
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-Follow these steps:
+Clone the repository and work locally using your preferred IDE (we recommend Cursor):
 
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
@@ -178,13 +172,8 @@ src/
 - Currently no environment variables required
 - All configuration is in `netlify.toml`
 
-### Lovable Deployment
-Simply open [Lovable](https://lovable.dev/projects/561d5d9a-d14e-4554-8ac7-900e078556f5) and click on Share -> Publish.
-
 ### Custom Domain
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+To connect a custom domain to your Netlify deployment, navigate to your Netlify dashboard > Site settings > Domain management.
 
 ## 📋 Development Workflow
 
@@ -195,6 +184,7 @@ Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-trick
 4. **Mobile Testing**: Always test on mobile devices
 
 ### Code Quality
+- **Simplicity**: Keep code as simple and readable as possible
 - **TypeScript**: Strict typing for all components
 - **Tailwind**: Use utility classes for styling
 - **Responsive**: Mobile-first approach
