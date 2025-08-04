@@ -170,7 +170,7 @@ const HelpAndSupport = () => {
   return (
     <div style={{ 
       minHeight: "100vh",
-      background: "url('/background/BlogBackground.svg')",
+      background: "url('/background/Background.svg')",
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
@@ -748,82 +748,7 @@ const HelpAndSupport = () => {
               <Disputes />
             ) : (
               <>
-                {/* Welcome Banner */}
-                {showWelcomeBanner && (
-                  <div style={{
-                    width: "100%",
-                    height: "224px",
-                    background: "url('/images/Help/WelcomeBanner.png')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    borderRadius: "20px",
-                    position: "relative",
-                    overflow: "hidden"
-                  }}>
-                    <div style={{
-                      position: "absolute",
-                      top: "20px",
-                      right: "20px",
-                      width: "24px",
-                      height: "24px",
-                      cursor: "pointer"
-                    }} onClick={dismissWelcomeBanner}>
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M18 6L6 18M6 6L18 18" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-              
-              <div style={{
-                position: "absolute",
-                left: "99px",
-                top: "32px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "8px",
-                width: "268px"
-              }}>
-                <h3 style={{
-                  fontSize: "20px",
-                  fontWeight: 700,
-                  fontFamily: "Open Sans, sans-serif",
-                  lineHeight: "27px",
-                  margin: 0,
-                  color: "#013957"
-                }}>
-                  Hi Amy, welcome to our help and support service!
-                </h3>
-                <p style={{
-                  fontSize: "14px",
-                  fontWeight: 400,
-                  fontFamily: "Open Sans, sans-serif",
-                  lineHeight: "19px",
-                  letterSpacing: "0.04em",
-                  margin: 0,
-                  color: "#013957"
-                }}>
-                  Please give us your feedback so that we can improve our support service.
-                </p>
-                <button style={{
-                  width: "268px",
-                  height: "52px",
-                  background: "#CC9B0A",
-                  borderRadius: "2px",
-                  border: "none",
-                  color: "white",
-                  fontSize: "16px",
-                  fontWeight: 700,
-                  fontFamily: "Open Sans, sans-serif",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}>
-                  Rate Our Service
-                </button>
-              </div>
-            </div>
-                )}
+                
 
             {/* Getting Started Section */}
             <div style={{
@@ -832,12 +757,12 @@ const HelpAndSupport = () => {
               gap: "32px"
             }}>
               <h2 style={{
-                color: "white",
-                fontSize: "30px",
+                fontSize: "32px",
                 fontWeight: 700,
-                fontFamily: "Montserrat, sans-serif",
-                letterSpacing: "0.04em",
-                margin: 0
+                fontFamily: "Open Sans, sans-serif",
+                lineHeight: "44px",
+                margin: 0,
+                color: "white"
               }}>
                 Getting Started
               </h2>
@@ -918,7 +843,7 @@ const HelpAndSupport = () => {
                         lineHeight: "22px",
                         margin: 0
                       }}>
-                        GigExec is a job marketplace exclusively designed for highly experienced freelancers with at least 10 years of expertise. It provides access to a curated pool of seasoned professionals, ensuring clients receive top-tier quality and expertise for their projects
+                        GigExec is a job marketplace exclusively designed for highly experienced freelancers with minimum 15 years of expertise. It provides access to a curated pool of seasoned professionals, ensuring clients receive top-tier quality and expertise for their projects
                       </p>
                     )}
                   </div>
@@ -1042,7 +967,7 @@ const HelpAndSupport = () => {
                         lineHeight: "22px",
                         margin: 0
                       }}>
-                        Clients on GigExec are individuals, businesses, or organizations seeking highly experienced freelancers with at least 10 years of expertise to fulfill their project needs. These clients range from small businesses to large corporations and individuals requiring specialized services. They rely on GigExec to connect them with top-tier talent across various fields, ensuring effective project outcomes.
+                        Clients on GigExec are individuals, businesses, or organizations seeking highly experienced freelancers with minimum 15 years of expertise to fulfill their project needs. These clients range from small businesses to large corporations and individuals requiring specialized services. They rely on GigExec to connect them with top-tier talent across various fields, ensuring effective project outcomes.
                       </p>
                     )}
                   </div>

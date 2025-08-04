@@ -2,7 +2,6 @@ import React, { useState } from "react"
 
 const Disputes = () => {
   const [expandedItems, setExpandedItems] = useState<number[]>([0, 1, 2, 3, 4, 5, 6, 7]) // All items start expanded
-  const [showWelcomeBanner, setShowWelcomeBanner] = useState<boolean>(true) // Track welcome banner visibility
 
   const toggleAccordion = (index: number) => {
     setExpandedItems(prev => 
@@ -12,89 +11,19 @@ const Disputes = () => {
     )
   }
 
-  const dismissWelcomeBanner = () => {
-    setShowWelcomeBanner(false)
-  }
-
   return (
-    <>
-      {/* Welcome Banner */}
-      {showWelcomeBanner && (
-        <div style={{
-          width: "100%",
-          height: "224px",
-          background: "url('/images/Help/WelcomeBanner.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          borderRadius: "20px",
-          position: "relative",
-          overflow: "hidden"
-        }}>
-          <div style={{
-            position: "absolute",
-            top: "20px",
-            right: "20px",
-            width: "24px",
-            height: "24px",
-            cursor: "pointer"
-          }} onClick={dismissWelcomeBanner}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M18 6L6 18M6 6L18 18" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-          
-          <div style={{
-            position: "absolute",
-            left: "99px",
-            top: "32px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-            width: "268px"
-          }}>
-            <h3 style={{
-              fontSize: "20px",
-              fontWeight: 700,
-              fontFamily: "Open Sans, sans-serif",
-              lineHeight: "27px",
-              margin: 0,
-              color: "#013957"
-            }}>
-              Hi Amy, welcome to our help and support service!
-            </h3>
-            <p style={{
-              fontSize: "14px",
-              fontWeight: 400,
-              fontFamily: "Open Sans, sans-serif",
-              lineHeight: "19px",
-              letterSpacing: "0.04em",
-              margin: 0,
-              color: "#013957"
-            }}>
-              Please give us your feedback so that we can improve our support service.
-            </p>
-            <button style={{
-              width: "268px",
-              height: "52px",
-              background: "#CC9B0A",
-              borderRadius: "2px",
-              border: "none",
-              color: "white",
-              fontSize: "16px",
-              fontWeight: 700,
-              fontFamily: "Open Sans, sans-serif",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center"
-            }}>
-              Rate Our Service
-            </button>
-          </div>
-        </div>
-      )}
-
+    <div style={{
+      minHeight: "100vh",
+      background: "url('/background/Background.svg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      backgroundAttachment: "fixed",
+      display: "flex",
+      flexDirection: "column",
+      position: "relative",
+      zIndex: 1
+    }}>
       {/* Disputes Section */}
       <div style={{
         display: "flex",
@@ -102,12 +31,12 @@ const Disputes = () => {
         gap: "32px"
       }}>
         <h2 style={{
-          color: "white",
-          fontSize: "30px",
+          fontSize: "32px",
           fontWeight: 700,
-          fontFamily: "Montserrat, sans-serif",
-          letterSpacing: "0.04em",
-          margin: 0
+          fontFamily: "Open Sans, sans-serif",
+          lineHeight: "44px",
+          margin: 0,
+          color: "white"
         }}>
           Disputes
         </h2>
@@ -115,29 +44,14 @@ const Disputes = () => {
         {/* Search Bar */}
         <div style={{
           width: "100%",
-          height: "40px",
+          height: "64px",
           background: "white",
           borderRadius: "20px",
+          padding: "20px 24px",
           display: "flex",
           alignItems: "center",
-          padding: "0 24px",
-          gap: "8px"
+          gap: "16px"
         }}>
-          <input 
-            type="text"
-            placeholder="Search our collection of frequently asked questions and other helpful resources..."
-            style={{
-              flex: 1,
-              border: "none",
-              outline: "none",
-              fontSize: "14px",
-              fontFamily: "Montserrat, sans-serif",
-              fontWeight: 400,
-              lineHeight: "25px",
-              letterSpacing: "0.04em",
-              opacity: 0.3
-            }}
-          />
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M14.0151 19.0678C14.0151 19.6781 13.6148 20.4784 13.1046 20.7886L11.694 21.699C10.3834 22.5094 8.56254 21.5989 8.56254 19.9782V14.6258C8.56254 13.9154 8.16236 13.005 7.75217 12.5048L3.91039 8.46294C3.40015 7.95271 3 7.05231 3 6.44203V4.12096C3 2.91041 3.91044 2 5.02094 2H18.367C19.4775 2 20.388 2.91041 20.388 4.02091V6.24193C20.388 7.0523 19.8778 8.06277 19.3775 8.563" stroke="#013957" strokeWidth="1.3" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
             <path d="M14.0151 19.0678C14.0151 19.6781 13.6148 20.4784 13.1046 20.7886L11.694 21.699C10.3834 22.5094 8.56254 21.5989 8.56254 19.9782V14.6258C8.56254 13.9154 8.16236 13.005 7.75217 12.5048L3.91039 8.46294C3.40015 7.95271 3 7.05231 3 6.44203V4.12096C3 2.91041 3.91044 2 5.02094 2H18.367C19.4775 2 20.388 2.91041 20.388 4.02091V6.24193C20.388 7.0523 19.8778 8.06277 19.3775 8.563" stroke="black" strokeOpacity="0.2" strokeWidth="1.3" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
@@ -146,520 +60,525 @@ const Disputes = () => {
             <path d="M19.5669 17.1176L18.5664 16.1172" stroke="#013957" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
             <path d="M19.5669 17.1176L18.5664 16.1172" stroke="black" strokeOpacity="0.2" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
+          <input 
+            type="text" 
+            placeholder="Search for help..." 
+            style={{
+              flex: 1,
+              border: "none",
+              outline: "none",
+              fontSize: "16px",
+              fontFamily: "Open Sans, sans-serif",
+              background: "transparent"
+            }}
+          />
         </div>
 
-        {/* FAQ Accordions */}
+        {/* FAQ Accordion 1 */}
         <div style={{
+          width: "100%",
+          background: "white",
+          borderRadius: "20px",
+          padding: "32px 40px",
           display: "flex",
-          flexDirection: "column",
-          gap: "8px"
-        }}>
-          {/* FAQ Accordion 1 */}
+          alignItems: "flex-start",
+          gap: "8px",
+          cursor: "pointer"
+        }} onClick={() => toggleAccordion(0)}>
           <div style={{
-            width: "100%",
-            background: "white",
-            borderRadius: "20px",
-            padding: "32px 40px",
+            flex: 1,
             display: "flex",
-            alignItems: "flex-start",
-            gap: "8px",
-            cursor: "pointer"
-          }} onClick={() => toggleAccordion(0)}>
-            <div style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              gap: "16px"
+            flexDirection: "column",
+            gap: "16px"
+          }}>
+            <h3 style={{
+              fontSize: "16px",
+              fontWeight: 700,
+              fontFamily: "Open Sans, sans-serif",
+              lineHeight: "22px",
+              margin: 0,
+              color: "#1A1A1A"
             }}>
-              <h3 style={{
+              What is a dispute on GigExecs?
+            </h3>
+            {expandedItems.includes(0) && (
+              <p style={{
                 fontSize: "16px",
-                fontWeight: 700,
+                fontWeight: 400,
                 fontFamily: "Open Sans, sans-serif",
                 lineHeight: "22px",
-                margin: 0,
-                color: "#1A1A1A"
+                margin: 0
               }}>
-                What should I do if I have a dispute with an employer/freelancer?
-              </h3>
-              {expandedItems.includes(0) && (
-                <p style={{
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  fontFamily: "Open Sans, sans-serif",
-                  lineHeight: "22px",
-                  margin: 0
-                }}>
-                  If you encounter a dispute, first try to resolve the issue directly by communicating with the employer/freelancer through the platform. If the matter remains unresolved, you can escalate the dispute by submitting a formal dispute resolution request via the app.
-                </p>
-              )}
-            </div>
-            <div style={{
-              width: "24px",
-              height: "24px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "transform 0.3s ease"
-            }}>
-              <svg 
-                width="27" 
-                height="24" 
-                viewBox="0 0 27 24" 
-                fill="none" 
-                style={{
-                  transform: expandedItems.includes(0) ? 'rotate(180deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.3s ease'
-                }}
-              >
-                <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
+                A dispute occurs when there's a disagreement between a client and consultant about project deliverables, quality, timeline, or payment. Disputes can arise from miscommunication, unmet expectations, or differences in project interpretation.
+              </p>
+            )}
           </div>
-
-          {/* FAQ Accordion 2 */}
           <div style={{
-            width: "100%",
-            background: "white",
-            borderRadius: "20px",
-            padding: "32px 40px",
+            width: "24px",
+            height: "24px",
             display: "flex",
-            alignItems: "flex-start",
-            gap: "8px",
-            cursor: "pointer"
-          }} onClick={() => toggleAccordion(1)}>
-            <div style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              gap: "16px"
-            }}>
-              <h3 style={{
-                fontSize: "16px",
-                fontWeight: 700,
-                fontFamily: "Open Sans, sans-serif",
-                lineHeight: "22px",
-                margin: 0,
-                color: "#1A1A1A"
-              }}>
-                How do I file a dispute?
-              </h3>
-              {expandedItems.includes(1) && (
-                <p style={{
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  fontFamily: "Open Sans, sans-serif",
-                  lineHeight: "22px",
-                  margin: 0
-                }}>
-                  To file a dispute, navigate to the project or contract in question, select "Open a Dispute," and provide detailed information about the issue. Be sure to include any supporting documentation or evidence related to the work completed.
-                </p>
-              )}
-            </div>
-            <div style={{
-              width: "24px",
-              height: "24px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "transform 0.3s ease"
-            }}>
-              <svg 
-                width="27" 
-                height="24" 
-                viewBox="0 0 27 24" 
-                fill="none" 
-                style={{
-                  transform: expandedItems.includes(1) ? 'rotate(180deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.3s ease'
-                }}
-              >
-                <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "transform 0.3s ease"
+          }}>
+            <svg 
+              width="27" 
+              height="24" 
+              viewBox="0 0 27 24" 
+              fill="none" 
+              style={{
+                transform: expandedItems.includes(0) ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.3s ease'
+              }}
+            >
+              <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </div>
+        </div>
 
-          {/* FAQ Accordion 3 */}
+        {/* FAQ Accordion 2 */}
+        <div style={{
+          width: "100%",
+          background: "white",
+          borderRadius: "20px",
+          padding: "32px 40px",
+          display: "flex",
+          alignItems: "flex-start",
+          gap: "8px",
+          cursor: "pointer"
+        }} onClick={() => toggleAccordion(1)}>
           <div style={{
-            width: "100%",
-            background: "white",
-            borderRadius: "20px",
-            padding: "32px 40px",
+            flex: 1,
             display: "flex",
-            alignItems: "flex-start",
-            gap: "8px",
-            cursor: "pointer"
-          }} onClick={() => toggleAccordion(2)}>
-            <div style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              gap: "16px"
+            flexDirection: "column",
+            gap: "16px"
+          }}>
+            <h3 style={{
+              fontSize: "16px",
+              fontWeight: 700,
+              fontFamily: "Open Sans, sans-serif",
+              lineHeight: "22px",
+              margin: 0,
+              color: "#1A1A1A"
             }}>
-              <h3 style={{
+              How do I initiate a dispute?
+            </h3>
+            {expandedItems.includes(1) && (
+              <p style={{
                 fontSize: "16px",
-                fontWeight: 700,
+                fontWeight: 400,
                 fontFamily: "Open Sans, sans-serif",
                 lineHeight: "22px",
-                margin: 0,
-                color: "#1A1A1A"
+                margin: 0
               }}>
-                What happens after I file a dispute?
-              </h3>
-              {expandedItems.includes(2) && (
-                <p style={{
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  fontFamily: "Open Sans, sans-serif",
-                  lineHeight: "22px",
-                  margin: 0
-                }}>
-                  Once a dispute is filed, our dispute resolution team will review your submission and mediate between you and the other party. Both parties will have the opportunity to present their case. We aim to resolve disputes within a set timeframe, typically 7-10 business days.
-                </p>
-              )}
-            </div>
-            <div style={{
-              width: "24px",
-              height: "24px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "transform 0.3s ease"
-            }}>
-              <svg 
-                width="27" 
-                height="24" 
-                viewBox="0 0 27 24" 
-                fill="none" 
-                style={{
-                  transform: expandedItems.includes(2) ? 'rotate(180deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.3s ease'
-                }}
-              >
-                <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
+                Contact the other party first to discuss the issue and attempt resolution. If that fails, submit a dispute through the platform's dispute resolution system. Provide detailed documentation, evidence, and a clear explanation of the problem.
+              </p>
+            )}
           </div>
-
-          {/* FAQ Accordion 4 */}
           <div style={{
-            width: "100%",
-            background: "white",
-            borderRadius: "20px",
-            padding: "32px 40px",
+            width: "24px",
+            height: "24px",
             display: "flex",
-            alignItems: "flex-start",
-            gap: "8px",
-            cursor: "pointer"
-          }} onClick={() => toggleAccordion(3)}>
-            <div style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              gap: "16px"
-            }}>
-              <h3 style={{
-                fontSize: "16px",
-                fontWeight: 700,
-                fontFamily: "Open Sans, sans-serif",
-                lineHeight: "22px",
-                margin: 0,
-                color: "#1A1A1A"
-              }}>
-                What kind of evidence can I submit for a dispute?
-              </h3>
-              {expandedItems.includes(3) && (
-                <p style={{
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  fontFamily: "Open Sans, sans-serif",
-                  lineHeight: "22px",
-                  margin: 0
-                }}>
-                  You can submit various forms of evidence, such as communication records, files related to the job, contracts, screenshots of conversations, invoices, and proof of payment. Be sure to provide as much relevant information as possible to support your claim.
-                </p>
-              )}
-            </div>
-            <div style={{
-              width: "24px",
-              height: "24px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "transform 0.3s ease"
-            }}>
-              <svg 
-                width="27" 
-                height="24" 
-                viewBox="0 0 27 24" 
-                fill="none" 
-                style={{
-                  transform: expandedItems.includes(3) ? 'rotate(180deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.3s ease'
-                }}
-              >
-                <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "transform 0.3s ease"
+          }}>
+            <svg 
+              width="27" 
+              height="24" 
+              viewBox="0 0 27 24" 
+              fill="none" 
+              style={{
+                transform: expandedItems.includes(1) ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.3s ease'
+              }}
+            >
+              <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </div>
+        </div>
 
-          {/* FAQ Accordion 5 */}
+        {/* FAQ Accordion 3 */}
+        <div style={{
+          width: "100%",
+          background: "white",
+          borderRadius: "20px",
+          padding: "32px 40px",
+          display: "flex",
+          alignItems: "flex-start",
+          gap: "8px",
+          cursor: "pointer"
+        }} onClick={() => toggleAccordion(2)}>
           <div style={{
-            width: "100%",
-            background: "white",
-            borderRadius: "20px",
-            padding: "32px 40px",
+            flex: 1,
             display: "flex",
-            alignItems: "flex-start",
-            gap: "8px",
-            cursor: "pointer"
-          }} onClick={() => toggleAccordion(4)}>
-            <div style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              gap: "16px"
+            flexDirection: "column",
+            gap: "16px"
+          }}>
+            <h3 style={{
+              fontSize: "16px",
+              fontWeight: 700,
+              fontFamily: "Open Sans, sans-serif",
+              lineHeight: "22px",
+              margin: 0,
+              color: "#1A1A1A"
             }}>
-              <h3 style={{
+              What evidence should I provide for a dispute?
+            </h3>
+            {expandedItems.includes(2) && (
+              <p style={{
                 fontSize: "16px",
-                fontWeight: 700,
+                fontWeight: 400,
                 fontFamily: "Open Sans, sans-serif",
                 lineHeight: "22px",
-                margin: 0,
-                color: "#1A1A1A"
+                margin: 0
               }}>
-                What if I am unsatisfied with the dispute resolution outcome?
-              </h3>
-              {expandedItems.includes(4) && (
-                <p style={{
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  fontFamily: "Open Sans, sans-serif",
-                  lineHeight: "22px",
-                  margin: 0
-                }}>
-                  If you are not satisfied with the outcome of the dispute, you may request a further review by providing additional evidence or reasoning. However, the final decision is at the discretion of the dispute resolution team.
-                </p>
-              )}
-            </div>
-            <div style={{
-              width: "24px",
-              height: "24px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "transform 0.3s ease"
-            }}>
-              <svg 
-                width="27" 
-                height="24" 
-                viewBox="0 0 27 24" 
-                fill="none" 
-                style={{
-                  transform: expandedItems.includes(4) ? 'rotate(180deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.3s ease'
-                }}
-              >
-                <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
+                Provide project agreements, communication records, deliverables, payment records, and any relevant documentation. Screenshots, emails, and project files help support your case. Be thorough and organized in your submission.
+              </p>
+            )}
           </div>
-
-          {/* FAQ Accordion 6 */}
           <div style={{
-            width: "100%",
-            background: "white",
-            borderRadius: "20px",
-            padding: "32px 40px",
+            width: "24px",
+            height: "24px",
             display: "flex",
-            alignItems: "flex-start",
-            gap: "8px",
-            cursor: "pointer"
-          }} onClick={() => toggleAccordion(5)}>
-            <div style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              gap: "16px"
-            }}>
-              <h3 style={{
-                fontSize: "16px",
-                fontWeight: 700,
-                fontFamily: "Open Sans, sans-serif",
-                lineHeight: "22px",
-                margin: 0,
-                color: "#1A1A1A"
-              }}>
-                Can I get a refund if the work was not completed as agreed?
-              </h3>
-              {expandedItems.includes(5) && (
-                <p style={{
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  fontFamily: "Open Sans, sans-serif",
-                  lineHeight: "22px",
-                  margin: 0
-                }}>
-                  If the dispute resolution team determines that the work was not completed or was not up to the agreed-upon standard, you may be eligible for a partial or full refund depending on the situation.
-                </p>
-              )}
-            </div>
-            <div style={{
-              width: "24px",
-              height: "24px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "transform 0.3s ease"
-            }}>
-              <svg 
-                width="27" 
-                height="24" 
-                viewBox="0 0 27 24" 
-                fill="none" 
-                style={{
-                  transform: expandedItems.includes(5) ? 'rotate(180deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.3s ease'
-                }}
-              >
-                <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "transform 0.3s ease"
+          }}>
+            <svg 
+              width="27" 
+              height="24" 
+              viewBox="0 0 27 24" 
+              fill="none" 
+              style={{
+                transform: expandedItems.includes(2) ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.3s ease'
+              }}
+            >
+              <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </div>
+        </div>
 
-          {/* FAQ Accordion 7 */}
+        {/* FAQ Accordion 4 */}
+        <div style={{
+          width: "100%",
+          background: "white",
+          borderRadius: "20px",
+          padding: "32px 40px",
+          display: "flex",
+          alignItems: "flex-start",
+          gap: "8px",
+          cursor: "pointer"
+        }} onClick={() => toggleAccordion(3)}>
           <div style={{
-            width: "100%",
-            background: "white",
-            borderRadius: "20px",
-            padding: "32px 40px",
+            flex: 1,
             display: "flex",
-            alignItems: "flex-start",
-            gap: "8px",
-            cursor: "pointer"
-          }} onClick={() => toggleAccordion(6)}>
-            <div style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              gap: "16px"
+            flexDirection: "column",
+            gap: "16px"
+          }}>
+            <h3 style={{
+              fontSize: "16px",
+              fontWeight: 700,
+              fontFamily: "Open Sans, sans-serif",
+              lineHeight: "22px",
+              margin: 0,
+              color: "#1A1A1A"
             }}>
-              <h3 style={{
+              How long does dispute resolution take?
+            </h3>
+            {expandedItems.includes(3) && (
+              <p style={{
                 fontSize: "16px",
-                fontWeight: 700,
+                fontWeight: 400,
                 fontFamily: "Open Sans, sans-serif",
                 lineHeight: "22px",
-                margin: 0,
-                color: "#1A1A1A"
+                margin: 0
               }}>
-                What happens if the other party doesn't respond to the dispute?
-              </h3>
-              {expandedItems.includes(6) && (
-                <p style={{
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  fontFamily: "Open Sans, sans-serif",
-                  lineHeight: "22px",
-                  margin: 0
-                }}>
-                  If the other party fails to respond to the dispute within the allotted time, the resolution team may make a decision based solely on the information and evidence provided by you.
-                </p>
-              )}
-            </div>
-            <div style={{
-              width: "24px",
-              height: "24px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "transform 0.3s ease"
-            }}>
-              <svg 
-                width="27" 
-                height="24" 
-                viewBox="0 0 27 24" 
-                fill="none" 
-                style={{
-                  transform: expandedItems.includes(6) ? 'rotate(180deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.3s ease'
-                }}
-              >
-                <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
+                Dispute resolution typically takes 5-10 business days, depending on complexity and evidence review. Simple cases may be resolved faster, while complex disputes require more thorough investigation. You'll be updated throughout the process.
+              </p>
+            )}
           </div>
-
-          {/* FAQ Accordion 8 */}
           <div style={{
-            width: "100%",
-            background: "white",
-            borderRadius: "20px",
-            padding: "32px 40px",
+            width: "24px",
+            height: "24px",
             display: "flex",
-            alignItems: "flex-start",
-            gap: "8px",
-            cursor: "pointer"
-          }} onClick={() => toggleAccordion(7)}>
-            <div style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              gap: "16px"
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "transform 0.3s ease"
+          }}>
+            <svg 
+              width="27" 
+              height="24" 
+              viewBox="0 0 27 24" 
+              fill="none" 
+              style={{
+                transform: expandedItems.includes(3) ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.3s ease'
+              }}
+            >
+              <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        {/* FAQ Accordion 5 */}
+        <div style={{
+          width: "100%",
+          background: "white",
+          borderRadius: "20px",
+          padding: "32px 40px",
+          display: "flex",
+          alignItems: "flex-start",
+          gap: "8px",
+          cursor: "pointer"
+        }} onClick={() => toggleAccordion(4)}>
+          <div style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: "16px"
+          }}>
+            <h3 style={{
+              fontSize: "16px",
+              fontWeight: 700,
+              fontFamily: "Open Sans, sans-serif",
+              lineHeight: "22px",
+              margin: 0,
+              color: "#1A1A1A"
             }}>
-              <h3 style={{
+              What are the possible outcomes of a dispute?
+            </h3>
+            {expandedItems.includes(4) && (
+              <p style={{
                 fontSize: "16px",
-                fontWeight: 700,
+                fontWeight: 400,
                 fontFamily: "Open Sans, sans-serif",
                 lineHeight: "22px",
-                margin: 0,
-                color: "#1A1A1A"
+                margin: 0
               }}>
-                Can I still work with the same freelancer/employer after a dispute?
-              </h3>
-              {expandedItems.includes(7) && (
-                <p style={{
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  fontFamily: "Open Sans, sans-serif",
-                  lineHeight: "22px",
-                  margin: 0
-                }}>
-                  Yes, you can choose to continue working with the same freelancer/employer after a dispute is resolved, but we recommend reviewing the terms of the project carefully to avoid further issues.
-                </p>
-              )}
-            </div>
-            <div style={{
-              width: "24px",
-              height: "24px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "transform 0.3s ease"
+                Outcomes include full payment to consultant, partial payment, project revision, refund to client, or case dismissal. The decision is based on evidence, project terms, and platform policies. Both parties must accept the final decision.
+              </p>
+            )}
+          </div>
+          <div style={{
+            width: "24px",
+            height: "24px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "transform 0.3s ease"
+          }}>
+            <svg 
+              width="27" 
+              height="24" 
+              viewBox="0 0 27 24" 
+              fill="none" 
+              style={{
+                transform: expandedItems.includes(4) ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.3s ease'
+              }}
+            >
+              <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        {/* FAQ Accordion 6 */}
+        <div style={{
+          width: "100%",
+          background: "white",
+          borderRadius: "20px",
+          padding: "32px 40px",
+          display: "flex",
+          alignItems: "flex-start",
+          gap: "8px",
+          cursor: "pointer"
+        }} onClick={() => toggleAccordion(5)}>
+          <div style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: "16px"
+          }}>
+            <h3 style={{
+              fontSize: "16px",
+              fontWeight: 700,
+              fontFamily: "Open Sans, sans-serif",
+              lineHeight: "22px",
+              margin: 0,
+              color: "#1A1A1A"
             }}>
-              <svg 
-                width="27" 
-                height="24" 
-                viewBox="0 0 27 24" 
-                fill="none" 
-                style={{
-                  transform: expandedItems.includes(7) ? 'rotate(180deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.3s ease'
-                }}
-              >
-                <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
+              Can I appeal a dispute decision?
+            </h3>
+            {expandedItems.includes(5) && (
+              <p style={{
+                fontSize: "16px",
+                fontWeight: 400,
+                fontFamily: "Open Sans, sans-serif",
+                lineHeight: "22px",
+                margin: 0
+              }}>
+                Appeals are only considered if new evidence is presented that wasn't available during the initial review. Appeals must be submitted within 7 days of the decision and include compelling new information that could change the outcome.
+              </p>
+            )}
+          </div>
+          <div style={{
+            width: "24px",
+            height: "24px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "transform 0.3s ease"
+          }}>
+            <svg 
+              width="27" 
+              height="24" 
+              viewBox="0 0 27 24" 
+              fill="none" 
+              style={{
+                transform: expandedItems.includes(5) ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.3s ease'
+              }}
+            >
+              <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        {/* FAQ Accordion 7 */}
+        <div style={{
+          width: "100%",
+          background: "white",
+          borderRadius: "20px",
+          padding: "32px 40px",
+          display: "flex",
+          alignItems: "flex-start",
+          gap: "8px",
+          cursor: "pointer"
+        }} onClick={() => toggleAccordion(6)}>
+          <div style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: "16px"
+          }}>
+            <h3 style={{
+              fontSize: "16px",
+              fontWeight: 700,
+              fontFamily: "Open Sans, sans-serif",
+              lineHeight: "22px",
+              margin: 0,
+              color: "#1A1A1A"
+            }}>
+              How can I prevent disputes?
+            </h3>
+            {expandedItems.includes(6) && (
+              <p style={{
+                fontSize: "16px",
+                fontWeight: 400,
+                fontFamily: "Open Sans, sans-serif",
+                lineHeight: "22px",
+                margin: 0
+              }}>
+                Maintain clear communication, document all agreements, set realistic expectations, provide regular updates, and address concerns promptly. Use detailed project briefs and establish clear deliverables and timelines from the start.
+              </p>
+            )}
+          </div>
+          <div style={{
+            width: "24px",
+            height: "24px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "transform 0.3s ease"
+          }}>
+            <svg 
+              width="27" 
+              height="24" 
+              viewBox="0 0 27 24" 
+              fill="none" 
+              style={{
+                transform: expandedItems.includes(6) ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.3s ease'
+              }}
+            >
+              <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        {/* FAQ Accordion 8 */}
+        <div style={{
+          width: "100%",
+          background: "white",
+          borderRadius: "20px",
+          padding: "32px 40px",
+          display: "flex",
+          alignItems: "flex-start",
+          gap: "8px",
+          cursor: "pointer"
+        }} onClick={() => toggleAccordion(7)}>
+          <div style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: "16px"
+          }}>
+            <h3 style={{
+              fontSize: "16px",
+              fontWeight: 700,
+              fontFamily: "Open Sans, sans-serif",
+              lineHeight: "22px",
+              margin: 0,
+              color: "#1A1A1A"
+            }}>
+              What if I'm not satisfied with the dispute resolution?
+            </h3>
+            {expandedItems.includes(7) && (
+              <p style={{
+                fontSize: "16px",
+                fontWeight: 400,
+                fontFamily: "Open Sans, sans-serif",
+                lineHeight: "22px",
+                margin: 0
+              }}>
+                While platform decisions are final, you can provide feedback on the process. For legal matters, you may pursue external options, but this removes the dispute from platform protection. Consider the decision carefully before taking external action.
+              </p>
+            )}
+          </div>
+          <div style={{
+            width: "24px",
+            height: "24px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "transform 0.3s ease"
+          }}>
+            <svg 
+              width="27" 
+              height="24" 
+              viewBox="0 0 27 24" 
+              fill="none" 
+              style={{
+                transform: expandedItems.includes(7) ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.3s ease'
+              }}
+            >
+              <path d="M8 9L14 15L20 9" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M8 9L14 15L20 9" stroke="black" strokeOpacity="0.2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

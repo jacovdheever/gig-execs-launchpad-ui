@@ -53,7 +53,7 @@ const About = () => {
               Helping People Succeed
             </div>
             <div style={{ color: "white", fontSize: 16, fontFamily: "Open Sans, sans-serif", fontWeight: 400, wordWrap: "break-word" }}>
-              GigExecs is an exclusive freelancing platform for senior professionals with a proven track record and at least 15 years of experience. We curate our network to maintain a high-quality ecosystem, ensuring the right skills meet the right opportunities.
+              GigExecs is an exclusive freelancing platform for senior professionals with a proven track record and minimum 15 years of experience. We curate our network to maintain a high-quality ecosystem, ensuring the right skills meet the right opportunities.
             </div>
           </div>
         </div>

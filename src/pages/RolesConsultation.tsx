@@ -2,7 +2,6 @@ import React, { useState } from "react"
 
 const RolesConsultation = () => {
   const [expandedItems, setExpandedItems] = useState<number[]>([0, 1, 2, 3, 4, 5, 6]) // All items start expanded
-  const [showWelcomeBanner, setShowWelcomeBanner] = useState<boolean>(true) // Track welcome banner visibility
 
   const toggleAccordion = (index: number) => {
     setExpandedItems(prev => 
@@ -12,89 +11,19 @@ const RolesConsultation = () => {
     )
   }
 
-  const dismissWelcomeBanner = () => {
-    setShowWelcomeBanner(false)
-  }
-
   return (
-    <>
-      {/* Welcome Banner */}
-      {showWelcomeBanner && (
-        <div style={{
-          width: "100%",
-          height: "224px",
-          background: "url('/images/Help/WelcomeBanner.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          borderRadius: "20px",
-          position: "relative",
-          overflow: "hidden"
-        }}>
-          <div style={{
-            position: "absolute",
-            top: "20px",
-            right: "20px",
-            width: "24px",
-            height: "24px",
-            cursor: "pointer"
-          }} onClick={dismissWelcomeBanner}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M18 6L6 18M6 6L18 18" stroke="#013957" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-          
-          <div style={{
-            position: "absolute",
-            left: "99px",
-            top: "32px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-            width: "268px"
-          }}>
-            <h3 style={{
-              fontSize: "20px",
-              fontWeight: 700,
-              fontFamily: "Open Sans, sans-serif",
-              lineHeight: "27px",
-              margin: 0,
-              color: "#013957"
-            }}>
-              Hi Amy, welcome to our help and support service!
-            </h3>
-            <p style={{
-              fontSize: "14px",
-              fontWeight: 400,
-              fontFamily: "Open Sans, sans-serif",
-              lineHeight: "19px",
-              letterSpacing: "0.04em",
-              margin: 0,
-              color: "#013957"
-            }}>
-              Please give us your feedback so that we can improve our support service.
-            </p>
-            <button style={{
-              width: "268px",
-              height: "52px",
-              background: "#CC9B0A",
-              borderRadius: "2px",
-              border: "none",
-              color: "white",
-              fontSize: "16px",
-              fontWeight: 700,
-              fontFamily: "Open Sans, sans-serif",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center"
-            }}>
-              Rate Our Service
-            </button>
-          </div>
-        </div>
-      )}
-
+    <div style={{
+      minHeight: "100vh",
+      background: "url('/background/Background.svg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      backgroundAttachment: "fixed",
+      display: "flex",
+      flexDirection: "column",
+      position: "relative",
+      zIndex: 1
+    }}>
       {/* Consultant Section */}
       <div style={{
         display: "flex",
@@ -102,12 +31,12 @@ const RolesConsultation = () => {
         gap: "32px"
       }}>
         <h2 style={{
-          color: "white",
-          fontSize: "30px",
+          fontSize: "32px",
           fontWeight: 700,
-          fontFamily: "Montserrat, sans-serif",
-          letterSpacing: "0.04em",
-          margin: 0
+          fontFamily: "Open Sans, sans-serif",
+          lineHeight: "44px",
+          margin: 0,
+          color: "white"
         }}>
           Consultant
         </h2>
@@ -115,29 +44,14 @@ const RolesConsultation = () => {
         {/* Search Bar */}
         <div style={{
           width: "100%",
-          height: "40px",
+          height: "64px",
           background: "white",
           borderRadius: "20px",
+          padding: "20px 24px",
           display: "flex",
           alignItems: "center",
-          padding: "0 24px",
-          gap: "8px"
+          gap: "16px"
         }}>
-          <input 
-            type="text"
-            placeholder="Search our collection of frequently asked questions and other helpful resources..."
-            style={{
-              flex: 1,
-              border: "none",
-              outline: "none",
-              fontSize: "14px",
-              fontFamily: "Montserrat, sans-serif",
-              fontWeight: 400,
-              lineHeight: "25px",
-              letterSpacing: "0.04em",
-              opacity: 0.3
-            }}
-          />
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M14.0151 19.0678C14.0151 19.6781 13.6148 20.4784 13.1046 20.7886L11.694 21.699C10.3834 22.5094 8.56254 21.5989 8.56254 19.9782V14.6258C8.56254 13.9154 8.16236 13.005 7.75217 12.5048L3.91039 8.46294C3.40015 7.95271 3 7.05231 3 6.44203V4.12096C3 2.91041 3.91044 2 5.02094 2H18.367C19.4775 2 20.388 2.91041 20.388 4.02091V6.24193C20.388 7.0523 19.8778 8.06277 19.3775 8.563" stroke="#013957" strokeWidth="1.3" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
             <path d="M14.0151 19.0678C14.0151 19.6781 13.6148 20.4784 13.1046 20.7886L11.694 21.699C10.3834 22.5094 8.56254 21.5989 8.56254 19.9782V14.6258C8.56254 13.9154 8.16236 13.005 7.75217 12.5048L3.91039 8.46294C3.40015 7.95271 3 7.05231 3 6.44203V4.12096C3 2.91041 3.91044 2 5.02094 2H18.367C19.4775 2 20.388 2.91041 20.388 4.02091V6.24193C20.388 7.0523 19.8778 8.06277 19.3775 8.563" stroke="black" strokeOpacity="0.2" strokeWidth="1.3" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
@@ -146,14 +60,19 @@ const RolesConsultation = () => {
             <path d="M19.5669 17.1176L18.5664 16.1172" stroke="#013957" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
             <path d="M19.5669 17.1176L18.5664 16.1172" stroke="black" strokeOpacity="0.2" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
+          <input 
+            type="text" 
+            placeholder="Search for help..." 
+            style={{
+              flex: 1,
+              border: "none",
+              outline: "none",
+              fontSize: "16px",
+              fontFamily: "Open Sans, sans-serif",
+              background: "transparent"
+            }}
+          />
         </div>
-
-        {/* FAQ Accordions */}
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "8px"
-        }}>
 
         {/* FAQ Accordion 1 */}
         <div style={{
@@ -180,7 +99,7 @@ const RolesConsultation = () => {
               margin: 0,
               color: "#1A1A1A"
             }}>
-              How do I showcase my skills and experience effectively on my profile?
+              What qualifications do I need to become a consultant on GigExecs?
             </h3>
             {expandedItems.includes(0) && (
               <p style={{
@@ -190,7 +109,7 @@ const RolesConsultation = () => {
                 lineHeight: "22px",
                 margin: 0
               }}>
-                Create a compelling profile by highlighting your key achievements, certifications, and specific industry expertise. Include detailed project descriptions, client testimonials, and measurable results. Use professional language and ensure your profile reflects your senior-level experience and unique value proposition.
+                You need minimum 15 years of professional experience in your field, a proven track record of successful projects, and expertise in your domain. We also look for strong communication skills, problem-solving abilities, and a commitment to delivering high-quality work.
               </p>
             )}
           </div>
@@ -243,7 +162,7 @@ const RolesConsultation = () => {
               margin: 0,
               color: "#1A1A1A"
             }}>
-              Can I set my own rates as a consultant?
+              How do I set my rates as a consultant?
             </h3>
             {expandedItems.includes(1) && (
               <p style={{
@@ -253,7 +172,7 @@ const RolesConsultation = () => {
                 lineHeight: "22px",
                 margin: 0
               }}>
-                Yes, you have full control over your rates. Set competitive pricing based on your expertise, market demand, and project complexity. Consider your experience level, specialized skills, and the value you provide to clients when determining your rates.
+                Set rates based on your expertise, market demand, and project complexity. Consider your experience level, the value you provide, and industry standards. Start with competitive rates and adjust based on client feedback and project success.
               </p>
             )}
           </div>
@@ -306,7 +225,7 @@ const RolesConsultation = () => {
               margin: 0,
               color: "#1A1A1A"
             }}>
-              How do I find consulting opportunities on the platform?
+              What types of projects can I work on as a consultant?
             </h3>
             {expandedItems.includes(2) && (
               <p style={{
@@ -316,7 +235,7 @@ const RolesConsultation = () => {
                 lineHeight: "22px",
                 margin: 0
               }}>
-                Browse available projects in your expertise area, set up job alerts for relevant opportunities, and proactively reach out to clients with compelling proposals. Network with other consultants and maintain an active, professional presence on the platform.
+                You can work on strategic consulting, process optimization, technology implementation, business transformation, and specialized advisory projects. The platform offers diverse opportunities across industries and project types.
               </p>
             )}
           </div>
@@ -369,7 +288,7 @@ const RolesConsultation = () => {
               margin: 0,
               color: "#1A1A1A"
             }}>
-              What is the process for applying to consulting projects?
+              How do I communicate effectively with clients?
             </h3>
             {expandedItems.includes(3) && (
               <p style={{
@@ -379,7 +298,7 @@ const RolesConsultation = () => {
                 lineHeight: "22px",
                 margin: 0
               }}>
-                Review project requirements carefully, submit a tailored proposal highlighting your relevant experience, provide a clear timeline and deliverables, and include your proposed rate. Follow up professionally and be prepared for client interviews.
+                Maintain clear, professional communication through regular updates, detailed project plans, and transparent progress reports. Use the platform's messaging tools and schedule regular check-ins to ensure alignment and address any concerns promptly.
               </p>
             )}
           </div>
@@ -432,7 +351,7 @@ const RolesConsultation = () => {
               margin: 0,
               color: "#1A1A1A"
             }}>
-              How do I communicate with clients during a consulting project?
+              What should I include in my consultant profile?
             </h3>
             {expandedItems.includes(4) && (
               <p style={{
@@ -442,7 +361,7 @@ const RolesConsultation = () => {
                 lineHeight: "22px",
                 margin: 0
               }}>
-                Use the platform's messaging system for all communications, maintain regular check-ins, provide progress updates, and address any concerns promptly. Establish clear communication protocols and keep all interactions professional and documented.
+                Include your professional summary, key achievements, relevant certifications, industry expertise, and examples of successful projects. Highlight your unique value proposition and the specific problems you solve for clients.
               </p>
             )}
           </div>
@@ -495,7 +414,7 @@ const RolesConsultation = () => {
               margin: 0,
               color: "#1A1A1A"
             }}>
-              Are there any restrictions on the number of consulting projects I can take on?
+              Can I work on multiple projects simultaneously?
             </h3>
             {expandedItems.includes(5) && (
               <p style={{
@@ -596,8 +515,7 @@ const RolesConsultation = () => {
           </div>
         </div>
       </div>
-      </div>
-    </>
+    </div>
   )
 }
 
