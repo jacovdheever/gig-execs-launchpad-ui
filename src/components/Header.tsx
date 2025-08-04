@@ -47,30 +47,30 @@ const Header = () => {
       >
         {/* Logo */}
         <Link to="/" style={{ textDecoration: "none" }}>
+        <div
+          data-property-1="White"
+          style={{ width: 145.14, height: 38.12, position: "relative" }}
+        >
           <div
-            data-property-1="White"
-            style={{ width: 145.14, height: 38.12, position: "relative" }}
+            style={{
+              width: 145.14,
+              height: 38.12,
+              left: 0,
+              top: 0,
+              position: "absolute",
+              justifyContent: "center",
+              display: "flex",
+              flexDirection: "column",
+              color: "white",
+              fontSize: 29,
+              fontFamily: "Montserrat, sans-serif",
+              fontWeight: 800,
+              wordWrap: "break-word",
+            }}
           >
-            <div
-              style={{
-                width: 145.14,
-                height: 38.12,
-                left: 0,
-                top: 0,
-                position: "absolute",
-                justifyContent: "center",
-                display: "flex",
-                flexDirection: "column",
-                color: "white",
-                fontSize: 29,
-                fontFamily: "Montserrat, sans-serif",
-                fontWeight: 800,
-                wordWrap: "break-word",
-              }}
-            >
-              GigExecs
-            </div>
+            GigExecs
           </div>
+        </div>
         </Link>
         {/* Navigation Links */}
         <div
@@ -83,23 +83,23 @@ const Header = () => {
         >
           <Link to="/" style={{ textDecoration: "none" }}>
             <div style={getLinkStyle("/")}>
-              What is GigExecs
-            </div>
+            What is GigExecs
+          </div>
           </Link>
           <Link to="/clients" style={{ textDecoration: "none" }}>
             <div style={getLinkStyle("/clients")}>
-              Clients
-            </div>
+            Clients
+          </div>
           </Link>
           <Link to="/professionals" style={{ textDecoration: "none" }}>
             <div style={getLinkStyle("/professionals")}>
-              Professionals
-            </div>
+            Professionals
+          </div>
           </Link>
           <Link to="/blog" style={{ textDecoration: "none" }}>
             <div style={getLinkStyle("/blog")}>
-              Blog
-            </div>
+            Blog
+          </div>
           </Link>
         </div>
         {/* CTA Buttons */}
@@ -111,70 +111,70 @@ const Header = () => {
           }}
         >
           <a href="https://gigexecs.com/login" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+          <div
+            style={{
+              height: 40,
+              paddingLeft: 48,
+              paddingRight: 48,
+              paddingTop: 8,
+              paddingBottom: 8,
+              background: "#4885AA",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 8,
+              display: "flex",
+              cursor: "pointer",
+            }}
+          >
             <div
               style={{
-                height: 40,
-                paddingLeft: 48,
-                paddingRight: 48,
-                paddingTop: 8,
-                paddingBottom: 8,
-                background: "#4885AA",
+                textAlign: "center",
                 justifyContent: "center",
-                alignItems: "center",
-                gap: 8,
                 display: "flex",
-                cursor: "pointer",
+                flexDirection: "column",
+                color: "white",
+                fontSize: 16,
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: 700,
+                wordWrap: "break-word",
               }}
             >
-              <div
-                style={{
-                  textAlign: "center",
-                  justifyContent: "center",
-                  display: "flex",
-                  flexDirection: "column",
-                  color: "white",
-                  fontSize: 16,
-                  fontFamily: "Montserrat, sans-serif",
-                  fontWeight: 700,
-                  wordWrap: "break-word",
-                }}
-              >
-                Sign in
-              </div>
+              Sign in
             </div>
+          </div>
           </a>
           <a href="https://gigexecs.com/signup" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+          <div
+            style={{
+              height: 40,
+              paddingLeft: 48,
+              paddingRight: 48,
+              paddingTop: 8,
+              paddingBottom: 8,
+              background: "#CC9B0A",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 8,
+              display: "flex",
+              cursor: "pointer",
+            }}
+          >
             <div
               style={{
-                height: 40,
-                paddingLeft: 48,
-                paddingRight: 48,
-                paddingTop: 8,
-                paddingBottom: 8,
-                background: "#CC9B0A",
+                textAlign: "center",
                 justifyContent: "center",
-                alignItems: "center",
-                gap: 8,
                 display: "flex",
-                cursor: "pointer",
+                flexDirection: "column",
+                color: "white",
+                fontSize: 16,
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: 700,
+                wordWrap: "break-word",
               }}
             >
-              <div
-                style={{
-                  textAlign: "center",
-                  justifyContent: "center",
-                  display: "flex",
-                  flexDirection: "column",
-                  color: "white",
-                  fontSize: 16,
-                  fontFamily: "Montserrat, sans-serif",
-                  fontWeight: 700,
-                  wordWrap: "break-word",
-                }}
-              >
-                Join
-              </div>
+              Join
             </div>
+          </div>
           </a>
         </div>
       </div>

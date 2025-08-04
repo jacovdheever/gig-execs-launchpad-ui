@@ -65,44 +65,44 @@ const Hero = () => {
           Connecting senior talent with high-quality global projects through a secure and trusted platform.
         </div>
         <a href="https://gigexecs.com/signup" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+        <div
+          data-content="Icons & Text"
+          data-hierarchy="Secondary"
+          data-left-icon="false"
+          data-right-icon="false"
+          data-size="Large"
+          data-state="Default"
+          data-style="Filled"
+          style={{
+            width: 302,
+            height: "100%",
+            paddingLeft: 24,
+            paddingRight: 24,
+            paddingTop: 16,
+            paddingBottom: 16,
+            background: "#CC9B0A",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 8,
+            display: "inline-flex",
+            borderRadius: 8,
+            cursor: "pointer",
+          }}
+        >
           <div
-            data-content="Icons & Text"
-            data-hierarchy="Secondary"
-            data-left-icon="false"
-            data-right-icon="false"
-            data-size="Large"
-            data-state="Default"
-            data-style="Filled"
             style={{
-              width: 302,
-              height: "100%",
-              paddingLeft: 24,
-              paddingRight: 24,
-              paddingTop: 16,
-              paddingBottom: 16,
-              background: "#CC9B0A",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: 8,
-              display: "inline-flex",
-              borderRadius: 8,
-              cursor: "pointer",
+              textAlign: "center",
+              color: "white",
+              fontSize: 18,
+              fontFamily: "Montserrat, sans-serif",
+              fontWeight: 700,
+              lineHeight: "21.60px",
+              wordWrap: "break-word",
             }}
           >
-            <div
-              style={{
-                textAlign: "center",
-                color: "white",
-                fontSize: 18,
-                fontFamily: "Montserrat, sans-serif",
-                fontWeight: 700,
-                lineHeight: "21.60px",
-                wordWrap: "break-word",
-              }}
-            >
-              Join GigExecs
-            </div>
+            Join GigExecs
           </div>
+        </div>
         </a>
       </div>
     </section>

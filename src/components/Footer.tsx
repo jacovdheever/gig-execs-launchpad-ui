@@ -201,11 +201,11 @@ const Footer = () => {
                     </div>
                   );
                 })}
-              </div>
+            </div>
             </div>
           ))}
-        </div>
-      </div>
+          </div>
+          </div>
       {/* Bottom Row */}
       <div
         style={{

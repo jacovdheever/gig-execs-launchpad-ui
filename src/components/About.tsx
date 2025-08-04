@@ -86,11 +86,11 @@ const About = () => {
               </div>
             ))}
             <a href="https://gigexecs.com/signup" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-              <div style={{ alignSelf: "stretch", height: 42, paddingLeft: 24, paddingRight: 24, paddingTop: 16, paddingBottom: 16, background: "#CC9B0A", justifyContent: "center", alignItems: "center", gap: 8, display: "inline-flex" }}>
-                <div style={{ textAlign: "center", color: "white", fontSize: 18, fontFamily: "Montserrat, sans-serif", fontWeight: 700, lineHeight: "21.60px", wordWrap: "break-word" }}>
-                  Sign Up
-                </div>
+            <div style={{ alignSelf: "stretch", height: 42, paddingLeft: 24, paddingRight: 24, paddingTop: 16, paddingBottom: 16, background: "#CC9B0A", justifyContent: "center", alignItems: "center", gap: 8, display: "inline-flex" }}>
+              <div style={{ textAlign: "center", color: "white", fontSize: 18, fontFamily: "Montserrat, sans-serif", fontWeight: 700, lineHeight: "21.60px", wordWrap: "break-word" }}>
+                Sign Up
               </div>
+            </div>
             </a>
           </div>
         </div>

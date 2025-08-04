@@ -196,18 +196,18 @@ const ExecutiveFreelancePlatform = () => {
             </div>
           </div>
 
-                      {/* Article Title */}
-            <h1 style={{ 
-              color: "#012E46", 
-              fontSize: 20, 
-              fontFamily: "Montserrat, sans-serif", 
-              fontWeight: 700, 
-              lineHeight: "120%", 
-              marginBottom: "32px",
-              wordWrap: "break-word"
-            }}>
+          {/* Article Title */}
+          <h1 style={{ 
+            color: "#012E46", 
+            fontSize: 20, 
+            fontFamily: "Montserrat, sans-serif", 
+            fontWeight: 700, 
+            lineHeight: "120%", 
+            marginBottom: "32px",
+            wordWrap: "break-word"
+          }}>
               Navigating the AI Revolution: Strategies for Senior Professionals
-            </h1>
+          </h1>
           
           {/* Article Content */}
           <div style={{ color: "#012E46", fontSize: 16, lineHeight: "28px", fontFamily: "Montserrat, sans-serif" }}>
@@ -539,7 +539,7 @@ const ExecutiveFreelancePlatform = () => {
         {/* Data Privacy Policy */}
         <a href="/data-privacy-policy" style={{
           color: "rgba(255, 255, 255, 0.8)",
-          fontSize: 14,
+          fontSize: 14, 
           fontFamily: "Open Sans, sans-serif",
           fontWeight: 400,
           textDecoration: "none"
@@ -557,7 +557,7 @@ const ExecutiveFreelancePlatform = () => {
         {/* Terms and Conditions */}
         <a href="/terms-and-conditions" style={{
           color: "rgba(255, 255, 255, 0.8)",
-          fontSize: 14,
+          fontSize: 14, 
           fontFamily: "Open Sans, sans-serif",
           fontWeight: 400,
           textDecoration: "none"
