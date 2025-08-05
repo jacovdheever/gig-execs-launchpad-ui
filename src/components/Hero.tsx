@@ -31,7 +31,7 @@ const Hero = () => {
             Connecting highly experienced freelancing professionals to global clients through a trusted and secure platform.
           </div>
           <a href="https://gigexecs.com/signup" target="_blank" rel="noopener noreferrer" className="text-decoration-none">
-            <div className="inline-flex items-center justify-center px-6 py-4 bg-[#012E46] rounded-lg cursor-pointer hover:bg-[#001A2D] transition-colors">
+            <div className="inline-flex items-center justify-center px-6 py-4 bg-[#CC9B0A] rounded-lg cursor-pointer hover:bg-[#B88A09] transition-colors">
               <div className="text-center text-white font-bold text-sm sm:text-base">
                 Get Started
               </div>
