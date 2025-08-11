@@ -4,7 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./auth/context/AuthContext";
-import Index from "./pages/Index";
+import Maintenance from "./pages/Maintenance";
+import MarketingHome from "./pages/MarketingHome";
 import Clients from "./pages/Clients";
 import Professionals from "./pages/Professionals";
 import Blog from "./pages/Blog";
@@ -42,8 +43,11 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* Maintenance Page - Root Route */}
+            <Route path="/" element={<Maintenance />} />
+            
             {/* Marketing Site Routes */}
-            <Route path="/" element={<Index />} />
+            <Route path="/marketing" element={<MarketingHome />} />
             <Route path="/clients" element={<Clients />} />
             <Route path="/professionals" element={<Professionals />} />
             <Route path="/blog" element={<Blog />} />
