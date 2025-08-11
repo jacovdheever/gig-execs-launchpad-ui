@@ -72,10 +72,10 @@ export default function Maintenance() {
             <p className="text-gray-400 text-sm">
               Need to reach us? Contact us at{' '}
               <a 
-                href="mailto:support@gigexecs.com" 
+                href="mailto:help@gigexecs.com" 
                 className="text-[#FFD700] hover:text-white transition-colors"
               >
-                support@gigexecs.com
+                help@gigexecs.com
               </a>
             </p>
           </div>
