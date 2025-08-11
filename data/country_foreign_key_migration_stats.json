@@ -1,0 +1,10 @@
+{
+  "stats": {
+    "consultant_profiles_processed": 401,
+    "consultant_profiles_updated": 399,
+    "client_profiles_processed": 2,
+    "client_profiles_updated": 2,
+    "errors": []
+  },
+  "timestamp": "2025-08-05T12:14:41.680987"
+}

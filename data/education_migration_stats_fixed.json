@@ -1,0 +1,8 @@
+{
+  "total_records": 866,
+  "records_with_education": 358,
+  "education_entries_found": 884,
+  "successful_inserts": 0,
+  "errors": 884,
+  "constraint_errors": 156
+}

@@ -1,0 +1,11 @@
+{
+  "stats": {
+    "total_records": 866,
+    "users_with_phones": 497,
+    "consultant_profiles_found": 276,
+    "phones_updated": 276,
+    "phones_skipped": 0,
+    "errors": []
+  },
+  "timestamp": "2025-08-05T10:27:27.203559"
+}

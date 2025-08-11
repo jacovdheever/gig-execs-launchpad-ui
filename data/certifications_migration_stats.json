@@ -1,0 +1,9 @@
+{
+  "total_records": 866,
+  "records_with_certifications": 105,
+  "certifications_found": 226,
+  "successful_inserts": 226,
+  "errors": 0,
+  "user_not_found": 1,
+  "constraint_errors": 0
+}

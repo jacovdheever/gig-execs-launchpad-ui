@@ -1,0 +1,10 @@
+{
+  "stats": {
+    "total_records": 866,
+    "users_with_skills": 314,
+    "skills_processed": 2502,
+    "user_skills_inserted": 183,
+    "errors": []
+  },
+  "timestamp": "2025-08-05T09:33:11.548880"
+}
