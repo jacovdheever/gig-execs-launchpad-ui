@@ -7,9 +7,11 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Eye, EyeOff, Mail, Lock, User, Building2 } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { supabase } from '@/lib/supabase'
 
 export default function RegisterPage() {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -23,6 +25,7 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
   const handleInputChange = (field: string, value: string | boolean) => {
@@ -55,21 +58,126 @@ export default function RegisterPage() {
     if (!validateForm()) return
 
     setIsLoading(true)
+    setErrors({})
 
     try {
-      // TODO: Implement Supabase auth registration
-      console.log('Registration attempt:', formData)
+      // Step 1: Create user with Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            user_type: formData.userType,
+            company_name: formData.companyName || null
+          }
+        }
+      })
+
+      if (authError) {
+        console.error('Auth error:', authError)
+        
+        // Handle specific error cases
+        if (authError.message.includes('already registered')) {
+          setErrors({ email: 'An account with this email already exists' })
+        } else if (authError.message.includes('password')) {
+          setErrors({ password: 'Password must be at least 8 characters' })
+        } else if (authError.message.includes('email')) {
+          setErrors({ email: 'Please enter a valid email address' })
+        } else if (authError.message.includes('rate limit')) {
+          setErrors({ general: 'Too many attempts. Please wait a moment and try again.' })
+        } else {
+          setErrors({ general: authError.message || 'Registration failed. Please try again.' })
+        }
+        return
+      }
+
+      if (!authData.user) {
+        setErrors({ general: 'Failed to create user account' })
+        return
+      }
+
+      // Step 2: Create profile record based on user type
+      const profileData = {
+        user_id: authData.user.id,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      }
+
+      let profileError = null
+
+      if (formData.userType === 'consultant') {
+        // Create consultant profile
+        const { error } = await supabase
+          .from('consultant_profiles')
+          .insert([profileData])
+        profileError = error
+      } else {
+        // Create client profile
+        const { error } = await supabase
+          .from('client_profiles')
+          .insert([{
+            ...profileData,
+            company_name: formData.companyName
+          }])
+        profileError = error
+      }
+
+      if (profileError) {
+        console.error('Profile creation error:', profileError)
+        // Note: We don't want to fail the entire registration if profile creation fails
+        // The user can still log in and complete their profile later
+        console.warn('Profile creation failed, but user account was created')
+      }
+
+      // Step 3: Success! Show success state
+      console.log('Registration successful:', authData.user)
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      setIsSuccess(true)
       
-      // TODO: Redirect to onboarding or dashboard on success
+      // Redirect to dashboard after 2 seconds
+      setTimeout(() => {
+        navigate('/dashboard', { replace: true })
+      }, 2000)
       
     } catch (err) {
+      console.error('Registration error:', err)
       setErrors({ general: 'Registration failed. Please try again.' })
     } finally {
       setIsLoading(false)
     }
+  }
+
+  // Show success state
+  if (isSuccess) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-4">
+        <div className="w-full max-w-md text-center">
+          <div className="mb-8">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h1 className="text-3xl font-bold text-[#012E46] mb-2">Welcome to GigExecs!</h1>
+            <p className="text-slate-600">Your account has been created successfully.</p>
+          </div>
+          
+          <Card className="shadow-xl border-0">
+            <CardContent className="p-6">
+              <p className="text-slate-600 mb-4">
+                We've sent a confirmation email to <strong>{formData.email}</strong>. 
+                Please check your inbox and click the verification link.
+              </p>
+              <p className="text-sm text-slate-500">
+                Redirecting to dashboard in a few seconds...
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    )
   }
 
   return (
