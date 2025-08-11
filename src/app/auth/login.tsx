@@ -5,31 +5,77 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { supabase } from '@/lib/supabase'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  })
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }))
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }))
+    }
+  }
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {}
+
+    if (!formData.email.trim()) newErrors.email = 'Email is required'
+    if (!formData.password) newErrors.password = 'Password is required'
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!validateForm()) return
+
     setIsLoading(true)
-    setError('')
+    setErrors({})
 
     try {
-      // TODO: Implement Supabase auth login
-      console.log('Login attempt:', { email, password })
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // TODO: Redirect to dashboard on success
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      })
+
+      if (error) {
+        console.error('Login error:', error)
+        
+        // Handle specific error cases
+        if (error.message.includes('Invalid login credentials')) {
+          setErrors({ general: 'Invalid email or password' })
+        } else if (error.message.includes('Email not confirmed')) {
+          setErrors({ general: 'Please check your email and click the confirmation link' })
+        } else if (error.message.includes('rate limit')) {
+          setErrors({ general: 'Too many attempts. Please wait a moment and try again.' })
+        } else {
+          setErrors({ general: error.message || 'Login failed. Please try again.' })
+        }
+        return
+      }
+
+      if (data.user) {
+        console.log('Login successful:', data.user)
+        
+        // Redirect to dashboard
+        navigate('/dashboard', { replace: true })
+      }
       
     } catch (err) {
-      setError('Invalid email or password. Please try again.')
+      console.error('Login error:', err)
+      setErrors({ general: 'Login failed. Please try again.' })
     } finally {
       setIsLoading(false)
     }
@@ -41,17 +87,17 @@ export default function LoginPage() {
         {/* Logo/Brand */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-[#012E46] mb-2">GigExecs</h1>
-          <p className="text-slate-600">Sign in to your account</p>
+          <p className="text-slate-600">Welcome back</p>
         </div>
 
         {/* Login Form */}
         <Card className="shadow-xl border-0">
           <CardHeader className="space-y-1 pb-6">
             <CardTitle className="text-2xl font-bold text-center text-[#012E46]">
-              Welcome back
+              Sign in to your account
             </CardTitle>
             <CardDescription className="text-center text-slate-600">
-              Enter your credentials to access your account
+              Enter your credentials to access your dashboard
             </CardDescription>
           </CardHeader>
           
@@ -68,12 +114,15 @@ export default function LoginPage() {
                     id="email"
                     type="email"
                     placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
                     className="pl-10 h-11 border-slate-200 focus:border-[#4885AA] focus:ring-[#4885AA]"
                     required
                   />
                 </div>
+                {errors.email && (
+                  <p className="text-sm text-red-600">{errors.email}</p>
+                )}
               </div>
 
               {/* Password Field */}
@@ -87,8 +136,8 @@ export default function LoginPage() {
                     id="password"
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={formData.password}
+                    onChange={(e) => handleInputChange('password', e.target.value)}
                     className="pl-10 pr-10 h-11 border-slate-200 focus:border-[#4885AA] focus:ring-[#4885AA]"
                     required
                   />
@@ -106,12 +155,15 @@ export default function LoginPage() {
                     )}
                   </Button>
                 </div>
+                {errors.password && (
+                  <p className="text-sm text-red-600">{errors.password}</p>
+                )}
               </div>
 
-              {/* Error Message */}
-              {error && (
+              {/* General Error */}
+              {errors.general && (
                 <Alert variant="destructive">
-                  <AlertDescription>{error}</AlertDescription>
+                  <AlertDescription>{errors.general}</AlertDescription>
                 </Alert>
               )}
 
@@ -126,15 +178,17 @@ export default function LoginPage() {
             </form>
 
             {/* Links */}
-            <div className="text-center space-y-2 pt-4">
-              <Link
-                to="/auth/forgot-password"
-                className="text-sm text-[#4885AA] hover:text-[#012E46] transition-colors"
-              >
-                Forgot your password?
-              </Link>
+            <div className="space-y-3 pt-4">
+              <div className="text-center">
+                <Link
+                  to="/auth/forgot-password"
+                  className="text-sm text-[#4885AA] hover:text-[#012E46] font-medium transition-colors"
+                >
+                  Forgot your password?
+                </Link>
+              </div>
               
-              <div className="text-sm text-slate-600">
+              <div className="text-center text-sm text-slate-600">
                 Don't have an account?{' '}
                 <Link
                   to="/auth/register"
