@@ -49,7 +49,7 @@ export function AppHeader() {
 
       {/* Bottom bar nav (desktop only) */}
       <div className="hidden md:block border-t border-yellow-500">
-        {user && <NavTabs role={user.role} />}
+        <NavTabs role={user?.role || 'consultant'} />
       </div>
     </header>
   );
