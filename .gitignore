@@ -106,3 +106,6 @@ scripts/
 
 # SQL files (may contain sensitive data)
 sql/
+
+# Environment example files
+env.example
