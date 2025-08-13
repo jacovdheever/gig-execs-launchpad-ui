@@ -23,11 +23,29 @@ if (!supabaseUrl || !supabaseAnonKey) {
     key: supabaseAnonKey ? 'loaded' : 'missing'
   })
   
-  // For development, you can set fallbacks here
-  // In production, these should always be set
   throw new Error(
     'Supabase environment variables are not configured. ' +
     'Please check your .env file and Netlify environment variables.'
+  )
+}
+
+// Validate URL format
+try {
+  new URL(supabaseUrl)
+} catch (error) {
+  console.error('Invalid Supabase URL:', supabaseUrl)
+  throw new Error(
+    `Invalid Supabase URL: "${supabaseUrl}". ` +
+    'Please check your VITE_SUPABASE_URL environment variable.'
+  )
+}
+
+// Validate key format (should be a JWT token)
+if (!supabaseAnonKey.startsWith('eyJ')) {
+  console.error('Invalid Supabase key format:', supabaseAnonKey.substring(0, 20) + '...')
+  throw new Error(
+    'Invalid Supabase key format. ' +
+    'Please check your VITE_SUPABASE_ANON_KEY environment variable.'
   )
 }
 
