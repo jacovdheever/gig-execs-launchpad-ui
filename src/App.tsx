@@ -43,8 +43,10 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            {/* Maintenance Page - Root Route */}
-            <Route path="/" element={<Maintenance />} />
+            {/* Functional App Routes - Root Route */}
+            <Route path="/" element={<DashboardLayout />}>
+              <Route index element={<DashboardPage />} />
+            </Route>
             
             {/* Marketing Site Routes */}
             <Route path="/marketing" element={<MarketingHome />} />
@@ -74,6 +76,9 @@ const App = () => (
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<DashboardPage />} />
             </Route>
+            
+            {/* Maintenance Page */}
+            <Route path="/maintenance" element={<Maintenance />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
