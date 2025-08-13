@@ -4,14 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "18"
-
-# Disable secrets scanning (environment variables are safe)
-[build.processing]
-  skip_processing = false
-
-# Secrets scanning configuration
-[build.processing.secrets]
-  enabled = false
+  SECRETS_SCAN_ENABLED = "false"
 
 # Redirects for SPA routing (if using React Router)
 [[redirects]]
