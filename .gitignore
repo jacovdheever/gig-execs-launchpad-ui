@@ -100,3 +100,9 @@ Desktop.ini
 
 # Local development
 *.local
+
+# Scripts folder (contains hardcoded secrets)
+scripts/
+
+# SQL files (may contain sensitive data)
+sql/
