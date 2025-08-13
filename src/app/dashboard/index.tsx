@@ -12,17 +12,13 @@ import {
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-interface DashboardPageProps {
-  userType: 'consultant' | 'client'
-}
-
-export default function DashboardPage({ userType }: DashboardPageProps) {
-  // TODO: Replace with real data from Supabase
+export default function DashboardPage() {
+  // Simple test data without Supabase dependency
   const stats = {
     totalProjects: 12,
     activeProjects: 3,
     completedProjects: 8,
-    pendingBids: userType === 'consultant' ? 5 : 0,
+    pendingBids: 5,
     unreadMessages: 2,
     profileCompleteness: 85
   }
