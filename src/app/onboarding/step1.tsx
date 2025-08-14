@@ -43,7 +43,7 @@ export default function OnboardingStep1() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Stepped Process Indicator */}
         <div className="mb-6 sm:mb-8">
-          <div className="flex items-center justify-center space-x-1 sm:space-x-2 overflow-x-auto px-2">
+          <div className="flex items-center justify-center space-x-1 sm:space-x-2 overflow-x-auto px-2 max-w-full">
             {[1, 2, 3, 4, 5, 6].map((step) => (
               <div key={step} className="flex items-center flex-shrink-0">
                 <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-semibold ${
@@ -54,7 +54,7 @@ export default function OnboardingStep1() {
                   {step}
                 </div>
                 {step < 6 && (
-                  <div className={`w-8 sm:w-12 h-1 mx-1 sm:mx-2 ${
+                  <div className={`w-6 sm:w-8 lg:w-12 h-1 mx-1 sm:mx-2 ${
                     step === 1 ? 'bg-[#012E46]' : 'bg-slate-200'
                   }`}></div>
                 )}
