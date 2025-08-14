@@ -10,13 +10,14 @@ import {
   CheckCircle,
   AlertCircle
 } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser'
 
 export default function DashboardPage() {
   const [user, setUser] = useState<CurrentUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCurrentUser()
