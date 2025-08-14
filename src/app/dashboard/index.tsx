@@ -78,10 +78,10 @@ export default function DashboardPage() {
       {/* Welcome Section */}
       <div className="bg-gradient-to-r from-[#012E46] to-[#4885AA] rounded-lg p-6 text-white">
         <h1 className="text-2xl font-bold mb-2">
-          Welcome back, {userType === 'consultant' ? 'Consultant' : 'Client'}!
+          Welcome back, Consultant!
         </h1>
         <p className="text-slate-100">
-          Here's what's happening with your {userType === 'consultant' ? 'consulting work' : 'projects'} today.
+          Here's what's happening with your consulting work today.
         </p>
       </div>
 
@@ -103,16 +103,16 @@ export default function DashboardPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              {userType === 'consultant' ? 'Pending Bids' : 'Active Projects'}
+              Pending Bids
             </CardTitle>
             <FileText className="h-4 w-4 text-slate-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {userType === 'consultant' ? stats.pendingBids : stats.activeProjects}
+              {stats.pendingBids}
             </div>
             <p className="text-xs text-slate-600">
-              {userType === 'consultant' ? 'Awaiting response' : 'Currently running'}
+              Awaiting response
             </p>
           </CardContent>
         </Card>
@@ -161,49 +161,25 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {userType === 'consultant' ? (
-              <>
-                <Button asChild className="h-auto p-4 flex-col space-y-2">
-                  <Link to="/dashboard/projects">
-                    <Briefcase className="h-6 w-6" />
-                    <span>Browse Projects</span>
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" className="h-auto p-4 flex-col space-y-2">
-                  <Link to="/dashboard/profile">
-                    <FileText className="h-6 w-6" />
-                    <span>Update Profile</span>
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" className="h-auto p-4 flex-col space-y-2">
-                  <Link to="/dashboard/messages">
-                    <MessageSquare className="h-6 w-6" />
-                    <span>View Messages</span>
-                  </Link>
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button asChild className="h-auto p-4 flex-col space-y-2">
-                  <Link to="/dashboard/projects/new">
-                    <FileText className="h-6 w-6" />
-                    <span>Create Project</span>
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" className="h-auto p-4 flex-col space-y-2">
-                  <Link to="/dashboard/projects">
-                    <Briefcase className="h-6 w-6" />
-                    <span>View Projects</span>
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" className="h-auto p-4 flex-col space-y-2">
-                  <Link to="/dashboard/profile">
-                    <FileText className="h-6 w-6" />
-                    <span>Company Profile</span>
-                  </Link>
-                </Button>
-              </>
-            )}
+            {/* Default to consultant view for now */}
+            <Button asChild className="h-auto p-4 flex-col space-y-2">
+              <Link to="/dashboard/projects">
+                <Briefcase className="h-6 w-6" />
+                <span>Browse Projects</span>
+              </Link>
+            </Button>
+            <Button asChild variant="outline" className="h-auto p-4 flex-col space-y-2">
+              <Link to="/dashboard/profile">
+                <FileText className="h-6 w-6" />
+                <span>Update Profile</span>
+              </Link>
+            </Button>
+            <Button asChild variant="outline" className="h-auto p-4 flex-col space-y-2">
+              <Link to="/dashboard/messages">
+                <MessageSquare className="h-6 w-6" />
+                <span>View Messages</span>
+              </Link>
+            </Button>
           </div>
         </CardContent>
       </Card>
