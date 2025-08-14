@@ -41,12 +41,12 @@ export default function OnboardingStep1() {
 
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-6 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold text-[#012E46] mb-4">
+        <div className="mb-12">
+          <h1 className="text-3xl font-bold text-[#012E46] mb-4 text-center">
             Choose Your Preferred Method to Input Your Information
           </h1>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Importing your data from LinkedIn is quick and efficient. You will be able to review all your details before adding it to your GigExecs profile.
+          <p className="text-lg text-[#012E46] max-w-2xl mx-auto text-left">
+            The fastest method is to import your data from LinkedIn. You will be able to review all your details before adding it to your GigExecs profile.
           </p>
         </div>
 
@@ -56,8 +56,8 @@ export default function OnboardingStep1() {
           <Card 
             className={`cursor-pointer transition-all hover:shadow-lg ${
               selectedMethod === 'linkedin' 
-                ? 'ring-2 ring-yellow-500 border-yellow-500' 
-                : 'border-slate-200 hover:border-slate-300'
+                ? 'ring-2 ring-yellow-500 border-green-700' 
+                : 'border-green-700 hover:border-green-600'
             }`}
             onClick={() => setSelectedMethod('linkedin')}
           >
@@ -73,7 +73,7 @@ export default function OnboardingStep1() {
                   <h3 className="text-xl font-semibold text-[#012E46] mb-1">
                     Import from LinkedIn
                   </h3>
-                  <p className="text-slate-600">
+                  <p className="text-[#012E46]">
                     Quick profile setup using your existing LinkedIn data
                   </p>
                 </div>
@@ -85,8 +85,8 @@ export default function OnboardingStep1() {
           <Card 
             className={`cursor-pointer transition-all hover:shadow-lg ${
               selectedMethod === 'manual' 
-                ? 'ring-2 ring-yellow-500 border-yellow-500' 
-                : 'border-slate-200 hover:border-slate-300'
+                ? 'ring-2 ring-yellow-500 border-green-700' 
+                : 'border-green-700 hover:border-green-600'
             }`}
             onClick={() => setSelectedMethod('manual')}
           >
@@ -102,7 +102,7 @@ export default function OnboardingStep1() {
                   <h3 className="text-xl font-semibold text-[#012E46] mb-1">
                     Input information manually
                   </h3>
-                  <p className="text-slate-600">
+                  <p className="text-[#012E46]">
                     Build your profile step by step with custom information
                   </p>
                 </div>
