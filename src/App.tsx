@@ -33,6 +33,7 @@ import AuthCallback from "./app/auth/callback";
 import DashboardLayout from "./app/dashboard/layout";
 import DashboardPage from "./app/dashboard";
 import OnboardingStep1 from "./app/onboarding/step1";
+import OnboardingStep2 from "./app/onboarding/step2";
 
 const queryClient = new QueryClient();
 
@@ -80,6 +81,7 @@ const App = () => (
             
             {/* Onboarding Routes */}
             <Route path="/onboarding/step1" element={<OnboardingStep1 />} />
+            <Route path="/onboarding/step2" element={<OnboardingStep2 />} />
             
             {/* Maintenance Page */}
             <Route path="/maintenance" element={<Maintenance />} />

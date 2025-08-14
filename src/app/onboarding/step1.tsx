@@ -11,10 +11,10 @@ export default function OnboardingStep1() {
   const handleContinue = () => {
     if (selectedMethod === 'linkedin') {
       // TODO: Implement LinkedIn import flow
-      navigate('/onboarding/step2-linkedin');
+      navigate('/onboarding/step2');
     } else if (selectedMethod === 'manual') {
       // TODO: Implement manual input flow
-      navigate('/onboarding/step2-manual');
+      navigate('/onboarding/step2');
     }
   };
 
