@@ -41,17 +41,44 @@ export default function OnboardingStep1() {
 
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-3xl font-bold text-[#012E46] mb-4 text-center">
-            Choose Your Preferred Method to Input Your Information
-          </h1>
-          <p className="text-lg text-[#012E46] max-w-2xl mx-auto text-left">
-            The fastest method is to import your data from LinkedIn. You will be able to review all your details before adding it to your GigExecs profile.
-          </p>
+        {/* Stepped Process Indicator */}
+        <div className="mb-8">
+          <div className="flex items-center justify-center space-x-2">
+            {[1, 2, 3, 4, 5, 6].map((step) => (
+              <div key={step} className="flex items-center">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                  step === 1 
+                    ? 'bg-[#012E46] text-white' 
+                    : 'bg-slate-200 text-slate-600'
+                }`}>
+                  {step}
+                </div>
+                {step < 6 && (
+                  <div className={`w-12 h-1 mx-2 ${
+                    step === 1 ? 'bg-[#012E46]' : 'bg-slate-200'
+                  }`}></div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Selection Options */}
-        <div className="space-y-6 max-w-2xl mx-auto">
+        {/* Main Card */}
+        <div className="max-w-2xl mx-auto">
+          <Card className="bg-white shadow-lg border-0">
+            <CardContent className="p-8">
+              {/* Title and Description */}
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-[#012E46] mb-4 text-center">
+                  Choose Your Preferred Method to Input Your Information
+                </h1>
+                <p className="text-lg text-[#012E46] text-center">
+                  Importing your data from LinkedIn is quick and efficient. You will be able to review all your details before adding it to your GigExecs profile.
+                </p>
+              </div>
+
+              {/* Selection Options */}
+              <div className="space-y-6 mb-8">
           {/* LinkedIn Import Option */}
           <Card 
             className={`cursor-pointer transition-all hover:shadow-lg ${
@@ -111,15 +138,18 @@ export default function OnboardingStep1() {
           </Card>
         </div>
 
-        {/* Continue Button */}
-        <div className="text-center mt-12">
-          <Button
-            onClick={handleContinue}
-            disabled={!selectedMethod}
-            className="px-8 py-3 text-lg bg-gradient-to-r from-[#012E46] to-[#4885AA] hover:from-[#011E36] hover:to-[#3A7A9A] text-white border-0"
-          >
-            Continue
-          </Button>
+              {/* Continue Button */}
+              <div className="text-center">
+                <Button
+                  onClick={handleContinue}
+                  disabled={!selectedMethod}
+                  className="px-8 py-3 text-lg bg-gradient-to-r from-[#012E46] to-[#4885AA] hover:from-[#011E36] hover:to-[#3A7A9A] text-white border-0"
+                >
+                  Continue
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
