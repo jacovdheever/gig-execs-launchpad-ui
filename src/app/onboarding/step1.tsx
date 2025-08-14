@@ -26,8 +26,8 @@ export default function OnboardingStep1() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
       <div className="bg-white border-b border-slate-200">
-        <div className="max-w-4xl mx-auto px-6 py-4">
-          <div className="flex items-center gap-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             <button
               onClick={handleBack}
               className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
@@ -40,13 +40,13 @@ export default function OnboardingStep1() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-6 py-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Stepped Process Indicator */}
-        <div className="mb-8">
-          <div className="flex items-center justify-center space-x-2">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex items-center justify-center space-x-1 sm:space-x-2 overflow-x-auto px-2">
             {[1, 2, 3, 4, 5, 6].map((step) => (
-              <div key={step} className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+              <div key={step} className="flex items-center flex-shrink-0">
+                <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-semibold ${
                   step === 1 
                     ? 'bg-[#012E46] text-white' 
                     : 'bg-slate-200 text-slate-600'
@@ -54,7 +54,7 @@ export default function OnboardingStep1() {
                   {step}
                 </div>
                 {step < 6 && (
-                  <div className={`w-12 h-1 mx-2 ${
+                  <div className={`w-8 sm:w-12 h-1 mx-1 sm:mx-2 ${
                     step === 1 ? 'bg-[#012E46]' : 'bg-slate-200'
                   }`}></div>
                 )}
@@ -64,21 +64,21 @@ export default function OnboardingStep1() {
         </div>
 
         {/* Main Card */}
-        <div className="max-w-2xl mx-auto">
+        <div className="w-full max-w-2xl mx-auto px-2 sm:px-0">
           <Card className="bg-white shadow-lg border-0">
-            <CardContent className="p-8">
+            <CardContent className="p-4 sm:p-6 lg:p-8">
               {/* Title and Description */}
-              <div className="mb-8">
-                <h1 className="text-3xl font-bold text-[#012E46] mb-4 text-center">
+              <div className="mb-6 sm:mb-8">
+                <h1 className="text-2xl sm:text-3xl font-bold text-[#012E46] mb-3 sm:mb-4 text-center">
                   Choose Your Preferred Method to Input Your Information
                 </h1>
-                <p className="text-lg text-[#012E46] text-center">
+                <p className="text-base sm:text-lg text-[#012E46] text-center">
                   Importing your data from LinkedIn is quick and efficient. You will be able to review all your details before adding it to your GigExecs profile.
                 </p>
               </div>
 
               {/* Selection Options */}
-              <div className="space-y-6 mb-8">
+              <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
           {/* LinkedIn Import Option */}
           <Card 
             className={`cursor-pointer transition-all hover:shadow-lg ${
@@ -88,11 +88,11 @@ export default function OnboardingStep1() {
             }`}
             onClick={() => setSelectedMethod('linkedin')}
           >
-            <CardContent className="p-6">
-              <div className="flex items-center gap-4">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex items-center gap-3 sm:gap-4">
                 {/* LinkedIn Icon */}
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Linkedin className="w-8 h-8 text-white" />
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Linkedin className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                 </div>
                 
                 {/* Text Content */}
@@ -117,11 +117,11 @@ export default function OnboardingStep1() {
             }`}
             onClick={() => setSelectedMethod('manual')}
           >
-            <CardContent className="p-6">
-              <div className="flex items-center gap-4">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex items-center gap-3 sm:gap-4">
                 {/* Manual Input Icon */}
-                <div className="w-16 h-16 bg-[#012E46] rounded-full flex items-center justify-center flex-shrink-0">
-                  <User className="w-8 h-8 text-white" />
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-[#012E46] rounded-full flex items-center justify-center flex-shrink-0">
+                  <User className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                 </div>
                 
                 {/* Text Content */}
