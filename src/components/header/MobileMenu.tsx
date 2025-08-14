@@ -4,20 +4,13 @@ import { SearchBar } from './SearchBar';
 import type { CurrentUser } from '@/lib/getCurrentUser';
 import { Link } from 'react-router-dom';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { UserProfileDropdown } from './UserProfileDropdown';
 
 type Props = { user: CurrentUser | null };
 
 export function MobileMenu({ user }: Props) {
   const [open, setOpen] = useState(false);
   const roleLabel = user?.role === 'consultant' ? 'Professional Account' : 'Client Account';
-
-  // Get initials for avatar placeholder
-  const getInitials = () => {
-    if (!user) return 'U';
-    const first = user.firstName.charAt(0).toUpperCase();
-    const last = user.lastName.charAt(0).toUpperCase();
-    return `${first}${last}`;
-  };
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -28,24 +21,14 @@ export function MobileMenu({ user }: Props) {
       </SheetTrigger>
       
       <SheetContent side="left" className="w-[85%] max-w-[360px] bg-[#0f3441] text-white p-6 border-0">
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-3">
-          {user?.avatarUrl ? (
-            <img 
-              src={user.avatarUrl} 
-              alt={`${user.firstName} ${user.lastName} profile`}
-              className="w-12 h-12 rounded-full object-cover"
-            />
-          ) : (
-            <div className="w-12 h-12 rounded-full bg-slate-300 flex items-center justify-center text-sm font-semibold text-slate-700">
-              {getInitials()}
-            </div>
-          )}
-          <div className="-space-y-1">
-            <div className="text-[18px]">{user ? `${user.firstName} ${user.lastName}` : ''}</div>
-            <div className="text-xs font-semibold tracking-[0.25em] text-yellow-400">{roleLabel}</div>
-          </div>
-        </div>
+                        {/* Header */}
+                <div className="flex items-center gap-3 mb-3">
+                  <UserProfileDropdown user={user} />
+                  <div className="-space-y-1">
+                    <div className="text-[18px]">{user ? `${user.firstName} ${user.lastName}` : ''}</div>
+                    <div className="text-xs font-semibold tracking-[0.25em] text-yellow-400">{roleLabel}</div>
+                  </div>
+                </div>
         <div className="h-px bg-white/30 my-4" />
 
         {/* Search */}

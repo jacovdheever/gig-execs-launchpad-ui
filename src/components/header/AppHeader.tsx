@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser';
 import { SearchBar } from './SearchBar';
-import { UserBadge } from './UserBadge';
+import { UserProfileDropdown } from './UserProfileDropdown';
 import { NavTabs } from './NavTabs';
 import { MobileMenu } from './MobileMenu';
 import { Bell, MessageSquare } from 'lucide-react';
@@ -77,7 +77,7 @@ export function AppHeader() {
             <MessageSquare className="w-6 h-6" />
           </button>
           <div className="hidden md:block">
-            <UserBadge user={user} />
+            <UserProfileDropdown user={user} />
           </div>
         </div>
       </div>
