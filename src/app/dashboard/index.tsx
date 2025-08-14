@@ -11,14 +11,33 @@ import {
   AlertCircle
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser'
 
 export default function DashboardPage() {
+  const [user, setUser] = useState<CurrentUser | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getCurrentUser()
+      .then((userData) => {
+        console.log('Dashboard: User data loaded:', userData);
+        setUser(userData);
+      })
+      .catch((err) => {
+        console.error('Dashboard: Error loading user:', err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
   // Simple test data without Supabase dependency
   const stats = {
     totalProjects: 12,
     activeProjects: 3,
     completedProjects: 8,
-    pendingBids: 5,
+    pendingBids: user?.role === 'consultant' ? 5 : 0,
     unreadMessages: 2,
     profileCompleteness: 85
   }
@@ -73,15 +92,31 @@ export default function DashboardPage() {
     }
   }
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-slate-600">Loading dashboard...</div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-red-600">Error: User not found</div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
       <div className="bg-gradient-to-r from-[#012E46] to-[#4885AA] rounded-lg p-6 text-white">
         <h1 className="text-2xl font-bold mb-2">
-          Welcome back, Consultant!
+          Welcome back, {user.role === 'consultant' ? 'Consultant' : 'Client'}!
         </h1>
         <p className="text-slate-100">
-          Here's what's happening with your consulting work today.
+          Here's what's happening with your {user.role === 'consultant' ? 'consulting work' : 'projects'} today.
         </p>
       </div>
 
@@ -103,16 +138,16 @@ export default function DashboardPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Pending Bids
+              {user.role === 'consultant' ? 'Pending Bids' : 'Active Projects'}
             </CardTitle>
             <FileText className="h-4 w-4 text-slate-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {stats.pendingBids}
+              {user.role === 'consultant' ? stats.pendingBids : stats.activeProjects}
             </div>
             <p className="text-xs text-slate-600">
-              Awaiting response
+              {user.role === 'consultant' ? 'Awaiting response' : 'Currently running'}
             </p>
           </CardContent>
         </Card>
@@ -161,25 +196,49 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Default to consultant view for now */}
-            <Button asChild className="h-auto p-4 flex-col space-y-2">
-              <Link to="/dashboard/projects">
-                <Briefcase className="h-6 w-6" />
-                <span>Browse Projects</span>
-              </Link>
-            </Button>
-            <Button asChild variant="outline" className="h-auto p-4 flex-col space-y-2">
-              <Link to="/dashboard/profile">
-                <FileText className="h-6 w-6" />
-                <span>Update Profile</span>
-              </Link>
-            </Button>
-            <Button asChild variant="outline" className="h-auto p-4 flex-col space-y-2">
-              <Link to="/dashboard/messages">
-                <MessageSquare className="h-6 w-6" />
-                <span>View Messages</span>
-              </Link>
-            </Button>
+            {user.role === 'consultant' ? (
+              <>
+                <Button asChild className="h-auto p-4 flex-col space-y-2">
+                  <Link to="/dashboard/projects">
+                    <Briefcase className="h-6 w-6" />
+                    <span>Browse Projects</span>
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="h-auto p-4 flex-col space-y-2">
+                  <Link to="/dashboard/profile">
+                    <FileText className="h-6 w-6" />
+                    <span>Update Profile</span>
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="h-auto p-4 flex-col space-y-2">
+                  <Link to="/dashboard/messages">
+                    <MessageSquare className="h-6 w-6" />
+                    <span>View Messages</span>
+                  </Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button asChild className="h-auto p-4 flex-col space-y-2">
+                  <Link to="/dashboard/projects/new">
+                    <FileText className="h-6 w-6" />
+                    <span>Create Project</span>
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="h-auto p-4 flex-col space-y-2">
+                  <Link to="/dashboard/projects">
+                    <Briefcase className="h-6 w-6" />
+                    <span>View Projects</span>
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="h-auto p-4 flex-col space-y-2">
+                  <Link to="/dashboard/profile">
+                    <FileText className="h-6 w-6" />
+                    <span>Company Profile</span>
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
         </CardContent>
       </Card>
