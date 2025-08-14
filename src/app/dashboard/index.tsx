@@ -165,7 +165,10 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card 
+          className="cursor-pointer hover:shadow-md transition-shadow" 
+          onClick={() => navigate('/onboarding/step1')}
+        >
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Profile Complete</CardTitle>
             <div className="w-4 h-4 rounded-full bg-slate-200 flex items-center justify-center">
