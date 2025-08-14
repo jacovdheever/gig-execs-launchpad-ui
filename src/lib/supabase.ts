@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from './database.types'
 
-// Environment variables should now be clean
+// Environment variables should now be clean and properly formatted
 
 // Try multiple ways to get environment variables
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL
