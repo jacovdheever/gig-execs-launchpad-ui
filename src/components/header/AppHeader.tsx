@@ -9,10 +9,45 @@ import { Link } from 'react-router-dom';
 
 export function AppHeader() {
   const [user, setUser] = useState<CurrentUser | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
   useEffect(() => { 
-    getCurrentUser().then(setUser); 
+    setLoading(true);
+    getCurrentUser()
+      .then((userData) => {
+        console.log('AppHeader: User data loaded:', userData);
+        setUser(userData);
+        setError(null);
+      })
+      .catch((err) => {
+        console.error('AppHeader: Error loading user:', err);
+        setError(err.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
+
+  if (loading) {
+    return (
+      <header className="w-full bg-white border-b border-yellow-500">
+        <div className="flex items-center justify-center px-6 py-3 md:px-20 md:py-4">
+          <div className="text-slate-600">Loading...</div>
+        </div>
+      </header>
+    );
+  }
+
+  if (error) {
+    return (
+      <header className="w-full bg-white border-b border-yellow-500">
+        <div className="flex items-center justify-center px-6 py-3 md:px-20 md:py-4">
+          <div className="text-red-600">Error: {error}</div>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header className="w-full bg-white border-b border-yellow-500">
