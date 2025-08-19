@@ -23,11 +23,12 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
     // Try to get user data from the public.users table
     const { data, error } = await supabase
       .from('users')
-      .select('id, first_name, last_name, user_type')
+      .select('id, first_name, last_name, user_type, email')
       .eq('id', user.id)
       .single();
     
     if (error || !data) {
+      console.warn('User not found in users table, falling back to auth metadata');
       // If no user in public.users table, try to get from user_metadata
       const userMetadata = user.user_metadata;
       return {
@@ -44,10 +45,10 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
       firstName: data.first_name ?? user.email?.split('@')[0] ?? 'User',
       lastName: data.last_name ?? '',
       role: (data.user_type as UserRole) ?? 'consultant',
-      email: user.email ?? undefined,
+      email: data.email ?? user.email ?? undefined,
     };
   } catch (error) {
-    console.warn('Error getting current user:', error);
+    console.error('Error getting current user:', error);
     return null;
   }
 }

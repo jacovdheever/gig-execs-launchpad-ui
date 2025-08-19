@@ -98,7 +98,27 @@ export default function RegisterPage() {
         return
       }
 
-      // Step 2: Create profile record based on user type
+      // Step 2: Create user record in users table
+      const { error: userError } = await supabase
+        .from('users')
+        .insert([{
+          id: authData.user.id,
+          email: formData.email,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          user_type: formData.userType,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        }])
+
+      if (userError) {
+        console.error('User creation error:', userError)
+        // Note: We don't want to fail the entire registration if user record creation fails
+        // The user can still log in and complete their profile later
+        console.warn('User record creation failed, but user account was created')
+      }
+
+      // Step 3: Create profile record based on user type
       const profileData = {
         user_id: authData.user.id,
         created_at: new Date().toISOString(),

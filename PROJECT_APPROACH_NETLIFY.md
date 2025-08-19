@@ -220,6 +220,7 @@ await fetch('/.netlify/functions/sendEmail', {
 ### 🎯 **Next Implementation Priority**
 - **Frontend Auth Components**: ✅ **COMPLETED** - Login/register forms working
 - **Role-based Dashboards**: ✅ **COMPLETED** - Basic dashboard with header rendering
+- **User Data Storage**: ✅ **FIXED** - Users table already had correct structure, registration flow updated to use it
 - **Onboarding Wizards**: Leverage existing profile data
 - **Project Management**: Build on existing projects table
 - **Bidding System**: Implement bid creation and management
@@ -252,6 +253,6 @@ await fetch('/.netlify/functions/sendEmail', {
 - `src/app/auth/register.tsx` - Working registration form
 
 **⚠️ IMPORTANT NOTES:**
-- Dashboard currently defaults to consultant view
-- User role detection needs to be implemented
+- Dashboard now properly detects user roles from the users table
+- User data is stored consistently in both users table and profile tables
 - This is a working foundation to build upon

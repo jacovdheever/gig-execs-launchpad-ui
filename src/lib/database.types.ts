@@ -6,18 +6,27 @@ export interface Database {
         Row: {
           id: string
           email: string
+          first_name: string | null
+          last_name: string | null
+          user_type: string
           created_at: string
           updated_at: string
         }
         Insert: {
           id?: string
           email: string
+          first_name?: string | null
+          last_name?: string | null
+          user_type: string
           created_at?: string
           updated_at?: string
         }
         Update: {
           id?: string
           email?: string
+          first_name?: string | null
+          last_name?: string | null
+          user_type?: string
           created_at?: string
           updated_at?: string
         }
