@@ -99,7 +99,15 @@ export default function RegisterPage() {
       }
 
       // Step 2: Create user record in users table
-      const { error: userError } = await supabase
+      console.log('Attempting to insert user into users table:', {
+        id: authData.user.id,
+        email: formData.email,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        user_type: formData.userType
+      })
+      
+      const { data: userData, error: userError } = await supabase
         .from('users')
         .insert([{
           id: authData.user.id,
@@ -110,12 +118,15 @@ export default function RegisterPage() {
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
         }])
+        .select()
+      
+      console.log('Users table insert result:', { userData, userError })
 
       if (userError) {
         console.error('User creation error:', userError)
-        // Note: We don't want to fail the entire registration if user record creation fails
-        // The user can still log in and complete their profile later
-        console.warn('User record creation failed, but user account was created')
+        // Show the error to the user so they know something went wrong
+        setErrors({ general: `User profile creation failed: ${userError.message}. Please contact support.` })
+        return
       }
 
       // Step 3: Create profile record based on user type
@@ -129,26 +140,33 @@ export default function RegisterPage() {
 
       if (formData.userType === 'consultant') {
         // Create consultant profile
-        const { error } = await supabase
+        console.log('Creating consultant profile:', profileData)
+        const { data: profileDataResult, error } = await supabase
           .from('consultant_profiles')
           .insert([profileData])
+          .select()
         profileError = error
+        console.log('Consultant profile creation result:', { profileDataResult, error })
       } else {
         // Create client profile
-        const { error } = await supabase
+        const clientProfileData = {
+          ...profileData,
+          company_name: formData.companyName
+        }
+        console.log('Creating client profile:', clientProfileData)
+        const { data: profileDataResult, error } = await supabase
           .from('client_profiles')
-          .insert([{
-            ...profileData,
-            company_name: formData.companyName
-          }])
+          .insert([clientProfileData])
+          .select()
         profileError = error
+        console.log('Client profile creation result:', { profileDataResult, error })
       }
 
       if (profileError) {
         console.error('Profile creation error:', profileError)
-        // Note: We don't want to fail the entire registration if profile creation fails
-        // The user can still log in and complete their profile later
-        console.warn('Profile creation failed, but user account was created')
+        // Show the error to the user so they know something went wrong
+        setErrors({ general: `Profile creation failed: ${profileError.message}. Please contact support.` })
+        return
       }
 
       // Step 3: Success! Show success state
