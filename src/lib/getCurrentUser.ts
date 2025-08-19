@@ -21,16 +21,21 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
     }
 
     // Try to get user data from the public.users table
+    console.log('getCurrentUser: Attempting to query users table for user ID:', user.id);
+    
     const { data, error } = await supabase
       .from('users')
       .select('id, first_name, last_name, user_type, email')
       .eq('id', user.id)
       .single();
     
+    console.log('getCurrentUser: Query result:', { data, error });
+    
     if (error || !data) {
-      console.warn('User not found in users table, falling back to auth metadata');
+      console.warn('User not found in users table, falling back to auth metadata. Error:', error);
       // If no user in public.users table, try to get from user_metadata
       const userMetadata = user.user_metadata;
+      console.log('getCurrentUser: Using auth metadata:', userMetadata);
       return {
         id: user.id,
         firstName: userMetadata?.first_name || user.email?.split('@')[0] || 'User',
