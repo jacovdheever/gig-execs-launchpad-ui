@@ -115,6 +115,12 @@ export default function OnboardingStep2() {
 
       if (userError) {
         console.error('Error updating user:', userError);
+        console.log('User update error details:', {
+          message: userError.message,
+          code: userError.code,
+          details: userError.details,
+          hint: userError.hint
+        });
         return;
       }
 
@@ -130,6 +136,12 @@ export default function OnboardingStep2() {
 
       if (profileError) {
         console.error('Error updating consultant profile:', profileError);
+        console.log('Profile update error details:', {
+          message: profileError.message,
+          code: profileError.code,
+          details: profileError.details,
+          hint: profileError.hint
+        });
         return;
       }
 
