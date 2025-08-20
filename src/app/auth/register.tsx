@@ -125,6 +125,11 @@ export default function RegisterPage() {
         details: userError?.details,
         hint: userError?.hint
       })
+      
+      // Log the actual values, not just the objects
+      console.log('User insert success?', !userError)
+      console.log('User data inserted:', userData)
+      console.log('User error object:', userError)
 
       if (userError) {
         console.error('User creation error:', userError)
@@ -151,6 +156,9 @@ export default function RegisterPage() {
           .select()
         profileError = error
         console.log('Consultant profile creation result:', { profileDataResult, error })
+        console.log('Consultant profile insert success?', !error)
+        console.log('Consultant profile data inserted:', profileDataResult)
+        console.log('Consultant profile error object:', error)
       } else {
         // Create client profile
         const clientProfileData = {
@@ -164,6 +172,9 @@ export default function RegisterPage() {
           .select()
         profileError = error
         console.log('Client profile creation result:', { profileDataResult, error })
+        console.log('Client profile insert success?', !error)
+        console.log('Client profile data inserted:', profileDataResult)
+        console.log('Client profile error object:', error)
       }
 
       if (profileError) {
