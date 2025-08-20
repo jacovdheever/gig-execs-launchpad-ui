@@ -121,6 +121,12 @@ export default function RegisterPage() {
         .select()
       
       console.log('Users table insert result:', { userData, userError })
+      console.log('User error details:', {
+        message: userError?.message,
+        code: userError?.code,
+        details: userError?.details,
+        hint: userError?.hint
+      })
 
       if (userError) {
         console.error('User creation error:', userError)
