@@ -37,6 +37,8 @@ import OnboardingStep2 from "./app/onboarding/step2";
 import OnboardingStep3 from "./app/onboarding/step3";
 import OnboardingStep4 from "./app/onboarding/step4";
 import OnboardingStep5 from "./app/onboarding/step5";
+import OnboardingStep6 from "./app/onboarding/step6"; // Added
+import ReviewProfile from "./app/onboarding/review"; // Added
 
 const queryClient = new QueryClient();
 
@@ -88,6 +90,8 @@ const App = () => (
             <Route path="/onboarding/step3" element={<OnboardingStep3 />} />
             <Route path="/onboarding/step4" element={<OnboardingStep4 />} />
             <Route path="/onboarding/step5" element={<OnboardingStep5 />} />
+            <Route path="/onboarding/step6" element={<OnboardingStep6 />} /> {/* Added */}
+            <Route path="/onboarding/review" element={<ReviewProfile />} /> {/* Added */}
             
             {/* Maintenance Page */}
             <Route path="/maintenance" element={<Maintenance />} />
