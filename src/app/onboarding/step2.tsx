@@ -61,11 +61,34 @@ export default function OnboardingStep2() {
       try {
         const user = await getCurrentUser();
         if (user) {
+          // Load basic user data
           setFormData(prev => ({
             ...prev,
             firstName: user.firstName || '',
             lastName: user.lastName || ''
           }));
+
+          // Load existing profile data from consultant_profiles table
+          const { data: profileData } = await supabase
+            .from('consultant_profiles')
+            .select('job_title, bio, address1, country')
+            .eq('user_id', user.id)
+            .single();
+
+          console.log('Step 2: Loaded profile data:', profileData);
+
+          if (profileData) {
+            setFormData(prev => ({
+              ...prev,
+              headline: profileData.job_title || '',
+              bio: profileData.bio || '',
+              city: profileData.address1 || '',
+              country: profileData.country || ''
+            }));
+            console.log('Step 2: Updated form data with profile data');
+          } else {
+            console.log('Step 2: No existing profile data found');
+          }
         }
       } catch (error) {
         console.error('Error loading user data:', error);
