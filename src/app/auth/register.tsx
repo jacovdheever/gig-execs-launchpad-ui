@@ -189,10 +189,10 @@ export default function RegisterPage() {
       
       setIsSuccess(true)
       
-      // Redirect to dashboard after 2 seconds
+      // Redirect to login page after 3 seconds so they can authenticate
       setTimeout(() => {
-        navigate('/dashboard', { replace: true })
-      }, 2000)
+        navigate('/login', { replace: true })
+      }, 3000)
       
     } catch (err) {
       console.error('Registration error:', err)
@@ -224,7 +224,10 @@ export default function RegisterPage() {
                 Please check your inbox and click the verification link.
               </p>
               <p className="text-sm text-slate-500">
-                Redirecting to dashboard in a few seconds...
+                After verifying your email, you'll be redirected to login to access your account.
+              </p>
+              <p className="text-sm text-slate-500">
+                Redirecting to login page in a few seconds...
               </p>
             </CardContent>
           </Card>
