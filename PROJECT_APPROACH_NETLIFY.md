@@ -203,7 +203,449 @@ await fetch('/.netlify/functions/sendEmail', {
 
 ---
 
-## 10) Current Progress Status
+## 10) Database Schema Reference
+
+### ⚠️ **CRITICAL: Always Check Database Schema Before Database Operations**
+
+**BEFORE making any database-related changes, ALWAYS:**
+1. Check the database schema in this section
+2. Verify table names and column names exist
+3. Do NOT assume fields exist - reference the actual schema below
+4. If unsure, ask user to re-export current schema
+
+### Current Database Structure (Exported from Supabase)
+
+#### Core User Tables
+- **users**: Basic identity and profile data
+- **consultant_profiles**: Detailed consultant information  
+- **client_profiles**: Company and business information
+
+#### Profile & Skills Tables
+- **user_skills**: User-skill relationships
+- **user_languages**: User-language relationships
+- **skills**: Available skills catalog
+- **languages**: Available languages catalog
+
+#### Professional Data Tables
+- **education**: User education history
+- **certifications**: User certifications
+- **work_experience**: User work history
+- **portfolio**: User portfolio projects
+- **reference_contacts**: User references
+
+#### Project & Business Tables
+- **projects**: Project listings
+- **bids**: Consultant bids on projects
+- **contracts**: Project contracts
+- **payments**: Payment records
+- **teams**: Team structures
+
+#### Communication Tables
+- **conversations**: Chat conversations
+- **messages**: Individual messages
+- **notifications**: User notifications
+
+#### Complete Schema DDL:
+
+```sql
+-- Users table (Basic identity and profile data)
+CREATE TABLE users (
+  id uuid NOT NULL, 
+  email text NOT NULL, 
+  first_name text NOT NULL, 
+  last_name text NOT NULL, 
+  user_type text NOT NULL, 
+  status text DEFAULT 'registered'::text, 
+  t_and_c_accepted boolean DEFAULT false, 
+  vetting_status text DEFAULT 'pending'::text, 
+  verification_reason text, 
+  profile_complete_pct integer DEFAULT 0, 
+  last_login timestamp with time zone, 
+  created_at timestamp with time zone DEFAULT now(), 
+  updated_at timestamp with time zone DEFAULT now(), 
+  deleted_at timestamp with time zone, 
+  profile_photo_url text, 
+  headline text, 
+  profile_status text
+);
+
+-- Consultant profiles table (Detailed consultant information)
+CREATE TABLE consultant_profiles (
+  user_id uuid NOT NULL, 
+  job_title text, 
+  bio text, 
+  address1 text, 
+  address2 text, 
+  address3 text, 
+  country text, 
+  postal_code text, 
+  phone text, 
+  linkedin_url text, 
+  id_doc_url text, 
+  video_intro_url text, 
+  stripe_account_id text, 
+  hourly_rate_min numeric, 
+  hourly_rate_max numeric, 
+  availability jsonb, 
+  created_at timestamp with time zone DEFAULT now(), 
+  updated_at timestamp with time zone DEFAULT now(), 
+  country_id integer, 
+  industries ARRAY
+);
+
+-- Client profiles table (Company and business information)
+CREATE TABLE client_profiles (
+  user_id uuid NOT NULL, 
+  company_name text NOT NULL, 
+  website text, 
+  description text, 
+  duns_number text, 
+  organisation_type text, 
+  industry text, 
+  logo_url text, 
+  address1 text, 
+  address2 text, 
+  address3 text, 
+  country text, 
+  postal_code text, 
+  phone text, 
+  linkedin_url text, 
+  stripe_customer_id text, 
+  created_at timestamp with time zone DEFAULT now(), 
+  updated_at timestamp with time zone DEFAULT now(), 
+  country_id integer
+);
+
+-- User skills table (User-skill relationships)
+CREATE TABLE user_skills (
+  user_id uuid NOT NULL, 
+  skill_id integer NOT NULL
+);
+
+-- User languages table (User-language relationships)
+CREATE TABLE user_languages (
+  user_id uuid NOT NULL, 
+  language_id integer NOT NULL, 
+  proficiency text NOT NULL
+);
+
+-- Skills table (Available skills catalog)
+CREATE TABLE skills (
+  id integer NOT NULL DEFAULT nextval('skills_id_seq'::regclass), 
+  name text NOT NULL
+);
+
+-- Languages table (Available languages catalog)
+CREATE TABLE languages (
+  id integer NOT NULL DEFAULT nextval('languages_id_seq'::regclass), 
+  name text NOT NULL
+);
+
+-- Education table (User education history)
+CREATE TABLE education (
+  id integer NOT NULL DEFAULT nextval('education_id_seq'::regclass), 
+  user_id uuid, 
+  institution_name text NOT NULL, 
+  degree_level text NOT NULL, 
+  grade text, 
+  start_date date, 
+  end_date date, 
+  description text, 
+  file_url text
+);
+
+-- Certifications table (User certifications)
+CREATE TABLE certifications (
+  id integer NOT NULL DEFAULT nextval('certifications_id_seq'::regclass), 
+  user_id uuid, 
+  name text NOT NULL, 
+  awarding_body text NOT NULL, 
+  issue_date date, 
+  expiry_date date, 
+  credential_id text, 
+  credential_url text, 
+  file_url text
+);
+
+-- Work experience table (User work history)
+CREATE TABLE work_experience (
+  id integer NOT NULL DEFAULT nextval('work_experience_id_seq'::regclass), 
+  user_id uuid NOT NULL, 
+  company character varying(255) NOT NULL, 
+  job_title character varying(255) NOT NULL, 
+  description text, 
+  city character varying(255), 
+  country_id integer, 
+  start_date_month character varying(50), 
+  start_date_year integer, 
+  end_date_month character varying(50), 
+  end_date_year integer, 
+  currently_working boolean DEFAULT false, 
+  created_at timestamp with time zone DEFAULT now(), 
+  updated_at timestamp with time zone DEFAULT now()
+);
+
+-- Portfolio table (User portfolio projects)
+CREATE TABLE portfolio (
+  id integer NOT NULL DEFAULT nextval('portfolio_id_seq'::regclass), 
+  user_id uuid, 
+  project_name text NOT NULL, 
+  project_role text, 
+  description text, 
+  start_date date, 
+  completed_date date, 
+  currently_open boolean DEFAULT false, 
+  problem_video_url text, 
+  problem_files jsonb, 
+  solution_video_url text, 
+  solution_files jsonb, 
+  skills jsonb, 
+  portfolio_files ARRAY
+);
+
+-- Reference contacts table (User references)
+CREATE TABLE reference_contacts (
+  id integer NOT NULL DEFAULT nextval('reference_contacts_id_seq'::regclass), 
+  user_id uuid, 
+  first_name text NOT NULL, 
+  last_name text NOT NULL, 
+  email text NOT NULL, 
+  phone text, 
+  company_name text, 
+  description text
+);
+
+-- Projects table (Project listings)
+CREATE TABLE projects (
+  id integer NOT NULL DEFAULT nextval('projects_id_seq'::regclass), 
+  creator_id uuid, 
+  type text NOT NULL, 
+  title text NOT NULL, 
+  description text, 
+  cover_photo_url text, 
+  skills_required jsonb, 
+  num_consultants integer DEFAULT 1, 
+  currency text, 
+  budget_min numeric, 
+  budget_max numeric, 
+  desired_amount_min numeric, 
+  desired_amount_max numeric, 
+  delivery_time_min integer, 
+  delivery_time_max integer, 
+  status text DEFAULT 'draft'::text, 
+  screening_questions jsonb, 
+  template_id integer, 
+  created_at timestamp with time zone DEFAULT now(), 
+  updated_at timestamp with time zone DEFAULT now(), 
+  deleted_at timestamp with time zone
+);
+
+-- Bids table (Consultant bids on projects)
+CREATE TABLE bids (
+  id integer NOT NULL DEFAULT nextval('bids_id_seq'::regclass), 
+  project_id integer, 
+  consultant_id uuid, 
+  amount numeric, 
+  currency text, 
+  status text DEFAULT 'pending'::text, 
+  created_at timestamp with time zone DEFAULT now(), 
+  bid_documents ARRAY
+);
+
+-- Contracts table (Project contracts)
+CREATE TABLE contracts (
+  id integer NOT NULL DEFAULT nextval('contracts_id_seq'::regclass), 
+  client_id uuid, 
+  consultant_id uuid, 
+  project_id integer, 
+  bid_id integer, 
+  status text DEFAULT 'active'::text, 
+  start_date date, 
+  end_date date, 
+  terms jsonb, 
+  payment_terms jsonb, 
+  created_at timestamp with time zone DEFAULT now(), 
+  updated_at timestamp with time zone DEFAULT now(), 
+  deleted_at timestamp with time zone
+);
+
+-- Payments table (Payment records)
+CREATE TABLE payments (
+  id integer NOT NULL DEFAULT nextval('payments_id_seq'::regclass), 
+  contract_id integer, 
+  amount numeric NOT NULL, 
+  status text DEFAULT 'pending'::text, 
+  stripe_payment_id text, 
+  created_at timestamp with time zone DEFAULT now()
+);
+
+-- Teams table (Team structures)
+CREATE TABLE teams (
+  id integer NOT NULL DEFAULT nextval('teams_id_seq'::regclass), 
+  name text NOT NULL, 
+  created_by uuid, 
+  created_at timestamp with time zone DEFAULT now()
+);
+
+-- Team members table (Team member relationships)
+CREATE TABLE team_members (
+  team_id integer NOT NULL, 
+  user_id uuid NOT NULL
+);
+
+-- Conversations table (Chat conversations)
+CREATE TABLE conversations (
+  id integer NOT NULL DEFAULT nextval('conversations_id_seq'::regclass), 
+  type text DEFAULT 'one_to_one'::text, 
+  subject text
+);
+
+-- Messages table (Individual messages)
+CREATE TABLE messages (
+  id integer NOT NULL DEFAULT nextval('messages_id_seq'::regclass), 
+  conversation_id integer, 
+  sender_id uuid, 
+  recipient_id uuid, 
+  content text, 
+  attachments jsonb, 
+  status text DEFAULT 'unread'::text, 
+  created_at timestamp with time zone DEFAULT now()
+);
+
+-- Notifications table (User notifications)
+CREATE TABLE notifications (
+  id integer NOT NULL DEFAULT nextval('notifications_id_seq'::regclass), 
+  user_id uuid, 
+  type text, 
+  content text, 
+  read boolean DEFAULT false, 
+  action_url text, 
+  created_at timestamp with time zone DEFAULT now(), 
+  updated_at timestamp with time zone DEFAULT now()
+);
+
+-- Project skills table (Project-skill relationships)
+CREATE TABLE project_skills (
+  project_id integer NOT NULL, 
+  skill_id integer NOT NULL
+);
+
+-- Project languages table (Project-language relationships)
+CREATE TABLE project_languages (
+  project_id integer NOT NULL, 
+  language_id integer NOT NULL
+);
+
+-- Countries table (Country reference data)
+CREATE TABLE countries (
+  id integer NOT NULL DEFAULT nextval('countries_id_seq'::regclass), 
+  name character varying(255) NOT NULL, 
+  created_at timestamp with time zone DEFAULT now(), 
+  updated_at timestamp with time zone DEFAULT now()
+);
+
+-- Articles table (Content articles)
+CREATE TABLE articles (
+  id integer NOT NULL DEFAULT nextval('articles_id_seq'::regclass), 
+  title text NOT NULL, 
+  type text, 
+  tags jsonb, 
+  role text, 
+  body text, 
+  created_at timestamp with time zone DEFAULT now(), 
+  updated_at timestamp with time zone DEFAULT now()
+);
+
+-- Project templates table (Project templates)
+CREATE TABLE project_templates (
+  id integer NOT NULL DEFAULT nextval('project_templates_id_seq'::regclass), 
+  creator_id uuid, 
+  title text, 
+  description text, 
+  cover_photo_url text, 
+  skills_required jsonb, 
+  num_consultants integer, 
+  currency text, 
+  budget_min numeric, 
+  budget_max numeric, 
+  desired_amount_min numeric, 
+  desired_amount_max numeric, 
+  delivery_time_min integer, 
+  delivery_time_max integer, 
+  screening_questions jsonb, 
+  created_at timestamp with time zone DEFAULT now()
+);
+
+-- Video meetings table (Video meeting scheduling)
+CREATE TABLE video_meetings (
+  id integer NOT NULL DEFAULT nextval('video_meetings_id_seq'::regclass), 
+  title text NOT NULL, 
+  description text, 
+  date date NOT NULL, 
+  start_time time without time zone NOT NULL, 
+  end_time time without time zone NOT NULL, 
+  created_by uuid, 
+  participants jsonb, 
+  meeting_url text, 
+  created_at timestamp with time zone DEFAULT now()
+);
+
+-- Vetting questions table (Vetting questions)
+CREATE TABLE vetting_questions (
+  id integer NOT NULL DEFAULT nextval('vetting_questions_id_seq'::regclass), 
+  question text NOT NULL
+);
+
+-- Vetting responses table (User vetting responses)
+CREATE TABLE vetting_responses (
+  id integer NOT NULL DEFAULT nextval('vetting_responses_id_seq'::regclass), 
+  user_id uuid, 
+  question_id integer, 
+  answer text NOT NULL, 
+  verified_by uuid, 
+  created_at timestamp with time zone DEFAULT now()
+);
+
+-- Disputes table (Contract disputes)
+CREATE TABLE disputes (
+  id integer NOT NULL DEFAULT nextval('disputes_id_seq'::regclass), 
+  contract_id integer, 
+  raised_by uuid, 
+  reason text NOT NULL, 
+  details text, 
+  preferred_outcome text, 
+  status text DEFAULT 'open'::text, 
+  ticket_no text, 
+  supporting_docs jsonb, 
+  created_at timestamp with time zone DEFAULT now(), 
+  updated_at timestamp with time zone DEFAULT now()
+);
+
+-- Dispute responses table (Dispute responses)
+CREATE TABLE dispute_responses (
+  id integer NOT NULL DEFAULT nextval('dispute_responses_id_seq'::regclass), 
+  dispute_id integer, 
+  responder_id uuid, 
+  response_details text, 
+  preferred_outcome text, 
+  supporting_docs jsonb, 
+  created_at timestamp with time zone DEFAULT now()
+);
+```
+
+### Schema Validation Checklist
+
+**Before any database operation, verify:**
+- [ ] Table name exists in schema above
+- [ ] Column names exist in target table
+- [ ] Data types match expected format
+- [ ] Foreign key relationships are correct
+- [ ] Required fields are NOT NULL
+- [ ] Default values are appropriate
+
+---
+
+## 11) Current Progress Status
 
 ### ✅ **Completed Infrastructure**
 - **Database Schema**: 95% complete with comprehensive user data

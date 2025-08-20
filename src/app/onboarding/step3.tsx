@@ -1,69 +1,70 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Plus, X } from 'lucide-react';
+import { ArrowLeft, Plus, X, Edit, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { getCurrentUser } from '@/lib/getCurrentUser';
 
+interface WorkExperience {
+  id?: number;
+  company: string;
+  job_title: string;
+  city?: string;
+  country_id?: number;
+  start_date_month: string;
+  start_date_year: number;
+  end_date_month?: string;
+  end_date_year?: number;
+  currently_working: boolean;
+  description?: string;
+}
+
 export default function OnboardingStep3() {
-  const [skills, setSkills] = useState<string[]>([]);
-  const [languages, setLanguages] = useState<string[]>([]);
-  const [newSkill, setNewSkill] = useState('');
-  const [newLanguage, setNewLanguage] = useState('');
+  const [workExperiences, setWorkExperiences] = useState<WorkExperience[]>([]);
+  const [showModal, setShowModal] = useState(false);
+  const [editingExperience, setEditingExperience] = useState<WorkExperience | null>(null);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
 
-  // Load existing skills and languages on component mount
+  // Form state
+  const [formData, setFormData] = useState<WorkExperience>({
+    company: '',
+    job_title: '',
+    city: '',
+    country_id: undefined,
+    start_date_month: '',
+    start_date_year: new Date().getFullYear(),
+    end_date_month: '',
+    end_date_year: new Date().getFullYear(),
+    currently_working: false,
+    description: ''
+  });
+
+  // Load existing work experience on component mount
   useEffect(() => {
     const loadUserData = async () => {
       try {
         const user = await getCurrentUser();
         if (user) {
-          // Load existing skills
-          const { data: skillsData } = await supabase
-            .from('user_skills')
-            .select('skill_id')
-            .eq('user_id', user.id);
-          
-          if (skillsData) {
-            // Get skill names from skills table
-            const skillIds = skillsData.map(s => s.skill_id);
-            if (skillIds.length > 0) {
-              const { data: skillNames } = await supabase
-                .from('skills')
-                .select('name')
-                .in('id', skillIds);
-              if (skillNames) {
-                setSkills(skillNames.map(s => s.name));
-              }
-            }
-          }
+          const { data: workExpData } = await supabase
+            .from('work_experience')
+            .select('*')
+            .eq('user_id', user.id)
+            .order('start_date_year', { ascending: false })
+            .order('start_date_month', { ascending: false });
 
-          // Load existing languages
-          const { data: languagesData } = await supabase
-            .from('user_languages')
-            .select('language_id')
-            .eq('user_id', user.id);
-          
-          if (languagesData) {
-            // Get language names from languages table
-            const languageIds = languagesData.map(l => l.language_id);
-            if (languageIds.length > 0) {
-              const { data: languageNames } = await supabase
-                .from('languages')
-                .select('name')
-                .in('id', languageIds);
-              if (languageNames) {
-                setLanguages(languageNames.map(l => l.name));
-              }
-            }
+          if (workExpData) {
+            setWorkExperiences(workExpData);
           }
         }
       } catch (error) {
-        console.error('Error loading user data:', error);
+        console.error('Error loading work experience:', error);
       } finally {
         setLoading(false);
       }
@@ -72,29 +73,48 @@ export default function OnboardingStep3() {
     loadUserData();
   }, []);
 
-  const addSkill = () => {
-    if (newSkill.trim() && !skills.includes(newSkill.trim()) && skills.length < 15) {
-      setSkills([...skills, newSkill.trim()]);
-      setNewSkill('');
+  const resetForm = () => {
+    setFormData({
+      company: '',
+      job_title: '',
+      city: '',
+      country_id: undefined,
+      start_date_month: '',
+      start_date_year: new Date().getFullYear(),
+      end_date_month: '',
+      end_date_year: new Date().getFullYear(),
+      currently_working: false,
+      description: ''
+    });
+    setEditingExperience(null);
+  };
+
+  const openAddModal = () => {
+    resetForm();
+    setShowModal(true);
+  };
+
+  const openEditModal = (experience: WorkExperience) => {
+    setFormData({ ...experience });
+    setEditingExperience(experience);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    resetForm();
+  };
+
+  const handleInputChange = (field: keyof WorkExperience, value: any) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async () => {
+    if (!formData.company || !formData.job_title || !formData.start_date_month || !formData.start_date_year) {
+      return; // Required fields validation
     }
-  };
 
-  const removeSkill = (skillToRemove: string) => {
-    setSkills(skills.filter(skill => skill !== skillToRemove));
-  };
-
-  const addLanguage = () => {
-    if (newLanguage.trim() && !languages.includes(newLanguage.trim())) {
-      setLanguages([...languages, newLanguage.trim()]);
-      setNewLanguage('');
-    }
-  };
-
-  const removeLanguage = (languageToRemove: string) => {
-    setLanguages(languages.filter(language => language !== languageToRemove));
-  };
-
-  const saveToSupabase = async () => {
+    setSaving(true);
     try {
       const user = await getCurrentUser();
       if (!user) {
@@ -102,74 +122,65 @@ export default function OnboardingStep3() {
         return;
       }
 
-      // Save skills
-      for (const skillName of skills) {
-        // First, get or create the skill
-        let { data: skillData } = await supabase
-          .from('skills')
-          .select('id')
-          .eq('name', skillName)
+      const experienceData = {
+        ...formData,
+        user_id: user.id,
+        updated_at: new Date().toISOString()
+      };
+
+      if (editingExperience?.id) {
+        // Update existing experience
+        const { error } = await supabase
+          .from('work_experience')
+          .update(experienceData)
+          .eq('id', editingExperience.id);
+
+        if (error) throw error;
+
+        setWorkExperiences(prev => 
+          prev.map(exp => 
+            exp.id === editingExperience.id 
+              ? { ...experienceData, id: editingExperience.id }
+              : exp
+          )
+        );
+      } else {
+        // Add new experience
+        const { data, error } = await supabase
+          .from('work_experience')
+          .insert([experienceData])
+          .select()
           .single();
 
-        if (!skillData) {
-          // Create new skill if it doesn't exist
-          const { data: newSkillData } = await supabase
-            .from('skills')
-            .insert([{ name: skillName }])
-            .select()
-            .single();
-          skillData = newSkillData;
-        }
+        if (error) throw error;
 
-        if (skillData) {
-          // Add user-skill relationship
-          await supabase
-            .from('user_skills')
-            .upsert([{
-              user_id: user.id,
-              skill_id: skillData.id
-            }], { onConflict: 'user_id,skill_id' });
-        }
+        setWorkExperiences(prev => [data, ...prev]);
       }
 
-      // Save languages
-      for (const languageName of languages) {
-        // First, get or create the language
-        let { data: languageData } = await supabase
-          .from('languages')
-          .select('id')
-          .eq('name', languageName)
-          .single();
-
-        if (!languageData) {
-          // Create new language if it doesn't exist
-          const { data: newLanguageData } = await supabase
-            .from('languages')
-            .insert([{ name: languageName }])
-            .select()
-            .single();
-          languageData = newLanguageData;
-        }
-
-        if (languageData) {
-          // Add user-language relationship
-          await supabase
-            .from('user_languages')
-            .upsert([{
-              user_id: user.id,
-              language_id: languageData.id
-            }], { onConflict: 'user_id,language_id' });
-        }
-      }
-
-      console.log('Skills and languages saved successfully');
+      closeModal();
     } catch (error) {
-      console.error('Error saving skills and languages:', error);
+      console.error('Error saving work experience:', error);
+    } finally {
+      setSaving(false);
     }
   };
 
-  const handleContinue = async () => {
-    await saveToSupabase();
+  const deleteExperience = async (id: number) => {
+    try {
+      const { error } = await supabase
+        .from('work_experience')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      setWorkExperiences(prev => prev.filter(exp => exp.id !== id));
+    } catch (error) {
+      console.error('Error deleting work experience:', error);
+    }
+  };
+
+  const handleContinue = () => {
     navigate('/onboarding/step4');
   };
 
@@ -177,15 +188,14 @@ export default function OnboardingStep3() {
     navigate('/onboarding/step2');
   };
 
-  const handleSkip = async () => {
-    await saveToSupabase();
+  const handleSkip = () => {
     navigate('/onboarding/step4');
   };
 
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
-        <div className="text-slate-600">Loading skills and languages...</div>
+        <div className="text-slate-600">Loading work experience...</div>
       </div>
     );
   }
@@ -235,110 +245,66 @@ export default function OnboardingStep3() {
 
         {/* Step Title */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-[#012E46] mb-2">Skills & Languages</h1>
-          <p className="text-slate-600">Tell us about your professional skills and languages</p>
+          <h1 className="text-3xl font-bold text-[#012E46] mb-2">Your work experience</h1>
+          <p className="text-slate-600">Only include recent and relevant work experience. Highlight skills and experiences relevant to the gigs you're applying for.</p>
         </div>
 
-        <div className="space-y-6">
-          {/* Skills Section */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="mb-4">
-                <Label className="text-lg font-semibold text-slate-900">Professional Skills</Label>
-                <p className="text-sm text-slate-600 mt-1">Add up to 15 skills that best describe your expertise</p>
-              </div>
-              
-              <div className="flex gap-2 mb-4">
-                <Input
-                  placeholder="e.g., Project Management, React, Data Analysis"
-                  value={newSkill}
-                  onChange={(e) => setNewSkill(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && addSkill()}
-                  className="flex-1"
-                />
-                <Button 
-                  onClick={addSkill}
-                  disabled={!newSkill.trim() || skills.length >= 15}
-                  className="px-4"
-                >
+        {/* Work Experience List */}
+        <Card className="mb-6">
+          <CardContent className="p-6">
+            {workExperiences.length === 0 ? (
+              <div className="text-center py-8">
+                <p className="text-slate-500 mb-4">No work experience added yet</p>
+                <Button onClick={openAddModal} className="bg-blue-600 hover:bg-blue-700">
                   <Plus className="w-4 h-4 mr-2" />
-                  Add
+                  Add Work Experience
                 </Button>
               </div>
-
-              <div className="flex flex-wrap gap-2">
-                {skills.map((skill, index) => (
-                  <div
-                    key={index}
-                    className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full flex items-center gap-2"
-                  >
-                    <span>{skill}</span>
-                    <button
-                      onClick={() => removeSkill(skill)}
-                      className="hover:bg-blue-200 rounded-full p-1"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
+            ) : (
+              <div className="space-y-4">
+                {workExperiences.map((experience, index) => (
+                  <div key={experience.id || index} className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-slate-900">{experience.job_title}</h3>
+                      <p className="text-slate-600">{experience.company}</p>
+                      <p className="text-sm text-slate-500">
+                        {experience.start_date_month} {experience.start_date_year} - {
+                          experience.currently_working 
+                            ? 'Present' 
+                            : `${experience.end_date_month} ${experience.end_date_year}`
+                        }
+                      </p>
+                      {experience.city && (
+                        <p className="text-sm text-slate-500">{experience.city}</p>
+                      )}
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => openEditModal(experience)}
+                        className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+                      >
+                        <Edit className="w-4 h-4 text-slate-600" />
+                      </button>
+                      <button
+                        onClick={() => experience.id && deleteExperience(experience.id)}
+                        className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4 text-slate-600" />
+                      </button>
+                    </div>
                   </div>
                 ))}
-              </div>
-              
-              {skills.length >= 15 && (
-                <p className="text-sm text-amber-600 mt-2">
-                  Maximum of 15 skills reached
-                </p>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Languages Section */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="mb-4">
-                <Label className="text-lg font-semibold text-slate-900">Languages</Label>
-                <p className="text-sm text-slate-600 mt-1">Add languages you can work in</p>
-              </div>
-              
-              <div className="flex gap-2 mb-4">
-                <Input
-                  placeholder="e.g., English, Spanish, French"
-                  value={newLanguage}
-                  onChange={(e) => setNewLanguage(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && addLanguage()}
-                  className="flex-1"
-                />
-                <Button 
-                  onClick={addLanguage}
-                  disabled={!newLanguage.trim()}
-                  className="px-4"
-                >
+                <Button onClick={openAddModal} className="w-full bg-blue-600 hover:bg-blue-700">
                   <Plus className="w-4 h-4 mr-2" />
-                  Add
+                  Add Work Experience
                 </Button>
               </div>
-
-              <div className="flex flex-wrap gap-2">
-                {languages.map((language, index) => (
-                  <div
-                    key={index}
-                    className="bg-green-100 text-green-800 px-3 py-1 rounded-full flex items-center gap-2"
-                  >
-                    <span>{language}</span>
-                    <button
-                      onClick={() => removeLanguage(language)}
-                      className="hover:bg-green-200 rounded-full p-1"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+            )}
+          </CardContent>
+        </Card>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between mt-8">
+        <div className="flex justify-between">
           <Button
             variant="outline"
             onClick={handleBack}
@@ -353,10 +319,11 @@ export default function OnboardingStep3() {
               onClick={handleSkip}
               className="px-6"
             >
-              Skip
+              I'll do this later
             </Button>
             <Button
               onClick={handleContinue}
+              disabled={workExperiences.length === 0}
               className="px-6"
             >
               Continue
@@ -364,6 +331,182 @@ export default function OnboardingStep3() {
           </div>
         </div>
       </div>
+
+      {/* Add/Edit Work Experience Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <h2 className="text-xl font-semibold text-[#012E46] mb-4">
+                {editingExperience ? 'Edit Work Experience' : 'Add Work Experience'}
+              </h2>
+              
+              <div className="space-y-4">
+                {/* Job Title */}
+                <div>
+                  <Label htmlFor="job_title" className="text-sm font-medium">
+                    Job title <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="job_title"
+                    placeholder="E.g. Cyber Security Specialist"
+                    value={formData.job_title}
+                    onChange={(e) => handleInputChange('job_title', e.target.value)}
+                  />
+                </div>
+
+                {/* Company */}
+                <div>
+                  <Label htmlFor="company" className="text-sm font-medium">
+                    Company <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="company"
+                    placeholder="E.g. JP Morgan"
+                    value={formData.company}
+                    onChange={(e) => handleInputChange('company', e.target.value)}
+                  />
+                </div>
+
+                {/* City */}
+                <div>
+                  <Label htmlFor="city" className="text-sm font-medium">
+                    City (Optional)
+                  </Label>
+                  <Input
+                    id="city"
+                    placeholder="E.g. Johannesburg"
+                    value={formData.city}
+                    onChange={(e) => handleInputChange('city', e.target.value)}
+                  />
+                </div>
+
+                {/* Start Date */}
+                <div>
+                  <Label className="text-sm font-medium">
+                    Start date <span className="text-red-500">*</span>
+                  </Label>
+                  <div className="flex gap-2">
+                    <Select
+                      value={formData.start_date_month}
+                      onValueChange={(value) => handleInputChange('start_date_month', value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Month" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(month => (
+                          <SelectItem key={month} value={month}>{month}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Select
+                      value={formData.start_date_year.toString()}
+                      onValueChange={(value) => handleInputChange('start_date_year', parseInt(value))}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Year" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i).map(year => (
+                          <SelectItem key={year} value={year.toString()}>{year}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* End Date */}
+                <div>
+                  <Label className="text-sm font-medium">
+                    End date <span className="text-red-500">*</span>
+                  </Label>
+                  <div className="flex gap-2">
+                    <Select
+                      value={formData.end_date_month}
+                      onValueChange={(value) => handleInputChange('end_date_month', value)}
+                      disabled={formData.currently_working}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Month" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(month => (
+                          <SelectItem key={month} value={month}>{month}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Select
+                      value={formData.end_date_year?.toString()}
+                      onValueChange={(value) => handleInputChange('end_date_year', parseInt(value))}
+                      disabled={formData.currently_working}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Year" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i).map(year => (
+                          <SelectItem key={year} value={year.toString()}>{year}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Currently Working Checkbox */}
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="currently_working"
+                    checked={formData.currently_working}
+                    onChange={(e) => handleInputChange('currently_working', e.target.checked)}
+                    className="rounded border-slate-300"
+                  />
+                  <Label htmlFor="currently_working" className="text-sm">
+                    I am currently working in this role
+                  </Label>
+                </div>
+
+                {/* Description */}
+                <div>
+                  <Label htmlFor="description" className="text-sm font-medium">
+                    Description (Optional)
+                  </Label>
+                  <Textarea
+                    id="description"
+                    placeholder="Type here..."
+                    value={formData.description}
+                    onChange={(e) => handleInputChange('description', e.target.value)}
+                    maxLength={2000}
+                    rows={4}
+                  />
+                  <p className="text-xs text-slate-500 mt-1">
+                    {formData.description?.length || 0}/2000 characters
+                  </p>
+                </div>
+              </div>
+
+              {/* Modal Actions */}
+              <div className="flex gap-3 mt-6">
+                <Button
+                  variant="outline"
+                  onClick={closeModal}
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleSubmit}
+                  disabled={saving || !formData.company || !formData.job_title || !formData.start_date_month || !formData.start_date_year}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700"
+                >
+                  {saving ? 'Saving...' : (editingExperience ? 'Update Work Experience' : 'Add Work Experience')}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
