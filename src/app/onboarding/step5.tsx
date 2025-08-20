@@ -46,6 +46,12 @@ export default function OnboardingStep5() {
     { value: 'native', label: 'Native or Bilingual' }
   ];
 
+  // Helper function to get proficiency display label
+  const getProficiencyLabel = (value: string): string => {
+    const level = proficiencyLevels.find(level => level.value === value);
+    return level ? level.label : value;
+  };
+
   // Load user data and languages on component mount
   useEffect(() => {
     const loadData = async () => {
@@ -302,7 +308,7 @@ export default function OnboardingStep5() {
                     <div key={index} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
                       <div>
                         <div className="font-semibold text-[#012E46]">{language.language_name}</div>
-                        <div className="text-slate-600 text-sm">{language.proficiency}</div>
+                        <div className="text-slate-600 text-sm">{getProficiencyLabel(language.proficiency)}</div>
                       </div>
                       <div className="flex items-center gap-2">
                         <button
