@@ -3,6 +3,7 @@ import { User, Settings, LogOut, Bell, MessageSquare } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import type { CurrentUser } from '@/lib/getCurrentUser';
+import { ProfileAvatar } from '@/components/ui/ProfileAvatar';
 
 type Props = { user: CurrentUser | null };
 
@@ -32,14 +33,6 @@ export function UserProfileDropdown({ user }: Props) {
     }
   };
 
-  // Get initials for avatar placeholder
-  const getInitials = () => {
-    if (!user) return 'U';
-    const first = user.firstName.charAt(0).toUpperCase();
-    const last = user.lastName.charAt(0).toUpperCase();
-    return `${first}${last}`;
-  };
-
   const name = user ? `${user.firstName} ${user.lastName}` : 'User';
 
   return (
@@ -49,29 +42,11 @@ export function UserProfileDropdown({ user }: Props) {
         {/* User Avatar Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-200 hover:bg-slate-300 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500"
+          className="hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded-full"
           aria-label="User menu"
         >
-          {user?.avatarUrl ? (
-            <img
-              src={user.avatarUrl}
-              alt={`${name} profile`}
-              className="w-10 h-10 rounded-full object-cover"
-            />
-          ) : (
-            <span className="text-sm font-semibold text-slate-700">
-              {getInitials()}
-            </span>
-          )}
+          <ProfileAvatar user={user} size="md" />
         </button>
-        
-        {/* User Name and Role */}
-        <div className="-space-y-1">
-          <div className="text-[16px] leading-5">{name}</div>
-          <div className="text-xs font-semibold tracking-[0.25em] text-yellow-500">
-            {user?.role === 'consultant' ? 'Professional Account' : 'Client Account'}
-          </div>
-        </div>
       </div>
 
       {/* Notifications and Messages Icons */}
@@ -92,21 +67,9 @@ export function UserProfileDropdown({ user }: Props) {
             <div className="px-4 py-3 border-b border-slate-200">
               <div className="flex flex-col items-center">
                 {/* Profile Picture */}
-                {user?.avatarUrl ? (
-                  <img
-                    src={user.avatarUrl}
-                    alt={`${name} profile`}
-                    className="w-16 h-16 rounded-full object-cover mb-2"
-                  />
-                ) : (
-                  <div className="w-16 h-16 rounded-full bg-slate-200 flex items-center justify-center mb-2">
-                    <span className="text-lg font-semibold text-slate-700">
-                      {getInitials()}
-                    </span>
-                  </div>
-                )}
+                <ProfileAvatar user={user} size="xl" />
                 {/* User Name */}
-                <h3 className="font-semibold text-slate-900 text-center">{name}</h3>
+                <h3 className="font-semibold text-slate-900 text-center mt-2">{name}</h3>
               </div>
             </div>
 
