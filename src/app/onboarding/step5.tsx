@@ -158,6 +158,13 @@ export default function OnboardingStep5() {
 
               if (editingLanguage) {
           // Update existing language
+          console.log('Updating language with data:', {
+            language_id: parseInt(formData.language_id),
+            proficiency: formData.proficiency,
+            user_id: editingLanguage.user_id,
+            old_language_id: editingLanguage.language_id
+          });
+          
           const { error } = await supabase
             .from('user_languages')
             .update({
@@ -188,6 +195,12 @@ export default function OnboardingStep5() {
         }
 
         // Add new language
+        console.log('Adding language with data:', {
+          user_id: user.id,
+          language_id: parseInt(formData.language_id),
+          proficiency: formData.proficiency
+        });
+        
         const { error } = await supabase
           .from('user_languages')
           .insert({
