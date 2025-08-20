@@ -100,15 +100,12 @@ export default function OnboardingStep2() {
         return;
       }
 
-      // Update users table with profile data
+      // Update users table with basic profile data
       const { error: userError } = await supabase
         .from('users')
         .update({
           first_name: formData.firstName,
           last_name: formData.lastName,
-          headline: formData.headline,
-          bio: formData.bio || null,
-          profile_photo_url: profilePicture || null,
           updated_at: new Date().toISOString()
         })
         .eq('id', user.id);
@@ -124,11 +121,13 @@ export default function OnboardingStep2() {
         return;
       }
 
-      // Update consultant_profiles table with location data
+      // Update consultant_profiles table with detailed profile data
       const { error: profileError } = await supabase
         .from('consultant_profiles')
         .update({
-          city: formData.city,
+          job_title: formData.headline,
+          bio: formData.bio || null,
+          address1: formData.city,
           country: formData.country,
           updated_at: new Date().toISOString()
         })
