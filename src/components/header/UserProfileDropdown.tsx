@@ -45,8 +45,28 @@ export function UserProfileDropdown({ user }: Props) {
           className="hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded-full"
           aria-label="User menu"
         >
-          <ProfileAvatar user={user} size="md" />
+          <div className="w-10 h-10 rounded-full overflow-hidden">
+            {user?.profilePhotoUrl ? (
+              <img
+                src={user.profilePhotoUrl}
+                alt={`${name} profile`}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full bg-slate-200 flex items-center justify-center text-sm font-semibold text-slate-700">
+                {user ? `${user.firstName.charAt(0)}${user.lastName.charAt(0)}` : 'U'}
+              </div>
+            )}
+          </div>
         </button>
+        
+        {/* User Name and Role */}
+        <div className="-space-y-1">
+          <div className="text-[16px] leading-5">{name}</div>
+          <div className="text-xs font-semibold tracking-[0.25em] text-yellow-500">
+            {user?.role === 'consultant' ? 'Professional Account' : 'Client Account'}
+          </div>
+        </div>
       </div>
 
       {/* Notifications and Messages Icons */}
