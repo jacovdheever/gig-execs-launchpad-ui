@@ -191,7 +191,7 @@ export default function RegisterPage() {
       
       // Redirect to login page after 3 seconds so they can authenticate
       setTimeout(() => {
-        navigate('/login', { replace: true })
+        navigate('/auth/login', { replace: true })
       }, 3000)
       
     } catch (err) {
