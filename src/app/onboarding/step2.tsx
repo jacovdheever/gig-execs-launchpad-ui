@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ArrowLeft, Upload, User } from 'lucide-react';
+import { ArrowLeft, Upload, User, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { getCurrentUser } from '@/lib/getCurrentUser';
+import { uploadProfilePhoto, deleteProfilePhoto } from '@/lib/storage';
 
 export default function OnboardingStep2() {
   const [formData, setFormData] = useState({
@@ -20,6 +21,8 @@ export default function OnboardingStep2() {
     country: ''
   });
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -110,14 +113,48 @@ export default function OnboardingStep2() {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleProfilePictureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProfilePictureUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setProfilePicture(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+
+    try {
+      setUploading(true);
+      setUploadError(null);
+
+      const user = await getCurrentUser();
+      if (!user) {
+        setUploadError('User not authenticated');
+        return;
+      }
+
+      // Upload to Supabase Storage
+      const result = await uploadProfilePhoto(file, user.id);
+      
+      if (result.success && result.url) {
+        setProfilePicture(result.url);
+        console.log('Profile photo uploaded successfully:', result.url);
+      } else {
+        setUploadError(result.error || 'Upload failed');
+      }
+    } catch (error) {
+      console.error('Profile picture upload error:', error);
+      setUploadError('An unexpected error occurred during upload');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleRemoveProfilePicture = async () => {
+    try {
+      const user = await getCurrentUser();
+      if (!user) return;
+
+      // Delete from Supabase Storage
+      await deleteProfilePhoto(user.id);
+      setProfilePicture(null);
+      console.log('Profile photo removed successfully');
+    } catch (error) {
+      console.error('Error removing profile photo:', error);
     }
   };
 
@@ -135,7 +172,7 @@ export default function OnboardingStep2() {
         .update({
           first_name: formData.firstName,
           last_name: formData.lastName,
-          profile_photo_url: profilePicture,
+          profile_photo_url: profilePicture, // This is now a Supabase Storage URL
           updated_at: new Date().toISOString()
         })
         .eq('id', user.id);
@@ -274,12 +311,32 @@ export default function OnboardingStep2() {
                         <User className="w-12 h-12 sm:w-16 sm:h-16 text-slate-400" />
                       )}
                     </div>
+                    
+                    {/* Upload Button */}
                     <button
                       onClick={() => fileInputRef.current?.click()}
-                      className="absolute -bottom-1 -right-1 w-8 h-8 sm:w-10 sm:h-10 bg-yellow-400 rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors"
+                      disabled={uploading}
+                      className="absolute -bottom-1 -right-1 w-8 h-8 sm:w-10 sm:h-10 bg-yellow-400 rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      title="Upload photo"
                     >
-                      <Upload className="w-4 h-4 sm:w-5 sm:h-5 text-slate-800" />
+                      {uploading ? (
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-slate-800 border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <Upload className="w-4 h-4 sm:w-5 sm:h-5 text-slate-800" />
+                      )}
                     </button>
+
+                    {/* Remove Button */}
+                    {profilePicture && (
+                      <button
+                        onClick={handleRemoveProfilePicture}
+                        className="absolute -top-1 -right-1 w-6 h-6 sm:w-8 sm:h-8 bg-red-500 rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
+                        title="Remove photo"
+                      >
+                        <X className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                      </button>
+                    )}
+
                     <input
                       ref={fileInputRef}
                       type="file"
@@ -289,6 +346,20 @@ export default function OnboardingStep2() {
                     />
                   </div>
                 </div>
+
+                {/* Upload Error Display */}
+                {uploadError && (
+                  <div className="mt-3 text-center">
+                    <p className="text-red-500 text-sm">{uploadError}</p>
+                  </div>
+                )}
+
+                {/* Upload Status */}
+                {uploading && (
+                  <div className="mt-3 text-center">
+                    <p className="text-blue-500 text-sm">Uploading photo...</p>
+                  </div>
+                )}
               </div>
 
               {/* Form Fields */}

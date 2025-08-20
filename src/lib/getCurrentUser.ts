@@ -31,6 +31,8 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
       .single();
     
     console.log('getCurrentUser: Query result:', { data, error });
+    console.log('getCurrentUser: Raw data fields:', data ? Object.keys(data) : 'No data');
+    console.log('getCurrentUser: profile_photo_url value:', data?.profile_photo_url);
     
     if (error || !data) {
       console.warn('User not found in users table, falling back to auth metadata. Error:', error);
@@ -46,6 +48,8 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
       };
     }
 
+    console.log('getCurrentUser: Returning user with profilePhotoUrl:', data.profile_photo_url);
+    
     return {
       id: data.id,
       firstName: data.first_name ?? user.email?.split('@')[0] ?? 'User',
