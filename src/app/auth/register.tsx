@@ -99,25 +99,23 @@ export default function RegisterPage() {
       }
 
       // Step 2: Create user record in users table
-      console.log('Attempting to insert user into users table:', {
+      const userInsertData = {
         id: authData.user.id,
         email: formData.email,
         first_name: formData.firstName,
         last_name: formData.lastName,
-        user_type: formData.userType
-      })
+        user_type: formData.userType,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      }
+      
+      console.log('Attempting to insert user into users table:', userInsertData)
+      console.log('User ID type:', typeof userInsertData.id, 'Value:', userInsertData.id)
+      console.log('User type value:', userInsertData.user_type)
       
       const { data: userData, error: userError } = await supabase
         .from('users')
-        .insert([{
-          id: authData.user.id,
-          email: formData.email,
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          user_type: formData.userType,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        }])
+        .insert([userInsertData])
         .select()
       
       console.log('Users table insert result:', { userData, userError })
