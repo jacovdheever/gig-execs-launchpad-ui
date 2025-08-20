@@ -14,7 +14,7 @@ interface Language {
 }
 
 interface UserLanguage {
-  id?: number;
+  user_id: string;
   language_id: number;
   language_name: string;
   proficiency: string;
@@ -77,7 +77,7 @@ export default function OnboardingStep5() {
           const { data: userLanguagesData, error: userLanguagesError } = await supabase
             .from('user_languages')
             .select(`
-              id,
+              user_id,
               language_id,
               proficiency,
               languages!inner(name)
@@ -90,7 +90,7 @@ export default function OnboardingStep5() {
           }
 
           const formattedLanguages = (userLanguagesData || []).map(item => ({
-            id: item.id,
+            user_id: item.user_id,
             language_id: item.language_id,
             language_name: item.languages.name,
             proficiency: item.proficiency
@@ -123,7 +123,7 @@ export default function OnboardingStep5() {
     setShowModal(true);
   };
 
-  const handleDeleteLanguage = async (languageId: number) => {
+  const handleDeleteLanguage = async (language: UserLanguage) => {
     try {
       const user = await getCurrentUser();
       if (!user) return;
@@ -131,8 +131,8 @@ export default function OnboardingStep5() {
       const { error } = await supabase
         .from('user_languages')
         .delete()
-        .eq('id', languageId)
-        .eq('user_id', user.id);
+        .eq('user_id', language.user_id)
+        .eq('language_id', language.language_id);
 
       if (error) {
         console.error('Error deleting language:', error);
@@ -140,7 +140,9 @@ export default function OnboardingStep5() {
       }
 
       // Remove from local state
-      setUserLanguages(prev => prev.filter(lang => lang.id !== languageId));
+      setUserLanguages(prev => prev.filter(lang => 
+        !(lang.user_id === language.user_id && lang.language_id === language.language_id)
+      ));
     } catch (error) {
       console.error('Error deleting language:', error);
     }
@@ -154,16 +156,16 @@ export default function OnboardingStep5() {
       const user = await getCurrentUser();
       if (!user) return;
 
-      if (editingLanguage) {
-        // Update existing language
-        const { error } = await supabase
-          .from('user_languages')
-          .update({
-            language_id: parseInt(formData.language_id),
-            proficiency: formData.proficiency
-          })
-          .eq('id', editingLanguage.id)
-          .eq('user_id', user.id);
+              if (editingLanguage) {
+          // Update existing language
+          const { error } = await supabase
+            .from('user_languages')
+            .update({
+              language_id: parseInt(formData.language_id),
+              proficiency: formData.proficiency
+            })
+            .eq('user_id', editingLanguage.user_id)
+            .eq('language_id', editingLanguage.language_id);
 
         if (error) {
           console.error('Error updating language:', error);
@@ -173,7 +175,7 @@ export default function OnboardingStep5() {
         // Update local state
         const languageName = availableLanguages.find(l => l.id === parseInt(formData.language_id))?.name || '';
         setUserLanguages(prev => prev.map(lang => 
-          lang.id === editingLanguage.id 
+          lang.user_id === editingLanguage.user_id && lang.language_id === editingLanguage.language_id
             ? { ...lang, language_id: parseInt(formData.language_id), language_name: languageName, proficiency: formData.proficiency }
             : lang
         ));
@@ -202,6 +204,7 @@ export default function OnboardingStep5() {
         // Add to local state
         const languageName = availableLanguages.find(l => l.id === parseInt(formData.language_id))?.name || '';
         const newLanguage: UserLanguage = {
+          user_id: user.id,
           language_id: parseInt(formData.language_id),
           language_name: languageName,
           proficiency: formData.proficiency
@@ -319,7 +322,7 @@ export default function OnboardingStep5() {
                           <Edit className="w-4 h-4" />
                         </button>
                         <button
-                          onClick={() => handleDeleteLanguage(language.id!)}
+                          onClick={() => handleDeleteLanguage(language)}
                           className="p-2 text-slate-500 hover:text-red-600 transition-colors"
                           title="Delete language"
                         >
