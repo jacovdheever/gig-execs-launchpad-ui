@@ -6,6 +6,7 @@ export type CurrentUser = {
   role: UserRole;
   avatarUrl?: string | null;
   email?: string;
+  profilePhotoUrl?: string | null;
 };
 
 import { supabase } from './supabase';
@@ -25,7 +26,7 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
     
     const { data, error } = await supabase
       .from('users')
-      .select('id, first_name, last_name, user_type, email')
+      .select('id, first_name, last_name, user_type, email, profile_photo_url')
       .eq('id', user.id)
       .single();
     
@@ -51,6 +52,7 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
       lastName: data.last_name ?? '',
       role: (data.user_type as UserRole) ?? 'consultant',
       email: data.email ?? user.email ?? undefined,
+      profilePhotoUrl: data.profile_photo_url ?? null,
     };
   } catch (error) {
     console.error('Error getting current user:', error);

@@ -89,6 +89,12 @@ export default function OnboardingStep2() {
           } else {
             console.log('Step 2: No existing profile data found');
           }
+
+          // Load existing profile picture URL from users table
+          if (user.profilePhotoUrl) {
+            setProfilePicture(user.profilePhotoUrl);
+            console.log('Step 2: Loaded existing profile picture:', user.profilePhotoUrl);
+          }
         }
       } catch (error) {
         console.error('Error loading user data:', error);
@@ -129,6 +135,7 @@ export default function OnboardingStep2() {
         .update({
           first_name: formData.firstName,
           last_name: formData.lastName,
+          profile_photo_url: profilePicture,
           updated_at: new Date().toISOString()
         })
         .eq('id', user.id);
