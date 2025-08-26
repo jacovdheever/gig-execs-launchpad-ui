@@ -152,28 +152,25 @@ export default function RegisterPage() {
       let profileError = null
 
       if (formData.userType === 'consultant') {
-        // Create consultant profile
-        console.log('Creating consultant profile:', profileData)
+        // Create consultant profile using function
+        console.log('Creating consultant profile using function:', profileData)
         const { data: profileDataResult, error } = await supabase
-          .from('consultant_profiles')
-          .insert([profileData])
-          .select()
+          .rpc('create_consultant_profile', {
+            user_id: profileData.user_id
+          })
         profileError = error
         console.log('Consultant profile creation result:', { profileDataResult, error })
         console.log('Consultant profile insert success?', !error)
         console.log('Consultant profile data inserted:', profileDataResult)
         console.log('Consultant profile error object:', error)
       } else {
-        // Create client profile
-        const clientProfileData = {
-          ...profileData,
-          company_name: formData.companyName
-        }
-        console.log('Creating client profile:', clientProfileData)
+        // Create client profile using function
+        console.log('Creating client profile using function:', profileData)
         const { data: profileDataResult, error } = await supabase
-          .from('client_profiles')
-          .insert([clientProfileData])
-          .select()
+          .rpc('create_client_profile', {
+            user_id: profileData.user_id,
+            company_name: formData.companyName
+          })
         profileError = error
         console.log('Client profile creation result:', { profileDataResult, error })
         console.log('Client profile insert success?', !error)
