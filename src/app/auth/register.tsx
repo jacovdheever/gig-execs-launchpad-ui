@@ -98,7 +98,30 @@ export default function RegisterPage() {
         return
       }
 
-      // Step 2: Create user record in users table
+      // Step 1.5: Sign in the user to establish authentication context for database operations
+      console.log('Signing in user to establish session for database operations...')
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password
+      })
+      
+      if (signInError) {
+        console.error('Sign in error after signup:', signInError)
+        setErrors({ general: 'Account created successfully, but automatic sign-in failed. Please check your email and sign in manually.' })
+        return
+      }
+      
+      // Verify the session is properly established
+      if (!signInData.session) {
+        console.error('No session established after sign in')
+        setErrors({ general: 'Account created but session not established. Please sign in manually.' })
+        return
+      }
+      
+      console.log('User authenticated successfully for database operations. Session established.')
+      console.log('Current user ID from session:', signInData.user.id)
+
+      // Step 2: Create user record in users table (now with active session)
       const userInsertData = {
         id: authData.user.id,
         email: formData.email,
@@ -112,6 +135,8 @@ export default function RegisterPage() {
       console.log('Attempting to insert user into users table:', userInsertData)
       console.log('User ID type:', typeof userInsertData.id, 'Value:', userInsertData.id)
       console.log('User type value:', userInsertData.user_type)
+      console.log('Current session user ID:', signInData.user.id)
+      console.log('Session matches user ID?', signInData.user.id === userInsertData.id)
       
       const { data: userData, error: userError } = await supabase
         .from('users')
@@ -186,12 +211,13 @@ export default function RegisterPage() {
 
       // Step 3: Success! Show success state
       console.log('Registration successful:', authData.user)
+      console.log('User is now signed in and can proceed with onboarding')
       
       setIsSuccess(true)
       
-      // Redirect to login page after 3 seconds so they can authenticate
+      // Redirect to dashboard after 3 seconds since user is now signed in
       setTimeout(() => {
-        navigate('/auth/login', { replace: true })
+        navigate('/dashboard', { replace: true })
       }, 3000)
       
     } catch (err) {
@@ -224,10 +250,10 @@ export default function RegisterPage() {
                 Please check your inbox and click the verification link.
               </p>
               <p className="text-sm text-slate-500">
-                After verifying your email, you'll be redirected to login to access your account.
+                You're now signed in and will be redirected to your dashboard.
               </p>
               <p className="text-sm text-slate-500">
-                Redirecting to login page in a few seconds...
+                Redirecting to dashboard in a few seconds...
               </p>
             </CardContent>
           </Card>
