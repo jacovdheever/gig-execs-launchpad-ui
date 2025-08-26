@@ -114,9 +114,13 @@ export default function RegisterPage() {
       console.log('User type value:', userInsertData.user_type)
       
       const { data: userData, error: userError } = await supabase
-        .from('users')
-        .insert([userInsertData])
-        .select()
+        .rpc('create_user_profile', {
+          user_id: userInsertData.id,
+          user_email: userInsertData.email,
+          user_first_name: userInsertData.firstName,
+          user_last_name: userInsertData.lastName,
+          user_type: userInsertData.userType
+        })
       
       console.log('Users table insert result:', { userData, userError })
       console.log('User error details:', {
