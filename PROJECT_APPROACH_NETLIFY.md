@@ -147,7 +147,87 @@ await fetch('/.netlify/functions/sendEmail', {
 
 ---
 
-## 5) UX Flows
+## 5) Security Architecture & Best Practices
+
+### ⚠️ **CRITICAL: Never Expose Service Role Keys in Frontend**
+
+**NEVER store sensitive keys in frontend code or environment variables accessible to the browser:**
+
+- ❌ `VITE_SUPABASE_SERVICE_ROLE_KEY` (frontend accessible)
+- ❌ `VITE_STRIPE_SECRET_KEY` (frontend accessible)
+- ❌ Any secret keys with `VITE_` prefix
+
+**ALWAYS use server-side functions for sensitive operations:**
+
+- ✅ **Netlify Functions** for database operations requiring elevated privileges
+- ✅ **Supabase Edge Functions** for complex business logic
+- ✅ **Server-side API endpoints** for payment processing
+- ✅ **Environment variables** only accessible to server-side code
+
+### 5.1 Secure Registration Flow Architecture
+
+**Current Implementation (INSECURE - DO NOT USE):**
+```typescript
+// ❌ INSECURE - Service role key exposed to browser
+const serviceRoleClient = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY  // EXPOSED!
+)
+```
+
+**Secure Implementation (REQUIRED):**
+```typescript
+// ✅ SECURE - Call Netlify function instead
+const response = await fetch('/.netlify/functions/register-user', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(userData)
+})
+```
+
+### 5.2 Required Security Measures
+
+1. **Frontend Environment Variables (Public):**
+   - `VITE_SUPABASE_URL` - Public Supabase URL
+   - `VITE_SUPABASE_ANON_KEY` - Public anon key (limited permissions)
+
+2. **Server Environment Variables (Private):**
+   - `SUPABASE_SERVICE_ROLE_KEY` - Server-side only
+   - `STRIPE_SECRET_KEY` - Server-side only
+   - `RESEND_API_KEY` - Server-side only
+
+3. **Database Operations:**
+   - **User registration**: Netlify Function + service role
+   - **Profile updates**: RLS policies + authenticated user context
+   - **Payment processing**: Netlify Function + Stripe secret key
+   - **Email sending**: Netlify Function + Resend API key
+
+### 5.3 Implementation Priority
+
+**IMMEDIATE (Security Critical):**
+- [ ] Replace frontend service role usage with Netlify Functions
+- [ ] Move all sensitive operations to server-side
+- [ ] Implement proper RLS policies for authenticated operations
+
+**PHASE 2 (Enhanced Security):**
+- [ ] Add request validation and rate limiting
+- [ ] Implement audit logging for sensitive operations
+- [ ] Add IP whitelisting for admin functions
+
+### 5.4 Security Checklist
+
+**Before Production Deployment:**
+- [ ] No `VITE_` prefixed secret keys in frontend
+- [ ] All sensitive operations use Netlify Functions
+- [ ] RLS policies properly configured for all tables
+- [ ] Service role keys only accessible server-side
+- [ ] Environment variables properly secured in Netlify
+- [ ] No hardcoded secrets in source code
+- [ ] Proper authentication flow for all protected routes
+
+---
+
+## 6) UX Flows
 
 - Auth & Registration
 - Role-based dashboard
@@ -157,7 +237,7 @@ await fetch('/.netlify/functions/sendEmail', {
 
 ---
 
-## 6) Core Features
+## 7) Core Features
 
 - Projects: Create/edit, skills join table, public browse
 - Bids: Create/read with RLS, email triggers
@@ -166,7 +246,7 @@ await fetch('/.netlify/functions/sendEmail', {
 
 ---
 
-## 7) Security & Testing
+## 8) Security & Testing
 
 - All reads/writes pass RLS
 - File uploads: signed URLs tied to owner
@@ -175,7 +255,7 @@ await fetch('/.netlify/functions/sendEmail', {
 
 ---
 
-## 8) Sprint Plan
+## 9) Sprint Plan
 
 **Sprint 1**
 - Auth UI + verification guard
@@ -191,7 +271,7 @@ await fetch('/.netlify/functions/sendEmail', {
 
 ---
 
-## 9) Gotchas & Conventions
+## 10) Gotchas & Conventions
 
 - Table is **reference_contacts**
 - Use join tables for filterable facets
@@ -217,7 +297,7 @@ await fetch('/.netlify/functions/sendEmail', {
 
 ---
 
-## 10) Database Schema Reference
+## 11) Database Schema Reference
 
 ### ⚠️ **CRITICAL: Always Check Database Schema Before Database Operations**
 
