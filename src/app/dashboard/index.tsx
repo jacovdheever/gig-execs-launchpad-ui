@@ -69,18 +69,17 @@ export default function DashboardPage() {
           .select('id')
           .eq('user_id', userId);
 
-        // Calculate completion based on ALL mandatory fields across 6 steps
+        // Calculate completion based on TRULY mandatory fields across 6 steps
         let completedFields = 0;
-        const totalFields = 12; // Comprehensive list of all mandatory fields
+        const totalFields = 11; // Only mandatory fields (bio is optional)
 
-        // Step 2: Personal & Location (4 fields)
+        // Step 2: Personal & Location (3 mandatory fields + 1 optional)
         const jobTitleComplete = !!consultantProfile?.job_title;
-        const bioComplete = !!consultantProfile?.bio;
         const addressComplete = !!consultantProfile?.address1;
         const countryComplete = !!consultantProfile?.country;
+        // Note: bio is optional, not counted in mandatory fields
 
         if (jobTitleComplete) completedFields++;
-        if (bioComplete) completedFields++;
         if (addressComplete) completedFields++;
         if (countryComplete) completedFields++;
 
@@ -104,17 +103,17 @@ export default function DashboardPage() {
         if (hourlyRateComplete) completedFields++;
 
         console.log('=== DETAILED FIELD COMPLETION STATUS ===');
-        console.log('Step 2 - Personal & Location:');
-        console.log('  - job_title:', jobTitleComplete, 'value:', consultantProfile?.job_title);
-        console.log('  - bio:', bioComplete, 'value:', consultantProfile?.bio);
-        console.log('  - address1:', addressComplete, 'value:', consultantProfile?.address1);
-        console.log('  - country:', countryComplete, 'value:', consultantProfile?.country);
-        console.log('Step 3 - Work Experience:', workExpComplete, 'entries:', workExperience?.length);
-        console.log('Step 4 - Skills & Industries:');
+        console.log('Step 2 - Personal & Location (3 mandatory + 1 optional):');
+        console.log('  - job_title (mandatory):', jobTitleComplete, 'value:', consultantProfile?.job_title);
+        console.log('  - bio (optional):', !!consultantProfile?.bio, 'value:', consultantProfile?.bio);
+        console.log('  - address1 (mandatory):', addressComplete, 'value:', consultantProfile?.address1);
+        console.log('  - country (mandatory):', countryComplete, 'value:', consultantProfile?.country);
+        console.log('Step 3 - Work Experience (mandatory):', workExpComplete, 'entries:', workExperience?.length);
+        console.log('Step 4 - Skills & Industries (both mandatory):');
         console.log('  - skills:', skillsComplete, 'count:', userSkills?.length);
         console.log('  - industries:', industriesComplete, 'count:', userIndustries?.length);
-        console.log('Step 5 - Languages:', languagesComplete, 'count:', userLanguages?.length);
-        console.log('Step 6 - Hourly Rate:', hourlyRateComplete, 'min:', consultantProfile?.hourly_rate_min, 'max:', consultantProfile?.hourly_rate_max);
+        console.log('Step 5 - Languages (mandatory):', languagesComplete, 'count:', userLanguages?.length);
+        console.log('Step 6 - Hourly Rate (both mandatory):', hourlyRateComplete, 'min:', consultantProfile?.hourly_rate_min, 'max:', consultantProfile?.hourly_rate_max);
         console.log('=== END FIELD COMPLETION STATUS ===');
 
         console.log('Consultant profile data:', consultantProfile);
