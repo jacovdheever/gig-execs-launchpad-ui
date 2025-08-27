@@ -50,13 +50,20 @@ export default function ClientOnboardingReview() {
       }
 
       // Load all profile data from various tables
+      console.log('=== REVIEW STEP DEBUG ===');
+      console.log('Loading profile data for user:', user.id);
+      
       const [
         { data: userData },
         { data: clientProfile }
       ] = await Promise.all([
         supabase.from('users').select('first_name, last_name, profile_photo_url').eq('id', user.id).single(),
-        supabase.from('client_profiles').select('company_name, website, duns_number, organisation_type, industry, logo_url, address1, country_id').eq('user_id', user.id).single()
+        supabase.from('client_profiles').select('job_title, company_name, website, duns_number, organisation_type, industry, logo_url, address1, country_id').eq('user_id', user.id).single()
       ]);
+
+      console.log('User data loaded:', userData);
+      console.log('Client profile data loaded:', clientProfile);
+      console.log('Job title from client profile:', clientProfile?.job_title);
 
       // Load country name
       let countryName = '';
@@ -67,9 +74,10 @@ export default function ClientOnboardingReview() {
           .eq('id', clientProfile.country_id)
           .single();
         countryName = country?.name || '';
+        console.log('Country name loaded:', countryName);
       }
 
-      setProfileData({
+      const profileDataToSet = {
         personal: {
           first_name: userData?.first_name || '',
           last_name: userData?.last_name || '',
@@ -86,7 +94,13 @@ export default function ClientOnboardingReview() {
           city: clientProfile?.address1 || '',
           country: countryName
         }
-      });
+      };
+
+      console.log('Setting profile data:', profileDataToSet);
+      console.log('Job title in personal data:', profileDataToSet.personal.job_title);
+      console.log('=== END REVIEW DEBUG ===');
+
+      setProfileData(profileDataToSet);
     } catch (error) {
       console.error('Error loading profile data:', error);
       setError('Failed to load profile data');
