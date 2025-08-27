@@ -959,3 +959,122 @@ CREATE TABLE dispute_responses (
 ---
 
 ## 13) Database Schema Reference
+
+```
+
+## Feature Completion Checkpoints
+
+### ✅ Client Onboarding & Profile Completeness System (Completed: August 27, 2025)
+
+**Status**: COMPLETE - All functionality working correctly
+
+**Features Implemented**:
+- Complete client onboarding flow (4 steps: LinkedIn/Manual selection, Personal Profile, Company Profile, Review)
+- Profile photo upload for clients using Supabase Storage
+- Company logo upload using dedicated `company-logos` bucket
+- Integration with dashboard profile completeness indicator
+- Accurate profile completeness calculation (6/6 mandatory fields for clients)
+- Responsive design with mobile-first approach
+- Database integration with proper field mapping
+
+**Key Technical Achievements**:
+- Resolved "bucket not found" error by creating proper Supabase Storage buckets
+- Fixed `job_title` field storage and display issues
+- Implemented robust profile completeness calculation with automatic refresh triggers
+- Added multiple event listeners for automatic UI updates (visibility, focus, navigation)
+- Corrected database schema constraints for client profiles
+
+**Lessons Learned**:
+- Always verify Supabase Storage bucket existence before implementing file uploads
+- Profile completeness calculations require careful field-by-field validation
+- Multiple refresh triggers (visibility, focus, navigation) ensure consistent UI state
+- Database schema changes may be needed when adding new user types
+- Extensive console logging is crucial for debugging complex data flow issues
+
+---
+
+### ✅ Community Feature - Basic Landing Page & Posting (Completed: August 27, 2025)
+
+**Status**: COMPLETE - Core functionality working correctly
+
+**Features Implemented**:
+- Community landing page with post feed
+- Modal-based new post composer (Skool-style)
+- Category filtering and sorting (Default, New, Top, Unread)
+- Post creation with title, body, and category selection
+- Profile picture display on all posts and composer
+- Responsive design with Tailwind CSS
+- Database schema with proper RLS policies
+
+**Database Tables Created**:
+- `forum_categories` - Post categories
+- `forum_posts` - Main post content
+- `forum_comments` - Post comments
+- `forum_post_reactions` - Like/unlike functionality
+- `forum_post_reads` - Track read status for unread filter
+
+**Key Technical Achievements**:
+- Implemented modal overlay for post composer instead of inline expansion
+- Fixed profile picture display by properly mapping Supabase join data
+- Removed unnecessary second-level navigation tabs
+- Eliminated hardcoded content (coffee hour banner, email toggle)
+- Created comprehensive TypeScript interfaces and API functions
+
+**Lessons Learned**:
+- **Supabase Join Data Mapping**: When using joins like `users!forum_posts_author_id_fkey()`, the returned data structure may be nested differently than expected. Always add data transformation layers to ensure proper mapping to your TypeScript interfaces.
+- **Modal vs Inline UX**: For post creation, modal overlays provide better UX than inline expansion, especially on mobile devices.
+- **Profile Picture Consistency**: Ensure profile pictures are loaded and displayed consistently across all components (composer, post cards, user inputs).
+- **Data Transformation**: Raw Supabase data often needs transformation to match your frontend data structures. Don't assume the data will be in the exact format you expect.
+- **Debugging Strategy**: Use emoji-prefixed console logs (🔍) for easy identification of debug output in complex data flow scenarios.
+
+**Technical Implementation Details**:
+- **Data Transformation Pattern**: Implemented consistent data transformation in API functions to handle both array and single object cases from Supabase joins
+- **Component Architecture**: Used React Query hooks for server state management with optimistic updates
+- **Storage Integration**: Leveraged existing Supabase Storage buckets for profile photos
+- **Type Safety**: Created comprehensive TypeScript interfaces that match the database schema
+
+**Future Enhancements Ready**:
+- Comment system implementation
+- Post editing and deletion
+- Advanced search and filtering
+- User notifications
+- Community moderation tools
+
+---
+
+## Lessons Learned Summary
+
+### Database & Backend
+1. **Supabase Storage Buckets**: Always create and configure storage buckets before implementing file uploads
+2. **Join Data Handling**: Supabase joins return nested data structures that require transformation layers
+3. **RLS Policies**: Implement proper Row Level Security policies for all new tables
+4. **Schema Validation**: Test database constraints thoroughly when adding new user types
+
+### Frontend Development
+1. **Profile Completeness**: Complex calculations require extensive debugging and multiple refresh triggers
+2. **Modal UX**: Modal overlays often provide better UX than inline expansion for complex forms
+3. **Data Flow Debugging**: Use consistent logging patterns (emoji prefixes) for easy debugging
+4. **State Management**: React Query provides excellent server state management for real-time data
+
+### Project Management
+1. **Iterative Development**: Complex features require multiple rounds of testing and refinement
+2. **User Feedback Integration**: Real user testing reveals UX issues that aren't apparent in development
+3. **Documentation**: Comprehensive checkpoints help maintain project momentum and context
+4. **Error Resolution**: Systematic debugging with console logs is more effective than guessing
+
+---
+
+## Next Development Phase
+
+**Community Feature Expansion**:
+- Implement comment system
+- Add post editing/deletion
+- Implement advanced search
+- Add user notifications
+- Community moderation tools
+
+**General Improvements**:
+- Performance optimization for large post feeds
+- Enhanced mobile responsiveness
+- Accessibility improvements
+- Analytics and insights
