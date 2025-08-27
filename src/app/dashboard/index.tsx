@@ -134,8 +134,15 @@ export default function DashboardPage() {
         console.log('User industries:', userIndustries);
         console.log('User languages:', userLanguages);
         console.log('Work experience:', workExperience);
-        console.log('Completed fields:', completedFields, 'of', totalFields);
+        console.log('=== FIELD COUNTING BREAKDOWN ===');
+        console.log('Step 2 - Personal & Location: +', (jobTitleComplete ? 1 : 0) + (addressComplete ? 1 : 0) + (countryComplete ? 1 : 0), 'fields');
+        console.log('Step 3 - Work Experience: +', (workExpComplete ? 1 : 0), 'fields');
+        console.log('Step 4 - Skills & Industries: +', (skillsComplete ? 1 : 0) + (industriesComplete ? 1 : 0), 'fields');
+        console.log('Step 5 - Languages: +', (languagesComplete ? 1 : 0), 'fields');
+        console.log('Step 6 - Hourly Rate: +', (hourlyRateMinComplete ? 1 : 0) + (hourlyRateMaxComplete ? 1 : 0), 'fields');
+        console.log('Total completed fields:', completedFields, 'of', totalFields);
         console.log('Consultant completion percentage:', Math.round((completedFields / totalFields) * 100));
+        console.log('=== END FIELD COUNTING BREAKDOWN ===');
 
         return Math.round((completedFields / totalFields) * 100);
       } else {
