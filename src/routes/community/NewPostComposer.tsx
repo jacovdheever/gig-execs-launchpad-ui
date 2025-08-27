@@ -1,9 +1,9 @@
 /**
  * NewPostComposer Component
- * Inline card for creating new posts
+ * Modal composer for creating new posts
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Paperclip, 
   Link, 
@@ -37,10 +37,17 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     attachments: []
   });
   const [sendEmail, setSendEmail] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
   const { data: categories } = useCategories();
   const createPost = useCreatePost();
+
+  useEffect(() => {
+    if (isOpen) {
+      // Load current user when composer opens
+      getCurrentUser().then(setUser);
+    }
+  }, [isOpen]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,7 +67,6 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
         attachments: []
       });
       setSendEmail(false);
-      setIsExpanded(false);
       
       onPostCreated?.();
       onClose();
@@ -73,161 +79,195 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const handleClose = () => {
+    // Reset form when closing
+    setFormData({
+      title: '',
+      body: '',
+      category_id: 0,
+      attachments: []
+    });
+    setSendEmail(false);
+    onClose();
+  };
+
   if (!isOpen) return null;
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
-      <form onSubmit={handleSubmit}>
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-4">
-          <Avatar className="w-10 h-10">
-            <AvatarImage src="" alt="Your avatar" />
-            <AvatarFallback className="bg-slate-100 text-slate-600 text-sm font-medium">
-              Y
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex-1">
-            <div className="text-sm text-slate-500">
-              posting in <span className="font-medium text-slate-700">Lead by Design</span>
+    <>
+      {/* Backdrop */}
+      <div 
+        className="fixed inset-0 bg-black bg-opacity-50 z-40"
+        onClick={handleClose}
+      />
+      
+      {/* Modal */}
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+          <form onSubmit={handleSubmit}>
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-slate-200">
+              <div className="flex items-center gap-3">
+                <Avatar className="w-10 h-10">
+                  <AvatarImage 
+                    src={user?.profilePhotoUrl} 
+                    alt={`${user?.firstName} ${user?.lastName}`}
+                  />
+                  <AvatarFallback className="bg-slate-100 text-slate-600 text-sm font-medium">
+                    {user ? `${user.firstName?.charAt(0)}${user.lastName?.charAt(0)}` : 'U'}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <div className="font-medium text-slate-900">
+                    {user ? `${user.firstName} ${user.lastName}` : 'Loading...'}
+                  </div>
+                  <div className="text-sm text-slate-500">
+                    posting in <span className="font-medium text-slate-700">Lead by Design</span>
+                  </div>
+                </div>
+              </div>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={handleClose}
+                className="h-8 w-8 p-0 hover:bg-slate-100"
+              >
+                <X className="w-4 h-4" />
+              </Button>
             </div>
-          </div>
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={onClose}
-            className="h-8 w-8 p-0 hover:bg-slate-100"
-          >
-            <X className="w-4 h-4" />
-          </Button>
-        </div>
 
-        {/* Title Input */}
-        <div className="mb-4">
-          <Input
-            placeholder="Title"
-            value={formData.title}
-            onChange={(e) => handleInputChange('title', e.target.value)}
-            className="text-lg font-medium placeholder:opacity-20"
-            required
-          />
-        </div>
+            {/* Content */}
+            <div className="p-6 space-y-4">
+              {/* Title Input */}
+              <div>
+                <Input
+                  placeholder="Title"
+                  value={formData.title}
+                  onChange={(e) => handleInputChange('title', e.target.value)}
+                  className="text-lg font-medium placeholder:opacity-20"
+                  required
+                />
+              </div>
 
-        {/* Body Input */}
-        <div className="mb-4">
-          <Textarea
-            placeholder="Write something..."
-            value={formData.body}
-            onChange={(e) => handleInputChange('body', e.target.value)}
-            className="min-h-[100px] resize-none placeholder:opacity-20"
-          />
-        </div>
+              {/* Body Input */}
+              <div>
+                <Textarea
+                  placeholder="Write something..."
+                  value={formData.body}
+                  onChange={(e) => handleInputChange('body', e.target.value)}
+                  className="min-h-[120px] resize-none placeholder:opacity-20"
+                />
+              </div>
 
-        {/* Attachment Row */}
-        <div className="flex items-center gap-2 mb-4">
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
-            title="Attach file"
-          >
-            <Paperclip className="w-4 h-4" />
-          </Button>
-          
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
-            title="Add link"
-          >
-            <Link className="w-4 h-4" />
-          </Button>
-          
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
-            title="Add video"
-          >
-            <Play className="w-4 h-4" />
-          </Button>
-          
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
-            title="Create poll"
-          >
-            <BarChart3 className="w-4 h-4" />
-          </Button>
-          
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
-            title="Add emoji"
-          >
-            <Smile className="w-4 h-4" />
-          </Button>
-          
-          <span className="text-sm text-slate-500 font-medium">GIF</span>
-        </div>
+              {/* Attachment Options */}
+              <div className="flex items-center gap-2">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
+                  title="Attach file"
+                >
+                  <Paperclip className="w-4 h-4" />
+                </Button>
+                
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
+                  title="Add link"
+                >
+                  <Link className="w-4 h-4" />
+                </Button>
+                
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
+                  title="Add video"
+                >
+                  <Play className="w-4 h-4" />
+                </Button>
+                
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
+                  title="Create poll"
+                >
+                  <BarChart3 className="w-4 h-4" />
+                </Button>
+                
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
+                  title="Add emoji"
+                >
+                  <Smile className="w-4 h-4" />
+                </Button>
+                
+                <span className="text-sm text-slate-500 font-medium">GIF</span>
+              </div>
 
-        {/* Category Selection */}
-        <div className="mb-4">
-          <select
-            value={formData.category_id}
-            onChange={(e) => handleInputChange('category_id', parseInt(e.target.value))}
-            className="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-            required
-          >
-            <option value={0}>Select a category</option>
-            {categories?.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
+              {/* Category Selection */}
+              <div>
+                <select
+                  value={formData.category_id}
+                  onChange={(e) => handleInputChange('category_id', parseInt(e.target.value))}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  required
+                >
+                  <option value={0}>Select a category</option>
+                  {categories?.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
 
-        {/* Action Row */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Switch
-              id="send-email"
-              checked={sendEmail}
-              onCheckedChange={setSendEmail}
-              disabled
-            />
-            <Label htmlFor="send-email" className="text-sm text-slate-600">
-              Send email to all members
-            </Label>
-          </div>
-          
-          <div className="flex items-center gap-3">
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={onClose}
-              className="text-slate-600 hover:text-slate-700"
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              disabled={!formData.title.trim() || !formData.category_id || createPost.isPending}
-              className="bg-slate-600 hover:bg-slate-700 text-white"
-            >
-              {createPost.isPending ? 'Posting...' : 'Post'}
-            </Button>
-          </div>
+            {/* Footer */}
+            <div className="flex items-center justify-between p-6 border-t border-slate-200">
+              <div className="flex items-center gap-2">
+                <Switch
+                  id="send-email"
+                  checked={sendEmail}
+                  onCheckedChange={setSendEmail}
+                  disabled
+                />
+                <Label htmlFor="send-email" className="text-sm text-slate-600">
+                  Send email to all members
+                </Label>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={handleClose}
+                  className="text-slate-600 hover:text-slate-700"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={!formData.title.trim() || !formData.category_id || createPost.isPending}
+                  className="bg-slate-600 hover:bg-slate-700 text-white"
+                >
+                  {createPost.isPending ? 'Posting...' : 'Post'}
+                </Button>
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
+      </div>
+    </>
   );
 }

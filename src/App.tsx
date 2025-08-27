@@ -50,13 +50,6 @@ import ClientOnboardingReview from "./app/onboarding/client/review";
 import CommunityLayout from "./routes/community/CommunityLayout";
 import CommunityLanding from "./routes/community/CommunityLanding";
 import CommunityTopic from "./routes/community/CommunityTopic";
-import {
-  ClassroomPlaceholder,
-  CalendarPlaceholder,
-  MembersPlaceholder,
-  LeaderboardsPlaceholder,
-  AboutPlaceholder
-} from "./routes/community/CommunityPlaceholder";
 
 const queryClient = new QueryClient();
 
@@ -121,11 +114,6 @@ const App = () => (
             <Route path="/community" element={<CommunityLayout />}>
               <Route index element={<CommunityLanding />} />
               <Route path="topic/:slug" element={<CommunityTopic />} />
-              <Route path="classroom" element={<ClassroomPlaceholder />} />
-              <Route path="calendar" element={<CalendarPlaceholder />} />
-              <Route path="members" element={<MembersPlaceholder />} />
-              <Route path="leaderboards" element={<LeaderboardsPlaceholder />} />
-              <Route path="about" element={<AboutPlaceholder />} />
             </Route>
 
             {/* Maintenance Page */}

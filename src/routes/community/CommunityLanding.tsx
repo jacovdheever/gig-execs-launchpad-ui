@@ -3,8 +3,8 @@
  * Main community feed view with "All" posts
  */
 
-import { useState } from 'react';
-import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
@@ -15,21 +15,26 @@ import NewPostComposer from './NewPostComposer';
 import { useFeedFilters } from '@/lib/community.hooks';
 import { usePosts } from '@/lib/community.hooks';
 import { getCurrentUser } from '@/lib/getCurrentUser';
-import { formatTimeUntil } from '@/lib/time';
 
 export default function CommunityLanding() {
   const [isComposerOpen, setIsComposerOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const { filters, updateCategory, updateSort, nextPage, prevPage } = useFeedFilters();
   const { data: feedData, isLoading, error } = usePosts(filters);
+
+  useEffect(() => {
+    // Load current user for profile picture
+    getCurrentUser().then(setUser => setCurrentUser(setUser));
+  }, []);
 
   const handlePostCreated = () => {
     // Refresh the feed
     window.location.reload();
   };
 
-  // Coffee hour banner (static stub)
-  const coffeeHourDate = new Date();
-  coffeeHourDate.setHours(coffeeHourDate.getHours() + 26);
+  const getInitials = (firstName: string, lastName: string) => {
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+  };
 
   if (error) {
     return (
@@ -46,9 +51,12 @@ export default function CommunityLanding() {
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
         <div className="flex items-center gap-3">
           <Avatar className="w-10 h-10">
-            <AvatarImage src="" alt="Your avatar" />
+            <AvatarImage 
+              src={currentUser?.profilePhotoUrl} 
+              alt={`${currentUser?.firstName} ${currentUser?.lastName}`}
+            />
             <AvatarFallback className="bg-slate-100 text-slate-600 text-sm font-medium">
-              Y
+              {currentUser ? getInitials(currentUser.firstName, currentUser.lastName) : 'U'}
             </AvatarFallback>
           </Avatar>
           <Input
@@ -57,16 +65,6 @@ export default function CommunityLanding() {
             onClick={() => setIsComposerOpen(true)}
             readOnly
           />
-        </div>
-      </div>
-
-      {/* Coffee Hour Banner */}
-      <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-xl p-4">
-        <div className="flex items-center gap-3">
-          <Calendar className="w-5 h-5 text-yellow-600" />
-          <span className="text-yellow-800 font-medium">
-            Coffee hour is happening {formatTimeUntil(coffeeHourDate)}
-          </span>
         </div>
       </div>
 
@@ -81,13 +79,6 @@ export default function CommunityLanding() {
           onSortChange={updateSort}
         />
       </div>
-
-      {/* New Post Composer */}
-      <NewPostComposer
-        isOpen={isComposerOpen}
-        onClose={() => setIsComposerOpen(false)}
-        onPostCreated={handlePostCreated}
-      />
 
       {/* Posts Feed */}
       <div className="space-y-4">
@@ -161,6 +152,13 @@ export default function CommunityLanding() {
           </div>
         </div>
       )}
+
+      {/* New Post Composer Modal */}
+      <NewPostComposer
+        isOpen={isComposerOpen}
+        onClose={() => setIsComposerOpen(false)}
+        onPostCreated={handlePostCreated}
+      />
     </div>
   );
 }
