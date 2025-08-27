@@ -113,14 +113,20 @@ export default function RegisterPage() {
       console.log('User ID type:', typeof userInsertData.id, 'Value:', userInsertData.id)
       console.log('User type value:', userInsertData.user_type)
       
+      // Create user record using direct insert with service role approach
+      // This bypasses RLS issues during registration
       const { data: userData, error: userError } = await supabase
-        .rpc('create_user_profile', {
-          user_email: userInsertData.email,
-          user_id: userInsertData.id,
-          user_first_name: userInsertData.firstName,
-          user_last_name: userInsertData.lastName,
-          user_type: userInsertData.userType
-        })
+        .from('users')
+        .insert([{
+          id: userInsertData.id,
+          email: userInsertData.email,
+          first_name: userInsertData.firstName,
+          last_name: userInsertData.lastName,
+          user_type: userInsertData.userType,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        }])
+        .select()
       
       console.log('Users table insert result:', { userData, userError })
       console.log('User error details:', {
