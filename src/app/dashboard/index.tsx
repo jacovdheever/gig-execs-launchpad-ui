@@ -75,7 +75,7 @@ export default function DashboardPage() {
 
         // Calculate completion based on TRULY mandatory fields across 6 steps
         let completedFields = 0;
-        const totalFields = 11; // Only mandatory fields (bio is optional)
+        const totalFields = 9; // 9 mandatory fields: job_title, address1, country, work_exp, skills, industries, languages, hourly_rate_min, hourly_rate_max
 
         // Step 2: Personal & Location (3 mandatory fields + 1 optional)
         const jobTitleComplete = !!consultantProfile?.job_title;
