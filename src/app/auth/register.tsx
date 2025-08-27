@@ -119,7 +119,7 @@ export default function RegisterPage() {
       
       // Create user record using secure Netlify Function
       // This keeps the service role key server-side only
-      const response = await fetch('/.netlify/functions/register-user', {
+      const response = await fetch('/.netlify/functions/register-user-simple', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

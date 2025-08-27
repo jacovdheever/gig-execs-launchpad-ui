@@ -1,0 +1,12 @@
+{
+  "name": "gig-execs-netlify-functions",
+  "version": "1.0.0",
+  "description": "Netlify Functions for GigExecs",
+  "main": "index.js",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.53.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
