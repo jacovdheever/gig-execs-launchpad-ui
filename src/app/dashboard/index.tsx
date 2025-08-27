@@ -33,8 +33,80 @@ export default function DashboardPage() {
       });
   }, []);
 
-  // Get profile completeness from user data
-  const profileCompleteness = user?.profile_complete_pct || 0;
+  // Calculate accurate profile completeness based on completed mandatory fields
+  const calculateProfileCompleteness = async (userId: string, userRole: string) => {
+    try {
+      if (userRole === 'consultant') {
+        // Consultant mandatory fields
+        const { data: consultantProfile } = await supabase
+          .from('consultant_profiles')
+          .select('job_title, bio, address1, country, hourly_rate_min, hourly_rate_max')
+          .eq('user_id', userId)
+          .single();
+
+        const { data: userSkills } = await supabase
+          .from('user_skills')
+          .select('skill_id')
+          .eq('user_id', userId);
+
+        const { data: userIndustries } = await supabase
+          .from('user_industries')
+          .select('industry_id')
+          .eq('user_id', userId);
+
+        const { data: userLanguages } = await supabase
+          .from('user_languages')
+          .select('language_id')
+          .eq('user_id', userId);
+
+        // Calculate completion based on mandatory fields
+        let completedFields = 0;
+        const totalFields = 6; // job_title, bio, address1, country, hourly_rate, skills
+
+        if (consultantProfile?.job_title) completedFields++;
+        if (consultantProfile?.bio) completedFields++;
+        if (consultantProfile?.address1) completedFields++;
+        if (consultantProfile?.country) completedFields++;
+        if (consultantProfile?.hourly_rate_min && consultantProfile?.hourly_rate_max) completedFields++;
+        if (userSkills && userSkills.length > 0) completedFields++;
+
+        return Math.round((completedFields / totalFields) * 100);
+      } else {
+        // Client mandatory fields
+        const { data: clientProfile } = await supabase
+          .from('client_profiles')
+          .select('job_title, company_name, organisation_type, industry, address1, country_id')
+          .eq('user_id', userId)
+          .single();
+
+        // Calculate completion based on mandatory fields
+        let completedFields = 0;
+        const totalFields = 6; // job_title, company_name, organisation_type, industry, address1, country_id
+
+        if (clientProfile?.job_title) completedFields++;
+        if (clientProfile?.company_name) completedFields++;
+        if (clientProfile?.organisation_type) completedFields++;
+        if (clientProfile?.industry) completedFields++;
+        if (clientProfile?.address1) completedFields++;
+        if (clientProfile?.country_id) completedFields++;
+
+        return Math.round((completedFields / totalFields) * 100);
+      }
+    } catch (error) {
+      console.error('Error calculating profile completeness:', error);
+      return 0;
+    }
+  };
+
+  // State for profile completeness
+  const [profileCompleteness, setProfileCompleteness] = useState(0);
+  
+  // Load profile completeness on component mount
+  useEffect(() => {
+    if (user) {
+      calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
+    }
+  }, [user]);
   
   const stats = {
     totalProjects: 12,
@@ -116,7 +188,7 @@ export default function DashboardPage() {
       {/* Welcome Section */}
       <div className="bg-gradient-to-r from-[#012E46] to-[#4885AA] rounded-lg p-6 text-white">
         <h1 className="text-2xl font-bold mb-2">
-          Welcome back, {user.role === 'consultant' ? 'Consultant' : 'Client'}!
+          Welcome back, {user.firstName}!
         </h1>
         <p className="text-slate-100">
           Here's what's happening with your {user.role === 'consultant' ? 'consulting work' : 'projects'} today.

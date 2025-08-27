@@ -325,11 +325,11 @@ export default function ClientOnboardingReview() {
 
                     {/* Website */}
                     {profileData.company.website && (
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm font-medium text-slate-600 w-24">Website:</span>
-                        <div className="flex items-center gap-2">
-                          <Globe className="w-4 h-4 text-slate-400" />
-                          <span className="text-slate-800">{profileData.company.website}</span>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                        <span className="text-sm font-medium text-slate-600 w-24 flex-shrink-0">Website:</span>
+                        <div className="flex items-center gap-2 min-w-0">
+                          <Globe className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                          <span className="text-slate-800 break-all">{profileData.company.website}</span>
                         </div>
                       </div>
                     )}
