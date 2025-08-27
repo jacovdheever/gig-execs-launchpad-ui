@@ -115,8 +115,8 @@ export default function RegisterPage() {
       
       const { data: userData, error: userError } = await supabase
         .rpc('create_user_profile', {
-          user_id: userInsertData.id,
           user_email: userInsertData.email,
+          user_id: userInsertData.id,
           user_first_name: userInsertData.firstName,
           user_last_name: userInsertData.lastName,
           user_type: userInsertData.userType
