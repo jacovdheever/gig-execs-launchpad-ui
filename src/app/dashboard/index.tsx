@@ -42,7 +42,7 @@ export default function DashboardPage() {
       console.log('Timestamp:', new Date().toISOString());
       
       if (userRole === 'consultant') {
-        // Consultant mandatory fields
+        // Consultant mandatory fields across all 6 steps
         const { data: consultantProfile } = await supabase
           .from('consultant_profiles')
           .select('job_title, bio, address1, country, hourly_rate_min, hourly_rate_max')
@@ -64,19 +64,40 @@ export default function DashboardPage() {
           .select('language_id')
           .eq('user_id', userId);
 
-        // Calculate completion based on mandatory fields
-        let completedFields = 0;
-        const totalFields = 6; // job_title, bio, address1, country, hourly_rate, skills
+        const { data: workExperience } = await supabase
+          .from('work_experience')
+          .select('id')
+          .eq('user_id', userId);
 
-        if (consultantProfile?.job_title) completedFields++;
-        if (consultantProfile?.bio) completedFields++;
-        if (consultantProfile?.address1) completedFields++;
-        if (consultantProfile?.country) completedFields++;
+        // Calculate completion based on ALL mandatory fields across 6 steps
+        let completedFields = 0;
+        const totalFields = 12; // Comprehensive list of all mandatory fields
+
+        // Step 2: Personal & Location (5 fields)
+        if (consultantProfile?.job_title) completedFields++; // job_title
+        if (consultantProfile?.bio) completedFields++; // bio
+        if (consultantProfile?.address1) completedFields++; // city/address1
+        if (consultantProfile?.country) completedFields++; // country
+        // Note: first_name and last_name are in users table, not consultant_profiles
+
+        // Step 3: Work Experience (at least 1 entry required)
+        if (workExperience && workExperience.length > 0) completedFields++;
+
+        // Step 4: Skills & Industries (2 fields)
+        if (userSkills && userSkills.length > 0) completedFields++; // at least 1 skill
+        if (userIndustries && userIndustries.length > 0) completedFields++; // at least 1 industry
+
+        // Step 5: Languages (at least 1 language required)
+        if (userLanguages && userLanguages.length > 0) completedFields++;
+
+        // Step 6: Hourly Rate (2 fields)
         if (consultantProfile?.hourly_rate_min && consultantProfile?.hourly_rate_max) completedFields++;
-        if (userSkills && userSkills.length > 0) completedFields++;
 
         console.log('Consultant profile data:', consultantProfile);
         console.log('User skills:', userSkills);
+        console.log('User industries:', userIndustries);
+        console.log('User languages:', userLanguages);
+        console.log('Work experience:', workExperience);
         console.log('Completed fields:', completedFields, 'of', totalFields);
         console.log('Consultant completion percentage:', Math.round((completedFields / totalFields) * 100));
 
