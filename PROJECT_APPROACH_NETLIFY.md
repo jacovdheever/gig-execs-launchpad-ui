@@ -201,6 +201,20 @@ await fetch('/.netlify/functions/sendEmail', {
 - Use React Query or Next server actions + revalidation
 - Index frequent filter/search fields
 
+### ⚠️ **CRITICAL: Never Hardcode Values**
+
+**NEVER hardcode values that should come from user input or dynamic data:**
+- ❌ `'Pending'` for names, titles, or descriptions
+- ❌ `'consultant'` or `'client'` for user types
+- ❌ Any hardcoded strings that override actual user data
+- ❌ Default values that mask real functionality
+
+**ALWAYS:**
+- ✅ Use parameters passed to functions
+- ✅ Respect user input data
+- ✅ Maintain data integrity
+- ✅ Test with real user data to verify functionality
+
 ---
 
 ## 10) Database Schema Reference
