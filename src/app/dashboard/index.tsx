@@ -73,25 +73,49 @@ export default function DashboardPage() {
         let completedFields = 0;
         const totalFields = 12; // Comprehensive list of all mandatory fields
 
-        // Step 2: Personal & Location (5 fields)
-        if (consultantProfile?.job_title) completedFields++; // job_title
-        if (consultantProfile?.bio) completedFields++; // bio
-        if (consultantProfile?.address1) completedFields++; // city/address1
-        if (consultantProfile?.country) completedFields++; // country
-        // Note: first_name and last_name are in users table, not consultant_profiles
+        // Step 2: Personal & Location (4 fields)
+        const jobTitleComplete = !!consultantProfile?.job_title;
+        const bioComplete = !!consultantProfile?.bio;
+        const addressComplete = !!consultantProfile?.address1;
+        const countryComplete = !!consultantProfile?.country;
+
+        if (jobTitleComplete) completedFields++;
+        if (bioComplete) completedFields++;
+        if (addressComplete) completedFields++;
+        if (countryComplete) completedFields++;
 
         // Step 3: Work Experience (at least 1 entry required)
-        if (workExperience && workExperience.length > 0) completedFields++;
+        const workExpComplete = workExperience && workExperience.length > 0;
+        if (workExpComplete) completedFields++;
 
         // Step 4: Skills & Industries (2 fields)
-        if (userSkills && userSkills.length > 0) completedFields++; // at least 1 skill
-        if (userIndustries && userIndustries.length > 0) completedFields++; // at least 1 industry
+        const skillsComplete = userSkills && userSkills.length > 0;
+        const industriesComplete = userIndustries && userIndustries.length > 0;
+        
+        if (skillsComplete) completedFields++;
+        if (industriesComplete) completedFields++;
 
         // Step 5: Languages (at least 1 language required)
-        if (userLanguages && userLanguages.length > 0) completedFields++;
+        const languagesComplete = userLanguages && userLanguages.length > 0;
+        if (languagesComplete) completedFields++;
 
         // Step 6: Hourly Rate (2 fields)
-        if (consultantProfile?.hourly_rate_min && consultantProfile?.hourly_rate_max) completedFields++;
+        const hourlyRateComplete = consultantProfile?.hourly_rate_min && consultantProfile?.hourly_rate_max;
+        if (hourlyRateComplete) completedFields++;
+
+        console.log('=== DETAILED FIELD COMPLETION STATUS ===');
+        console.log('Step 2 - Personal & Location:');
+        console.log('  - job_title:', jobTitleComplete, 'value:', consultantProfile?.job_title);
+        console.log('  - bio:', bioComplete, 'value:', consultantProfile?.bio);
+        console.log('  - address1:', addressComplete, 'value:', consultantProfile?.address1);
+        console.log('  - country:', countryComplete, 'value:', consultantProfile?.country);
+        console.log('Step 3 - Work Experience:', workExpComplete, 'entries:', workExperience?.length);
+        console.log('Step 4 - Skills & Industries:');
+        console.log('  - skills:', skillsComplete, 'count:', userSkills?.length);
+        console.log('  - industries:', industriesComplete, 'count:', userIndustries?.length);
+        console.log('Step 5 - Languages:', languagesComplete, 'count:', userLanguages?.length);
+        console.log('Step 6 - Hourly Rate:', hourlyRateComplete, 'min:', consultantProfile?.hourly_rate_min, 'max:', consultantProfile?.hourly_rate_max);
+        console.log('=== END FIELD COMPLETION STATUS ===');
 
         console.log('Consultant profile data:', consultantProfile);
         console.log('User skills:', userSkills);
