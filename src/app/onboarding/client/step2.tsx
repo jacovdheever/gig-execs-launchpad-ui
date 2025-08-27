@@ -47,18 +47,27 @@ export default function ClientOnboardingStep2() {
         .single();
 
       // Load existing client profile data
-      const { data: clientProfile } = await supabase
+      console.log('Loading existing client profile data...');
+      const { data: clientProfile, error: clientProfileError } = await supabase
         .from('client_profiles')
         .select('job_title')
         .eq('user_id', user.id)
         .single();
 
+      if (clientProfileError) {
+        console.log('Client profile error (this might be normal for new users):', clientProfileError);
+      }
+      
+      console.log('Loaded client profile data:', clientProfile);
+
       if (userData) {
-        setFormData({
+        const initialFormData = {
           firstName: userData.first_name || '',
           lastName: userData.last_name || '',
           jobTitle: clientProfile?.job_title || ''
-        });
+        };
+        console.log('Setting initial form data:', initialFormData);
+        setFormData(initialFormData);
         setProfilePicture(userData.profile_photo_url);
       }
     } catch (error) {
@@ -69,14 +78,28 @@ export default function ClientOnboardingStep2() {
   };
 
   const validateForm = () => {
+    console.log('=== VALIDATION DEBUG ===');
+    console.log('Form data for validation:', formData);
+    console.log('firstName valid:', formData.firstName.trim() !== '');
+    console.log('lastName valid:', formData.lastName.trim() !== '');
+    console.log('jobTitle valid:', formData.jobTitle.trim() !== '');
+    
     const valid = formData.firstName.trim() !== '' && 
                   formData.lastName.trim() !== '' && 
                   formData.jobTitle.trim() !== '';
+    
+    console.log('Overall form valid:', valid);
+    console.log('=== END VALIDATION DEBUG ===');
     setIsValid(valid);
   };
 
   const handleInputChange = (field: keyof typeof formData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    console.log(`Input change - Field: ${field}, Value: "${value}"`);
+    setFormData(prev => {
+      const newData = { ...prev, [field]: value };
+      console.log('Updated form data:', newData);
+      return newData;
+    });
   };
 
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,13 +155,21 @@ export default function ClientOnboardingStep2() {
 
   const saveToSupabase = async () => {
     try {
+      console.log('=== SAVE TO SUPABASE DEBUG ===');
+      console.log('Form data:', formData);
+      console.log('Job title value:', formData.jobTitle);
+      console.log('Job title type:', typeof formData.jobTitle);
+      console.log('Job title length:', formData.jobTitle?.length);
+      
       const user = await getCurrentUser();
       if (!user) {
         console.error('No user found');
         return;
       }
+      console.log('User ID:', user.id);
 
       // Update users table with basic profile data
+      console.log('Updating users table...');
       const { error: userError } = await supabase
         .from('users')
         .update({
@@ -153,26 +184,41 @@ export default function ClientOnboardingStep2() {
         console.error('Error updating user:', userError);
         return;
       }
+      console.log('Users table updated successfully');
 
       // Update client_profiles table with job title
-      const { error: profileError } = await supabase
+      console.log('Updating client_profiles table...');
+      const upsertData = {
+        user_id: user.id,
+        job_title: formData.jobTitle,
+        updated_at: new Date().toISOString()
+      };
+      console.log('Upsert data:', upsertData);
+      
+      const { data: profileData, error: profileError } = await supabase
         .from('client_profiles')
-        .upsert({
-          user_id: user.id,
-          job_title: formData.jobTitle,
-          updated_at: new Date().toISOString()
-        }, {
+        .upsert(upsertData, {
           onConflict: 'user_id'
-        });
+        })
+        .select();
 
       if (profileError) {
         console.error('Error updating client profile:', profileError);
+        console.error('Profile error details:', {
+          message: profileError.message,
+          code: profileError.code,
+          details: profileError.details,
+          hint: profileError.hint
+        });
         return;
       }
-
-      console.log('Profile data saved successfully');
+      
+      console.log('Client profile updated successfully');
+      console.log('Returned profile data:', profileData);
+      console.log('=== END SAVE DEBUG ===');
     } catch (error) {
       console.error('Error saving profile data:', error);
+      console.error('Full error object:', error);
     }
   };
 
