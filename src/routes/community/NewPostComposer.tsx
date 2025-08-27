@@ -16,8 +16,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
 import { useCategories } from '@/lib/community.hooks';
 import { useCreatePost } from '@/lib/community.hooks';
 import { getCurrentUser } from '@/lib/getCurrentUser';
@@ -36,7 +34,6 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     category_id: 0,
     attachments: []
   });
-  const [sendEmail, setSendEmail] = useState(false);
   const [user, setUser] = useState<any>(null);
 
   const { data: categories } = useCategories();
@@ -66,7 +63,6 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
         category_id: 0,
         attachments: []
       });
-      setSendEmail(false);
       
       onPostCreated?.();
       onClose();
@@ -87,7 +83,6 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
       category_id: 0,
       attachments: []
     });
-    setSendEmail(false);
     onClose();
   };
 
@@ -235,17 +230,6 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
 
             {/* Footer */}
             <div className="flex items-center justify-between p-6 border-t border-slate-200">
-              <div className="flex items-center gap-2">
-                <Switch
-                  id="send-email"
-                  checked={sendEmail}
-                  onCheckedChange={setSendEmail}
-                  disabled
-                />
-                <Label htmlFor="send-email" className="text-sm text-slate-600">
-                  Send email to all members
-                </Label>
-              </div>
               
               <div className="flex items-center gap-3">
                 <Button

@@ -135,7 +135,19 @@ export async function fetchUnreadPosts(userId: string, filters: Omit<FeedFilters
   
   // Apply pagination
   const total = unreadPosts.length;
-  const posts = unreadPosts.slice(offset, offset + limit);
+  const posts = unreadPosts.slice(offset, offset + limit).map(post => {
+    // Transform the data to match our ForumPost interface
+    const transformedPost: ForumPost = {
+      ...post,
+      // Ensure author data is properly mapped - handle both array and single object cases
+      author: post.users ? (Array.isArray(post.users) ? post.users[0] : post.users) : undefined,
+      // Ensure category data is properly mapped - handle both array and single object cases
+      category: post.forum_categories ? (Array.isArray(post.forum_categories) ? post.forum_categories[0] : post.forum_categories) : undefined
+    };
+    
+    return transformedPost;
+  }) as ForumPost[];
+  
   const hasMore = offset + limit < total;
 
   return { posts, total, hasMore };
