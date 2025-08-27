@@ -39,6 +39,7 @@ export default function DashboardPage() {
     try {
       console.log('=== PROFILE COMPLETENESS DEBUG ===');
       console.log('Calculating for user:', userId, 'role:', userRole);
+      console.log('Timestamp:', new Date().toISOString());
       
       if (userRole === 'consultant') {
         // Consultant mandatory fields
@@ -137,11 +138,38 @@ export default function DashboardPage() {
   // State for profile completeness
   const [profileCompleteness, setProfileCompleteness] = useState(0);
   
-  // Load profile completeness on component mount
+  // Load profile completeness on component mount and when user changes
   useEffect(() => {
     if (user) {
       calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
     }
+  }, [user]);
+  
+  // Refresh profile completeness when component becomes visible (user returns from onboarding)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden && user) {
+        console.log('Dashboard became visible, refreshing profile completeness...');
+        calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    // Also refresh when the component gains focus (user navigates back)
+    const handleFocus = () => {
+      if (user) {
+        console.log('Dashboard gained focus, refreshing profile completeness...');
+        calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
+      }
+    };
+
+    window.addEventListener('focus', handleFocus);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+    };
   }, [user]);
   
   const stats = {
@@ -288,8 +316,27 @@ export default function DashboardPage() {
         >
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Profile Complete</CardTitle>
-            <div className="w-4 h-4 rounded-full bg-slate-200 flex items-center justify-center">
-              <span className="text-xs font-bold text-slate-600">{stats.profileCompleteness}%</span>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded-full bg-slate-200 flex items-center justify-center">
+                <span className="text-xs font-bold text-slate-600">{stats.profileCompleteness}%</span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-6 w-6 p-0 hover:bg-slate-100"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (user) {
+                    console.log('Manual refresh of profile completeness...');
+                    calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
+                  }
+                }}
+                title="Refresh profile completeness"
+              >
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+              </Button>
             </div>
           </CardHeader>
           <CardContent>
