@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Home, Briefcase, FolderClosed, Users, UserRound, HelpCircle, ChevronDown } from 'lucide-react';
+import { Home, Briefcase, FolderClosed, Users, UserRound, HelpCircle, ChevronDown, MessageSquare } from 'lucide-react';
 import type { UserRole } from '@/lib/getCurrentUser';
 
 type Props = { role: UserRole; activePath?: string; };
@@ -11,6 +11,7 @@ const active = 'text-slate-900 border-b-2 border-yellow-500';
 export function NavTabs({ role }: Props) {
   const common = [
     { to: '/dashboard', label: 'Dashboard', icon: <Home className="w-5 h-5" /> },
+    { to: '/community', label: 'Community', icon: <MessageSquare className="w-5 h-5" /> },
     ...(role === 'client'
       ? [{ to: '/find', label: 'Find Professionals & Gigs', icon: <UserRound className="w-5 h-5" />, chevron: true }]
       : [{ to: '/find', label: 'Find Gigs', icon: <Briefcase className="w-5 h-5" /> }]),
