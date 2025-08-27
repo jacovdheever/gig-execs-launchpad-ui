@@ -64,10 +64,14 @@ export default function DashboardPage() {
           .select('language_id')
           .eq('user_id', userId);
 
-        const { data: workExperience } = await supabase
+        const { data: workExperience, error: workExpError } = await supabase
           .from('work_experience')
-          .select('id')
+          .select('id, company, job_title, user_id')
           .eq('user_id', userId);
+
+        if (workExpError) {
+          console.error('Error loading work experience:', workExpError);
+        }
 
         // Calculate completion based on TRULY mandatory fields across 6 steps
         let completedFields = 0;
@@ -109,6 +113,10 @@ export default function DashboardPage() {
         console.log('  - address1 (mandatory):', addressComplete, 'value:', consultantProfile?.address1);
         console.log('  - country (mandatory):', countryComplete, 'value:', consultantProfile?.country);
         console.log('Step 3 - Work Experience (mandatory):', workExpComplete, 'entries:', workExperience?.length);
+        console.log('Work experience data loaded:', workExperience);
+        if (workExpError) {
+          console.log('Work experience error:', workExpError);
+        }
         console.log('Step 4 - Skills & Industries (both mandatory):');
         console.log('  - skills:', skillsComplete, 'count:', userSkills?.length);
         console.log('  - industries:', industriesComplete, 'count:', userIndustries?.length);
