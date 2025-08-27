@@ -792,3 +792,170 @@ CREATE TABLE dispute_responses (
 - Dashboard now properly detects user roles from the users table
 - User data is stored consistently in both users table and profile tables
 - This is a working foundation to build upon
+
+---
+
+## 12) Checkpoint Log & Key Learnings
+
+### 🎯 **CHECKPOINT: AUGUST 27, 2025 - REGISTRATION & CONSULTANT ONBOARDING WORKING**
+
+**Status**: ✅ **FULLY FUNCTIONAL**
+- **User Registration**: Working with secure Netlify Functions
+- **User Authentication**: Supabase Auth fully operational
+- **Database Operations**: Secure service role access via server-side functions
+- **Security**: No sensitive keys exposed to frontend
+
+---
+
+### 🚨 **CRITICAL ISSUES ENCOUNTERED & RESOLVED**
+
+#### **Issue 1: RLS Policy Violations During Registration**
+**Problem**: `new row violates row-level security policy for table "users"`
+**Root Cause**: RLS policies blocking anon users from inserting during registration
+**Attempted Solutions**:
+- ❌ Direct table inserts with authenticated user (failed - no session during registration)
+- ❌ RLS policy modifications (failed - conflicting policies)
+- ❌ Database functions with SECURITY DEFINER (failed - function not found errors)
+- ✅ **SOLUTION**: Netlify Functions with service role key (bypasses RLS completely)
+
+**Key Learning**: RLS policies are designed for authenticated operations, not registration flows
+
+#### **Issue 2: Service Role Key Security Exposure**
+**Problem**: Attempted to use `VITE_SUPABASE_SERVICE_ROLE_KEY` in frontend
+**Security Risk**: Service role key would be visible to anyone inspecting the browser
+**Solution**: Moved all sensitive operations to Netlify Functions (server-side only)
+
+**Key Learning**: Never prefix sensitive keys with `VITE_` - this makes them accessible to browsers
+
+#### **Issue 3: Environment Variable Configuration**
+**Problem**: `SUPABASE_SERVICE_ROLE_KEY` showing as "MISSING" in Netlify Functions
+**Root Cause**: Environment variable name mismatch
+- **Netlify had**: `VITE_SUPABASE_SERVICE_ROLE_KEY` (frontend accessible)
+- **Function needed**: `SUPABASE_SERVICE_ROLE_KEY` (server-side only)
+**Solution**: Added separate environment variable without `VITE_` prefix
+
+**Key Learning**: Environment variables in Netlify Functions are separate from frontend variables
+
+#### **Issue 4: Netlify Function Dependencies**
+**Problem**: Functions failing with "Internal server error"
+**Root Cause**: Missing package dependencies in function runtime
+**Solution**: Added `package.json` in `netlify/functions/` directory
+
+**Key Learning**: Netlify Functions need their own dependency management
+
+---
+
+### 🛡️ **SECURITY ARCHITECTURE IMPLEMENTED**
+
+#### **Frontend (Public)**
+- ✅ `VITE_SUPABASE_URL` - Public Supabase URL
+- ✅ `VITE_SUPABASE_ANON_KEY` - Limited permissions for authenticated users
+- ✅ No sensitive operations
+- ✅ Only API calls to secure endpoints
+
+#### **Backend (Private)**
+- ✅ `SUPABASE_SERVICE_ROLE_KEY` - Full database access (server-side only)
+- ✅ `STRIPE_SECRET_KEY` - Payment processing (server-side only)
+- ✅ `RESEND_API_KEY` - Email services (server-side only)
+- ✅ All sensitive operations in Netlify Functions
+
+#### **Database Security**
+- ✅ RLS policies for authenticated user operations
+- ✅ Service role bypass only for registration/initial setup
+- ✅ User data isolation via `auth.uid()` checks
+
+---
+
+### 🔧 **TROUBLESHOOTING CHECKLIST FOR FUTURE ISSUES**
+
+#### **Registration Issues**
+- [ ] Check Netlify Function logs in dashboard
+- [ ] Verify environment variables are set (no `VITE_` prefix for secrets)
+- [ ] Confirm function dependencies are available
+- [ ] Test basic function functionality first (without Supabase)
+- [ ] Check RLS policies if using direct database access
+
+#### **Environment Variable Issues**
+- [ ] Frontend variables: Must start with `VITE_`
+- [ ] Backend variables: No prefix (server-side only)
+- [ ] Netlify dashboard: Site settings → Environment variables
+- [ ] Deployment required: Variables only available after successful deploy
+
+#### **Netlify Function Issues**
+- [ ] Check function logs in Netlify dashboard
+- [ ] Verify function syntax and exports
+- [ ] Test with simple function first (no external dependencies)
+- [ ] Check package.json in functions directory
+- [ ] Verify function path: `/.netlify/functions/function-name`
+
+#### **Database Connection Issues**
+- [ ] Verify Supabase URL and keys
+- [ ] Check RLS policies for table access
+- [ ] Test with service role client (bypasses RLS)
+- [ ] Verify table and column names exist
+- **CRITICAL**: Always check database schema before operations
+
+---
+
+### 📋 **IMPLEMENTATION CHECKPOINTS**
+
+#### **✅ COMPLETED CHECKPOINTS**
+
+**Checkpoint 1: Basic Infrastructure (August 2025)**
+- [x] Supabase project setup
+- [x] Database schema creation
+- [x] Basic React app with Vite
+- [x] Environment variable configuration
+
+**Checkpoint 2: Authentication System (August 2025)**
+- [x] Supabase Auth integration
+- [x] Login/Register forms
+- [x] Session management
+- [x] Protected routes
+
+**Checkpoint 3: Secure Registration (August 27, 2025)**
+- [x] Netlify Functions setup
+- [x] Service role key security
+- [x] RLS policy bypass for registration
+- [x] Complete user + profile creation
+- [x] Error handling and logging
+
+#### **🚧 NEXT CHECKPOINTS**
+
+**Checkpoint 4: Onboarding Flow (In Progress)**
+- [ ] Step 1: User type selection
+- [ ] Step 2: Personal information
+- [ ] Step 3: Work experience
+- [ ] Step 4: Skills and industries
+- [ ] Step 5: Languages
+- [ ] Step 6: Hourly rates
+- [ ] Review and submission
+
+**Checkpoint 5: Dashboard Functionality**
+- [ ] Role-based dashboard content
+- [ ] Profile completion tracking
+- [ ] Quick actions and navigation
+- [ ] User data display
+
+**Checkpoint 6: Core Marketplace Features**
+- [ ] Project creation and management
+- [ ] Bidding system
+- [ ] Contract management
+- [ ] Payment processing
+
+---
+
+### 💡 **KEY LEARNINGS SUMMARY**
+
+1. **Security First**: Never expose service role keys in frontend code
+2. **RLS Limitations**: Row-level security doesn't work for unauthenticated registration
+3. **Environment Variables**: Frontend vs backend variables must be clearly separated
+4. **Netlify Functions**: Essential for secure server-side operations
+5. **Error Handling**: Comprehensive logging is crucial for debugging
+6. **Database Schema**: Always verify table/column existence before operations
+7. **Dependency Management**: Functions need their own package management
+8. **Testing Strategy**: Test basic functionality before adding complexity
+
+---
+
+## 13) Database Schema Reference
