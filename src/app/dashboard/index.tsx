@@ -36,6 +36,9 @@ export default function DashboardPage() {
   // Calculate accurate profile completeness based on completed mandatory fields
   const calculateProfileCompleteness = async (userId: string, userRole: string) => {
     try {
+      console.log('=== PROFILE COMPLETENESS DEBUG ===');
+      console.log('Calculating for user:', userId, 'role:', userRole);
+      
       if (userRole === 'consultant') {
         // Consultant mandatory fields
         const { data: consultantProfile } = await supabase
@@ -70,30 +73,62 @@ export default function DashboardPage() {
         if (consultantProfile?.hourly_rate_min && consultantProfile?.hourly_rate_max) completedFields++;
         if (userSkills && userSkills.length > 0) completedFields++;
 
+        console.log('Consultant profile data:', consultantProfile);
+        console.log('User skills:', userSkills);
+        console.log('Completed fields:', completedFields, 'of', totalFields);
+        console.log('Consultant completion percentage:', Math.round((completedFields / totalFields) * 100));
+
         return Math.round((completedFields / totalFields) * 100);
       } else {
         // Client mandatory fields
-        const { data: clientProfile } = await supabase
+        console.log('Loading client profile data...');
+        const { data: clientProfile, error: clientError } = await supabase
           .from('client_profiles')
           .select('job_title, company_name, organisation_type, industry, address1, country_id')
           .eq('user_id', userId)
           .single();
 
+        if (clientError) {
+          console.error('Error loading client profile:', clientError);
+        }
+
+        console.log('Client profile data loaded:', clientProfile);
+
         // Calculate completion based on mandatory fields
         let completedFields = 0;
         const totalFields = 6; // job_title, company_name, organisation_type, industry, address1, country_id
 
-        if (clientProfile?.job_title) completedFields++;
-        if (clientProfile?.company_name) completedFields++;
-        if (clientProfile?.organisation_type) completedFields++;
-        if (clientProfile?.industry) completedFields++;
-        if (clientProfile?.address1) completedFields++;
-        if (clientProfile?.country_id) completedFields++;
+        // Check each field individually
+        const jobTitleComplete = !!clientProfile?.job_title;
+        const companyNameComplete = !!clientProfile?.company_name;
+        const orgTypeComplete = !!clientProfile?.organisation_type;
+        const industryComplete = !!clientProfile?.industry;
+        const addressComplete = !!clientProfile?.address1;
+        const countryComplete = !!clientProfile?.country_id;
+
+        if (jobTitleComplete) completedFields++;
+        if (companyNameComplete) completedFields++;
+        if (orgTypeComplete) completedFields++;
+        if (industryComplete) completedFields++;
+        if (addressComplete) completedFields++;
+        if (countryComplete) completedFields++;
+
+        console.log('Field completion status:');
+        console.log('- job_title:', jobTitleComplete, 'value:', clientProfile?.job_title);
+        console.log('- company_name:', companyNameComplete, 'value:', clientProfile?.company_name);
+        console.log('- organisation_type:', orgTypeComplete, 'value:', clientProfile?.organisation_type);
+        console.log('- industry:', industryComplete, 'value:', clientProfile?.industry);
+        console.log('- address1:', addressComplete, 'value:', clientProfile?.address1);
+        console.log('- country_id:', countryComplete, 'value:', clientProfile?.country_id);
+        console.log('Completed fields:', completedFields, 'of', totalFields);
+        console.log('Client completion percentage:', Math.round((completedFields / totalFields) * 100));
+        console.log('=== END PROFILE COMPLETENESS DEBUG ===');
 
         return Math.round((completedFields / totalFields) * 100);
       }
     } catch (error) {
       console.error('Error calculating profile completeness:', error);
+      console.error('Full error object:', error);
       return 0;
     }
   };
