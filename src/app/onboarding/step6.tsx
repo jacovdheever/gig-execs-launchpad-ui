@@ -167,8 +167,8 @@ export default function OnboardingStep6() {
           {/* Form */}
           <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
             {/* Currency and Price Range */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-              {/* Currency */}
+            <div className="space-y-6">
+              {/* Currency Row */}
               <div>
                 <Label htmlFor="currency" className="text-sm font-medium text-gray-700 mb-2 block">
                   Currency
@@ -178,7 +178,7 @@ export default function OnboardingStep6() {
                   onValueChange={(value) => handleInputChange('currency', value)}
                   disabled
                 >
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full max-w-xs">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -187,54 +187,59 @@ export default function OnboardingStep6() {
                 </Select>
               </div>
 
-              {/* Min Price */}
+              {/* Min/Max Price Row */}
               <div>
-                <Label htmlFor="min_price" className="text-sm font-medium text-gray-700 mb-2 block">
-                  Min price*
-                </Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                    $
-                  </span>
-                  <Input
-                    id="min_price"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    value={formData.min_price || ''}
-                    onChange={(e) => handleInputChange('min_price', e.target.value)}
-                    className="pl-8"
-                    placeholder="0.00"
-                    required
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
+                  {/* Min Price */}
+                  <div>
+                    <Label htmlFor="min_price" className="text-sm font-medium text-gray-700 mb-2 block">
+                      Min price*
+                    </Label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                        $
+                      </span>
+                      <Input
+                        id="min_price"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        value={formData.min_price || ''}
+                        onChange={(e) => handleInputChange('min_price', e.target.value)}
+                        className="pl-8 h-11"
+                        placeholder="0.00"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* Max Price */}
+                  <div>
+                    <Label htmlFor="max_price" className="text-sm font-medium text-gray-700 mb-2 block">
+                      Max price*
+                    </Label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                        $
+                      </span>
+                      <Input
+                        id="max_price"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        value={formData.max_price || ''}
+                        onChange={(e) => handleInputChange('max_price', e.target.value)}
+                        className="pl-8 h-11"
+                        placeholder="0.00"
+                        required
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-              {/* Separator */}
-              <div className="flex items-center justify-center">
-                <span className="text-gray-400 text-xl">-</span>
-              </div>
-
-              {/* Max Price */}
-              <div>
-                <Label htmlFor="max_price" className="text-sm font-medium text-gray-700 mb-2 block">
-                  Max price*
-                </Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                    $
-                  </span>
-                  <Input
-                    id="max_price"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    value={formData.max_price || ''}
-                    onChange={(e) => handleInputChange('max_price', e.target.value)}
-                    className="pl-8"
-                    placeholder="0.00"
-                    required
-                  />
+                
+                {/* Visual separator between min and max */}
+                <div className="hidden md:flex items-center justify-center mt-2">
+                  <div className="w-16 h-px bg-gray-300"></div>
                 </div>
               </div>
             </div>

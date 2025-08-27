@@ -1,14 +1,18 @@
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Alert, AlertDescription } from '@/components/ui/alert'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { supabase } from '../../lib/supabase'
+
+import { Button } from '../../components/ui/button'
+import { Input } from '../../components/ui/input'
+import { Label } from '../../components/ui/label'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select'
+import { Alert, AlertDescription } from '../../components/ui/alert'
+import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Eye, EyeOff, Mail, Lock, User, Building2 } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
-import { supabase } from '@/lib/supabase'
+import { Link } from 'react-router-dom'
 
 export default function RegisterPage() {
   const navigate = useNavigate()
@@ -113,86 +117,39 @@ export default function RegisterPage() {
       console.log('User ID type:', typeof userInsertData.id, 'Value:', userInsertData.id)
       console.log('User type value:', userInsertData.user_type)
       
-      // Create user record using direct insert with service role approach
-      // This bypasses RLS issues during registration
-      const { data: userData, error: userError } = await supabase
-        .from('users')
-        .insert([{
+      // Create user record using secure Netlify Function
+      // This keeps the service role key server-side only
+      const response = await fetch('/.netlify/functions/register-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           id: userInsertData.id,
           email: userInsertData.email,
-          first_name: userInsertData.firstName,
-          last_name: userInsertData.lastName,
-          user_type: userInsertData.userType,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        }])
-        .select()
-      
-      console.log('Users table insert result:', { userData, userError })
-      console.log('User error details:', {
-        message: userError?.message,
-        code: userError?.code,
-        details: userError?.details,
-        hint: userError?.hint
+          firstName: userInsertData.first_name,
+          lastName: userInsertData.last_name,
+          userType: userInsertData.user_type,
+          companyName: formData.companyName
+        })
       })
-      
-      // Log the actual values, not just the objects
-      console.log('User insert success?', !userError)
-      console.log('User data inserted:', userData)
-      console.log('User error object:', userError)
 
-      if (userError) {
-        console.error('User creation error:', userError)
-        // Show the error to the user so they know something went wrong
-        setErrors({ general: `User profile creation failed: ${userError.message}. Please contact support.` })
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.error('Registration function error:', errorData)
+        setErrors({ general: `User profile creation failed: ${errorData.error}. Please contact support.` })
         return
       }
 
-      // Step 3: Create profile record based on user type
-      const profileData = {
-        user_id: authData.user.id,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      }
+      const result = await response.json()
+      console.log('Registration function result:', result)
 
-      let profileError = null
-
-      if (formData.userType === 'consultant') {
-        // Create consultant profile using function
-        console.log('Creating consultant profile using function:', profileData)
-        const { data: profileDataResult, error } = await supabase
-          .rpc('create_consultant_profile', {
-            user_id: profileData.user_id
-          })
-        profileError = error
-        console.log('Consultant profile creation result:', { profileDataResult, error })
-        console.log('Consultant profile insert success?', !error)
-        console.log('Consultant profile data inserted:', profileDataResult)
-        console.log('Consultant profile error object:', error)
-      } else {
-        // Create client profile using function
-        console.log('Creating client profile using function:', profileData)
-        const { data: profileDataResult, error } = await supabase
-          .rpc('create_client_profile', {
-            user_id: profileData.user_id,
-            company_name: formData.companyName
-          })
-        profileError = error
-        console.log('Client profile creation result:', { profileDataResult, error })
-        console.log('Client profile insert success?', !error)
-        console.log('Client profile data inserted:', profileDataResult)
-        console.log('Client profile error object:', error)
-      }
-
-      if (profileError) {
-        console.error('Profile creation error:', profileError)
-        // Show the error to the user so they know something went wrong
-        setErrors({ general: `Profile creation failed: ${profileError.message}. Please contact support.` })
+      if (!result.success) {
+        console.error('Registration failed:', result.error)
+        setErrors({ general: `User profile creation failed: ${result.error}. Please contact support.` })
         return
       }
 
       // Step 3: Success! Show success state
-      console.log('Registration successful:', authData.user)
+      console.log('Registration successful:', result.user)
       
       setIsSuccess(true)
       
