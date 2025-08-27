@@ -102,9 +102,12 @@ export default function DashboardPage() {
         const languagesComplete = userLanguages && userLanguages.length > 0;
         if (languagesComplete) completedFields++;
 
-        // Step 6: Hourly Rate (2 fields)
-        const hourlyRateComplete = consultantProfile?.hourly_rate_min && consultantProfile?.hourly_rate_max;
-        if (hourlyRateComplete) completedFields++;
+        // Step 6: Hourly Rate (2 separate fields)
+        const hourlyRateMinComplete = !!consultantProfile?.hourly_rate_min;
+        const hourlyRateMaxComplete = !!consultantProfile?.hourly_rate_max;
+        
+        if (hourlyRateMinComplete) completedFields++;
+        if (hourlyRateMaxComplete) completedFields++;
 
         console.log('=== DETAILED FIELD COMPLETION STATUS ===');
         console.log('Step 2 - Personal & Location (3 mandatory + 1 optional):');
@@ -121,7 +124,9 @@ export default function DashboardPage() {
         console.log('  - skills:', skillsComplete, 'count:', userSkills?.length);
         console.log('  - industries:', industriesComplete, 'count:', userIndustries?.length);
         console.log('Step 5 - Languages (mandatory):', languagesComplete, 'count:', userLanguages?.length);
-        console.log('Step 6 - Hourly Rate (both mandatory):', hourlyRateComplete, 'min:', consultantProfile?.hourly_rate_min, 'max:', consultantProfile?.hourly_rate_max);
+        console.log('Step 6 - Hourly Rate (2 separate mandatory fields):');
+        console.log('  - hourly_rate_min:', hourlyRateMinComplete, 'value:', consultantProfile?.hourly_rate_min);
+        console.log('  - hourly_rate_max:', hourlyRateMaxComplete, 'value:', consultantProfile?.hourly_rate_max);
         console.log('=== END FIELD COMPLETION STATUS ===');
 
         console.log('Consultant profile data:', consultantProfile);
