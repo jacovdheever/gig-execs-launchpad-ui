@@ -162,7 +162,35 @@ export default function DashboardPage() {
   // Load profile completeness on component mount and when user changes
   useEffect(() => {
     if (user) {
+      console.log('User changed or component mounted, calculating profile completeness...');
       calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
+    }
+  }, [user]);
+  
+  // Additional refresh when component is focused or becomes visible
+  useEffect(() => {
+    if (user) {
+      const handleFocus = () => {
+        console.log('Component focused, refreshing profile completeness...');
+        calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
+      };
+      
+      const handleVisibilityChange = () => {
+        if (!document.hidden) {
+          console.log('Component became visible, refreshing profile completeness...');
+          calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
+        }
+      };
+      
+      // Add listeners
+      window.addEventListener('focus', handleFocus);
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+      
+      // Cleanup
+      return () => {
+        window.removeEventListener('focus', handleFocus);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+      };
     }
   }, [user]);
   
@@ -187,9 +215,37 @@ export default function DashboardPage() {
 
     window.addEventListener('focus', handleFocus);
     
+    // Refresh when user navigates back to dashboard (using navigation events)
+    const handlePopState = () => {
+      if (user) {
+        console.log('Navigation detected, refreshing profile completeness...');
+        // Small delay to ensure data is saved
+        setTimeout(() => {
+          calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
+        }, 500);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    
+    // Refresh when the page becomes active (user switches back to tab)
+    const handlePageShow = () => {
+      if (user) {
+        console.log('Page became active, refreshing profile completeness...');
+        // Small delay to ensure data is saved
+        setTimeout(() => {
+          calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
+        }, 500);
+      }
+    };
+
+    window.addEventListener('pageshow', handlePageShow);
+    
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('pageshow', handlePageShow);
     };
   }, [user]);
   
