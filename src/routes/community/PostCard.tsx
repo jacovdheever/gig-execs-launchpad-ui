@@ -26,6 +26,11 @@ export default function PostCard({ post, onCommentClick }: PostCardProps) {
   const [isLiked, setIsLiked] = useState(post.isLiked || false);
   const [reactionCount, setReactionCount] = useState(post.reaction_count);
   
+  // Debug: Log the post data being received
+  console.log('🔍 PostCard received post:', post);
+  console.log('🔍 Post author data:', post.author);
+  console.log('🔍 Post author profile photo:', post.author?.profile_photo_url);
+  
   const toggleReaction = useToggleReaction();
   const markAsRead = useMarkPostAsRead();
 

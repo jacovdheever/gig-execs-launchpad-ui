@@ -85,7 +85,30 @@ export async function fetchPosts(filters: FeedFilters): Promise<FeedResponse> {
     throw new Error('Failed to fetch posts');
   }
 
-  const posts = (data || []) as ForumPost[];
+  // Debug: Log the raw data structure
+  console.log('🔍 Raw posts data from Supabase:', data);
+
+  // Transform the data to match our ForumPost interface
+  const posts = (data || []).map(post => {
+    console.log('🔍 Processing post:', post);
+    console.log('🔍 Post users field:', post.users);
+    console.log('🔍 Post forum_categories field:', post.forum_categories);
+    
+    const transformedPost: ForumPost = {
+      ...post,
+      // Ensure author data is properly mapped - handle both array and single object cases
+      author: post.users ? (Array.isArray(post.users) ? post.users[0] : post.users) : undefined,
+      // Ensure category data is properly mapped - handle both array and single object cases
+      category: post.forum_categories ? (Array.isArray(post.forum_categories) ? post.forum_categories[0] : post.forum_categories) : undefined
+    };
+    
+    console.log('🔍 Transformed post author:', transformedPost.author);
+    console.log('🔍 Transformed post category:', transformedPost.category);
+    
+    return transformedPost;
+  }) as ForumPost[];
+
+  console.log('🔍 Final transformed posts:', posts);
   const total = count || 0;
   const hasMore = offset + limit < total;
 
