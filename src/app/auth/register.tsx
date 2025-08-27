@@ -135,7 +135,18 @@ export default function RegisterPage() {
       if (!response.ok) {
         const errorData = await response.json()
         console.error('Registration function error:', errorData)
-        setErrors({ general: `User profile creation failed: ${errorData.error}. Please contact support.` })
+        
+        // Show detailed error information to help with debugging
+        let errorMessage = `User profile creation failed: ${errorData.error}`
+        if (errorData.details) {
+          if (typeof errorData.details === 'string') {
+            errorMessage += `. Details: ${errorData.details}`
+          } else if (errorData.details.message) {
+            errorMessage += `. Technical details: ${errorData.details.message}`
+          }
+        }
+        
+        setErrors({ general: errorMessage })
         return
       }
 
