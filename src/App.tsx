@@ -40,6 +40,12 @@ import OnboardingStep5 from "./app/onboarding/step5";
 import OnboardingStep6 from "./app/onboarding/step6"; // Added
 import ReviewProfile from "./app/onboarding/review"; // Added
 
+// Client Onboarding Components
+import ClientOnboardingStep1 from "./app/onboarding/client/step1";
+import ClientOnboardingStep2 from "./app/onboarding/client/step2";
+import ClientOnboardingStep3 from "./app/onboarding/client/step3";
+import ClientOnboardingReview from "./app/onboarding/client/review";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -93,6 +99,12 @@ const App = () => (
             <Route path="/onboarding/step6" element={<OnboardingStep6 />} /> {/* Added */}
             <Route path="/onboarding/review" element={<ReviewProfile />} /> {/* Added */}
             
+            {/* Client Onboarding Routes */}
+            <Route path="/onboarding/client/step1" element={<ClientOnboardingStep1 />} />
+            <Route path="/onboarding/client/step2" element={<ClientOnboardingStep2 />} />
+            <Route path="/onboarding/client/step3" element={<ClientOnboardingStep3 />} />
+            <Route path="/onboarding/client/review" element={<ClientOnboardingReview />} />
+
             {/* Maintenance Page */}
             <Route path="/maintenance" element={<Maintenance />} />
             

@@ -53,28 +53,18 @@ VALUES
   ('bid-documents', 'bid-documents', false, 20971520, ARRAY['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/plain']); -- 20MB, documents only
 
 -- 2. Create storage policies for profile photos
-CREATE POLICY "Users can upload their own profile photos" ON storage.objects
-FOR INSERT WITH CHECK (
-  bucket_id = 'profile-photos' AND 
-  auth.uid()::text = (storage.foldername(name))[1]
-);
+INSERT INTO storage.policies (name, definition, bucket_id) VALUES
+  ('Profile Photos Public Read', 'SELECT', 'profile-photos'),
+  ('Profile Photos Authenticated Upload', 'INSERT', 'profile-photos'),
+  ('Profile Photos Owner Delete', 'DELETE', 'profile-photos');
 
-CREATE POLICY "Users can update their own profile photos" ON storage.objects
-FOR UPDATE USING (
-  bucket_id = 'profile-photos' AND 
-  auth.uid()::text = (storage.foldername(name))[1]
-);
+-- 3. Create storage policies for company logos
+INSERT INTO storage.policies (name, definition, bucket_id) VALUES
+  ('Company Logos Public Read', 'SELECT', 'company-logos'),
+  ('Company Logos Authenticated Upload', 'INSERT', 'company-logos'),
+  ('Company Logos Owner Delete', 'DELETE', 'company-logos');
 
-CREATE POLICY "Anyone can view profile photos" ON storage.objects
-FOR SELECT USING (bucket_id = 'profile-photos');
-
-CREATE POLICY "Users can delete their own profile photos" ON storage.objects
-FOR DELETE USING (
-  bucket_id = 'profile-photos' AND 
-  auth.uid()::text = (storage.foldername(name))[1]
-);
-
--- 3. Create storage policies for portfolio files
+-- 4. Create storage policies for portfolio files
 CREATE POLICY "Users can upload their own portfolio files" ON storage.objects
 FOR INSERT WITH CHECK (
   bucket_id = 'portfolio-files' AND 
@@ -99,7 +89,7 @@ FOR DELETE USING (
   auth.uid()::text = (storage.foldername(name))[1]
 );
 
--- 4. Create storage policies for education proofs
+-- 5. Create storage policies for education proofs
 CREATE POLICY "Users can upload their own education proofs" ON storage.objects
 FOR INSERT WITH CHECK (
   bucket_id = 'education-proofs' AND 
@@ -124,7 +114,7 @@ FOR DELETE USING (
   auth.uid()::text = (storage.foldername(name))[1]
 );
 
--- 5. Create storage policies for certification proofs
+-- 6. Create storage policies for certification proofs
 CREATE POLICY "Users can upload their own certification proofs" ON storage.objects
 FOR INSERT WITH CHECK (
   bucket_id = 'certification-proofs' AND 
@@ -149,7 +139,7 @@ FOR DELETE USING (
   auth.uid()::text = (storage.foldername(name))[1]
 );
 
--- 6. Create storage policies for company logos
+-- 7. Create storage policies for company logos
 CREATE POLICY "Users can upload their own company logos" ON storage.objects
 FOR INSERT WITH CHECK (
   bucket_id = 'company-logos' AND 
@@ -171,7 +161,7 @@ FOR DELETE USING (
   auth.uid()::text = (storage.foldername(name))[1]
 );
 
--- 7. Create storage policies for bid documents
+-- 8. Create storage policies for bid documents
 CREATE POLICY "Users can upload bid documents" ON storage.objects
 FOR INSERT WITH CHECK (
   bucket_id = 'bid-documents' AND 
@@ -196,7 +186,7 @@ FOR DELETE USING (
   auth.uid()::text = (storage.foldername(name))[1]
 );
 
--- 8. Allow service role to manage all storage (for migrations)
+-- 9. Allow service role to manage all storage (for migrations)
 CREATE POLICY "Service role can manage all storage" ON storage.objects
 FOR ALL USING (auth.role() = 'service_role');
 ```

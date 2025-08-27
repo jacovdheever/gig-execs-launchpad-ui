@@ -33,14 +33,16 @@ export default function DashboardPage() {
       });
   }, []);
 
-  // Simple test data without Supabase dependency
+  // Get profile completeness from user data
+  const profileCompleteness = user?.profile_complete_pct || 0;
+  
   const stats = {
     totalProjects: 12,
     activeProjects: 3,
     completedProjects: 8,
     pendingBids: user?.role === 'consultant' ? 5 : 0,
     unreadMessages: 2,
-    profileCompleteness: 85
+    profileCompleteness: profileCompleteness
   }
 
   const recentProjects = [
@@ -168,7 +170,13 @@ export default function DashboardPage() {
 
         <Card 
           className="cursor-pointer hover:shadow-md transition-shadow" 
-          onClick={() => navigate('/onboarding/step1')}
+          onClick={() => {
+            if (user.role === 'consultant') {
+              navigate('/onboarding/step1');
+            } else {
+              navigate('/onboarding/client/step1');
+            }
+          }}
         >
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Profile Complete</CardTitle>
@@ -200,6 +208,26 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+            {/* Onboarding Action - Show prominently if profile incomplete */}
+            {profileCompleteness < 100 && (
+              <Button 
+                onClick={() => {
+                  if (user.role === 'consultant') {
+                    navigate('/onboarding/step1');
+                  } else {
+                    navigate('/onboarding/client/step1');
+                  }
+                }}
+                className="h-auto p-4 flex-col space-y-2 bg-yellow-500 hover:bg-yellow-600 text-white col-span-full sm:col-span-1"
+              >
+                <CheckCircle className="h-6 w-6" />
+                <span>Complete Profile</span>
+                <span className="text-xs opacity-90">
+                  {100 - profileCompleteness}% remaining
+                </span>
+              </Button>
+            )}
+            
             {user.role === 'consultant' ? (
               <>
                 <Button asChild className="h-auto p-4 flex-col space-y-2">

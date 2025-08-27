@@ -145,3 +145,104 @@ export async function getProfilePhotoUrl(userId: string): Promise<string | null>
     return null;
   }
 }
+
+/**
+ * Upload a company logo to Supabase Storage
+ * @param file - The image file to upload
+ * @param userId - The user ID for organizing files
+ * @returns Promise<UploadResult> - Result of the upload operation
+ */
+export async function uploadCompanyLogo(file: File, userId: string): Promise<UploadResult> {
+  try {
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      return {
+        success: false,
+        error: 'Invalid file type. Please upload a JPEG, PNG, or WebP image.'
+      };
+    }
+
+    // Validate file size (5MB limit)
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    if (file.size > maxSize) {
+      return {
+        success: false,
+        error: 'File size too large. Please upload an image smaller than 5MB.'
+      };
+    }
+
+    // Generate unique filename
+    const fileExt = file.name.split('.').pop();
+    const timestamp = Date.now();
+    const fileName = `${userId}/${timestamp}.${fileExt}`;
+    const filePath = `company-logos/${fileName}`;
+
+    // Upload to Supabase Storage
+    const { data, error } = await supabase.storage
+      .from('company-logos')
+      .upload(fileName, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
+
+    if (error) {
+      console.error('Storage upload error:', error);
+      return {
+        success: false,
+        error: `Upload failed: ${error.message}`
+      };
+    }
+
+    // Get public URL
+    const { data: { publicUrl } } = supabase.storage
+      .from('company-logos')
+      .getPublicUrl(fileName);
+
+    return {
+      success: true,
+      url: publicUrl
+    };
+
+  } catch (error) {
+    console.error('Company logo upload error:', error);
+    return {
+      success: false,
+      error: 'An unexpected error occurred during upload.'
+    };
+  }
+}
+
+/**
+ * Delete a company logo from Supabase Storage
+ * @param logoUrl - The URL of the logo to delete
+ * @returns Promise<boolean> - Success status
+ */
+export async function deleteCompanyLogo(logoUrl: string): Promise<boolean> {
+  try {
+    // Extract the file path from the URL
+    const urlParts = logoUrl.split('/');
+    const fileName = urlParts[urlParts.length - 1];
+    const userId = urlParts[urlParts.length - 2];
+    
+    if (!fileName || !userId) {
+      console.error('Invalid logo URL format');
+      return false;
+    }
+
+    // Delete the specific file
+    const { error: deleteError } = await supabase.storage
+      .from('company-logos')
+      .remove([`${userId}/${fileName}`]);
+
+    if (deleteError) {
+      console.error('Error deleting company logo:', deleteError);
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Company logo deletion error:', error);
+    return false;
+  }
+}
