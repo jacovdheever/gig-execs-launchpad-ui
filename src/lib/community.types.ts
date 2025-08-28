@@ -52,10 +52,17 @@ export interface ForumComment {
 }
 
 export interface ForumAttachment {
-  type: 'link' | 'image' | 'video';
+  id?: string;
+  type: 'file' | 'link' | 'image' | 'video';
   url: string;
   title?: string;
   description?: string;
+  // File-specific fields
+  fileName?: string;
+  fileSize?: number;
+  mimeType?: string;
+  storagePath?: string;
+  uploadedAt?: string;
 }
 
 export interface ForumPostReaction {

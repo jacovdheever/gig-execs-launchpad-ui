@@ -1,6 +1,6 @@
 /**
  * PostCard Component
- * Displays a single post in the feed
+ * Displays a single post in the feed with attachment support
  */
 
 import { useState } from 'react';
@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import { formatPostDate, formatRelativeTime } from '@/lib/time';
 import { useToggleReaction, useMarkPostAsRead } from '@/lib/community.hooks';
 import { getCurrentUser } from '@/lib/getCurrentUser';
+import AttachmentsCarousel from '@/components/community/AttachmentsCarousel';
 import type { ForumPost } from '@/lib/community.types';
 
 interface PostCardProps {
@@ -59,6 +60,11 @@ export default function PostCard({ post, onCommentClick }: PostCardProps) {
     } catch (error) {
       console.error('Error marking post as read:', error);
     }
+  };
+
+  const handleRemoveAttachment = (attachmentId: string) => {
+    // In read-only view, we don't allow removing attachments
+    console.log('Attachment removal not allowed in read-only view');
   };
 
   const getInitials = (firstName: string, lastName: string) => {
@@ -122,6 +128,17 @@ export default function PostCard({ post, onCommentClick }: PostCardProps) {
           </p>
         )}
       </div>
+
+      {/* Attachments */}
+      {post.attachments && post.attachments.length > 0 && (
+        <div className="mb-4">
+          <AttachmentsCarousel
+            attachments={post.attachments}
+            onRemoveAttachment={handleRemoveAttachment}
+            showRemove={false} // Don't show remove button in read-only view
+          />
+        </div>
+      )}
 
       {/* Post Footer */}
       <div className="flex items-center justify-between">

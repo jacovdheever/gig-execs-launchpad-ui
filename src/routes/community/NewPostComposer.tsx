@@ -1,25 +1,35 @@
 /**
  * NewPostComposer Component
- * Modal composer for creating new posts
+ * Modal composer for creating new posts with dynamic height and attachment support
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { 
   Paperclip, 
   Link, 
   Play, 
   BarChart3, 
   Smile, 
-  X 
+  X,
+  Plus,
+  Upload
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { 
+  Tooltip, 
+  TooltipContent, 
+  TooltipProvider, 
+  TooltipTrigger 
+} from '@/components/ui/tooltip';
 import { useCategories } from '@/lib/community.hooks';
 import { useCreatePost } from '@/lib/community.hooks';
 import { getCurrentUser } from '@/lib/getCurrentUser';
-import type { CreatePostData } from '@/lib/community.types';
+import { uploadCommunityAttachment } from '@/lib/storage';
+import AttachmentsCarousel from '@/components/community/AttachmentsCarousel';
+import type { CreatePostData, ForumAttachment } from '@/lib/community.types';
 
 interface NewPostComposerProps {
   isOpen: boolean;
@@ -35,6 +45,11 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     attachments: []
   });
   const [user, setUser] = useState<any>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const { data: categories } = useCategories();
   const createPost = useCreatePost();
@@ -45,6 +60,14 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
       getCurrentUser().then(setUser);
     }
   }, [isOpen]);
+
+  // Auto-resize textarea based on content
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [formData.body]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,6 +98,58 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const handleFileSelect = async (files: FileList) => {
+    if (!user?.id) return;
+
+    setIsUploading(true);
+    setUploadError(null);
+
+    try {
+      const newAttachments: ForumAttachment[] = [];
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        
+        const result = await uploadCommunityAttachment(file, user.id);
+        
+        if (result.success && result.url) {
+          newAttachments.push({
+            id: `${Date.now()}_${i}`,
+            type: 'file',
+            url: result.url,
+            fileName: file.name,
+            fileSize: file.size,
+            mimeType: file.type,
+            storagePath: `community-attachments/${user.id}/${Date.now()}_${file.name}`,
+            uploadedAt: new Date().toISOString()
+          });
+        } else {
+          setUploadError(result.error || 'Upload failed');
+          break;
+        }
+      }
+
+      if (newAttachments.length > 0) {
+        setFormData(prev => ({
+          ...prev,
+          attachments: [...(prev.attachments || []), ...newAttachments]
+        }));
+      }
+    } catch (error) {
+      console.error('Error uploading files:', error);
+      setUploadError('An unexpected error occurred during upload');
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleRemoveAttachment = (attachmentId: string) => {
+    setFormData(prev => ({
+      ...prev,
+      attachments: (prev.attachments || []).filter(att => att.id !== attachmentId)
+    }));
+  };
+
   const handleClose = () => {
     // Reset form when closing
     setFormData({
@@ -83,175 +158,229 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
       category_id: 0,
       attachments: []
     });
+    setUploadError(null);
     onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <>
-      {/* Backdrop */}
-      <div 
-        className="fixed inset-0 bg-black bg-opacity-50 z-40"
-        onClick={handleClose}
-      />
-      
-      {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-          <form onSubmit={handleSubmit}>
-            {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-slate-200">
-              <div className="flex items-center gap-3">
-                <Avatar className="w-10 h-10">
-                  <AvatarImage 
-                    src={user?.profilePhotoUrl} 
-                    alt={`${user?.firstName} ${user?.lastName}`}
-                  />
-                  <AvatarFallback className="bg-slate-100 text-slate-600 text-sm font-medium">
-                    {user ? `${user.firstName?.charAt(0)}${user.lastName?.charAt(0)}` : 'U'}
-                  </AvatarFallback>
-                </Avatar>
-                <div>
-                  <div className="font-medium text-slate-900">
-                    {user ? `${user.firstName} ${user.lastName}` : 'Loading...'}
+    <TooltipProvider>
+      <>
+        {/* Backdrop */}
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40"
+          onClick={handleClose}
+        />
+        
+        {/* Modal */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
+            <form onSubmit={handleSubmit} className="flex flex-col h-full">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-slate-200 flex-shrink-0">
+                <div className="flex items-center gap-3">
+                  <Avatar className="w-10 h-10">
+                    <AvatarImage 
+                      src={user?.profilePhotoUrl} 
+                      alt={`${user?.firstName} ${user?.lastName}`}
+                    />
+                    <AvatarFallback className="bg-slate-100 text-slate-600 text-sm font-medium">
+                      {user ? `${user.firstName?.charAt(0)}${user.lastName?.charAt(0)}` : 'U'}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <div className="font-medium text-slate-900">
+                      {user ? `${user.firstName} ${user.lastName}` : 'Loading...'}
+                    </div>
+                    <div className="text-sm text-slate-500">
+                      posting in <span className="font-medium text-slate-700">Lead by Design</span>
+                    </div>
                   </div>
-                  <div className="text-sm text-slate-500">
-                    posting in <span className="font-medium text-slate-700">Lead by Design</span>
+                </div>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleClose}
+                  className="h-8 w-8 p-0 hover:bg-slate-100"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+
+              {/* Content - Scrollable */}
+              <div className="flex-1 overflow-y-auto p-6 space-y-4">
+                {/* Title Input */}
+                <div>
+                  <Input
+                    placeholder="Title"
+                    value={formData.title}
+                    onChange={(e) => handleInputChange('title', e.target.value)}
+                    className="text-lg font-medium placeholder:opacity-20"
+                    required
+                  />
+                </div>
+
+                {/* Body Input */}
+                <div>
+                  <Textarea
+                    ref={textareaRef}
+                    placeholder="Write something..."
+                    value={formData.body}
+                    onChange={(e) => handleInputChange('body', e.target.value)}
+                    className="min-h-[120px] resize-none placeholder:opacity-20 overflow-hidden"
+                    style={{ minHeight: '120px' }}
+                  />
+                </div>
+
+                {/* Attachments Display */}
+                {formData.attachments && formData.attachments.length > 0 && (
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-medium text-slate-700">Attachments</h4>
+                    <AttachmentsCarousel
+                      attachments={formData.attachments}
+                      onRemoveAttachment={handleRemoveAttachment}
+                      showRemove={true}
+                    />
+                  </div>
+                )}
+
+                {/* Upload Error */}
+                {uploadError && (
+                  <div className="text-sm text-red-600 bg-red-50 p-3 rounded-md">
+                    {uploadError}
+                  </div>
+                )}
+
+                {/* Category Selection */}
+                <div>
+                  <select
+                    value={formData.category_id}
+                    onChange={(e) => handleInputChange('category_id', parseInt(e.target.value))}
+                    className="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    required
+                  >
+                    <option value={0}>Select a category</option>
+                    {categories?.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Footer - Fixed */}
+              <div className="border-t border-slate-200 p-6 flex-shrink-0">
+                {/* Attachment Options */}
+                <div className="flex items-center gap-2 mb-4">
+                  {/* File Upload */}
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={isUploading}
+                      >
+                        {isUploading ? (
+                          <Upload className="w-4 h-4 animate-pulse" />
+                        ) : (
+                          <Paperclip className="w-4 h-4" />
+                        )}
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Add attachment</p>
+                    </TooltipContent>
+                  </Tooltip>
+
+                  {/* Hidden file input */}
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    multiple
+                    accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv"
+                    onChange={(e) => {
+                      const files = e.target.files;
+                      if (files && files.length > 0) {
+                        handleFileSelect(files);
+                      }
+                    }}
+                    className="hidden"
+                  />
+                  
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
+                    title="Add link"
+                  >
+                    <Link className="w-4 h-4" />
+                  </Button>
+                  
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
+                    title="Add video"
+                  >
+                    <Play className="w-4 h-4" />
+                  </Button>
+                  
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
+                    title="Create poll"
+                  >
+                    <BarChart3 className="w-4 h-4" />
+                  </Button>
+                  
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
+                    title="Add emoji"
+                  >
+                    <Smile className="w-4 h-4" />
+                  </Button>
+                  
+                  <span className="text-sm text-slate-500 font-medium">GIF</span>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      onClick={handleClose}
+                      className="text-slate-600 hover:text-slate-700"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      disabled={!formData.title.trim() || !formData.category_id || createPost.isPending}
+                      className="bg-slate-600 hover:bg-slate-700 text-white"
+                    >
+                      {createPost.isPending ? 'Posting...' : 'Post'}
+                    </Button>
                   </div>
                 </div>
               </div>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={handleClose}
-                className="h-8 w-8 p-0 hover:bg-slate-100"
-              >
-                <X className="w-4 h-4" />
-              </Button>
-            </div>
-
-            {/* Content */}
-            <div className="p-6 space-y-4">
-              {/* Title Input */}
-              <div>
-                <Input
-                  placeholder="Title"
-                  value={formData.title}
-                  onChange={(e) => handleInputChange('title', e.target.value)}
-                  className="text-lg font-medium placeholder:opacity-20"
-                  required
-                />
-              </div>
-
-              {/* Body Input */}
-              <div>
-                <Textarea
-                  placeholder="Write something..."
-                  value={formData.body}
-                  onChange={(e) => handleInputChange('body', e.target.value)}
-                  className="min-h-[120px] resize-none placeholder:opacity-20"
-                />
-              </div>
-
-              {/* Attachment Options */}
-              <div className="flex items-center gap-2">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
-                  title="Attach file"
-                >
-                  <Paperclip className="w-4 h-4" />
-                </Button>
-                
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
-                  title="Add link"
-                >
-                  <Link className="w-4 h-4" />
-                </Button>
-                
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
-                  title="Add video"
-                >
-                  <Play className="w-4 h-4" />
-                </Button>
-                
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
-                  title="Create poll"
-                >
-                  <BarChart3 className="w-4 h-4" />
-                </Button>
-                
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
-                  title="Add emoji"
-                >
-                  <Smile className="w-4 h-4" />
-                </Button>
-                
-                <span className="text-sm text-slate-500 font-medium">GIF</span>
-              </div>
-
-              {/* Category Selection */}
-              <div>
-                <select
-                  value={formData.category_id}
-                  onChange={(e) => handleInputChange('category_id', parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                  required
-                >
-                  <option value={0}>Select a category</option>
-                  {categories?.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="flex items-center justify-between p-6 border-t border-slate-200">
-              
-              <div className="flex items-center gap-3">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  onClick={handleClose}
-                  className="text-slate-600 hover:text-slate-700"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  disabled={!formData.title.trim() || !formData.category_id || createPost.isPending}
-                  className="bg-slate-600 hover:bg-slate-700 text-white"
-                >
-                  {createPost.isPending ? 'Posting...' : 'Post'}
-                </Button>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
-    </>
+      </>
+    </TooltipProvider>
   );
 }

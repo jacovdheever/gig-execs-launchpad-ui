@@ -246,3 +246,128 @@ export async function deleteCompanyLogo(logoUrl: string): Promise<boolean> {
     return false;
   }
 }
+
+/**
+ * Upload a community attachment to Supabase Storage
+ * @param file - The file to upload
+ * @param userId - The user ID for organizing files
+ * @returns Promise<UploadResult> - Result of the upload operation
+ */
+export async function uploadCommunityAttachment(file: File, userId: string): Promise<UploadResult> {
+  try {
+    // Validate file size (5MB limit)
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    if (file.size > maxSize) {
+      return {
+        success: false,
+        error: 'File size too large. Please upload a file smaller than 5MB.'
+      };
+    }
+
+    // Generate unique filename
+    const fileExt = file.name.split('.').pop();
+    const timestamp = Date.now();
+    const fileName = `${userId}/${timestamp}_${file.name}`;
+    const filePath = `community-attachments/${fileName}`;
+
+    // Upload to Supabase Storage
+    const { data, error } = await supabase.storage
+      .from('community-attachments')
+      .upload(fileName, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
+
+    if (error) {
+      console.error('Storage upload error:', error);
+      return {
+        success: false,
+        error: `Upload failed: ${error.message}`
+      };
+    }
+
+    // Get public URL
+    const { data: { publicUrl } } = supabase.storage
+      .from('community-attachments')
+      .getPublicUrl(fileName);
+
+    return {
+      success: true,
+      url: publicUrl
+    };
+
+  } catch (error) {
+    console.error('Community attachment upload error:', error);
+    return {
+      success: false,
+      error: 'An unexpected error occurred during upload.'
+    };
+  }
+}
+
+/**
+ * Delete a community attachment from Supabase Storage
+ * @param storagePath - The storage path of the file to delete
+ * @returns Promise<boolean> - Success status
+ */
+export async function deleteCommunityAttachment(storagePath: string): Promise<boolean> {
+  try {
+    const { error } = await supabase.storage
+      .from('community-attachments')
+      .remove([storagePath]);
+
+    if (error) {
+      console.error('Storage delete error:', error);
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Community attachment delete error:', error);
+    return false;
+  }
+}
+
+/**
+ * Get file icon based on MIME type
+ * @param mimeType - The MIME type of the file
+ * @returns string - CSS class for the appropriate icon
+ */
+export function getFileIcon(mimeType: string): string {
+  if (mimeType.startsWith('image/')) {
+    return 'image';
+  }
+  
+  if (mimeType === 'application/pdf') {
+    return 'pdf';
+  }
+  
+  if (mimeType.includes('word') || mimeType.includes('document')) {
+    return 'document';
+  }
+  
+  if (mimeType.includes('excel') || mimeType.includes('spreadsheet')) {
+    return 'spreadsheet';
+  }
+  
+  if (mimeType.includes('powerpoint') || mimeType.includes('presentation')) {
+    return 'presentation';
+  }
+  
+  return 'file';
+}
+
+/**
+ * Format file size for display
+ * @param bytes - File size in bytes
+ * @returns string - Formatted file size
+ */
+export function formatFileSize(bytes: number): string {
+  if (bytes === 0) return '0 Bytes';
+  
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
