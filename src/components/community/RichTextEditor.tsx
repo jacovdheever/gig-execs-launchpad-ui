@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import 'quill/dist/quill.snow.css';
 
 interface RichTextEditorProps {
   value: string;
@@ -20,12 +20,7 @@ export default function RichTextEditor({
       ['bold', 'italic', 'underline'],
       [{ 'list': 'ordered'}, { 'list': 'bullet' }],
       ['link']
-    ],
-    link: {
-      // Custom link handling to ensure popup stays within bounds
-      showTextInput: true,
-      defaultProtocol: 'https'
-    }
+    ]
   };
 
   const formats = [
@@ -48,9 +43,6 @@ export default function RichTextEditor({
           .ql-tooltip {
             z-index: 9999 !important;
             position: fixed !important;
-          }
-          .ql-tooltip[data-mode="link"]::before {
-            content: "Enter link:";
           }
         `}
       </style>
