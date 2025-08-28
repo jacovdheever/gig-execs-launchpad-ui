@@ -100,6 +100,8 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
       const end = textarea.selectionEnd;
       const text = textarea.value.substring(start, end);
       
+      console.log('Selection changed:', { start, end, text, bodyLength: textarea.value.length });
+      
       setSelectionStart(start);
       setSelectionEnd(end);
       setSelectedText(text);
@@ -108,11 +110,13 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     textarea.addEventListener('mouseup', handleSelectionChange);
     textarea.addEventListener('keyup', handleSelectionChange);
     textarea.addEventListener('select', handleSelectionChange);
+    textarea.addEventListener('input', handleSelectionChange);
 
     return () => {
       textarea.removeEventListener('mouseup', handleSelectionChange);
       textarea.removeEventListener('keyup', handleSelectionChange);
       textarea.removeEventListener('select', handleSelectionChange);
+      textarea.removeEventListener('input', handleSelectionChange);
     };
   }, []);
 
@@ -199,6 +203,13 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
 
   // Link functionality handlers
   const handleLinkClick = () => {
+    console.log('Link button clicked:', { 
+      selectedText: selectedText.trim(), 
+      selectionStart, 
+      selectionEnd,
+      bodyLength: formData.body.length 
+    });
+    
     // Check if there's selected text
     if (selectedText.trim()) {
       // Text is selected - will create a hyperlink
@@ -229,11 +240,21 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     // Ensure URL has protocol
     const fullUrl = linkUrl.startsWith('http') ? linkUrl : `https://${linkUrl}`;
     
+    console.log('Link submission:', { 
+      selectedText: selectedText.trim(), 
+      selectionStart, 
+      selectionEnd, 
+      bodyLength: formData.body.length,
+      fullUrl 
+    });
+    
     if (selectedText.trim()) {
       // Create hyperlink from selected text
       const beforeText = formData.body.substring(0, selectionStart);
       const afterText = formData.body.substring(selectionEnd);
       const hyperlinkText = `[${selectedText}](${fullUrl})`;
+      
+      console.log('Creating hyperlink:', { beforeText, hyperlinkText, afterText });
       
       const newBody = beforeText + hyperlinkText + afterText;
       setFormData(prev => ({ ...prev, body: newBody }));
