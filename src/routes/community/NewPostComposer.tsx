@@ -183,7 +183,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div 
             ref={modalRef}
-            className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-2xl max-h-[90vh] flex flex-col"
+            className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-2xl h-[90vh] flex flex-col"
           >
             <form onSubmit={handleSubmit} className="flex flex-col h-full">
               {/* Header */}
@@ -219,7 +219,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
               </div>
 
               {/* Content - Scrollable */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-4">
+              <div className="flex-1 overflow-y-auto p-6 space-y-4 min-h-0">
                 {/* Title Input */}
                 <div>
                   <Input
