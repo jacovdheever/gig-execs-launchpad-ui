@@ -1,6 +1,6 @@
 /**
  * NewPostComposer Component
- * Modal composer for creating new posts with dynamic height and attachment support
+ * Modal composer for creating new posts with dynamic height, attachment support, and link functionality
  */
 
 import { useState, useEffect, useRef } from 'react';
@@ -49,6 +49,14 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  
+  // Link functionality state variables
+  const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
+  const [linkUrl, setLinkUrl] = useState('');
+  const [linkError, setLinkError] = useState<string | null>(null);
+  const [selectedText, setSelectedText] = useState('');
+  const [selectionStart, setSelectionStart] = useState(0);
+  const [selectionEnd, setSelectionEnd] = useState(0);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -189,6 +197,67 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     }));
   };
 
+  // Link functionality handlers
+  const handleLinkClick = () => {
+    // Check if there's selected text
+    if (selectedText.trim()) {
+      // Text is selected - will create a hyperlink
+      setLinkUrl('');
+      setLinkError(null);
+    } else {
+      // No text selected - will insert plain URL
+      setLinkUrl('');
+      setLinkError(null);
+    }
+    setIsLinkModalOpen(true);
+  };
+
+  const handleLinkSubmit = () => {
+    // Validate URL
+    if (!linkUrl.trim()) {
+      setLinkError('Please enter a URL');
+      return;
+    }
+
+    // Basic URL validation
+    const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+    if (!urlPattern.test(linkUrl)) {
+      setLinkError('Please enter a valid URL');
+      return;
+    }
+
+    // Ensure URL has protocol
+    const fullUrl = linkUrl.startsWith('http') ? linkUrl : `https://${linkUrl}`;
+    
+    if (selectedText.trim()) {
+      // Create hyperlink from selected text
+      const beforeText = formData.body.substring(0, selectionStart);
+      const afterText = formData.body.substring(selectionEnd);
+      const hyperlinkText = `[${selectedText}](${fullUrl})`;
+      
+      const newBody = beforeText + hyperlinkText + afterText;
+      setFormData(prev => ({ ...prev, body: newBody }));
+    } else {
+      // Insert plain URL at cursor position or at the end
+      const cursorPos = textareaRef.current?.selectionStart || formData.body.length;
+      const beforeCursor = formData.body.substring(0, cursorPos);
+      const afterCursor = formData.body.substring(cursorPos);
+      
+      // Add space before URL if not at start and previous char is not space
+      const spaceBefore = cursorPos > 0 && !beforeCursor.endsWith(' ') ? ' ' : '';
+      const spaceAfter = afterCursor.length > 0 && !afterCursor.startsWith(' ') ? ' ' : '';
+      
+      const newBody = beforeCursor + spaceBefore + fullUrl + spaceAfter + afterCursor;
+      setFormData(prev => ({ ...prev, body: newBody }));
+    }
+
+    // Reset and close modal
+    setLinkUrl('');
+    setLinkError(null);
+    setIsLinkModalOpen(false);
+    setSelectedText('');
+  };
+
   const handleClose = () => {
     // Reset form when closing
     setFormData({
@@ -199,6 +268,13 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     });
     setUploadError(null);
     setIsCategoryOpen(false);
+    
+    // Reset link functionality state
+    setIsLinkModalOpen(false);
+    setLinkUrl('');
+    setLinkError(null);
+    setSelectedText('');
+    
     onClose();
   };
 
@@ -388,12 +464,14 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
                     className="hidden"
                   />
                   
+                  {/* Link Button - Now with onClick handler */}
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
                     className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
                     title="Add link"
+                    onClick={handleLinkClick}
                   >
                     <Link className="w-4 h-4" />
                   </Button>
@@ -455,6 +533,73 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
             </form>
           </div>
         </div>
+
+        {/* Link Modal - Complete with all functionality */}
+        {isLinkModalOpen && (
+          <>
+            {/* Backdrop */}
+            <div 
+              className="fixed inset-0 bg-black bg-opacity-50 z-60"
+              onClick={() => setIsLinkModalOpen(false)}
+            />
+            
+            {/* Link Modal */}
+            <div className="fixed inset-0 z-70 flex items-center justify-center p-4">
+              <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-md">
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-slate-900 mb-4">
+                    Add link
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        {selectedText.trim() ? 'Enter a URL' : 'Enter a URL'}
+                      </label>
+                      <Input
+                        type="url"
+                        placeholder="https://example.com"
+                        value={linkUrl}
+                        onChange={(e) => {
+                          setLinkUrl(e.target.value);
+                          setLinkError(null);
+                        }}
+                        className="w-full"
+                        autoFocus
+                      />
+                      {linkError && (
+                        <p className="text-sm text-red-600 mt-1">{linkError}</p>
+                      )}
+                      {selectedText.trim() && (
+                        <p className="text-sm text-slate-500 mt-1">
+                          Selected text: "{selectedText}" will become a hyperlink
+                        </p>
+                      )}
+                    </div>
+                    
+                    <div className="flex items-center justify-end gap-3">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => setIsLinkModalOpen(false)}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={handleLinkSubmit}
+                        disabled={!linkUrl.trim()}
+                        className="bg-slate-600 hover:bg-slate-700 text-white"
+                      >
+                        Link
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </>
     </TooltipProvider>
   );
