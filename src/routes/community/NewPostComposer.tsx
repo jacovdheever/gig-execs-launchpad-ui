@@ -61,7 +61,17 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     if (isOpen) {
       // Load current user when composer opens
       getCurrentUser().then(setUser);
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Restore body scroll when modal closes
+      document.body.style.overflow = 'unset';
     }
+
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [isOpen]);
 
   // Auto-resize textarea based on content
@@ -288,8 +298,8 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
                           onClick={() => setIsCategoryOpen(false)}
                         />
                         
-                        {/* Dropdown content */}
-                        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-20 max-h-60 overflow-y-auto">
+                        {/* Dropdown content - positioned above other components */}
+                        <div className="absolute bottom-full left-0 right-0 mb-1 bg-white border border-slate-200 rounded-lg shadow-lg z-20 max-h-60 overflow-y-auto">
                           {categories?.map((category) => (
                             <button
                               key={category.id}
