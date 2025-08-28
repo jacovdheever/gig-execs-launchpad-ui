@@ -30,6 +30,7 @@ import { useCreatePost } from '@/lib/community.hooks';
 import { getCurrentUser } from '@/lib/getCurrentUser';
 import { uploadCommunityAttachment } from '@/lib/storage';
 import AttachmentsCarousel from '@/components/community/AttachmentsCarousel';
+import RichTextEditor from '@/components/community/RichTextEditor';
 import type { CreatePostData, ForumAttachment } from '@/lib/community.types';
 
 interface NewPostComposerProps {
@@ -393,15 +394,13 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
                   />
                 </div>
 
-                {/* Body Input */}
+                {/* Body Input - Rich Text Editor */}
                 <div>
-                  <Textarea
-                    ref={textareaRef}
-                    placeholder="Write something..."
+                  <RichTextEditor
                     value={formData.body}
-                    onChange={(e) => handleInputChange('body', e.target.value)}
-                    className="min-h-[120px] resize-none placeholder:opacity-20"
-                    style={{ minHeight: '120px' }}
+                    onChange={(value) => handleInputChange('body', value)}
+                    placeholder="Write something..."
+                    className="min-h-[120px]"
                   />
                 </div>
 
