@@ -90,7 +90,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     }
   }, [formData.body]);
 
-  // Track text selection
+  // Track text selection - improved with more event listeners
   useEffect(() => {
     const textarea = textareaRef.current;
     if (!textarea) return;
@@ -107,16 +107,25 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
       setSelectedText(text);
     };
 
+    // More comprehensive event listeners for text selection
     textarea.addEventListener('mouseup', handleSelectionChange);
+    textarea.addEventListener('mousedown', handleSelectionChange);
     textarea.addEventListener('keyup', handleSelectionChange);
+    textarea.addEventListener('keydown', handleSelectionChange);
     textarea.addEventListener('select', handleSelectionChange);
     textarea.addEventListener('input', handleSelectionChange);
+    textarea.addEventListener('focus', handleSelectionChange);
+    textarea.addEventListener('blur', handleSelectionChange);
 
     return () => {
       textarea.removeEventListener('mouseup', handleSelectionChange);
+      textarea.removeEventListener('mousedown', handleSelectionChange);
       textarea.removeEventListener('keyup', handleSelectionChange);
+      textarea.removeEventListener('keydown', handleSelectionChange);
       textarea.removeEventListener('select', handleSelectionChange);
       textarea.removeEventListener('input', handleSelectionChange);
+      textarea.removeEventListener('focus', handleSelectionChange);
+      textarea.removeEventListener('blur', handleSelectionChange);
     };
   }, []);
 
@@ -203,12 +212,32 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
 
   // Link functionality handlers
   const handleLinkClick = () => {
-    console.log('Link button clicked:', { 
-      selectedText: selectedText.trim(), 
-      selectionStart, 
-      selectionEnd,
-      bodyLength: formData.body.length 
-    });
+    // Get current selection from textarea as backup
+    const textarea = textareaRef.current;
+    if (textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const text = textarea.value.substring(start, end);
+      
+      // Update state with current selection
+      setSelectionStart(start);
+      setSelectionEnd(end);
+      setSelectedText(text);
+      
+      console.log('Link button clicked - updated selection:', { 
+        selectedText: text.trim(), 
+        selectionStart: start, 
+        selectionEnd: end,
+        bodyLength: formData.body.length 
+      });
+    } else {
+      console.log('Link button clicked:', { 
+        selectedText: selectedText.trim(), 
+        selectionStart, 
+        selectionEnd,
+        bodyLength: formData.body.length 
+      });
+    }
     
     // Check if there's selected text
     if (selectedText.trim()) {
