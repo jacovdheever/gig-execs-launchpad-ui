@@ -242,7 +242,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
                 </div>
 
                 {/* Body Input - Rich Text Editor */}
-                <div className="mb-8">
+                <div className="mb-12">
                   <RichTextEditor
                     value={formData.body}
                     onChange={(value) => handleInputChange('body', value)}

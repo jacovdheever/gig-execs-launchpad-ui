@@ -44,16 +44,21 @@ export default function RichTextEditor({
             z-index: 9999 !important;
             position: absolute !important;
             left: 50% !important;
-            transform: translateX(-50%) !important;
             top: 50% !important;
-            transform: translateY(-50%) !important;
+            transform: translate(-50%, -50%) !important;
+            max-width: 90% !important;
+            overflow: hidden !important;
           }
           .ql-tooltip[data-mode="link"] {
             position: absolute !important;
             left: 50% !important;
-            transform: translateX(-50%) !important;
             top: 50% !important;
-            transform: translateY(-50%) !important;
+            transform: translate(-50%, -50%) !important;
+            max-width: 90% !important;
+            overflow: hidden !important;
+          }
+          .ql-tooltip input {
+            max-width: 200px !important;
           }
         `}
       </style>
