@@ -61,17 +61,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     if (isOpen) {
       // Load current user when composer opens
       getCurrentUser().then(setUser);
-      // Prevent body scroll when modal is open
-      document.body.style.overflow = 'hidden';
-    } else {
-      // Restore body scroll when modal closes
-      document.body.style.overflow = 'unset';
     }
-
-    // Cleanup function
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
   }, [isOpen]);
 
   // Auto-resize textarea based on content
@@ -193,7 +183,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div 
             ref={modalRef}
-            className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col"
+            className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-2xl max-h-[90vh] flex flex-col"
           >
             <form onSubmit={handleSubmit} className="flex flex-col h-full">
               {/* Header */}
@@ -248,7 +238,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
                     placeholder="Write something..."
                     value={formData.body}
                     onChange={(e) => handleInputChange('body', e.target.value)}
-                    className="min-h-[120px] resize-none placeholder:opacity-20 overflow-hidden"
+                    className="min-h-[120px] resize-none placeholder:opacity-20"
                     style={{ minHeight: '120px' }}
                   />
                 </div>
