@@ -42,7 +42,18 @@ export default function RichTextEditor({
           }
           .ql-tooltip {
             z-index: 9999 !important;
-            position: fixed !important;
+            position: absolute !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+          }
+          .ql-tooltip[data-mode="link"] {
+            position: absolute !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
           }
         `}
       </style>
