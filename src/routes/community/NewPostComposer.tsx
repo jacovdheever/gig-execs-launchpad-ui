@@ -82,6 +82,32 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     }
   }, [formData.body]);
 
+  // Track text selection
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const handleSelectionChange = () => {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const text = textarea.value.substring(start, end);
+      
+      setSelectionStart(start);
+      setSelectionEnd(end);
+      setSelectedText(text);
+    };
+
+    textarea.addEventListener('mouseup', handleSelectionChange);
+    textarea.addEventListener('keyup', handleSelectionChange);
+    textarea.addEventListener('select', handleSelectionChange);
+
+    return () => {
+      textarea.removeEventListener('mouseup', handleSelectionChange);
+      textarea.removeEventListener('keyup', handleSelectionChange);
+      textarea.removeEventListener('select', handleSelectionChange);
+    };
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     

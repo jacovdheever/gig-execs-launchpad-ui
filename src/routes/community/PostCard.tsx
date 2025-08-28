@@ -16,6 +16,7 @@ import { formatPostDate, formatRelativeTime } from '@/lib/time';
 import { useToggleReaction, useMarkPostAsRead } from '@/lib/community.hooks';
 import { getCurrentUser } from '@/lib/getCurrentUser';
 import AttachmentsCarousel from '@/components/community/AttachmentsCarousel';
+import PostBodyRenderer from '@/components/community/PostBodyRenderer';
 import type { ForumPost } from '@/lib/community.types';
 
 interface PostCardProps {
@@ -71,6 +72,20 @@ export default function PostCard({ post, onCommentClick }: PostCardProps) {
     return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
   };
 
+  // Truncate body for preview while preserving links
+  const getBodyPreview = (body: string) => {
+    if (!body) return '';
+    
+    // Remove markdown link syntax for preview
+    const cleanBody = body.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+    
+    if (cleanBody.length > 200) {
+      return cleanBody.substring(0, 200) + '...';
+    }
+    
+    return cleanBody;
+  };
+
   return (
     <article 
       className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
@@ -120,12 +135,9 @@ export default function PostCard({ post, onCommentClick }: PostCardProps) {
           {post.title}
         </h3>
         {post.body && (
-          <p className="text-slate-700 leading-relaxed">
-            {post.body.length > 200 
-              ? `${post.body.substring(0, 200)}...` 
-              : post.body
-            }
-          </p>
+          <div className="text-slate-700 leading-relaxed">
+            <PostBodyRenderer body={getBodyPreview(post.body)} />
+          </div>
         )}
       </div>
 
