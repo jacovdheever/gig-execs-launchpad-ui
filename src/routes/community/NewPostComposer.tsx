@@ -12,7 +12,8 @@ import {
   Smile, 
   X,
   Plus,
-  Upload
+  Upload,
+  ChevronDown
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -47,9 +48,11 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
   const [user, setUser] = useState<any>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const { data: categories } = useCategories();
   const createPost = useCreatePost();
@@ -58,7 +61,17 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     if (isOpen) {
       // Load current user when composer opens
       getCurrentUser().then(setUser);
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Restore body scroll when modal closes
+      document.body.style.overflow = 'unset';
     }
+
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [isOpen]);
 
   // Auto-resize textarea based on content
@@ -159,8 +172,11 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
       attachments: []
     });
     setUploadError(null);
+    setIsCategoryOpen(false);
     onClose();
   };
+
+  const selectedCategory = categories?.find(cat => cat.id === formData.category_id);
 
   if (!isOpen) return null;
 
@@ -175,7 +191,10 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
         
         {/* Modal */}
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
+          <div 
+            ref={modalRef}
+            className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col"
+          >
             <form onSubmit={handleSubmit} className="flex flex-col h-full">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-slate-200 flex-shrink-0">
@@ -253,21 +272,51 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
                   </div>
                 )}
 
-                {/* Category Selection */}
-                <div>
-                  <select
-                    value={formData.category_id}
-                    onChange={(e) => handleInputChange('category_id', parseInt(e.target.value))}
-                    className="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    required
-                  >
-                    <option value={0}>Select a category</option>
-                    {categories?.map((category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
+                {/* Category Selection - Mobile Optimized */}
+                <div className="relative">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Category *
+                  </label>
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+                      className="w-full px-4 py-3 text-left bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent hover:border-slate-400 transition-colors"
+                    >
+                      <span className={selectedCategory ? 'text-slate-900' : 'text-slate-500'}>
+                        {selectedCategory ? selectedCategory.name : 'Select a category'}
+                      </span>
+                      <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
+                    </button>
+                    
+                    {/* Dropdown Menu */}
+                    {isCategoryOpen && (
+                      <>
+                        {/* Backdrop to close dropdown */}
+                        <div 
+                          className="fixed inset-0 z-10"
+                          onClick={() => setIsCategoryOpen(false)}
+                        />
+                        
+                        {/* Dropdown content */}
+                        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-20 max-h-60 overflow-y-auto">
+                          {categories?.map((category) => (
+                            <button
+                              key={category.id}
+                              type="button"
+                              onClick={() => {
+                                handleInputChange('category_id', category.id);
+                                setIsCategoryOpen(false);
+                              }}
+                              className="w-full px-4 py-3 text-left hover:bg-slate-50 focus:bg-slate-50 focus:outline-none transition-colors first:rounded-t-lg last:rounded-b-lg"
+                            >
+                              <span className="text-slate-900">{category.name}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
 
