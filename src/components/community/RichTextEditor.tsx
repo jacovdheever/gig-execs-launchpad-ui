@@ -1,5 +1,6 @@
 import React from 'react';
-import { Editor } from '@tinymce/tinymce-react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 interface RichTextEditorProps {
   value: string;
@@ -14,50 +15,30 @@ export default function RichTextEditor({
   placeholder = "Write something...",
   className = "" 
 }: RichTextEditorProps) {
-  const handleEditorChange = (content: string) => {
-    onChange(content);
+  const modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      ['link']
+    ],
   };
+
+  const formats = [
+    'bold', 'italic', 'underline',
+    'list', 'bullet',
+    'link'
+  ];
 
   return (
     <div className={className}>
-      <Editor
+      <ReactQuill
         value={value}
-        onEditorChange={handleEditorChange}
-        init={{
-          height: 300,
-          menubar: false,
-          plugins: [
-            'advlist', 'autolink', 'lists', 'link', 'charmap', 'preview',
-            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-          ],
-          toolbar: 'bold italic underline | bullist numlist | link',
-          content_style: `
-            body { 
-              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-              font-size: 14px;
-              line-height: 1.6;
-              color: #374151;
-            }
-            a { color: #2563eb; text-decoration: underline; }
-            a:hover { color: #1d4ed8; }
-          `,
-          placeholder: placeholder,
-          branding: false,
-          elementpath: false,
-          statusbar: false,
-          resize: false,
-          setup: (editor) => {
-            // Custom link handling to work with our existing system
-            editor.on('click', (e) => {
-              const target = e.target as HTMLElement;
-              if (target.tagName === 'A' && target.getAttribute('href')) {
-                e.preventDefault();
-                window.open(target.getAttribute('href'), '_blank');
-              }
-            });
-          }
-        }}
+        onChange={onChange}
+        modules={modules}
+        formats={formats}
+        placeholder={placeholder}
+        theme="snow"
+        style={{ height: '200px' }}
       />
     </div>
   );
