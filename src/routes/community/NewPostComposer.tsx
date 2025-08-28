@@ -6,7 +6,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { 
   Paperclip, 
-  Link, 
   Play, 
   BarChart3, 
   Smile, 
@@ -51,16 +50,9 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   
-  // Link functionality state variables
-  const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
-  const [linkUrl, setLinkUrl] = useState('');
-  const [linkError, setLinkError] = useState<string | null>(null);
-  const [selectedText, setSelectedText] = useState('');
-  const [selectionStart, setSelectionStart] = useState(0);
-  const [selectionEnd, setSelectionEnd] = useState(0);
+
   
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
 
   const { data: categories } = useCategories();
@@ -83,52 +75,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     };
   }, [isOpen]);
 
-  // Auto-resize textarea based on content
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
-  }, [formData.body]);
 
-  // Track text selection - improved with more event listeners
-  useEffect(() => {
-    const textarea = textareaRef.current;
-    if (!textarea) return;
-
-    const handleSelectionChange = () => {
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const text = textarea.value.substring(start, end);
-      
-      console.log('Selection changed:', { start, end, text, bodyLength: textarea.value.length });
-      
-      setSelectionStart(start);
-      setSelectionEnd(end);
-      setSelectedText(text);
-    };
-
-    // More comprehensive event listeners for text selection
-    textarea.addEventListener('mouseup', handleSelectionChange);
-    textarea.addEventListener('mousedown', handleSelectionChange);
-    textarea.addEventListener('keyup', handleSelectionChange);
-    textarea.addEventListener('keydown', handleSelectionChange);
-    textarea.addEventListener('select', handleSelectionChange);
-    textarea.addEventListener('input', handleSelectionChange);
-    textarea.addEventListener('focus', handleSelectionChange);
-    textarea.addEventListener('blur', handleSelectionChange);
-
-    return () => {
-      textarea.removeEventListener('mouseup', handleSelectionChange);
-      textarea.removeEventListener('mousedown', handleSelectionChange);
-      textarea.removeEventListener('keyup', handleSelectionChange);
-      textarea.removeEventListener('keydown', handleSelectionChange);
-      textarea.removeEventListener('select', handleSelectionChange);
-      textarea.removeEventListener('input', handleSelectionChange);
-      textarea.removeEventListener('focus', handleSelectionChange);
-      textarea.removeEventListener('blur', handleSelectionChange);
-    };
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -211,103 +158,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     }));
   };
 
-  // Link functionality handlers
-  const handleLinkClick = () => {
-    // Get current selection from textarea as backup
-    const textarea = textareaRef.current;
-    if (textarea) {
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const text = textarea.value.substring(start, end);
-      
-      // Update state with current selection
-      setSelectionStart(start);
-      setSelectionEnd(end);
-      setSelectedText(text);
-      
-      console.log('Link button clicked - updated selection:', { 
-        selectedText: text.trim(), 
-        selectionStart: start, 
-        selectionEnd: end,
-        bodyLength: formData.body.length 
-      });
-    } else {
-      console.log('Link button clicked:', { 
-        selectedText: selectedText.trim(), 
-        selectionStart, 
-        selectionEnd,
-        bodyLength: formData.body.length 
-      });
-    }
-    
-    // Check if there's selected text
-    if (selectedText.trim()) {
-      // Text is selected - will create a hyperlink
-      setLinkUrl('');
-      setLinkError(null);
-    } else {
-      // No text selected - will insert plain URL
-      setLinkUrl('');
-      setLinkError(null);
-    }
-    setIsLinkModalOpen(true);
-  };
 
-  const handleLinkSubmit = () => {
-    // Validate URL
-    if (!linkUrl.trim()) {
-      setLinkError('Please enter a URL');
-      return;
-    }
-
-    // Basic URL validation
-    const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
-    if (!urlPattern.test(linkUrl)) {
-      setLinkError('Please enter a valid URL');
-      return;
-    }
-
-    // Ensure URL has protocol
-    const fullUrl = linkUrl.startsWith('http') ? linkUrl : `https://${linkUrl}`;
-    
-    console.log('Link submission:', { 
-      selectedText: selectedText.trim(), 
-      selectionStart, 
-      selectionEnd, 
-      bodyLength: formData.body.length,
-      fullUrl 
-    });
-    
-    if (selectedText.trim()) {
-      // Create hyperlink from selected text
-      const beforeText = formData.body.substring(0, selectionStart);
-      const afterText = formData.body.substring(selectionEnd);
-      const hyperlinkText = `[${selectedText}](${fullUrl})`;
-      
-      console.log('Creating hyperlink:', { beforeText, hyperlinkText, afterText });
-      
-      const newBody = beforeText + hyperlinkText + afterText;
-      setFormData(prev => ({ ...prev, body: newBody }));
-    } else {
-      // Insert plain URL at cursor position or at the end
-      const cursorPos = textareaRef.current?.selectionStart || formData.body.length;
-      const beforeCursor = formData.body.substring(0, cursorPos);
-      const afterCursor = formData.body.substring(cursorPos);
-      
-      // Add space before URL if not at start and previous char is not space
-      const spaceBefore = cursorPos > 0 && !beforeCursor.endsWith(' ') ? ' ' : '';
-      const spaceAfter = afterCursor.length > 0 && !afterCursor.startsWith(' ') ? ' ' : '';
-      
-      const newBody = beforeCursor + spaceBefore + fullUrl + spaceAfter + afterCursor;
-      setFormData(prev => ({ ...prev, body: newBody }));
-    }
-
-    // Reset and close modal
-    setLinkUrl('');
-    setLinkError(null);
-    setIsLinkModalOpen(false);
-    setSelectedText('');
-  };
 
   const handleClose = () => {
     // Reset form when closing
@@ -320,11 +171,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     setUploadError(null);
     setIsCategoryOpen(false);
     
-    // Reset link functionality state
-    setIsLinkModalOpen(false);
-    setLinkUrl('');
-    setLinkError(null);
-    setSelectedText('');
+
     
     onClose();
   };
@@ -395,7 +242,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
                 </div>
 
                 {/* Body Input - Rich Text Editor */}
-                <div>
+                <div className="mb-6">
                   <RichTextEditor
                     value={formData.body}
                     onChange={(value) => handleInputChange('body', value)}
@@ -513,17 +360,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
                     className="hidden"
                   />
                   
-                  {/* Link Button - Now with onClick handler */}
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
-                    title="Add link"
-                    onClick={handleLinkClick}
-                  >
-                    <Link className="w-4 h-4" />
-                  </Button>
+
                   
                   <Button
                     type="button"
@@ -583,72 +420,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
           </div>
         </div>
 
-        {/* Link Modal - Complete with all functionality */}
-        {isLinkModalOpen && (
-          <>
-            {/* Backdrop */}
-            <div 
-              className="fixed inset-0 bg-black bg-opacity-50 z-[9998]"
-              onClick={() => setIsLinkModalOpen(false)}
-            />
-            
-            {/* Link Modal */}
-            <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-              <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-md">
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-slate-900 mb-4">
-                    Add link
-                  </h3>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">
-                        {selectedText.trim() ? 'Enter a URL' : 'Enter a URL'}
-                      </label>
-                      <Input
-                        type="url"
-                        placeholder="https://example.com"
-                        value={linkUrl}
-                        onChange={(e) => {
-                          setLinkUrl(e.target.value);
-                          setLinkError(null);
-                        }}
-                        className="w-full"
-                        autoFocus
-                      />
-                      {linkError && (
-                        <p className="text-sm text-red-600 mt-1">{linkError}</p>
-                      )}
-                      {selectedText.trim() && (
-                        <p className="text-sm text-slate-500 mt-1">
-                          Selected text: "{selectedText}" will become a hyperlink
-                        </p>
-                      )}
-                    </div>
-                    
-                    <div className="flex items-center justify-end gap-3">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => setIsLinkModalOpen(false)}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        type="button"
-                        onClick={handleLinkSubmit}
-                        disabled={!linkUrl.trim()}
-                        className="bg-slate-600 hover:bg-slate-700 text-white"
-                      >
-                        Link
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
+
       </>
     </TooltipProvider>
   );

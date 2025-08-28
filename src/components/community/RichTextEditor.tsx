@@ -21,6 +21,11 @@ export default function RichTextEditor({
       [{ 'list': 'ordered'}, { 'list': 'bullet' }],
       ['link']
     ],
+    link: {
+      // Custom link handling to ensure popup stays within bounds
+      showTextInput: true,
+      defaultProtocol: 'https'
+    }
   };
 
   const formats = [
@@ -30,7 +35,25 @@ export default function RichTextEditor({
   ];
 
   return (
-    <div className={className}>
+    <div className={`${className} relative`}>
+      <style>
+        {`
+          .ql-editor {
+            min-height: 120px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #374151;
+          }
+          .ql-tooltip {
+            z-index: 9999 !important;
+            position: fixed !important;
+          }
+          .ql-tooltip[data-mode="link"]::before {
+            content: "Enter link:";
+          }
+        `}
+      </style>
       <ReactQuill
         value={value}
         onChange={onChange}
