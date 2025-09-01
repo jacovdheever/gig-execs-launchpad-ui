@@ -12,12 +12,16 @@ import CategoryChips from './CategoryChips';
 import SortMenu from './SortMenu';
 import PostCard from './PostCard';
 import NewPostComposer from './NewPostComposer';
+import PostViewModal from '@/components/community/PostViewModal';
 import { useFeedFilters } from '@/lib/community.hooks';
 import { usePosts } from '@/lib/community.hooks';
 import { getCurrentUser } from '@/lib/getCurrentUser';
+import type { ForumPost } from '@/lib/community.types';
 
 export default function CommunityLanding() {
   const [isComposerOpen, setIsComposerOpen] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<ForumPost | null>(null);
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const { filters, updateCategory, updateSort, nextPage, prevPage } = useFeedFilters();
   const { data: feedData, isLoading, error } = usePosts(filters);
@@ -30,6 +34,16 @@ export default function CommunityLanding() {
   const handlePostCreated = () => {
     // Refresh the feed
     window.location.reload();
+  };
+
+  const handlePostClick = (post: ForumPost) => {
+    setSelectedPost(post);
+    setIsPostModalOpen(true);
+  };
+
+  const handlePostModalClose = () => {
+    setIsPostModalOpen(false);
+    setSelectedPost(null);
   };
 
   const getInitials = (firstName: string, lastName: string) => {
@@ -106,6 +120,7 @@ export default function CommunityLanding() {
                 // TODO: Implement comment view
                 console.log('Comment clicked for post:', post.id);
               }}
+              onPostClick={handlePostClick}
             />
           ))
         ) : (
@@ -158,6 +173,14 @@ export default function CommunityLanding() {
         isOpen={isComposerOpen}
         onClose={() => setIsComposerOpen(false)}
         onPostCreated={handlePostCreated}
+      />
+
+      {/* Post View Modal */}
+      <PostViewModal
+        post={selectedPost}
+        isOpen={isPostModalOpen}
+        onClose={handlePostModalClose}
+        onPostUpdated={handlePostCreated}
       />
     </div>
   );

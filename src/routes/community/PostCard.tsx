@@ -22,6 +22,7 @@ import type { ForumPost } from '@/lib/community.types';
 interface PostCardProps {
   post: ForumPost;
   onCommentClick?: () => void;
+  onPostClick?: (post: ForumPost) => void;
 }
 
 export default function PostCard({ post, onCommentClick }: PostCardProps) {
@@ -58,6 +59,9 @@ export default function PostCard({ post, onCommentClick }: PostCardProps) {
     try {
       const user = await getCurrentUser();
       markAsRead.mutate({ postId: post.id, userId: user.id });
+      
+      // Open post view modal
+      onPostClick?.(post);
     } catch (error) {
       console.error('Error marking post as read:', error);
     }
