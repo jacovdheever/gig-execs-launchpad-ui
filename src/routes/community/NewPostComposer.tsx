@@ -212,7 +212,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
           return {
             platform: 'wistia',
             videoId,
-            embedUrl: `https://fast.wistia.com/embed/medias/${videoId}.jsonp`
+            embedUrl: `https://fast.wistia.com/embed/medias/${videoId}.html`
           };
         }
       }
