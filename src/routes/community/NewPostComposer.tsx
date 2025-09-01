@@ -559,12 +559,12 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
           <>
             {/* Backdrop */}
             <div 
-              className="fixed inset-0 bg-black bg-opacity-50 z-60"
+              className="fixed inset-0 bg-black bg-opacity-50 z-[9999]"
               onClick={() => setIsVideoModalOpen(false)}
             />
             
             {/* Video Modal */}
-            <div className="fixed inset-0 z-70 flex items-center justify-center p-4">
+            <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
               <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-md">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-slate-200">
