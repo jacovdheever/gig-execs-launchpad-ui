@@ -366,22 +366,22 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
         />
         
         {/* Modal */}
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-4xl max-h-[90vh] overflow-hidden">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 md:p-4">
+          <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-4xl h-[95vh] md:h-[90vh] overflow-hidden">
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-slate-200">
-              <div className="flex items-center gap-3">
-                <Avatar className="w-10 h-10">
+            <div className="flex items-center justify-between p-4 md:p-6 border-b border-slate-200">
+              <div className="flex items-center gap-3 min-w-0 flex-1">
+                <Avatar className="w-8 h-8 md:w-10 md:h-10 flex-shrink-0">
                   <AvatarImage src={post.author?.profilePhotoUrl} />
                   <AvatarFallback className="bg-slate-100 text-slate-600 text-sm font-medium">
                     {post.author ? `${post.author.firstName?.charAt(0)}${post.author.lastName?.charAt(0)}` : 'U'}
                   </AvatarFallback>
                 </Avatar>
-                <div>
-                  <div className="font-medium text-slate-900">
+                <div className="min-w-0 flex-1">
+                  <div className="font-medium text-slate-900 truncate">
                     {post.author ? `${post.author.firstName} ${post.author.lastName}` : 'Unknown User'}
                   </div>
-                  <div className="text-sm text-slate-500">
+                  <div className="text-xs md:text-sm text-slate-500 truncate">
                     {new Date(post.created_at).toLocaleDateString()} • {post.category?.name || 'General'}
                   </div>
                 </div>
@@ -420,7 +420,7 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
             </div>
 
             {/* Content */}
-            <div className="p-6 overflow-y-auto max-h-[60vh]">
+            <div className="p-4 md:p-6 overflow-y-auto flex-1">
               {/* Post Title */}
               {isEditingPost ? (
                 <div className="mb-4">
@@ -428,11 +428,11 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                     value={editPostTitle}
                     onChange={(e) => setEditPostTitle(e.target.value)}
                     placeholder="Post title..."
-                    className="text-xl font-semibold text-slate-900"
+                    className="text-lg md:text-xl font-semibold text-slate-900"
                   />
                 </div>
               ) : (
-                <h2 className="text-xl font-semibold text-slate-900 mb-4">{post.title}</h2>
+                <h2 className="text-lg md:text-xl font-semibold text-slate-900 mb-4">{post.title}</h2>
               )}
               
               {/* Post Body */}
@@ -480,24 +480,26 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
               )}
 
               {/* Post Actions */}
-              <div className="flex items-center gap-4 py-4 border-t border-slate-200">
-                <Button variant="ghost" size="sm" className="flex items-center gap-2">
-                  <Heart className="w-4 h-4" />
-                  Like
-                </Button>
-                <div className="flex items-center gap-2 text-sm text-slate-500">
-                  <MessageCircle className="w-4 h-4" />
-                  {comments.length} comments
+              <div className="flex items-center justify-between py-3 md:py-4 border-t border-slate-200">
+                <div className="flex items-center gap-2 md:gap-4">
+                  <Button variant="ghost" size="sm" className="flex items-center gap-1 md:gap-2 h-8 md:h-9 px-2 md:px-3">
+                    <Heart className="w-4 h-4" />
+                    <span className="hidden sm:inline">Like</span>
+                  </Button>
+                  <div className="flex items-center gap-1 md:gap-2 text-xs md:text-sm text-slate-500">
+                    <MessageCircle className="w-4 h-4" />
+                    <span>{comments.length} comments</span>
+                  </div>
                 </div>
-                <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                <Button variant="ghost" size="sm" className="flex items-center gap-1 md:gap-2 h-8 md:h-9 px-2 md:px-3">
                   <Share2 className="w-4 h-4" />
-                  Share
+                  <span className="hidden sm:inline">Share</span>
                 </Button>
               </div>
 
               {/* Comments Section */}
-              <div className="border-t border-slate-200 pt-6">
-                <h3 className="text-lg font-semibold text-slate-900 mb-4">Comments</h3>
+              <div className="border-t border-slate-200 pt-4 md:pt-6">
+                <h3 className="text-base md:text-lg font-semibold text-slate-900 mb-3 md:mb-4">Comments</h3>
                 
                 {/* Comments List */}
                 <div className="space-y-4 mb-6">
@@ -575,9 +577,9 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                 </div>
 
                 {/* Add Comment */}
-                <div className="border-t border-slate-200 pt-4">
-                  <div className="flex gap-3">
-                    <Avatar className="w-8 h-8 flex-shrink-0">
+                <div className="border-t border-slate-200 pt-3 md:pt-4">
+                  <div className="flex gap-2 md:gap-3">
+                    <Avatar className="w-6 h-6 md:w-8 md:h-8 flex-shrink-0">
                       <AvatarImage src={currentUser?.profilePhotoUrl} />
                       <AvatarFallback className="bg-slate-100 text-slate-600 text-xs">
                         {currentUser ? `${currentUser.firstName?.charAt(0)}${currentUser.lastName?.charAt(0)}` : 'U'}
@@ -629,8 +631,8 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                         rows={3}
                       />
                       
-                      <div className="flex items-center justify-between mt-3">
-                        <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-between mt-2 md:mt-3">
+                        <div className="flex items-center gap-1 md:gap-2">
                           {/* Media Controls */}
                           <Tooltip>
                             <TooltipTrigger asChild>
@@ -638,11 +640,11 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                                 type="button"
                                 variant="ghost"
                                 size="sm"
-                                className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
+                                className="h-7 w-7 md:h-8 md:w-8 p-0 text-slate-500 hover:text-slate-700"
                                 onClick={() => document.getElementById('comment-file-input')?.click()}
                                 title="Add attachment"
                               >
-                                <Paperclip className="w-4 h-4" />
+                                <Paperclip className="w-3 h-3 md:w-4 md:h-4" />
                               </Button>
                             </TooltipTrigger>
                             <TooltipContent>
@@ -656,11 +658,11 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                                 type="button"
                                 variant="ghost"
                                 size="sm"
-                                className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
+                                className="h-7 w-7 md:h-8 md:w-8 p-0 text-slate-500 hover:text-slate-700"
                                 onClick={() => setIsVideoModalOpen(true)}
                                 title="Add video"
                               >
-                                <Play className="w-4 h-4" />
+                                <Play className="w-3 h-3 md:w-4 md:h-4" />
                               </Button>
                             </TooltipTrigger>
                             <TooltipContent>
@@ -674,11 +676,11 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                                 type="button"
                                 variant="ghost"
                                 size="sm"
-                                className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
+                                className="h-7 w-7 md:h-8 md:w-8 p-0 text-slate-500 hover:text-slate-700"
                                 onClick={() => setIsEmojiPickerOpen(true)}
                                 title="Add emoji"
                               >
-                                <Smile className="w-4 h-4" />
+                                <Smile className="w-3 h-3 md:w-4 md:h-4" />
                               </Button>
                             </TooltipTrigger>
                             <TooltipContent>
@@ -701,14 +703,14 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                         </div>
                         
                         <div className="flex gap-2">
-                          <Button variant="ghost" size="sm" onClick={() => setNewComment('')}>
+                          <Button variant="ghost" size="sm" onClick={() => setNewComment('')} className="h-8 px-2 md:px-3 text-xs md:text-sm">
                             Cancel
                           </Button>
                           <Button 
                             size="sm" 
                             onClick={handleSubmitComment}
                             disabled={!newComment.trim() || isSubmitting}
-                            className="bg-slate-600 hover:bg-slate-700 text-white"
+                            className="bg-slate-600 hover:bg-slate-700 text-white h-8 px-2 md:px-3 text-xs md:text-sm"
                           >
                             {isSubmitting ? 'Posting...' : 'Comment'}
                           </Button>
@@ -730,8 +732,8 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
               onClick={() => setIsVideoModalOpen(false)}
             />
             
-            <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-              <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-md">
+            <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 md:p-4">
+              <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-md mx-4">
                 <div className="flex items-center justify-between p-6 border-b border-slate-200">
                   <h3 className="text-lg font-semibold text-slate-900">Add video</h3>
                   <Button
@@ -801,8 +803,8 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
 
         {/* Emoji Picker Modal */}
         {isEmojiPickerOpen && (
-          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-            <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-md max-h-[80vh] overflow-hidden">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 md:p-4">
+            <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-md max-h-[80vh] overflow-hidden mx-4">
               <div className="flex items-center justify-between p-4 border-b border-slate-200">
                 <h3 className="text-lg font-semibold text-slate-900">Add Emoji</h3>
                 <Button
@@ -820,13 +822,13 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                 {Object.entries(emojis).map(([category, emojiList]) => (
                   <div key={category} className="mb-6">
                     <h4 className="text-sm font-medium text-slate-700 mb-3">{category}</h4>
-                    <div className="grid grid-cols-8 gap-2">
+                    <div className="grid grid-cols-6 md:grid-cols-8 gap-1 md:gap-2">
                       {emojiList.map((emoji, index) => (
                         <button
                           key={index}
                           type="button"
                           onClick={() => handleEmojiSelect(emoji)}
-                          className="w-10 h-10 text-2xl hover:bg-slate-100 rounded-lg transition-colors flex items-center justify-center"
+                          className="w-8 h-8 md:w-10 md:h-10 text-xl md:text-2xl hover:bg-slate-100 rounded-lg transition-colors flex items-center justify-center"
                           title={emoji}
                         >
                           {emoji}
@@ -842,8 +844,8 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
 
         {/* Delete Confirmation Modal */}
         {showDeleteConfirm && (
-          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-            <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-md">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 md:p-4">
+            <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-md mx-4">
               <div className="p-6">
                 <h3 className="text-lg font-semibold text-slate-900 mb-4">
                   Confirm Delete
