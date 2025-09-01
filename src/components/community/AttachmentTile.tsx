@@ -31,6 +31,7 @@ export default function AttachmentTile({ attachment, onRemove, showRemove = true
   };
 
   const getFileTypeLabel = () => {
+    if (attachment.type === 'video' && attachment.url.includes('embed')) return 'Embedded Video';
     if (attachment.mimeType?.startsWith('image/')) return 'Image';
     if (attachment.mimeType === 'application/pdf') return 'PDF';
     if (attachment.mimeType?.includes('word')) return 'Word';
@@ -42,6 +43,7 @@ export default function AttachmentTile({ attachment, onRemove, showRemove = true
 
   const isImage = attachment.mimeType?.startsWith('image/');
   const isVideo = attachment.mimeType?.startsWith('video/');
+  const isEmbeddedVideo = attachment.type === 'video' && attachment.url.includes('embed');
 
   return (
     <div className="relative group bg-white rounded-lg border border-slate-200 p-3 min-w-[200px] max-w-[250px] hover:shadow-md transition-shadow">
@@ -81,6 +83,10 @@ export default function AttachmentTile({ attachment, onRemove, showRemove = true
                 className="w-full h-full object-cover"
               />
             </div>
+          ) : isEmbeddedVideo ? (
+            <div className="w-16 h-16 rounded-lg bg-slate-100 flex items-center justify-center">
+              <FileVideo className="w-8 h-8 text-red-500" />
+            </div>
           ) : isVideo ? (
             <div className="w-16 h-16 rounded-lg bg-slate-100 flex items-center justify-center">
               <FileVideo className="w-8 h-8 text-red-500" />
@@ -109,14 +115,30 @@ export default function AttachmentTile({ attachment, onRemove, showRemove = true
           size="sm"
           className="w-full text-xs"
           onClick={() => {
-            const link = document.createElement('a');
-            link.href = attachment.url;
-            link.download = attachment.fileName || 'download';
-            link.click();
+            if (isEmbeddedVideo) {
+              // For embedded videos, open the original URL
+              const originalUrl = attachment.fileName || attachment.url;
+              window.open(originalUrl, '_blank');
+            } else {
+              // For files, download
+              const link = document.createElement('a');
+              link.href = attachment.url;
+              link.download = attachment.fileName || 'download';
+              link.click();
+            }
           }}
         >
-          <Download className="w-3 h-3 mr-1" />
-          Download
+          {isEmbeddedVideo ? (
+            <>
+              <Maximize2 className="w-3 h-3 mr-1" />
+              Watch
+            </>
+          ) : (
+            <>
+              <Download className="w-3 h-3 mr-1" />
+              Download
+            </>
+          )}
         </Button>
       </div>
     </div>

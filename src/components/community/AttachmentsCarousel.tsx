@@ -2,6 +2,7 @@ import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import AttachmentTile from './AttachmentTile';
+import VideoEmbed from './VideoEmbed';
 import type { ForumAttachment } from '@/lib/community.types';
 
 interface AttachmentsCarouselProps {
@@ -75,14 +76,27 @@ export default function AttachmentsCarousel({
         className="flex gap-3 overflow-x-auto scrollbar-hide px-1 py-2"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {attachments.map((attachment) => (
-          <AttachmentTile
-            key={attachment.id || attachment.url}
-            attachment={attachment}
-            onRemove={onRemoveAttachment}
-            showRemove={showRemove}
-          />
-        ))}
+        {attachments.map((attachment) => {
+          // Handle video attachments differently
+          if (attachment.type === 'video' && attachment.url.includes('embed')) {
+            return (
+              <VideoEmbed
+                key={attachment.id || attachment.url}
+                attachment={attachment}
+              />
+            );
+          }
+          
+          // Handle other attachments normally
+          return (
+            <AttachmentTile
+              key={attachment.id || attachment.url}
+              attachment={attachment}
+              onRemove={onRemoveAttachment}
+              showRemove={showRemove}
+            />
+          );
+        })}
       </div>
 
       {/* Custom scrollbar styling */}

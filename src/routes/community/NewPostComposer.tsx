@@ -49,8 +49,9 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  
-
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [videoUrl, setVideoUrl] = useState('');
+  const [videoError, setVideoError] = useState<string | null>(null);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -158,6 +159,111 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     }));
   };
 
+  // Video URL parsing and validation
+  const parseVideoUrl = (url: string): { platform: string; videoId: string; embedUrl: string } | null => {
+    try {
+      const urlObj = new URL(url);
+      
+      // YouTube
+      if (urlObj.hostname.includes('youtube.com') || urlObj.hostname.includes('youtu.be')) {
+        let videoId = '';
+        if (urlObj.hostname.includes('youtu.be')) {
+          videoId = urlObj.pathname.slice(1);
+        } else if (urlObj.searchParams.has('v')) {
+          videoId = urlObj.searchParams.get('v')!;
+        }
+        if (videoId) {
+          return {
+            platform: 'youtube',
+            videoId,
+            embedUrl: `https://www.youtube.com/embed/${videoId}`
+          };
+        }
+      }
+      
+      // Vimeo
+      if (urlObj.hostname.includes('vimeo.com')) {
+        const videoId = urlObj.pathname.slice(1);
+        if (videoId && /^\d+$/.test(videoId)) {
+          return {
+            platform: 'vimeo',
+            videoId,
+            embedUrl: `https://player.vimeo.com/video/${videoId}`
+          };
+        }
+      }
+      
+      // Loom
+      if (urlObj.hostname.includes('loom.com')) {
+        const videoId = urlObj.pathname.split('/').pop();
+        if (videoId) {
+          return {
+            platform: 'loom',
+            videoId,
+            embedUrl: `https://www.loom.com/embed/${videoId}`
+          };
+        }
+      }
+      
+      // Wistia
+      if (urlObj.hostname.includes('wistia.com')) {
+        const videoId = urlObj.pathname.split('/').pop();
+        if (videoId) {
+          return {
+            platform: 'wistia',
+            videoId,
+            embedUrl: `https://fast.wistia.com/embed/medias/${videoId}.jsonp`
+          };
+        }
+      }
+      
+      return null;
+    } catch {
+      return null;
+    }
+  };
+
+  const handleAddVideo = () => {
+    if (!videoUrl.trim()) {
+      setVideoError('Please enter a video URL');
+      return;
+    }
+
+    const videoData = parseVideoUrl(videoUrl.trim());
+    if (!videoData) {
+      setVideoError('Please enter a valid YouTube, Vimeo, Loom, or Wistia URL');
+      return;
+    }
+
+    // Add video to attachments
+    const videoAttachment: ForumAttachment = {
+      id: `video-${Date.now()}`,
+      type: 'video',
+      url: videoData.embedUrl,
+      title: `Video from ${videoData.platform}`,
+      description: `Embedded video from ${videoData.platform}`,
+      // Store original URL for reference
+      fileName: videoUrl.trim()
+    };
+
+    setFormData(prev => ({
+      ...prev,
+      attachments: [...(prev.attachments || []), videoAttachment]
+    }));
+
+    // Reset and close modal
+    setVideoUrl('');
+    setVideoError(null);
+    setIsVideoModalOpen(false);
+  };
+
+  const handleRemoveVideo = (videoId: string) => {
+    setFormData(prev => ({
+      ...prev,
+      attachments: (prev.attachments || []).filter(att => att.id !== videoId)
+    }));
+  };
+
 
 
   const handleClose = () => {
@@ -170,8 +276,9 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     });
     setUploadError(null);
     setIsCategoryOpen(false);
-    
-
+    setIsVideoModalOpen(false);
+    setVideoUrl('');
+    setVideoError(null);
     
     onClose();
   };
@@ -381,15 +488,23 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
                   
 
                   
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
-                    title="Add video"
-                  >
-                    <Play className="w-4 h-4" />
-                  </Button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 w-8 p-0 text-slate-500 hover:text-slate-700"
+                        onClick={() => setIsVideoModalOpen(true)}
+                        title="Add video"
+                      >
+                        <Play className="w-4 h-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Add video</p>
+                    </TooltipContent>
+                  </Tooltip>
                   
                   <Button
                     type="button"
@@ -439,6 +554,89 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
           </div>
         </div>
 
+        {/* Video Modal */}
+        {isVideoModalOpen && (
+          <>
+            {/* Backdrop */}
+            <div 
+              className="fixed inset-0 bg-black bg-opacity-50 z-60"
+              onClick={() => setIsVideoModalOpen(false)}
+            />
+            
+            {/* Video Modal */}
+            <div className="fixed inset-0 z-70 flex items-center justify-center p-4">
+              <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-md">
+                {/* Header */}
+                <div className="flex items-center justify-between p-6 border-b border-slate-200">
+                  <h3 className="text-lg font-semibold text-slate-900">Add video</h3>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsVideoModalOpen(false)}
+                    className="h-8 w-8 p-0 hover:bg-slate-100"
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 space-y-4">
+                  {/* Video URL Input */}
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      Video URL
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg className="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>
+                      </div>
+                      <Input
+                        type="url"
+                        placeholder="YouTube, Vimeo, Loom, or Wistia link"
+                        value={videoUrl}
+                        onChange={(e) => {
+                          setVideoUrl(e.target.value);
+                          setVideoError(null);
+                        }}
+                        className="pl-10"
+                      />
+                    </div>
+                    {videoError && (
+                      <p className="mt-1 text-sm text-red-600">{videoError}</p>
+                    )}
+                  </div>
+
+                  {/* Supported Platforms Info */}
+                  <div className="text-xs text-slate-500">
+                    <p>Supported platforms: YouTube, Vimeo, Loom, Wistia</p>
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="flex items-center justify-end gap-3 p-6 border-t border-slate-200">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={() => setIsVideoModalOpen(false)}
+                    className="text-slate-600 hover:text-slate-700"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={handleAddVideo}
+                    className="bg-slate-600 hover:bg-slate-700 text-white"
+                  >
+                    Add
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
 
       </>
     </TooltipProvider>
