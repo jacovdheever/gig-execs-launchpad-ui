@@ -33,6 +33,14 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
   const [videoError, setVideoError] = useState<string | null>(null);
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  
+  // Edit/Delete state
+  const [isEditingPost, setIsEditingPost] = useState(false);
+  const [editPostTitle, setEditPostTitle] = useState('');
+  const [editPostBody, setEditPostBody] = useState('');
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<'post' | 'comment' | null>(null);
+  const [deleteCommentId, setDeleteCommentId] = useState<string | null>(null);
 
   const createComment = useCreateComment();
   const updateComment = useUpdateComment();
@@ -51,6 +59,12 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
       setVideoUrl('');
       setVideoError(null);
       setIsEmojiPickerOpen(false);
+      setIsEditingPost(false);
+      setEditPostTitle('');
+      setEditPostBody('');
+      setShowDeleteConfirm(false);
+      setDeleteTarget(null);
+      setDeleteCommentId(null);
     }
   }, [isOpen, post]);
 
@@ -123,27 +137,79 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
     }
   };
 
-  const handleDeleteComment = async (commentId: string) => {
-    if (!confirm('Are you sure you want to delete this comment?')) return;
+
+
+  const handleEditPost = () => {
+    if (!post) return;
+    setEditPostTitle(post.title || '');
+    setEditPostBody(post.body || '');
+    setIsEditingPost(true);
+  };
+
+  const handleSavePostEdit = async () => {
+    if (!post || !editPostTitle.trim()) return;
 
     try {
-      // TODO: Implement comment deletion
-      setComments(prev => prev.filter(comment => comment.id !== commentId));
+      // TODO: Implement post update API call
+      console.log('Saving post edit:', {
+        id: post.id,
+        title: editPostTitle.trim(),
+        body: editPostBody.trim()
+      });
+      
+      // For now, just close edit mode
+      setIsEditingPost(false);
+      setEditPostTitle('');
+      setEditPostBody('');
+      
+      // Notify parent component
+      onPostUpdated?.();
     } catch (error) {
-      console.error('Error deleting comment:', error);
+      console.error('Error updating post:', error);
     }
   };
 
-  const handleEditPost = () => {
-    // TODO: Implement post editing
-    console.log('Edit post:', post?.id);
+  const handleCancelPostEdit = () => {
+    setIsEditingPost(false);
+    setEditPostTitle('');
+    setEditPostBody('');
   };
 
   const handleDeletePost = () => {
-    if (!confirm('Are you sure you want to delete this post?')) return;
-    // TODO: Implement post deletion
-    console.log('Delete post:', post?.id);
-    onClose();
+    setDeleteTarget('post');
+    setShowDeleteConfirm(true);
+  };
+
+  const handleDeleteComment = (commentId: string) => {
+    setDeleteTarget('comment');
+    setDeleteCommentId(commentId);
+    setShowDeleteConfirm(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      if (deleteTarget === 'post') {
+        // TODO: Implement post deletion API call
+        console.log('Deleting post:', post?.id);
+        onClose();
+      } else if (deleteTarget === 'comment' && deleteCommentId) {
+        // TODO: Implement comment deletion API call
+        console.log('Deleting comment:', deleteCommentId);
+        setComments(prev => prev.filter(comment => comment.id.toString() !== deleteCommentId));
+      }
+    } catch (error) {
+      console.error('Error deleting:', error);
+    } finally {
+      setShowDeleteConfirm(false);
+      setDeleteTarget(null);
+      setDeleteCommentId(null);
+    }
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteConfirm(false);
+    setDeleteTarget(null);
+    setDeleteCommentId(null);
   };
 
   // Media functions for comments
@@ -356,12 +422,43 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
             {/* Content */}
             <div className="p-6 overflow-y-auto max-h-[60vh]">
               {/* Post Title */}
-              <h2 className="text-xl font-semibold text-slate-900 mb-4">{post.title}</h2>
+              {isEditingPost ? (
+                <div className="mb-4">
+                  <Input
+                    value={editPostTitle}
+                    onChange={(e) => setEditPostTitle(e.target.value)}
+                    placeholder="Post title..."
+                    className="text-xl font-semibold text-slate-900"
+                  />
+                </div>
+              ) : (
+                <h2 className="text-xl font-semibold text-slate-900 mb-4">{post.title}</h2>
+              )}
               
               {/* Post Body */}
-              <div className="prose prose-slate max-w-none mb-6">
-                <div dangerouslySetInnerHTML={{ __html: post.body }} />
-              </div>
+              {isEditingPost ? (
+                <div className="mb-6">
+                  <textarea
+                    value={editPostBody}
+                    onChange={(e) => setEditPostBody(e.target.value)}
+                    placeholder="Post content..."
+                    className="w-full p-4 border border-slate-300 rounded-lg text-slate-700 leading-relaxed resize-none"
+                    rows={8}
+                  />
+                  <div className="flex gap-2 mt-3">
+                    <Button onClick={handleSavePostEdit} className="bg-slate-600 hover:bg-slate-700 text-white">
+                      Save Changes
+                    </Button>
+                    <Button variant="ghost" onClick={handleCancelPostEdit}>
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div className="prose prose-slate max-w-none mb-6">
+                  <div dangerouslySetInnerHTML={{ __html: post.body }} />
+                </div>
+              )}
 
               {/* Post Attachments */}
               {post.attachments && post.attachments.length > 0 && (
@@ -738,6 +835,36 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Delete Confirmation Modal */}
+        {showDeleteConfirm && (
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+            <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-md">
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-slate-900 mb-4">
+                  Confirm Delete
+                </h3>
+                <p className="text-slate-600 mb-6">
+                  {deleteTarget === 'post' 
+                    ? 'Are you sure you want to delete this post? This action cannot be undone.'
+                    : 'Are you sure you want to delete this comment? This action cannot be undone.'
+                  }
+                </p>
+                <div className="flex gap-3 justify-end">
+                  <Button variant="ghost" onClick={cancelDelete}>
+                    Cancel
+                  </Button>
+                  <Button 
+                    onClick={confirmDelete} 
+                    className="bg-red-600 hover:bg-red-700 text-white"
+                  >
+                    Delete
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
