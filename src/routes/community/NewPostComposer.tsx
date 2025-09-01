@@ -183,6 +183,25 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
   return (
     <TooltipProvider>
       <>
+        <style>
+          {`
+            .rich-text-editor-container {
+              position: relative;
+              z-index: 1;
+              overflow: visible;
+              isolation: isolate;
+            }
+            .rich-text-editor-container .ql-editor {
+              position: relative;
+              z-index: 1;
+            }
+            .modal-content {
+              position: relative;
+              z-index: 1;
+              isolation: isolate;
+            }
+          `}
+        </style>
         {/* Backdrop */}
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-40"
@@ -229,7 +248,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
               </div>
 
               {/* Content - Scrollable */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-4 min-h-0">
+              <div className="flex-1 overflow-y-auto p-6 space-y-6 min-h-0 modal-content">
                 {/* Title Input */}
                 <div>
                   <Input
@@ -242,7 +261,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
                 </div>
 
                 {/* Body Input - Rich Text Editor */}
-                <div className="mb-12">
+                <div className="mb-6 rich-text-editor-container">
                   <RichTextEditor
                     value={formData.body}
                     onChange={(value) => handleInputChange('body', value)}
@@ -253,7 +272,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
 
                 {/* Attachments Display */}
                 {formData.attachments && formData.attachments.length > 0 && (
-                  <div className="space-y-3">
+                  <div className="space-y-3 mb-6">
                     <h4 className="text-sm font-medium text-slate-700">Attachments</h4>
                     <AttachmentsCarousel
                       attachments={formData.attachments}
@@ -265,13 +284,13 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
 
                 {/* Upload Error */}
                 {uploadError && (
-                  <div className="text-sm text-red-600 bg-red-50 p-3 rounded-md">
+                  <div className="text-sm text-red-600 bg-red-50 p-3 rounded-md mb-6">
                     {uploadError}
                   </div>
                 )}
 
                 {/* Category Selection - Mobile Optimized */}
-                <div className="relative">
+                <div className="relative mt-6">
                   <label className="block text-sm font-medium text-slate-700 mb-2">
                     Category *
                   </label>
