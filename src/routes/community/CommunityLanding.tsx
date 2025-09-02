@@ -37,6 +37,7 @@ export default function CommunityLanding() {
   };
 
   const handlePostClick = (post: ForumPost) => {
+    console.log('🔍 CommunityLanding handlePostClick called with post:', post);
     setSelectedPost(post);
     setIsPostModalOpen(true);
   };

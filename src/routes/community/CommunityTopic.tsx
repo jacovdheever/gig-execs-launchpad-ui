@@ -38,6 +38,7 @@ export default function CommunityTopic() {
   };
 
   const handlePostClick = (post: ForumPost) => {
+    console.log('🔍 CommunityTopic handlePostClick called with post:', post);
     setSelectedPost(post);
     setIsPostModalOpen(true);
   };

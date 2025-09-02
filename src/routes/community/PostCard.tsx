@@ -56,12 +56,18 @@ export default function PostCard({ post, onCommentClick }: PostCardProps) {
   };
 
   const handleCardClick = async () => {
+    console.log('🔍 PostCard clicked, onPostClick:', onPostClick);
     try {
       const user = await getCurrentUser();
       markAsRead.mutate({ postId: post.id, userId: user.id });
       
       // Open post view modal
-      onPostClick?.(post);
+      if (onPostClick) {
+        console.log('🔍 Calling onPostClick with post:', post);
+        onPostClick(post);
+      } else {
+        console.error('❌ onPostClick is not defined!');
+      }
     } catch (error) {
       console.error('Error marking post as read:', error);
     }
