@@ -55,8 +55,8 @@ export default function PostCard({ post, onCommentClick }: PostCardProps) {
     }
   };
 
-  const handleCardClick = async () => {
-    console.log('🔍 PostCard clicked, onPostClick:', onPostClick);
+  const handleCardClick = async (e: React.MouseEvent) => {
+    console.log('🔍 PostCard clicked, onPostClick:', onPostClick, 'event target:', e.target);
     try {
       const user = await getCurrentUser();
       markAsRead.mutate({ postId: post.id, userId: user.id });
