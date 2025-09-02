@@ -10,14 +10,18 @@ import CategoryChips from './CategoryChips';
 import SortMenu from './SortMenu';
 import PostCard from './PostCard';
 import NewPostComposer from './NewPostComposer';
+import PostViewModal from '@/components/community/PostViewModal';
 import { useFeedFilters } from '@/lib/community.hooks';
 import { usePosts, useCategories } from '@/lib/community.hooks';
 import { useState } from 'react';
+import type { ForumPost } from '@/lib/community.types';
 
 export default function CommunityTopic() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [isComposerOpen, setIsComposerOpen] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<ForumPost | null>(null);
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   
   const { data: categories } = useCategories();
   const currentCategory = categories?.find(cat => cat.slug === slug);
@@ -31,6 +35,16 @@ export default function CommunityTopic() {
   const handlePostCreated = () => {
     // Refresh the feed
     window.location.reload();
+  };
+
+  const handlePostClick = (post: ForumPost) => {
+    setSelectedPost(post);
+    setIsPostModalOpen(true);
+  };
+
+  const handlePostModalClose = () => {
+    setIsPostModalOpen(false);
+    setSelectedPost(null);
   };
 
   const handleCategoryChange = (categoryId: number | undefined) => {
@@ -103,6 +117,14 @@ export default function CommunityTopic() {
         onPostCreated={handlePostCreated}
       />
 
+      {/* Post View Modal */}
+      <PostViewModal
+        post={selectedPost}
+        isOpen={isPostModalOpen}
+        onClose={handlePostModalClose}
+        onPostUpdated={handlePostCreated}
+      />
+
       {/* Posts Feed */}
       <div className="space-y-4">
         {isLoading ? (
@@ -129,6 +151,7 @@ export default function CommunityTopic() {
                 // TODO: Implement comment view
                 console.log('Comment clicked for post:', post.id);
               }}
+              onPostClick={handlePostClick}
             />
           ))
         ) : (
