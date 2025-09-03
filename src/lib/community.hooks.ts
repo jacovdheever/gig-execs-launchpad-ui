@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getCurrentUser } from './getCurrentUser';
 import * as communityApi from './community.api';
+import { supabase } from './supabase';
 import type { 
   ForumCategory, 
   ForumPost, 
@@ -108,6 +109,54 @@ export function useCreateComment() {
       queryClient.invalidateQueries({ queryKey: ['forum-posts'] });
       // Invalidate comments for this post
       queryClient.invalidateQueries({ queryKey: ['forum-comments', variables.post_id] });
+    },
+  });
+}
+
+/**
+ * Hook to update a comment
+ */
+export function useUpdateComment() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async ({ id, body }: { id: string; body: string }) => {
+      const { data, error } = await supabase
+        .from('forum_comments')
+        .update({ body })
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: (_, variables) => {
+      // Invalidate comments for this post
+      queryClient.invalidateQueries({ queryKey: ['forum-comments'] });
+    },
+  });
+}
+
+/**
+ * Hook to delete a comment
+ */
+export function useDeleteComment() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async (commentId: string) => {
+      const { error } = await supabase
+        .from('forum_comments')
+        .delete()
+        .eq('id', commentId);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      // Invalidate comments and posts to refresh comment counts
+      queryClient.invalidateQueries({ queryKey: ['forum-comments'] });
+      queryClient.invalidateQueries({ queryKey: ['forum-posts'] });
     },
   });
 }

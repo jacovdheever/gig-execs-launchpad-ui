@@ -6,8 +6,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import type { ForumPost, ForumComment, ForumAttachment } from '@/lib/community.types';
-import { useCreateComment, useUpdateComment, useDeleteComment } from '@/hooks/useCommunity';
-import { useToggleReaction, useComments } from '@/lib/community.hooks';
+import { useCreateComment, useUpdateComment, useDeleteComment, useToggleReaction, useComments } from '@/lib/community.hooks';
 import { getCurrentUser } from '@/lib/getCurrentUser';
 import type { User } from '@/lib/database.types';
 import { uploadCommunityAttachment } from '@/lib/storage';

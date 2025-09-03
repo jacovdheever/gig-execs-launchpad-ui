@@ -7,13 +7,13 @@ export function useCreateComment() {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: async (comment: Omit<ForumComment, 'id' | 'created_at' | 'updated_at'>) => {
+    mutationFn: async (comment: Omit<ForumComment, 'id' | 'created_at'>) => {
       const { data, error } = await supabase
         .from('forum_comments')
         .insert([{
           post_id: comment.post_id,
           author_id: comment.author_id,
-          content: comment.content
+          body: comment.body
         }])
         .select()
         .single();
