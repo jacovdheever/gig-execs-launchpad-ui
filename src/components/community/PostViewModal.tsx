@@ -12,6 +12,7 @@ import type { User } from '@/lib/database.types';
 import { uploadCommunityAttachment } from '@/lib/storage';
 import { formatRelativeTime } from '@/lib/time';
 import AttachmentsCarousel from '@/components/community/AttachmentsCarousel';
+import RichTextEditor from '@/components/community/RichTextEditor';
 
 interface PostViewModalProps {
   post: ForumPost | null;
@@ -231,9 +232,12 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
   const confirmDelete = async () => {
     try {
       if (deleteTarget === 'post' && post) {
+        console.log('🔍 Deleting post with ID:', post.id);
         await deletePost.mutateAsync(post.id);
+        console.log('🔍 Post deleted successfully, closing modal');
         onClose();
       } else if (deleteTarget === 'comment' && deleteCommentId) {
+        console.log('🔍 Deleting comment with ID:', deleteCommentId);
         await handleDeleteComment(deleteCommentId);
       }
     } catch (error) {
@@ -487,13 +491,12 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
               
               {/* Post Body */}
               {isEditingPost ? (
-                <div className="mb-6">
-                  <textarea
+                <div className="mb-6 rich-text-editor-container">
+                  <RichTextEditor
                     value={editPostBody}
-                    onChange={(e) => setEditPostBody(e.target.value)}
-                    placeholder="Post content..."
-                    className="w-full p-4 border border-slate-300 rounded-lg text-slate-700 leading-relaxed resize-none"
-                    rows={8}
+                    onChange={(value) => setEditPostBody(value)}
+                    placeholder="Write something..."
+                    className="min-h-[120px]"
                   />
                   <div className="flex gap-2 mt-3">
                     <Button onClick={handleSavePostEdit} className="bg-slate-600 hover:bg-slate-700 text-white">

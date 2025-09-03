@@ -194,14 +194,20 @@ export function useDeletePost() {
   
   return useMutation({
     mutationFn: async (postId: number) => {
+      console.log('🔍 useDeletePost: Deleting post with ID:', postId);
       const { error } = await supabase
         .from('forum_posts')
         .delete()
         .eq('id', postId);
 
-      if (error) throw error;
+      if (error) {
+        console.error('🔍 useDeletePost: Error deleting post:', error);
+        throw error;
+      }
+      console.log('🔍 useDeletePost: Post deleted successfully');
     },
     onSuccess: () => {
+      console.log('🔍 useDeletePost: Invalidating forum-posts query');
       // Invalidate posts to refresh the data
       queryClient.invalidateQueries({ queryKey: ['forum-posts'] });
     },
