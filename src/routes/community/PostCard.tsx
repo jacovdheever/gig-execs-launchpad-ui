@@ -25,7 +25,7 @@ interface PostCardProps {
   onPostClick?: (post: ForumPost) => void;
 }
 
-export default function PostCard({ post, onCommentClick }: PostCardProps) {
+export default function PostCard({ post, onCommentClick, onPostClick }: PostCardProps) {
   const [isLiked, setIsLiked] = useState(post.isLiked || false);
   const [reactionCount, setReactionCount] = useState(post.reaction_count);
   
