@@ -149,8 +149,8 @@ export default function CommunityTopic() {
               key={post.id}
               post={post}
               onCommentClick={() => {
-                // TODO: Implement comment view
                 console.log('Comment clicked for post:', post.id);
+                handlePostClick(post);
               }}
               onPostClick={handlePostClick}
             />
