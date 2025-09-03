@@ -42,9 +42,12 @@ export interface ForumComment {
   author_id: string;
   body: string;
   created_at: string;
+  parent_id?: number;
+  reply_count?: number;
   
   // Joined fields
   author?: {
+    id: string;
     first_name: string;
     last_name: string;
     profile_photo_url?: string;
@@ -102,4 +105,5 @@ export interface CreatePostData {
 export interface CreateCommentData {
   post_id: number;
   body: string;
+  parent_id?: number;
 }

@@ -229,6 +229,8 @@ export async function fetchComments(postId: number): Promise<ForumComment[]> {
     author_id: comment.author_id,
     body: comment.body,
     created_at: comment.created_at,
+    parent_id: comment.parent_id,
+    reply_count: comment.reply_count || 0,
     author: {
       id: comment.users.id,
       first_name: comment.users.first_name,
@@ -247,7 +249,8 @@ export async function createComment(commentData: CreateCommentData, authorId: st
   const insertData = {
     post_id: commentData.post_id,
     body: commentData.body,
-    author_id: authorId
+    author_id: authorId,
+    parent_id: commentData.parent_id
   };
   
   console.log('🔍 Insert data:', insertData);
@@ -282,6 +285,8 @@ export async function createComment(commentData: CreateCommentData, authorId: st
     author_id: data.author_id,
     body: data.body,
     created_at: data.created_at,
+    parent_id: data.parent_id,
+    reply_count: data.reply_count || 0,
     author: {
       id: data.users.id,
       first_name: data.users.first_name,

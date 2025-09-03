@@ -10,6 +10,7 @@ import { useCreateComment, useUpdateComment, useDeleteComment, useToggleReaction
 import { getCurrentUser } from '@/lib/getCurrentUser';
 import type { User } from '@/lib/database.types';
 import { uploadCommunityAttachment } from '@/lib/storage';
+import { formatRelativeTime } from '@/lib/time';
 
 interface PostViewModalProps {
   post: ForumPost | null;
@@ -134,7 +135,8 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
     try {
       await createComment.mutateAsync({
         post_id: post.id,
-        body: replyContent.trim()
+        body: replyContent.trim(),
+        parent_id: replyingTo
       });
       setReplyContent('');
       setReplyingTo(null);
@@ -543,6 +545,14 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                   <div className="flex items-center gap-1 md:gap-2 text-xs md:text-sm text-slate-500">
                     <MessageCircle className="w-4 h-4" />
                     <span>{comments.length} comments</span>
+                    {comments.length > 0 && (
+                      <span className="text-slate-400">•</span>
+                    )}
+                    {comments.length > 0 ? (
+                      <span>Last comment {formatRelativeTime(comments[comments.length - 1]?.created_at)}</span>
+                    ) : (
+                      <span>No comments yet</span>
+                    )}
                   </div>
                 </div>
                 <Button variant="ghost" size="sm" className="flex items-center gap-1 md:gap-2 h-8 md:h-9 px-2 md:px-3">
@@ -557,7 +567,7 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                 
                 {/* Comments List */}
                 <div className="space-y-4 mb-6">
-                  {comments.map((comment) => (
+                  {comments.filter(comment => !comment.parent_id).map((comment) => (
                     <div key={comment.id}>
                       {/* Main Comment */}
                       <div className="flex gap-3">
@@ -679,6 +689,101 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                         </div>
                       </div>
                     )}
+                      
+                      {/* Nested Comments (Replies) */}
+                      {comments.filter(reply => reply.parent_id === comment.id).map((reply) => (
+                        <div key={reply.id} className="ml-8 mt-3">
+                          <div className="flex gap-3">
+                            <Avatar className="w-6 h-6 flex-shrink-0">
+                              <AvatarImage src={reply.author?.profile_photo_url} />
+                              <AvatarFallback className="bg-slate-100 text-slate-600 text-xs">
+                                {reply.author ? `${reply.author.first_name?.charAt(0)}${reply.author.last_name?.charAt(0)}` : 'U'}
+                              </AvatarFallback>
+                            </Avatar>
+                            
+                            <div className="flex-1">
+                              <div className="bg-slate-50 rounded-lg p-2">
+                                <div className="flex items-center justify-between mb-1">
+                                  <div className="font-medium text-xs text-slate-900">
+                                    {reply.author ? `${reply.author.first_name} ${reply.author.last_name}` : 'Unknown User'}
+                                  </div>
+                                  {currentUser?.id === reply.author_id && (
+                                    <DropdownMenu>
+                                      <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" size="sm" className="h-5 w-5 p-0">
+                                          <MoreHorizontal className="w-2 h-2" />
+                                        </Button>
+                                      </DropdownMenuTrigger>
+                                      <DropdownMenuContent align="end">
+                                        <DropdownMenuItem onClick={() => {
+                                          setEditingComment(reply.id.toString());
+                                          setEditContent(reply.body);
+                                        }}>
+                                          <Edit className="w-3 h-3 mr-2" />
+                                          Edit
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => handleDeleteComment(reply.id.toString())} className="text-red-600">
+                                          <Trash2 className="w-3 h-3 mr-2" />
+                                          Delete
+                                        </DropdownMenuItem>
+                                      </DropdownMenuContent>
+                                    </DropdownMenu>
+                                  )}
+                                </div>
+                                
+                                {editingComment === reply.id.toString() ? (
+                                  <div className="space-y-2">
+                                    <textarea
+                                      value={editContent}
+                                      onChange={(e) => setEditContent(e.target.value)}
+                                      className="w-full p-2 border border-slate-300 rounded-md text-xs"
+                                      rows={2}
+                                    />
+                                    <div className="flex gap-2">
+                                      <Button size="sm" onClick={() => handleEditComment(reply.id.toString())}>
+                                        Save
+                                      </Button>
+                                      <Button size="sm" variant="ghost" onClick={() => {
+                                        setEditingComment(null);
+                                        setEditContent('');
+                                      }}>
+                                        Cancel
+                                      </Button>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div className="text-xs text-slate-700">{reply.body}</div>
+                                )}
+                                
+                                <div className="text-xs text-slate-500 mt-1">
+                                  {new Date(reply.created_at).toLocaleDateString()}
+                                </div>
+                                
+                                {/* Reply Actions */}
+                                <div className="flex items-center gap-2 mt-2 pt-1 border-t border-slate-200">
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleCommentLikeClick(reply.id.toString())}
+                                    className={`h-5 px-1 text-xs ${
+                                      commentLikes[reply.id.toString()]
+                                        ? 'text-yellow-600 hover:text-yellow-700'
+                                        : 'text-slate-500 hover:text-slate-700'
+                                    }`}
+                                  >
+                                    {commentLikes[reply.id.toString()] ? (
+                                      <ThumbsUp className="w-2 h-2 fill-current mr-1" />
+                                    ) : (
+                                      <ThumbsUp className="w-2 h-2 mr-1" />
+                                    )}
+                                    {commentReactionCounts[reply.id.toString()] || 0}
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   ))}
                 </div>
