@@ -430,16 +430,27 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
               {currentUser?.id === post.author_id && (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="h-8 w-8 p-0"
+                      onClick={() => console.log('🔍 Post dropdown menu clicked')}
+                    >
                       <MoreHorizontal className="w-4 h-4" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={handleEditPost}>
+                  <DropdownMenuContent align="end" className="z-[10000]">
+                    <DropdownMenuItem onClick={() => {
+                      console.log('🔍 Edit post clicked');
+                      handleEditPost();
+                    }}>
                       <Edit className="w-4 h-4 mr-2" />
                       Edit Post
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleDeletePost} className="text-red-600">
+                    <DropdownMenuItem onClick={() => {
+                      console.log('🔍 Delete post clicked');
+                      handleDeletePost();
+                    }} className="text-red-600">
                       <Trash2 className="w-4 h-4 mr-2" />
                       Delete Post
                     </DropdownMenuItem>
@@ -572,19 +583,28 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                             {currentUser?.id === comment.author_id && (
                               <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                  <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+                                  <Button 
+                                    variant="ghost" 
+                                    size="sm" 
+                                    className="h-6 w-6 p-0"
+                                    onClick={() => console.log('🔍 Comment dropdown menu clicked')}
+                                  >
                                     <MoreHorizontal className="w-3 h-3" />
                                   </Button>
                                 </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
+                                <DropdownMenuContent align="end" className="z-[10000]">
                                   <DropdownMenuItem onClick={() => {
+                                    console.log('🔍 Edit comment clicked');
                                     setEditingComment(comment.id.toString());
                                     setEditContent(comment.body);
                                   }}>
                                     <Edit className="w-3 h-3 mr-2" />
                                     Edit
                                   </DropdownMenuItem>
-                                  <DropdownMenuItem onClick={() => handleDeleteComment(comment.id.toString())} className="text-red-600">
+                                  <DropdownMenuItem onClick={() => {
+                                    console.log('🔍 Delete comment clicked');
+                                    handleDeleteComment(comment.id.toString());
+                                  }} className="text-red-600">
                                     <Trash2 className="w-3 h-3 mr-2" />
                                     Delete
                                   </DropdownMenuItem>
@@ -695,19 +715,28 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                                   {currentUser?.id === reply.author_id && (
                                     <DropdownMenu>
                                       <DropdownMenuTrigger asChild>
-                                        <Button variant="ghost" size="sm" className="h-5 w-5 p-0">
+                                        <Button 
+                                          variant="ghost" 
+                                          size="sm" 
+                                          className="h-5 w-5 p-0"
+                                          onClick={() => console.log('🔍 Reply dropdown menu clicked')}
+                                        >
                                           <MoreHorizontal className="w-2 h-2" />
                                         </Button>
                                       </DropdownMenuTrigger>
-                                      <DropdownMenuContent align="end">
+                                      <DropdownMenuContent align="end" className="z-[10000]">
                                         <DropdownMenuItem onClick={() => {
+                                          console.log('🔍 Edit reply clicked');
                                           setEditingComment(reply.id.toString());
                                           setEditContent(reply.body);
                                         }}>
                                           <Edit className="w-3 h-3 mr-2" />
                                           Edit
                                         </DropdownMenuItem>
-                                        <DropdownMenuItem onClick={() => handleDeleteComment(reply.id.toString())} className="text-red-600">
+                                        <DropdownMenuItem onClick={() => {
+                                          console.log('🔍 Delete reply clicked');
+                                          handleDeleteComment(reply.id.toString());
+                                        }} className="text-red-600">
                                           <Trash2 className="w-3 h-3 mr-2" />
                                           Delete
                                         </DropdownMenuItem>
