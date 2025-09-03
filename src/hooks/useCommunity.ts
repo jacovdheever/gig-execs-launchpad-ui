@@ -33,10 +33,10 @@ export function useUpdateComment() {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: async ({ id, content }: { id: string; content: string }) => {
+    mutationFn: async ({ id, body }: { id: string; body: string }) => {
       const { data, error } = await supabase
         .from('forum_comments')
-        .update({ content, updated_at: new Date().toISOString() })
+        .update({ body })
         .eq('id', id)
         .select()
         .single();
