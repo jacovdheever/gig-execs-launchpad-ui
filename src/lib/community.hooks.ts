@@ -147,16 +147,17 @@ export function useDeleteComment() {
   return useMutation({
     mutationFn: async (commentId: string) => {
       console.log('🔍 useDeleteComment: Deleting comment with ID:', commentId);
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('forum_comments')
         .delete()
-        .eq('id', commentId);
+        .eq('id', commentId)
+        .select();
 
       if (error) {
         console.error('🔍 useDeleteComment: Error deleting comment:', error);
         throw error;
       }
-      console.log('🔍 useDeleteComment: Comment deleted successfully');
+      console.log('🔍 useDeleteComment: Comment deleted successfully, data:', data);
     },
     onSuccess: () => {
       console.log('🔍 useDeleteComment: Clearing cache and forcing complete refresh');
@@ -216,16 +217,17 @@ export function useDeletePost() {
   return useMutation({
     mutationFn: async (postId: number) => {
       console.log('🔍 useDeletePost: Deleting post with ID:', postId);
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('forum_posts')
         .delete()
-        .eq('id', postId);
+        .eq('id', postId)
+        .select();
 
       if (error) {
         console.error('🔍 useDeletePost: Error deleting post:', error);
         throw error;
       }
-      console.log('🔍 useDeletePost: Post deleted successfully');
+      console.log('🔍 useDeletePost: Post deleted successfully, data:', data);
     },
     onSuccess: () => {
       console.log('🔍 useDeletePost: Clearing cache and forcing complete refresh');
