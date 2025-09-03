@@ -81,6 +81,18 @@ export function useCreatePost() {
 }
 
 /**
+ * Hook to fetch comments for a post
+ */
+export function useComments(postId: number) {
+  return useQuery({
+    queryKey: ['forum-comments', postId],
+    queryFn: () => communityApi.fetchComments(postId),
+    staleTime: 1 * 60 * 1000, // 1 minute
+    enabled: !!postId,
+  });
+}
+
+/**
  * Hook to create a new comment
  */
 export function useCreateComment() {
@@ -94,6 +106,8 @@ export function useCreateComment() {
     onSuccess: (newComment, variables) => {
       // Invalidate posts to refresh comment counts
       queryClient.invalidateQueries({ queryKey: ['forum-posts'] });
+      // Invalidate comments for this post
+      queryClient.invalidateQueries({ queryKey: ['forum-comments', variables.post_id] });
     },
   });
 }

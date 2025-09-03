@@ -7,7 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Input } from '@/components/ui/input';
 import type { ForumPost, ForumComment, ForumAttachment } from '@/lib/community.types';
 import { useCreateComment, useUpdateComment, useDeleteComment } from '@/hooks/useCommunity';
-import { useToggleReaction } from '@/lib/community.hooks';
+import { useToggleReaction, useComments } from '@/lib/community.hooks';
 import { getCurrentUser } from '@/lib/getCurrentUser';
 import type { User } from '@/lib/database.types';
 import { uploadCommunityAttachment } from '@/lib/storage';
@@ -21,7 +21,6 @@ interface PostViewModalProps {
 
 export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: PostViewModalProps) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [comments, setComments] = useState<ForumComment[]>([]);
   const [newComment, setNewComment] = useState('');
   const [editingComment, setEditingComment] = useState<string | null>(null);
   const [editContent, setEditContent] = useState('');
@@ -57,6 +56,9 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
   const updateComment = useUpdateComment();
   const deleteComment = useDeleteComment();
   const toggleReaction = useToggleReaction();
+  
+  // Fetch comments from database
+  const { data: comments = [], isLoading: commentsLoading } = useComments(post?.id || 0);
 
   useEffect(() => {
     if (isOpen && post) {
@@ -64,8 +66,6 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
       document.body.style.overflow = 'hidden';
       // Load current user
       getCurrentUser().then(setCurrentUser);
-      // Load comments for this post
-      loadComments();
       // Initialize like state
       setIsLiked(post.isLiked || false);
       setReactionCount(post.reaction_count || 0);
@@ -87,12 +87,7 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
     }
   }, [isOpen, post]);
 
-  const loadComments = async () => {
-    if (!post) return;
-    // TODO: Implement comment loading from API
-    // For now, start with empty comments array
-    setComments([]);
-  };
+
 
   const handleLikeClick = async () => {
     if (!post || !currentUser) return;
@@ -138,25 +133,11 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
     if (!post || !currentUser || !replyContent.trim() || !replyingTo) return;
 
     try {
-      // TODO: Implement reply creation API call
-      // For now, add as a nested comment
-      const reply: ForumComment = {
-        id: Date.now(),
+      await createComment.mutateAsync({
         post_id: post.id,
-        author_id: currentUser.id,
         content: replyContent.trim(),
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-        author: {
-          id: currentUser.id,
-          first_name: currentUser.firstName,
-          last_name: currentUser.lastName,
-          profile_photo_url: currentUser.profilePhotoUrl
-        },
-        parent_id: replyingTo // Add parent_id for nested comments
-      };
-
-      setComments(prev => [...prev, reply]);
+        parent_id: replyingTo
+      });
       setReplyContent('');
       setReplyingTo(null);
     } catch (error) {
@@ -169,26 +150,13 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
 
     setIsSubmitting(true);
     try {
-      // TODO: Implement comment creation
-      const comment: ForumComment = {
-        id: Date.now(),
+      await createComment.mutateAsync({
         post_id: post.id,
-        author_id: currentUser.id,
-        content: newComment.trim(),
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-        author: {
-          id: currentUser.id,
-          first_name: currentUser.firstName,
-          last_name: currentUser.lastName,
-          profile_photo_url: currentUser.profilePhotoUrl
-        }
-      };
-
-      setComments(prev => [comment, ...prev]);
+        content: newComment.trim()
+      });
       setNewComment('');
     } catch (error) {
-      console.error('Error creating comment:', error);
+      console.error('Error submitting comment:', error);
     } finally {
       setIsSubmitting(false);
     }
@@ -198,12 +166,10 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
     if (!editContent.trim()) return;
 
     try {
-      // TODO: Implement comment update
-      setComments(prev => prev.map(comment => 
-        comment.id === commentId 
-          ? { ...comment, content: editContent.trim(), updated_at: new Date().toISOString() }
-          : comment
-      ));
+      await updateComment.mutateAsync({
+        id: commentId,
+        content: editContent.trim()
+      });
       setEditingComment(null);
       setEditContent('');
     } catch (error) {
@@ -254,10 +220,12 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
     setShowDeleteConfirm(true);
   };
 
-  const handleDeleteComment = (commentId: string) => {
-    setDeleteTarget('comment');
-    setDeleteCommentId(commentId);
-    setShowDeleteConfirm(true);
+  const handleDeleteComment = async (commentId: string) => {
+    try {
+      await deleteComment.mutateAsync(commentId);
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
   };
 
   const confirmDelete = async () => {

@@ -203,13 +203,50 @@ export async function createPost(postData: CreatePostData, authorId: string): Pr
 }
 
 /**
+ * Fetch comments for a post
+ */
+export async function fetchComments(postId: number): Promise<ForumComment[]> {
+  const { data, error } = await supabase
+    .from('forum_comments')
+    .select(`
+      *,
+      users!forum_comments_author_id_fkey(first_name, last_name, profile_photo_url)
+    `)
+    .eq('post_id', postId)
+    .order('created_at', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching comments:', error);
+    throw new Error('Failed to fetch comments');
+  }
+
+  return data.map(comment => ({
+    id: comment.id,
+    post_id: comment.post_id,
+    author_id: comment.author_id,
+    content: comment.content,
+    created_at: comment.created_at,
+    updated_at: comment.updated_at,
+    parent_id: comment.parent_id,
+    author: {
+      id: comment.users.id,
+      first_name: comment.users.first_name,
+      last_name: comment.users.last_name,
+      profile_photo_url: comment.users.profile_photo_url
+    }
+  }));
+}
+
+/**
  * Create a new comment
  */
 export async function createComment(commentData: CreateCommentData, authorId: string): Promise<ForumComment> {
   const { data, error } = await supabase
     .from('forum_comments')
     .insert({
-      ...commentData,
+      post_id: commentData.post_id,
+      content: commentData.content,
+      parent_id: commentData.parent_id,
       author_id: authorId
     })
     .select(`
@@ -232,7 +269,21 @@ export async function createComment(commentData: CreateCommentData, authorId: st
     })
     .eq('id', commentData.post_id);
 
-  return data as ForumComment;
+  return {
+    id: data.id,
+    post_id: data.post_id,
+    author_id: data.author_id,
+    content: data.content,
+    created_at: data.created_at,
+    updated_at: data.updated_at,
+    parent_id: data.parent_id,
+    author: {
+      id: data.users.id,
+      first_name: data.users.first_name,
+      last_name: data.users.last_name,
+      profile_photo_url: data.users.profile_photo_url
+    }
+  };
 }
 
 /**
