@@ -87,6 +87,7 @@ export async function fetchPosts(filters: FeedFilters): Promise<FeedResponse> {
 
   // Debug: Log the raw data structure
   console.log('🔍 Raw posts data from Supabase:', data);
+  console.log('🔍 Sample post data:', data?.[0]);
 
   // Transform the data to match our ForumPost interface
   const posts = (data || []).map(post => {
@@ -109,6 +110,9 @@ export async function fetchPosts(filters: FeedFilters): Promise<FeedResponse> {
   }) as ForumPost[];
 
   console.log('🔍 Final transformed posts:', posts);
+  console.log('🔍 Sample transformed post:', posts?.[0]);
+  console.log('🔍 Sample post comment_count:', posts?.[0]?.comment_count);
+  console.log('🔍 Sample post last_activity_at:', posts?.[0]?.last_activity_at);
   const total = count || 0;
   const hasMore = offset + limit < total;
 

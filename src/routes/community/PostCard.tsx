@@ -31,6 +31,9 @@ export default function PostCard({ post, onCommentClick, onPostClick }: PostCard
   
   // Debug: Log the post data being received
   console.log('🔍 PostCard received post:', post);
+  console.log('🔍 Post comment_count:', post.comment_count);
+  console.log('🔍 Post reaction_count:', post.reaction_count);
+  console.log('🔍 Post last_activity_at:', post.last_activity_at);
   console.log('🔍 Post author data:', post.author);
   console.log('🔍 Post author profile photo:', post.author?.profile_photo_url);
   
