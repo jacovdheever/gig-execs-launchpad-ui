@@ -206,6 +206,8 @@ export async function createPost(postData: CreatePostData, authorId: string): Pr
  * Fetch comments for a post
  */
 export async function fetchComments(postId: number): Promise<ForumComment[]> {
+  console.log('🔍 Fetching comments for post:', postId);
+  
   const { data, error } = await supabase
     .from('forum_comments')
     .select(`
@@ -216,7 +218,8 @@ export async function fetchComments(postId: number): Promise<ForumComment[]> {
     .order('created_at', { ascending: true });
 
   if (error) {
-    console.error('Error fetching comments:', error);
+    console.error('❌ Error fetching comments:', error);
+    console.error('❌ Error details:', { message: error.message, details: error.details, hint: error.hint });
     throw new Error('Failed to fetch comments');
   }
 
@@ -241,14 +244,20 @@ export async function fetchComments(postId: number): Promise<ForumComment[]> {
  * Create a new comment
  */
 export async function createComment(commentData: CreateCommentData, authorId: string): Promise<ForumComment> {
+  console.log('🔍 Creating comment with data:', { commentData, authorId });
+  
+  const insertData = {
+    post_id: commentData.post_id,
+    content: commentData.content,
+    parent_id: commentData.parent_id,
+    author_id: authorId
+  };
+  
+  console.log('🔍 Insert data:', insertData);
+  
   const { data, error } = await supabase
     .from('forum_comments')
-    .insert({
-      post_id: commentData.post_id,
-      content: commentData.content,
-      parent_id: commentData.parent_id,
-      author_id: authorId
-    })
+    .insert(insertData)
     .select(`
       *,
       users!forum_comments_author_id_fkey(first_name, last_name, profile_photo_url)
@@ -256,7 +265,8 @@ export async function createComment(commentData: CreateCommentData, authorId: st
     .single();
 
   if (error) {
-    console.error('Error creating comment:', error);
+    console.error('❌ Error creating comment:', error);
+    console.error('❌ Error details:', { message: error.message, details: error.details, hint: error.hint });
     throw new Error('Failed to create comment');
   }
 
