@@ -159,10 +159,19 @@ export function useDeleteComment() {
       console.log('🔍 useDeleteComment: Comment deleted successfully');
     },
     onSuccess: () => {
-      console.log('🔍 useDeleteComment: Invalidating and refetching forum-comments and forum-posts queries');
-      // Invalidate comments and posts to refresh comment counts
-      queryClient.invalidateQueries({ queryKey: ['forum-comments'] });
-      queryClient.invalidateQueries({ queryKey: ['forum-posts'] });
+      console.log('🔍 useDeleteComment: Clearing cache and forcing complete refresh');
+      // Clear all forum-posts related queries from cache
+      queryClient.removeQueries({ 
+        predicate: (query) => {
+          return query.queryKey[0] === 'forum-posts';
+        }
+      });
+      // Also clear forum-comments queries
+      queryClient.removeQueries({ 
+        predicate: (query) => {
+          return query.queryKey[0] === 'forum-comments';
+        }
+      });
       // Force refetch all forum-posts queries to update comment counts
       queryClient.refetchQueries({ 
         predicate: (query) => {
@@ -219,13 +228,17 @@ export function useDeletePost() {
       console.log('🔍 useDeletePost: Post deleted successfully');
     },
     onSuccess: () => {
-      console.log('🔍 useDeletePost: Invalidating and refetching all forum-posts queries');
-      // Invalidate all posts queries to refresh the data
-      queryClient.invalidateQueries({ queryKey: ['forum-posts'] });
-      // Also invalidate specific queries that might be cached
-      queryClient.invalidateQueries({ 
+      console.log('🔍 useDeletePost: Clearing cache and forcing complete refresh');
+      // Clear all forum-posts related queries from cache
+      queryClient.removeQueries({ 
         predicate: (query) => {
           return query.queryKey[0] === 'forum-posts';
+        }
+      });
+      // Also clear forum-comments queries
+      queryClient.removeQueries({ 
+        predicate: (query) => {
+          return query.queryKey[0] === 'forum-comments';
         }
       });
       // Force refetch all forum-posts queries
