@@ -6,11 +6,12 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import type { ForumPost, ForumComment, ForumAttachment } from '@/lib/community.types';
-import { useCreateComment, useUpdateComment, useDeleteComment, useToggleReaction, useComments } from '@/lib/community.hooks';
+import { useCreateComment, useUpdateComment, useDeleteComment, useToggleReaction, useComments, useUpdatePost, useDeletePost } from '@/lib/community.hooks';
 import { getCurrentUser } from '@/lib/getCurrentUser';
 import type { User } from '@/lib/database.types';
 import { uploadCommunityAttachment } from '@/lib/storage';
 import { formatRelativeTime } from '@/lib/time';
+import AttachmentsCarousel from '@/components/community/AttachmentsCarousel';
 
 interface PostViewModalProps {
   post: ForumPost | null;
@@ -56,6 +57,8 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
   const updateComment = useUpdateComment();
   const deleteComment = useDeleteComment();
   const toggleReaction = useToggleReaction();
+  const updatePost = useUpdatePost();
+  const deletePost = useDeletePost();
   
   // Fetch comments from database
   const { data: comments = [], isLoading: commentsLoading } = useComments(post?.id || 0);
@@ -190,14 +193,11 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
     if (!post || !editPostTitle.trim()) return;
 
     try {
-      // TODO: Implement post update API call
-      console.log('Saving post edit:', {
+      await updatePost.mutateAsync({
         id: post.id,
         title: editPostTitle.trim(),
         body: editPostBody.trim()
       });
-      
-      // For now, just close edit mode
       setIsEditingPost(false);
       setEditPostTitle('');
       setEditPostBody('');
@@ -230,14 +230,11 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
 
   const confirmDelete = async () => {
     try {
-      if (deleteTarget === 'post') {
-        // TODO: Implement post deletion API call
-        console.log('Deleting post:', post?.id);
+      if (deleteTarget === 'post' && post) {
+        await deletePost.mutateAsync(post.id);
         onClose();
       } else if (deleteTarget === 'comment' && deleteCommentId) {
-        // TODO: Implement comment deletion API call
-        console.log('Deleting comment:', deleteCommentId);
-        setComments(prev => prev.filter(comment => comment.id.toString() !== deleteCommentId));
+        await handleDeleteComment(deleteCommentId);
       }
     } catch (error) {
       console.error('Error deleting:', error);
@@ -505,19 +502,11 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
               {/* Post Attachments */}
               {post.attachments && post.attachments.length > 0 && (
                 <div className="mb-6">
-                  <h4 className="text-sm font-medium text-slate-700 mb-3">Attachments</h4>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    {post.attachments.map((attachment) => (
-                      <div key={attachment.id} className="border border-slate-200 rounded-lg p-3">
-                        <div className="text-sm font-medium text-slate-900 truncate">
-                          {attachment.fileName || 'Attachment'}
-                        </div>
-                        <div className="text-xs text-slate-500">
-                          {attachment.fileSize ? `${(attachment.fileSize / 1024).toFixed(1)} KB` : ''}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                  <AttachmentsCarousel
+                    attachments={post.attachments}
+                    onRemoveAttachment={() => {}} // No remove functionality in view mode
+                    showRemove={false}
+                  />
                 </div>
               )}
 

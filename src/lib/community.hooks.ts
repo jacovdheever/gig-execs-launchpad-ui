@@ -162,6 +162,53 @@ export function useDeleteComment() {
 }
 
 /**
+ * Hook to update a post
+ */
+export function useUpdatePost() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async ({ id, title, body }: { id: number; title: string; body: string }) => {
+      const { data, error } = await supabase
+        .from('forum_posts')
+        .update({ title, body })
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      // Invalidate posts to refresh the data
+      queryClient.invalidateQueries({ queryKey: ['forum-posts'] });
+    },
+  });
+}
+
+/**
+ * Hook to delete a post
+ */
+export function useDeletePost() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async (postId: number) => {
+      const { error } = await supabase
+        .from('forum_posts')
+        .delete()
+        .eq('id', postId);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      // Invalidate posts to refresh the data
+      queryClient.invalidateQueries({ queryKey: ['forum-posts'] });
+    },
+  });
+}
+
+/**
  * Hook to toggle post reactions (like/unlike)
  */
 export function useToggleReaction() {
