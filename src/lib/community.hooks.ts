@@ -146,14 +146,20 @@ export function useDeleteComment() {
   
   return useMutation({
     mutationFn: async (commentId: string) => {
+      console.log('🔍 useDeleteComment: Deleting comment with ID:', commentId);
       const { error } = await supabase
         .from('forum_comments')
         .delete()
         .eq('id', commentId);
 
-      if (error) throw error;
+      if (error) {
+        console.error('🔍 useDeleteComment: Error deleting comment:', error);
+        throw error;
+      }
+      console.log('🔍 useDeleteComment: Comment deleted successfully');
     },
     onSuccess: () => {
+      console.log('🔍 useDeleteComment: Invalidating forum-comments and forum-posts queries');
       // Invalidate comments and posts to refresh comment counts
       queryClient.invalidateQueries({ queryKey: ['forum-comments'] });
       queryClient.invalidateQueries({ queryKey: ['forum-posts'] });
@@ -207,9 +213,15 @@ export function useDeletePost() {
       console.log('🔍 useDeletePost: Post deleted successfully');
     },
     onSuccess: () => {
-      console.log('🔍 useDeletePost: Invalidating forum-posts query');
-      // Invalidate posts to refresh the data
+      console.log('🔍 useDeletePost: Invalidating all forum-posts queries');
+      // Invalidate all posts queries to refresh the data
       queryClient.invalidateQueries({ queryKey: ['forum-posts'] });
+      // Also invalidate specific queries that might be cached
+      queryClient.invalidateQueries({ 
+        predicate: (query) => {
+          return query.queryKey[0] === 'forum-posts';
+        }
+      });
     },
   });
 }

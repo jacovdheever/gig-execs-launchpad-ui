@@ -223,9 +223,11 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
 
   const handleDeleteComment = async (commentId: string) => {
     try {
+      console.log('🔍 handleDeleteComment: Deleting comment with ID:', commentId);
       await deleteComment.mutateAsync(commentId);
+      console.log('🔍 handleDeleteComment: Comment deleted successfully');
     } catch (error) {
-      console.error('Error deleting comment:', error);
+      console.error('🔍 handleDeleteComment: Error deleting comment:', error);
     }
   };
 
