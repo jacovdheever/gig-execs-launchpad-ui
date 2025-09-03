@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, MoreHorizontal, Heart, MessageCircle, Share2, Edit, Trash2, Reply, Paperclip, Play, Smile, ThumbsUp } from 'lucide-react';
+import { X, MoreHorizontal, Heart, MessageCircle, Edit, Trash2, Reply, Paperclip, Play, Smile, ThumbsUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -555,10 +555,6 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                     )}
                   </div>
                 </div>
-                <Button variant="ghost" size="sm" className="flex items-center gap-1 md:gap-2 h-8 md:h-9 px-2 md:px-3">
-                  <Share2 className="w-4 h-4" />
-                  <span className="hidden sm:inline">Share</span>
-                </Button>
               </div>
 
               {/* Comments Section */}
