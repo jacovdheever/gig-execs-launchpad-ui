@@ -275,13 +275,39 @@ export async function createComment(commentData: CreateCommentData, authorId: st
   }
 
   // Update post's last_activity_at and comment_count
-  await supabase
+  const { error: updateError } = await supabase
     .from('forum_posts')
     .update({
-      last_activity_at: new Date().toISOString(),
-      comment_count: supabase.rpc('increment', { row_id: commentData.post_id, column_name: 'comment_count' })
+      last_activity_at: new Date().toISOString()
     })
     .eq('id', commentData.post_id);
+
+  if (updateError) {
+    console.error('❌ Error updating post activity:', updateError);
+  }
+
+  // Increment comment count using RPC function
+  const { error: incrementError } = await supabase.rpc('increment', { 
+    row_id: commentData.post_id, 
+    column_name: 'comment_count' 
+  });
+
+  if (incrementError) {
+    console.error('❌ Error incrementing comment count:', incrementError);
+    // Fallback: manually increment the count
+    const { data: currentPost } = await supabase
+      .from('forum_posts')
+      .select('comment_count')
+      .eq('id', commentData.post_id)
+      .single();
+    
+    if (currentPost) {
+      await supabase
+        .from('forum_posts')
+        .update({ comment_count: (currentPost.comment_count || 0) + 1 })
+        .eq('id', commentData.post_id);
+    }
+  }
 
   return {
     id: data.id,
@@ -326,12 +352,27 @@ export async function togglePostReaction(postId: number, userId: string): Promis
     }
 
     // Decrement reaction count
-    await supabase
-      .from('forum_posts')
-      .update({
-        reaction_count: supabase.rpc('decrement', { row_id: postId, column_name: 'reaction_count' })
-      })
-      .eq('id', postId);
+    const { error: decrementError } = await supabase.rpc('decrement', { 
+      row_id: postId, 
+      column_name: 'reaction_count' 
+    });
+
+    if (decrementError) {
+      console.error('❌ Error decrementing reaction count:', decrementError);
+      // Fallback: manually decrement the count
+      const { data: currentPost } = await supabase
+        .from('forum_posts')
+        .select('reaction_count')
+        .eq('id', postId)
+        .single();
+      
+      if (currentPost) {
+        await supabase
+          .from('forum_posts')
+          .update({ reaction_count: Math.max(0, (currentPost.reaction_count || 0) - 1) })
+          .eq('id', postId);
+      }
+    }
 
     return { isLiked: false, reactionCount: -1 };
   } else {
@@ -349,12 +390,27 @@ export async function togglePostReaction(postId: number, userId: string): Promis
     }
 
     // Increment reaction count
-    await supabase
-      .from('forum_posts')
-      .update({
-        reaction_count: supabase.rpc('increment', { row_id: postId, column_name: 'reaction_count' })
-      })
-      .eq('id', postId);
+    const { error: incrementError } = await supabase.rpc('increment', { 
+      row_id: postId, 
+      column_name: 'reaction_count' 
+    });
+
+    if (incrementError) {
+      console.error('❌ Error incrementing reaction count:', incrementError);
+      // Fallback: manually increment the count
+      const { data: currentPost } = await supabase
+        .from('forum_posts')
+        .select('reaction_count')
+        .eq('id', postId)
+        .single();
+      
+      if (currentPost) {
+        await supabase
+          .from('forum_posts')
+          .update({ reaction_count: (currentPost.reaction_count || 0) + 1 })
+          .eq('id', postId);
+      }
+    }
 
     return { isLiked: true, reactionCount: 1 };
   }
