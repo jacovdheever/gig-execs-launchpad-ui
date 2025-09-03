@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, MoreHorizontal, Heart, MessageCircle, Share2, Edit, Trash2, Reply, Paperclip, Play, Smile } from 'lucide-react';
+import { X, MoreHorizontal, Heart, MessageCircle, Share2, Edit, Trash2, Reply, Paperclip, Play, Smile, ThumbsUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -7,6 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Input } from '@/components/ui/input';
 import type { ForumPost, ForumComment, ForumAttachment } from '@/lib/community.types';
 import { useCreateComment, useUpdateComment, useDeleteComment } from '@/hooks/useCommunity';
+import { useToggleReaction } from '@/lib/community.hooks';
 import { getCurrentUser } from '@/lib/getCurrentUser';
 import type { User } from '@/lib/database.types';
 import { uploadCommunityAttachment } from '@/lib/storage';
@@ -41,10 +42,21 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<'post' | 'comment' | null>(null);
   const [deleteCommentId, setDeleteCommentId] = useState<string | null>(null);
+  
+  // Like state
+  const [isLiked, setIsLiked] = useState(false);
+  const [reactionCount, setReactionCount] = useState(0);
+  
+  // Comment interactions state
+  const [commentLikes, setCommentLikes] = useState<Record<string, boolean>>({});
+  const [commentReactionCounts, setCommentReactionCounts] = useState<Record<string, number>>({});
+  const [replyingTo, setReplyingTo] = useState<string | null>(null);
+  const [replyContent, setReplyContent] = useState('');
 
   const createComment = useCreateComment();
   const updateComment = useUpdateComment();
   const deleteComment = useDeleteComment();
+  const toggleReaction = useToggleReaction();
 
   useEffect(() => {
     if (isOpen && post) {
@@ -54,6 +66,9 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
       getCurrentUser().then(setCurrentUser);
       // Load comments for this post
       loadComments();
+      // Initialize like state
+      setIsLiked(post.isLiked || false);
+      setReactionCount(post.reaction_count || 0);
     } else {
       // Restore body scroll when modal closes
       document.body.style.overflow = 'unset';
@@ -79,6 +94,76 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
     setComments([]);
   };
 
+  const handleLikeClick = async () => {
+    if (!post || !currentUser) return;
+    
+    try {
+      const result = await toggleReaction.mutateAsync({ 
+        postId: post.id, 
+        userId: currentUser.id 
+      });
+      
+      setIsLiked(result.isLiked);
+      setReactionCount(prev => prev + result.reactionCount);
+    } catch (error) {
+      console.error('Error toggling reaction:', error);
+    }
+  };
+
+  const handleCommentLikeClick = async (commentId: string) => {
+    if (!currentUser) return;
+    
+    try {
+      // TODO: Implement comment like API call
+      // For now, just toggle local state
+      setCommentLikes(prev => ({
+        ...prev,
+        [commentId]: !prev[commentId]
+      }));
+      setCommentReactionCounts(prev => ({
+        ...prev,
+        [commentId]: (prev[commentId] || 0) + (commentLikes[commentId] ? -1 : 1)
+      }));
+    } catch (error) {
+      console.error('Error toggling comment reaction:', error);
+    }
+  };
+
+  const handleReplyClick = (commentId: string) => {
+    setReplyingTo(commentId);
+    setReplyContent('');
+  };
+
+  const handleSubmitReply = async () => {
+    if (!post || !currentUser || !replyContent.trim() || !replyingTo) return;
+
+    try {
+      // TODO: Implement reply creation API call
+      // For now, add as a nested comment
+      const reply: ForumComment = {
+        id: Date.now(),
+        post_id: post.id,
+        author_id: currentUser.id,
+        content: replyContent.trim(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        author: {
+          id: currentUser.id,
+          first_name: currentUser.firstName,
+          last_name: currentUser.lastName,
+          profile_photo_url: currentUser.profilePhotoUrl
+        },
+        parent_id: replyingTo // Add parent_id for nested comments
+      };
+
+      setComments(prev => [...prev, reply]);
+      setReplyContent('');
+      setReplyingTo(null);
+    } catch (error) {
+      console.error('Error submitting reply:', error);
+    }
+  };
+
   const handleSubmitComment = async () => {
     if (!post || !currentUser || !newComment.trim()) return;
 
@@ -94,9 +179,9 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
         updated_at: new Date().toISOString(),
         author: {
           id: currentUser.id,
-          firstName: currentUser.firstName,
-          lastName: currentUser.lastName,
-          profilePhotoUrl: currentUser.profilePhotoUrl
+          first_name: currentUser.firstName,
+          last_name: currentUser.lastName,
+          profile_photo_url: currentUser.profilePhotoUrl
         }
       };
 
@@ -471,9 +556,23 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
               {/* Post Actions */}
               <div className="flex items-center justify-between py-3 md:py-4 border-t border-slate-200">
                 <div className="flex items-center gap-2 md:gap-4">
-                  <Button variant="ghost" size="sm" className="flex items-center gap-1 md:gap-2 h-8 md:h-9 px-2 md:px-3">
-                    <Heart className="w-4 h-4" />
-                    <span className="hidden sm:inline">Like</span>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    onClick={handleLikeClick}
+                    disabled={toggleReaction.isPending}
+                    className={`flex items-center gap-1 md:gap-2 h-8 md:h-9 px-2 md:px-3 ${
+                      isLiked 
+                        ? 'text-yellow-600 hover:text-yellow-700' 
+                        : 'text-slate-500 hover:text-slate-700'
+                    }`}
+                  >
+                    {isLiked ? (
+                      <ThumbsUp className="w-4 h-4 fill-current" />
+                    ) : (
+                      <ThumbsUp className="w-4 h-4" />
+                    )}
+                    <span className="hidden sm:inline">{reactionCount}</span>
                   </Button>
                   <div className="flex items-center gap-1 md:gap-2 text-xs md:text-sm text-slate-500">
                     <MessageCircle className="w-4 h-4" />
@@ -492,12 +591,14 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                 
                 {/* Comments List */}
                 <div className="space-y-4 mb-6">
-                  {comments.map((comment) => (
-                    <div key={comment.id} className="flex gap-3">
+                  {comments.filter(comment => !comment.parent_id).map((comment) => (
+                    <div key={comment.id}>
+                      {/* Main Comment */}
+                      <div className="flex gap-3">
                       <Avatar className="w-8 h-8 flex-shrink-0">
-                        <AvatarImage src={comment.author?.profilePhotoUrl} />
+                        <AvatarImage src={comment.author?.profile_photo_url} />
                         <AvatarFallback className="bg-slate-100 text-slate-600 text-xs">
-                          {comment.author ? `${comment.author.firstName?.charAt(0)}${comment.author.lastName?.charAt(0)}` : 'U'}
+                          {comment.author ? `${comment.author.first_name?.charAt(0)}${comment.author.last_name?.charAt(0)}` : 'U'}
                         </AvatarFallback>
                       </Avatar>
                       
@@ -505,7 +606,7 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                         <div className="bg-slate-50 rounded-lg p-3">
                           <div className="flex items-center justify-between mb-2">
                             <div className="font-medium text-sm text-slate-900">
-                              {comment.author ? `${comment.author.firstName} ${comment.author.lastName}` : 'Unknown User'}
+                              {comment.author ? `${comment.author.first_name} ${comment.author.last_name}` : 'Unknown User'}
                             </div>
                             {currentUser?.id === comment.author_id && (
                               <DropdownMenu>
@@ -559,8 +660,156 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                             {new Date(comment.created_at).toLocaleDateString()}
                             {comment.updated_at !== comment.created_at && ' (edited)'}
                           </div>
+                          
+                          {/* Comment Actions */}
+                          <div className="flex items-center gap-3 mt-3 pt-2 border-t border-slate-200">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleCommentLikeClick(comment.id.toString())}
+                              className={`h-6 px-2 text-xs ${
+                                commentLikes[comment.id.toString()]
+                                  ? 'text-yellow-600 hover:text-yellow-700'
+                                  : 'text-slate-500 hover:text-slate-700'
+                              }`}
+                            >
+                              {commentLikes[comment.id.toString()] ? (
+                                <ThumbsUp className="w-3 h-3 fill-current mr-1" />
+                              ) : (
+                                <ThumbsUp className="w-3 h-3 mr-1" />
+                              )}
+                              {commentReactionCounts[comment.id.toString()] || 0}
+                            </Button>
+                            
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleReplyClick(comment.id.toString())}
+                              className="h-6 px-2 text-xs text-slate-500 hover:text-slate-700"
+                            >
+                              <Reply className="w-3 h-3 mr-1" />
+                              Reply
+                            </Button>
+                          </div>
                         </div>
                       </div>
+                    </div>
+                    
+                    {/* Reply Input */}
+                    {replyingTo === comment.id.toString() && (
+                      <div className="ml-8 mt-2">
+                        <div className="flex gap-2">
+                          <Input
+                            value={replyContent}
+                            onChange={(e) => setReplyContent(e.target.value)}
+                            placeholder="Write a reply..."
+                            className="text-sm"
+                          />
+                          <Button size="sm" onClick={handleSubmitReply} disabled={!replyContent.trim()}>
+                            Reply
+                          </Button>
+                          <Button size="sm" variant="ghost" onClick={() => setReplyingTo(null)}>
+                            Cancel
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                      
+                      {/* Nested Comments (Replies) */}
+                      {comments.filter(reply => reply.parent_id === comment.id.toString()).map((reply) => (
+                        <div key={reply.id} className="ml-8 mt-3">
+                          <div className="flex gap-3">
+                            <Avatar className="w-6 h-6 flex-shrink-0">
+                              <AvatarImage src={reply.author?.profile_photo_url} />
+                              <AvatarFallback className="bg-slate-100 text-slate-600 text-xs">
+                                {reply.author ? `${reply.author.first_name?.charAt(0)}${reply.author.last_name?.charAt(0)}` : 'U'}
+                              </AvatarFallback>
+                            </Avatar>
+                            
+                            <div className="flex-1">
+                              <div className="bg-slate-50 rounded-lg p-2">
+                                <div className="flex items-center justify-between mb-1">
+                                  <div className="font-medium text-xs text-slate-900">
+                                    {reply.author ? `${reply.author.first_name} ${reply.author.last_name}` : 'Unknown User'}
+                                  </div>
+                                  {currentUser?.id === reply.author_id && (
+                                    <DropdownMenu>
+                                      <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" size="sm" className="h-5 w-5 p-0">
+                                          <MoreHorizontal className="w-2 h-2" />
+                                        </Button>
+                                      </DropdownMenuTrigger>
+                                      <DropdownMenuContent align="end">
+                                        <DropdownMenuItem onClick={() => {
+                                          setEditingComment(reply.id.toString());
+                                          setEditContent(reply.content);
+                                        }}>
+                                          <Edit className="w-3 h-3 mr-2" />
+                                          Edit
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => handleDeleteComment(reply.id.toString())} className="text-red-600">
+                                          <Trash2 className="w-3 h-3 mr-2" />
+                                          Delete
+                                        </DropdownMenuItem>
+                                      </DropdownMenuContent>
+                                    </DropdownMenu>
+                                  )}
+                                </div>
+                                
+                                {editingComment === reply.id.toString() ? (
+                                  <div className="space-y-2">
+                                    <textarea
+                                      value={editContent}
+                                      onChange={(e) => setEditContent(e.target.value)}
+                                      className="w-full p-2 border border-slate-300 rounded-md text-xs"
+                                      rows={2}
+                                    />
+                                    <div className="flex gap-2">
+                                      <Button size="sm" onClick={() => handleEditComment(reply.id.toString())}>
+                                        Save
+                                      </Button>
+                                      <Button size="sm" variant="ghost" onClick={() => {
+                                        setEditingComment(null);
+                                        setEditContent('');
+                                      }}>
+                                        Cancel
+                                      </Button>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div className="text-xs text-slate-700">{reply.content}</div>
+                                )}
+                                
+                                <div className="text-xs text-slate-500 mt-1">
+                                  {new Date(reply.created_at).toLocaleDateString()}
+                                  {reply.updated_at !== reply.created_at && ' (edited)'}
+                                </div>
+                                
+                                {/* Reply Actions */}
+                                <div className="flex items-center gap-2 mt-2 pt-1 border-t border-slate-200">
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleCommentLikeClick(reply.id.toString())}
+                                    className={`h-5 px-1 text-xs ${
+                                      commentLikes[reply.id.toString()]
+                                        ? 'text-yellow-600 hover:text-yellow-700'
+                                        : 'text-slate-500 hover:text-slate-700'
+                                    }`}
+                                  >
+                                    {commentLikes[reply.id.toString()] ? (
+                                      <ThumbsUp className="w-2 h-2 fill-current mr-1" />
+                                    ) : (
+                                      <ThumbsUp className="w-2 h-2 mr-1" />
+                                    )}
+                                    {commentReactionCounts[reply.id.toString()] || 0}
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   ))}
                 </div>
