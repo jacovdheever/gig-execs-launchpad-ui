@@ -48,11 +48,15 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
 
   useEffect(() => {
     if (isOpen && post) {
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden';
       // Load current user
       getCurrentUser().then(setCurrentUser);
       // Load comments for this post
       loadComments();
     } else {
+      // Restore body scroll when modal closes
+      document.body.style.overflow = 'unset';
       // Reset state when modal closes
       setCommentAttachments([]);
       setIsVideoModalOpen(false);
@@ -71,23 +75,8 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
   const loadComments = async () => {
     if (!post) return;
     // TODO: Implement comment loading from API
-    // For now, using mock data
-    setComments([
-      {
-        id: 1,
-        post_id: post.id,
-        author_id: 'user1',
-        content: 'Great post! Thanks for sharing.',
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-        author: {
-          id: 'user1',
-          firstName: 'John',
-          lastName: 'Doe',
-          profilePhotoUrl: null
-        }
-      }
-    ]);
+    // For now, start with empty comments array
+    setComments([]);
   };
 
   const handleSubmitComment = async () => {
@@ -366,20 +355,20 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
         />
         
         {/* Modal */}
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 md:p-4">
-          <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-4xl h-[95vh] md:h-[90vh] overflow-hidden">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 md:p-4 overflow-hidden">
+          <div className="bg-white rounded-xl shadow-lg border border-slate-200 w-full max-w-4xl h-[95vh] md:h-[90vh] flex flex-col overflow-hidden">
             {/* Header */}
             <div className="flex items-center justify-between p-4 md:p-6 border-b border-slate-200">
               <div className="flex items-center gap-3 min-w-0 flex-1">
                 <Avatar className="w-8 h-8 md:w-10 md:h-10 flex-shrink-0">
-                  <AvatarImage src={post.author?.profilePhotoUrl} />
+                  <AvatarImage src={post.author?.profile_photo_url} />
                   <AvatarFallback className="bg-slate-100 text-slate-600 text-sm font-medium">
-                    {post.author ? `${post.author.firstName?.charAt(0)}${post.author.lastName?.charAt(0)}` : 'U'}
+                    {post.author ? `${post.author.first_name?.charAt(0)}${post.author.last_name?.charAt(0)}` : 'U'}
                   </AvatarFallback>
                 </Avatar>
                 <div className="min-w-0 flex-1">
                   <div className="font-medium text-slate-900 truncate">
-                    {post.author ? `${post.author.firstName} ${post.author.lastName}` : 'Unknown User'}
+                    {post.author ? `${post.author.first_name} ${post.author.last_name}` : 'Unknown User'}
                   </div>
                   <div className="text-xs md:text-sm text-slate-500 truncate">
                     {new Date(post.created_at).toLocaleDateString()} • {post.category?.name || 'General'}
@@ -420,7 +409,7 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
             </div>
 
             {/* Content */}
-            <div className="p-4 md:p-6 overflow-y-auto flex-1">
+            <div className="p-4 md:p-6 overflow-y-auto flex-1 min-h-0">
               {/* Post Title */}
               {isEditingPost ? (
                 <div className="mb-4">
