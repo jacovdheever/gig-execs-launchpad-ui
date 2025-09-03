@@ -49,7 +49,7 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
   useEffect(() => {
     if (isOpen && post) {
       // Load current user
-      getCurrentUser().then(setUser);
+      getCurrentUser().then(setCurrentUser);
       // Load comments for this post
       loadComments();
     } else {
