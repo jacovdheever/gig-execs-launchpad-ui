@@ -12,6 +12,14 @@ import Blog from "./pages/Blog";
 import BlogArticle from "./pages/BlogArticle";
 import BlogArticle1 from "./pages/BlogArticle1";
 import BlogArticle2 from "./pages/BlogArticle2";
+import BlogArticle3 from "./pages/BlogArticle3";
+import BlogArticle4 from "./pages/BlogArticle4";
+import BlogArticle5 from "./pages/BlogArticle5";
+import BlogArticle6 from "./pages/BlogArticle6";
+import BlogArticle7 from "./pages/BlogArticle7";
+import BlogArticle8 from "./pages/BlogArticle8";
+import BlogArticle9 from "./pages/BlogArticle9";
+import BlogArticle10 from "./pages/BlogArticle10";
 import ExecutiveFreelancePlatform from "./pages/ExecutiveFreelancePlatform";
 import NavigatingAI from "./pages/NavigatingAI";
 import BigAnomaly from "./pages/BigAnomaly";
@@ -78,6 +86,14 @@ const App = () => (
             <Route path="/blog/article" element={<BlogArticle />} />
             <Route path="/blog/remote-hybrid-in-office" element={<BlogArticle1 />} />
             <Route path="/blog/corporate-leadership-executive-freelancing" element={<BlogArticle2 />} />
+            <Route path="/blog/ai-revolution-senior-professionals" element={<BlogArticle3 />} />
+            <Route path="/blog/job-market-anomaly-older-talent" element={<BlogArticle4 />} />
+            <Route path="/blog/finding-purpose-second-half-life" element={<BlogArticle5 />} />
+            <Route path="/blog/building-future-flexible-work" element={<BlogArticle6 />} />
+            <Route path="/blog/ai-robots-future-work-2025" element={<BlogArticle7 />} />
+            <Route path="/blog/future-senior-work-flexibility-freelance" element={<BlogArticle8 />} />
+            <Route path="/blog/20-percent-challenge-flexible-work-2025" element={<BlogArticle9 />} />
+            <Route path="/blog/master-mental-clarity-stress-management-high-performers" element={<BlogArticle10 />} />
             <Route path="/blog/executive-freelance-platform" element={<ExecutiveFreelancePlatform />} />
             <Route path="/blog/navigating-ai" element={<NavigatingAI />} />
             <Route path="/blog/big-anomaly" element={<BigAnomaly />} />
