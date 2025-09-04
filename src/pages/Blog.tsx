@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import BlogCard from '@/components/BlogCard'
 
 const Blog = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -19,8 +20,8 @@ const Blog = () => {
               <a href="/" className="text-2xl text-[#012E46] hover:text-[#0284C7] transition-colors cursor-pointer">
                 <span className="font-bold">Gig</span><span className="font-normal">Execs</span>
               </a>
-            </div>
-
+      </div>
+      
             <div className="hidden lg:flex items-center space-x-12">
               <a href="/" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
               <a href="/clients" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
@@ -39,7 +40,7 @@ const Blog = () => {
                   Join
                 </a>
               </Button>
-            </div>
+                </div>
 
             <div className="lg:hidden">
               <button 
@@ -57,8 +58,8 @@ const Blog = () => {
                   </svg>
                 )}
               </button>
-            </div>
-          </div>
+                </div>
+              </div>
 
           <div className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
             isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
@@ -89,94 +90,22 @@ const Blog = () => {
           </div>
         </div>
       </section>
-
+      
       {/* Blog Posts Grid */}
       <section className="py-16 lg:py-24 bg-gray-50">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="bg-white hover:shadow-lg transition-shadow duration-300 p-0">
-              <div className="h-48 rounded-t-lg overflow-hidden">
-                <img 
-                  src="/images/blog/Blog1.png" 
-                  alt="Remote, Hybrid, or In-Office work models" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <CardHeader>
-                <CardTitle className="text-xl leading-tight">
-                  <a href="/blog/remote-hybrid-in-office" className="hover:text-[#0284C7] transition-colors">
-                    Remote, Hybrid, or In-Office? Choosing the Right Work Model for Your Career.
-                  </a>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <CardDescription className="text-[#9CA3AF] leading-relaxed">
-                  Is remote work the future, or is hybrid the best balance? Discover insights from 23 years of global experience on how work models impact career growth, flexibility, and the evolving job market.
-                </CardDescription>
-                <div className="text-sm text-[#6B7280]">
-                  Nuno G. Rodrigues | March 15, 2024
-                </div>
-                <a href="/blog/remote-hybrid-in-office" className="inline-flex items-center text-[#0284C7] hover:text-[#012E46] font-medium transition-colors ml-auto">
-                  Read More →
-                </a>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white hover:shadow-lg transition-shadow duration-300 p-0">
-              <div className="h-48 rounded-t-lg overflow-hidden">
-                <img 
-                  src="/images/blog/Blog2.png" 
-                  alt="Corporate Leadership to Executive Freelancing" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <CardHeader>
-                <CardTitle className="text-xl leading-tight">
-                  <a href="/blog/corporate-leadership-executive-freelancing" className="hover:text-[#0284C7] transition-colors">
-                    From Corporate Leadership to Executive Freelancing: The Story Behind GigExecs
-                  </a>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <CardDescription className="text-[#9CA3AF] leading-relaxed">
-                  This article updates readers on GigExecs' progress since launching its Beta version, showcasing a growing network of senior professionals from diverse industries globally.
-                </CardDescription>
-                <div className="text-sm text-[#6B7280]">
-                  Nuno G. Rodrigues | May 6, 2024
-                </div>
-                <a href="/blog/corporate-leadership-executive-freelancing" className="inline-flex items-center text-[#0284C7] hover:text-[#012E46] font-medium transition-colors ml-auto">
-                  Read More →
-                </a>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white hover:shadow-lg transition-shadow duration-300 p-0">
-              <div className="h-48 rounded-t-lg overflow-hidden">
-                <img 
-                  src="/images/blog/Blog3.png" 
-                  alt="AI Revolution Strategies for Experienced Professionals" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <CardHeader>
-                <CardTitle className="text-xl leading-tight">
-                  <a href="/blog/ai-revolution-senior-professionals" className="hover:text-[#0284C7] transition-colors">
-                    Navigating the AI Revolution: Strategies for Senior Professionals
-                  </a>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <CardDescription className="text-[#9CA3AF] leading-relaxed">
-                  The rise of AI is transforming industries, sparking both excitement and concern—especially for senior professionals. Will AI replace jobs, or can it be leveraged as an opportunity?
-                </CardDescription>
-                <div className="text-sm text-[#6B7280]">
-                  Nuno G. Rodrigues | June 10, 2024
-                </div>
-                <a href="/blog/ai-revolution-senior-professionals" className="inline-flex items-center text-[#0284C7] hover:text-[#012E46] font-medium transition-colors ml-auto">
-                  Read More →
-                </a>
-              </CardContent>
-            </Card>
+            {/* All 10 Blog Articles using BlogCard component */}
+            <BlogCard blogNumber={1} />
+            <BlogCard blogNumber={2} />
+            <BlogCard blogNumber={3} />
+            <BlogCard blogNumber={4} />
+            <BlogCard blogNumber={5} />
+            <BlogCard blogNumber={6} />
+            <BlogCard blogNumber={7} />
+            <BlogCard blogNumber={8} />
+            <BlogCard blogNumber={9} />
+            <BlogCard blogNumber={10} />
           </div>
         </div>
       </section>
@@ -190,41 +119,41 @@ const Blog = () => {
               <p className="text-[#9CA3AF]">
                 The premier freelance hub for top professionals and innovative companies.
               </p>
-            </div>
+                 </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">How it works</h3>
               <ul className="space-y-2 text-[#9CA3AF]">
                 <li><a href="/marketing" className="hover:text-white transition-colors">How it works</a></li>
                 <li><a href="/pricing" className="hover:text-white transition-colors">Pricing</a></li>
               </ul>
-            </div>
+                 </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">About</h3>
               <ul className="space-y-2 text-[#9CA3AF]">
                 <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
               </ul>
-            </div>
+               </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">Help & Support</h3>
               <ul className="space-y-2 text-[#9CA3AF]">
                 <li><a href="/help" className="hover:text-white transition-colors">Help</a></li>
               </ul>
-            </div>
+             </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">Legal</h3>
               <ul className="space-y-2 text-[#9CA3AF]">
                 <li><a href="/terms-and-conditions" className="hover:text-white transition-colors">Terms of Service</a></li>
                 <li><a href="/data-privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a></li>
               </ul>
-            </div>
-          </div>
+                 </div>
+               </div>
           <div className="border-t border-[#1F2937] mt-8 pt-8 text-center text-[#9CA3AF]">
             <p>&copy; 2024 GigExecs. All rights reserved.</p>
-          </div>
+         </div>
         </div>
       </footer>
     </div>
   )
 }
 
-export default Blog
+export default Blog 
