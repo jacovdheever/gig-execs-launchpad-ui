@@ -113,7 +113,7 @@ const Footer = () => {
       <div className="w-full border-t border-gray-600 mt-8 lg:mt-16">
         <div className="max-w-6xl mx-auto px-8 lg:px-16 py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="text-sm text-gray-300">
-            © 2024 GigExecs. All rights reserved.
+            © {new Date().getFullYear()} GigExecs. All rights reserved.
           </div>
           <div className="flex gap-6 text-sm">
             <a href="#" className="text-gray-300 hover:text-white transition-colors">

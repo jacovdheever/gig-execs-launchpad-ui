@@ -196,7 +196,7 @@ const AboutUs = () => {
             </div>
           </div>
           <div className="border-t border-[#1F2937] mt-8 pt-8 text-center text-[#9CA3AF]">
-            <p>&copy; 2024 GigExecs. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} GigExecs. All rights reserved.</p>
           </div>
         </div>
       </footer>

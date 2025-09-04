@@ -318,7 +318,7 @@ export default function PrivacyPolicy() {
           </div>
 
           <div className="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 GigExecs. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} GigExecs. All rights reserved.</p>
           </div>
         </div>
       </footer>
