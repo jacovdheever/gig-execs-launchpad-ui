@@ -45,8 +45,7 @@ export async function fetchPosts(filters: FeedFilters): Promise<FeedResponse> {
     .from('forum_posts')
     .select(`
       *,
-      forum_categories(id, name, slug),
-      users(first_name, last_name, profile_photo_url)
+      forum_categories(id, name, slug)
     `);
 
   // Apply category filter
@@ -82,8 +81,14 @@ export async function fetchPosts(filters: FeedFilters): Promise<FeedResponse> {
   const { data, error, count } = await query;
 
   if (error) {
-    console.error('Error fetching posts:', error);
-    throw new Error('Failed to fetch posts');
+    console.error('❌ Error fetching posts:', error);
+    console.error('❌ Error details:', { 
+      message: error.message, 
+      details: error.details, 
+      hint: error.hint,
+      code: error.code 
+    });
+    throw new Error(`Failed to fetch posts: ${error.message}`);
   }
 
   // Debug: Log the raw data structure
@@ -93,13 +98,12 @@ export async function fetchPosts(filters: FeedFilters): Promise<FeedResponse> {
   // Transform the data to match our ForumPost interface
   const posts = (data || []).map(post => {
     console.log('🔍 Processing post:', post);
-    console.log('🔍 Post users field:', post.users);
     console.log('🔍 Post forum_categories field:', post.forum_categories);
     
     const transformedPost: ForumPost = {
       ...post,
-      // Ensure author data is properly mapped - handle both array and single object cases
-      author: post.users ? (Array.isArray(post.users) ? post.users[0] : post.users) : undefined,
+      // Author data will be fetched separately if needed
+      author: undefined, // We'll fetch this separately to avoid join issues
       // Ensure category data is properly mapped - handle both array and single object cases
       category: post.forum_categories ? (Array.isArray(post.forum_categories) ? post.forum_categories[0] : post.forum_categories) : undefined
     };
@@ -132,8 +136,7 @@ export async function fetchUnreadPosts(userId: string, filters: Omit<FeedFilters
     .from('forum_posts')
     .select(`
       *,
-      forum_categories(id, name, slug),
-      users(first_name, last_name, profile_photo_url)
+      forum_categories(id, name, slug)
     `);
 
   if (categoryId) {
@@ -146,8 +149,14 @@ export async function fetchUnreadPosts(userId: string, filters: Omit<FeedFilters
   const { data: allPosts, error, count } = await query;
 
   if (error) {
-    console.error('Error fetching posts for unread filter:', error);
-    throw new Error('Failed to fetch posts');
+    console.error('❌ Error fetching posts for unread filter:', error);
+    console.error('❌ Error details:', { 
+      message: error.message, 
+      details: error.details, 
+      hint: error.hint,
+      code: error.code 
+    });
+    throw new Error(`Failed to fetch posts: ${error.message}`);
   }
 
   // Get read markers for the user
@@ -167,8 +176,8 @@ export async function fetchUnreadPosts(userId: string, filters: Omit<FeedFilters
     // Transform the data to match our ForumPost interface
     const transformedPost: ForumPost = {
       ...post,
-      // Ensure author data is properly mapped - handle both array and single object cases
-      author: post.users ? (Array.isArray(post.users) ? post.users[0] : post.users) : undefined,
+      // Author data will be fetched separately if needed
+      author: undefined, // We'll fetch this separately to avoid join issues
       // Ensure category data is properly mapped - handle both array and single object cases
       category: post.forum_categories ? (Array.isArray(post.forum_categories) ? post.forum_categories[0] : post.forum_categories) : undefined
     };
