@@ -158,8 +158,8 @@ export default function BlogArticle3() {
           <div className="flex justify-between items-center h-16">
             {/* Left side - Logo */}
             <div className="flex items-center">
-              <a href="/" className="text-2xl text-[#012E46] hover:text-[#0284C7] transition-colors cursor-pointer">
-                <span className="font-bold">Gig</span><span className="font-normal">Execs</span>
+              <a href="/" className="text-2xl font-extrabold text-slate-900 hover:text-[#0284C7] transition-colors cursor-pointer">
+                GigExecs
               </a>
             </div>
 
