@@ -11,6 +11,7 @@ import Professionals from "./pages/Professionals";
 import Blog from "./pages/Blog";
 import BlogArticle from "./pages/BlogArticle";
 import BlogArticle1 from "./pages/BlogArticle1";
+import BlogArticle2 from "./pages/BlogArticle2";
 import ExecutiveFreelancePlatform from "./pages/ExecutiveFreelancePlatform";
 import NavigatingAI from "./pages/NavigatingAI";
 import BigAnomaly from "./pages/BigAnomaly";
@@ -76,6 +77,7 @@ const App = () => (
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/article" element={<BlogArticle />} />
             <Route path="/blog/remote-hybrid-in-office" element={<BlogArticle1 />} />
+            <Route path="/blog/corporate-leadership-executive-freelancing" element={<BlogArticle2 />} />
             <Route path="/blog/executive-freelance-platform" element={<ExecutiveFreelancePlatform />} />
             <Route path="/blog/navigating-ai" element={<NavigatingAI />} />
             <Route path="/blog/big-anomaly" element={<BigAnomaly />} />
