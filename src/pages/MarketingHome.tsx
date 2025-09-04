@@ -93,7 +93,7 @@ function Homepage() {
         <div className="absolute inset-0 -z-10">
           {/* Hero background image */}
           <img
-            src="/images/Home/Home.png"
+            src="/images/main-header-banner-image.png"
             alt="GigExecs Hero Background"
             className="w-full h-full object-cover"
             style={{ 
