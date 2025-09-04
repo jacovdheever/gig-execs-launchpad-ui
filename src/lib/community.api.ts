@@ -397,7 +397,14 @@ export async function togglePostReaction(postId: number, userId: string): Promis
       }
     }
 
-    return { isLiked: false, reactionCount: -1 };
+    // Get the updated reaction count
+    const { data: updatedPost } = await supabase
+      .from('forum_posts')
+      .select('reaction_count')
+      .eq('id', postId)
+      .single();
+    
+    return { isLiked: false, reactionCount: updatedPost?.reaction_count || 0 };
   } else {
     // Like: add reaction
     const { error } = await supabase
@@ -435,7 +442,14 @@ export async function togglePostReaction(postId: number, userId: string): Promis
       }
     }
 
-    return { isLiked: true, reactionCount: 1 };
+    // Get the updated reaction count
+    const { data: updatedPost } = await supabase
+      .from('forum_posts')
+      .select('reaction_count')
+      .eq('id', postId)
+      .single();
+    
+    return { isLiked: true, reactionCount: updatedPost?.reaction_count || 0 };
   }
 }
 

@@ -276,11 +276,11 @@ export function useToggleReaction() {
             ...oldData,
             posts: oldData.posts.map(post => 
               post.id === postId 
-                ? { 
-                    ...post, 
-                    reaction_count: post.reaction_count + result.reactionCount,
-                    isLiked: result.isLiked 
-                  }
+                                  ? { 
+                      ...post, 
+                      reaction_count: result.reactionCount,
+                      isLiked: result.isLiked 
+                    }
                 : post
             ),
           };
