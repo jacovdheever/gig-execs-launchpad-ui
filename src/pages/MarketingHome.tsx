@@ -136,7 +136,7 @@ function Homepage() {
               {/* Right side - content */}
               <div className="text-center lg:text-left">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-2xl animate-fade-in-up">
-                  GigExecs: The Premier Freelance Hub for Top Professionals
+                  GigExecs: The Premier Hub for Highly Experienced Professionals
                 </h1>
                 <p className="text-lg sm:text-xl text-white/95 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed drop-shadow-lg animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                   Join a growing network of experienced talent and innovative companies. GigExecs connects senior professionals with projects that need their expertise.
