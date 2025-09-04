@@ -34,6 +34,7 @@ import AboutUs from "./pages/AboutUs";
 import DataPrivacyPolicy from "./pages/DataPrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import HelpAndSupport from "./pages/HelpAndSupport";
+import HowItWorks from "./pages/HowItWorks";
 import NotFound from "./pages/NotFound";
 
 // Functional App Components
@@ -108,6 +109,7 @@ const App = () => (
             <Route path="/data-privacy-policy" element={<DataPrivacyPolicy />} />
             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
             <Route path="/help" element={<HelpAndSupport />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
             
             {/* Functional App Routes */}
             <Route path="/auth/login" element={<LoginPage />} />
