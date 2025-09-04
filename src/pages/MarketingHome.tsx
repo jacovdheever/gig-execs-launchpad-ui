@@ -34,7 +34,7 @@ function Homepage() {
             {/* Center - Navigation Links */}
             <div className="hidden lg:flex items-center space-x-12">
               <a href="/" className="text-[#0284C7] font-semibold">What is GigExecs</a>
-              <a href="/client" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
+              <a href="/clients" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
               <a href="/professionals" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
               <a href="/blog" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
             </div>
@@ -79,7 +79,7 @@ function Homepage() {
           }`}>
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-[#F5F5F5]">
               <a href="/" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#0284C7] font-semibold">What is GigExecs</a>
-              <a href="/client" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
+              <a href="/clients" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
               <a href="/professionals" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
               <a href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
             </div>
@@ -311,14 +311,14 @@ function Homepage() {
             <div>
               <h3 className="text-lg font-semibold mb-4">How it works</h3>
               <ul className="space-y-2 text-[#9CA3AF]">
-                <li><a href="/" className="hover:text-white transition-colors">How it works</a></li>
+                <li><a href="/marketing" className="hover:text-white transition-colors">How it works</a></li>
                 <li><a href="/pricing" className="hover:text-white transition-colors">Pricing</a></li>
               </ul>
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">About</h3>
               <ul className="space-y-2 text-[#9CA3AF]">
-                <li><a href="/about-us" className="hover:text-white transition-colors">About Us</a></li>
+                <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
               </ul>
             </div>
             <div>
@@ -330,8 +330,8 @@ function Homepage() {
             <div>
               <h3 className="text-lg font-semibold mb-4">Legal</h3>
               <ul className="space-y-2 text-[#9CA3AF]">
-                <li><a href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</a></li>
-                <li><a href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="/terms-and-conditions" className="hover:text-white transition-colors">Terms of Service</a></li>
+                <li><a href="/data-privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a></li>
               </ul>
             </div>
           </div>
