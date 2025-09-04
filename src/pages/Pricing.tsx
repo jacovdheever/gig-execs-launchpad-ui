@@ -25,13 +25,13 @@ const Pricing = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <a href="/marketing" className="text-2xl text-[#012E46] hover:text-[#0284C7] transition-colors cursor-pointer">
+              <a href="/" className="text-2xl text-[#012E46] hover:text-[#0284C7] transition-colors cursor-pointer">
                 <span className="font-bold">Gig</span><span className="font-normal">Execs</span>
               </a>
             </div>
             
             <div className="hidden lg:flex items-center space-x-12">
-              <a href="/marketing" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
+              <a href="/" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
               <a href="/clients" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
               <a href="/professionals" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
               <a href="/blog" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>

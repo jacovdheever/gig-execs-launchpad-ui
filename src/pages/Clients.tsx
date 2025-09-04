@@ -103,13 +103,13 @@ const Clients = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <a href="/marketing" className="text-2xl text-[#012E46] hover:text-[#0284C7] transition-colors cursor-pointer">
+              <a href="/" className="text-2xl text-[#012E46] hover:text-[#0284C7] transition-colors cursor-pointer">
                 <span className="font-bold">Gig</span><span className="font-normal">Execs</span>
               </a>
             </div>
 
             <div className="hidden lg:flex items-center space-x-12">
-              <a href="/marketing" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
+              <a href="/" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
               <a href="/clients" className="text-[#0284C7] font-semibold">Clients</a>
               <a href="/professionals" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
               <a href="/blog" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
@@ -151,7 +151,7 @@ const Clients = () => {
             isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
           }`}>
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-[#F5F5F5]">
-              <a href="/marketing" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
+              <a href="/" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
               <a href="/clients" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#0284C7] font-semibold">Clients</a>
               <a href="/professionals" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
               <a href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
@@ -355,7 +355,7 @@ const Clients = () => {
             <div>
               <h3 className="text-lg font-semibold mb-4">How it works</h3>
               <ul className="space-y-2 text-[#9CA3AF]">
-                <li><a href="/marketing" className="hover:text-white transition-colors">How it works</a></li>
+                <li><a href="/" className="hover:text-white transition-colors">How it works</a></li>
                 <li><a href="/pricing" className="hover:text-white transition-colors">Pricing</a></li>
               </ul>
             </div>

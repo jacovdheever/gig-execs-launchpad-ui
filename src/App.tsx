@@ -63,13 +63,13 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            {/* Functional App Routes - Root Route */}
-            <Route path="/" element={<DashboardLayout />}>
+            {/* Marketing Site Routes - Root Route */}
+            <Route path="/" element={<MarketingHome />} />
+            
+            {/* Functional App Routes */}
+            <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<DashboardPage />} />
             </Route>
-            
-            {/* Marketing Site Routes */}
-            <Route path="/marketing" element={<MarketingHome />} />
             <Route path="/clients" element={<Clients />} />
             <Route path="/professionals" element={<Professionals />} />
             <Route path="/blog" element={<Blog />} />
