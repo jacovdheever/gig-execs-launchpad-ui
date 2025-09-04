@@ -355,7 +355,7 @@ const Clients = () => {
             <div>
               <h3 className="text-lg font-semibold mb-4">How it works</h3>
               <ul className="space-y-2 text-[#9CA3AF]">
-                <li><a href="/" className="hover:text-white transition-colors">How it works</a></li>
+                <li><a href="/how-it-works" className="hover:text-white transition-colors">How it works</a></li>
                 <li><a href="/pricing" className="hover:text-white transition-colors">Pricing</a></li>
               </ul>
             </div>
