@@ -30,12 +30,12 @@ const Blog = () => {
 
             <div className="flex items-center">
               <Button variant="outline" className="border-[#012E46] text-[#012E46] hover:bg-[#F5F5F5] rounded-r-none border-r-0">
-                <a href="https://gigexecs.com/login" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
+                <a href="/auth/login" className="w-full h-full flex items-center justify-center">
                   Sign in
                 </a>
               </Button>
               <Button className="bg-[#012E46] hover:bg-[#0284C7] text-white rounded-l-none">
-                <a href="https://gigexecs.com/signup" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center text-white">
+                <a href="/auth/register" className="w-full h-full flex items-center justify-center text-white">
                   Join
                 </a>
               </Button>

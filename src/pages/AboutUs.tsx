@@ -1,580 +1,207 @@
-import React from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import React, { useState, useEffect } from 'react'
+import { Button } from '@/components/ui/button'
 
 const AboutUs = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  useEffect(() => {
+    document.title = 'About Us - GigExecs | Premier Freelance Hub for Top Professionals'
+    
+    const metaDescription = document.querySelector('meta[name="description"]')
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Learn about GigExecs mission to revolutionize the gig economy by connecting senior professionals with innovative companies. Discover our story, values, and commitment to excellence.')
+    }
+  }, [])
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
+
   return (
-    <div style={{
-      background: `url('/background/BlogBackground.svg') center center / cover no-repeat`,
-      minHeight: "100vh"
-    }}> 
-      <Header />
-      
-      {/* Main Content */}
-      <main
-        style={{
-          width: "100%",
-          maxWidth: 1320,
-          margin: "0 auto",
-          padding: "40px 40px",
-          position: "relative",
-        }}
-      >
-        {/* Breadcrumbs */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            padding: "0px",
-            gap: 8,
-            marginBottom: 24,
-          }}
-        >
-          <a href="/" style={{ textDecoration: "none" }}>
-            <span
-              style={{
-                fontFamily: "Montserrat, sans-serif",
-                fontStyle: "normal",
-                fontWeight: 400,
-                fontSize: 14,
-                lineHeight: "120%",
-                color: "#CC9B0A",
-                cursor: "pointer",
-              }}
-            >
-              Home
-            </span>
-          </a>
-          <span
-            style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontStyle: "normal",
-              fontWeight: 400,
-              fontSize: 14,
-              lineHeight: "120%",
-              color: "#FFFFFF",
-            }}
-          >
-            &gt;
-          </span>
-          <span
-            style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontStyle: "normal",
-              fontWeight: 400,
-              fontSize: 14,
-              lineHeight: "120%",
-              color: "#FFFFFF",
-            }}
-          >
-            About Us
-          </span>
-        </div>
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <a href="/marketing" className="text-2xl text-[#012E46] hover:text-[#0284C7] transition-colors cursor-pointer">
+                <span className="font-bold">Gig</span><span className="font-normal">Execs</span>
+              </a>
+            </div>
 
-        {/* Page Heading */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            padding: "0px",
-            gap: 16,
-            marginBottom: 16,
-          }}
-        >
-          {/* Icon */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              padding: "2px",
-              gap: 10,
-              width: 24,
-              height: 24,
-            }}
-          >
-            <div
-              style={{
-                width: 20,
-                height: 20,
-                position: "relative",
-              }}
-            >
-              {/* Three colored dots */}
-              <div
-                style={{
-                  position: "absolute",
-                  left: "43.79%",
-                  right: "18.85%",
-                  top: "14.41%",
-                  bottom: "48.23%",
-                  background: "#4885AA",
-                  borderRadius: "50%",
-                }}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  left: "18.86%",
-                  right: "58.02%",
-                  top: "53.58%",
-                  bottom: "23.29%",
-                  background: "#CC9B0A",
-                  borderRadius: "50%",
-                }}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  left: "56.28%",
-                  right: "24.21%",
-                  top: "66.03%",
-                  bottom: "14.45%",
-                  background: "#FFFFFF",
-                  borderRadius: "50%",
-                }}
-              />
+            <div className="hidden lg:flex items-center space-x-12">
+              <a href="/marketing" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
+              <a href="/clients" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
+              <a href="/professionals" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
+              <a href="/blog" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
+            </div>
+
+            <div className="flex items-center">
+              <Button variant="outline" className="border-[#012E46] text-[#012E46] hover:bg-[#F5F5F5] rounded-r-none border-r-0">
+                <a href="/auth/login" className="w-full h-full flex items-center justify-center">
+                  Sign in
+                </a>
+              </Button>
+              <Button className="bg-[#012E46] hover:bg-[#0284C7] text-white rounded-l-none">
+                <a href="/auth/register" className="w-full h-full flex items-center justify-center text-white">
+                  Join
+                </a>
+              </Button>
+            </div>
+
+            <div className="lg:hidden">
+              <button 
+                onClick={toggleMobileMenu}
+                className="text-[#1F2937] hover:text-[#0284C7] transition-colors"
+                aria-label="Toggle mobile menu"
+              >
+                {isMobileMenuOpen ? (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                )}
+              </button>
             </div>
           </div>
-          
-          {/* Title */}
-          <h1
-            style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontStyle: "normal",
-              fontWeight: 600,
-              fontSize: 40,
-              lineHeight: "120%",
-              color: "#FFFFFF",
-              margin: 0,
-            }}
-          >
-            About GigExecs – The Freelance Marketplace for Experienced Professionals
-          </h1>
-        </div>
 
-        {/* Introduction Section */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 8,
-            marginBottom: 32,
-          }}
-        >
-          {/* Sub-heading */}
-          <h2
-            style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontStyle: "normal",
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "120%",
-              color: "#CC9B0A",
-              margin: 0,
-            }}
-          >
-            The Story Behind GigExecs - The Premium Freelance Marketplace
-          </h2>
-          
-          {/* Description paragraphs */}
-          <div
-            style={{
-              fontFamily: "Open Sans, sans-serif",
-              fontStyle: "normal",
-              fontWeight: 400,
-              fontSize: 16,
-              lineHeight: "normal",
-              color: "#FFFFFF",
-              maxWidth: 1280,
-            }}
-          >
-            <p style={{ marginBottom: 12 }}>
-            At GigExecs, we connect businesses, startups, and enterprises with a curated network of highly experienced freelancers, senior consultants, and interim executives. Whether you need specialist skills for a high-impact project or fractional leadership to drive change, GigExecs ensures you get access to top-tier professionals with the experience to deliver results. We’re not a generic freelance platform. Our focus is senior talent with at least 15 years of proven industry experience in strategy, operations, technology, marketing, finance, and executive leadership across various industries.
+          <div className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+            isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+          }`}>
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-[#F5F5F5]">
+              <a href="/marketing" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
+              <a href="/clients" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
+              <a href="/professionals" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
+              <a href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
+          <div className="relative z-10">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1F2937] mb-6 leading-tight">
+              About{' '}
+              <span className="bg-gradient-to-r from-[#0284C7] to-[#FACC15] bg-clip-text text-transparent">
+                GigExecs
+              </span>
+            </h1>
+            <p className="text-lg sm:text-xl text-[#9CA3AF] mb-8 max-w-3xl mx-auto leading-relaxed">
+              Learn about our mission to revolutionize the gig economy by connecting senior professionals with innovative companies.
             </p>
-
-
-            <h2 style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontStyle: "normal",
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "120%",
-              color: "#CC9B0A",
-              margin: 0,
-            }}>
-              <strong>Our Mission – Empowering Businesses with Proven Expertise</strong>
-            </h2>
-            <h2>
-            At GigExecs, our mission is to help businesses thrive by providing on-demand access to the best senior talent globally. We believe experience matters, especially when tackling complex challenges, entering new markets, or delivering critical projects. By using technology to simplify the way businesses access their skills and expertise, we are fostering a global community where experience is valued, ageism is challenged, and impactful work is executed.
-            </h2>
           </div>
         </div>
+      </section>
 
-{/* Introduction Section */}
-<div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 8,
-            marginBottom: 16,
-          }}
-        >
-
-
-        </div>
-        
-        <div>
-        <h2 style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontStyle: "normal",
-              fontWeight: 700,
-              fontSize: 18,
-              lineHeight: "120%",
-              color: "#CC9B0A",
-              marginBottom: 16,
-            }}>
-              <strong>Meet the Team</strong>
+      {/* Mission Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1F2937] mb-4">
+              Our Mission
             </h2>
-            
-            </div>
-        {/* Team Cards Section */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "0px",
-            gap: 24,
-            width: "100%",
-            maxWidth: 1280,
-          }}
-        >
-          {/* Nuno G. Rodrigues Card 1 */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              padding: "32px 40px",
-              gap: 24,
-              width: 628,
-              height: 606,
-              background: "#FFFFFF",
-              borderRadius: 24,
-            }}
-          >
-            {/* Profile Image */}
-            <div
-              style={{
-                width: 120,
-                height: 120,
-                borderRadius: "50%",
-                overflow: "hidden",
-                background: "url('/images/AboutUs/Nuno.png')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            />
-            
-            {/* Name and Title */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                padding: "0px",
-                width: 548,
-                height: 39,
-              }}
-            >
-              <div
-                style={{
-                  width: 177,
-                  height: 22,
-                  fontFamily: "Montserrat, sans-serif",
-                  fontStyle: "normal",
-                  fontWeight: 700,
-                  fontSize: 18,
-                  lineHeight: "120%",
-                  color: "#CC9B0A",
-                  textAlign: "center",
-                }}
-              >
-                Nuno G. Rodrigues
-              </div>
-              <div
-                style={{
-                  width: 548,
-                  height: 17,
-                  fontFamily: "Montserrat, sans-serif",
-                  fontStyle: "normal",
-                  fontWeight: 700,
-                  fontSize: 14,
-                  lineHeight: "120%",
-                  textAlign: "center",
-                  color: "#012E46",
-                }}
-              >
-                Co-Founder, Chief Executive Officer
-              </div>
-            </div>
-            
-            {/* Divider */}
-            <div
-              style={{
-                width: 548,
-                height: 0,
-                opacity: 0.3,
-                border: "1px solid #012E46",
-              }}
-            />
-            
-            {/* Biography */}
-            <div
-              style={{
-                width: 548,
-                height: 153,
-                fontFamily: "Montserrat, sans-serif",
-                fontStyle: "normal",
-                fontWeight: 400,
-                fontSize: 14,
-                lineHeight: "120%",
-                color: "#012E46",
-                textAlign: "left",
-              }}
-            >
-              With over 20 years of international experience, Nuno has held senior and executive roles in commercial, financial, and strategic leadership across blue-chip companies, mid-tier firms, and startups. He has originated and led deals exceeding $1 billion and has mentored over 60 entrepreneurs worldwide. Holding an MBA from London Business School, he brings a deep understanding of business growth and innovation.
-              <br /><br />
-              Outside of work, he's a dedicated husband and father of four, passionate about sports, great food, and building businesses that make an impact.
-            </div>
-            
-            {/* Social Media Links */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "4px 0px",
-                gap: 16,
-                width: 548,
-                height: 32,
-              }}
-            >
-              {/* X (Twitter) Icon */}
-              <a href="https://x.com/NunoG_Rodrigues" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: 24,
-                    height: 24,
-                    cursor: "pointer",
-                  }}
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clipPath="url(#clip0_826_68838)">
-                      <path d="M18.3173 2.06024H21.6747L14.3414 10.498L23 21.9398H16.1968L10.8956 15.004L4.7992 21.9398H1.44177L9.30522 12.9277L1 2.06024H7.97992L12.7952 8.42169L18.3173 2.06024ZM17.1245 19.9076H18.9799L6.96386 3.95984H4.93173L17.1245 19.9076Z" fill="#012E46"/>
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_826_68838">
-                        <rect width="22" height="19.8795" fill="white" transform="translate(1 2.06024)"/>
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </div>
-              </a>
-              
-              {/* LinkedIn Icon */}
-              <a href="https://www.linkedin.com/in/nuno-g-rodrigues-210a59/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    width: 24,
-                    height: 24,
-                    cursor: "pointer",
-                  }}
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5.99417 23V8.15664H1.27824V23H5.99417ZM3.63682 6.12881C5.28134 6.12881 6.30499 4.98901 6.30499 3.56465C6.27435 2.10816 5.28141 1 3.66802 1C2.05489 1 1 2.10818 1 3.56465C1 4.98908 2.02339 6.12881 3.60603 6.12881H3.63667H3.63682ZM8.60443 23H13.3204V14.7107C13.3204 14.2671 13.351 13.8239 13.4755 13.5068C13.8165 12.6205 14.5924 11.7024 15.8952 11.7024C17.6017 11.7024 18.2844 13.0636 18.2844 15.059V22.9999H23V14.4888C23 9.92955 20.6734 7.80816 17.5706 7.80816C15.0266 7.80816 13.9095 9.29584 13.289 10.3091H13.3205V8.15633H8.60453C8.66642 9.54915 8.60453 22.9997 8.60453 22.9997L8.60443 23Z" fill="#012E46"/>
-                  </svg>
-                </div>
-              </a>
-            </div>
+            <p className="text-lg text-[#9CA3AF] max-w-3xl mx-auto">
+              We believe that experience and expertise should never be wasted. Our platform connects seasoned professionals with companies that value their knowledge, creating meaningful partnerships that drive innovation and growth.
+            </p>
           </div>
+        </div>
+      </section>
 
-          {/* Jaco Card 2 */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              padding: "32px 40px",
-              gap: 24,
-              width: 628,
-              height: 606,
-              background: "#FFFFFF",
-              borderRadius: 24,
-            }}
-          >
-            {/* Profile Image */}
-            <div
-              style={{
-                width: 120,
-                height: 120,
-                borderRadius: "50%",
-                overflow: "hidden",
-                background: "url('/images/AboutUs/Jaco.png')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            />
-            
-            {/* Name and Title */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                padding: "0px",
-                width: 548,
-                height: 39,
-              }}
-            >
-              <div
-                style={{
-                  width: 200,
-                  height: 22,
-                  fontFamily: "Montserrat, sans-serif",
-                  fontStyle: "normal",
-                  fontWeight: 700,
-                  fontSize: 18,
-                  lineHeight: "120%",
-                  color: "#CC9B0A",
-                  textAlign: "center",
-                }}
-              >
-                Jaco van den Heever
+      {/* Team Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1F2937] mb-4">
+              Meet Our Team
+            </h2>
+            <p className="text-lg text-[#9CA3AF] max-w-2xl mx-auto">
+              The passionate individuals behind GigExecs, working to transform the future of work.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="text-center">
+              <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden">
+                <img 
+                  src="/images/AboutUs/Nuno.png" 
+                  alt="Nuno G. Rodrigues" 
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <div
-                style={{
-                  width: 548,
-                  height: 17,
-                  fontFamily: "Montserrat, sans-serif",
-                  fontStyle: "normal",
-                  fontWeight: 700,
-                  fontSize: 14,
-                  lineHeight: "120%",
-                  textAlign: "center",
-                  color: "#012E46",
-                }}
-              >
-                Co-Founder, Chief Experience Officer
+              <h3 className="text-xl font-bold text-[#0284C7] mb-2">Nuno G. Rodrigues</h3>
+              <p className="text-[#9CA3AF] mb-4">Founder & CEO</p>
+              <p className="text-sm text-[#6B7280]">
+                With over 23 years of global experience in corporate leadership, Nuno founded GigExecs to create opportunities for senior professionals in the gig economy.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden">
+                <img 
+                  src="/images/AboutUs/Jaco.png" 
+                  alt="Jaco van der Heever" 
+                  className="w-full h-full object-cover"
+                />
               </div>
-            </div>
-            
-            {/* Divider */}
-            <div
-              style={{
-                width: 548,
-                height: 0,
-                opacity: 0.3,
-                border: "1px solid #012E46",
-              }}
-            />
-            
-            {/* Biography */}
-            <div
-              style={{
-                width: 548,
-                height: 153,
-                fontFamily: "Montserrat, sans-serif",
-                fontStyle: "normal",
-                fontWeight: 400,
-                fontSize: 14,
-                lineHeight: "120%",
-                color: "#012E46",
-                textAlign: "left",
-              }}
-            >
-              With 19 years of professional experience across multiple industries and continents, Jaco has held senior leadership roles in design, IT, and product management for multinational blue-chips, mid-tier companies, and startups. He holds an MBA from Wits Business School and is a Certified Experience Architect (CXA), bringing a strong blend of strategic thinking and user-centered design expertise.
-              <br /><br />
-              Outside of work, he is a devoted husband and father of three, passionate about cooking, football, and family time. He finds fulfilment in making a difference through charity work and helping others thrive.
-            </div>
-            
-            {/* Social Media Links */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "4px 0px",
-                gap: 16,
-                width: 548,
-                height: 32,
-              }}
-            >
-              {/* X (Twitter) Icon */}
-              <a href="https://x.com/jacovdh" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: 24,
-                    height: 24,
-                    cursor: "pointer",
-                  }}
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clipPath="url(#clip0_826_68838)">
-                      <path d="M18.3173 2.06024H21.6747L14.3414 10.498L23 21.9398H16.1968L10.8956 15.004L4.7992 21.9398H1.44177L9.30522 12.9277L1 2.06024H7.97992L12.7952 8.42169L18.3173 2.06024ZM17.1245 19.9076H18.9799L6.96386 3.95984H4.93173L17.1245 19.9076Z" fill="#012E46"/>
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_826_68838">
-                        <rect width="22" height="19.8795" fill="white" transform="translate(1 2.06024)"/>
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </div>
-              </a>
-              
-              {/* LinkedIn Icon */}
-              <a href="https://www.linkedin.com/in/jacovdh/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    width: 24,
-                    height: 24,
-                    cursor: "pointer",
-                  }}
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5.99417 23V8.15664H1.27824V23H5.99417ZM3.63682 6.12881C5.28134 6.12881 6.30499 4.98901 6.30499 3.56465C6.27435 2.10816 5.28141 1 3.66802 1C2.05489 1 1 2.10818 1 3.56465C1 4.98908 2.02339 6.12881 3.60603 6.12881H3.63667H3.63682ZM8.60443 23H13.3204V14.7107C13.3204 14.2671 13.351 13.8239 13.4755 13.5068C13.8165 12.6205 14.5924 11.7024 15.8952 11.7024C17.6017 11.7024 18.2844 13.0636 18.2844 15.059V22.9999H23V14.4888C23 9.92955 20.6734 7.80816 17.5706 7.80816C15.0266 7.80816 13.9095 9.29584 13.289 10.3091H13.3205V8.15633H8.60453C8.66642 9.54915 8.60453 22.9997 8.60453 22.9997L8.60443 23Z" fill="#012E46"/>
-                  </svg>
-                </div>
-              </a>
+              <h3 className="text-xl font-bold text-[#0284C7] mb-2">Jaco van der Heever</h3>
+              <p className="text-[#9CA3AF] mb-4">Co-Founder & CTO</p>
+              <p className="text-sm text-[#6B7280]">
+                Technology visionary with extensive experience in building scalable platforms that connect people and create value.
+              </p>
             </div>
           </div>
         </div>
-      </main>
-      
-      <Footer />
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-[#012E46] text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+            <div>
+              <div className="text-2xl font-bold text-[#FACC15] mb-4">GigExecs</div>
+              <p className="text-[#9CA3AF]">
+                The premier freelance hub for top professionals and innovative companies.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-4">How it works</h3>
+              <ul className="space-y-2 text-[#9CA3AF]">
+                <li><a href="/marketing" className="hover:text-white transition-colors">How it works</a></li>
+                <li><a href="/pricing" className="hover:text-white transition-colors">Pricing</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-4">About</h3>
+              <ul className="space-y-2 text-[#9CA3AF]">
+                <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Help & Support</h3>
+              <ul className="space-y-2 text-[#9CA3AF]">
+                <li><a href="/help" className="hover:text-white transition-colors">Help</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Legal</h3>
+              <ul className="space-y-2 text-[#9CA3AF]">
+                <li><a href="/terms-and-conditions" className="hover:text-white transition-colors">Terms of Service</a></li>
+                <li><a href="/data-privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-[#1F2937] mt-8 pt-8 text-center text-[#9CA3AF]">
+            <p>&copy; 2024 GigExecs. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
-  );
-};
+  )
+}
 
-export default AboutUs; 
+export default AboutUs
