@@ -127,26 +127,31 @@ function Homepage() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
-          <div className="relative z-10">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-2xl animate-fade-in-up">
-              GigExecs: The Premier Freelance Hub for{' '}
-              <span className="bg-gradient-to-r from-[#FACC15] to-[#0284C7] bg-clip-text text-transparent drop-shadow-2xl">
-                Top Professionals
-              </span>
-            </h1>
-            <p className="text-lg sm:text-xl text-white/95 mb-8 max-w-3xl mx-auto leading-relaxed drop-shadow-lg animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              Join a growing network of experienced talent and innovative companies. GigExecs connects senior professionals with projects that need their expertise.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-              <Button size="lg" className="bg-white hover:bg-gray-100 text-[#012E46] px-8 py-3 drop-shadow-lg transition-all duration-300 hover:scale-105 font-semibold">
-                <a href="/auth/register" className="w-full h-full flex items-center justify-center text-[#012E46]">
-                  Join GigExecs
-                </a>
-              </Button>
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-[#012E46] px-8 py-3 drop-shadow-lg backdrop-blur-sm bg-white/10 transition-all duration-300 hover:scale-105 font-semibold">
-                Learn More
-              </Button>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 h-screen flex items-center">
+          <div className="relative z-10 w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-[60vh]">
+              {/* Left side - empty to show video background */}
+              <div className="hidden lg:block"></div>
+              
+              {/* Right side - content */}
+              <div className="text-center lg:text-left">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-2xl animate-fade-in-up">
+                  GigExecs: The Premier Freelance Hub for Top Professionals
+                </h1>
+                <p className="text-lg sm:text-xl text-white/95 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed drop-shadow-lg animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                  Join a growing network of experienced talent and innovative companies. GigExecs connects senior professionals with projects that need their expertise.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+                  <Button size="lg" className="bg-white hover:bg-gray-100 text-[#012E46] px-8 py-3 drop-shadow-lg transition-all duration-300 hover:scale-105 font-semibold">
+                    <a href="/auth/register" className="w-full h-full flex items-center justify-center text-[#012E46]">
+                      Join GigExecs
+                    </a>
+                  </Button>
+                  <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-[#012E46] px-8 py-3 drop-shadow-lg backdrop-blur-sm bg-white/10 transition-all duration-300 hover:scale-105 font-semibold">
+                    Learn More
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
