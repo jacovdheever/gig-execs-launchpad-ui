@@ -365,7 +365,12 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
                       {user ? `${user.firstName} ${user.lastName}` : 'Loading...'}
                     </div>
                     <div className="text-sm text-slate-500">
-                      posting in <span className="font-medium text-slate-700">Lead by Design</span>
+                      posting in <span className="font-medium text-slate-700">
+                        {formData.category_id 
+                          ? categories?.find(cat => cat.id === formData.category_id)?.name || 'Community'
+                          : 'Community'
+                        }
+                      </span>
                     </div>
                   </div>
                 </div>

@@ -29,6 +29,8 @@ import NotFound from "./pages/NotFound";
 // Functional App Components
 import LoginPage from "./app/auth/login";
 import RegisterPage from "./app/auth/register";
+import ForgotPasswordPage from "./app/auth/forgot-password";
+import ResetPasswordPage from "./app/auth/reset-password";
 import AuthCallback from "./app/auth/callback";
 import DashboardLayout from "./app/dashboard/layout";
 import DashboardPage from "./app/dashboard";
@@ -90,6 +92,8 @@ const App = () => (
             {/* Functional App Routes */}
             <Route path="/auth/login" element={<LoginPage />} />
             <Route path="/auth/register" element={<RegisterPage />} />
+            <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
             <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<DashboardPage />} />
