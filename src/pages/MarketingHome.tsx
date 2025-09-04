@@ -88,19 +88,18 @@ function Homepage() {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="relative overflow-hidden">
+      <section id="home" className="relative overflow-hidden min-h-screen">
         {/* Image Background */}
-        <div className="absolute inset-0 -z-10">
-          {/* Hero background image */}
-          <img
-            src="/images/main-header-banner-image.png"
-            alt="GigExecs Hero Background"
-            className="w-full h-full object-cover"
-            style={{ 
-              minHeight: '100vh'
-            }}
-          />
-          
+        <div 
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: 'url(/images/main-header-banner-image.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            minHeight: '100vh'
+          }}
+        >
           {/* Overlay for better text readability */}
           <div className="absolute inset-0 bg-black/25"></div>
         </div>
