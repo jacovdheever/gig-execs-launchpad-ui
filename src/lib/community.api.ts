@@ -46,7 +46,7 @@ export async function fetchPosts(filters: FeedFilters): Promise<FeedResponse> {
     .select(`
       *,
       forum_categories(id, name, slug),
-      users(first_name, last_name, profile_photo_url)
+      users!author_id(first_name, last_name, profile_photo_url)
     `);
 
   // Apply category filter
@@ -133,7 +133,7 @@ export async function fetchUnreadPosts(userId: string, filters: Omit<FeedFilters
     .select(`
       *,
       forum_categories(id, name, slug),
-      users(first_name, last_name, profile_photo_url)
+      users!author_id(first_name, last_name, profile_photo_url)
     `);
 
   if (categoryId) {
@@ -228,7 +228,7 @@ export async function fetchComments(postId: number): Promise<ForumComment[]> {
     .from('forum_comments')
     .select(`
       *,
-      users(first_name, last_name, profile_photo_url)
+      users!author_id(first_name, last_name, profile_photo_url)
     `)
     .eq('post_id', postId)
     .order('created_at', { ascending: true });
@@ -287,7 +287,7 @@ export async function createComment(commentData: CreateCommentData, authorId: st
     .insert(insertData)
     .select(`
       *,
-      users(first_name, last_name, profile_photo_url)
+      users!author_id(first_name, last_name, profile_photo_url)
     `)
     .single();
 
