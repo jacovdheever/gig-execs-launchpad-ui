@@ -136,31 +136,49 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
   const handleSubmitReply = async () => {
     if (!post || !currentUser || !replyContent.trim() || !replyingTo) return;
 
+    console.log('🔍 Submitting reply:', {
+      postId: post.id,
+      userId: currentUser.id,
+      parentId: replyingTo,
+      replyBody: replyContent.trim()
+    });
+
     try {
-      await createComment.mutateAsync({
+      const result = await createComment.mutateAsync({
         post_id: post.id,
         body: replyContent.trim(),
         parent_id: replyingTo
       });
+      console.log('✅ Reply created successfully:', result);
       setReplyContent('');
       setReplyingTo(null);
     } catch (error) {
-      console.error('Error submitting reply:', error);
+      console.error('❌ Error submitting reply:', error);
+      alert(`Failed to submit reply: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
   const handleSubmitComment = async () => {
     if (!post || !currentUser || !newComment.trim()) return;
 
+    console.log('🔍 Submitting comment:', {
+      postId: post.id,
+      userId: currentUser.id,
+      commentBody: newComment.trim()
+    });
+
     setIsSubmitting(true);
     try {
-      await createComment.mutateAsync({
+      const result = await createComment.mutateAsync({
         post_id: post.id,
         body: newComment.trim()
       });
+      console.log('✅ Comment created successfully:', result);
       setNewComment('');
     } catch (error) {
-      console.error('Error submitting comment:', error);
+      console.error('❌ Error submitting comment:', error);
+      // Show error to user
+      alert(`Failed to submit comment: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setIsSubmitting(false);
     }

@@ -228,7 +228,7 @@ export async function fetchComments(postId: number): Promise<ForumComment[]> {
     .from('forum_comments')
     .select(`
       *,
-      users!forum_comments_author_id_fkey(first_name, last_name, profile_photo_url)
+      users(first_name, last_name, profile_photo_url)
     `)
     .eq('post_id', postId)
     .order('created_at', { ascending: true });
@@ -247,12 +247,12 @@ export async function fetchComments(postId: number): Promise<ForumComment[]> {
     created_at: comment.created_at,
     parent_id: comment.parent_id,
     reply_count: comment.reply_count || 0,
-    author: {
-      id: comment.users.id,
+    author: comment.users ? {
+      id: comment.author_id,
       first_name: comment.users.first_name,
       last_name: comment.users.last_name,
       profile_photo_url: comment.users.profile_photo_url
-    }
+    } : undefined
   }));
 }
 
@@ -287,7 +287,7 @@ export async function createComment(commentData: CreateCommentData, authorId: st
     .insert(insertData)
     .select(`
       *,
-      users!forum_comments_author_id_fkey(first_name, last_name, profile_photo_url)
+      users(first_name, last_name, profile_photo_url)
     `)
     .single();
 
@@ -340,12 +340,12 @@ export async function createComment(commentData: CreateCommentData, authorId: st
     created_at: data.created_at,
     parent_id: data.parent_id,
     reply_count: data.reply_count || 0,
-    author: {
-      id: data.users.id,
+    author: data.users ? {
+      id: data.author_id,
       first_name: data.users.first_name,
       last_name: data.users.last_name,
       profile_photo_url: data.users.profile_photo_url
-    }
+    } : undefined
   };
 }
 
