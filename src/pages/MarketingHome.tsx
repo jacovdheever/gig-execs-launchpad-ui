@@ -1,18 +1,9 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
 
 function Homepage() {
-  const [email, setEmail] = useState('')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    // Handle email subscription
-    console.log('Email submitted:', email)
-    setEmail('')
-  }
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
@@ -299,35 +290,6 @@ function Homepage() {
         </div>
       </section>
 
-      {/* Newsletter Section */}
-      <section id="newsletter" className="py-20 bg-gradient-to-r from-[#012E46] to-[#0284C7] relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 lg:p-12">
-            <h2 className="text-3xl lg:text-5xl font-bold text-white mb-8 leading-tight">
-              A Premier Global Community for Elite Freelance Professionals
-            </h2>
-            <p className="text-lg text-white mb-8">
-              Sign up today and join a platform built for experienced professionals and the businesses that need them.
-            </p>
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1"
-                required
-              />
-              <Button type="submit" size="lg" className="bg-[#FACC15] hover:bg-[#EAB308] text-[#012E46] px-8 py-3 text-lg font-semibold">
-                <a href="https://gigexecs.com/signup" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center text-[#012E46]">
-                  Sign up for GigExecs Now
-                </a>
-              </Button>
-            </form>
-          </div>
-        </div>
-      </section>
 
       {/* Footer */}
       <footer className="bg-[#012E46] text-white py-12">
