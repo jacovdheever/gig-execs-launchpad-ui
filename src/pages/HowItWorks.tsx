@@ -10,81 +10,73 @@ function HowItWorks() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
+    <div className="min-h-screen bg-gradient-to-br from-[#F5F5F5] via-[#F5F5F5] to-[#FFFFFF]">
+      {/* Navigation */}
+      <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Left side - Logo */}
             <div className="flex items-center">
-              <a href="/" className="text-2xl font-bold text-[#012E46]">
-                GigExecs
+              <a href="/" className="text-2xl text-[#012E46] hover:text-[#0284C7] transition-colors cursor-pointer">
+                <span className="font-bold">Gig</span><span className="font-normal">Execs</span>
               </a>
             </div>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex space-x-8">
-              <a href="/" className="text-[#012E46] hover:text-[#0284C7] transition-colors">Home</a>
-              <a href="/clients" className="text-[#012E46] hover:text-[#0284C7] transition-colors">Clients</a>
-              <a href="/professionals" className="text-[#012E46] hover:text-[#0284C7] transition-colors">Professionals</a>
-              <a href="/blog" className="text-[#012E46] hover:text-[#0284C7] transition-colors">Blog</a>
-              <a href="/pricing" className="text-[#012E46] hover:text-[#0284C7] transition-colors">Pricing</a>
-              <a href="/how-it-works" className="text-[#0284C7] font-semibold">How it Works</a>
+
+            {/* Center - Navigation Links */}
+            <div className="hidden lg:flex items-center space-x-12">
+              <a href="/" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
+              <a href="/clients" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
+              <a href="/professionals" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
+              <a href="/blog" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
             </div>
 
-            {/* Desktop Auth Buttons */}
-            <div className="hidden md:flex space-x-4">
-              <Button variant="outline" asChild>
-                <a href="/auth/login" className="text-[#012E46] border-[#012E46] hover:bg-[#012E46] hover:text-white">
+            {/* Right side - Action Buttons */}
+            <div className="flex items-center">
+              <Button variant="outline" className="border-[#012E46] text-[#012E46] hover:bg-[#F5F5F5] rounded-r-none border-r-0">
+                <a href="/auth/login" className="w-full h-full flex items-center justify-center">
                   Sign in
                 </a>
               </Button>
-              <Button asChild>
-                <a href="/auth/register" className="bg-[#012E46] hover:bg-[#0284C7] text-white">
+              <Button className="bg-[#012E46] hover:bg-[#0284C7] text-white rounded-l-none">
+                <a href="/auth/register" className="w-full h-full flex items-center justify-center text-white">
                   Join
                 </a>
               </Button>
             </div>
 
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button
+            {/* Mobile Menu Button */}
+            <div className="lg:hidden">
+              <button 
                 onClick={toggleMobileMenu}
-                className="text-[#012E46] hover:text-[#0284C7] focus:outline-none"
+                className="text-[#1F2937] hover:text-[#0284C7] transition-colors"
+                aria-label="Toggle mobile menu"
               >
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+                {isMobileMenuOpen ? (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                )}
               </button>
             </div>
           </div>
 
-          {/* Mobile Navigation */}
-          {isMobileMenuOpen && (
-            <div className="md:hidden">
-              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
-                <a href="/" className="block px-3 py-2 text-[#012E46] hover:text-[#0284C7]">Home</a>
-                <a href="/clients" className="block px-3 py-2 text-[#012E46] hover:text-[#0284C7]">Clients</a>
-                <a href="/professionals" className="block px-3 py-2 text-[#012E46] hover:text-[#0284C7]">Professionals</a>
-                <a href="/blog" className="block px-3 py-2 text-[#012E46] hover:text-[#0284C7]">Blog</a>
-                <a href="/pricing" className="block px-3 py-2 text-[#012E46] hover:text-[#0284C7]">Pricing</a>
-                <a href="/how-it-works" className="block px-3 py-2 text-[#0284C7] font-semibold">How it Works</a>
-                <div className="pt-4 space-y-2">
-                  <Button variant="outline" asChild className="w-full">
-                    <a href="/auth/login" className="text-[#012E46] border-[#012E46] hover:bg-[#012E46] hover:text-white">
-                      Sign in
-                    </a>
-                  </Button>
-                  <Button asChild className="w-full">
-                    <a href="/auth/register" className="bg-[#012E46] hover:bg-[#0284C7] text-white">
-                      Join
-                    </a>
-                  </Button>
-                </div>
-              </div>
+          {/* Mobile Navigation Menu */}
+          <div className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+            isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+          }`}>
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-[#F5F5F5]">
+              <a href="/" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
+              <a href="/clients" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
+              <a href="/professionals" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
+              <a href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
             </div>
-          )}
-        </nav>
-      </header>
+          </div>
+        </div>
+      </nav>
 
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-[#012E46] to-[#0284C7] text-white">
@@ -281,48 +273,38 @@ function HowItWorks() {
           <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             <div>
               <div className="text-2xl font-bold text-[#FACC15] mb-4">GigExecs</div>
-              <p className="text-gray-300 mb-4">
-                Connecting businesses with experienced executives and senior professionals for flexible, project-based work.
+              <p className="text-[#9CA3AF]">
+                The premier freelance hub for top professionals and innovative companies.
               </p>
             </div>
-            
             <div>
-              <h3 className="text-lg font-semibold mb-4">For Clients</h3>
-              <ul className="space-y-2">
-                <li><a href="/clients" className="text-gray-300 hover:text-white transition-colors">Find Talent</a></li>
-                <li><a href="/pricing" className="text-gray-300 hover:text-white transition-colors">Pricing</a></li>
-                <li><a href="/how-it-works" className="text-gray-300 hover:text-white transition-colors">How it Works</a></li>
+              <h3 className="text-lg font-semibold mb-4">How it works</h3>
+              <ul className="space-y-2 text-[#9CA3AF]">
+                <li><a href="/how-it-works" className="hover:text-white transition-colors">How it works</a></li>
+                <li><a href="/pricing" className="hover:text-white transition-colors">Pricing</a></li>
               </ul>
             </div>
-            
             <div>
-              <h3 className="text-lg font-semibold mb-4">For Professionals</h3>
-              <ul className="space-y-2">
-                <li><a href="/professionals" className="text-gray-300 hover:text-white transition-colors">Find Work</a></li>
-                <li><a href="/auth/register" className="text-gray-300 hover:text-white transition-colors">Join Now</a></li>
-                <li><a href="/pricing" className="text-gray-300 hover:text-white transition-colors">Earnings</a></li>
+              <h3 className="text-lg font-semibold mb-4">About</h3>
+              <ul className="space-y-2 text-[#9CA3AF]">
+                <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
               </ul>
             </div>
-            
             <div>
-              <h3 className="text-lg font-semibold mb-4">Resources</h3>
-              <ul className="space-y-2">
-                <li><a href="/blog" className="text-gray-300 hover:text-white transition-colors">Blog</a></li>
-                <li><a href="/help" className="text-gray-300 hover:text-white transition-colors">Help & Support</a></li>
-                <li><a href="/about" className="text-gray-300 hover:text-white transition-colors">About Us</a></li>
+              <h3 className="text-lg font-semibold mb-4">Help & Support</h3>
+              <ul className="space-y-2 text-[#9CA3AF]">
+                <li><a href="/help" className="hover:text-white transition-colors">Help & Support</a></li>
               </ul>
             </div>
-            
             <div>
               <h3 className="text-lg font-semibold mb-4">Legal</h3>
-              <ul className="space-y-2">
-                <li><a href="/terms-and-conditions" className="text-gray-300 hover:text-white transition-colors">Terms of Service</a></li>
-                <li><a href="/data-privacy-policy" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
+              <ul className="space-y-2 text-[#9CA3AF]">
+                <li><a href="/terms-and-conditions" className="hover:text-white transition-colors">Terms of Service</a></li>
+                <li><a href="/data-privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a></li>
               </ul>
             </div>
           </div>
-          
-          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+          <div className="border-t border-[#1F2937] mt-8 pt-8 text-center text-[#9CA3AF]">
             <p>&copy; 2024 GigExecs. All rights reserved.</p>
           </div>
         </div>
