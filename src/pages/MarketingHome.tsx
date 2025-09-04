@@ -99,7 +99,7 @@ function Homepage() {
             className="w-full h-full object-cover"
             style={{ minHeight: '100vh' }}
             onError={(e) => {
-              console.error('Video failed to load, falling back to image:', e);
+              console.error('Main banner video 2 failed to load, falling back to image:', e);
               // Fallback to image if video fails
               const videoContainer = e.currentTarget.parentElement;
               if (videoContainer) {
@@ -118,7 +118,7 @@ function Homepage() {
               }
             }}
           >
-            <source src="/videos/hero-banner-gigexecs.mp4" type="video/mp4" />
+            <source src="/videos/main-banner-video-2.mp4" type="video/mp4" />
             {/* Fallback image if video is not supported */}
             <div 
               className="w-full h-full"
