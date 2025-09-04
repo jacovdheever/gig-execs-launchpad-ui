@@ -46,7 +46,7 @@ export async function fetchPosts(filters: FeedFilters): Promise<FeedResponse> {
     .select(`
       *,
       forum_categories(id, name, slug),
-      users!forum_posts_author_id_fkey(first_name, last_name, profile_photo_url)
+      users(first_name, last_name, profile_photo_url)
     `);
 
   // Apply category filter
@@ -133,7 +133,7 @@ export async function fetchUnreadPosts(userId: string, filters: Omit<FeedFilters
     .select(`
       *,
       forum_categories(id, name, slug),
-      users!forum_posts_author_id_fkey(first_name, last_name, profile_photo_url)
+      users(first_name, last_name, profile_photo_url)
     `);
 
   if (categoryId) {
