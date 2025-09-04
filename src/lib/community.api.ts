@@ -3,6 +3,7 @@
  */
 
 import { supabase } from './supabase';
+import { ensureUserExists } from './syncUser';
 import type { 
   ForumCategory, 
   ForumPost, 
@@ -184,6 +185,17 @@ export async function fetchUnreadPosts(userId: string, filters: Omit<FeedFilters
  * Create a new post
  */
 export async function createPost(postData: CreatePostData, authorId: string): Promise<ForumPost> {
+  // Ensure user exists in users table before creating post
+  console.log('🔄 Ensuring user exists in users table for post creation...');
+  const userExists = await ensureUserExists(authorId);
+  
+  if (!userExists) {
+    console.error('❌ Failed to ensure user exists in users table');
+    throw new Error('User not found. Please try logging out and logging back in.');
+  }
+  
+  console.log('✅ User exists in users table, proceeding with post creation');
+  
   const { data, error } = await supabase
     .from('forum_posts')
     .insert({
@@ -249,6 +261,17 @@ export async function fetchComments(postId: number): Promise<ForumComment[]> {
  */
 export async function createComment(commentData: CreateCommentData, authorId: string): Promise<ForumComment> {
   console.log('🔍 Creating comment with data:', { commentData, authorId });
+  
+  // Ensure user exists in users table before creating comment
+  console.log('🔄 Ensuring user exists in users table...');
+  const userExists = await ensureUserExists(authorId);
+  
+  if (!userExists) {
+    console.error('❌ Failed to ensure user exists in users table');
+    throw new Error('User not found. Please try logging out and logging back in.');
+  }
+  
+  console.log('✅ User exists in users table, proceeding with comment creation');
   
   const insertData = {
     post_id: commentData.post_id,
