@@ -119,7 +119,7 @@ export default function GigCreationStep5() {
       // Prepare project data for database
       const projectData = {
         creator_id: user.id,
-        type: 'consultation', // Try 'consultation' as a more standard project type
+        type: 'work', // Try 'work' as another common project type
         title: gigData.gigName,
         description: gigData.gigDescription,
         skills_required: JSON.stringify(gigData.selectedSkills.map(skill => skill.id)),
@@ -137,6 +137,8 @@ export default function GigCreationStep5() {
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       };
+
+      console.log('🔍 Project data being inserted:', projectData);
 
       // Insert project into database
       const { data: project, error: projectError } = await supabase
