@@ -69,7 +69,22 @@ export default function ProjectsPage() {
         return;
       }
 
-      setProjects(projectsData || []);
+      // Parse skills_required from JSON string to array
+      const processedProjects = (projectsData || []).map(project => {
+        let skills_required = [];
+        try {
+          skills_required = project.skills_required ? JSON.parse(project.skills_required) : [];
+        } catch (error) {
+          console.error('Error parsing skills_required for project', project.id, error);
+          skills_required = [];
+        }
+        return {
+          ...project,
+          skills_required
+        };
+      });
+
+      setProjects(processedProjects);
     } catch (error) {
       console.error('Error loading data:', error);
     } finally {
