@@ -119,7 +119,7 @@ export default function GigCreationStep5() {
       // Prepare project data for database
       const projectData = {
         creator_id: user.id,
-        type: 'work', // Try 'work' as another common project type
+        type: 'client', // Use 'client' as this is a client-created project
         title: gigData.gigName,
         description: gigData.gigDescription,
         skills_required: JSON.stringify(gigData.selectedSkills.map(skill => skill.id)),
