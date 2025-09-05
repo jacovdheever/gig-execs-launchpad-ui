@@ -1,7 +1,7 @@
 -- Setup Supabase Storage for Project Attachments
 -- This script creates the necessary storage bucket and RLS policies for project attachments
 
--- 1. Create project-attachments storage bucket
+-- 1. Create project-attachments storage bucket (if it doesn't exist)
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types) 
 VALUES (
   'project-attachments', 
@@ -19,9 +19,14 @@ VALUES (
     'application/zip',
     'application/x-rar-compressed'
   ]
-);
+)
+ON CONFLICT (id) DO NOTHING;
 
--- 2. Create RLS policies for project-attachments bucket
+-- 2. Create RLS policies for project-attachments bucket (drop existing first)
+DROP POLICY IF EXISTS "Users can upload project attachments" ON storage.objects;
+DROP POLICY IF EXISTS "Users can view their own project attachments" ON storage.objects;
+DROP POLICY IF EXISTS "Users can delete their own project attachments" ON storage.objects;
+
 CREATE POLICY "Users can upload project attachments" ON storage.objects
 FOR INSERT WITH CHECK (
   bucket_id = 'project-attachments' AND 
@@ -50,7 +55,10 @@ COMMENT ON COLUMN projects.project_attachments IS 'Array of URLs to project atta
 -- 5. Create index for better performance
 CREATE INDEX IF NOT EXISTS idx_projects_attachments ON projects USING GIN(project_attachments);
 
--- 6. Ensure projects table has proper RLS policies for clients
+-- 6. Ensure projects table has proper RLS policies for clients (drop existing first)
+DROP POLICY IF EXISTS "Clients can manage their own projects" ON projects;
+DROP POLICY IF EXISTS "Public can view open projects" ON projects;
+
 CREATE POLICY "Clients can manage their own projects" ON projects
 FOR ALL USING (
   auth.uid() = creator_id AND 
