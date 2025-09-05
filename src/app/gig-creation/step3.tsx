@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useNavigate } from 'react-router-dom';
 import { uploadProjectAttachment } from '@/lib/storage';
+import { getCurrentUser } from '@/lib/getCurrentUser';
 
 interface Attachment {
   id: string;
@@ -96,7 +97,13 @@ export default function GigCreationStep3() {
         )
       );
 
-      const result = await uploadProjectAttachment(attachment.file, 'temp-user-id');
+      // Get current user ID
+      const user = await getCurrentUser();
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
+
+      const result = await uploadProjectAttachment(attachment.file, user.id);
       
       if (result.success && result.url) {
         setAttachments(prev => 

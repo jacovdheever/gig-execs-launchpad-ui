@@ -151,8 +151,24 @@ export default function GigCreationStep5() {
         return;
       }
 
-      // TODO: Handle attachments upload to project-specific storage
-      // For now, we'll skip this as it requires additional storage setup
+      // Handle attachments - save URLs to database
+      if (gigData.attachments && gigData.attachments.length > 0) {
+        const attachmentUrls = gigData.attachments
+          .filter(att => att.url) // Only include successfully uploaded files
+          .map(att => att.url);
+
+        if (attachmentUrls.length > 0) {
+          const { error: updateError } = await supabase
+            .from('projects')
+            .update({ project_attachments: attachmentUrls })
+            .eq('id', project.id);
+
+          if (updateError) {
+            console.error('Error updating project attachments:', updateError);
+            // Don't fail the entire process for attachment errors
+          }
+        }
+      }
 
       // Clear session storage
       sessionStorage.removeItem('gigCreationData');
