@@ -527,13 +527,13 @@ export default function DashboardPage() {
             ) : (
               <>
                 <Button asChild className="h-auto p-4 flex-col space-y-2">
-                  <Link to="/dashboard/projects/new">
+                  <Link to="/gig-creation/step1">
                     <FileText className="h-6 w-6" />
-                    <span>Create Project</span>
+                    <span>Create Gig</span>
                   </Link>
                 </Button>
                 <Button asChild variant="outline" className="h-auto p-4 flex-col space-y-2">
-                  <Link to="/dashboard/projects">
+                  <Link to="/projects">
                     <Briefcase className="h-6 w-6" />
                     <span>View Projects</span>
                   </Link>

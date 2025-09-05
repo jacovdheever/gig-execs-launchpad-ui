@@ -38,9 +38,19 @@ export function MobileMenu({ user }: Props) {
           <Link to="/find" onClick={() => setOpen(false)} className="block">
             {user?.role === 'consultant' ? 'Find Gigs' : 'Find Professionals & Gigs'}
           </Link>
-          <button className="flex items-center gap-2">
-            <span>My Gigs</span><ChevronDown className="w-4 h-4" />
-          </button>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-[18px]">
+              <span>My Gigs</span><ChevronDown className="w-4 h-4" />
+            </div>
+            <div className="ml-4 space-y-2 text-[16px]">
+              <Link to="/gig-creation/step1" onClick={() => setOpen(false)} className="block text-slate-300 hover:text-white">
+                Create Gig
+              </Link>
+              <Link to="/projects" onClick={() => setOpen(false)} className="block text-slate-300 hover:text-white">
+                Manage Gigs
+              </Link>
+            </div>
+          </div>
           <Link to="/reports" onClick={() => setOpen(false)} className="block">Reports</Link>
           <Link to="/help" onClick={() => setOpen(false)} className="flex items-center gap-2">
             <HelpCircle className="w-5 h-5" /> Help &amp; Support

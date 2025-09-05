@@ -59,6 +59,17 @@ import ClientOnboardingStep2 from "./app/onboarding/client/step2";
 import ClientOnboardingStep3 from "./app/onboarding/client/step3";
 import ClientOnboardingReview from "./app/onboarding/client/review";
 
+// Gig Creation Components
+import GigCreationStep1 from "./app/gig-creation/step1";
+import GigCreationStep2 from "./app/gig-creation/step2";
+import GigCreationStep3 from "./app/gig-creation/step3";
+import GigCreationStep4 from "./app/gig-creation/step4";
+import GigCreationStep5 from "./app/gig-creation/step5";
+
+// Projects Components
+import ProjectsPage from "./app/projects";
+import GigsPage from "./app/gigs";
+
 // Community Components
 import CommunityLayout from "./routes/community/CommunityLayout";
 import CommunityLanding from "./routes/community/CommunityLanding";
@@ -135,6 +146,17 @@ const App = () => (
             <Route path="/onboarding/client/step2" element={<ClientOnboardingStep2 />} />
             <Route path="/onboarding/client/step3" element={<ClientOnboardingStep3 />} />
             <Route path="/onboarding/client/review" element={<ClientOnboardingReview />} />
+
+            {/* Gig Creation Routes */}
+            <Route path="/gig-creation/step1" element={<GigCreationStep1 />} />
+            <Route path="/gig-creation/step2" element={<GigCreationStep2 />} />
+            <Route path="/gig-creation/step3" element={<GigCreationStep3 />} />
+            <Route path="/gig-creation/step4" element={<GigCreationStep4 />} />
+            <Route path="/gig-creation/step5" element={<GigCreationStep5 />} />
+
+            {/* Projects Routes */}
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/gigs" element={<GigsPage />} />
 
             {/* Community Routes */}
             <Route path="/community" element={<CommunityLayout />}>

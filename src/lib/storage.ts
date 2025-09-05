@@ -306,6 +306,64 @@ export async function uploadCommunityAttachment(file: File, userId: string): Pro
 }
 
 /**
+ * Upload a project attachment to Supabase Storage
+ * @param file - The file to upload
+ * @param userId - The user ID for organizing files
+ * @returns Promise<UploadResult> - Result of the upload operation
+ */
+export async function uploadProjectAttachment(file: File, userId: string): Promise<UploadResult> {
+  try {
+    // Validate file size (10MB limit for project attachments)
+    const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+    if (file.size > maxSize) {
+      return {
+        success: false,
+        error: 'File size too large. Please upload a file smaller than 10MB.'
+      };
+    }
+
+    // Generate unique filename
+    const fileExt = file.name.split('.').pop();
+    const timestamp = Date.now();
+    const fileName = `${userId}/${timestamp}_${file.name}`;
+    const filePath = `project-attachments/${fileName}`;
+
+    // Upload to Supabase Storage
+    const { data, error } = await supabase.storage
+      .from('project-attachments')
+      .upload(fileName, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
+
+    if (error) {
+      console.error('Storage upload error:', error);
+      return {
+        success: false,
+        error: `Upload failed: ${error.message}`
+      };
+    }
+
+    // Get public URL
+    const { data: { publicUrl } } = supabase.storage
+      .from('project-attachments')
+      .getPublicUrl(fileName);
+
+    return {
+      success: true,
+      url: publicUrl
+    };
+
+  } catch (error) {
+    console.error('Project attachment upload error:', error);
+    return {
+      success: false,
+      error: 'An unexpected error occurred during upload.'
+    };
+  }
+}
+
+/**
  * Delete a community attachment from Supabase Storage
  * @param storagePath - The storage path of the file to delete
  * @returns Promise<boolean> - Success status

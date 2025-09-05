@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { Home, Briefcase, FolderClosed, Users, UserRound, HelpCircle, ChevronDown, MessageSquare } from 'lucide-react';
 import type { UserRole } from '@/lib/getCurrentUser';
+import { GigsDropdown } from './GigsDropdown';
 
 type Props = { role: UserRole; activePath?: string; };
 
@@ -15,7 +16,6 @@ export function NavTabs({ role }: Props) {
     ...(role === 'client'
       ? [{ to: '/find', label: 'Find Professionals & Gigs', icon: <UserRound className="w-5 h-5" />, chevron: true }]
       : [{ to: '/find', label: 'Find Gigs', icon: <Briefcase className="w-5 h-5" /> }]),
-    { to: '/gigs', label: 'My Gigs', icon: <FolderClosed className="w-5 h-5" />, chevron: true },
     { to: '/teams', label: 'My Teams', icon: <Users className="w-5 h-5" /> },
   ];
 
@@ -34,6 +34,9 @@ export function NavTabs({ role }: Props) {
             {item.chevron && <ChevronDown className="w-4 h-4" aria-hidden />}
           </NavLink>
         ))}
+        
+        {/* My Gigs Dropdown */}
+        <GigsDropdown />
       </nav>
 
       <NavLink to="/help" className={`${base} ${inactive}`}>
