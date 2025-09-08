@@ -51,7 +51,7 @@ export function ProfileAvatar({ user, size = 'md', className, showName = false }
       {showName && user && (
         <div className="-space-y-1">
           <div className="text-[16px] leading-5">{`${user.firstName} ${user.lastName}`}</div>
-          <div className="text-xs font-semibold tracking-[0.25em] text-yellow-500">
+          <div className="text-xs font-bold tracking-[0.25em] text-yellow-500">
             {user.role === 'consultant' ? 'Professional Account' : 'Client Account'}
           </div>
         </div>
