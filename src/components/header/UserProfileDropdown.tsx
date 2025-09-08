@@ -61,9 +61,9 @@ export function UserProfileDropdown({ user }: Props) {
         </button>
         
         {/* User Name and Role */}
-        <div className="-space-y-1">
+        <div className="space-y-1">
           <div className="text-[16px] leading-5">{name}</div>
-          <div className="text-xs font-bold tracking-[0.25em] text-yellow-500">
+          <div className="text-xs font-bold tracking-[0.1em] text-yellow-500">
             {user?.role === 'consultant' ? 'Professional Account' : 'Client Account'}
           </div>
         </div>
