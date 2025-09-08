@@ -17,6 +17,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser';
 import { supabase } from '@/lib/supabase';
+import { AppShell } from '@/components/AppShell';
 
 interface Project {
   id: number;
@@ -33,9 +34,15 @@ interface Project {
   creator_id: string;
 }
 
+interface Skill {
+  id: number;
+  name: string;
+}
+
 export default function ProjectsPage() {
   const [user, setUser] = useState<CurrentUser | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [skills, setSkills] = useState<Skill[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -57,20 +64,34 @@ export default function ProjectsPage() {
       }
       setUser(userData);
 
-      // Load projects
-      const { data: projectsData, error } = await supabase
-        .from('projects')
-        .select('*')
-        .eq('creator_id', userData.id)
-        .order('created_at', { ascending: false });
+      // Load projects and skills in parallel
+      const [projectsResult, skillsResult] = await Promise.all([
+        supabase
+          .from('projects')
+          .select('*')
+          .eq('creator_id', userData.id)
+          .order('created_at', { ascending: false }),
+        supabase
+          .from('skills')
+          .select('id, name')
+          .order('name')
+      ]);
 
-      if (error) {
-        console.error('Error loading projects:', error);
+      if (projectsResult.error) {
+        console.error('Error loading projects:', projectsResult.error);
         return;
       }
 
+      if (skillsResult.error) {
+        console.error('Error loading skills:', skillsResult.error);
+        return;
+      }
+
+      // Set skills for lookup
+      setSkills(skillsResult.data || []);
+
       // Parse skills_required from JSON string to array
-      const processedProjects = (projectsData || []).map(project => {
+      const processedProjects = (projectsResult.data || []).map(project => {
         let skills_required = [];
         try {
           skills_required = project.skills_required ? JSON.parse(project.skills_required) : [];
@@ -115,6 +136,11 @@ export default function ProjectsPage() {
     }
   };
 
+  const getSkillName = (skillId: number) => {
+    const skill = skills.find(s => s.id === skillId);
+    return skill ? skill.name : `Skill ${skillId}`;
+  };
+
   const getStatusBadge = (status: string) => {
     const statusConfig = {
       draft: { label: 'Draft', variant: 'secondary' as const },
@@ -147,12 +173,13 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <AppShell>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">My Projects</h1>
+            <h1 className="text-3xl font-bold text-slate-900">My Gigs</h1>
             <p className="text-slate-600 mt-2">
               Manage your gigs and track their progress
             </p>
@@ -273,7 +300,7 @@ export default function ProjectsPage() {
                         <div className="flex flex-wrap gap-1">
                           {project.skills_required.slice(0, 3).map((skillId) => (
                             <Badge key={skillId} variant="outline" className="text-xs">
-                              Skill {skillId}
+                              {getSkillName(skillId)}
                             </Badge>
                           ))}
                           {project.skills_required.length > 3 && (
@@ -302,7 +329,8 @@ export default function ProjectsPage() {
             ))}
           </div>
         )}
+        </div>
       </div>
-    </div>
+    </AppShell>
   );
 }
