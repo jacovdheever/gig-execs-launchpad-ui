@@ -1,0 +1,555 @@
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Slider } from '@/components/ui/slider';
+import { 
+  Search, 
+  Filter, 
+  MapPin,
+  Clock,
+  DollarSign,
+  Star,
+  Building2,
+  CheckCircle,
+  Calendar,
+  Briefcase
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser';
+import { supabase } from '@/lib/supabase';
+import { AppShell } from '@/components/AppShell';
+
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  budget_min: number;
+  budget_max: number;
+  currency: string;
+  delivery_time_min: number;
+  delivery_time_max: number;
+  status: string;
+  created_at: string;
+  skills_required: number[];
+  creator_id: string;
+  industries?: number[];
+  client?: {
+    first_name: string;
+    last_name: string;
+    company_name?: string;
+    logo_url?: string;
+    verified?: boolean;
+    rating?: number;
+    total_ratings?: number;
+  };
+}
+
+interface Skill {
+  id: number;
+  name: string;
+}
+
+interface Industry {
+  id: number;
+  name: string;
+  category: string;
+}
+
+export default function FindGigsPage() {
+  const [user, setUser] = useState<CurrentUser | null>(null);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [skills, setSkills] = useState<Skill[]>([]);
+  const [industries, setIndustries] = useState<Industry[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedSkills, setSelectedSkills] = useState<number[]>([]);
+  const [selectedIndustries, setSelectedIndustries] = useState<number[]>([]);
+  const [hourlyRateRange, setHourlyRateRange] = useState<[number, number]>([0, 1000]);
+  const [showFilters, setShowFilters] = useState(false);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      
+      const userData = await getCurrentUser();
+      if (!userData) {
+        return;
+      }
+      setUser(userData);
+
+      // Load projects, skills, and industries in parallel
+      const [projectsResult, skillsResult, industriesResult] = await Promise.all([
+        supabase
+          .from('projects')
+          .select(`
+            *,
+            client:creator_id (
+              first_name,
+              last_name,
+              company_name,
+              logo_url,
+              verified
+            )
+          `)
+          .eq('status', 'open')
+          .order('created_at', { ascending: false }),
+        supabase
+          .from('skills')
+          .select('id, name')
+          .order('name'),
+        supabase
+          .from('industries')
+          .select('id, name, category')
+          .order('name')
+      ]);
+
+      if (projectsResult.error) {
+        console.error('Error loading projects:', projectsResult.error);
+        return;
+      }
+
+      if (skillsResult.error) {
+        console.error('Error loading skills:', skillsResult.error);
+        return;
+      }
+
+      if (industriesResult.error) {
+        console.error('Error loading industries:', industriesResult.error);
+        return;
+      }
+
+      setSkills(skillsResult.data || []);
+      setIndustries(industriesResult.data || []);
+
+      // Process projects data
+      const processedProjects = (projectsResult.data || []).map(project => {
+        let skills_required = [];
+        try {
+          skills_required = project.skills_required ? JSON.parse(project.skills_required) : [];
+        } catch (error) {
+          console.error('Error parsing skills_required for project', project.id, error);
+          skills_required = [];
+        }
+
+        // Mock client rating for now - in real app, this would come from database
+        const clientRating = Math.random() * 2 + 3; // Random rating between 3-5
+        const totalRatings = Math.floor(Math.random() * 50) + 1;
+
+        return {
+          ...project,
+          skills_required,
+          client: {
+            ...project.client,
+            rating: clientRating,
+            total_ratings: totalRatings
+          }
+        };
+      });
+
+      setProjects(processedProjects);
+    } catch (error) {
+      console.error('Error loading data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatCurrency = (amount: number, currency: string) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currency,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(amount);
+  };
+
+  const formatDuration = (minDays: number, maxDays: number) => {
+    if (minDays < 30) {
+      return `${minDays}-${maxDays} days`;
+    } else if (minDays < 365) {
+      const minMonths = Math.round(minDays / 30);
+      const maxMonths = Math.round(maxDays / 30);
+      return `${minMonths}-${maxMonths} months`;
+    } else {
+      const minYears = Math.round(minDays / 365);
+      const maxYears = Math.round(maxDays / 365);
+      return `${minYears}-${maxYears} years`;
+    }
+  };
+
+  const getSkillName = (skillId: number) => {
+    const skill = skills.find(s => s.id === skillId);
+    return skill ? skill.name : `Skill ${skillId}`;
+  };
+
+  const getIndustryName = (industryId: number) => {
+    const industry = industries.find(i => i.id === industryId);
+    return industry ? industry.name : `Industry ${industryId}`;
+  };
+
+  const renderStars = (rating: number) => {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+    return (
+      <div className="flex items-center gap-1">
+        {[...Array(fullStars)].map((_, i) => (
+          <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+        ))}
+        {hasHalfStar && (
+          <div className="relative">
+            <Star className="w-4 h-4 text-gray-300" />
+            <div className="absolute inset-0 overflow-hidden w-1/2">
+              <Star className="w-4 h-4 text-yellow-400 fill-current" />
+            </div>
+          </div>
+        )}
+        {[...Array(emptyStars)].map((_, i) => (
+          <Star key={i + fullStars + (hasHalfStar ? 1 : 0)} className="w-4 h-4 text-gray-300" />
+        ))}
+        <span className="text-sm text-slate-600 ml-1">
+          ({rating.toFixed(1)})
+        </span>
+      </div>
+    );
+  };
+
+  const filteredProjects = projects.filter(project => {
+    const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         project.client?.company_name?.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesSkills = selectedSkills.length === 0 || 
+                         selectedSkills.some(skillId => project.skills_required.includes(skillId));
+    
+    const matchesIndustries = selectedIndustries.length === 0 || 
+                             (project.industries && selectedIndustries.some(industryId => project.industries.includes(industryId)));
+    
+    const matchesRate = project.budget_min >= hourlyRateRange[0] && project.budget_max <= hourlyRateRange[1];
+    
+    return matchesSearch && matchesSkills && matchesIndustries && matchesRate;
+  });
+
+  const handleSelectAllIndustries = (checked: boolean) => {
+    if (checked) {
+      setSelectedIndustries(industries.map(i => i.id));
+    } else {
+      setSelectedIndustries([]);
+    }
+  };
+
+  if (loading) {
+    return (
+      <AppShell>
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto mb-4"></div>
+            <p className="text-slate-600">Loading available gigs...</p>
+          </div>
+        </div>
+      </AppShell>
+    );
+  }
+
+  return (
+    <AppShell>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-900">Find Gigs</h1>
+              <p className="text-slate-600 mt-2">
+                Discover opportunities that match your skills and expertise
+              </p>
+            </div>
+            <div className="mt-4 sm:mt-0 flex gap-3">
+              <Button
+                variant="outline"
+                onClick={() => setShowFilters(!showFilters)}
+                className="flex items-center gap-2"
+              >
+                <Filter className="w-4 h-4" />
+                {showFilters ? 'Hide Filters' : 'Show Filters'}
+              </Button>
+            </div>
+          </div>
+
+          {/* Search and Filters */}
+          <Card className="mb-6">
+            <CardContent className="p-6">
+              <div className="space-y-6">
+                {/* Search Bar */}
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <Input
+                    placeholder="Search gigs by title, description, or company..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+
+                {/* Filters */}
+                {showFilters && (
+                  <div className="grid gap-6 md:grid-cols-3">
+                    {/* Skills Filter */}
+                    <div>
+                      <h3 className="font-semibold text-slate-900 mb-3">Skills Required</h3>
+                      <div className="space-y-2 max-h-40 overflow-y-auto">
+                        {skills.slice(0, 20).map((skill) => (
+                          <div key={skill.id} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={`skill-${skill.id}`}
+                              checked={selectedSkills.includes(skill.id)}
+                              onCheckedChange={(checked) => {
+                                if (checked) {
+                                  setSelectedSkills([...selectedSkills, skill.id]);
+                                } else {
+                                  setSelectedSkills(selectedSkills.filter(id => id !== skill.id));
+                                }
+                              }}
+                            />
+                            <label
+                              htmlFor={`skill-${skill.id}`}
+                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                              {skill.name}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Industries Filter */}
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="font-semibold text-slate-900">Industries</h3>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleSelectAllIndustries(selectedIndustries.length !== industries.length)}
+                        >
+                          {selectedIndustries.length === industries.length ? 'Deselect All' : 'Select All'}
+                        </Button>
+                      </div>
+                      <div className="space-y-2 max-h-40 overflow-y-auto">
+                        {industries.map((industry) => (
+                          <div key={industry.id} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={`industry-${industry.id}`}
+                              checked={selectedIndustries.includes(industry.id)}
+                              onCheckedChange={(checked) => {
+                                if (checked) {
+                                  setSelectedIndustries([...selectedIndustries, industry.id]);
+                                } else {
+                                  setSelectedIndustries(selectedIndustries.filter(id => id !== industry.id));
+                                }
+                              }}
+                            />
+                            <label
+                              htmlFor={`industry-${industry.id}`}
+                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                              {industry.name}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Hourly Rate Filter */}
+                    <div>
+                      <h3 className="font-semibold text-slate-900 mb-3">
+                        Budget Range: {formatCurrency(hourlyRateRange[0], 'USD')} - {formatCurrency(hourlyRateRange[1], 'USD')}
+                      </h3>
+                      <Slider
+                        value={hourlyRateRange}
+                        onValueChange={setHourlyRateRange}
+                        max={1000}
+                        min={0}
+                        step={50}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-xs text-slate-500 mt-2">
+                        <span>$0</span>
+                        <span>$1,000+</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Results Count */}
+          <div className="mb-6">
+            <p className="text-slate-600">
+              Showing {filteredProjects.length} of {projects.length} available gigs
+            </p>
+          </div>
+
+          {/* Gigs Grid */}
+          {filteredProjects.length === 0 ? (
+            <Card>
+              <CardContent className="p-12 text-center">
+                <Briefcase className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                  {projects.length === 0 ? 'No gigs available' : 'No gigs match your filters'}
+                </h3>
+                <p className="text-slate-600 mb-6">
+                  {projects.length === 0 
+                    ? 'Check back later for new opportunities.'
+                    : 'Try adjusting your search terms or filters to find what you\'re looking for.'
+                  }
+                </p>
+                {projects.length > 0 && (
+                  <Button variant="outline" onClick={() => {
+                    setSearchTerm('');
+                    setSelectedSkills([]);
+                    setSelectedIndustries([]);
+                    setHourlyRateRange([0, 1000]);
+                  }}>
+                    Clear All Filters
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {filteredProjects.map((project) => (
+                <Card key={project.id} className="hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-100 flex items-center justify-center">
+                          {project.client?.logo_url ? (
+                            <img
+                              src={project.client.logo_url}
+                              alt={project.client.company_name || 'Company Logo'}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <Building2 className="w-6 h-6 text-slate-500" />
+                          )}
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-slate-900">
+                            {project.client?.company_name || `${project.client?.first_name} ${project.client?.last_name}`}
+                          </h3>
+                          <div className="flex items-center gap-2 mt-1">
+                            {project.client?.verified && (
+                              <div className="flex items-center gap-1">
+                                <CheckCircle className="w-4 h-4 text-green-500" />
+                                <span className="text-xs text-green-600 font-medium">Verified</span>
+                              </div>
+                            )}
+                            {project.client?.rating ? (
+                              renderStars(project.client.rating)
+                            ) : (
+                              <span className="text-sm text-slate-500">Unrated</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <Badge variant="outline" className="text-xs">
+                        {new Date(project.created_at).toLocaleDateString()}
+                      </Badge>
+                    </div>
+                    
+                    <CardTitle className="text-lg line-clamp-2 mb-2">{project.title}</CardTitle>
+                    <CardDescription className="line-clamp-3">
+                      {project.description.length > 500 
+                        ? `${project.description.substring(0, 500)}...`
+                        : project.description
+                      }
+                    </CardDescription>
+                  </CardHeader>
+                  
+                  <CardContent>
+                    <div className="space-y-4">
+                      {/* About Gig */}
+                      <div className="space-y-2">
+                        <h4 className="font-semibold text-slate-900 text-sm">About Gig:</h4>
+                        <div className="flex items-center gap-4 text-sm text-slate-600">
+                          <div className="flex items-center gap-1">
+                            <DollarSign className="w-4 h-4" />
+                            <span>
+                              {formatCurrency(project.budget_min, project.currency)}
+                              {project.budget_max !== project.budget_min && 
+                                ` - ${formatCurrency(project.budget_max, project.currency)}`
+                              }
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Clock className="w-4 h-4" />
+                            <span>{formatDuration(project.delivery_time_min, project.delivery_time_max)}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Industries */}
+                      {project.industries && project.industries.length > 0 && (
+                        <div>
+                          <h4 className="font-semibold text-slate-900 text-sm mb-2">Industries:</h4>
+                          <div className="flex flex-wrap gap-1">
+                            {project.industries.slice(0, 3).map((industryId) => (
+                              <Badge key={industryId} variant="secondary" className="text-xs">
+                                {getIndustryName(industryId)}
+                              </Badge>
+                            ))}
+                            {project.industries.length > 3 && (
+                              <Badge variant="secondary" className="text-xs">
+                                +{project.industries.length - 3} more
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Skills Required */}
+                      {project.skills_required && project.skills_required.length > 0 && (
+                        <div>
+                          <h4 className="font-semibold text-slate-900 text-sm mb-2">Skills Required:</h4>
+                          <div className="flex flex-wrap gap-1">
+                            {project.skills_required.slice(0, 4).map((skillId) => (
+                              <Badge key={skillId} variant="outline" className="text-xs">
+                                {getSkillName(skillId)}
+                              </Badge>
+                            ))}
+                            {project.skills_required.length > 4 && (
+                              <Badge variant="outline" className="text-xs">
+                                +{project.skills_required.length - 4} more
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* View Details Button */}
+                      <div className="pt-4 border-t border-slate-200">
+                        <Button asChild className="w-full">
+                          <Link to={`/find-gigs/${project.id}`}>
+                            View Gig Details
+                          </Link>
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </AppShell>
+  );
+}

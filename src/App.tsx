@@ -72,6 +72,10 @@ import GigsPage from "./app/gigs";
 import GigViewPage from "./app/projects/[id]/view";
 import GigEditPage from "./app/projects/[id]/edit";
 
+// Find Gigs Components
+import FindGigsPage from "./app/find-gigs";
+import GigDetailsPage from "./app/find-gigs/[id]";
+
 // Community Components
 import CommunityLayout from "./routes/community/CommunityLayout";
 import CommunityLanding from "./routes/community/CommunityLanding";
@@ -161,6 +165,10 @@ const App = () => (
             <Route path="/projects/:id/view" element={<GigViewPage />} />
             <Route path="/projects/:id/edit" element={<GigEditPage />} />
             <Route path="/gigs" element={<GigsPage />} />
+
+            {/* Find Gigs Routes */}
+            <Route path="/find-gigs" element={<FindGigsPage />} />
+            <Route path="/find-gigs/:id" element={<GigDetailsPage />} />
 
             {/* Community Routes */}
             <Route path="/community" element={<CommunityLayout />}>

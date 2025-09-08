@@ -15,7 +15,7 @@ export function NavTabs({ role }: Props) {
     { to: '/community', label: 'Community', icon: <MessageSquare className="w-5 h-5" /> },
     ...(role === 'client'
       ? [{ to: '/find', label: 'Find Professionals & Gigs', icon: <UserRound className="w-5 h-5" />, chevron: true }]
-      : [{ to: '/find', label: 'Find Gigs', icon: <Briefcase className="w-5 h-5" /> }]),
+      : [{ to: '/find-gigs', label: 'Find Gigs', icon: <Briefcase className="w-5 h-5" /> }]),
     { to: '/teams', label: 'My Teams', icon: <Users className="w-5 h-5" /> },
   ];
 
