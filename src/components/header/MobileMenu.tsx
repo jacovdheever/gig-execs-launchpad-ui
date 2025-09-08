@@ -35,7 +35,7 @@ export function MobileMenu({ user }: Props) {
         <nav className="mt-6 space-y-5 text-[18px]">
           <Link to="/profile" onClick={() => setOpen(false)} className="block">View Profile</Link>
           <Link to="/dashboard" onClick={() => setOpen(false)} className="block">Dashboard</Link>
-          <Link to="/find" onClick={() => setOpen(false)} className="block">
+          <Link to={user?.role === 'consultant' ? '/find-gigs' : '/find'} onClick={() => setOpen(false)} className="block">
             {user?.role === 'consultant' ? 'Find Gigs' : 'Find Professionals & Gigs'}
           </Link>
           <div className="space-y-2">
