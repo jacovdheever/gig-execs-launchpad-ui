@@ -130,7 +130,7 @@ export default function GigCreationStep5() {
         desired_amount_max: parseFloat(gigData.budget),
         delivery_time_min: getDeliveryTimeMin(gigData.duration),
         delivery_time_max: getDeliveryTimeMax(gigData.duration),
-        status: 'draft',
+        status: 'open',
         screening_questions: gigData.screeningQuestions.length > 0 
           ? JSON.stringify(gigData.screeningQuestions.map(q => q.question))
           : null,
