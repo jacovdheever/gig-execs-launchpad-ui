@@ -139,6 +139,7 @@ export default function GigCreationStep5() {
       };
 
       console.log('🔍 Project data being inserted:', projectData);
+      console.log('🔍 Status being set to:', projectData.status);
 
       // Insert project into database
       const { data: project, error: projectError } = await supabase
@@ -152,6 +153,9 @@ export default function GigCreationStep5() {
         setError('Failed to create project');
         return;
       }
+
+      console.log('🔍 Project created successfully:', project);
+      console.log('🔍 Project status in database:', project?.status);
 
       // Handle attachments - save URLs to database
       if (gigData.attachments && gigData.attachments.length > 0) {
