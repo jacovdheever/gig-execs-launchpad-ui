@@ -315,11 +315,15 @@ export default function ProjectsPage() {
                     {/* Actions */}
                     <div className="pt-4 border-t border-slate-200">
                       <div className="flex gap-2">
-                        <Button variant="outline" size="sm" className="flex-1">
-                          View Details
+                        <Button variant="outline" size="sm" className="flex-1" asChild>
+                          <Link to={`/projects/${project.id}/view`}>
+                            View Details
+                          </Link>
                         </Button>
-                        <Button variant="outline" size="sm" className="flex-1">
-                          Edit
+                        <Button variant="outline" size="sm" className="flex-1" asChild>
+                          <Link to={`/projects/${project.id}/edit`}>
+                            Edit
+                          </Link>
                         </Button>
                       </div>
                     </div>
