@@ -151,57 +151,42 @@ export default function FindGigsPage() {
       const creatorIds = [...new Set(projectsResult.data?.map(p => p.creator_id) || [])];
       console.log('🔍 Unique creator IDs:', creatorIds);
       
-      // Let's check if this user exists in the users table
-      const checkUserResult = await supabase
-        .from('users')
-        .select('id, first_name, last_name, user_type')
-        .in('id', creatorIds);
+      // Load client data with a single query using joins
+      const clientDataResult = await supabase
+        .from('projects')
+        .select(`
+          id,
+          creator_id,
+          users!projects_creator_id_fkey (
+            id,
+            first_name,
+            last_name,
+            user_type
+          ),
+          client_profiles!client_profiles_user_id_fkey (
+            user_id,
+            company_name,
+            logo_url
+          )
+        `)
+        .in('id', projectsResult.data?.map(p => p.id) || []);
       
-      console.log('🔍 Check if creator users exist:', checkUserResult);
+      console.log('🔍 Client data query result:', clientDataResult);
       
-      // Load client profiles
+      // Process the joined data
       const clientProfiles = [];
       const users = [];
       
-      for (const creatorId of creatorIds) {
-        try {
-          // Get client profile
-          const clientProfileResult = await supabase
-            .from('client_profiles')
-            .select('user_id, company_name, logo_url')
-            .eq('user_id', creatorId)
-            .maybeSingle();
-          
-          console.log('🔍 Client profile query result for', creatorId, ':', clientProfileResult);
-          console.log('🔍 Client profile data:', clientProfileResult.data);
-          console.log('🔍 Client profile error:', clientProfileResult.error);
-          
-          if (clientProfileResult.data) {
-            clientProfiles.push(clientProfileResult.data);
-            console.log('🔍 Found client profile for', creatorId, ':', clientProfileResult.data.company_name);
-          } else {
-            console.log('🔍 No client profile for', creatorId, '- Error:', clientProfileResult.error);
+      if (clientDataResult.data) {
+        for (const project of clientDataResult.data) {
+          if (project.users) {
+            users.push(project.users);
+            console.log('🔍 Found user data for project', project.id, ':', project.users.first_name, project.users.last_name);
           }
-          
-          // Get user data
-          const userResult = await supabase
-            .from('users')
-            .select('id, first_name, last_name')
-            .eq('id', creatorId)
-            .maybeSingle();
-          
-          console.log('🔍 User query result for', creatorId, ':', userResult);
-          console.log('🔍 User data:', userResult.data);
-          console.log('🔍 User error:', userResult.error);
-          
-          if (userResult.data) {
-            users.push(userResult.data);
-            console.log('🔍 Found user data for', creatorId, ':', userResult.data.first_name, userResult.data.last_name);
-          } else {
-            console.log('🔍 No user data for', creatorId, '- Error:', userResult.error);
+          if (project.client_profiles) {
+            clientProfiles.push(project.client_profiles);
+            console.log('🔍 Found client profile for project', project.id, ':', project.client_profiles.company_name);
           }
-        } catch (error) {
-          console.log('🔍 Error loading data for', creatorId, ':', error.message);
         }
       }
       
