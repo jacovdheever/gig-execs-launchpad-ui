@@ -120,7 +120,7 @@ export default function FindGigsPage() {
             users!projects_creator_id_fkey (
               first_name,
               last_name,
-              client_profiles!client_profiles_user_id_fkey (
+              client_profiles (
                 company_name,
                 logo_url,
                 rating,
