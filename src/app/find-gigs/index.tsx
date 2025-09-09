@@ -123,8 +123,6 @@ export default function FindGigsPage() {
               client_profiles (
                 company_name,
                 logo_url,
-                rating,
-                total_ratings,
                 verified
               )
             )
@@ -190,9 +188,9 @@ export default function FindGigsPage() {
           last_name: clientData.last_name
         });
         
-        // Only show ratings if they exist in the database (no hardcoded values)
-        const clientRating = clientProfile.rating || null;
-        const totalRatings = clientProfile.total_ratings || null;
+        // Client profiles don't have rating fields in the current schema
+        const clientRating = null;
+        const totalRatings = null;
 
         return {
           ...project,
