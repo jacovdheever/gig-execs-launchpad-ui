@@ -361,11 +361,22 @@ export default function FindGigsPage() {
     return hasSearch || hasSkills || hasIndustries || hasBudgetFilter;
   }, [searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, maxBudget]);
 
-  const filteredProjects = useMemo(() => projects.filter(project => {
-    // If no active filters, show all projects
-    if (!hasActiveFilters) {
-      return true;
-    }
+  const filteredProjects = useMemo(() => {
+    console.log('🔍 Starting filtering with:', {
+      totalProjects: projects.length,
+      hasActiveFilters: hasActiveFilters,
+      searchTerm: searchTerm,
+      selectedSkills: selectedSkills,
+      selectedIndustries: selectedIndustries,
+      hourlyRateRange: hourlyRateRange
+    });
+
+    return projects.filter(project => {
+      // If no active filters, show all projects
+      if (!hasActiveFilters) {
+        console.log('🔍 No active filters, showing project', project.id);
+        return true;
+      }
 
     const matchesSearch = searchTerm.length === 0 || 
                          project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -409,7 +420,10 @@ export default function FindGigsPage() {
     });
     
     return matchesSearch && matchesSkills && matchesIndustries && matchesRate;
-  }).sort((a, b) => {
+    });
+  }, [projects, hasActiveFilters, searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, user, userSkills, userIndustries]);
+
+  const sortedProjects = useMemo(() => filteredProjects.sort((a, b) => {
     // Sort by match quality: Excellent → Good → Partial → Low
     if (user?.userType !== 'consultant') {
       return 0; // No sorting for non-consultants
@@ -432,12 +446,13 @@ export default function FindGigsPage() {
 
     // If same quality level, sort by percentage (higher first)
     return matchB.percentage - matchA.percentage;
-  }), [projects, hasActiveFilters, searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, user, userSkills, userIndustries]);
+  }), [filteredProjects, user, userSkills, userIndustries]);
 
   // Debug summary
   console.log('🔍 Filtering summary:', {
     totalProjects: projects.length,
     filteredProjects: filteredProjects.length,
+    sortedProjects: sortedProjects.length,
     hasActiveFilters,
     selectedSkills: selectedSkills.length,
     selectedIndustries: selectedIndustries.length,
@@ -631,12 +646,12 @@ export default function FindGigsPage() {
           {/* Results Count */}
           <div className="mb-6">
             <p className="text-slate-600">
-              Showing {filteredProjects.length} of {projects.length} available gigs
+              Showing {sortedProjects.length} of {projects.length} available gigs
             </p>
           </div>
 
           {/* Gigs Grid */}
-          {filteredProjects.length === 0 ? (
+          {sortedProjects.length === 0 ? (
             <Card>
               <CardContent className="p-12 text-center">
                 <Briefcase className="w-16 h-16 text-slate-300 mx-auto mb-4" />
@@ -663,7 +678,7 @@ export default function FindGigsPage() {
             </Card>
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {filteredProjects.map((project) => (
+              {sortedProjects.map((project) => (
                 <Card key={project.id} className="hover:shadow-lg transition-shadow">
                   <CardHeader>
                     <div className="flex items-start justify-between mb-4">
