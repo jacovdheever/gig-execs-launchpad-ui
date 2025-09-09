@@ -400,20 +400,18 @@ export default function FindGigsPage() {
     const hasIndustries = selectedIndustries.length > 0;
     const hasBudgetFilter = hourlyRateRange[0] !== 0 || hourlyRateRange[1] !== maxBudget;
     
-    console.log('🔍 Filter check:', {
-      hasSearch,
-      hasSkills, 
-      hasIndustries,
-      hasBudgetFilter,
-      searchTerm: searchTerm,
-      selectedSkills: JSON.stringify(selectedSkills),
-      selectedIndustries: JSON.stringify(selectedIndustries),
-      hourlyRateRange: JSON.stringify(hourlyRateRange),
-      maxBudget: maxBudget,
-      searchTermLength: searchTerm.length,
-      selectedSkillsLength: selectedSkills.length,
-      selectedIndustriesLength: selectedIndustries.length
-    });
+    console.log('🔍 Filter check:');
+    console.log('  - hasSearch:', hasSearch);
+    console.log('  - hasSkills:', hasSkills);
+    console.log('  - hasIndustries:', hasIndustries);
+    console.log('  - hasBudgetFilter:', hasBudgetFilter);
+    console.log('  - searchTerm:', searchTerm);
+    console.log('  - selectedSkills:', selectedSkills);
+    console.log('  - selectedIndustries:', selectedIndustries);
+    console.log('  - hourlyRateRange:', hourlyRateRange);
+    console.log('  - maxBudget:', maxBudget);
+    console.log('  - hourlyRateRange[0] !== 0:', hourlyRateRange[0] !== 0);
+    console.log('  - hourlyRateRange[1] !== maxBudget:', hourlyRateRange[1] !== maxBudget);
     
     return hasSearch || hasSkills || hasIndustries || hasBudgetFilter;
   }, [searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, maxBudget]);
@@ -505,18 +503,17 @@ export default function FindGigsPage() {
   }), [filteredProjects, user, userSkills, userIndustries]);
 
   // Debug summary
-  console.log('🔍 Filtering summary:', {
-    totalProjects: projects.length,
-    filteredProjects: filteredProjects.length,
-    sortedProjects: sortedProjects.length,
-    hasActiveFilters,
-    selectedSkills: selectedSkills.length,
-    selectedIndustries: selectedIndustries.length,
-    searchTerm,
-    hourlyRateRange,
-    maxBudget,
-    userType: user?.userType
-  });
+  console.log('🔍 Filtering summary:');
+  console.log('  - totalProjects:', projects.length);
+  console.log('  - filteredProjects:', filteredProjects.length);
+  console.log('  - sortedProjects:', sortedProjects.length);
+  console.log('  - hasActiveFilters:', hasActiveFilters);
+  console.log('  - selectedSkills:', selectedSkills.length);
+  console.log('  - selectedIndustries:', selectedIndustries.length);
+  console.log('  - searchTerm:', searchTerm);
+  console.log('  - hourlyRateRange:', hourlyRateRange);
+  console.log('  - maxBudget:', maxBudget);
+  console.log('  - userType:', user?.userType);
   
   // Log each project's data structure
   console.log('🔍 All projects data:', projects.map(p => ({
