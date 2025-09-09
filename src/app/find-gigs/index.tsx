@@ -90,12 +90,13 @@ export default function FindGigsPage() {
           .from('projects')
           .select(`
             *,
-            client:creator_id (
+            users!projects_creator_id_fkey (
               first_name,
               last_name,
-              company_name,
-              logo_url,
-              verified
+              client_profiles (
+                company_name,
+                logo_url
+              )
             )
           `)
           .eq('status', 'open')
@@ -114,6 +115,8 @@ export default function FindGigsPage() {
         console.error('Error loading projects:', projectsResult.error);
         return;
       }
+
+      console.log('🔍 Projects loaded:', projectsResult.data);
 
       if (skillsResult.error) {
         console.error('Error loading skills:', skillsResult.error);
@@ -146,7 +149,8 @@ export default function FindGigsPage() {
           ...project,
           skills_required,
           client: {
-            ...project.client,
+            ...project.users,
+            ...project.users?.client_profiles?.[0],
             rating: clientRating,
             total_ratings: totalRatings
           }
