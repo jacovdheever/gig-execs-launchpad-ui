@@ -136,47 +136,9 @@ export default function FindGigsPage() {
       console.log('🔍 Projects loaded:', projectsResult.data?.length || 0, 'projects');
       console.log('🔍 Raw project data structure:', JSON.stringify(projectsResult.data, null, 2));
 
-      // Load client profiles and users data separately
-      const creatorIds = projectsResult.data?.map(p => p.creator_id) || [];
-      console.log('🔍 Creator IDs for queries:', creatorIds);
-      
-      // Try individual queries instead of 'in' syntax
-      const clientProfiles = [];
-      const users = [];
-      
-      for (const creatorId of creatorIds) {
-        // Get client profile for this creator
-        const clientProfileResult = await supabase
-          .from('client_profiles')
-          .select('user_id, company_name, logo_url')
-          .eq('user_id', creatorId)
-          .single();
-        
-        if (clientProfileResult.data) {
-          clientProfiles.push(clientProfileResult.data);
-        } else if (clientProfileResult.error) {
-          console.log('🔍 No client profile for creator', creatorId, ':', clientProfileResult.error.message);
-        }
-        
-        // Get user data for this creator
-        const userResult = await supabase
-          .from('users')
-          .select('id, first_name, last_name')
-          .eq('id', creatorId);
-        
-        if (userResult.data && userResult.data.length > 0) {
-          users.push(userResult.data[0]);
-        } else if (userResult.error) {
-          console.log('🔍 No user data for creator', creatorId, ':', userResult.error.message);
-        } else {
-          console.log('🔍 No user data found for creator', creatorId);
-        }
-      }
-      
-      console.log('🔍 Client profiles loaded:', clientProfiles.length, 'profiles');
-      console.log('🔍 Client profiles data:', JSON.stringify(clientProfiles, null, 2));
-      console.log('🔍 Users loaded:', users.length, 'users');
-      console.log('🔍 Users data:', JSON.stringify(users, null, 2));
+      // For now, let's skip the complex client data loading and just use basic fallbacks
+      // This will get the gigs showing first, then we can add client data later
+      console.log('🔍 Skipping client data loading for now to get basic functionality working');
 
       if (skillsResult.error) {
         console.error('Error loading skills:', skillsResult.error);
@@ -204,39 +166,22 @@ export default function FindGigsPage() {
           skills_required = [];
         }
 
-        // Get client profile data from separate query
-        const clientProfile = clientProfiles.find(cp => cp.user_id === project.creator_id) || {};
-        const clientData = users.find(u => u.id === project.creator_id) || {};
+        // Use basic fallbacks for now to get gigs showing
+        const clientName = `Client ${project.creator_id.slice(-4)}`;
         
-        // Debug client data
-        console.log('🔍 Client data for project', project.id, ':', {
-          creator_id: project.creator_id,
-          clientProfile: JSON.stringify(clientProfile),
-          clientData: JSON.stringify(clientData),
-          company_name: clientProfile.company_name,
-          first_name: clientData.first_name,
-          last_name: clientData.last_name,
-          hasClientProfile: !!clientProfile.user_id,
-          hasClientData: !!clientData.first_name,
-          clientProfileKeys: Object.keys(clientProfile),
-          clientDataKeys: Object.keys(clientData)
-        });
-        
-        // Client profiles don't have rating fields in the current schema
-        const clientRating = null;
-        const totalRatings = null;
+        console.log('🔍 Processing project', project.id, 'with basic fallback client data');
 
         return {
           ...project,
           skills_required,
           client: {
-            first_name: clientData.first_name || '',
-            last_name: clientData.last_name || '',
-            company_name: clientProfile.company_name || null,
-            logo_url: clientProfile.logo_url || null,
-            verified: false, // Default to false since verified column doesn't exist
-            rating: clientRating,
-            total_ratings: totalRatings
+            first_name: 'Client',
+            last_name: project.creator_id.slice(-4),
+            company_name: clientName,
+            logo_url: null,
+            verified: false,
+            rating: null,
+            total_ratings: null
           }
         };
       });
