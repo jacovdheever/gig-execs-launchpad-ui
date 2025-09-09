@@ -148,7 +148,7 @@ export default function FindGigsPage() {
         // Get client profile for this creator
         const clientProfileResult = await supabase
           .from('client_profiles')
-          .select('user_id, company_name, logo_url, verified')
+          .select('user_id, company_name, logo_url')
           .eq('user_id', creatorId)
           .single();
         
@@ -162,13 +162,14 @@ export default function FindGigsPage() {
         const userResult = await supabase
           .from('users')
           .select('id, first_name, last_name')
-          .eq('id', creatorId)
-          .single();
+          .eq('id', creatorId);
         
-        if (userResult.data) {
-          users.push(userResult.data);
+        if (userResult.data && userResult.data.length > 0) {
+          users.push(userResult.data[0]);
         } else if (userResult.error) {
           console.log('🔍 No user data for creator', creatorId, ':', userResult.error.message);
+        } else {
+          console.log('🔍 No user data found for creator', creatorId);
         }
       }
       
@@ -233,7 +234,7 @@ export default function FindGigsPage() {
             last_name: clientData.last_name || '',
             company_name: clientProfile.company_name || null,
             logo_url: clientProfile.logo_url || null,
-            verified: clientProfile.verified || false,
+            verified: false, // Default to false since verified column doesn't exist
             rating: clientRating,
             total_ratings: totalRatings
           }
