@@ -103,11 +103,18 @@ export default function FindGigsPage() {
         ]);
 
         if (userSkillsResult.data) {
-          setUserSkills(userSkillsResult.data.map(us => us.skill_id));
+          const skillIds = userSkillsResult.data.map(us => us.skill_id);
+          console.log('🔍 User skills loaded:', skillIds);
+          setUserSkills(skillIds);
+        } else {
+          console.log('🔍 No user skills found for user:', userData.id);
         }
 
         if (userIndustriesResult.data?.industries) {
+          console.log('🔍 User industries loaded:', userIndustriesResult.data.industries);
           setUserIndustries(userIndustriesResult.data.industries);
+        } else {
+          console.log('🔍 No user industries found for user:', userData.id);
         }
       }
 
@@ -157,6 +164,8 @@ export default function FindGigsPage() {
             .maybeSingle();
           
           console.log('🔍 Client profile query result for', creatorId, ':', clientProfileResult);
+          console.log('🔍 Client profile data:', clientProfileResult.data);
+          console.log('🔍 Client profile error:', clientProfileResult.error);
           
           if (clientProfileResult.data) {
             clientProfiles.push(clientProfileResult.data);
@@ -173,6 +182,8 @@ export default function FindGigsPage() {
             .maybeSingle();
           
           console.log('🔍 User query result for', creatorId, ':', userResult);
+          console.log('🔍 User data:', userResult.data);
+          console.log('🔍 User error:', userResult.error);
           
           if (userResult.data) {
             users.push(userResult.data);
