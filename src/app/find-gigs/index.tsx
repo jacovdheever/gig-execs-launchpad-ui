@@ -88,12 +88,11 @@ export default function FindGigsPage() {
       }
       console.log('🔍 User data from getCurrentUser:', userData);
       console.log('🔍 User data keys:', Object.keys(userData));
-      console.log('🔍 User data userType:', userData.userType);
-      console.log('🔍 User data user_type:', userData.user_type);
+      console.log('🔍 User data role:', userData.role);
       setUser(userData);
 
       // Load user's skills and industries for match calculation using Netlify function
-      if (userData.userType === 'consultant' || userData.user_type === 'consultant') {
+      if (userData.role === 'consultant') {
         console.log('🔍 Loading user skills via Netlify function for user:', userData.id);
         
         const userSkillsResponse = await fetch('/.netlify/functions/get-user-skills', {
@@ -301,8 +300,8 @@ export default function FindGigsPage() {
   };
 
   const calculateMatchQuality = (project: Project) => {
-    if (!user || (user.userType !== 'consultant' && user.user_type !== 'consultant')) {
-      console.log('🔍 No match calculation - user not consultant:', { user, userType: user?.userType, user_type: user?.user_type });
+    if (!user || user.role !== 'consultant') {
+      console.log('🔍 No match calculation - user not consultant:', { user, role: user?.role });
       return null; // No match calculation for non-consultants
     }
 
@@ -468,7 +467,7 @@ export default function FindGigsPage() {
 
   const sortedProjects = useMemo(() => filteredProjects.sort((a, b) => {
     // Sort by match quality: Excellent → Good → Partial → Low
-    if (user?.userType !== 'consultant' && user?.user_type !== 'consultant') {
+    if (user?.role !== 'consultant') {
       return 0; // No sorting for non-consultants
     }
 
@@ -765,7 +764,7 @@ export default function FindGigsPage() {
                     
                     <div className="flex items-start justify-between mb-2">
                       <CardTitle className="text-lg line-clamp-2 flex-1">{project.title}</CardTitle>
-                      {(user?.userType === 'consultant' || user?.user_type === 'consultant') && (() => {
+                      {user?.role === 'consultant' && (() => {
                         const match = calculateMatchQuality(project);
                         console.log('🔍 Match badge for project', project.id, ':', match);
                         return match ? (
