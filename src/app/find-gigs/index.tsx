@@ -157,14 +157,15 @@ export default function FindGigsPage() {
       
       for (const creatorId of creatorIds) {
         try {
-          // Get user data
+          // Get user data with maybeSingle to handle RLS
           const userResult = await supabase
             .from('users')
             .select('id, first_name, last_name, user_type')
             .eq('id', creatorId)
-            .single();
+            .maybeSingle();
           
           console.log('🔍 User query result for', creatorId, ':', userResult);
+          console.log('🔍 User error details:', userResult.error);
           
           if (userResult.data) {
             users.push(userResult.data);
@@ -173,14 +174,15 @@ export default function FindGigsPage() {
             console.log('🔍 No user data for', creatorId, '- Error:', userResult.error);
           }
           
-          // Get client profile
+          // Get client profile with maybeSingle to handle RLS
           const clientProfileResult = await supabase
             .from('client_profiles')
             .select('user_id, company_name, logo_url')
             .eq('user_id', creatorId)
-            .single();
+            .maybeSingle();
           
           console.log('🔍 Client profile query result for', creatorId, ':', clientProfileResult);
+          console.log('🔍 Client profile error details:', clientProfileResult.error);
           
           if (clientProfileResult.data) {
             clientProfiles.push(clientProfileResult.data);
