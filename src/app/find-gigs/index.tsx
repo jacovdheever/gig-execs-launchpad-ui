@@ -67,7 +67,8 @@ export default function FindGigsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSkills, setSelectedSkills] = useState<number[]>([]);
   const [selectedIndustries, setSelectedIndustries] = useState<number[]>([]);
-  const [hourlyRateRange, setHourlyRateRange] = useState<[number, number]>([0, 10000000]);
+  const [hourlyRateRange, setHourlyRateRange] = useState<[number, number]>([0, 0]);
+  const [maxBudget, setMaxBudget] = useState<number>(1000000);
   const [showFilters, setShowFilters] = useState(false);
   const [userSkills, setUserSkills] = useState<number[]>([]);
   const [userIndustries, setUserIndustries] = useState<number[]>([]);
@@ -183,6 +184,15 @@ export default function FindGigsPage() {
       });
 
       setProjects(processedProjects);
+
+      // Calculate dynamic budget range based on loaded projects
+      if (processedProjects.length > 0) {
+        const maxProjectBudget = Math.max(...processedProjects.map(p => p.budget_max));
+        const minProjectBudget = Math.min(...processedProjects.map(p => p.budget_min));
+        setMaxBudget(maxProjectBudget);
+        setHourlyRateRange([minProjectBudget, maxProjectBudget]);
+        console.log('🔍 Dynamic budget range set:', { min: minProjectBudget, max: maxProjectBudget });
+      }
     } catch (error) {
       console.error('Error loading data:', error);
     } finally {
@@ -277,8 +287,20 @@ export default function FindGigsPage() {
     );
   };
 
+  // Check if any filters are actively applied (not default values)
+  const hasActiveFilters = searchTerm.length > 0 || 
+                          selectedSkills.length > 0 || 
+                          selectedIndustries.length > 0 || 
+                          (hourlyRateRange[0] !== 0 || hourlyRateRange[1] !== maxBudget);
+
   const filteredProjects = projects.filter(project => {
-    const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    // If no active filters, show all projects
+    if (!hasActiveFilters) {
+      return true;
+    }
+
+    const matchesSearch = searchTerm.length === 0 || 
+                         project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          project.client?.company_name?.toLowerCase().includes(searchTerm.toLowerCase());
     
@@ -289,7 +311,8 @@ export default function FindGigsPage() {
                              (project.industries && selectedIndustries.some(industryId => project.industries.includes(industryId)));
     
     // More flexible rate matching - project budget should overlap with filter range
-    const matchesRate = project.budget_min <= hourlyRateRange[1] && project.budget_max >= hourlyRateRange[0];
+    const matchesRate = selectedSkills.length === 0 && selectedIndustries.length === 0 && searchTerm.length === 0 ? true :
+                       project.budget_min <= hourlyRateRange[1] && project.budget_max >= hourlyRateRange[0];
     
     // Additional debug for rate matching
     console.log('🔍 Rate matching for project', project.id, ':', {
@@ -319,16 +342,41 @@ export default function FindGigsPage() {
     });
     
     return matchesSearch && matchesSkills && matchesIndustries && matchesRate;
+  }).sort((a, b) => {
+    // Sort by match quality: Excellent → Good → Partial → Low
+    if (user?.userType !== 'consultant') {
+      return 0; // No sorting for non-consultants
+    }
+
+    const matchA = calculateMatchQuality(a);
+    const matchB = calculateMatchQuality(b);
+
+    if (!matchA && !matchB) return 0;
+    if (!matchA) return 1;
+    if (!matchB) return -1;
+
+    const qualityOrder = { excellent: 0, good: 1, partial: 2, low: 3 };
+    const orderA = qualityOrder[matchA.level as keyof typeof qualityOrder];
+    const orderB = qualityOrder[matchB.level as keyof typeof qualityOrder];
+
+    if (orderA !== orderB) {
+      return orderA - orderB;
+    }
+
+    // If same quality level, sort by percentage (higher first)
+    return matchB.percentage - matchA.percentage;
   });
 
   // Debug summary
   console.log('🔍 Filtering summary:', {
     totalProjects: projects.length,
     filteredProjects: filteredProjects.length,
+    hasActiveFilters,
     selectedSkills: selectedSkills.length,
     selectedIndustries: selectedIndustries.length,
     searchTerm,
     hourlyRateRange,
+    maxBudget,
     userType: user?.userType
   });
   
@@ -479,14 +527,14 @@ export default function FindGigsPage() {
                       <Slider
                         value={hourlyRateRange}
                         onValueChange={setHourlyRateRange}
-                        max={10000000}
+                        max={maxBudget}
                         min={0}
-                        step={1000}
+                        step={Math.max(100, Math.floor(maxBudget / 100))}
                         className="w-full"
                       />
                       <div className="flex justify-between text-xs text-slate-500 mt-2">
                         <span>$0</span>
-                        <span>$10M+</span>
+                        <span>{formatCurrency(maxBudget, 'USD')}</span>
                       </div>
                     </div>
                   </div>
@@ -521,7 +569,7 @@ export default function FindGigsPage() {
                     setSearchTerm('');
                     setSelectedSkills([]);
                     setSelectedIndustries([]);
-                    setHourlyRateRange([0, 10000000]);
+                    setHourlyRateRange([0, maxBudget]);
                   }}>
                     Clear All Filters
                   </Button>
