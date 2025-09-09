@@ -156,11 +156,13 @@ export default function FindGigsPage() {
             .eq('user_id', creatorId)
             .maybeSingle();
           
+          console.log('🔍 Client profile query result for', creatorId, ':', clientProfileResult);
+          
           if (clientProfileResult.data) {
             clientProfiles.push(clientProfileResult.data);
             console.log('🔍 Found client profile for', creatorId, ':', clientProfileResult.data.company_name);
           } else {
-            console.log('🔍 No client profile for', creatorId);
+            console.log('🔍 No client profile for', creatorId, '- Error:', clientProfileResult.error);
           }
           
           // Get user data
@@ -170,11 +172,13 @@ export default function FindGigsPage() {
             .eq('id', creatorId)
             .maybeSingle();
           
+          console.log('🔍 User query result for', creatorId, ':', userResult);
+          
           if (userResult.data) {
             users.push(userResult.data);
             console.log('🔍 Found user data for', creatorId, ':', userResult.data.first_name, userResult.data.last_name);
           } else {
-            console.log('🔍 No user data for', creatorId);
+            console.log('🔍 No user data for', creatorId, '- Error:', userResult.error);
           }
         } catch (error) {
           console.log('🔍 Error loading data for', creatorId, ':', error.message);
@@ -220,11 +224,10 @@ export default function FindGigsPage() {
                            `${clientData.first_name} ${clientData.last_name.charAt(0)}.` : 
                            `Client ${project.creator_id.slice(-4)}`);
         
-        console.log('🔍 Processing project', project.id, 'with client data:', {
-          clientProfile: clientProfile,
-          clientData: clientData,
-          clientName: clientName
-        });
+        console.log('🔍 Processing project', project.id, 'with client data:');
+        console.log('  - clientProfile:', clientProfile);
+        console.log('  - clientData:', clientData);
+        console.log('  - clientName:', clientName);
 
         return {
           ...project,
@@ -322,22 +325,19 @@ export default function FindGigsPage() {
     const projectSkills = project.skills_required || [];
     const projectIndustries = project.industries || [];
     
-    console.log('🔍 Match calculation for project', project.id, ':', {
-      userSkillsCount: userSkills.length,
-      userIndustriesCount: userIndustries.length,
-      projectSkillsCount: projectSkills.length,
-      projectIndustriesCount: projectIndustries.length,
-      userSkills: JSON.stringify(userSkills),
-      userIndustries: JSON.stringify(userIndustries),
-      projectSkills: JSON.stringify(projectSkills),
-      projectIndustries: JSON.stringify(projectIndustries),
-      userType: user?.userType,
-      hasUser: !!user,
-      userSkillsArray: Array.isArray(userSkills) ? 'is array' : 'not array',
-      projectSkillsArray: Array.isArray(projectSkills) ? 'is array' : 'not array',
-      userSkillsLoaded: userSkills.length > 0,
-      userIndustriesLoaded: userIndustries.length > 0
-    });
+    console.log('🔍 Match calculation for project', project.id, ':');
+    console.log('  - userSkillsCount:', userSkills.length);
+    console.log('  - userIndustriesCount:', userIndustries.length);
+    console.log('  - projectSkillsCount:', projectSkills.length);
+    console.log('  - projectIndustriesCount:', projectIndustries.length);
+    console.log('  - userSkills:', userSkills);
+    console.log('  - userIndustries:', userIndustries);
+    console.log('  - projectSkills:', projectSkills);
+    console.log('  - projectIndustries:', projectIndustries);
+    console.log('  - userType:', user?.userType);
+    console.log('  - hasUser:', !!user);
+    console.log('  - userSkillsLoaded:', userSkills.length > 0);
+    console.log('  - userIndustriesLoaded:', userIndustries.length > 0);
     
     // Calculate skill match percentage
     const skillMatches = projectSkills.filter(skillId => userSkills.includes(skillId)).length;
@@ -419,17 +419,13 @@ export default function FindGigsPage() {
   }, [searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, maxBudget]);
 
   const filteredProjects = useMemo(() => {
-    console.log('🔍 Starting filtering with:', {
-      totalProjects: projects.length,
-      hasActiveFilters: hasActiveFilters,
-      searchTerm: searchTerm,
-      selectedSkills: JSON.stringify(selectedSkills),
-      selectedIndustries: JSON.stringify(selectedIndustries),
-      hourlyRateRange: JSON.stringify(hourlyRateRange),
-      searchTermLength: searchTerm.length,
-      selectedSkillsLength: selectedSkills.length,
-      selectedIndustriesLength: selectedIndustries.length
-    });
+    console.log('🔍 Starting filtering with:');
+    console.log('  - totalProjects:', projects.length);
+    console.log('  - hasActiveFilters:', hasActiveFilters);
+    console.log('  - searchTerm:', searchTerm);
+    console.log('  - selectedSkills:', selectedSkills);
+    console.log('  - selectedIndustries:', selectedIndustries);
+    console.log('  - hourlyRateRange:', hourlyRateRange);
 
     return projects.filter(project => {
       // If no active filters, show all projects
