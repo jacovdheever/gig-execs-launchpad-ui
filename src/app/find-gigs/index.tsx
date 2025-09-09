@@ -288,7 +288,17 @@ export default function FindGigsPage() {
     const matchesIndustries = selectedIndustries.length === 0 || 
                              (project.industries && selectedIndustries.some(industryId => project.industries.includes(industryId)));
     
-    const matchesRate = project.budget_min >= hourlyRateRange[0] && project.budget_max <= hourlyRateRange[1];
+    // More flexible rate matching - project budget should overlap with filter range
+    const matchesRate = project.budget_min <= hourlyRateRange[1] && project.budget_max >= hourlyRateRange[0];
+    
+    // Additional debug for rate matching
+    console.log('🔍 Rate matching for project', project.id, ':', {
+      projectBudget: { min: project.budget_min, max: project.budget_max },
+      filterRange: hourlyRateRange,
+      matchesRate,
+      condition1: project.budget_min <= hourlyRateRange[1],
+      condition2: project.budget_max >= hourlyRateRange[0]
+    });
     
     // Debug logging
     console.log('🔍 Filtering project:', {
@@ -303,7 +313,9 @@ export default function FindGigsPage() {
       selectedIndustries,
       projectIndustries: project.industries,
       hourlyRateRange,
-      projectBudget: { min: project.budget_min, max: project.budget_max }
+      projectBudget: { min: project.budget_min, max: project.budget_max },
+      searchTerm,
+      finalResult: matchesSearch && matchesSkills && matchesIndustries && matchesRate
     });
     
     return matchesSearch && matchesSkills && matchesIndustries && matchesRate;
@@ -316,8 +328,20 @@ export default function FindGigsPage() {
     selectedSkills: selectedSkills.length,
     selectedIndustries: selectedIndustries.length,
     searchTerm,
-    hourlyRateRange
+    hourlyRateRange,
+    userType: user?.userType
   });
+  
+  // Log each project's data structure
+  console.log('🔍 All projects data:', projects.map(p => ({
+    id: p.id,
+    title: p.title,
+    status: p.status,
+    budget_min: p.budget_min,
+    budget_max: p.budget_max,
+    skills_required: p.skills_required,
+    industries: p.industries
+  })));
 
   const handleSelectAllIndustries = (checked: boolean) => {
     if (checked) {
