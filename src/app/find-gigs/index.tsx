@@ -155,8 +155,11 @@ export default function FindGigsPage() {
         return;
       }
 
-      setSkills(skillsResult.data || []);
-      setIndustries(industriesResult.data || []);
+      const skillsData = skillsResult.data || [];
+      const industriesData = industriesResult.data || [];
+      
+      setSkills(skillsData);
+      setIndustries(industriesData);
 
       // Process projects data
       const processedProjects = (projectsResult.data || []).map(project => {
@@ -222,9 +225,13 @@ export default function FindGigsPage() {
       });
 
       // Get skill details for project skills only
-      const projectSkillsData = skills.filter(skill => allProjectSkills.has(skill.id));
+      const projectSkillsData = skillsData.filter(skill => allProjectSkills.has(skill.id));
       setProjectSkills(projectSkillsData);
-      console.log('🔍 Project skills extracted:', projectSkillsData);
+      console.log('🔍 Project skills extracted:', {
+        allProjectSkills: Array.from(allProjectSkills),
+        skillsData: skillsData.length,
+        projectSkillsData: projectSkillsData
+      });
     } catch (error) {
       console.error('Error loading data:', error);
     } finally {
@@ -266,12 +273,20 @@ export default function FindGigsPage() {
   };
 
   const calculateMatchQuality = (project: Project) => {
-    if (user.userType !== 'consultant') {
+    if (!user || user.userType !== 'consultant') {
+      console.log('🔍 No match calculation - user not consultant:', { user, userType: user?.userType });
       return null; // No match calculation for non-consultants
     }
 
     const projectSkills = project.skills_required || [];
     const projectIndustries = project.industries || [];
+    
+    console.log('🔍 Match calculation for project', project.id, ':', {
+      userSkills,
+      userIndustries,
+      projectSkills,
+      projectIndustries
+    });
     
     // Calculate skill match percentage
     const skillMatches = projectSkills.filter(skillId => userSkills.includes(skillId)).length;
@@ -283,6 +298,14 @@ export default function FindGigsPage() {
     
     // Calculate overall match (weighted: 70% skills, 30% industries)
     const overallMatch = (skillMatchPercentage * 0.7) + (industryMatchPercentage * 0.3);
+    
+    console.log('🔍 Match calculation result:', {
+      skillMatches,
+      skillMatchPercentage,
+      industryMatches,
+      industryMatchPercentage,
+      overallMatch
+    });
     
     // Determine match quality
     if (overallMatch >= 80) return { level: 'excellent', percentage: Math.round(overallMatch), color: 'green' };
@@ -631,8 +654,8 @@ export default function FindGigsPage() {
                           <h3 className="font-semibold text-slate-900">
                             {project.client?.company_name || 
                              (project.client?.first_name && project.client?.last_name ? 
-                              `${project.client.first_name} ${project.client.last_name}` : 
-                              `Project by User ${project.creator_id?.slice(-4) || 'Unknown'}`)}
+                              `${project.client.first_name} ${project.client.last_name.charAt(0)}.` : 
+                              `User ${project.creator_id?.slice(-4) || 'Unknown'}`)}
                           </h3>
                           <div className="flex items-center gap-2 mt-1">
                             {project.client?.verified && (
