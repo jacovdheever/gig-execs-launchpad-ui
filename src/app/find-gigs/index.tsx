@@ -115,13 +115,7 @@ export default function FindGigsPage() {
       const [projectsResult, skillsResult, industriesResult] = await Promise.all([
         supabase
           .from('projects')
-          .select(`
-            *,
-            users (
-              first_name,
-              last_name
-            )
-          `)
+          .select('*')
           .eq('status', 'open')
           .order('created_at', { ascending: false }),
         supabase
@@ -144,13 +138,32 @@ export default function FindGigsPage() {
 
       // Load client profiles separately
       const creatorIds = projectsResult.data?.map(p => p.creator_id) || [];
+      console.log('🔍 Creator IDs for client profiles:', creatorIds);
+      
       const clientProfileResult = await supabase
         .from('client_profiles')
         .select('user_id, company_name, logo_url, verified')
         .in('user_id', creatorIds);
       
+      if (clientProfileResult.error) {
+        console.error('Error loading client profiles:', clientProfileResult.error);
+      }
+      
       console.log('🔍 Client profiles loaded:', clientProfileResult.data?.length || 0, 'profiles');
       console.log('🔍 Client profiles data:', JSON.stringify(clientProfileResult.data, null, 2));
+
+      // Load users data separately
+      const usersResult = await supabase
+        .from('users')
+        .select('id, first_name, last_name')
+        .in('id', creatorIds);
+      
+      if (usersResult.error) {
+        console.error('Error loading users:', usersResult.error);
+      }
+      
+      console.log('🔍 Users loaded:', usersResult.data?.length || 0, 'users');
+      console.log('🔍 Users data:', JSON.stringify(usersResult.data, null, 2));
 
       if (skillsResult.error) {
         console.error('Error loading skills:', skillsResult.error);
@@ -180,7 +193,7 @@ export default function FindGigsPage() {
 
         // Get client profile data from separate query
         const clientProfile = clientProfileResult.data?.find(cp => cp.user_id === project.creator_id) || {};
-        const clientData = project.users || {};
+        const clientData = usersResult.data?.find(u => u.id === project.creator_id) || {};
         
         // Debug client data
         console.log('🔍 Client data for project', project.id, ':', {
@@ -191,7 +204,9 @@ export default function FindGigsPage() {
           first_name: clientData.first_name,
           last_name: clientData.last_name,
           hasClientProfile: !!clientProfile.user_id,
-          hasClientData: !!clientData.first_name
+          hasClientData: !!clientData.first_name,
+          clientProfileKeys: Object.keys(clientProfile),
+          clientDataKeys: Object.keys(clientData)
         });
         
         // Client profiles don't have rating fields in the current schema
@@ -304,7 +319,9 @@ export default function FindGigsPage() {
       projectSkills: projectSkills,
       projectIndustries: projectIndustries,
       userType: user?.userType,
-      hasUser: !!user
+      hasUser: !!user,
+      userSkillsArray: Array.isArray(userSkills) ? userSkills : 'not array',
+      projectSkillsArray: Array.isArray(projectSkills) ? projectSkills : 'not array'
     });
     
     // Calculate skill match percentage
