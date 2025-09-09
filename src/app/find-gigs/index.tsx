@@ -67,7 +67,7 @@ export default function FindGigsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSkills, setSelectedSkills] = useState<number[]>([]);
   const [selectedIndustries, setSelectedIndustries] = useState<number[]>([]);
-  const [hourlyRateRange, setHourlyRateRange] = useState<[number, number]>([0, 1000]);
+  const [hourlyRateRange, setHourlyRateRange] = useState<[number, number]>([0, 10000000]);
   const [showFilters, setShowFilters] = useState(false);
   const [userSkills, setUserSkills] = useState<number[]>([]);
   const [userIndustries, setUserIndustries] = useState<number[]>([]);
@@ -479,14 +479,14 @@ export default function FindGigsPage() {
                       <Slider
                         value={hourlyRateRange}
                         onValueChange={setHourlyRateRange}
-                        max={1000}
+                        max={10000000}
                         min={0}
-                        step={50}
+                        step={1000}
                         className="w-full"
                       />
                       <div className="flex justify-between text-xs text-slate-500 mt-2">
                         <span>$0</span>
-                        <span>$1,000+</span>
+                        <span>$10M+</span>
                       </div>
                     </div>
                   </div>
@@ -521,7 +521,7 @@ export default function FindGigsPage() {
                     setSearchTerm('');
                     setSelectedSkills([]);
                     setSelectedIndustries([]);
-                    setHourlyRateRange([0, 1000]);
+                    setHourlyRateRange([0, 10000000]);
                   }}>
                     Clear All Filters
                   </Button>
