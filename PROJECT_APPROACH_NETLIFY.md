@@ -295,6 +295,21 @@ const response = await fetch('/.netlify/functions/register-user', {
 - ✅ Maintain data integrity
 - ✅ Test with real user data to verify functionality
 
+### ⚠️ **CRITICAL: Always Consider RLS (Row Level Security) Issues**
+
+**RLS policies can block database queries even when data exists:**
+- ❌ Assuming frontend queries will work without checking RLS policies
+- ❌ Ignoring 406/400 errors from Supabase queries
+- ❌ Not considering RLS when database queries return null with null errors
+- ❌ Trying to access user-specific data from frontend without proper permissions
+
+**ALWAYS:**
+- ✅ Proactively anticipate RLS issues when accessing user-specific data
+- ✅ Use Netlify functions with service role keys to bypass RLS when needed
+- ✅ Check RLS policies first when database queries fail
+- ✅ Consider RLS for user_skills, consultant_profiles, client_profiles, and other user data
+- ✅ Use service role access for data that needs to be accessible across users
+
 ---
 
 ## 11) Database Schema Reference
