@@ -151,49 +151,25 @@ export default function FindGigsPage() {
       const creatorIds = [...new Set(projectsResult.data?.map(p => p.creator_id) || [])];
       console.log('🔍 Unique creator IDs:', creatorIds);
       
-      // Load client data with separate queries since joins are failing
-      const clientProfiles = [];
-      const users = [];
+      // Load client data using Netlify function to bypass RLS
+      console.log('🔍 Loading client data via Netlify function for creator IDs:', creatorIds);
       
-      for (const creatorId of creatorIds) {
-        try {
-          // Get user data with maybeSingle to handle RLS
-          const userResult = await supabase
-            .from('users')
-            .select('id, first_name, last_name, user_type')
-            .eq('id', creatorId)
-            .maybeSingle();
-          
-          console.log('🔍 User query result for', creatorId, ':', userResult);
-          console.log('🔍 User error details:', userResult.error);
-          
-          if (userResult.data) {
-            users.push(userResult.data);
-            console.log('🔍 Found user data for', creatorId, ':', userResult.data.first_name, userResult.data.last_name);
-          } else {
-            console.log('🔍 No user data for', creatorId, '- Error:', userResult.error);
-          }
-          
-          // Get client profile with maybeSingle to handle RLS
-          const clientProfileResult = await supabase
-            .from('client_profiles')
-            .select('user_id, company_name, logo_url')
-            .eq('user_id', creatorId)
-            .maybeSingle();
-          
-          console.log('🔍 Client profile query result for', creatorId, ':', clientProfileResult);
-          console.log('🔍 Client profile error details:', clientProfileResult.error);
-          
-          if (clientProfileResult.data) {
-            clientProfiles.push(clientProfileResult.data);
-            console.log('🔍 Found client profile for', creatorId, ':', clientProfileResult.data.company_name);
-          } else {
-            console.log('🔍 No client profile for', creatorId, '- Error:', clientProfileResult.error);
-          }
-        } catch (error) {
-          console.log('🔍 Error loading data for', creatorId, ':', error.message);
-        }
-      }
+      const clientDataResponse = await fetch('/.netlify/functions/get-client-data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ creatorIds })
+      });
+      
+      const clientDataResult = await clientDataResponse.json();
+      console.log('🔍 Client data from Netlify function:', clientDataResult);
+      
+      const users = clientDataResult.users || [];
+      const clientProfiles = clientDataResult.clientProfiles || [];
+      
+      console.log('🔍 Users loaded from function:', users.length);
+      console.log('🔍 Client profiles loaded from function:', clientProfiles.length);
       
       console.log('🔍 Client profiles loaded:', clientProfiles.length);
       console.log('🔍 Users loaded:', users.length);
