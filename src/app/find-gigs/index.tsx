@@ -89,31 +89,31 @@ export default function FindGigsPage() {
       console.log('🔍 User data from getCurrentUser:', userData);
       setUser(userData);
 
-      // Load user's skills and industries for match calculation
+      // Load user's skills and industries for match calculation using Netlify function
       if (userData.userType === 'consultant') {
-        const [userSkillsResult, userIndustriesResult] = await Promise.all([
-          supabase
-            .from('user_skills')
-            .select('skill_id')
-            .eq('user_id', userData.id),
-          supabase
-            .from('consultant_profiles')
-            .select('industries')
-            .eq('user_id', userData.id)
-            .single()
-        ]);
-
-        if (userSkillsResult.data) {
-          const skillIds = userSkillsResult.data.map(us => us.skill_id);
-          console.log('🔍 User skills loaded:', skillIds);
-          setUserSkills(skillIds);
+        console.log('🔍 Loading user skills via Netlify function for user:', userData.id);
+        
+        const userSkillsResponse = await fetch('/.netlify/functions/get-user-skills', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId: userData.id })
+        });
+        
+        const userSkillsResult = await userSkillsResponse.json();
+        console.log('🔍 User skills from Netlify function:', userSkillsResult);
+        
+        if (userSkillsResult.userSkills) {
+          console.log('🔍 User skills loaded:', userSkillsResult.userSkills);
+          setUserSkills(userSkillsResult.userSkills);
         } else {
           console.log('🔍 No user skills found for user:', userData.id);
         }
 
-        if (userIndustriesResult.data?.industries) {
-          console.log('🔍 User industries loaded:', userIndustriesResult.data.industries);
-          setUserIndustries(userIndustriesResult.data.industries);
+        if (userSkillsResult.userIndustries) {
+          console.log('🔍 User industries loaded:', userSkillsResult.userIndustries);
+          setUserIndustries(userSkillsResult.userIndustries);
         } else {
           console.log('🔍 No user industries found for user:', userData.id);
         }
