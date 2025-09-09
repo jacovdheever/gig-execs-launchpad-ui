@@ -119,12 +119,7 @@ export default function FindGigsPage() {
             *,
             users!projects_creator_id_fkey (
               first_name,
-              last_name,
-              client_profiles (
-                company_name,
-                logo_url,
-                verified
-              )
+              last_name
             )
           `)
           .eq('status', 'open')
@@ -146,6 +141,15 @@ export default function FindGigsPage() {
 
       console.log('🔍 Projects loaded:', projectsResult.data?.length || 0, 'projects');
       console.log('🔍 Raw project data structure:', JSON.stringify(projectsResult.data, null, 2));
+
+      // Load client profiles separately
+      const clientProfileResult = await supabase
+        .from('client_profiles')
+        .select('user_id, company_name, logo_url, verified')
+        .in('user_id', projectsResult.data?.map(p => p.creator_id) || []);
+      
+      console.log('🔍 Client profiles loaded:', clientProfileResult.data?.length || 0, 'profiles');
+      console.log('🔍 Client profiles data:', JSON.stringify(clientProfileResult.data, null, 2));
 
       if (skillsResult.error) {
         console.error('Error loading skills:', skillsResult.error);
@@ -173,14 +177,13 @@ export default function FindGigsPage() {
           skills_required = [];
         }
 
-        // Get client profile data safely
-        const clientProfile = project.users?.client_profiles?.[0] || {};
+        // Get client profile data from separate query
+        const clientProfile = clientProfileResult.data?.find(cp => cp.user_id === project.creator_id) || {};
         const clientData = project.users || {};
         
         // Debug client data
         console.log('🔍 Client data for project', project.id, ':', {
-          users: project.users,
-          client_profiles: project.users?.client_profiles,
+          creator_id: project.creator_id,
           clientProfile: clientProfile,
           clientData: clientData,
           company_name: clientProfile.company_name,
