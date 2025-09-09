@@ -136,9 +136,53 @@ export default function FindGigsPage() {
       console.log('🔍 Projects loaded:', projectsResult.data?.length || 0, 'projects');
       console.log('🔍 Raw project data structure:', JSON.stringify(projectsResult.data, null, 2));
 
-      // For now, let's skip the complex client data loading and just use basic fallbacks
-      // This will get the gigs showing first, then we can add client data later
-      console.log('🔍 Skipping client data loading for now to get basic functionality working');
+      // Load client data with a simple approach
+      console.log('🔍 Loading client data with simple approach');
+      
+      // Get unique creator IDs
+      const creatorIds = [...new Set(projectsResult.data?.map(p => p.creator_id) || [])];
+      console.log('🔍 Unique creator IDs:', creatorIds);
+      
+      // Load client profiles
+      const clientProfiles = [];
+      const users = [];
+      
+      for (const creatorId of creatorIds) {
+        try {
+          // Get client profile
+          const clientProfileResult = await supabase
+            .from('client_profiles')
+            .select('user_id, company_name, logo_url')
+            .eq('user_id', creatorId)
+            .maybeSingle();
+          
+          if (clientProfileResult.data) {
+            clientProfiles.push(clientProfileResult.data);
+            console.log('🔍 Found client profile for', creatorId, ':', clientProfileResult.data.company_name);
+          } else {
+            console.log('🔍 No client profile for', creatorId);
+          }
+          
+          // Get user data
+          const userResult = await supabase
+            .from('users')
+            .select('id, first_name, last_name')
+            .eq('id', creatorId)
+            .maybeSingle();
+          
+          if (userResult.data) {
+            users.push(userResult.data);
+            console.log('🔍 Found user data for', creatorId, ':', userResult.data.first_name, userResult.data.last_name);
+          } else {
+            console.log('🔍 No user data for', creatorId);
+          }
+        } catch (error) {
+          console.log('🔍 Error loading data for', creatorId, ':', error.message);
+        }
+      }
+      
+      console.log('🔍 Client profiles loaded:', clientProfiles.length);
+      console.log('🔍 Users loaded:', users.length);
 
       if (skillsResult.error) {
         console.error('Error loading skills:', skillsResult.error);
@@ -166,19 +210,30 @@ export default function FindGigsPage() {
           skills_required = [];
         }
 
-        // Use basic fallbacks for now to get gigs showing
-        const clientName = `Client ${project.creator_id.slice(-4)}`;
+        // Get client data from loaded data
+        const clientProfile = clientProfiles.find(cp => cp.user_id === project.creator_id) || {};
+        const clientData = users.find(u => u.id === project.creator_id) || {};
         
-        console.log('🔍 Processing project', project.id, 'with basic fallback client data');
+        // Create client name with fallbacks
+        const clientName = clientProfile.company_name || 
+                          (clientData.first_name && clientData.last_name ? 
+                           `${clientData.first_name} ${clientData.last_name.charAt(0)}.` : 
+                           `Client ${project.creator_id.slice(-4)}`);
+        
+        console.log('🔍 Processing project', project.id, 'with client data:', {
+          clientProfile: clientProfile,
+          clientData: clientData,
+          clientName: clientName
+        });
 
         return {
           ...project,
           skills_required,
           client: {
-            first_name: 'Client',
-            last_name: project.creator_id.slice(-4),
-            company_name: clientName,
-            logo_url: null,
+            first_name: clientData.first_name || 'Client',
+            last_name: clientData.last_name || project.creator_id.slice(-4),
+            company_name: clientProfile.company_name || null,
+            logo_url: clientProfile.logo_url || null,
             verified: false,
             rating: null,
             total_ratings: null
@@ -279,7 +334,9 @@ export default function FindGigsPage() {
       userType: user?.userType,
       hasUser: !!user,
       userSkillsArray: Array.isArray(userSkills) ? 'is array' : 'not array',
-      projectSkillsArray: Array.isArray(projectSkills) ? 'is array' : 'not array'
+      projectSkillsArray: Array.isArray(projectSkills) ? 'is array' : 'not array',
+      userSkillsLoaded: userSkills.length > 0,
+      userIndustriesLoaded: userIndustries.length > 0
     });
     
     // Calculate skill match percentage
@@ -366,9 +423,12 @@ export default function FindGigsPage() {
       totalProjects: projects.length,
       hasActiveFilters: hasActiveFilters,
       searchTerm: searchTerm,
-      selectedSkills: selectedSkills,
-      selectedIndustries: selectedIndustries,
-      hourlyRateRange: hourlyRateRange
+      selectedSkills: JSON.stringify(selectedSkills),
+      selectedIndustries: JSON.stringify(selectedIndustries),
+      hourlyRateRange: JSON.stringify(hourlyRateRange),
+      searchTermLength: searchTerm.length,
+      selectedSkillsLength: selectedSkills.length,
+      selectedIndustriesLength: selectedIndustries.length
     });
 
     return projects.filter(project => {
