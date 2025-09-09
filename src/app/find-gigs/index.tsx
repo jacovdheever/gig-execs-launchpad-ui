@@ -120,9 +120,12 @@ export default function FindGigsPage() {
             users!projects_creator_id_fkey (
               first_name,
               last_name,
-              client_profiles (
+              client_profiles!client_profiles_user_id_fkey (
                 company_name,
-                logo_url
+                logo_url,
+                rating,
+                total_ratings,
+                verified
               )
             )
           `)
@@ -143,7 +146,7 @@ export default function FindGigsPage() {
         return;
       }
 
-      console.log('🔍 Projects loaded:', projectsResult.data);
+      console.log('🔍 Projects loaded:', projectsResult.data?.length || 0, 'projects');
       console.log('🔍 Raw project data structure:', JSON.stringify(projectsResult.data, null, 2));
 
       if (skillsResult.error) {
@@ -288,6 +291,10 @@ export default function FindGigsPage() {
     const projectIndustries = project.industries || [];
     
     console.log('🔍 Match calculation for project', project.id, ':', {
+      userSkillsCount: userSkills.length,
+      userIndustriesCount: userIndustries.length,
+      projectSkillsCount: projectSkills.length,
+      projectIndustriesCount: projectIndustries.length,
       userSkills: userSkills,
       userIndustries: userIndustries,
       projectSkills: projectSkills,
@@ -349,13 +356,26 @@ export default function FindGigsPage() {
   };
 
   // Check if any filters are actively applied (not default values)
-  const hasActiveFilters = useMemo(() => 
-    searchTerm.length > 0 || 
-    selectedSkills.length > 0 || 
-    selectedIndustries.length > 0 || 
-    (hourlyRateRange[0] !== 0 || hourlyRateRange[1] !== maxBudget),
-    [searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, maxBudget]
-  );
+  const hasActiveFilters = useMemo(() => {
+    const hasSearch = searchTerm.length > 0;
+    const hasSkills = selectedSkills.length > 0;
+    const hasIndustries = selectedIndustries.length > 0;
+    const hasBudgetFilter = hourlyRateRange[0] !== 0 || hourlyRateRange[1] !== maxBudget;
+    
+    console.log('🔍 Filter check:', {
+      hasSearch,
+      hasSkills, 
+      hasIndustries,
+      hasBudgetFilter,
+      searchTerm: searchTerm,
+      selectedSkills: selectedSkills,
+      selectedIndustries: selectedIndustries,
+      hourlyRateRange: hourlyRateRange,
+      maxBudget: maxBudget
+    });
+    
+    return hasSearch || hasSkills || hasIndustries || hasBudgetFilter;
+  }, [searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, maxBudget]);
 
   const filteredProjects = useMemo(() => projects.filter(project => {
     // If no active filters, show all projects
@@ -584,19 +604,9 @@ export default function FindGigsPage() {
 
                     {/* Hourly Rate Filter */}
                     <div>
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="font-semibold text-slate-900">
-                          Budget Range: {formatCurrency(hourlyRateRange[0], 'USD')} - {formatCurrency(hourlyRateRange[1], 'USD')}
-                        </h3>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setHourlyRateRange([0, maxBudget])}
-                          className="text-xs"
-                        >
-                          Reset
-                        </Button>
-                      </div>
+                      <h3 className="font-semibold text-slate-900 mb-3">
+                        Budget Range: {formatCurrency(hourlyRateRange[0], 'USD')} - {formatCurrency(hourlyRateRange[1], 'USD')}
+                      </h3>
                       <Slider
                         value={hourlyRateRange}
                         onValueChange={setHourlyRateRange}
@@ -613,6 +623,23 @@ export default function FindGigsPage() {
                     </div>
                   </div>
                 )}
+                
+                {/* Reset Filters Button */}
+                <div className="flex justify-end pt-4 border-t border-slate-200">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setSearchTerm('');
+                      setSelectedSkills([]);
+                      setSelectedIndustries([]);
+                      setHourlyRateRange([0, maxBudget]);
+                    }}
+                    className="text-sm"
+                  >
+                    Reset Filters
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
