@@ -167,16 +167,31 @@ export default function FindGigsPage() {
           skills_required = [];
         }
 
-        // Mock client rating for now - in real app, this would come from database
-        const clientRating = Math.random() * 2 + 3; // Random rating between 3-5
-        const totalRatings = Math.floor(Math.random() * 50) + 1;
+        // Get client profile data safely
+        const clientProfile = project.users?.client_profiles?.[0] || {};
+        const clientData = project.users || {};
+        
+        // Debug client data
+        console.log('🔍 Client data for project', project.id, ':', {
+          users: project.users,
+          client_profiles: project.users?.client_profiles,
+          clientProfile,
+          clientData
+        });
+        
+        // Only show ratings if they exist in the database (no hardcoded values)
+        const clientRating = clientProfile.rating || null;
+        const totalRatings = clientProfile.total_ratings || null;
 
         return {
           ...project,
           skills_required,
           client: {
-            ...project.users,
-            ...project.users?.client_profiles?.[0],
+            first_name: clientData.first_name || '',
+            last_name: clientData.last_name || '',
+            company_name: clientProfile.company_name || null,
+            logo_url: clientProfile.logo_url || null,
+            verified: clientProfile.verified || false,
             rating: clientRating,
             total_ratings: totalRatings
           }
@@ -596,7 +611,10 @@ export default function FindGigsPage() {
                         </div>
                         <div>
                           <h3 className="font-semibold text-slate-900">
-                            {project.client?.company_name || `${project.client?.first_name} ${project.client?.last_name}`}
+                            {project.client?.company_name || 
+                             (project.client?.first_name && project.client?.last_name ? 
+                              `${project.client.first_name} ${project.client.last_name}` : 
+                              'Unknown Client')}
                           </h3>
                           <div className="flex items-center gap-2 mt-1">
                             {project.client?.verified && (
@@ -605,10 +623,10 @@ export default function FindGigsPage() {
                                 <span className="text-xs text-green-600 font-medium">Verified</span>
                               </div>
                             )}
-                            {project.client?.rating ? (
+                            {project.client?.rating && project.client?.total_ratings ? (
                               renderStars(project.client.rating)
                             ) : (
-                              <span className="text-sm text-slate-500">Unrated</span>
+                              <span className="text-sm text-slate-500">No ratings yet</span>
                             )}
                           </div>
                         </div>
