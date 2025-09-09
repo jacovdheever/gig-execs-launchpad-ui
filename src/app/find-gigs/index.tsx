@@ -144,6 +144,7 @@ export default function FindGigsPage() {
       }
 
       console.log('🔍 Projects loaded:', projectsResult.data);
+      console.log('🔍 Raw project data structure:', JSON.stringify(projectsResult.data, null, 2));
 
       if (skillsResult.error) {
         console.error('Error loading skills:', skillsResult.error);
@@ -183,14 +184,7 @@ export default function FindGigsPage() {
           clientData: clientData,
           company_name: clientProfile.company_name,
           first_name: clientData.first_name,
-          last_name: clientData.last_name,
-          finalClient: {
-            first_name: clientData.first_name || '',
-            last_name: clientData.last_name || '',
-            company_name: clientProfile.company_name || null,
-            logo_url: clientProfile.logo_url || null,
-            verified: clientProfile.verified || false
-          }
+          last_name: clientData.last_name
         });
         
         // Only show ratings if they exist in the database (no hardcoded values)
@@ -380,9 +374,8 @@ export default function FindGigsPage() {
     const matchesIndustries = selectedIndustries.length === 0 || 
                              (project.industries && selectedIndustries.some(industryId => project.industries.includes(industryId)));
     
-    // More flexible rate matching - project budget should overlap with filter range
-    const matchesRate = selectedSkills.length === 0 && selectedIndustries.length === 0 && searchTerm.length === 0 ? true :
-                       project.budget_min <= hourlyRateRange[1] && project.budget_max >= hourlyRateRange[0];
+    // Budget matching - project budget should overlap with filter range
+    const matchesRate = project.budget_min <= hourlyRateRange[1] && project.budget_max >= hourlyRateRange[0];
     
     // Additional debug for rate matching
     console.log('🔍 Rate matching for project', project.id, ':', {
@@ -591,9 +584,19 @@ export default function FindGigsPage() {
 
                     {/* Hourly Rate Filter */}
                     <div>
-                      <h3 className="font-semibold text-slate-900 mb-3">
-                        Budget Range: {formatCurrency(hourlyRateRange[0], 'USD')} - {formatCurrency(hourlyRateRange[1], 'USD')}
-                      </h3>
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="font-semibold text-slate-900">
+                          Budget Range: {formatCurrency(hourlyRateRange[0], 'USD')} - {formatCurrency(hourlyRateRange[1], 'USD')}
+                        </h3>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setHourlyRateRange([0, maxBudget])}
+                          className="text-xs"
+                        >
+                          Reset
+                        </Button>
+                      </div>
                       <Slider
                         value={hourlyRateRange}
                         onValueChange={setHourlyRateRange}
@@ -696,6 +699,7 @@ export default function FindGigsPage() {
                       <CardTitle className="text-lg line-clamp-2 flex-1">{project.title}</CardTitle>
                       {user?.userType === 'consultant' && (() => {
                         const match = calculateMatchQuality(project);
+                        console.log('🔍 Match badge for project', project.id, ':', match);
                         return match ? (
                           <Badge 
                             variant="outline" 
