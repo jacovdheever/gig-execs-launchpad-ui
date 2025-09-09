@@ -242,7 +242,7 @@ export default function FindGigsPage() {
         const clientName = clientProfile.company_name || 
                           (clientData.first_name && clientData.last_name ? 
                            `${clientData.first_name} ${clientData.last_name.charAt(0)}.` : 
-                           `Client ${project.creator_id.slice(-4)}`);
+                           `Project Creator`);
         
         console.log('🔍 Processing project', project.id, 'with client data:');
         console.log('  - clientProfile:', clientProfile);
@@ -253,8 +253,8 @@ export default function FindGigsPage() {
           ...project,
           skills_required,
           client: {
-            first_name: clientData.first_name || 'Client',
-            last_name: clientData.last_name || project.creator_id.slice(-4),
+            first_name: clientData.first_name || 'Project',
+            last_name: clientData.last_name || 'Creator',
             company_name: clientProfile.company_name || null,
             logo_url: clientProfile.logo_url || null,
             verified: false,
