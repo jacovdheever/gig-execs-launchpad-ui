@@ -69,6 +69,8 @@ export default function FindGigsPage() {
   const [selectedIndustries, setSelectedIndustries] = useState<number[]>([]);
   const [hourlyRateRange, setHourlyRateRange] = useState<[number, number]>([0, 1000]);
   const [showFilters, setShowFilters] = useState(false);
+  const [userSkills, setUserSkills] = useState<number[]>([]);
+  const [userIndustries, setUserIndustries] = useState<number[]>([]);
 
   useEffect(() => {
     loadData();
@@ -83,6 +85,29 @@ export default function FindGigsPage() {
         return;
       }
       setUser(userData);
+
+      // Load user's skills and industries for match calculation
+      if (userData.userType === 'consultant') {
+        const [userSkillsResult, userIndustriesResult] = await Promise.all([
+          supabase
+            .from('user_skills')
+            .select('skill_id')
+            .eq('user_id', userData.id),
+          supabase
+            .from('consultant_profiles')
+            .select('industries')
+            .eq('user_id', userData.id)
+            .single()
+        ]);
+
+        if (userSkillsResult.data) {
+          setUserSkills(userSkillsResult.data.map(us => us.skill_id));
+        }
+
+        if (userIndustriesResult.data?.industries) {
+          setUserIndustries(userIndustriesResult.data.industries);
+        }
+      }
 
       // Load projects, skills, and industries in parallel
       const [projectsResult, skillsResult, industriesResult] = await Promise.all([
@@ -198,6 +223,32 @@ export default function FindGigsPage() {
     return industry ? industry.name : `Industry ${industryId}`;
   };
 
+  const calculateMatchQuality = (project: Project) => {
+    if (user.userType !== 'consultant') {
+      return null; // No match calculation for non-consultants
+    }
+
+    const projectSkills = project.skills_required || [];
+    const projectIndustries = project.industries || [];
+    
+    // Calculate skill match percentage
+    const skillMatches = projectSkills.filter(skillId => userSkills.includes(skillId)).length;
+    const skillMatchPercentage = projectSkills.length > 0 ? (skillMatches / projectSkills.length) * 100 : 0;
+    
+    // Calculate industry match percentage
+    const industryMatches = projectIndustries.filter(industryId => userIndustries.includes(industryId)).length;
+    const industryMatchPercentage = projectIndustries.length > 0 ? (industryMatches / projectIndustries.length) * 100 : 0;
+    
+    // Calculate overall match (weighted: 70% skills, 30% industries)
+    const overallMatch = (skillMatchPercentage * 0.7) + (industryMatchPercentage * 0.3);
+    
+    // Determine match quality
+    if (overallMatch >= 80) return { level: 'excellent', percentage: Math.round(overallMatch), color: 'green' };
+    if (overallMatch >= 60) return { level: 'good', percentage: Math.round(overallMatch), color: 'blue' };
+    if (overallMatch >= 30) return { level: 'partial', percentage: Math.round(overallMatch), color: 'yellow' };
+    return { level: 'low', percentage: Math.round(overallMatch), color: 'gray' };
+  };
+
   const renderStars = (rating: number) => {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
@@ -239,7 +290,33 @@ export default function FindGigsPage() {
     
     const matchesRate = project.budget_min >= hourlyRateRange[0] && project.budget_max <= hourlyRateRange[1];
     
+    // Debug logging
+    console.log('🔍 Filtering project:', {
+      id: project.id,
+      title: project.title,
+      matchesSearch,
+      matchesSkills,
+      matchesIndustries,
+      matchesRate,
+      selectedSkills,
+      projectSkills: project.skills_required,
+      selectedIndustries,
+      projectIndustries: project.industries,
+      hourlyRateRange,
+      projectBudget: { min: project.budget_min, max: project.budget_max }
+    });
+    
     return matchesSearch && matchesSkills && matchesIndustries && matchesRate;
+  });
+
+  // Debug summary
+  console.log('🔍 Filtering summary:', {
+    totalProjects: projects.length,
+    filteredProjects: filteredProjects.length,
+    selectedSkills: selectedSkills.length,
+    selectedIndustries: selectedIndustries.length,
+    searchTerm,
+    hourlyRateRange
   });
 
   const handleSelectAllIndustries = (checked: boolean) => {
@@ -469,7 +546,27 @@ export default function FindGigsPage() {
                       </Badge>
                     </div>
                     
-                    <CardTitle className="text-lg line-clamp-2 mb-2">{project.title}</CardTitle>
+                    <div className="flex items-start justify-between mb-2">
+                      <CardTitle className="text-lg line-clamp-2 flex-1">{project.title}</CardTitle>
+                      {user?.userType === 'consultant' && (() => {
+                        const match = calculateMatchQuality(project);
+                        return match ? (
+                          <Badge 
+                            variant="outline" 
+                            className={`ml-2 text-xs ${
+                              match.color === 'green' ? 'bg-green-50 text-green-700 border-green-200' :
+                              match.color === 'blue' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                              match.color === 'yellow' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
+                              'bg-gray-50 text-gray-700 border-gray-200'
+                            }`}
+                          >
+                            {match.level === 'excellent' ? 'Excellent Match' :
+                             match.level === 'good' ? 'Good Match' :
+                             match.level === 'partial' ? 'Partial Match' : 'Low Match'} ({match.percentage}%)
+                          </Badge>
+                        ) : null;
+                      })()}
+                    </div>
                     <CardDescription className="line-clamp-3">
                       {project.description.length > 500 
                         ? `${project.description.substring(0, 500)}...`
