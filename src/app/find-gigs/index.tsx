@@ -117,7 +117,7 @@ export default function FindGigsPage() {
           .from('projects')
           .select(`
             *,
-            users!projects_creator_id_fkey (
+            users (
               first_name,
               last_name
             )
@@ -143,10 +143,11 @@ export default function FindGigsPage() {
       console.log('🔍 Raw project data structure:', JSON.stringify(projectsResult.data, null, 2));
 
       // Load client profiles separately
+      const creatorIds = projectsResult.data?.map(p => p.creator_id) || [];
       const clientProfileResult = await supabase
         .from('client_profiles')
         .select('user_id, company_name, logo_url, verified')
-        .in('user_id', projectsResult.data?.map(p => p.creator_id) || []);
+        .in('user_id', creatorIds);
       
       console.log('🔍 Client profiles loaded:', clientProfileResult.data?.length || 0, 'profiles');
       console.log('🔍 Client profiles data:', JSON.stringify(clientProfileResult.data, null, 2));
@@ -188,7 +189,9 @@ export default function FindGigsPage() {
           clientData: clientData,
           company_name: clientProfile.company_name,
           first_name: clientData.first_name,
-          last_name: clientData.last_name
+          last_name: clientData.last_name,
+          hasClientProfile: !!clientProfile.user_id,
+          hasClientData: !!clientData.first_name
         });
         
         // Client profiles don't have rating fields in the current schema
@@ -299,7 +302,9 @@ export default function FindGigsPage() {
       userSkills: userSkills,
       userIndustries: userIndustries,
       projectSkills: projectSkills,
-      projectIndustries: projectIndustries
+      projectIndustries: projectIndustries,
+      userType: user?.userType,
+      hasUser: !!user
     });
     
     // Calculate skill match percentage
@@ -372,7 +377,10 @@ export default function FindGigsPage() {
       selectedSkills: selectedSkills,
       selectedIndustries: selectedIndustries,
       hourlyRateRange: hourlyRateRange,
-      maxBudget: maxBudget
+      maxBudget: maxBudget,
+      searchTermLength: searchTerm.length,
+      selectedSkillsLength: selectedSkills.length,
+      selectedIndustriesLength: selectedIndustries.length
     });
     
     return hasSearch || hasSkills || hasIndustries || hasBudgetFilter;
