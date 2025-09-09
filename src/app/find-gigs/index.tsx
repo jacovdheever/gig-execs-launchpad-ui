@@ -86,6 +86,7 @@ export default function FindGigsPage() {
       if (!userData) {
         return;
       }
+      console.log('🔍 User data from getCurrentUser:', userData);
       setUser(userData);
 
       // Load user's skills and industries for match calculation
@@ -149,6 +150,14 @@ export default function FindGigsPage() {
       // Get unique creator IDs
       const creatorIds = [...new Set(projectsResult.data?.map(p => p.creator_id) || [])];
       console.log('🔍 Unique creator IDs:', creatorIds);
+      
+      // Let's check if this user exists in the users table
+      const checkUserResult = await supabase
+        .from('users')
+        .select('id, first_name, last_name, user_type')
+        .in('id', creatorIds);
+      
+      console.log('🔍 Check if creator users exist:', checkUserResult);
       
       // Load client profiles
       const clientProfiles = [];
@@ -409,7 +418,7 @@ export default function FindGigsPage() {
     const hasSearch = searchTerm.length > 0;
     const hasSkills = selectedSkills.length > 0;
     const hasIndustries = selectedIndustries.length > 0;
-    const hasBudgetFilter = hourlyRateRange[0] !== 0 || hourlyRateRange[1] !== maxBudget;
+    const hasBudgetFilter = hourlyRateRange[0] > 0 || hourlyRateRange[1] < maxBudget;
     
     console.log('🔍 Filter check:');
     console.log('  - hasSearch:', hasSearch);
