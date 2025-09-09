@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -179,11 +179,18 @@ export default function FindGigsPage() {
         console.log('🔍 Client data for project', project.id, ':', {
           users: project.users,
           client_profiles: project.users?.client_profiles,
-          clientProfile,
-          clientData,
+          clientProfile: clientProfile,
+          clientData: clientData,
           company_name: clientProfile.company_name,
           first_name: clientData.first_name,
-          last_name: clientData.last_name
+          last_name: clientData.last_name,
+          finalClient: {
+            first_name: clientData.first_name || '',
+            last_name: clientData.last_name || '',
+            company_name: clientProfile.company_name || null,
+            logo_url: clientProfile.logo_url || null,
+            verified: clientProfile.verified || false
+          }
         });
         
         // Only show ratings if they exist in the database (no hardcoded values)
@@ -278,14 +285,19 @@ export default function FindGigsPage() {
       return null; // No match calculation for non-consultants
     }
 
+    if (userSkills.length === 0 && userIndustries.length === 0) {
+      console.log('🔍 No match calculation - user skills/industries not loaded yet');
+      return null;
+    }
+
     const projectSkills = project.skills_required || [];
     const projectIndustries = project.industries || [];
     
     console.log('🔍 Match calculation for project', project.id, ':', {
-      userSkills,
-      userIndustries,
-      projectSkills,
-      projectIndustries
+      userSkills: userSkills,
+      userIndustries: userIndustries,
+      projectSkills: projectSkills,
+      projectIndustries: projectIndustries
     });
     
     // Calculate skill match percentage
@@ -300,11 +312,11 @@ export default function FindGigsPage() {
     const overallMatch = (skillMatchPercentage * 0.7) + (industryMatchPercentage * 0.3);
     
     console.log('🔍 Match calculation result:', {
-      skillMatches,
-      skillMatchPercentage,
-      industryMatches,
-      industryMatchPercentage,
-      overallMatch
+      skillMatches: skillMatches,
+      skillMatchPercentage: skillMatchPercentage,
+      industryMatches: industryMatches,
+      industryMatchPercentage: industryMatchPercentage,
+      overallMatch: overallMatch
     });
     
     // Determine match quality
@@ -343,12 +355,15 @@ export default function FindGigsPage() {
   };
 
   // Check if any filters are actively applied (not default values)
-  const hasActiveFilters = searchTerm.length > 0 || 
-                          selectedSkills.length > 0 || 
-                          selectedIndustries.length > 0 || 
-                          (hourlyRateRange[0] !== 0 || hourlyRateRange[1] !== maxBudget);
+  const hasActiveFilters = useMemo(() => 
+    searchTerm.length > 0 || 
+    selectedSkills.length > 0 || 
+    selectedIndustries.length > 0 || 
+    (hourlyRateRange[0] !== 0 || hourlyRateRange[1] !== maxBudget),
+    [searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, maxBudget]
+  );
 
-  const filteredProjects = projects.filter(project => {
+  const filteredProjects = useMemo(() => projects.filter(project => {
     // If no active filters, show all projects
     if (!hasActiveFilters) {
       return true;
@@ -386,13 +401,13 @@ export default function FindGigsPage() {
       matchesSkills,
       matchesIndustries,
       matchesRate,
-      selectedSkills,
+      selectedSkills: selectedSkills,
       projectSkills: project.skills_required,
-      selectedIndustries,
+      selectedIndustries: selectedIndustries,
       projectIndustries: project.industries,
-      hourlyRateRange,
+      hourlyRateRange: hourlyRateRange,
       projectBudget: { min: project.budget_min, max: project.budget_max },
-      searchTerm,
+      searchTerm: searchTerm,
       finalResult: matchesSearch && matchesSkills && matchesIndustries && matchesRate
     });
     
@@ -420,7 +435,7 @@ export default function FindGigsPage() {
 
     // If same quality level, sort by percentage (higher first)
     return matchB.percentage - matchA.percentage;
-  });
+  }), [projects, hasActiveFilters, searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, user, userSkills, userIndustries]);
 
   // Debug summary
   console.log('🔍 Filtering summary:', {
