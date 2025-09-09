@@ -63,6 +63,7 @@ export default function FindGigsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
   const [industries, setIndustries] = useState<Industry[]>([]);
+  const [projectSkills, setProjectSkills] = useState<Skill[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSkills, setSelectedSkills] = useState<number[]>([]);
@@ -176,7 +177,10 @@ export default function FindGigsPage() {
           users: project.users,
           client_profiles: project.users?.client_profiles,
           clientProfile,
-          clientData
+          clientData,
+          company_name: clientProfile.company_name,
+          first_name: clientData.first_name,
+          last_name: clientData.last_name
         });
         
         // Only show ratings if they exist in the database (no hardcoded values)
@@ -208,6 +212,19 @@ export default function FindGigsPage() {
         setHourlyRateRange([minProjectBudget, maxProjectBudget]);
         console.log('🔍 Dynamic budget range set:', { min: minProjectBudget, max: maxProjectBudget });
       }
+
+      // Extract skills from projects for filtering
+      const allProjectSkills = new Set<number>();
+      processedProjects.forEach(project => {
+        if (project.skills_required) {
+          project.skills_required.forEach(skillId => allProjectSkills.add(skillId));
+        }
+      });
+
+      // Get skill details for project skills only
+      const projectSkillsData = skills.filter(skill => allProjectSkills.has(skill.id));
+      setProjectSkills(projectSkillsData);
+      console.log('🔍 Project skills extracted:', projectSkillsData);
     } catch (error) {
       console.error('Error loading data:', error);
     } finally {
@@ -473,7 +490,7 @@ export default function FindGigsPage() {
                     <div>
                       <h3 className="font-semibold text-slate-900 mb-3">Skills Required</h3>
                       <div className="space-y-2 max-h-40 overflow-y-auto">
-                        {skills.slice(0, 20).map((skill) => (
+                        {projectSkills.map((skill) => (
                           <div key={skill.id} className="flex items-center space-x-2">
                             <Checkbox
                               id={`skill-${skill.id}`}
@@ -546,6 +563,7 @@ export default function FindGigsPage() {
                         min={0}
                         step={Math.max(100, Math.floor(maxBudget / 100))}
                         className="w-full"
+                        minStepsBetweenThumbs={1}
                       />
                       <div className="flex justify-between text-xs text-slate-500 mt-2">
                         <span>$0</span>
@@ -614,7 +632,7 @@ export default function FindGigsPage() {
                             {project.client?.company_name || 
                              (project.client?.first_name && project.client?.last_name ? 
                               `${project.client.first_name} ${project.client.last_name}` : 
-                              'Unknown Client')}
+                              `Project by User ${project.creator_id?.slice(-4) || 'Unknown'}`)}
                           </h3>
                           <div className="flex items-center gap-2 mt-1">
                             {project.client?.verified && (
