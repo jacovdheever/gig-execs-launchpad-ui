@@ -82,6 +82,9 @@ import CommunityLayout from "./routes/community/CommunityLayout";
 import CommunityLanding from "./routes/community/CommunityLanding";
 import CommunityTopic from "./routes/community/CommunityTopic";
 
+// Profile Components
+import ProfilePage from "./routes/profile/ProfilePage";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -176,6 +179,10 @@ const App = () => (
               <Route index element={<CommunityLanding />} />
               <Route path="topic/:slug" element={<CommunityTopic />} />
             </Route>
+
+            {/* Profile Routes */}
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile/:id" element={<ProfilePage />} />
 
             {/* Secure Help Page */}
             <Route path="/help-secure" element={<HelpAndSupportSecure />} />
