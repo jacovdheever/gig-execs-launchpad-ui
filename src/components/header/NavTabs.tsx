@@ -13,9 +13,13 @@ export function NavTabs({ role }: Props) {
   const common = [
     { to: '/dashboard', label: 'Dashboard', icon: <Home className="w-5 h-5" /> },
     { to: '/community', label: 'Community', icon: <MessageSquare className="w-5 h-5" /> },
-    ...(role === 'client'
-      ? [{ to: '/find', label: 'Find Professionals & Gigs', icon: <UserRound className="w-5 h-5" />, chevron: true }]
-      : [{ to: '/find-gigs', label: 'Find Gigs', icon: <Briefcase className="w-5 h-5" /> }]),
+    // Temporarily hidden until functionality is implemented
+    // ...(role === 'client'
+    //   ? [{ to: '/find', label: 'Find Professionals & Gigs', icon: <UserRound className="w-5 h-5" />, chevron: true }]
+    //   : [{ to: '/find-gigs', label: 'Find Gigs', icon: <Briefcase className="w-5 h-5" /> }]),
+    ...(role === 'professional'
+      ? [{ to: '/find-gigs', label: 'Find Gigs', icon: <Briefcase className="w-5 h-5" /> }]
+      : []),
   ];
 
   return (
