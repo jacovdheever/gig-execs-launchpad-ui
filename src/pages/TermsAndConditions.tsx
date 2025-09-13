@@ -505,7 +505,7 @@ export default function TermsOfService() {
                 <span className="font-bold">Gig</span>Execs
               </div>
               <p className="text-gray-300 mb-4">
-                The premier freelance hub for top professionals and innovative companies.
+                The premier community connecting top professionals and innovative companies.
               </p>
             </div>
 

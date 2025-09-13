@@ -306,7 +306,7 @@ export default function BlogArticle5() {
             <div>
               <div className="text-2xl font-bold text-[#FACC15] mb-4">GigExecs</div>
               <p className="text-[#9CA3AF]">
-                The premier freelance hub for top professionals and innovative companies.
+                The premier community connecting top professionals and innovative companies.
               </p>
             </div>
             <div>
