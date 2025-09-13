@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { ShieldCheck, Rocket, Cake, CreditCard } from 'lucide-react'
 
 // BlogCard component for the client page
 const BlogCard = ({ blogNumber }: { blogNumber: number }) => {
@@ -175,9 +176,16 @@ const Clients = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="bg-[#012E46] hover:bg-[#0284C7] text-white px-8 py-3">
-                Join GigExecs
+                <a href="/auth/register" className="w-full h-full flex items-center justify-center text-white">
+                  Join GigExecs
+                </a>
               </Button>
-              <Button variant="outline" size="lg" className="border-[#012E46] text-[#012E46] hover:bg-[#F5F5F5] px-8 py-3">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-[#012E46] text-[#012E46] hover:bg-[#F5F5F5] px-8 py-3"
+                onClick={() => document.getElementById('cta-section')?.scrollIntoView({ behavior: 'smooth' })}
+              >
                 Learn More
               </Button>
             </div>
@@ -192,7 +200,7 @@ const Clients = () => {
       </section>
 
       {/* CTA Section with Split Layout */}
-      <section className="py-20 bg-white">
+      <section id="cta-section" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -207,13 +215,15 @@ const Clients = () => {
             
             <div className="space-y-6">
               <h2 className="text-3xl lg:text-4xl font-bold text-[#0284C7] leading-tight">
-                Post your job and requirements, hire an experienced freelancer in a flash!
+                Post your job and requirements, hire a senior professional in a flash!
               </h2>
               <p className="text-lg text-[#9CA3AF] leading-relaxed">
                 We designed an easy process to enable you to match quickly the perfect expert to your project needs. Post your job and start receiving offers from skilled professionals!
               </p>
               <Button size="lg" className="bg-[#012E46] hover:bg-[#0284C7] text-white px-8 py-3">
-                Create a New Gig
+                <a href="/auth/register" className="w-full h-full flex items-center justify-center text-white">
+                  Get Started
+                </a>
               </Button>
             </div>
           </div>
@@ -245,14 +255,10 @@ const Clients = () => {
           <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-lg">
             <div className="grid md:grid-cols-4 gap-8">
               {[
-                { step: "1", title: "Sign up & get verified", description: "Our validation process ensures platform quality." },
-                { step: "2", title: "Create a Job", description: "Outline the scope, required skills, timeline, and budget to find the perfect expert." },
-                { step: "3", title: "Browse for Talent", description: "Browse profiles and portfolios to find the best fit for your project." },
-                { step: "4", title: "Identify Potential Experts", description: "Start searching for top consultants tailored to your needs." },
-                { step: "5", title: "Accept a Bid", description: "Choose the best consultant by accepting their bid." },
-                { step: "6", title: "Kick-off meeting", description: "Invite the freelancer to align on deliverables and expectations." },
-                { step: "7", title: "Track the progress", description: "Evaluate the deliverables and complete payment." },
-                { step: "8", title: "Provide Feedback", description: "Share your review to support the consultant's growth." }
+                { step: "1", title: "Sign up & get Verified", description: "Our validation process ensures platform quality" },
+                { step: "2", title: "Create a Gig", description: "Outline the scope, required skills, timeline, and budget to find the perfect expert." },
+                { step: "3", title: "Select an Expert", description: "Review bids received by verified senior professionals" },
+                { step: "4", title: "Start the Gig", description: "Work with your selected expert to deliver great outcomes." }
               ].map((item, index) => (
                 <div key={index} className="text-center space-y-4">
                   <div className="w-16 h-16 bg-[#FACC15] rounded-full flex items-center justify-center mx-auto">
@@ -276,50 +282,50 @@ const Clients = () => {
           
           <div className="grid md:grid-cols-2 gap-8">
             <div className="text-center">
-              <div className="bg-gray-200 rounded-xl w-24 h-24 mx-auto mb-6 flex items-center justify-center">
-                <span className="text-gray-500 text-2xl">🔒</span>
+              <div className="w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                <ShieldCheck className="w-12 h-12 text-[#FACC15]" />
               </div>
               <h3 className="text-xl font-bold text-[#0284C7] mb-3">
-                Access to a quality pool of experienced freelancers
+                Access a quality pool of experienced professionals on-demand
               </h3>
               <p className="text-gray-700">
-                GigExecs runs a rigorous vetting process to ensure and protect the quality of our freelancers and clients. Our platform and processes were designed for simplicity and for user friendliness.
+                GigExecs runs a rigorous vetting process to ensure and protect the quality of our professionals and clients. Our platform and processes were designed for simplicity and for user friendliness.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-gray-200 rounded-xl w-24 h-24 mx-auto mb-6 flex items-center justify-center">
-                <span className="text-gray-500 text-2xl">⚡</span>
+              <div className="w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                <Rocket className="w-12 h-12 text-[#FACC15]" />
               </div>
               <h3 className="text-xl font-bold text-[#0284C7] mb-3">
                 Streamlined hiring process
               </h3>
               <p className="text-gray-700">
-                Our platform matches the best available skills with our client's requirements. The hiring process for freelancers is simple, quick and safe.
+                Our platform matches the best available skills with our client's requirements. The hiring process is simple, quick and safe.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-gray-200 rounded-xl w-24 h-24 mx-auto mb-6 flex items-center justify-center">
-                <span className="text-gray-500 text-2xl">👥</span>
+              <div className="w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                <Cake className="w-12 h-12 text-[#FACC15]" />
               </div>
               <h3 className="text-xl font-bold text-[#0284C7] mb-3">
                 Age is Just a Number
               </h3>
               <p className="text-gray-700">
-                At GigExecs we welcome senior professionals in their 50s, 60s or 70s to join our platform to share their valuable skills and know-how with our clients; freelancing is a great alternative to stay financially active, in a less stressful lifestyle, whilst still engaged in interesting work later in our careers.
+                At GigExecs we welcome senior professionals well into their 70s to use our platform to share valuable skills, know-how and networks with clients globally; flexible work is an efficient alternative to stay professionally and financially active until later in our careers.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-gray-200 rounded-xl w-24 h-24 mx-auto mb-6 flex items-center justify-center">
-                <span className="text-gray-500 text-2xl">💳</span>
+              <div className="w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                <CreditCard className="w-12 h-12 text-[#FACC15]" />
               </div>
               <h3 className="text-xl font-bold text-[#0284C7] mb-3">
                 Secure and easy payment processes
               </h3>
               <p className="text-gray-700">
-                GigExecs offers secure payment processing systems, enabling clients to make payments to freelancers using credit or debit cards as well as other mainstream digital payment methods. Our payment processes are convenient and streamlined to our users.
+                GigExecs offers secure online payment processes through Stripe, a world leading payments processing company. Our payment processes are convenient and streamlined to our users.
               </p>
             </div>
           </div>
@@ -332,11 +338,18 @@ const Clients = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 lg:p-12 text-center">
             <h2 className="text-3xl lg:text-5xl font-bold text-white mb-8 leading-tight">
-              Need help but don't have time to post, browse, or monitor your project?<br />
-              We can assist with that too.
+              Need help posting your job and identify good candidates?<br />
+              Or just a chat to learn more about us?
             </h2>
             <Button size="lg" className="bg-[#FACC15] hover:bg-[#EAB308] text-[#012E46] px-8 py-3 text-lg font-semibold">
-              Book a Call
+              <a 
+                href="https://calendly.com/jaco-vandenheever-gigexecs/30min" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-full h-full flex items-center justify-center text-[#012E46]"
+              >
+                Book a Call
+              </a>
             </Button>
           </div>
         </div>
