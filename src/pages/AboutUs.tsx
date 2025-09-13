@@ -205,7 +205,7 @@ const AboutUs = () => {
             <div className="text-center">
               <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden">
                 <img 
-                  src="/images/AboutUs/nuno-selfie.png" 
+                  src="/images/AboutUs/nuno-selfie.jpeg" 
                   alt="Nuno G. Rodrigues" 
                   className="w-full h-full object-cover"
                 />
@@ -238,7 +238,7 @@ const AboutUs = () => {
             <div className="text-center">
               <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden">
                 <img 
-                  src="/images/AboutUs/jaco-selfie.png" 
+                  src="/images/AboutUs/jaco-selfie.jpg" 
                   alt="Jaco van den Heever" 
                   className="w-full h-full object-cover grayscale"
                 />
