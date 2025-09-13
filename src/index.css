@@ -124,11 +124,6 @@
   body {
     @apply text-foreground font-executive antialiased;
     background-color: hsl(var(--background));
-    background-image: url('/background/Background.svg');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    
   }
   
   

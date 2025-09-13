@@ -16,7 +16,6 @@ export function NavTabs({ role }: Props) {
     ...(role === 'client'
       ? [{ to: '/find', label: 'Find Professionals & Gigs', icon: <UserRound className="w-5 h-5" />, chevron: true }]
       : [{ to: '/find-gigs', label: 'Find Gigs', icon: <Briefcase className="w-5 h-5" /> }]),
-    { to: '/teams', label: 'My Teams', icon: <Users className="w-5 h-5" /> },
   ];
 
   return (
@@ -36,7 +35,7 @@ export function NavTabs({ role }: Props) {
         ))}
         
         {/* My Gigs Dropdown */}
-        <GigsDropdown />
+        <GigsDropdown role={role} />
       </nav>
 
       <NavLink to="/help-secure" className={`${base} ${inactive}`}>
