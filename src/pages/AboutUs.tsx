@@ -205,7 +205,7 @@ const AboutUs = () => {
             <div className="text-center">
               <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden">
                 <img 
-                  src="/images/AboutUs/Nuno.png" 
+                  src="/images/AboutUs/nuno-selfie.png" 
                   alt="Nuno G. Rodrigues" 
                   className="w-full h-full object-cover"
                 />
@@ -238,12 +238,12 @@ const AboutUs = () => {
             <div className="text-center">
               <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden">
                 <img 
-                  src="/images/AboutUs/Jaco.png" 
-                  alt="Jaco van der Heever" 
+                  src="/images/AboutUs/jaco-selfie.png" 
+                  alt="Jaco van den Heever" 
                   className="w-full h-full object-cover grayscale"
                 />
               </div>
-              <h3 className="text-xl font-bold text-[#0284C7] mb-2">Jaco van der Heever</h3>
+              <h3 className="text-xl font-bold text-[#0284C7] mb-2">Jaco van den Heever</h3>
               <p className="text-[#9CA3AF] mb-4">Co-Founder & CXO</p>
               <p className="text-sm text-[#6B7280] mb-4">
                 Award-winning product and design leader with 20+ years of experience shaping digital platforms across fintech, healthcare, and enterprise domains. He drives the platform vision, user experience, and technology implementation, building GigExecs into a category-defining company.
