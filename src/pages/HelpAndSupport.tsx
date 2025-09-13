@@ -24,20 +24,20 @@ export default function HelpSupportHome() {
       content: 'Welcome to GigExecs! This section will help you get started with our platform.',
       faqs: [
         {
-          question: 'What is Gigexecs?',
-          answer: 'GigExecs is a job marketplace exclusively designed for highly experienced freelancers with at least 10 years of expertise. It provides access to a curated pool of seasoned professionals, ensuring clients receive top-tier quality and expertise for their projects.'
+          question: 'What is GigExecs?',
+          answer: 'GigExecs is a digital platform and a premium global network where companies and highly experienced senior professionals connect to work together using flexible work models - i.e. independent advisory, independent consulting, fractional roles, interim roles, freelancing, short-term contracts. We focus exclusively on talent with a minimum of 15 years\' experience, typically professionals from their late 30s into their 70s, giving businesses access to trusted skills, proven leadership, and established networks on-demand, that are otherwise difficult to reach. We believe flexible work models will enable senior professionals and companies to collaborate more easily without lengthy recruitment processes and high fees associated with full time employment.'
         },
         {
           question: 'Understanding Gigs',
-          answer: 'The platform offers a wide range of job opportunities spanning industries such as consultancy, project management, technical expertise, creative services, and more. Clients can find professionals capable of handling diverse projects, from complex technical tasks to strategic consultancy assignments. Each job listing on GigExecs is tailored to attract seasoned professionals, ensuring clients access top-tier talent for their projects.'
+          answer: 'We strongly believe that work today (as well as in the future) doesn\'t always require a full-time hire. GigExecs makes it easier for companies to access senior expertise in flexible ways - from short-term advisory and interim leadership, to part-time roles and specific mandates. We are industry agnostic, we believe our model can help companies and senior professionals across all industries and functions. More than focusing on specific industries our specific geographies, our focus is on connecting companies with trusted, highly experienced professionals who can adapt to different needs and deliver meaningful results, whatever the challenge.'
         },
         {
           question: 'Who are Clients?',
-          answer: 'Clients on GigExec are individuals, businesses, or organizations seeking highly experienced freelancers with at least 10 years of expertise to fulfill their project needs. These clients range from small businesses to large corporations and individuals requiring specialized services. They rely on GigExec to connect them with top-tier talent across various fields, ensuring effective project outcomes.'
+          answer: 'Clients on GigExecs are forward-thinking companies, organizations, and leaders who need access to highly experienced professionals without the cost and inflexibility of a permanent hire. They range from scaling businesses and corporates to investors, founders, and executives who value expertise on-demand. Clients use GigExecs to: Access trusted senior talent quickly and efficiently. Fill advisory, consulting, fractional, or interim roles with proven professionals. Reduce the time and fees associated with lengthy recruitment processes. Gain fresh perspectives and established networks that accelerate impact. By working with GigExecs, clients unlock the ability to collaborate with seasoned professionals who deliver meaningful results in a flexible way.'
         },
         {
           question: 'Who are Experienced Professionals?',
-          answer: 'A freelancer is a self-employed individual who provides services to clients on a project or contract basis. Freelancers work in a wide range of industries, including writing, design, programming, marketing, consulting, and more. They typically work remotely and can set their own schedules and rates. As independent contractors, freelancers are responsible for finding their own clients, negotiating contracts, and managing their own finances. They may work for multiple clients simultaneously or specialize in a particular niche. Freelancers are often highly skilled and experienced in their field, and they are able to offer flexible and customized services to meet their clients\' needs. Freelancing offers many benefits, including the freedom to choose their projects, set their own rates, and the flexibility to work from anywhere. However, it requires a high degree of self-discipline, organization, and business savvy to succeed. Freelancers must be able to manage their time effectively, maintain a steady flow of work, and provide high-quality services that meet their clients\' expectations.'
+          answer: 'Experienced Professionals on GigExecs are senior, independent experts with a minimum of 15 years of experience, often bringing decades of leadership and specialist knowledge. They are typically professionals from their late 30s through to their 70s who choose to work differently, beyond traditional full-time employment. Our professionals include former executives, consultants, advisors, and specialists who now engage in: Independent advisory and consulting, Fractional leadership roles, Interim management, Freelancing and short-term contracts. They value: Flexibility in how, when, and where they work. The opportunity to apply their expertise across industries and functions. Belonging to a curated, trusted global network where quality and reputation matter. GigExecs enables these professionals to continue making an impact, on their own terms, while helping companies access skills and networks that are otherwise difficult to reach.'
         }
       ]
     },
@@ -47,55 +47,55 @@ export default function HelpSupportHome() {
       content: 'Understanding and managing project milestones.',
       faqs: [
         {
-          question: 'What are milestones?',
-          answer: 'Milestones are significant points or events in a project that mark progress toward a specific goal or achievement. They serve as checkpoints to track the completion of key tasks or phases within the project timeline.'
+          question: 'What are Milestones?',
+          answer: 'Milestones are key checkpoints that mark important stages of a mandate, engagement, or project. They ensure both sides stay aligned on objectives, deliverables, and timing.'
         },
         {
-          question: 'How do I create milestones for my project?',
-          answer: 'To create milestones for your project, identify key objectives or deliverables and break them down into smaller, measurable tasks. Assign specific dates or deadlines to each milestone to track progress effectively.'
+          question: 'How to Create Milestones',
+          answer: 'When setting up a gig, companies and professionals agree on milestones by: Defining the critical deliverables or outcomes. Breaking them into manageable phases. Assigning dates or completion criteria so progress can be measured clearly.'
         },
         {
-          question: 'What should I do if a milestone is not met as planned?',
-          answer: 'If a milestone is not met as planned, assess the reasons for the delay and take corrective action as necessary. This may involve reallocating resources, adjusting timelines, or revising project plans to ensure future milestones are achieved on time.'
+          question: 'What if a Milestone is Delayed?',
+          answer: 'If a milestone is not met as planned, both parties can review the reasons, adjust scope or timelines, and agree on corrective steps. This flexibility helps keep the engagement on track while maintaining trust and accountability.'
         },
         {
-          question: 'How do milestones impact project payments?',
-          answer: 'Milestones serve as payment triggers in project contracts or agreements. Payments may be tied to the completion of specific milestones, ensuring that work is delivered satisfactorily before payment is made.'
+          question: 'How Milestones Impact Payments',
+          answer: 'On GigExecs, milestones often act as payment triggers. This means payments are linked to the successful completion of specific deliverables, giving companies confidence in delivery and professionals clarity on when they will be paid.'
         }
       ]
     },
     'contracts': {
       title: 'Contracts',
       icon: FileText,
-      content: 'Contract management and legal aspects of working on GigExecs.',
+      content: 'Managing agreements on GigExecs.',
       faqs: [
         {
           question: 'What is a contract on GigExecs?',
-          answer: 'A contract on the platform is a legally binding agreement between a client and a freelancer/consultant outlining the terms and conditions of their working relationship. It typically includes details such as project scope, deliverables, timelines, payment terms, and other relevant terms.'
+          answer: 'A contract is a binding agreement between a client and a professional, outlining how they will work together. It typically covers scope, deliverables, timelines, payment terms, and any other important conditions.'
         },
         {
-          question: 'How do I create a contract with a freelancer/consultant?',
-          answer: 'To create a contract, both parties must agree to the terms and conditions of the project. This can be done through the platform\'s Manage Gig section. Once both parties agree, the contract is finalised and becomes binding.'
+          question: 'How do I create a contract?',
+          answer: 'Contracts are set up through the platform\'s Manage Gig section. Once both parties agree on the terms, the contract is finalized and becomes binding.'
         },
         {
-          question: 'What is included in a contract?',
-          answer: 'A contract includes clear and detailed information about the project scope, deliverables, timelines, payment terms, intellectual property rights, confidentiality agreements, and any other relevant terms specific to the project.'
+          question: 'What does a contract include?',
+          answer: 'It usually covers project scope, deliverables, timelines, payment details, intellectual property rights, confidentiality, and other relevant terms.'
         },
         {
-          question: 'Can I negotiate terms in a contract?',
-          answer: 'Yes, clients and freelancers/consultants can negotiate the terms of the contract to ensure they are mutually beneficial. It\'s important to communicate openly and clearly about expectations and requirements to reach a satisfactory agreement.'
+          question: 'Can terms be negotiated?',
+          answer: 'Yes. Both clients and professionals can negotiate terms before finalizing to ensure the contract is fair and practical for both sides.'
         },
         {
-          question: 'What happens if there is a dispute over a contract?',
-          answer: 'In the event of a dispute over a contract, both parties should attempt to resolve the issue amicably through negotiation and communication. If resolution cannot be reached, GigExecs offers dispute resolution services or mediation to help resolve the conflict.'
+          question: 'What if a dispute arises?',
+          answer: 'First, both parties should try to resolve issues directly. If that\'s not possible, GigExecs can provide dispute resolution and mediation services, either through 3rd party services or by trying to solve the issues in an independent and fair way with both parties.'
         },
         {
-          question: 'Can I cancel a contract once it\'s been signed?',
-          answer: 'Contracts are legally binding agreements, and canceling them may have legal and financial implications. However, if both parties agree to cancel the contract, they can do so by mutual consent. It\'s important to review the contract terms regarding cancellation and termination clauses.'
+          question: 'Can a contract be canceled?',
+          answer: 'Contracts are binding, but they can be canceled if both parties agree. The specific cancellation and termination clauses will apply.'
         },
         {
-          question: 'What happens if one party breaches the contract?',
-          answer: 'If one party breaches the contract by failing to fulfill their obligations, the other party may pursue legal remedies such as seeking damages or terminating the contract. It\'s essential to document any breaches and attempt to resolve the issue through communication before taking legal action.'
+          question: 'What happens in case of a breach?',
+          answer: 'If one side fails to meet their obligations, the other may take steps such as termination or legal remedies. Issues should always be documented, and resolution should be attempted through communication first.'
         }
       ]
     },
@@ -133,201 +133,178 @@ export default function HelpSupportHome() {
     'disputes': {
       title: 'Disputes',
       icon: AlertTriangle,
-      content: 'Resolving conflicts and handling disputes on the platform.',
+      content: 'Ensuring fair and professional conflict resolution on GigExecs.',
       faqs: [
         {
-          question: 'What should I do if I have a dispute with an employer/freelancer?',
-          answer: 'If you encounter a dispute, first try to resolve the issue directly by communicating with the employer/freelancer through the platform. If the matter remains unresolved, you can escalate the dispute by submitting a formal dispute resolution request via the app.'
+          question: 'What should I do if I have a dispute with a client or professional?',
+          answer: 'Start by addressing the issue directly through open communication on the platform. Many disagreements can be resolved by clarifying expectations and finding common ground.'
         },
         {
           question: 'How do I file a dispute?',
-          answer: 'To file a dispute, navigate to the project or contract in question, select "Open a Dispute," and provide detailed information about the issue. Be sure to include any supporting documentation or evidence related to the work completed.'
+          answer: 'If the matter remains unresolved, you can submit a formal dispute request via help@gigexecs.com. Provide a clear description of the issue along with any supporting evidence.'
         },
         {
           question: 'What happens after I file a dispute?',
-          answer: 'Once a dispute is filed, our dispute resolution team will review your submission and mediate between you and the other party. Both parties will have the opportunity to present their case. We aim to resolve disputes within a set timeframe, typically 7–10 business days.'
+          answer: 'The GigExecs team will review the case and provide an independent and fair recommendation aimed at resolving the matter quickly. Both parties will have the opportunity to present their perspectives before a recommendation is made.'
         },
         {
-              question: 'What kind of evidence can I submit for a dispute?',
-              answer: 'You can submit various forms of evidence, such as communication records, files related to the job, contracts, screenshots of conversations, invoices, and proof of payment. Be sure to provide as much relevant information as possible to support your claim.'
+          question: 'What if I am unsatisfied with the resolution?',
+          answer: 'If you disagree with GigExecs\' independent recommendation, you may submit further information for reconsideration. If the matter still cannot be resolved, GigExecs can recommend 3rd party specialised legal services (at an extra cost) to mediate the dispute.'
         },
         {
-              question: 'What if I am unsatisfied with the dispute resolution outcome?',
-              answer: 'If you are not satisfied with the outcome of the dispute, you may request a further review by providing additional evidence or reasoning. However, the final decision is at the discretion of the dispute resolution team.'
+          question: 'What kind of evidence can I submit?',
+          answer: 'Evidence may include communication records, contracts, deliverables, payment proof, or other relevant documentation. The more comprehensive the information, the smoother the process.'
         },
         {
-              question: 'Can I get a refund if the work was not completed as agreed?',
-              answer: 'If the dispute resolution team determines that the work was not completed or was not up to the agreed-upon standard, you may be eligible for a partial or full refund depending on the situation.'
+          question: 'Can I get a refund if the work was not completed as agreed?',
+          answer: 'If evidence shows that work was not delivered in line with the agreed terms, GigExecs may recommend a partial or full refund, depending on the circumstances. Refunds apply only to the payment for work and exclude any GigExecs service fees.'
         },
         {
-              question: 'What happens if the other party doesn\'t respond to the dispute?',
-              answer: 'If the other party fails to respond to the dispute within the allotted time, the resolution team may make a decision based solely on the information and evidence provided by you.'
+          question: 'What happens if one party does not respond?',
+          answer: 'If a party fails to engage in the process, GigExecs may issue a recommendation based solely on the available evidence. If still unresolved, the matter can be escalated to a third-party mediator or legal professional.'
         },
         {
-              question: 'Can I still work with the same freelancer/employer after a dispute?',
-              answer: 'Yes, you can choose to continue working with the same freelancer/employer after a dispute is resolved, but we recommend reviewing the terms of the project carefully to avoid further issues.'
+          question: 'Can I still work with the same client or professional after a dispute?',
+          answer: 'Yes. Many disputes are situational and can be resolved professionally. If trust is rebuilt, both parties are welcome to collaborate again, ideally with clearer terms in place.'
         }
       ]
     },
-    'consultant': {
-      title: 'Consultant',
+    'professionals': {
+      title: 'Professionals',
       icon: Users,
-      content: 'Information for consultants and freelancers using the platform.',
+      content: 'Information for professionals using the platform.',
       faqs: [
         {
           question: 'How do I showcase my skills and experience effectively on my profile?',
-          answer: 'Make sure to provide detailed information about your past projects, clients, achievements, and any certifications or qualifications you hold. Utilize our profile sections effectively to highlight your strengths.'
+          answer: 'Provide detailed information about your career achievements, leadership roles, key projects, and any certifications or qualifications. Use the profile sections to highlight your expertise, strengths, and the value you can bring to clients.'
         },
         {
-          question: 'Can I set my own rates as a consultant?',
-          answer: 'Yes, as a consultant, you have the flexibility to set your own rates based on your expertise, market demand, and the complexity of the projects you undertake.'
+          question: 'Can I set my own rates as a professional?',
+          answer: 'Yes. Professionals on GigExecs have the flexibility to set their own rates based on their expertise, market demand, and the scope or complexity of the engagement.'
         },
         {
-          question: 'How do I find consulting opportunities on the platform?',
-          answer: 'Consulting opportunities are typically listed under our "Find Gigs" section. You can browse through available projects, filter based on your expertise, and submit proposals for those that match your skills.'
+          question: 'How do I find opportunities on the platform?',
+          answer: 'Opportunities are listed in the "Find Gigs" section. You can browse available roles, filter based on your expertise, and apply to those that align with your skills and interests.'
         },
         {
-          question: 'What is the process for applying to consulting projects?',
-          answer: 'Once you find a project of interest, you can submit a proposal outlining your approach, relevant experience, and how you can add value to the client\'s project. Clients will review proposals and may contact you for further discussion.'
+          question: 'What is the process for applying to opportunities?',
+          answer: 'Once you find an opportunity of interest, you can submit a tailored proposal highlighting your relevant experience, approach, and how you can deliver value to the client. Clients review proposals and may reach out to discuss further.'
         },
         {
-          question: 'How do I communicate with clients during a consulting project?',
-          answer: 'Our platform provides messaging and communication tools that allow you to interact with clients directly. You can discuss project details, share documents, and provide updates through our secure messaging system.'
+          question: 'How do I communicate with clients during an engagement?',
+          answer: 'We recommend using GigExecs\' platform messaging tools to keep all communication within the system. This ensures clarity, maintains a record in case of disputes or support needs, and allows you to share updates, documents, and clarify details directly with clients.'
         },
         {
-          question: 'Are there any restrictions on the number of consulting projects I can take on?',
-          answer: 'As a consultant, you have the flexibility to take on multiple projects simultaneously based on your availability and workload. However, ensure that you can commit enough time and resources to deliver high-quality results for each project.'
+          question: 'Are there any restrictions on the number of opportunities I can take on?',
+          answer: 'Professionals are free to take on multiple opportunities simultaneously, depending on availability and workload. However, it is important to ensure capacity to deliver consistently high-quality results.'
         },
         {
-          question: 'How can I build long-term relationships with clients as a consultant?',
-          answer: 'Building trust, delivering exceptional results, and maintaining clear communication are key to fostering long-term relationships with clients. Consistently delivering value and exceeding client expectations can lead to repeat business and referrals.'
+          question: 'How can I build long-term relationships with clients?',
+          answer: 'Trust, reliability, and impact are key. Delivering strong results, maintaining clear communication, and consistently adding value will help you foster long-term relationships that can lead to repeat work and referrals.'
         }
       ]
     },
     'client': {
-      title: 'Client',
+      title: 'Clients',
       icon: Users,
-      content: 'Information for clients hiring consultants and managing projects.',
+      content: 'Information for clients hiring and engaging senior professionals.',
       faqs: [
         {
-          question: 'How can I find consultants on the platform?',
-          answer: 'Clients can find consultants by browsing through our directory of experienced professionals or by posting a project and receiving proposals from qualified consultants.'
+          question: 'How can I find senior professionals on the platform?',
+          answer: 'Clients can find professionals by browsing our curated network of highly experienced individuals or by posting an engagement and receiving proposals from qualified professionals.'
         },
         {
-          question: 'What types of consulting services are available on the platform?',
-          answer: 'Our platform offers a wide range of consulting services including management, strategy, finance, marketing, technology, human resources, and more. Clients can find consultants with expertise in various industries and specialties.'
+          question: 'What types of services are available on the platform?',
+          answer: 'GigExecs is industry and function agnostic. Clients can find professionals for advisory roles, interim leadership, fractional positions, specialized mandates, and other flexible arrangements across all sectors.'
         },
         {
-          question: 'How do I post a project on the platform?',
-          answer: 'Posting a project is simple. Just click on the "Create a New Gig" button in the navigation bar, provide details about your project requirements, budget, and timeline, and submit the project. Qualified consultants will then submit proposals for your review.'
+          question: 'How do I post an engagement on the platform?',
+          answer: 'Click on the "Create a New Gig" button, provide details about the engagement, scope, budget, and timeline, and submit it. Qualified professionals will then submit proposals for your review.'
         },
         {
-          question: 'Can I review the profiles of consultants before hiring them?',
-          answer: 'Yes, clients have access to detailed profiles of consultants, which include information about their expertise, experience, past projects, client reviews, and ratings. This allows clients to make informed decisions when hiring consultants.'
+          question: 'Can I review senior professional profiles before engaging them?',
+          answer: 'Yes. Clients have access to detailed profiles, including expertise, experience, past roles or assignments, client feedback, and ratings. This enables informed hiring decisions.'
         },
         {
-          question: 'How do I communicate with consultants during a project?',
-          answer: 'Clients can communicate with consultants directly through our platform\'s messaging system. This allows for seamless communication, sharing of project updates, and collaboration throughout the project duration.'
+          question: 'How do I communicate with professionals during an engagement?',
+          answer: 'We recommend using GigExecs\' messaging tools to keep all communication within the platform. This allows for secure, transparent communication, sharing of updates and documents, and ensures a record in case of disputes or support needs.'
         },
         {
-          question: 'What if I\'m not satisfied with the work of a consultant?',
-          answer: 'If a client is not satisfied with the work of a consultant, they can discuss their concerns directly with the consultant and attempt to resolve any issues. If necessary, clients can also reach out to our support team for assistance in resolving disputes.'
+          question: 'What if I\'m not satisfied with the work of a professional?',
+          answer: 'Clients should first address concerns directly with the professional. If resolution isn\'t possible, GigExecs can provide an independent recommendation or connect both parties to third-party dispute resolution specialists.'
         },
         {
-          question: 'Are there any fees for posting projects or hiring consultants on the platform?',
-          answer: 'Clients can post projects on our platform for free. However, there are fees associated with hiring consultants, such as project fees or service fees. These fees are transparently displayed before hiring a consultant.'
+          question: 'Are there any fees for posting or hiring professionals on the platform?',
+          answer: 'Posting engagements is free. Service fees or platform fees for hiring professionals are transparently displayed before engagement.'
         },
         {
-          question: 'How can I ensure the confidentiality of my project information?',
-          answer: 'We take the confidentiality of our clients\' projects seriously. Clients can rest assured that their project information is kept confidential and only shared with the consultant(s) they choose to work with.'
+          question: 'How can I ensure the confidentiality of my engagement information?',
+          answer: 'GigExecs takes confidentiality seriously. Information is only shared with the professionals you choose to engage and is protected throughout the process.'
         },
         {
-          question: 'Can I hire consultants for long-term projects or ongoing support?',
-          answer: 'Yes, clients can hire consultants for both short-term and long-term projects, as well as for ongoing support. Many consultants offer flexible arrangements to meet the needs of clients\' projects.'
+          question: 'Can I hire professionals for long-term or ongoing support?',
+          answer: 'Yes. GigExecs supports both short-term and long-term engagements, including advisory, interim, fractional, or ongoing roles. Senior professionals in our network offer flexible arrangements to meet clients specific needs.'
         }
       ]
     },
     'billing-process': {
       title: 'Billing Process & Invoicing',
       icon: CreditCard,
-      content: 'How billing works and how to manage invoices.',
+      content: 'Understanding how billing works and managing invoices on GigExecs.',
       faqs: [
         {
           question: 'How does the billing process work on the platform?',
-          answer: 'The billing process involves charging clients for services rendered by freelancers or consultants. Clients are billed based on the agreed-upon terms and payment schedule for each project.'
+          answer: 'Clients are billed for services provided by professionals based on the agreed-upon terms and payment schedule for each engagement or milestone. GigExecs facilitates secure and transparent payments between clients and professionals.'
         },
         {
           question: 'When will I receive invoices for services rendered?',
-          answer: 'Invoices are typically generated upon project completion or at agreed-upon milestones. You\'ll receive invoices via email or can access them directly on your account dashboard.'
-        },
-        {
-          question: 'How do I view and download invoices for my records?',
-          answer: 'You can view and download invoices from your account dashboard under the "Billing" or "Invoices" section. Simply click on the invoice you wish to download for a detailed view.'
+          answer: 'Invoices are typically generated upon completion of an engagement, or at agreed-upon milestones. Clients and professionals can access invoices via email or directly through their account dashboard.'
         },
         {
           question: 'What should I do if I have questions or concerns about an invoice?',
-          answer: 'If you have any questions or concerns about an invoice, please reach out to our billing support team for assistance. We\'re here to help resolve any billing-related issues promptly.'
+          answer: 'If there are any questions or discrepancies, contact our team on help@gigexecs.com. They are available to help resolve any billing-related issues promptly and efficiently.'
         }
       ]
     },
     'payment-methods': {
       title: 'Payment Methods',
       icon: CreditCard,
-      content: 'Available payment methods and how to set them up.',
+      content: 'What payment methods are accepted on the platform?',
       faqs: [
         {
           question: 'What payment methods are accepted on the platform?',
-          answer: 'We only accept payment methods through credit/debit cards at this time. We strive to provide a seamless and secure payment experience for our users, and credit/debit card transactions offer a convenient and widely accepted method for processing payments on our platform. We apologise for any inconvenience this may cause and appreciate your understanding. If you have any questions or concerns regarding payment methods, please don\'t hesitate to contact our support team for assistance.'
+          answer: 'Currently, all payments are processed securely via Stripe, a leading global online payment platform integrated on GigExecs. We are considering adding other payment options in the future to provide more flexibility. Stripe processing fees are typically included in the service fees charged to both clients and professionals.'
         },
         {
           question: 'How can I add or update my payment method?',
-          answer: 'You can add or update your payment method in your account settings. Simply navigate to the "Payment Methods" section under your profile and follow the prompts to add a new payment method or update existing ones.'
+          answer: 'Go to your account settings, navigate to the "Payment Methods" section, and follow the prompts to add or update your payment details.'
         },
         {
           question: 'Are there any additional fees for using certain payment methods?',
-          answer: 'We strive to provide transparent pricing, and there are typically no additional fees for using standard payment methods. However, please check with your financial institution for any potential transaction fees they may charge.'
+          answer: 'There are typically no additional fees for standard payments via Stripe. Please check with your bank or card provider for any potential transaction fees they may charge.'
         },
         {
-          question: 'What should I do if I have questions or concerns about an invoice?',
-          answer: 'If you have any questions or concerns about an invoice, please reach out to our billing support team for assistance. We\'re here to help resolve any billing-related issues promptly.'
-        }
-      ]
-    },
-    'subscription-management': {
-      title: 'Subscription Management',
-      icon: CreditCard,
-      content: 'Managing your subscriptions and billing cycles.',
-      faqs: [
-        {
-          question: 'What subscription plans are available on the platform?',
-          answer: 'Currently, GigExec offers a single subscription plan at its initial launch, providing users with comprehensive access to all platform features. However, future updates may introduce additional subscription options to better cater to user needs. Stay tuned for any developments in our subscription offerings. For specific inquiries or suggestions, feel free to contact our support team.'
-        },
-        {
-          question: 'How can I upgrade or downgrade my subscription plan?',
-          answer: 'You can upgrade or downgrade your subscription plan at any time by accessing your account settings. Simply select the desired plan and follow the prompts to make the change.'
-        },
-        {
-          question: 'Can I cancel my subscription at any time?',
-          answer: 'Yes, you can cancel your subscription at any time. However, please note that cancellation may affect access to certain features or services associated with your subscription plan.'
+          question: 'What should I do if I have questions or concerns about a payment?',
+          answer: 'Contact our team at help@gigexecs.com for assistance. They are available to help resolve any payment-related questions or issues promptly.'
         }
       ]
     },
     'refunds-credits': {
       title: 'Refunds and Credits',
       icon: CreditCard,
-      content: 'How refunds and credits work on the platform.',
+      content: 'Understanding how refunds and credits work on GigExecs.',
       faqs: [
         {
           question: 'What is the refund policy for services rendered?',
-          answer: 'Our refund policy varies depending on the circumstances. Generally, refunds are issued in accordance with the terms of the agreement between clients and freelancers/consultants. Please refer to the project contract or contact our billing support team for more information.'
+          answer: 'Refunds are handled in accordance with the terms agreed between clients and professionals. If work is not delivered as agreed or a dispute resolution recommends a refund, GigExecs may recommend a partial or full refund. Refunds apply only to payments for services and exclude any GigExecs service fees.'
         },
         {
           question: 'How long does it take to process refunds or issue credits?',
-          answer: 'Refunds and credits are typically processed within a specified timeframe, which may vary depending on the payment method and financial institution. We strive to process refunds promptly once the request is approved.'
+          answer: 'Refunds and credits are typically processed within a reasonable timeframe, depending on the payment method and financial institution. GigExecs strives to handle refund requests promptly once they are approved.'
         },
         {
           question: 'What should I do if I believe I\'m eligible for a refund or credit?',
-          answer: 'If you believe you\'re eligible for a refund or credit, please contact our billing support team with details of your request. We\'ll review your case and provide assistance in processing the refund or issuing credits accordingly.'
+          answer: 'Contact our support team on help@gigexecs.com with details of your request. They will review your case, coordinate with the professional if necessary, and assist in processing any approved refund or credit.'
         }
       ]
     }
@@ -591,7 +568,7 @@ export default function HelpSupportHome() {
                     User Roles
                   </h3>
                   <div className="space-y-1">
-                    {['consultant', 'client'].map((key) => {
+                    {['professionals', 'client'].map((key) => {
                       const section = helpContent[key as keyof typeof helpContent]
                       const IconComponent = section.icon
                       
@@ -619,7 +596,7 @@ export default function HelpSupportHome() {
                     Billing & Payments
                   </h3>
                   <div className="space-y-1">
-                    {['billing-process', 'payment-methods', 'subscription-management', 'refunds-credits'].map((key) => {
+                    {['billing-process', 'payment-methods', 'refunds-credits'].map((key) => {
                       const section = helpContent[key as keyof typeof helpContent]
                       const IconComponent = section.icon
                       
@@ -648,22 +625,7 @@ export default function HelpSupportHome() {
           <div className="lg:col-span-3">
             <div className="bg-white rounded-lg shadow-sm border p-8">
               {(() => {
-                // Find the current section or child section
-                let currentSection = helpContent[activeTab as keyof typeof helpContent]
-                let currentChild = null
-                
-                // If not found in main sections, check if it's a child section
-                if (!currentSection) {
-                  Object.values(helpContent).forEach(section => {
-                    if (section.children) {
-                      const child = section.children.find(c => c.id === activeTab)
-                      if (child) {
-                        currentSection = section
-                        currentChild = child
-                      }
-                    }
-                  })
-                }
+                const currentSection = helpContent[activeTab as keyof typeof helpContent]
                 
                 if (!currentSection) return null
 
@@ -675,18 +637,18 @@ export default function HelpSupportHome() {
                       <IconComponent className="w-8 h-8 text-blue-600" />
                       <div>
                         <h2 className="text-2xl font-bold text-gray-900">
-                          {currentChild ? currentChild.title : currentSection.title}
+                          {currentSection.title}
                         </h2>
                         <p className="text-gray-600">
-                          {currentChild ? currentChild.content : currentSection.content}
+                          {currentSection.content}
                         </p>
                       </div>
                     </div>
 
                     {/* FAQ Content */}
                     <div className="space-y-6">
-                      {(currentChild ? currentChild.faqs : currentSection.faqs) && 
-                        (currentChild ? currentChild.faqs : currentSection.faqs).map((faq, index) => (
+                      {currentSection.faqs && 
+                        currentSection.faqs.map((faq, index) => (
                           <Card key={index} className="bg-white border border-gray-200 hover:shadow-md transition-shadow">
                             <CardHeader>
                               <CardTitle className="text-lg text-gray-900">
@@ -701,25 +663,6 @@ export default function HelpSupportHome() {
                           </Card>
                         ))}
                     </div>
-
-                    {/* Show child sections if viewing parent section */}
-                    {!currentChild && currentSection.children && currentSection.children.length > 0 && (
-                      <div className="mt-8">
-                        <h3 className="text-xl font-semibold text-gray-900 mb-4">Related Topics</h3>
-                        <div className="grid md:grid-cols-2 gap-4">
-                          {currentSection.children.map((child) => (
-                            <Card key={child.id} className="hover:shadow-md transition-shadow cursor-pointer">
-                              <CardHeader>
-                                <CardTitle className="text-lg">{child.title}</CardTitle>
-                              </CardHeader>
-                              <CardContent>
-                                <p className="text-gray-600">{child.content}</p>
-                              </CardContent>
-                            </Card>
-                          ))}
-                        </div>
-                      </div>
-                    )}
                   </div>
                 )
               })()}
