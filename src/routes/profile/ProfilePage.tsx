@@ -139,8 +139,7 @@ export function ProfilePage() {
         const { data: references, error: referencesError } = await supabase
           .from('reference_contacts')
           .select('*')
-          .eq('user_id', profileId)
-          .order('created_at', { ascending: false });
+          .eq('user_id', profileId);
 
         if (referencesError) {
           throw new Error(`Failed to load references: ${referencesError.message}`);
