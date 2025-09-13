@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { ShieldCheck, UserStar, Globe } from 'lucide-react'
+import { ShieldCheck, Award, Globe } from 'lucide-react'
 
 // BlogCard component for the professionals page
 const BlogCard = ({ blogNumber }: { blogNumber: number }) => {
@@ -213,7 +213,7 @@ const Professionals = () => {
             <Card className="text-center hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
                 <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                  <UserStar className="w-8 h-8 text-[#FACC15]" />
+                  <Award className="w-8 h-8 text-[#FACC15]" />
                 </div>
                 <CardTitle className="text-xl text-[#0284C7]">Build your Reputation</CardTitle>
               </CardHeader>
