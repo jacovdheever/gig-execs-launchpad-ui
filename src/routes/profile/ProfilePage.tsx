@@ -4,7 +4,7 @@ import { AppShell } from '@/components/AppShell';
 import { ProfileView } from './ProfileView';
 import { ProfileEdit } from './ProfileEdit';
 import { getCurrentUser } from '@/lib/getCurrentUser';
-import { createClient } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 
 interface User {
@@ -112,7 +112,6 @@ export function ProfilePage() {
         setIsOwner(isOwnProfile);
 
         // Load profile data
-        const supabase = createClient();
         
         // Load user data
         const { data: userData, error: userError } = await supabase

@@ -83,7 +83,7 @@ import CommunityLanding from "./routes/community/CommunityLanding";
 import CommunityTopic from "./routes/community/CommunityTopic";
 
 // Profile Components
-import ProfilePage from "./routes/profile/ProfilePage";
+import { ProfilePage } from "./routes/profile/ProfilePage";
 
 const queryClient = new QueryClient();
 

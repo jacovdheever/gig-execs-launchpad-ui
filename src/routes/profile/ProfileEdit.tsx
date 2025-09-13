@@ -9,7 +9,7 @@ import { CertificationsForm } from '@/components/profile/CertificationsForm';
 import { PortfolioForm } from '@/components/profile/PortfolioForm';
 import { IdDocumentUploader } from '@/components/profile/IdDocumentUploader';
 import { computeCompleteness, computeProfileStatus, type CompletenessData } from '@/lib/profile';
-import { createClient } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 
 interface User {
@@ -100,7 +100,6 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   const { user, profile, references, education, certifications, portfolio } = profileData;
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-  const supabase = createClient();
 
   // Calculate completeness
   const completenessData: CompletenessData = {
