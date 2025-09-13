@@ -1,16 +1,93 @@
 import React, { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
+import { Linkedin, Twitter } from 'lucide-react'
 
 const AboutUs = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
-    document.title = 'About Us - GigExecs | Premier Freelance Hub for Top Professionals'
+    document.title = 'About GigExecs | Senior Professionals & Fractional Executives Marketplace'
     
+    // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]')
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Learn about GigExecs mission to revolutionize the gig economy by connecting senior professionals with innovative companies. Discover our story, values, and commitment to excellence.')
+      metaDescription.setAttribute('content', 'GigExecs connects innovative companies with seasoned professionals for fractional, freelance, and project-based roles. Learn about our mission, team, and vision for the future of work.')
     }
+
+    // Add meta keywords
+    let metaKeywords = document.querySelector('meta[name="keywords"]')
+    if (!metaKeywords) {
+      metaKeywords = document.createElement('meta')
+      metaKeywords.setAttribute('name', 'keywords')
+      document.head.appendChild(metaKeywords)
+    }
+    metaKeywords.setAttribute('content', 'GigExecs, fractional executives, senior professionals, freelance executives, project-based consultants, gig economy leadership, hire senior talent, executive marketplace')
+
+    // Add Open Graph meta tags
+    const ogTitle = document.querySelector('meta[property="og:title"]')
+    if (!ogTitle) {
+      const ogTitleEl = document.createElement('meta')
+      ogTitleEl.setAttribute('property', 'og:title')
+      document.head.appendChild(ogTitleEl)
+    }
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', 'About GigExecs | Senior Professionals & Fractional Executives Marketplace')
+
+    const ogDescription = document.querySelector('meta[property="og:description"]')
+    if (!ogDescription) {
+      const ogDescriptionEl = document.createElement('meta')
+      ogDescriptionEl.setAttribute('property', 'og:description')
+      document.head.appendChild(ogDescriptionEl)
+    }
+    document.querySelector('meta[property="og:description"]')?.setAttribute('content', 'Discover GigExecs\' mission to revolutionize the gig economy by connecting innovative companies with seasoned professionals. Meet the team driving the future of work.')
+
+    const ogType = document.querySelector('meta[property="og:type"]')
+    if (!ogType) {
+      const ogTypeEl = document.createElement('meta')
+      ogTypeEl.setAttribute('property', 'og:type')
+      document.head.appendChild(ogTypeEl)
+    }
+    document.querySelector('meta[property="og:type"]')?.setAttribute('content', 'website')
+
+    const ogUrl = document.querySelector('meta[property="og:url"]')
+    if (!ogUrl) {
+      const ogUrlEl = document.createElement('meta')
+      ogUrlEl.setAttribute('property', 'og:url')
+      document.head.appendChild(ogUrlEl)
+    }
+    document.querySelector('meta[property="og:url"]')?.setAttribute('content', 'https://www.gigexecs.com/about')
+
+    const ogImage = document.querySelector('meta[property="og:image"]')
+    if (!ogImage) {
+      const ogImageEl = document.createElement('meta')
+      ogImageEl.setAttribute('property', 'og:image')
+      document.head.appendChild(ogImageEl)
+    }
+    document.querySelector('meta[property="og:image"]')?.setAttribute('content', 'https://www.gigexecs.com/images/og-about.jpg')
+
+    // Add Twitter meta tags
+    const twitterCard = document.querySelector('meta[name="twitter:card"]')
+    if (!twitterCard) {
+      const twitterCardEl = document.createElement('meta')
+      twitterCardEl.setAttribute('name', 'twitter:card')
+      document.head.appendChild(twitterCardEl)
+    }
+    document.querySelector('meta[name="twitter:card"]')?.setAttribute('content', 'summary_large_image')
+
+    const twitterTitle = document.querySelector('meta[name="twitter:title"]')
+    if (!twitterTitle) {
+      const twitterTitleEl = document.createElement('meta')
+      twitterTitleEl.setAttribute('name', 'twitter:title')
+      document.head.appendChild(twitterTitleEl)
+    }
+    document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', 'About GigExecs | Senior Professionals & Fractional Executives Marketplace')
+
+    const twitterDescription = document.querySelector('meta[name="twitter:description"]')
+    if (!twitterDescription) {
+      const twitterDescriptionEl = document.createElement('meta')
+      twitterDescriptionEl.setAttribute('name', 'twitter:description')
+      document.head.appendChild(twitterDescriptionEl)
+    }
+    document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', 'GigExecs connects companies with senior professionals and executives for fractional, freelance, and project-based roles.')
   }, [])
 
   const toggleMobileMenu = () => {
@@ -135,9 +212,27 @@ const AboutUs = () => {
               </div>
               <h3 className="text-xl font-bold text-[#0284C7] mb-2">Nuno G. Rodrigues</h3>
               <p className="text-[#9CA3AF] mb-4">Founder & CEO</p>
-              <p className="text-sm text-[#6B7280]">
-                With over 23 years of global experience in corporate leadership, Nuno founded GigExecs to create opportunities for senior professionals in the gig economy.
+              <p className="text-sm text-[#6B7280] mb-4">
+                Senior Executive, Entrepreneur and dealmaker leading GigExecs to reshape how companies and senior talent work together. Advised on $30B+ in transactions, delivered $2B+ in value creation.
               </p>
+              <div className="flex justify-center space-x-4">
+                <a 
+                  href="https://www.linkedin.com/in/nuno-g-rodrigues-210a59/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-[#0284C7] hover:text-[#012E46] transition-colors"
+                >
+                  <Linkedin className="w-5 h-5" />
+                </a>
+                <a 
+                  href="https://x.com/NunoG_Rodrigues" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-[#0284C7] hover:text-[#012E46] transition-colors"
+                >
+                  <Twitter className="w-5 h-5" />
+                </a>
+              </div>
             </div>
 
             <div className="text-center">
@@ -145,15 +240,56 @@ const AboutUs = () => {
                 <img 
                   src="/images/AboutUs/Jaco.png" 
                   alt="Jaco van der Heever" 
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover grayscale"
                 />
               </div>
               <h3 className="text-xl font-bold text-[#0284C7] mb-2">Jaco van der Heever</h3>
-              <p className="text-[#9CA3AF] mb-4">Co-Founder & CTO</p>
-              <p className="text-sm text-[#6B7280]">
-                Technology visionary with extensive experience in building scalable platforms that connect people and create value.
+              <p className="text-[#9CA3AF] mb-4">Co-Founder & CXO</p>
+              <p className="text-sm text-[#6B7280] mb-4">
+                Award-winning product and design leader with 20+ years of experience shaping digital platforms across fintech, healthcare, and enterprise domains. He drives the platform vision, user experience, and technology implementation, building GigExecs into a category-defining company.
               </p>
+              <div className="flex justify-center space-x-4">
+                <a 
+                  href="https://www.linkedin.com/in/jacovdh/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-[#0284C7] hover:text-[#012E46] transition-colors"
+                >
+                  <Linkedin className="w-5 h-5" />
+                </a>
+                <a 
+                  href="https://x.com/jacovdh" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-[#0284C7] hover:text-[#012E46] transition-colors"
+                >
+                  <Twitter className="w-5 h-5" />
+                </a>
+              </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why GigExecs Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1F2937] mb-4">
+              Why GigExecs?
+            </h2>
+            <p className="text-lg text-[#9CA3AF] max-w-4xl mx-auto leading-relaxed">
+              Traditional hiring is slow, costly, and rigid. GigExecs offers companies flexible access to senior executives, advisors, and specialists — on a fractional, freelance, or project basis. Our vetted community brings decades of leadership experience across industries, giving organizations immediate expertise without long-term overheads.
+            </p>
+          </div>
+          
+          <div className="text-center">
+            <h3 className="text-2xl font-bold text-[#0284C7] mb-4">
+              Shaping the Future of Work
+            </h3>
+            <p className="text-lg text-[#6B7280] max-w-3xl mx-auto leading-relaxed">
+              As businesses face tighter budgets and talent shortages, fractional and project-based work has become a critical strategy. GigExecs is at the forefront of this shift, building a platform where experience meets opportunity, helping both professionals and companies thrive.
+            </p>
           </div>
         </div>
       </section>
