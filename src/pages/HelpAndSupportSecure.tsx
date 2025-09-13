@@ -4,8 +4,9 @@ import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ChevronRight, Search, BookOpen, Users, CreditCard, Target, FileText, Briefcase, AlertTriangle, ChevronDown, ChevronUp } from 'lucide-react'
 import BlogCard from '@/components/BlogCard'
+import { AppShell } from '@/components/AppShell'
 
-export default function HelpSupportHome() {
+export default function HelpAndSupportSecure() {
   const [activeTab, setActiveTab] = useState('getting-started')
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState([])
@@ -374,373 +375,265 @@ export default function HelpSupportHome() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F5F5F5] via-[#F5F5F5] to-[#FFFFFF]">
-      {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Left side - Logo */}
-            <div className="flex items-center">
-              <a href="/" className="text-2xl font-extrabold text-slate-900 hover:text-[#0284C7] transition-colors cursor-pointer">
-                GigExecs
-              </a>
-            </div>
-
-            {/* Center - Navigation Links */}
-            <div className="hidden lg:flex items-center space-x-12">
-              <a href="/" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
-              <a href="/clients" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
-              <a href="/professionals" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
-              <a href="/blog" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
-            </div>
-
-            {/* Right side - Action Buttons */}
-            <div className="flex items-center">
-              <Button variant="outline" className="border-[#012E46] text-[#012E46] hover:bg-[#F5F5F5] rounded-r-none border-r-0">
-                <a href="/auth/login" className="w-full h-full flex items-center justify-center">
-                  Sign in
-                </a>
-              </Button>
-              <Button className="bg-[#012E46] hover:bg-[#0284C7] text-white rounded-l-none">
-                <a href="/auth/register" className="w-full h-full flex items-center justify-center text-white">
-                  Join
-                </a>
-              </Button>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="lg:hidden">
-              <button 
-                onClick={toggleMobileMenu}
-                className="text-[#1F2937] hover:text-[#0284C7] transition-colors"
-                aria-label="Toggle mobile menu"
-              >
-                {isMobileMenuOpen ? (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                ) : (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                )}
-              </button>
+    <AppShell>
+      <div className="min-h-screen bg-gradient-to-br from-[#F5F5F5] via-[#F5F5F5] to-[#FFFFFF]">
+        {/* Header */}
+        <header className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="text-center">
+              <h1 className="text-3xl font-bold text-gray-900">Help & Support</h1>
+              <p className="text-gray-600 mt-1">Find answers to your questions and get the help you need</p>
             </div>
           </div>
+        </header>
 
-          {/* Mobile Navigation Menu */}
-          <div className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-            isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
-          }`}>
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-[#F5F5F5]">
-              <a href="/" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
-              <a href="/clients" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
-              <a href="/professionals" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
-              <a href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900">Help & Support</h1>
-            <p className="text-gray-600 mt-1">Find answers to your questions and get the help you need</p>
-          </div>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid lg:grid-cols-4 gap-8">
-          {/* Left Sidebar - Navigation */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-8">
-              {/* Search */}
-              <div className="mb-6">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                  <Input
-                    type="text"
-                    placeholder="Search help topics..."
-                    value={searchQuery}
-                    onChange={(e) => handleSearch(e.target.value)}
-                    className="pl-10 pr-4 py-2 w-full"
-                  />
-                </div>
-                
-                {/* Search Results */}
-                {searchQuery.trim() !== '' && (
-                  <div className="mt-3 bg-white rounded-lg shadow-lg border max-h-96 overflow-y-auto">
-                    {isSearching ? (
-                      <div className="p-6 text-center">
-                        <div className="w-6 h-6 mx-auto mb-3 text-blue-500 animate-spin">
-                          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                          </svg>
-                        </div>
-                        <p className="text-sm text-gray-600">Searching...</p>
-                      </div>
-                    ) : searchResults.length > 0 ? (
-                      searchResults.map((result, index) => (
-                        <div
-                          key={index}
-                          onClick={() => handleSearchResultClick(result)}
-                          className="p-3 hover:bg-gray-50 cursor-pointer border-b last:border-b-0"
-                        >
-                          <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                            <span className="text-sm font-medium text-gray-900">
-                              {result.title}
-                            </span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid lg:grid-cols-4 gap-8">
+            {/* Left Sidebar - Navigation */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-8">
+                {/* Search */}
+                <div className="mb-6">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <Input
+                      type="text"
+                      placeholder="Search help topics..."
+                      value={searchQuery}
+                      onChange={(e) => handleSearch(e.target.value)}
+                      className="pl-10 pr-4 py-2 w-full"
+                    />
+                  </div>
+                  
+                  {/* Search Results */}
+                  {searchQuery.trim() !== '' && (
+                    <div className="mt-3 bg-white rounded-lg shadow-lg border max-h-96 overflow-y-auto">
+                      {isSearching ? (
+                        <div className="p-6 text-center">
+                          <div className="w-6 h-6 mx-auto mb-3 text-blue-500 animate-spin">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
                           </div>
-                          <p className="text-xs text-gray-600 mt-1 line-clamp-2">
-                            {result.content}
+                          <p className="text-sm text-gray-600">Searching...</p>
+                        </div>
+                      ) : searchResults.length > 0 ? (
+                        searchResults.map((result, index) => (
+                          <div
+                            key={index}
+                            onClick={() => handleSearchResultClick(result)}
+                            className="p-3 hover:bg-gray-50 cursor-pointer border-b last:border-b-0"
+                          >
+                            <div className="flex items-center gap-2">
+                              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                              <span className="text-sm font-medium text-gray-900">
+                                {result.title}
+                              </span>
+                            </div>
+                            <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+                              {result.content}
+                            </p>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="p-6 text-center">
+                          <div className="w-12 h-12 mx-auto mb-3 text-gray-400">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                          </div>
+                          <h3 className="text-sm font-medium text-gray-900 mb-1">No results found</h3>
+                          <p className="text-xs text-gray-500">
+                            Try searching with different keywords or browse the topics below
                           </p>
                         </div>
-                      ))
-                    ) : (
-                      <div className="p-6 text-center">
-                        <div className="w-12 h-12 mx-auto mb-3 text-gray-400">
-                          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                          </svg>
-                        </div>
-                        <h3 className="text-sm font-medium text-gray-900 mb-1">No results found</h3>
-                        <p className="text-xs text-gray-500">
-                          Try searching with different keywords or browse the topics below
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-
-              {/* Navigation Tabs */}
-              <nav className="space-y-4">
-                {/* Getting Started Section */}
-                <div>
-                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">
-                    Getting Started
-                  </h3>
-                  <div className="space-y-1">
-                    <button
-                      onClick={() => setActiveTab('getting-started')}
-                      className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${
-                        activeTab === 'getting-started'
-                          ? 'bg-blue-50 text-blue-700 border border-blue-200' 
-                          : 'hover:bg-gray-100 text-gray-700'
-                      }`}
-                    >
-                      <BookOpen className="w-5 h-5" />
-                      <span className="font-medium">Getting Started</span>
-                    </button>
-                  </div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
-                {/* Core Platform Features */}
-                <div>
-                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">
-                    Core Platform Features
-                  </h3>
-                  <div className="space-y-1">
-                    {['milestones', 'contracts', 'gigs', 'disputes'].map((key) => {
-                      const section = helpContent[key as keyof typeof helpContent]
-                      const IconComponent = section.icon
-                      
-                      return (
-                        <button
-                          key={key}
-                          onClick={() => setActiveTab(key)}
-                          className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${
-                            activeTab === key 
-                              ? 'bg-blue-50 text-blue-700 border border-blue-200' 
-                              : 'hover:bg-gray-100 text-gray-700'
-                          }`}
-                        >
-                          <IconComponent className="w-5 h-5" />
-                          <span className="font-medium">{section.title}</span>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-
-                {/* User Roles */}
-                <div>
-                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">
-                    User Roles
-                  </h3>
-                  <div className="space-y-1">
-                    {['professionals', 'client'].map((key) => {
-                      const section = helpContent[key as keyof typeof helpContent]
-                      const IconComponent = section.icon
-                      
-                      return (
-                        <button
-                          key={key}
-                          onClick={() => setActiveTab(key)}
-                          className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${
-                            activeTab === key 
-                              ? 'bg-blue-50 text-blue-700 border border-blue-200' 
-                              : 'hover:bg-gray-100 text-gray-700'
-                          }`}
-                        >
-                          <IconComponent className="w-5 h-5" />
-                          <span className="font-medium">{section.title}</span>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-
-                {/* Billing & Payments */}
-                <div>
-                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">
-                    Billing & Payments
-                  </h3>
-                  <div className="space-y-1">
-                    {['billing-process', 'payment-methods', 'refunds-credits'].map((key) => {
-                      const section = helpContent[key as keyof typeof helpContent]
-                      const IconComponent = section.icon
-                      
-                      return (
-                        <button
-                          key={key}
-                          onClick={() => setActiveTab(key)}
-                          className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${
-                            activeTab === key 
-                              ? 'bg-blue-50 text-blue-700 border border-blue-200' 
-                              : 'hover:bg-gray-100 text-gray-700'
-                          }`}
-                        >
-                          <IconComponent className="w-5 h-5" />
-                          <span className="font-medium">{section.title}</span>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-              </nav>
-            </div>
-          </div>
-
-          {/* Right Content Area */}
-          <div className="lg:col-span-3">
-            <div className="bg-white rounded-lg shadow-sm border p-8">
-              {(() => {
-                const currentSection = helpContent[activeTab as keyof typeof helpContent]
-                
-                if (!currentSection) return null
-
-                const IconComponent = currentSection.icon
-                
-                return (
+                {/* Navigation Tabs */}
+                <nav className="space-y-4">
+                  {/* Getting Started Section */}
                   <div>
-                    <div className="flex items-center gap-3 mb-6">
-                      <IconComponent className="w-8 h-8 text-blue-600" />
-                      <div>
-                        <h2 className="text-2xl font-bold text-gray-900">
-                          {currentSection.title}
-                        </h2>
-                        <p className="text-gray-600">
-                          {currentSection.content}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* FAQ Content */}
-                    <div className="space-y-6">
-                      {currentSection.faqs && 
-                        currentSection.faqs.map((faq, index) => (
-                          <Card key={index} className="bg-white border border-gray-200 hover:shadow-md transition-shadow">
-                            <CardHeader>
-                              <CardTitle className="text-lg text-gray-900">
-                                {faq.question}
-                              </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                              <p className="text-gray-700 leading-relaxed">
-                                {faq.answer}
-                              </p>
-                            </CardContent>
-                          </Card>
-                        ))}
+                    <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">
+                      Getting Started
+                    </h3>
+                    <div className="space-y-1">
+                      <button
+                        onClick={() => setActiveTab('getting-started')}
+                        className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${
+                          activeTab === 'getting-started'
+                            ? 'bg-blue-50 text-blue-700 border border-blue-200' 
+                            : 'hover:bg-gray-100 text-gray-700'
+                        }`}
+                      >
+                        <BookOpen className="w-5 h-5" />
+                        <span className="font-medium">Getting Started</span>
+                      </button>
                     </div>
                   </div>
-                )
-              })()}
+
+                  {/* Core Platform Features */}
+                  <div>
+                    <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">
+                      Core Platform Features
+                    </h3>
+                    <div className="space-y-1">
+                      {['milestones', 'contracts', 'gigs', 'disputes'].map((key) => {
+                        const section = helpContent[key as keyof typeof helpContent]
+                        const IconComponent = section.icon
+                        
+                        return (
+                          <button
+                            key={key}
+                            onClick={() => setActiveTab(key)}
+                            className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${
+                              activeTab === key 
+                                ? 'bg-blue-50 text-blue-700 border border-blue-200' 
+                                : 'hover:bg-gray-100 text-gray-700'
+                            }`}
+                          >
+                            <IconComponent className="w-5 h-5" />
+                            <span className="font-medium">{section.title}</span>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+
+                  {/* User Roles */}
+                  <div>
+                    <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">
+                      User Roles
+                    </h3>
+                    <div className="space-y-1">
+                      {['professionals', 'client'].map((key) => {
+                        const section = helpContent[key as keyof typeof helpContent]
+                        const IconComponent = section.icon
+                        
+                        return (
+                          <button
+                            key={key}
+                            onClick={() => setActiveTab(key)}
+                            className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${
+                              activeTab === key 
+                                ? 'bg-blue-50 text-blue-700 border border-blue-200' 
+                                : 'hover:bg-gray-100 text-gray-700'
+                            }`}
+                          >
+                            <IconComponent className="w-5 h-5" />
+                            <span className="font-medium">{section.title}</span>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Billing & Payments */}
+                  <div>
+                    <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">
+                      Billing & Payments
+                    </h3>
+                    <div className="space-y-1">
+                      {['billing-process', 'payment-methods', 'refunds-credits'].map((key) => {
+                        const section = helpContent[key as keyof typeof helpContent]
+                        const IconComponent = section.icon
+                        
+                        return (
+                          <button
+                            key={key}
+                            onClick={() => setActiveTab(key)}
+                            className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${
+                              activeTab === key 
+                                ? 'bg-blue-50 text-blue-700 border border-blue-200' 
+                                : 'hover:bg-gray-100 text-gray-700'
+                            }`}
+                          >
+                            <IconComponent className="w-5 h-5" />
+                            <span className="font-medium">{section.title}</span>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </nav>
+              </div>
+            </div>
+
+            {/* Right Content Area */}
+            <div className="lg:col-span-3">
+              <div className="bg-white rounded-lg shadow-sm border p-8">
+                {(() => {
+                  const currentSection = helpContent[activeTab as keyof typeof helpContent]
+                  
+                  if (!currentSection) return null
+
+                  const IconComponent = currentSection.icon
+                  
+                  return (
+                    <div>
+                      <div className="flex items-center gap-3 mb-6">
+                        <IconComponent className="w-8 h-8 text-blue-600" />
+                        <div>
+                          <h2 className="text-2xl font-bold text-gray-900">
+                            {currentSection.title}
+                          </h2>
+                          <p className="text-gray-600">
+                            {currentSection.content}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* FAQ Content */}
+                      <div className="space-y-6">
+                        {currentSection.faqs && 
+                          currentSection.faqs.map((faq, index) => (
+                            <Card key={index} className="bg-white border border-gray-200 hover:shadow-md transition-shadow">
+                              <CardHeader>
+                                <CardTitle className="text-lg text-gray-900">
+                                  {faq.question}
+                                </CardTitle>
+                              </CardHeader>
+                              <CardContent>
+                                <p className="text-gray-700 leading-relaxed">
+                                  {faq.answer}
+                                </p>
+                              </CardContent>
+                            </Card>
+                          ))}
+                      </div>
+                    </div>
+                  )
+                })()}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Related Articles Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Related Articles</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Discover more insights about freelancing, professional development, and the gig economy
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Blog 1 - Getting Started with Freelancing */}
-            <BlogCard blogNumber={1} />
-            
-            {/* Blog 2 - AI and Future of Work */}
-            <BlogCard blogNumber={3} />
-            
-            {/* Blog 3 - Finding Purpose in Second Half */}
-            <BlogCard blogNumber={5} />
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-[#012E46] text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-            <div>
-              <div className="text-2xl font-bold text-[#FACC15] mb-4">GigExecs</div>
-              <p className="text-[#9CA3AF]">
-                The premier community connecting top professionals and innovative companies.
+        {/* Related Articles Section */}
+        <section className="py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Related Articles</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Discover more insights about freelancing, professional development, and the gig economy
               </p>
             </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">How it works</h3>
-              <ul className="space-y-2 text-[#9CA3AF]">
-                <li><a href="/how-it-works" className="hover:text-white transition-colors">How it works</a></li>
-                <li><a href="/pricing" className="hover:text-white transition-colors">Pricing</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">About</h3>
-              <ul className="space-y-2 text-[#9CA3AF]">
-                <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Help & Support</h3>
-              <ul className="space-y-2 text-[#9CA3AF]">
-                <li><a href="/help" className="hover:text-white transition-colors">Help & Support</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Legal</h3>
-              <ul className="space-y-2 text-[#9CA3AF]">
-                <li><a href="/terms-and-conditions" className="hover:text-white transition-colors">Terms of Service</a></li>
-                <li><a href="/data-privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a></li>
-              </ul>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Blog 1 - Getting Started with Freelancing */}
+              <BlogCard blogNumber={1} />
+              
+              {/* Blog 2 - AI and Future of Work */}
+              <BlogCard blogNumber={3} />
+              
+              {/* Blog 3 - Finding Purpose in Second Half */}
+              <BlogCard blogNumber={5} />
             </div>
           </div>
-          <div className="border-t border-[#1F2937] mt-8 pt-8 text-center text-[#9CA3AF]">
-            <p>&copy; {new Date().getFullYear()} GigExecs. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
-    </div>
+        </section>
+      </div>
+    </AppShell>
   )
 }

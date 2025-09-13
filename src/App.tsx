@@ -34,6 +34,7 @@ import AboutUs from "./pages/AboutUs";
 import DataPrivacyPolicy from "./pages/DataPrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import HelpAndSupport from "./pages/HelpAndSupport";
+import HelpAndSupportSecure from "./pages/HelpAndSupportSecure";
 import HowItWorks from "./pages/HowItWorks";
 import NotFound from "./pages/NotFound";
 
@@ -175,6 +176,9 @@ const App = () => (
               <Route index element={<CommunityLanding />} />
               <Route path="topic/:slug" element={<CommunityTopic />} />
             </Route>
+
+            {/* Secure Help Page */}
+            <Route path="/help-secure" element={<HelpAndSupportSecure />} />
 
             {/* Maintenance Page */}
             <Route path="/maintenance" element={<Maintenance />} />

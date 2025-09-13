@@ -39,7 +39,7 @@ export function NavTabs({ role }: Props) {
         <GigsDropdown />
       </nav>
 
-      <NavLink to="/help" className={`${base} ${inactive}`}>
+      <NavLink to="/help-secure" className={`${base} ${inactive}`}>
         <HelpCircle className="w-5 h-5" />
         <span>Help &amp; Support</span>
       </NavLink>
