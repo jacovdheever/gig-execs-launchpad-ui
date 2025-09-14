@@ -116,10 +116,7 @@ export function CompletenessMeter({ segments, percent, missing }: CompletenessMe
       {/* Overall Status */}
       <div className="mt-3 text-center">
         <p className="text-sm text-slate-600">
-          {percent === 100 
-            ? 'Profile Complete!' 
-            : `${100 - Math.round(percent)}% remaining to complete`
-          }
+          {100 - Math.round(percent)}% remaining to complete
         </p>
       </div>
     </div>

@@ -19,6 +19,7 @@ import { supabase } from '@/lib/supabase'
 
 // Community Posts Grid Component
 function CommunityPostsGrid() {
+  const navigate = useNavigate();
   const { data: feedData, isLoading, error } = usePosts({
     categoryId: null,
     sort: 'new',
@@ -481,18 +482,19 @@ export default function DashboardPage() {
 
       {/* Profile Strength Section - Only for consultants */}
       {user.role === 'consultant' && completenessData && (
-        <Card 
-          className="cursor-pointer hover:shadow-md transition-shadow" 
-          onClick={() => {
-            // If basic profile is incomplete, go to onboarding
-            if (profileTier === 'BASIC' && !completenessData.basic.hasCore) {
-              navigate('/onboarding/step1');
-            } else {
-              // Otherwise go to profile page
-              navigate('/profile');
-            }
-          }}
-        >
+        <div className="w-full lg:w-1/2">
+          <Card 
+            className="cursor-pointer hover:shadow-md transition-shadow" 
+            onClick={() => {
+              // If basic profile is incomplete, go to onboarding
+              if (profileTier === 'BASIC' && !completenessData.basic.hasCore) {
+                navigate('/onboarding/step1');
+              } else {
+                // Otherwise go to profile page
+                navigate('/profile');
+              }
+            }}
+          >
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <User className="h-5 w-5" />
@@ -511,8 +513,8 @@ export default function DashboardPage() {
                 <CompletenessMeter 
                   segments={{
                     basic: completenessData.basic.hasCore ? 1 : 0,
-                    full: completenessData.full.referencesCount > 0 || completenessData.full.hasIdDocument || completenessData.full.qualificationsCount > 0 || completenessData.full.certificationsCount > 0 ? 1 : 0,
-                    allStar: completenessData.allstar.portfolioCount > 0 ? 1 : 0
+                    full: (completenessData.full.referencesCount >= 2 && completenessData.full.hasIdDocument && (completenessData.full.qualificationsCount >= 1 || completenessData.full.certificationsCount >= 1)) ? 1 : 0,
+                    allStar: (completenessData.full.referencesCount >= 2 && completenessData.full.hasIdDocument && (completenessData.full.qualificationsCount >= 1 || completenessData.full.certificationsCount >= 1) && completenessData.allstar.portfolioCount >= 1) ? 1 : 0
                   }}
                   percent={profileCompleteness}
                   missing={{
@@ -537,6 +539,7 @@ export default function DashboardPage() {
             </div>
           </CardContent>
         </Card>
+        </div>
       )}
 
       {/* Quick Actions */}
