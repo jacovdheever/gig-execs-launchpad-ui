@@ -3,17 +3,107 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { 
   Briefcase, 
-  MessageSquare, 
   FileText, 
-  TrendingUp, 
-  Clock,
   CheckCircle,
-  AlertCircle
+  User
 } from 'lucide-react'
+import { CompletenessMeter } from '@/components/profile/CompletenessMeter'
+import { StatusBadge } from '@/components/profile/StatusBadge'
+import { computeCompleteness, computeProfileStatus, type CompletenessData } from '@/lib/profile'
+import { usePosts } from '@/lib/community.hooks'
+import type { ForumPost } from '@/lib/community.types'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser'
 import { supabase } from '@/lib/supabase'
+
+// Community Posts Grid Component
+function CommunityPostsGrid() {
+  const { data: feedData, isLoading, error } = usePosts({
+    categoryId: null,
+    sort: 'new',
+    page: 0,
+    limit: 3
+  });
+
+  const getInitials = (firstName: string, lastName: string) => {
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+  };
+
+  const truncateText = (text: string, maxLength: number = 120) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+  };
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="animate-pulse">
+            <div className="bg-slate-200 h-32 rounded-lg"></div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-8 text-slate-500">
+        Unable to load community posts
+      </div>
+    );
+  }
+
+  const posts = feedData?.posts || [];
+
+  if (posts.length === 0) {
+    return (
+      <div className="text-center py-8 text-slate-500">
+        No community posts yet
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {posts.map((post: ForumPost) => (
+        <div key={post.id} className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+          <div className="flex items-start gap-3 mb-3">
+            <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0">
+              {post.author?.profile_photo_url ? (
+                <img
+                  src={post.author.profile_photo_url}
+                  alt={`${post.author.first_name} ${post.author.last_name}`}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <span className="text-sm font-medium text-slate-600">
+                  {getInitials(post.author?.first_name || 'U', post.author?.last_name || 'U')}
+                </span>
+              )}
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-medium text-slate-900 text-sm mb-1 line-clamp-2">
+                {post.title}
+              </h3>
+              <p className="text-xs text-slate-500">
+                {post.author?.first_name} {post.author?.last_name}
+              </p>
+            </div>
+          </div>
+          <p className="text-sm text-slate-600 line-clamp-3">
+            {truncateText(post.body || '')}
+          </p>
+          <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
+            <span>{post.category?.name || 'General'}</span>
+            <span>{new Date(post.created_at).toLocaleDateString()}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function DashboardPage() {
   const [user, setUser] = useState<CurrentUser | null>(null);
@@ -201,12 +291,61 @@ export default function DashboardPage() {
 
   // State for profile completeness
   const [profileCompleteness, setProfileCompleteness] = useState(0);
+  const [completenessData, setCompletenessData] = useState<CompletenessData | null>(null);
+  const [profileTier, setProfileTier] = useState<'BASIC' | 'FULL' | 'ALL_STAR'>('BASIC');
+  const [vettingStatus, setVettingStatus] = useState<string | null>(null);
   
   // Load profile completeness on component mount and when user changes
   useEffect(() => {
     if (user) {
       console.log('User changed or component mounted, calculating profile completeness...');
-      calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
+      calculateProfileCompleteness(user.id, user.role).then(async (percentage) => {
+        setProfileCompleteness(percentage);
+        
+        // Also calculate detailed completeness data for Profile Strength component
+        if (user.role === 'consultant') {
+          try {
+            // Load all necessary data for completeness calculation
+            const [profileResult, referencesResult, educationResult, certificationsResult, portfolioResult] = await Promise.all([
+              supabase.from('consultant_profiles').select('*').eq('user_id', user.id).single(),
+              supabase.from('reference_contacts').select('id').eq('user_id', user.id),
+              supabase.from('education').select('id').eq('user_id', user.id),
+              supabase.from('certifications').select('id').eq('user_id', user.id),
+              supabase.from('portfolio').select('id').eq('user_id', user.id)
+            ]);
+
+            const profile = profileResult.data;
+            const references = referencesResult.data || [];
+            const education = educationResult.data || [];
+            const certifications = certificationsResult.data || [];
+            const portfolio = portfolioResult.data || [];
+
+            const completenessData: CompletenessData = {
+              basic: {
+                hasCore: !!(user.first_name && user.last_name && user.email && profile?.job_title && profile?.address1 && profile?.country),
+              },
+              full: {
+                referencesCount: references.length,
+                hasIdDocument: !!profile?.id_doc_url,
+                qualificationsCount: education.length,
+                certificationsCount: certifications.length,
+              },
+              allstar: {
+                portfolioCount: portfolio.length,
+              },
+            };
+
+            const computedCompleteness = computeCompleteness(completenessData);
+            const computedStatus = computeProfileStatus(completenessData, profile?.vetting_status || 'pending');
+
+            setCompletenessData(completenessData);
+            setProfileTier(computedCompleteness.tier);
+            setVettingStatus(profile?.vetting_status || 'pending');
+          } catch (error) {
+            console.error('Error calculating detailed completeness:', error);
+          }
+        }
+      });
     }
   }, [user]);
   
@@ -292,64 +431,6 @@ export default function DashboardPage() {
     };
   }, [user]);
   
-  const stats = {
-    totalProjects: 12,
-    activeProjects: 3,
-    completedProjects: 8,
-    pendingBids: user?.role === 'consultant' ? 5 : 0,
-    unreadMessages: 2,
-    profileCompleteness: profileCompleteness
-  }
-
-  const recentProjects = [
-    {
-      id: 1,
-      title: 'Website Redesign Project',
-      status: 'in_progress',
-      progress: 65,
-      deadline: '2024-02-15'
-    },
-    {
-      id: 2,
-      title: 'Mobile App Development',
-      status: 'open',
-      progress: 0,
-      deadline: '2024-03-01'
-    },
-    {
-      id: 3,
-      title: 'Marketing Strategy Consultation',
-      status: 'completed',
-      progress: 100,
-      deadline: '2024-01-20'
-    }
-  ]
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'open':
-        return <Badge variant="secondary">Open</Badge>
-      case 'in_progress':
-        return <Badge variant="default">In Progress</Badge>
-      case 'completed':
-        return <Badge variant="outline" className="text-green-600 border-green-600">Completed</Badge>
-      default:
-        return <Badge variant="secondary">{status}</Badge>
-    }
-  }
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'open':
-        return <Clock className="h-4 w-4 text-slate-400" />
-      case 'in_progress':
-        return <TrendingUp className="h-4 w-4 text-blue-500" />
-      case 'completed':
-        return <CheckCircle className="h-4 w-4 text-green-500" />
-      default:
-        return <AlertCircle className="h-4 w-4 text-slate-400" />
-    }
-  }
 
   if (loading) {
     return (
@@ -375,103 +456,69 @@ export default function DashboardPage() {
           Welcome back, {user.firstName}!
         </h1>
         <p className="text-slate-100">
-          Here's what's happening with your {user.role === 'consultant' ? 'consulting work' : 'projects'} today.
+          Here's what's happening today.
         </p>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Projects</CardTitle>
-            <Briefcase className="h-4 w-4 text-slate-400" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.totalProjects}</div>
-            <p className="text-xs text-slate-600">
-              {stats.activeProjects} active, {stats.completedProjects} completed
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              {user.role === 'consultant' ? 'Pending Bids' : 'Active Projects'}
-            </CardTitle>
-            <FileText className="h-4 w-4 text-slate-400" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {user.role === 'consultant' ? stats.pendingBids : stats.activeProjects}
-            </div>
-            <p className="text-xs text-slate-600">
-              {user.role === 'consultant' ? 'Awaiting response' : 'Currently running'}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Unread Messages</CardTitle>
-            <MessageSquare className="h-4 w-4 text-slate-400" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.unreadMessages}</div>
-            <p className="text-xs text-slate-600">
-              New messages to review
-            </p>
-          </CardContent>
-        </Card>
-
+      {/* Profile Strength Section - Only for consultants */}
+      {user.role === 'consultant' && completenessData && (
         <Card 
           className="cursor-pointer hover:shadow-md transition-shadow" 
           onClick={() => {
-            if (user.role === 'consultant') {
+            // If basic profile is incomplete, go to onboarding
+            if (profileTier === 'BASIC' && !completenessData.basic.hasCore) {
               navigate('/onboarding/step1');
             } else {
-              navigate('/onboarding/client/step1');
+              // Otherwise go to profile page
+              navigate('/profile');
             }
           }}
         >
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Profile Complete</CardTitle>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 rounded-full bg-slate-200 flex items-center justify-center">
-                <span className="text-xs font-bold text-slate-600">{stats.profileCompleteness}%</span>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <User className="h-5 w-5" />
+              Profile Strength
+            </CardTitle>
+            <CardDescription>
+              {profileTier === 'BASIC' && !completenessData.basic.hasCore 
+                ? 'Complete your basic profile to get started'
+                : 'Manage your professional profile and visibility'
+              }
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <CompletenessMeter 
+                  segments={{
+                    basic: completenessData.basic.hasCore ? 1 : 0,
+                    full: completenessData.full.referencesCount > 0 || completenessData.full.hasIdDocument || completenessData.full.qualificationsCount > 0 || completenessData.full.certificationsCount > 0 ? 1 : 0,
+                    allStar: completenessData.allstar.portfolioCount > 0 ? 1 : 0
+                  }}
+                  percent={profileCompleteness}
+                  missing={{
+                    basic: completenessData.basic.hasCore ? [] : ['Complete basic information'],
+                    full: [],
+                    allStar: []
+                  }}
+                />
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-6 w-6 p-0 hover:bg-slate-100"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (user) {
-                    console.log('Manual refresh of profile completeness...');
-                    calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
-                  }
-                }}
-                title="Refresh profile completeness"
+              <StatusBadge status={profileTier} />
+            </div>
+            <div className="text-center">
+              <Button 
+                variant={profileTier === 'BASIC' && !completenessData.basic.hasCore ? "default" : "outline"}
+                className="w-full"
               >
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
+                {profileTier === 'BASIC' && !completenessData.basic.hasCore 
+                  ? 'Complete Profile' 
+                  : 'View Profile'
+                }
               </Button>
             </div>
-          </CardHeader>
-          <CardContent>
-            <div className="w-full bg-slate-200 rounded-full h-2">
-              <div 
-                className="bg-[#012E46] h-2 rounded-full transition-all duration-300"
-                style={{ width: `${stats.profileCompleteness}%` }}
-              ></div>
-            </div>
-            <p className="text-xs text-slate-600 mt-2">
-              {100 - stats.profileCompleteness}% remaining
-            </p>
           </CardContent>
         </Card>
-      </div>
+      )}
 
       {/* Quick Actions */}
       <Card>
@@ -506,21 +553,9 @@ export default function DashboardPage() {
             {user.role === 'consultant' ? (
               <>
                 <Button asChild className="h-auto p-4 flex-col space-y-2">
-                  <Link to="/dashboard/projects">
+                  <Link to="/find-gigs">
                     <Briefcase className="h-6 w-6" />
-                    <span>Browse Projects</span>
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" className="h-auto p-4 flex-col space-y-2">
-                  <Link to="/dashboard/profile">
-                    <FileText className="h-6 w-6" />
-                    <span>Update Profile</span>
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" className="h-auto p-4 flex-col space-y-2">
-                  <Link to="/dashboard/messages">
-                    <MessageSquare className="h-6 w-6" />
-                    <span>View Messages</span>
+                    <span>Browse Gigs</span>
                   </Link>
                 </Button>
               </>
@@ -550,52 +585,19 @@ export default function DashboardPage() {
         </CardContent>
       </Card>
 
-      {/* Recent Projects */}
+      {/* Latest from the Community */}
       <Card>
         <CardHeader>
-          <CardTitle>Recent Projects</CardTitle>
+          <CardTitle>Latest from the Community</CardTitle>
           <CardDescription>
-            Your latest project activity
+            See what's happening in the GigExecs community
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {recentProjects.map((project) => (
-              <div key={project.id} className="flex items-center justify-between p-4 border border-slate-200 rounded-lg">
-                <div className="flex items-center space-x-4">
-                  {getStatusIcon(project.status)}
-                  <div>
-                    <h3 className="font-medium text-slate-900">{project.title}</h3>
-                    <p className="text-sm text-slate-500">
-                      Due: {new Date(project.deadline).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  {getStatusBadge(project.status)}
-                  {project.status === 'in_progress' && (
-                    <div className="text-sm text-slate-600">
-                      {project.progress}% complete
-                    </div>
-                  )}
-                  <Button variant="ghost" size="sm" asChild>
-                    <Link to={`/dashboard/projects/${project.id}`}>
-                      View
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 text-center">
-            <Button variant="outline" asChild>
-              <Link to="/dashboard/projects">
-                View All Projects
-              </Link>
-            </Button>
-          </div>
+          <CommunityPostsGrid />
         </CardContent>
       </Card>
+
     </div>
   )
 }
