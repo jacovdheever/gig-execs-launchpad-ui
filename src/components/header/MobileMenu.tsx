@@ -1,16 +1,27 @@
 import { useState } from 'react';
-import { Menu, ChevronDown, HelpCircle } from 'lucide-react';
+import { Menu, ChevronDown, HelpCircle, User, LogOut } from 'lucide-react';
 import { SearchBar } from './SearchBar';
 import type { CurrentUser } from '@/lib/getCurrentUser';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { ProfileAvatar } from '@/components/ui/ProfileAvatar';
+import { supabase } from '@/lib/supabase';
 
 
 type Props = { user: CurrentUser | null };
 
 export function MobileMenu({ user }: Props) {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut();
+      navigate('/auth/login');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -66,6 +77,27 @@ export function MobileMenu({ user }: Props) {
             <HelpCircle className="w-5 h-5" /> Help &amp; Support
           </Link>
         </nav>
+
+        {/* User Actions - Separated section */}
+        <div className="mt-8 pt-6 border-t border-white/30">
+          <nav className="space-y-4 text-[18px]">
+            {/* View Profile */}
+            <Link to="/profile" onClick={() => setOpen(false)} className="flex items-center gap-2">
+              <User className="w-5 h-5" /> View Profile
+            </Link>
+            
+            {/* Sign Out */}
+            <button 
+              onClick={() => {
+                setOpen(false);
+                handleSignOut();
+              }} 
+              className="flex items-center gap-2 text-left w-full"
+            >
+              <LogOut className="w-5 h-5" /> Sign Out
+            </button>
+          </nav>
+        </div>
       </SheetContent>
     </Sheet>
   );
