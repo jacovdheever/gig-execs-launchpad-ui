@@ -119,7 +119,7 @@ export function ProfileView({ profileData, isOwner }: ProfileViewProps) {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Section */}
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8 mb-8">
