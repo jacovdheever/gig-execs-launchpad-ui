@@ -237,18 +237,22 @@ export function ProfilePage() {
   // Only allow editing if user is viewing their own profile and is a consultant
   if (isOwner && profileData.user.user_type === 'consultant') {
     return (
-      <ProfileEdit
-        profileData={profileData}
-        onUpdate={setProfileData}
-      />
+      <AppShell>
+        <ProfileEdit
+          profileData={profileData}
+          onUpdate={setProfileData}
+        />
+      </AppShell>
     );
   }
 
   // View mode for others or non-consultants
   return (
-    <ProfileView
-      profileData={profileData}
-      isOwner={isOwner}
-    />
+    <AppShell>
+      <ProfileView
+        profileData={profileData}
+        isOwner={isOwner}
+      />
+    </AppShell>
   );
 }

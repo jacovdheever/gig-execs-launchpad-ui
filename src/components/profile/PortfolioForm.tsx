@@ -266,6 +266,7 @@ export function PortfolioForm({
   };
 
   const handleEdit = (item: PortfolioItem) => {
+    console.log('Editing item with skills:', item.skills);
     setFormData({
       project_name: item.project_name,
       project_role: item.project_role || '',
@@ -334,6 +335,7 @@ export function PortfolioForm({
                 size="sm" 
                 onClick={() => {
                   resetForm();
+                  setEditingId(null);
                   setIsAddModalOpen(true);
                 }}
                 className="flex items-center gap-2"
@@ -471,7 +473,6 @@ export function PortfolioForm({
                     </div>
                     
                     {/* Selected skills */}
-                    {console.log('Rendering skills:', formData.skills)}
                     {formData.skills.length > 0 && (
                       <div className="flex flex-wrap gap-2">
                         {formData.skills.map((skill, index) => (
