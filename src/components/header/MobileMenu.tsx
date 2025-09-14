@@ -31,32 +31,40 @@ export function MobileMenu({ user }: Props) {
         {/* Search */}
         <SearchBar className="bg-white text-slate-800" />
 
-        {/* Links */}
+        {/* Links - Match desktop menu */}
         <nav className="mt-6 space-y-5 text-[18px]">
-          <Link to="/profile" onClick={() => setOpen(false)} className="block">View Profile</Link>
+          {/* Dashboard */}
           <Link to="/dashboard" onClick={() => setOpen(false)} className="block">Dashboard</Link>
-          <Link to={user?.role === 'consultant' ? '/find-gigs' : '/find'} onClick={() => setOpen(false)} className="block">
-            {user?.role === 'consultant' ? 'Find Gigs' : 'Find Professionals & Gigs'}
-          </Link>
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-[18px]">
-              <span>My Gigs</span><ChevronDown className="w-4 h-4" />
+          
+          {/* Community */}
+          <Link to="/community" onClick={() => setOpen(false)} className="block">Community</Link>
+          
+          {/* Find Gigs (consultants only) */}
+          {user?.role === 'consultant' && (
+            <Link to="/find-gigs" onClick={() => setOpen(false)} className="block">Find Gigs</Link>
+          )}
+          
+          {/* My Gigs (clients only) */}
+          {user?.role === 'client' && (
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-[18px]">
+                <span>My Gigs</span><ChevronDown className="w-4 h-4" />
+              </div>
+              <div className="ml-4 space-y-2 text-[16px]">
+                <Link to="/gig-creation/step1" onClick={() => setOpen(false)} className="block text-slate-300 hover:text-white">
+                  Create Gig
+                </Link>
+                <Link to="/projects" onClick={() => setOpen(false)} className="block text-slate-300 hover:text-white">
+                  Manage Gigs
+                </Link>
+              </div>
             </div>
-            <div className="ml-4 space-y-2 text-[16px]">
-              <Link to="/gig-creation/step1" onClick={() => setOpen(false)} className="block text-slate-300 hover:text-white">
-                Create Gig
-              </Link>
-              <Link to="/projects" onClick={() => setOpen(false)} className="block text-slate-300 hover:text-white">
-                Manage Gigs
-              </Link>
-            </div>
-          </div>
-          <Link to="/reports" onClick={() => setOpen(false)} className="block">Reports</Link>
-          <Link to="/help" onClick={() => setOpen(false)} className="flex items-center gap-2">
+          )}
+          
+          {/* Help & Support */}
+          <Link to="/help-secure" onClick={() => setOpen(false)} className="flex items-center gap-2">
             <HelpCircle className="w-5 h-5" /> Help &amp; Support
           </Link>
-          <Link to="/settings" onClick={() => setOpen(false)} className="block">Settings</Link>
-          <button onClick={async () => { /* supabase.auth.signOut() */ }} className="block text-left w-full">Sign out</button>
         </nav>
       </SheetContent>
     </Sheet>
