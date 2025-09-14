@@ -212,12 +212,12 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   };
 
   // Education handlers
-  const handleAddEducation = async (education: Omit<Education, 'id'>) => {
+  const handleAddEducation = async (educationData: Omit<Education, 'id'>) => {
     setIsLoading(true);
     try {
       const { data, error } = await supabase
         .from('education')
-        .insert([{ ...education, user_id: user.id }])
+        .insert([{ ...educationData, user_id: user.id }])
         .select()
         .single();
 
@@ -234,12 +234,12 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     }
   };
 
-  const handleEditEducation = async (id: number, education: Omit<Education, 'id'>) => {
+  const handleEditEducation = async (id: number, educationData: Omit<Education, 'id'>) => {
     setIsLoading(true);
     try {
       const { data, error } = await supabase
         .from('education')
-        .update(education)
+        .update(educationData)
         .eq('id', id)
         .select()
         .single();
