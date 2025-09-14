@@ -349,10 +349,24 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   const handleAddPortfolio = async (item: Omit<PortfolioItem, 'id'>) => {
     setIsLoading(true);
     try {
-      console.log('Adding portfolio item:', { ...item, user_id: user.id });
+      // Clean the data before sending
+      const cleanItem = {
+        project_name: item.project_name,
+        project_role: item.project_role || null,
+        description: item.description || null,
+        start_date: item.start_date || null,
+        completed_date: item.completed_date || null,
+        currently_open: item.currently_open || false,
+        solution_video_url: item.solution_video_url || null,
+        solution_files: item.solution_files || null,
+        skills: item.skills || null,
+        user_id: user.id
+      };
+      
+      console.log('Adding portfolio item (cleaned):', cleanItem);
       const { data, error } = await supabase
         .from('portfolio')
-        .insert([{ ...item, user_id: user.id }])
+        .insert([cleanItem])
         .select()
         .single();
 

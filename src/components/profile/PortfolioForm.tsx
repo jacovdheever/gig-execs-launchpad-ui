@@ -78,6 +78,7 @@ export function PortfolioForm({
           return;
         }
 
+        console.log('Skills loaded:', skillsData);
         setAvailableSkills(skillsData || []);
       } catch (error) {
         console.error('Error loading skills:', error);
@@ -431,12 +432,16 @@ export function PortfolioForm({
                       />
                       {showSkillDropdown && skillSearch && (
                         <div className="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-48 overflow-y-auto">
+                          {console.log('Dropdown showing, filteredSkills:', filteredSkills)}
                           {filteredSkills.length > 0 ? (
                             filteredSkills.slice(0, 10).map((skill) => (
                               <button
                                 key={skill.id}
                                 type="button"
-                                onClick={() => handleAddSkill(skill)}
+                                onClick={() => {
+                                  console.log('Skill button clicked:', skill);
+                                  handleAddSkill(skill);
+                                }}
                                 className="w-full px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 focus:bg-slate-50 focus:outline-none"
                               >
                                 {skill.name}
