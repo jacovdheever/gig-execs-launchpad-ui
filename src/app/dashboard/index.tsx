@@ -362,6 +362,9 @@ export default function DashboardPage() {
               vettingStatus: profile?.vetting_status || 'pending'
             });
 
+            console.log('🔍 Setting profile completeness:', computedCompleteness.percent);
+            console.log('🔍 Computed completeness object:', computedCompleteness);
+            
             setCompletenessData(completenessData);
             setComputedCompleteness(computedCompleteness);
             setProfileTier(computedCompleteness.tier);
@@ -521,6 +524,11 @@ export default function DashboardPage() {
                   percent={profileCompleteness}
                   missing={computedCompleteness?.missing || { basic: [], full: [], allStar: [] }}
                 />
+                {console.log('🔍 CompletenessMeter props:', {
+                  segments: computedCompleteness?.segments,
+                  percent: profileCompleteness,
+                  missing: computedCompleteness?.missing
+                })}
               </div>
               <StatusBadge status={profileTier} />
             </div>
