@@ -48,6 +48,7 @@ export function PortfolioForm({
   const [editingId, setEditingId] = useState<number | null>(null);
   const [isUploadingFile, setIsUploadingFile] = useState(false);
   const [availableSkills, setAvailableSkills] = useState<Skill[]>([]);
+  const [selectedSkills, setSelectedSkills] = useState<Skill[]>([]);
   const [skillSearch, setSkillSearch] = useState('');
   const [showSkillDropdown, setShowSkillDropdown] = useState(false);
   const [formData, setFormData] = useState({
@@ -114,6 +115,7 @@ export function PortfolioForm({
       solution_files: [],
       skills: [],
     });
+    setSelectedSkills([]);
     setNewSkill('');
     setEditingId(null);
   };
@@ -192,38 +194,34 @@ export function PortfolioForm({
   // Filter skills based on search
   const filteredSkills = availableSkills.filter(skill =>
     skill.name.toLowerCase().includes(skillSearch.toLowerCase()) &&
-    !formData.skills.includes(skill.name)
+    !selectedSkills.some(selected => selected.id === skill.id)
   );
 
-  const handleAddSkill = (skill: Skill) => {
-    console.log('Adding skill:', skill.name, 'Current skills:', formData.skills);
-    if (!formData.skills.includes(skill.name)) {
-      const newSkills = [...formData.skills, skill.name];
-      console.log('New skills array:', newSkills);
-      setFormData(prev => ({
-        ...prev,
-        skills: newSkills
-      }));
+  const addSkill = (skill: Skill) => {
+    console.log('Adding skill:', skill.name, 'Current selected skills:', selectedSkills);
+    if (!selectedSkills.some(selected => selected.id === skill.id)) {
+      const newSelectedSkills = [...selectedSkills, skill];
+      console.log('New selected skills array:', newSelectedSkills);
+      setSelectedSkills(newSelectedSkills);
       setSkillSearch('');
       setShowSkillDropdown(false);
     }
   };
 
-  const handleAddCustomSkill = () => {
-    if (newSkill.trim() && !formData.skills.includes(newSkill.trim())) {
-      setFormData(prev => ({
-        ...prev,
-        skills: [...prev.skills, newSkill.trim()]
-      }));
-      setNewSkill('');
-    }
+  const removeSkill = (skillId: number) => {
+    console.log('Removing skill with ID:', skillId);
+    setSelectedSkills(selectedSkills.filter(skill => skill.id !== skillId));
   };
 
-  const handleRemoveSkill = (skillToRemove: string) => {
-    setFormData(prev => ({
-      ...prev,
-      skills: prev.skills.filter(skill => skill !== skillToRemove)
-    }));
+  const handleAddCustomSkill = () => {
+    if (newSkill.trim() && !selectedSkills.some(skill => skill.name === newSkill.trim())) {
+      const customSkill: Skill = {
+        id: Date.now(), // Use timestamp as temporary ID for custom skills
+        name: newSkill.trim()
+      };
+      setSelectedSkills([...selectedSkills, customSkill]);
+      setNewSkill('');
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -239,14 +237,21 @@ export function PortfolioForm({
     }
 
     try {
+      // Convert selectedSkills to string array for formData
+      const skillsArray = selectedSkills.map(skill => skill.name);
+      const formDataWithSkills = {
+        ...formData,
+        skills: skillsArray
+      };
+
       if (editingId) {
-        await onEdit(editingId, formData);
+        await onEdit(editingId, formDataWithSkills);
         toast({
           title: 'Portfolio item updated',
           description: 'Portfolio item has been updated successfully.',
         });
       } else {
-        await onAdd(formData);
+        await onAdd(formDataWithSkills);
         toast({
           title: 'Portfolio item added',
           description: 'Portfolio item has been added successfully.',
@@ -266,6 +271,13 @@ export function PortfolioForm({
 
   const handleEdit = (item: PortfolioItem) => {
     console.log('Editing item with skills:', item.skills);
+    
+    // Convert skills array to Skill objects for selectedSkills
+    const skillsAsObjects: Skill[] = (item.skills || []).map((skillName, index) => ({
+      id: Date.now() + index, // Temporary ID for existing skills
+      name: skillName
+    }));
+    
     setFormData({
       project_name: item.project_name,
       project_role: item.project_role || '',
@@ -277,6 +289,7 @@ export function PortfolioForm({
       solution_files: item.solution_files || [],
       skills: item.skills || [],
     });
+    setSelectedSkills(skillsAsObjects);
     setEditingId(item.id);
     setIsAddModalOpen(true);
   };
@@ -440,7 +453,7 @@ export function PortfolioForm({
                                 type="button"
                                 onClick={() => {
                                   console.log('Skill button clicked:', skill);
-                                  handleAddSkill(skill);
+                                  addSkill(skill);
                                 }}
                                 className="w-full px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 focus:bg-slate-50 focus:outline-none"
                               >
@@ -476,23 +489,22 @@ export function PortfolioForm({
                     </div>
                     
                     {/* Selected skills */}
-                    {formData.skills.length > 0 && (
+                    {selectedSkills.length > 0 && (
                       <div className="flex flex-wrap gap-2">
-                        {formData.skills.map((skill, index) => (
-                          <Badge
-                            key={index}
-                            variant="outline"
-                            className="flex items-center gap-1 bg-slate-50 text-slate-700 border-slate-200"
+                        {selectedSkills.map((skill) => (
+                          <div
+                            key={skill.id}
+                            className="bg-[#012E46] text-white px-3 py-1 rounded-full flex items-center gap-2"
                           >
-                            {skill}
+                            <span>{skill.name}</span>
                             <button
                               type="button"
-                              onClick={() => handleRemoveSkill(skill)}
-                              className="ml-1 hover:text-red-600"
+                              onClick={() => removeSkill(skill.id)}
+                              className="hover:bg-blue-700 rounded-full p-1"
                             >
                               <X className="w-3 h-3" />
                             </button>
-                          </Badge>
+                          </div>
                         ))}
                       </div>
                     )}
