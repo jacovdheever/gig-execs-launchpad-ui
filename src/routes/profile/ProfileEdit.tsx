@@ -381,6 +381,9 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
 
       if (error) {
         console.error('Portfolio insert error:', error);
+        console.error('Error details:', JSON.stringify(error, null, 2));
+        console.error('Error message:', error.message);
+        console.error('Error code:', error.code);
         throw error;
       }
 
@@ -399,6 +402,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     console.log('=== handleEditPortfolio called ===');
     console.log('ID:', id);
     console.log('Item data:', item);
+    console.log('Item data JSON:', JSON.stringify(item, null, 2));
     
     setIsLoading(true);
     try {
@@ -412,6 +416,9 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
 
       if (error) {
         console.error('Portfolio update error:', error);
+        console.error('Error details:', JSON.stringify(error, null, 2));
+        console.error('Error message:', error.message);
+        console.error('Error code:', error.code);
         throw error;
       }
 
