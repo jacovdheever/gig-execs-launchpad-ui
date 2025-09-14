@@ -110,6 +110,11 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
       ...updatedData
     }));
     onUpdate(updatedData);
+    
+    // Dispatch custom event to refresh header
+    window.dispatchEvent(new CustomEvent('profileUpdated', { 
+      detail: { user: updatedData.user } 
+    }));
   };
 
   // Calculate completeness
@@ -554,8 +559,8 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
 
         {/* Profile Sections */}
         <div className="space-y-8">
-          {/* Basic Information */}
-          <SectionCard title="Basic Information">
+          {/* Profile Strength */}
+          <SectionCard title="Profile Strength">
             <BasicInfoForm 
               user={user} 
               profile={profile} 

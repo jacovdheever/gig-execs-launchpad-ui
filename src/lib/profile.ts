@@ -88,8 +88,8 @@ export function computeCompleteness(
                       hasQualificationsOrCerts;
   const fullPercent = fullComplete ? COMPLETENESS_THRESHOLDS.FULL.WEIGHT : 0;
   
-  // Calculate All-Star tier
-  const allStarComplete = allstar.portfolioCount >= COMPLETENESS_THRESHOLDS.ALL_STAR.REQUIREMENTS.portfolioCount;
+  // Calculate All-Star tier - only if Full tier is complete
+  const allStarComplete = fullComplete && allstar.portfolioCount >= COMPLETENESS_THRESHOLDS.ALL_STAR.REQUIREMENTS.portfolioCount;
   const allStarPercent = allStarComplete ? COMPLETENESS_THRESHOLDS.ALL_STAR.WEIGHT : 0;
   
   // Determine overall tier

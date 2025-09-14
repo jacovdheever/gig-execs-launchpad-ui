@@ -12,7 +12,7 @@ export function AppHeader() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
-  useEffect(() => { 
+  const loadUser = () => {
     setLoading(true);
     getCurrentUser()
       .then((userData) => {
@@ -27,6 +27,21 @@ export function AppHeader() {
       .finally(() => {
         setLoading(false);
       });
+  };
+
+  useEffect(() => { 
+    loadUser();
+  }, []);
+
+  // Listen for profile updates
+  useEffect(() => {
+    const handleProfileUpdate = () => {
+      console.log('AppHeader: Profile updated, refreshing user data');
+      loadUser();
+    };
+
+    window.addEventListener('profileUpdated', handleProfileUpdate);
+    return () => window.removeEventListener('profileUpdated', handleProfileUpdate);
   }, []);
 
   if (loading) {

@@ -151,15 +151,30 @@ export function BasicInfoForm({ user, profile, onUpdate, isLoading = false }: Ba
         setAvailableSkills(skillsData);
       }
 
-      // Load industries
-      const { data: industriesData } = await supabase
-        .from('industries_master')
-        .select('id, name, category')
-        .order('name');
-
-      if (industriesData) {
-        setAvailableIndustries(industriesData);
-      }
+      // Load industries - using a static list since there's no industries table
+      const industriesList = [
+        { id: 1, name: 'Technology', category: 'IT' },
+        { id: 2, name: 'Healthcare', category: 'Medical' },
+        { id: 3, name: 'Finance', category: 'Financial' },
+        { id: 4, name: 'Education', category: 'Academic' },
+        { id: 5, name: 'Manufacturing', category: 'Industrial' },
+        { id: 6, name: 'Retail', category: 'Consumer' },
+        { id: 7, name: 'Real Estate', category: 'Property' },
+        { id: 8, name: 'Consulting', category: 'Professional Services' },
+        { id: 9, name: 'Marketing', category: 'Advertising' },
+        { id: 10, name: 'Legal', category: 'Professional Services' },
+        { id: 11, name: 'Government', category: 'Public Sector' },
+        { id: 12, name: 'Non-Profit', category: 'Charitable' },
+        { id: 13, name: 'Energy', category: 'Utilities' },
+        { id: 14, name: 'Transportation', category: 'Logistics' },
+        { id: 15, name: 'Entertainment', category: 'Media' },
+        { id: 16, name: 'Food & Beverage', category: 'Hospitality' },
+        { id: 17, name: 'Construction', category: 'Building' },
+        { id: 18, name: 'Agriculture', category: 'Farming' },
+        { id: 19, name: 'Telecommunications', category: 'Communications' },
+        { id: 20, name: 'Other', category: 'Miscellaneous' }
+      ];
+      setAvailableIndustries(industriesList);
 
       // Load languages
       const { data: languagesData } = await supabase
@@ -188,10 +203,10 @@ export function BasicInfoForm({ user, profile, onUpdate, isLoading = false }: Ba
         setSelectedSkills(skills);
       }
 
-      // Load user industries
+      // Load user industries from profile.industries array
       if (profile.industries && profile.industries.length > 0) {
         const industries = profile.industries.map(industryName => {
-          const industry = availableIndustries.find(i => i.name === industryName);
+          const industry = industriesList.find(i => i.name === industryName);
           return industry || { id: 0, name: industryName, category: 'Other' };
         });
         setSelectedIndustries(industries);
