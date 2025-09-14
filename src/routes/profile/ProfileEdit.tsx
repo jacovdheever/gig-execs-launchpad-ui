@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SectionCard } from '@/components/profile/SectionCard';
 import { CompletenessMeter } from '@/components/profile/CompletenessMeter';
 import { StatusBadge } from '@/components/profile/StatusBadge';
-import { BasicInfoView } from '@/components/profile/BasicInfoView';
+import { BasicInfoForm } from '@/components/profile/BasicInfoForm';
 import { ReferencesForm } from '@/components/profile/ReferencesForm';
 import { QualificationsForm } from '@/components/profile/QualificationsForm';
 import { CertificationsForm } from '@/components/profile/CertificationsForm';
@@ -98,9 +98,19 @@ interface ProfileEditProps {
 }
 
 export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
-  const { user, profile, references, education, certifications, portfolio } = profileData;
   const [isLoading, setIsLoading] = useState(false);
+  const [currentProfileData, setCurrentProfileData] = useState(profileData);
+  const { user, profile, references, education, certifications, portfolio } = currentProfileData;
   const { toast } = useToast();
+
+  // Handle basic info updates
+  const handleBasicInfoUpdate = (updatedData: any) => {
+    setCurrentProfileData(prev => ({
+      ...prev,
+      ...updatedData
+    }));
+    onUpdate(updatedData);
+  };
 
   // Calculate completeness
   const completenessData: CompletenessData = {
@@ -546,7 +556,12 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
         <div className="space-y-8">
           {/* Basic Information */}
           <SectionCard title="Basic Information">
-            <BasicInfoView user={user} profile={profile} />
+            <BasicInfoForm 
+              user={user} 
+              profile={profile} 
+              onUpdate={handleBasicInfoUpdate}
+              isLoading={isLoading}
+            />
           </SectionCard>
 
           {/* References */}
