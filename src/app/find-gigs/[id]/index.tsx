@@ -103,11 +103,8 @@ export default function GigDetailsPage() {
             client:creator_id (
               first_name,
               last_name,
-              company_name,
-              logo_url,
-              verified,
               headline,
-              country
+              profile_photo_url
             )
           `)
           .eq('id', id)
@@ -144,6 +141,17 @@ export default function GigDetailsPage() {
 
       // Process project data
       const projectData = projectResult.data;
+      
+      // Load client profile data separately
+      let clientProfile = null;
+      if (projectData.creator_id) {
+        const { data: clientProfileData } = await supabase
+          .from('client_profiles')
+          .select('company_name, logo_url, country')
+          .eq('user_id', projectData.creator_id)
+          .single();
+        clientProfile = clientProfileData;
+      }
       let skills_required = [];
       try {
         skills_required = projectData.skills_required ? JSON.parse(projectData.skills_required) : [];
@@ -168,6 +176,9 @@ export default function GigDetailsPage() {
         screening_questions,
         client: {
           ...projectData.client,
+          company_name: clientProfile?.company_name,
+          logo_url: clientProfile?.logo_url,
+          country: clientProfile?.country,
           rating: clientRating,
           total_ratings: totalRatings
         }
