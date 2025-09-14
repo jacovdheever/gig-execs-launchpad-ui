@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -7,6 +7,12 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Briefcase, Calendar, Play, FileText, Plus, Edit, Trash2, Upload, Tag, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/lib/supabase';
+
+interface Skill {
+  id: number;
+  name: string;
+}
 
 interface PortfolioItem {
   id: number;
@@ -41,6 +47,9 @@ export function PortfolioForm({
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [isUploadingFile, setIsUploadingFile] = useState(false);
+  const [availableSkills, setAvailableSkills] = useState<Skill[]>([]);
+  const [skillSearch, setSkillSearch] = useState('');
+  const [showSkillDropdown, setShowSkillDropdown] = useState(false);
   const [formData, setFormData] = useState({
     project_name: '',
     project_role: '',
@@ -54,6 +63,43 @@ export function PortfolioForm({
   });
   const [newSkill, setNewSkill] = useState('');
   const { toast } = useToast();
+
+  // Load available skills on component mount
+  useEffect(() => {
+    const loadSkills = async () => {
+      try {
+        const { data: skillsData, error: skillsError } = await supabase
+          .from('skills')
+          .select('id, name')
+          .order('name');
+
+        if (skillsError) {
+          console.error('Error loading skills:', skillsError);
+          return;
+        }
+
+        setAvailableSkills(skillsData || []);
+      } catch (error) {
+        console.error('Error loading skills:', error);
+      }
+    };
+
+    loadSkills();
+  }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (showSkillDropdown) {
+        setShowSkillDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showSkillDropdown]);
 
   const resetForm = () => {
     setFormData({
@@ -142,7 +188,24 @@ export function PortfolioForm({
     }));
   };
 
-  const handleAddSkill = () => {
+  // Filter skills based on search
+  const filteredSkills = availableSkills.filter(skill =>
+    skill.name.toLowerCase().includes(skillSearch.toLowerCase()) &&
+    !formData.skills.includes(skill.name)
+  );
+
+  const handleAddSkill = (skill: Skill) => {
+    if (!formData.skills.includes(skill.name)) {
+      setFormData(prev => ({
+        ...prev,
+        skills: [...prev.skills, skill.name]
+      }));
+      setSkillSearch('');
+      setShowSkillDropdown(false);
+    }
+  };
+
+  const handleAddCustomSkill = () => {
     if (newSkill.trim() && !formData.skills.includes(newSkill.trim())) {
       setFormData(prev => ({
         ...prev,
@@ -349,22 +412,60 @@ export function PortfolioForm({
                 <div>
                   <label className="text-sm font-medium text-slate-700">Skills Used</label>
                   <div className="space-y-2">
+                    {/* Skills from database */}
+                    <div className="relative">
+                      <Input
+                        value={skillSearch}
+                        onChange={(e) => {
+                          setSkillSearch(e.target.value);
+                          setShowSkillDropdown(true);
+                        }}
+                        onFocus={() => setShowSkillDropdown(true)}
+                        placeholder="Search and select skills..."
+                        className="w-full"
+                      />
+                      {showSkillDropdown && skillSearch && (
+                        <div className="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-48 overflow-y-auto">
+                          {filteredSkills.length > 0 ? (
+                            filteredSkills.slice(0, 10).map((skill) => (
+                              <button
+                                key={skill.id}
+                                type="button"
+                                onClick={() => handleAddSkill(skill)}
+                                className="w-full px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 focus:bg-slate-50 focus:outline-none"
+                              >
+                                {skill.name}
+                              </button>
+                            ))
+                          ) : (
+                            <div className="px-3 py-2 text-sm text-slate-500">
+                              No skills found
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Custom skill input */}
                     <div className="flex gap-2">
                       <Input
                         value={newSkill}
                         onChange={(e) => setNewSkill(e.target.value)}
-                        placeholder="Add a skill..."
-                        onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddSkill())}
+                        placeholder="Add custom skill..."
+                        onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddCustomSkill())}
                       />
                       <Button
                         type="button"
+                        onClick={handleAddCustomSkill}
                         variant="outline"
-                        onClick={handleAddSkill}
+                        size="sm"
                         disabled={!newSkill.trim()}
                       >
-                        Add
+                        Add Custom
                       </Button>
                     </div>
+                    
+                    {/* Selected skills */}
                     {formData.skills.length > 0 && (
                       <div className="flex flex-wrap gap-2">
                         {formData.skills.map((skill, index) => (
