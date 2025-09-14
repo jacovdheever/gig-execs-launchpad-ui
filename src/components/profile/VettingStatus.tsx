@@ -11,8 +11,8 @@ interface VettingStatusProps {
 export function VettingStatus({ vettingStatus, profileTier }: VettingStatusProps) {
   // Determine the display status based on profile tier and vetting status
   const getDisplayStatus = () => {
-    // If profile is not complete enough for vetting
-    if (profileTier === 'BASIC') {
+    // If profile is not complete enough for vetting (incomplete basic fields)
+    if (profileTier === 'BASIC' && !vettingStatus) {
       return {
         status: 'incomplete',
         label: 'Profile Incomplete',
@@ -23,7 +23,7 @@ export function VettingStatus({ vettingStatus, profileTier }: VettingStatusProps
       };
     }
 
-    // If profile is complete but not yet submitted for vetting
+    // If profile is complete (BASIC, FULL, or ALL_STAR) but not yet submitted for vetting
     if (!vettingStatus || vettingStatus === 'pending') {
       return {
         status: 'ready',

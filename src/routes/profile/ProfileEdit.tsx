@@ -150,8 +150,8 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   console.log('Certifications count:', certifications.length);
   console.log('Portfolio count:', portfolio.length);
   console.log('Has ID doc:', !!profile?.id_doc_url);
-  console.log('Completeness Data:', completenessData);
-  console.log('Computed Completeness:', completeness);
+  console.log('Completeness Data:', JSON.stringify(completenessData, null, 2));
+  console.log('Computed Completeness:', JSON.stringify(completeness, null, 2));
   console.log('Profile Tier:', completeness.tier);
   console.log('Vetting Status:', user.vetting_status);
   console.log('Final Status:', status);
