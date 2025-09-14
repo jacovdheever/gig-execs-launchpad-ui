@@ -74,7 +74,7 @@ function CommunityPostsGrid() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       {posts.map((post: ForumPost) => (
-        <div key={post.id} className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+        <div key={post.id} className="border border-slate-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate('/community')}>
           <div className="flex items-start gap-3 mb-3">
             <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0">
               {post.author?.profile_photo_url ? (
@@ -101,9 +101,22 @@ function CommunityPostsGrid() {
           <p className="text-sm text-slate-600 line-clamp-3">
             {truncateText(stripHtml(post.body || ''))}
           </p>
-          <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
-            <span>{post.category?.name || 'General'}</span>
-            <span>{new Date(post.created_at).toLocaleDateString()}</span>
+          <div className="mt-3 flex items-center justify-between">
+            <div className="flex items-center gap-2 text-xs text-slate-500">
+              <span>{post.category?.name || 'General'}</span>
+              <span>{new Date(post.created_at).toLocaleDateString()}</span>
+            </div>
+            <Button 
+              size="sm" 
+              variant="outline" 
+              className="text-xs"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate('/community');
+              }}
+            >
+              View
+            </Button>
           </div>
         </div>
       ))}
@@ -328,7 +341,7 @@ export default function DashboardPage() {
 
             const completenessData: CompletenessData = {
               basic: {
-                hasCore: !!(user.first_name && user.last_name && user.email && profile?.job_title && profile?.address1 && profile?.country),
+                hasCore: !!(user.first_name && user.last_name && user.email && profile?.job_title),
               },
               full: {
                 referencesCount: references.length,
@@ -493,8 +506,8 @@ export default function DashboardPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
+              <div className="flex-1">
                 <CompletenessMeter 
                   segments={{
                     basic: completenessData.basic.hasCore ? 1 : 0,
@@ -511,10 +524,10 @@ export default function DashboardPage() {
               </div>
               <StatusBadge status={profileTier} />
             </div>
-            <div className="text-center">
+            <div className="flex justify-center">
               <Button 
                 variant={profileTier === 'BASIC' && !completenessData.basic.hasCore ? "default" : "outline"}
-                className="w-full"
+                className="w-auto px-8"
               >
                 {profileTier === 'BASIC' && !completenessData.basic.hasCore 
                   ? 'Complete Profile' 
@@ -536,25 +549,6 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {/* Onboarding Action - Show prominently if profile incomplete */}
-            {profileCompleteness < 100 && (
-              <Button 
-                onClick={() => {
-                  if (user.role === 'consultant') {
-                    navigate('/onboarding/step1');
-                  } else {
-                    navigate('/onboarding/client/step1');
-                  }
-                }}
-                className="h-auto p-4 flex-col space-y-2 bg-yellow-500 hover:bg-yellow-600 text-white col-span-full sm:col-span-1"
-              >
-                <CheckCircle className="h-6 w-6" />
-                <span>Complete Profile</span>
-                <span className="text-xs opacity-90">
-                  {100 - profileCompleteness}% remaining
-                </span>
-              </Button>
-            )}
             
             {user.role === 'consultant' ? (
               <>
