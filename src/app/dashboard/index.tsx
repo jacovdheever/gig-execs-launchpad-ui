@@ -362,11 +362,11 @@ export default function DashboardPage() {
               vettingStatus: profile?.vetting_status || 'pending'
             });
 
-            console.log('🔍 User object:', user);
-            console.log('🔍 Profile object:', profile);
-            console.log('🔍 Completeness data being passed to computeCompleteness:', completenessData);
+            console.log('🔍 User object:', JSON.stringify(user, null, 2));
+            console.log('🔍 Profile object:', JSON.stringify(profile, null, 2));
+            console.log('🔍 Completeness data being passed to computeCompleteness:', JSON.stringify(completenessData, null, 2));
             console.log('🔍 Setting profile completeness:', computedCompleteness.percent);
-            console.log('🔍 Computed completeness object:', computedCompleteness);
+            console.log('🔍 Computed completeness object:', JSON.stringify(computedCompleteness, null, 2));
             
             setCompletenessData(completenessData);
             setComputedCompleteness(computedCompleteness);
