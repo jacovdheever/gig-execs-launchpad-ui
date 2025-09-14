@@ -353,6 +353,9 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
 
   // Portfolio handlers
   const handleAddPortfolio = async (item: Omit<PortfolioItem, 'id'>) => {
+    console.log('=== handleAddPortfolio called ===');
+    console.log('Original item:', item);
+    
     setIsLoading(true);
     try {
       // Clean the data before sending
@@ -393,8 +396,13 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   };
 
   const handleEditPortfolio = async (id: number, item: Omit<PortfolioItem, 'id'>) => {
+    console.log('=== handleEditPortfolio called ===');
+    console.log('ID:', id);
+    console.log('Item data:', item);
+    
     setIsLoading(true);
     try {
+      console.log('Updating portfolio item with ID:', id);
       const { data, error } = await supabase
         .from('portfolio')
         .update(item)
@@ -402,7 +410,10 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Portfolio update error:', error);
+        throw error;
+      }
 
       onUpdate({
         ...profileData,
