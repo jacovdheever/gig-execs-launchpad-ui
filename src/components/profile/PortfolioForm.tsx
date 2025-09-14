@@ -93,7 +93,13 @@ export function PortfolioForm({
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (showSkillDropdown) {
-        setShowSkillDropdown(false);
+        // Check if click is inside the dropdown
+        const target = event.target as Element;
+        const dropdown = target.closest('.skill-dropdown');
+        if (!dropdown) {
+          console.log('Clicking outside dropdown, closing');
+          setShowSkillDropdown(false);
+        }
       }
     };
 
@@ -198,13 +204,19 @@ export function PortfolioForm({
   );
 
   const addSkill = (skill: Skill) => {
+    console.log('=== addSkill called ===');
     console.log('Adding skill:', skill.name, 'Current selected skills:', selectedSkills);
+    console.log('Skill ID:', skill.id, 'Skill name:', skill.name);
+    
     if (!selectedSkills.some(selected => selected.id === skill.id)) {
       const newSelectedSkills = [...selectedSkills, skill];
       console.log('New selected skills array:', newSelectedSkills);
       setSelectedSkills(newSelectedSkills);
       setSkillSearch('');
       setShowSkillDropdown(false);
+      console.log('=== addSkill completed ===');
+    } else {
+      console.log('Skill already selected, not adding');
     }
   };
 
@@ -444,22 +456,28 @@ export function PortfolioForm({
                         className="w-full"
                       />
                       {showSkillDropdown && skillSearch && (
-                        <div className="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-48 overflow-y-auto">
+                        <div className="skill-dropdown absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-48 overflow-y-auto">
                           {console.log('Dropdown showing, filteredSkills:', filteredSkills)}
+                          {console.log('selectedSkills:', selectedSkills)}
                           {filteredSkills.length > 0 ? (
-                            filteredSkills.slice(0, 10).map((skill) => (
-                              <button
-                                key={skill.id}
-                                type="button"
-                                onClick={() => {
-                                  console.log('Skill button clicked:', skill);
-                                  addSkill(skill);
-                                }}
-                                className="w-full px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 focus:bg-slate-50 focus:outline-none"
-                              >
-                                {skill.name}
-                              </button>
-                            ))
+                            filteredSkills.slice(0, 10).map((skill) => {
+                              console.log('Rendering skill button:', skill);
+                              return (
+                                <button
+                                  key={skill.id}
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    console.log('Skill button clicked:', skill);
+                                    addSkill(skill);
+                                  }}
+                                  className="w-full px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 focus:bg-slate-50 focus:outline-none"
+                                >
+                                  {skill.name}
+                                </button>
+                              );
+                            })
                           ) : (
                             <div className="px-3 py-2 text-sm text-slate-500">
                               No skills found
