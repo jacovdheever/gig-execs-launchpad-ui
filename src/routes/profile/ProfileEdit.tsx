@@ -121,7 +121,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   // Calculate completeness
   const completenessData: CompletenessData = {
     basic: {
-      hasCore: !!(user.first_name && user.last_name && user.email && profile?.job_title),
+      hasCore: !!(user.first_name && user.last_name && user.email && profile?.job_title && profile?.address1 && profile?.country),
     },
     full: {
       referencesCount: references.length,
@@ -143,6 +143,13 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   // Debug logging
   console.log('=== PROFILE COMPLETENESS DEBUG ===');
   console.log('User ID:', user.id);
+  console.log('User data:', { first_name: user.first_name, last_name: user.last_name, email: user.email });
+  console.log('Profile data:', { job_title: profile?.job_title, bio: profile?.bio, address1: profile?.address1, country: profile?.country });
+  console.log('References count:', references.length);
+  console.log('Education count:', education.length);
+  console.log('Certifications count:', certifications.length);
+  console.log('Portfolio count:', portfolio.length);
+  console.log('Has ID doc:', !!profile?.id_doc_url);
   console.log('Completeness Data:', completenessData);
   console.log('Computed Completeness:', completeness);
   console.log('Profile Tier:', completeness.tier);
