@@ -4,7 +4,7 @@ import { SearchBar } from './SearchBar';
 import { UserProfileDropdown } from './UserProfileDropdown';
 import { NavTabs } from './NavTabs';
 import { MobileMenu } from './MobileMenu';
-import { Bell, MessageSquare } from 'lucide-react';
+// import { Bell, MessageSquare } from 'lucide-react'; // Temporarily hidden
 import { Link } from 'react-router-dom';
 
 export function AppHeader() {
@@ -83,14 +83,15 @@ export function AppHeader() {
           <SearchBar className="w-full md:max-w-xl xl:w-[824px]" />
         </div>
 
-        {/* Right: icons (mobile) / user cluster (desktop) */}
+        {/* Right: user cluster (desktop) */}
         <div className="flex items-center gap-4">
-          <button aria-label="Notifications" className="md:hidden p-1">
+          {/* Temporarily hidden until features are developed */}
+          {/* <button aria-label="Notifications" className="md:hidden p-1">
             <Bell className="w-6 h-6" />
           </button>
           <button aria-label="Messages" className="md:hidden p-1">
             <MessageSquare className="w-6 h-6" />
-          </button>
+          </button> */}
           <div className="hidden md:block">
             <UserProfileDropdown user={user} />
           </div>

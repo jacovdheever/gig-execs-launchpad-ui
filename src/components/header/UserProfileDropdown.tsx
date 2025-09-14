@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { User, Settings, LogOut, Bell, MessageSquare } from 'lucide-react';
+import { User, Settings, LogOut } from 'lucide-react';
+// import { Bell, MessageSquare } from 'lucide-react'; // Temporarily hidden
 import { supabase } from '@/lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import type { CurrentUser } from '@/lib/getCurrentUser';
@@ -69,15 +70,15 @@ export function UserProfileDropdown({ user }: Props) {
         </div>
       </div>
 
-      {/* Notifications and Messages Icons */}
-      <div className="flex items-center gap-2">
+      {/* Notifications and Messages Icons - Temporarily hidden until features are developed */}
+      {/* <div className="flex items-center gap-2">
         <button aria-label="Notifications" className="p-1">
           <Bell className="w-6 h-6" />
         </button>
         <button aria-label="Messages" className="p-1">
           <MessageSquare className="w-6 h-6" />
         </button>
-      </div>
+      </div> */}
 
       {/* Dropdown Menu */}
       <div className="relative" ref={dropdownRef}>
