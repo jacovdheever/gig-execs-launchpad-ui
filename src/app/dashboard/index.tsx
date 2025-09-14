@@ -312,6 +312,7 @@ export default function DashboardPage() {
   // State for profile completeness
   const [profileCompleteness, setProfileCompleteness] = useState(0);
   const [completenessData, setCompletenessData] = useState<CompletenessData | null>(null);
+  const [computedCompleteness, setComputedCompleteness] = useState<any>(null);
   const [profileTier, setProfileTier] = useState<'BASIC' | 'FULL' | 'ALL_STAR'>('BASIC');
   const [vettingStatus, setVettingStatus] = useState<string | null>(null);
   
@@ -356,11 +357,16 @@ export default function DashboardPage() {
             };
 
             const computedCompleteness = computeCompleteness(user.id, completenessData);
-            const computedStatus = computeProfileStatus(completenessData, profile?.vetting_status || 'pending');
+            const computedStatus = computeProfileStatus({
+              tier: computedCompleteness.tier,
+              vettingStatus: profile?.vetting_status || 'pending'
+            });
 
             setCompletenessData(completenessData);
+            setComputedCompleteness(computedCompleteness);
             setProfileTier(computedCompleteness.tier);
             setVettingStatus(profile?.vetting_status || 'pending');
+            setProfileCompleteness(computedCompleteness.percent);
           } catch (error) {
             console.error('Error calculating detailed completeness:', error);
           }
@@ -511,17 +517,9 @@ export default function DashboardPage() {
             <div className="flex items-center gap-4">
               <div className="flex-1">
                 <CompletenessMeter 
-                  segments={{
-                    basic: completenessData.basic.hasCore ? 1 : 0,
-                    full: (completenessData.full.referencesCount >= 2 && completenessData.full.hasIdDocument && (completenessData.full.qualificationsCount >= 1 || completenessData.full.certificationsCount >= 1)) ? 1 : 0,
-                    allStar: (completenessData.full.referencesCount >= 2 && completenessData.full.hasIdDocument && (completenessData.full.qualificationsCount >= 1 || completenessData.full.certificationsCount >= 1) && completenessData.allstar.portfolioCount >= 1) ? 1 : 0
-                  }}
+                  segments={computedCompleteness?.segments || { basic: 0, full: 0, allStar: 0 }}
                   percent={profileCompleteness}
-                  missing={{
-                    basic: completenessData.basic.hasCore ? [] : ['Complete basic information'],
-                    full: [],
-                    allStar: []
-                  }}
+                  missing={computedCompleteness?.missing || { basic: [], full: [], allStar: [] }}
                 />
               </div>
               <StatusBadge status={profileTier} />
