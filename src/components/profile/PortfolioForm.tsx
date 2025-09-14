@@ -197,14 +197,12 @@ export function PortfolioForm({
   const handleAddSkill = (skill: Skill) => {
     console.log('Adding skill:', skill.name, 'Current skills:', formData.skills);
     if (!formData.skills.includes(skill.name)) {
-      setFormData(prev => {
-        const newSkills = [...prev.skills, skill.name];
-        console.log('New skills array:', newSkills);
-        return {
-          ...prev,
-          skills: newSkills
-        };
-      });
+      const newSkills = [...formData.skills, skill.name];
+      console.log('New skills array:', newSkills);
+      setFormData(prev => ({
+        ...prev,
+        skills: newSkills
+      }));
       setSkillSearch('');
       setShowSkillDropdown(false);
     }

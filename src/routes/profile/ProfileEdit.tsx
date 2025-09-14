@@ -349,13 +349,17 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   const handleAddPortfolio = async (item: Omit<PortfolioItem, 'id'>) => {
     setIsLoading(true);
     try {
+      console.log('Adding portfolio item:', { ...item, user_id: user.id });
       const { data, error } = await supabase
         .from('portfolio')
         .insert([{ ...item, user_id: user.id }])
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Portfolio insert error:', error);
+        throw error;
+      }
 
       onUpdate({
         ...profileData,
@@ -448,6 +452,16 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   return (
     <div className="bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Page Header */}
+        <div className="mb-8">
+          <nav className="flex items-center space-x-2 text-sm text-slate-500 mb-4">
+            <a href="/dashboard" className="hover:text-slate-700">Dashboard</a>
+            <span>/</span>
+            <span className="text-slate-900 font-medium">My Profile</span>
+          </nav>
+          <h1 className="text-3xl font-bold text-slate-900">My Profile</h1>
+          <p className="text-slate-600 mt-2">Manage your professional profile and showcase your expertise</p>
+        </div>
         {/* Hero Section */}
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8 mb-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
