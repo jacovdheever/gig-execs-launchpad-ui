@@ -358,15 +358,15 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     
     setIsLoading(true);
     try {
-      // Clean the data before sending
+      // Clean the data before sending - convert empty strings to null for date fields
       const cleanItem = {
         project_name: item.project_name,
-        project_role: item.project_role || null,
-        description: item.description || null,
-        start_date: item.start_date || null,
-        completed_date: item.completed_date || null,
+        project_role: item.project_role && item.project_role.trim() !== '' ? item.project_role : null,
+        description: item.description && item.description.trim() !== '' ? item.description : null,
+        start_date: item.start_date && item.start_date.trim() !== '' ? item.start_date : null,
+        completed_date: item.completed_date && item.completed_date.trim() !== '' ? item.completed_date : null,
         currently_open: item.currently_open || false,
-        solution_video_url: item.solution_video_url || null,
+        solution_video_url: item.solution_video_url && item.solution_video_url.trim() !== '' ? item.solution_video_url : null,
         solution_files: item.solution_files || null,
         skills: item.skills || null,
         user_id: user.id
@@ -404,12 +404,22 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     console.log('Item data:', item);
     console.log('Item data JSON:', JSON.stringify(item, null, 2));
     
+    // Clean the data before sending - convert empty strings to null for date fields
+    const cleanItem = {
+      ...item,
+      start_date: item.start_date && item.start_date.trim() !== '' ? item.start_date : null,
+      completed_date: item.completed_date && item.completed_date.trim() !== '' ? item.completed_date : null,
+      solution_video_url: item.solution_video_url && item.solution_video_url.trim() !== '' ? item.solution_video_url : null,
+    };
+    
+    console.log('Cleaned item for update:', cleanItem);
+    
     setIsLoading(true);
     try {
       console.log('Updating portfolio item with ID:', id);
       const { data, error } = await supabase
         .from('portfolio')
-        .update(item)
+        .update(cleanItem)
         .eq('id', id)
         .select()
         .single();
