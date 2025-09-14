@@ -8,6 +8,7 @@ import { QualificationsForm } from '@/components/profile/QualificationsForm';
 import { CertificationsForm } from '@/components/profile/CertificationsForm';
 import { PortfolioForm } from '@/components/profile/PortfolioForm';
 import { IdDocumentUploader } from '@/components/profile/IdDocumentUploader';
+import { VettingStatus } from '@/components/profile/VettingStatus';
 import { computeCompleteness, computeProfileStatus, type CompletenessData } from '@/lib/profile';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
@@ -525,26 +526,17 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
           <h1 className="text-3xl font-bold text-slate-900">My Profile</h1>
           <p className="text-slate-600 mt-2">Manage your professional profile and showcase your expertise</p>
         </div>
-        {/* Hero Section */}
+        {/* Profile Strength Section */}
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8 mb-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div className="flex-1">
+              <h2 className="text-2xl font-bold text-slate-900 mb-4">Profile Strength</h2>
               <div className="flex items-center gap-4 mb-4">
-                <h1 className="text-3xl font-bold text-slate-900">
-                  {user.first_name} {user.last_name}
-                </h1>
-                <StatusBadge status={status} />
+                <VettingStatus 
+                  vettingStatus={user.vetting_status as any} 
+                  profileTier={completeness.tier}
+                />
               </div>
-              
-              {profile?.job_title && (
-                <p className="text-xl text-slate-600 mb-2">{profile.job_title}</p>
-              )}
-              
-              {profile?.bio && (
-                <p className="text-slate-700 leading-relaxed max-w-2xl">
-                  {profile.bio}
-                </p>
-              )}
             </div>
             
             <div className="lg:w-80">
@@ -559,8 +551,8 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
 
         {/* Profile Sections */}
         <div className="space-y-8">
-          {/* Profile Strength */}
-          <SectionCard title="Profile Strength">
+          {/* Basic Information */}
+          <SectionCard title="Basic Information">
             <BasicInfoForm 
               user={user} 
               profile={profile} 
