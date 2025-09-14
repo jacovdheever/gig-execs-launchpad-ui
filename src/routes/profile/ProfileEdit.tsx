@@ -11,6 +11,7 @@ import { IdDocumentUploader } from '@/components/profile/IdDocumentUploader';
 import { computeCompleteness, computeProfileStatus, type CompletenessData } from '@/lib/profile';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
+import { uploadProfileDocument, uploadPortfolioFile } from '@/lib/storage';
 
 interface User {
   id: string;
@@ -125,23 +126,28 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
 
   // File upload helper
   const uploadFile = async (file: File, bucket: string): Promise<string> => {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-    const filePath = `${user.id}/${fileName}`;
+    try {
+      let result;
+      
+      if (bucket === 'profile-docs') {
+        // Determine document type based on context (this is a simplified approach)
+        const documentType = 'document'; // You could make this more specific based on the form
+        result = await uploadProfileDocument(file, user.id, documentType);
+      } else if (bucket === 'portfolio') {
+        result = await uploadPortfolioFile(file, user.id);
+      } else {
+        throw new Error(`Unknown bucket: ${bucket}`);
+      }
 
-    const { error: uploadError } = await supabase.storage
-      .from(bucket)
-      .upload(filePath, file);
+      if (!result.success || !result.url) {
+        throw new Error(result.error || 'Upload failed');
+      }
 
-    if (uploadError) {
-      throw new Error(`Upload failed: ${uploadError.message}`);
+      return result.url;
+    } catch (error) {
+      console.error('File upload error:', error);
+      throw error;
     }
-
-    const { data } = supabase.storage
-      .from(bucket)
-      .getPublicUrl(filePath);
-
-    return data.publicUrl;
   };
 
   // Reference handlers

@@ -416,6 +416,200 @@ export function getFileIcon(mimeType: string): string {
 }
 
 /**
+ * Upload a profile document to Supabase Storage (ID docs, qualifications, certifications)
+ * @param file - The file to upload
+ * @param userId - The user ID for organizing files
+ * @param documentType - Type of document (id, qualification, certification)
+ * @returns Promise<UploadResult> - Result of the upload operation
+ */
+export async function uploadProfileDocument(file: File, userId: string, documentType: string): Promise<UploadResult> {
+  try {
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
+    if (!allowedTypes.includes(file.type)) {
+      return {
+        success: false,
+        error: 'Invalid file type. Please upload a JPEG, PNG, WebP, or PDF file.'
+      };
+    }
+
+    // Validate file size (5MB limit)
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    if (file.size > maxSize) {
+      return {
+        success: false,
+        error: 'File size too large. Please upload a file smaller than 5MB.'
+      };
+    }
+
+    // Generate unique filename
+    const fileExt = file.name.split('.').pop();
+    const timestamp = Date.now();
+    const fileName = `${userId}/${documentType}_${timestamp}.${fileExt}`;
+
+    // Upload to Supabase Storage
+    const { data, error } = await supabase.storage
+      .from('profile-docs')
+      .upload(fileName, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
+
+    if (error) {
+      console.error('Profile document upload error:', error);
+      return {
+        success: false,
+        error: `Upload failed: ${error.message}`
+      };
+    }
+
+    // Get public URL
+    const { data: { publicUrl } } = supabase.storage
+      .from('profile-docs')
+      .getPublicUrl(fileName);
+
+    return {
+      success: true,
+      url: publicUrl
+    };
+
+  } catch (error) {
+    console.error('Profile document upload error:', error);
+    return {
+      success: false,
+      error: 'An unexpected error occurred during upload.'
+    };
+  }
+}
+
+/**
+ * Upload a portfolio file to Supabase Storage
+ * @param file - The file to upload
+ * @param userId - The user ID for organizing files
+ * @param projectId - The portfolio project ID
+ * @returns Promise<UploadResult> - Result of the upload operation
+ */
+export async function uploadPortfolioFile(file: File, userId: string, projectId?: string): Promise<UploadResult> {
+  try {
+    // Validate file size (10MB limit for portfolio files)
+    const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+    if (file.size > maxSize) {
+      return {
+        success: false,
+        error: 'File size too large. Please upload a file smaller than 10MB.'
+      };
+    }
+
+    // Generate unique filename
+    const fileExt = file.name.split('.').pop();
+    const timestamp = Date.now();
+    const projectPrefix = projectId ? `project_${projectId}_` : '';
+    const fileName = `${userId}/${projectPrefix}${timestamp}_${file.name}`;
+
+    // Upload to Supabase Storage
+    const { data, error } = await supabase.storage
+      .from('portfolio')
+      .upload(fileName, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
+
+    if (error) {
+      console.error('Portfolio file upload error:', error);
+      return {
+        success: false,
+        error: `Upload failed: ${error.message}`
+      };
+    }
+
+    // Get public URL
+    const { data: { publicUrl } } = supabase.storage
+      .from('portfolio')
+      .getPublicUrl(fileName);
+
+    return {
+      success: true,
+      url: publicUrl
+    };
+
+  } catch (error) {
+    console.error('Portfolio file upload error:', error);
+    return {
+      success: false,
+      error: 'An unexpected error occurred during upload.'
+    };
+  }
+}
+
+/**
+ * Delete a profile document from Supabase Storage
+ * @param documentUrl - The URL of the document to delete
+ * @returns Promise<boolean> - Success status
+ */
+export async function deleteProfileDocument(documentUrl: string): Promise<boolean> {
+  try {
+    // Extract the file path from the URL
+    const urlParts = documentUrl.split('/');
+    const fileName = urlParts[urlParts.length - 1];
+    const userId = urlParts[urlParts.length - 2];
+    
+    if (!fileName || !userId) {
+      console.error('Invalid document URL format');
+      return false;
+    }
+
+    // Delete the specific file
+    const { error: deleteError } = await supabase.storage
+      .from('profile-docs')
+      .remove([`${userId}/${fileName}`]);
+
+    if (deleteError) {
+      console.error('Error deleting profile document:', deleteError);
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Profile document deletion error:', error);
+    return false;
+  }
+}
+
+/**
+ * Delete a portfolio file from Supabase Storage
+ * @param fileUrl - The URL of the file to delete
+ * @returns Promise<boolean> - Success status
+ */
+export async function deletePortfolioFile(fileUrl: string): Promise<boolean> {
+  try {
+    // Extract the file path from the URL
+    const urlParts = fileUrl.split('/');
+    const fileName = urlParts[urlParts.length - 1];
+    const userId = urlParts[urlParts.length - 2];
+    
+    if (!fileName || !userId) {
+      console.error('Invalid portfolio file URL format');
+      return false;
+    }
+
+    // Delete the specific file
+    const { error: deleteError } = await supabase.storage
+      .from('portfolio')
+      .remove([`${userId}/${fileName}`]);
+
+    if (deleteError) {
+      console.error('Error deleting portfolio file:', deleteError);
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Portfolio file deletion error:', error);
+    return false;
+  }
+}
+
+/**
  * Format file size for display
  * @param bytes - File size in bytes
  * @returns string - Formatted file size
