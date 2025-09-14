@@ -64,8 +64,17 @@ export function QualificationsForm({
   };
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('=== Qualifications handleFileUpload called ===');
+    console.log('Event:', event);
+    console.log('Target files:', event.target.files);
+    
     const file = event.target.files?.[0];
-    if (!file) return;
+    if (!file) {
+      console.log('No file selected for qualification');
+      return;
+    }
+    
+    console.log('File selected for qualification:', file.name);
 
     // Validate file type
     const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
@@ -314,6 +323,7 @@ export function QualificationsForm({
                             size="sm"
                             disabled={isUploadingFile}
                             className="flex items-center gap-2"
+                            onClick={() => console.log('Qualification upload button clicked')}
                           >
                             <Upload className="w-4 h-4" />
                             {isUploadingFile ? 'Uploading...' : 'Upload Document'}

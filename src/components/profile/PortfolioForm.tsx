@@ -127,8 +127,17 @@ export function PortfolioForm({
   };
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('=== handleFileUpload called ===');
+    console.log('Event:', event);
+    console.log('Target files:', event.target.files);
+    
     const files = event.target.files;
-    if (!files || files.length === 0) return;
+    if (!files || files.length === 0) {
+      console.log('No files selected');
+      return;
+    }
+    
+    console.log('Files selected:', files.length);
 
     const fileArray = Array.from(files);
     const maxFiles = 5;
@@ -550,6 +559,7 @@ export function PortfolioForm({
                           size="sm"
                           disabled={isUploadingFile}
                           className="flex items-center gap-2"
+                          onClick={() => console.log('Upload button clicked')}
                         >
                           <Upload className="w-4 h-4" />
                           {isUploadingFile ? 'Uploading...' : 'Upload Files'}
