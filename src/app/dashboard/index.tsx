@@ -343,7 +343,7 @@ export default function DashboardPage() {
 
             const completenessData: CompletenessData = {
               basic: {
-                hasCore: !!(user.first_name && user.last_name && user.email && profile?.job_title),
+                hasCore: !!(user.firstName && user.lastName && user.email && profile?.job_title),
               },
               full: {
                 referencesCount: references.length,
@@ -362,11 +362,7 @@ export default function DashboardPage() {
               vettingStatus: profile?.vetting_status || 'pending'
             });
 
-            console.log('🔍 User object:', JSON.stringify(user, null, 2));
-            console.log('🔍 Profile object:', JSON.stringify(profile, null, 2));
-            console.log('🔍 Completeness data being passed to computeCompleteness:', JSON.stringify(completenessData, null, 2));
             console.log('🔍 Setting profile completeness:', computedCompleteness.percent);
-            console.log('🔍 Computed completeness object:', JSON.stringify(computedCompleteness, null, 2));
             
             setCompletenessData(completenessData);
             setComputedCompleteness(computedCompleteness);
@@ -527,11 +523,6 @@ export default function DashboardPage() {
                   percent={profileCompleteness}
                   missing={computedCompleteness?.missing || { basic: [], full: [], allStar: [] }}
                 />
-                {console.log('🔍 CompletenessMeter props:', {
-                  segments: computedCompleteness?.segments,
-                  percent: profileCompleteness,
-                  missing: computedCompleteness?.missing
-                })}
               </div>
               <StatusBadge status={profileTier} />
             </div>
