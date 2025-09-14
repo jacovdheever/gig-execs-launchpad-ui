@@ -319,19 +319,20 @@ export function CertificationsForm({
                       </div>
                     ) : (
                       <div className="flex items-center gap-2">
-                        <label htmlFor="certification-file-upload">
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            disabled={isUploadingFile}
-                            className="flex items-center gap-2"
-                            onClick={() => console.log('Certification upload button clicked')}
-                          >
-                            <Upload className="w-4 h-4" />
-                            {isUploadingFile ? 'Uploading...' : 'Upload Document'}
-                          </Button>
-                        </label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          disabled={isUploadingFile}
+                          className="flex items-center gap-2"
+                          onClick={() => {
+                            console.log('Certification upload button clicked');
+                            document.getElementById('certification-file-upload')?.click();
+                          }}
+                        >
+                          <Upload className="w-4 h-4" />
+                          {isUploadingFile ? 'Uploading...' : 'Upload Document'}
+                        </Button>
                         <input
                           id="certification-file-upload"
                           type="file"

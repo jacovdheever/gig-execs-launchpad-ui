@@ -552,19 +552,20 @@ export function PortfolioForm({
                   <label className="text-sm font-medium text-slate-700">Solution Files</label>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
-                      <label htmlFor="portfolio-files-upload">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          disabled={isUploadingFile}
-                          className="flex items-center gap-2"
-                          onClick={() => console.log('Upload button clicked')}
-                        >
-                          <Upload className="w-4 h-4" />
-                          {isUploadingFile ? 'Uploading...' : 'Upload Files'}
-                        </Button>
-                      </label>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        disabled={isUploadingFile}
+                        className="flex items-center gap-2"
+                        onClick={() => {
+                          console.log('Upload button clicked');
+                          document.getElementById('portfolio-files-upload')?.click();
+                        }}
+                      >
+                        <Upload className="w-4 h-4" />
+                        {isUploadingFile ? 'Uploading...' : 'Upload Files'}
+                      </Button>
                       <input
                         id="portfolio-files-upload"
                         type="file"

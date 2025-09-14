@@ -316,19 +316,20 @@ export function QualificationsForm({
                       </div>
                     ) : (
                       <div className="flex items-center gap-2">
-                        <label htmlFor="qualification-file-upload">
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            disabled={isUploadingFile}
-                            className="flex items-center gap-2"
-                            onClick={() => console.log('Qualification upload button clicked')}
-                          >
-                            <Upload className="w-4 h-4" />
-                            {isUploadingFile ? 'Uploading...' : 'Upload Document'}
-                          </Button>
-                        </label>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          disabled={isUploadingFile}
+                          className="flex items-center gap-2"
+                          onClick={() => {
+                            console.log('Qualification upload button clicked');
+                            document.getElementById('qualification-file-upload')?.click();
+                          }}
+                        >
+                          <Upload className="w-4 h-4" />
+                          {isUploadingFile ? 'Uploading...' : 'Upload Document'}
+                        </Button>
                         <input
                           id="qualification-file-upload"
                           type="file"
