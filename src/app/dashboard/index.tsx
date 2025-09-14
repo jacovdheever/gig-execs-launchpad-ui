@@ -35,6 +35,12 @@ function CommunityPostsGrid() {
     return text.substring(0, maxLength) + '...';
   };
 
+  const stripHtml = (html: string) => {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || '';
+  };
+
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -93,7 +99,7 @@ function CommunityPostsGrid() {
             </div>
           </div>
           <p className="text-sm text-slate-600 line-clamp-3">
-            {truncateText(post.body || '')}
+            {truncateText(stripHtml(post.body || ''))}
           </p>
           <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
             <span>{post.category?.name || 'General'}</span>
@@ -335,7 +341,7 @@ export default function DashboardPage() {
               },
             };
 
-            const computedCompleteness = computeCompleteness(completenessData);
+            const computedCompleteness = computeCompleteness(user.id, completenessData);
             const computedStatus = computeProfileStatus(completenessData, profile?.vetting_status || 'pending');
 
             setCompletenessData(completenessData);
