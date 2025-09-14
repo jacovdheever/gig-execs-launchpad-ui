@@ -140,6 +140,16 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     vettingStatus: user.vetting_status as any,
   });
 
+  // Debug logging
+  console.log('=== PROFILE COMPLETENESS DEBUG ===');
+  console.log('User ID:', user.id);
+  console.log('Completeness Data:', completenessData);
+  console.log('Computed Completeness:', completeness);
+  console.log('Profile Tier:', completeness.tier);
+  console.log('Vetting Status:', user.vetting_status);
+  console.log('Final Status:', status);
+  console.log('=== END DEBUG ===');
+
   // File upload helper
   const uploadFile = async (file: File, bucket: string): Promise<string> => {
     try {
