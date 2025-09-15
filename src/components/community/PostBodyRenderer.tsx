@@ -1,4 +1,5 @@
 import React from 'react';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 interface PostBodyRendererProps {
   body: string;
@@ -14,7 +15,7 @@ export default function PostBodyRenderer({ body, className = '' }: PostBodyRende
     return (
       <div 
         className={`prose prose-slate max-w-none ${className}`}
-        dangerouslySetInnerHTML={{ __html: body }}
+        dangerouslySetInnerHTML={{ __html: sanitizeHtml(body) }}
       />
     );
   } else {

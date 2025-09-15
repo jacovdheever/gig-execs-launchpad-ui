@@ -31,9 +31,6 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
       .eq('id', user.id)
       .single();
     
-    console.log('getCurrentUser: Query result:', { data, error });
-    console.log('getCurrentUser: Raw data fields:', data ? Object.keys(data) : 'No data');
-    console.log('getCurrentUser: profile_photo_url value:', data?.profile_photo_url);
     
     if (error || !data) {
       console.warn('User not found in users table, attempting to sync from auth. Error:', error);
