@@ -99,6 +99,20 @@ interface ProfileEditProps {
 }
 
 export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
+  console.log('🔍 ProfileEdit: Starting component');
+  
+  // MINIMAL TEST - Just render basic info without complex components
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-4">ProfileEdit - Minimal Test</h1>
+      <p>User: {profileData.user.first_name} {profileData.user.last_name}</p>
+      <p>Job Title: {profileData.profile?.job_title}</p>
+      <p>If this loads without error, the issue is in ProfileEdit's child components.</p>
+    </div>
+  );
+  
+  // ORIGINAL COMPLEX COMPONENT - TEMPORARILY DISABLED
+  /*
   const [isLoading, setIsLoading] = useState(false);
   const [currentProfileData, setCurrentProfileData] = useState(profileData);
   const { user, profile, references, education, certifications, portfolio } = currentProfileData;
@@ -638,4 +652,5 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
       </div>
     </div>
   );
+  */
 }
