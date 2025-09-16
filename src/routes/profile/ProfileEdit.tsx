@@ -138,43 +138,95 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     vettingStatus: user.vetting_status as any,
   });
   
-  // TEST: Add CompletenessMeter + VettingStatus + BasicInfoForm components
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4">ProfileEdit - Testing CompletenessMeter + VettingStatus + BasicInfoForm</h1>
-      <p>User: {user.first_name} {user.last_name}</p>
-      <p>Job Title: {profile?.job_title}</p>
-      
-      <div className="mt-6">
-        <h2 className="text-lg font-semibold mb-4">Profile Completeness</h2>
-        <CompletenessMeter
-          segments={completeness.segments}
-          percent={completeness.percent}
-          missing={completeness.missing}
-        />
+    <div className="max-w-4xl mx-auto p-6">
+      {/* Profile Header */}
+      <div className="flex items-start justify-between mb-8">
+        <div>
+          <h1 className="text-3xl font-bold text-slate-900">Edit Profile</h1>
+          <p className="text-slate-600 mt-2">Manage your professional profile and settings</p>
+        </div>
+        <div className="flex items-center gap-4">
+          <CompletenessMeter
+            segments={completeness.segments}
+            percent={completeness.percent}
+            missing={completeness.missing}
+          />
+          <VettingStatus 
+            status={status}
+            tier={completeness.tier}
+            vettingStatus={user.vetting_status || 'pending'}
+          />
+        </div>
       </div>
-      
-      <div className="mt-6">
-        <h2 className="text-lg font-semibold mb-4">Vetting Status</h2>
-        <VettingStatus 
-          status={status}
-          tier={completeness.tier}
-          vettingStatus={user.vetting_status || 'pending'}
-        />
+
+      {/* Navigation Tabs */}
+      <div className="border-b border-slate-200 mb-8">
+        <nav className="-mb-px flex space-x-8">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                activeTab === tab.id
+                  ? 'border-[#0284C7] text-[#0284C7]'
+                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+              }`}
+            >
+              <tab.icon className="w-4 h-4 inline-block mr-2" />
+              {tab.name}
+            </button>
+          ))}
+        </nav>
       </div>
-      
-      <div className="mt-6">
-        <h2 className="text-lg font-semibold mb-4">Basic Information Form</h2>
-        <BasicInfoForm 
-          user={user}
-          profile={profile}
-          onSave={() => {}}
-        />
+
+      {/* Tab Content */}
+      <div className="min-h-[600px]">
+        {activeTab === 'basic' && (
+          <BasicInfoForm 
+            user={user}
+            profile={profile}
+            onUpdate={handleProfileUpdate}
+            isLoading={isLoading}
+          />
+        )}
+        
+        {activeTab === 'references' && (
+          <ReferencesForm 
+            userId={user.id}
+            onUpdate={() => refetchData()}
+          />
+        )}
+        
+        {activeTab === 'qualifications' && (
+          <QualificationsForm 
+            userId={user.id}
+            onUpdate={() => refetchData()}
+          />
+        )}
+        
+        {activeTab === 'certifications' && (
+          <CertificationsForm 
+            userId={user.id}
+            onUpdate={() => refetchData()}
+          />
+        )}
+        
+        {activeTab === 'portfolio' && (
+          <PortfolioForm 
+            userId={user.id}
+            onUpdate={() => refetchData()}
+          />
+        )}
+        
+        {activeTab === 'documents' && (
+          <IdDocumentUploader 
+            userId={user.id}
+            currentUrl={profile?.id_doc_url}
+            onUpdate={() => refetchData()}
+          />
+        )}
       </div>
-      
-      <p className="mt-4 text-sm text-gray-600">
-        If this loads without error, BasicInfoForm is not the issue either.
-      </p>
     </div>
   );
 }
