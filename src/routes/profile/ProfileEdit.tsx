@@ -135,11 +135,14 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     },
   };
 
+  console.log('🔍 ProfileEdit: About to call computeCompleteness');
   const completeness = computeCompleteness(user.id, completenessData);
+  console.log('🔍 ProfileEdit: computeCompleteness completed');
   const status = computeProfileStatus({
     tier: completeness.tier,
     vettingStatus: user.vetting_status as any,
   });
+  console.log('🔍 ProfileEdit: computeProfileStatus completed');
 
 
   // File upload helper
