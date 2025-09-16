@@ -64,17 +64,11 @@ export function CertificationsForm({
   };
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('=== Certifications handleFileUpload called ===');
-    console.log('Event:', event);
-    console.log('Target files:', event.target.files);
-    
     const file = event.target.files?.[0];
     if (!file) {
-      console.log('No file selected for certification');
       return;
     }
     
-    console.log('File selected for certification:', file.name);
 
     // Validate file type
     const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];

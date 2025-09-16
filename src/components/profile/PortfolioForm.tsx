@@ -127,13 +127,8 @@ export function PortfolioForm({
   };
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('=== handleFileUpload called ===');
-    console.log('Event:', event);
-    console.log('Target files:', event.target.files);
-    
     const files = event.target.files;
     if (!files || files.length === 0) {
-      console.log('No files selected');
       return;
     }
     

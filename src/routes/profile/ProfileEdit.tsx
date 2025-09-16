@@ -140,22 +140,6 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     vettingStatus: user.vetting_status as any,
   });
 
-  // Debug logging
-  console.log('=== PROFILE COMPLETENESS DEBUG ===');
-  console.log('User ID:', user.id);
-  console.log('User data:', { first_name: user.first_name, last_name: user.last_name, email: user.email });
-  console.log('Profile data:', { job_title: profile?.job_title, bio: profile?.bio, address1: profile?.address1, country: profile?.country });
-  console.log('References count:', references.length);
-  console.log('Education count:', education.length);
-  console.log('Certifications count:', certifications.length);
-  console.log('Portfolio count:', portfolio.length);
-  console.log('Has ID doc:', !!profile?.id_doc_url);
-  console.log('Completeness Data:', JSON.stringify(completenessData, null, 2));
-  console.log('Computed Completeness:', JSON.stringify(completeness, null, 2));
-  console.log('Profile Tier:', completeness.tier);
-  console.log('Vetting Status:', user.vetting_status);
-  console.log('Final Status:', status);
-  console.log('=== END DEBUG ===');
 
   // File upload helper
   const uploadFile = async (file: File, bucket: string): Promise<string> => {
@@ -386,8 +370,6 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
 
   // Portfolio handlers
   const handleAddPortfolio = async (item: Omit<PortfolioItem, 'id'>) => {
-    console.log('=== handleAddPortfolio called ===');
-    console.log('Original item:', item);
     
     setIsLoading(true);
     try {
@@ -432,10 +414,6 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   };
 
   const handleEditPortfolio = async (id: number, item: Omit<PortfolioItem, 'id'>) => {
-    console.log('=== handleEditPortfolio called ===');
-    console.log('ID:', id);
-    console.log('Item data:', item);
-    console.log('Item data JSON:', JSON.stringify(item, null, 2));
     
     // Clean the data before sending - convert empty strings to null for date fields
     const cleanItem = {
