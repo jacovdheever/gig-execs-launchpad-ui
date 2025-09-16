@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import type { ForumPost, ForumComment, ForumAttachment } from '@/lib/community.types';
 import { useCreateComment, useUpdateComment, useDeleteComment, useToggleReaction, useComments, useUpdatePost, useDeletePost } from '@/lib/community.hooks';
 import { getCurrentUser } from '@/lib/getCurrentUser';
-import type { User } from '@/lib/database.types';
+import type { CurrentUser } from '@/lib/getCurrentUser';
 import { uploadCommunityAttachment } from '@/lib/storage';
 import { formatRelativeTime } from '@/lib/time';
 import AttachmentsCarousel from '@/components/community/AttachmentsCarousel';
