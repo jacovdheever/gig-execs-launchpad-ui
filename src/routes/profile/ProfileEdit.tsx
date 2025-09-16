@@ -115,7 +115,14 @@ interface ProfileEditProps {
 export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   console.log('🔍 ProfileEdit: Testing with CompletenessMeter component');
   
-  const { user, profile, references, education, certifications, portfolio } = profileData;
+  const { 
+    user, 
+    profile, 
+    references = [], 
+    education = [], 
+    certifications = [], 
+    portfolio = [] 
+  } = profileData;
   const [activeTab, setActiveTab] = useState('basic');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
