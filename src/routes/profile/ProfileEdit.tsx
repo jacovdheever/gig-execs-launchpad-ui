@@ -112,15 +112,51 @@ interface ProfileEditProps {
 }
 
 export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
-  console.log('🔍 ProfileEdit: Starting minimal component');
+  console.log('🔍 ProfileEdit: Testing with CompletenessMeter component');
   
-  // MINIMAL TEST - Just render basic info without complex components
+  const { user, profile, references, education, certifications, portfolio } = profileData;
+  
+  // Calculate completeness for CompletenessMeter
+  const completenessData: CompletenessData = {
+    basic: {
+      hasCore: !!(user.first_name && user.last_name && user.email && profile?.job_title),
+    },
+    full: {
+      referencesCount: references.length,
+      hasIdDocument: !!profile?.id_doc_url,
+      qualificationsCount: education.length,
+      certificationsCount: certifications.length,
+    },
+    allstar: {
+      portfolioCount: portfolio.length,
+    },
+  };
+
+  const completeness = computeCompleteness(user.id, completenessData);
+  const status = computeProfileStatus({
+    tier: completeness.tier,
+    vettingStatus: user.vetting_status as any,
+  });
+  
+  // TEST: Add CompletenessMeter component
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4">ProfileEdit - Minimal Test</h1>
-      <p>User: {profileData.user.first_name} {profileData.user.last_name}</p>
-      <p>Job Title: {profileData.profile?.job_title}</p>
-      <p>If this loads without error, the issue is in ProfileEdit's child components.</p>
+      <h1 className="text-2xl font-bold mb-4">ProfileEdit - Testing CompletenessMeter</h1>
+      <p>User: {user.first_name} {user.last_name}</p>
+      <p>Job Title: {profile?.job_title}</p>
+      
+      <div className="mt-6">
+        <h2 className="text-lg font-semibold mb-4">Profile Completeness</h2>
+        <CompletenessMeter
+          segments={completeness.segments}
+          percent={completeness.percent}
+          missing={completeness.missing}
+        />
+      </div>
+      
+      <p className="mt-4 text-sm text-gray-600">
+        If this loads without error, CompletenessMeter is not the issue.
+      </p>
     </div>
   );
 }
