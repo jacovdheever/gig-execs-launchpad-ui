@@ -1,0 +1,2817 @@
+{
+  "totalFiles": 352,
+  "successfulUploads": 280,
+  "failedUploads": 72,
+  "uploads": [
+    {
+      "file": "006554728536392718-degree.jpg",
+      "user": "yebiliye@gmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/67a9b4ad-fd01-43c0-a471-f4d25db03b28/education/1757932286209_006554728536392718-degree.jpg",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "011323082872966461-Utlility Bill.pdf",
+      "user": "michael@linkstreet.consulting",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67921a7e-8f16-4f6c-a9c1-7940407f8fd4/document/1757932291882_011323082872966461-Utlility_Bill.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "012114704771975182-6sigmastudy_Omonigho Brown.pdf",
+      "user": "omonigho28@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67cafdb0-96a8-4b5f-9bda-a4d5512a6178/document/1757932293365_012114704771975182-6sigmastudy_Omonigho_Brown.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "015865377972611894-Yagnesh qualifications .pdf",
+      "user": "yagneshjshukla@hotmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67c8427f-5391-492a-8c9a-32ab4c315c66/document/1757932297611_015865377972611894-Yagnesh_qualifications_.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "01839903606746951-AOrbetsova_FCMA_CIMA Fellow (CIMA, UK)_May 29,2014.pdf",
+      "user": "aorbetsova@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66f2c9c7-2ba8-4213-8802-fe10f85dcc35/document/1757932299783_01839903606746951-AOrbetsova_FCMA_CIMA_Fellow__CIM.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "01855434472131523-WARWICK MBA CERT - PTL.pdf",
+      "user": "chichi.nwosu@c-rowland.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66cde4ab-75f4-45ec-aa2a-8a231eefe78d/certification/1757932301374_01855434472131523-WARWICK_MBA_CERT_-_PTL.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "01880386997368233-Pass_1709102544213.jpg",
+      "user": "mehdi.kiani.t@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67f7df90-a554-4a1c-905a-f82666507f20/profile_photo/1757932302527_01880386997368233-Pass_1709102544213.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "021494852953576782-Matt Carstens CV.pdf",
+      "user": "mattdcarstens@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/683b10cc-3757-4a9a-be9b-05f4e8ad0c96/document/1757932303962_021494852953576782-Matt_Carstens_CV.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "02564946014687952-Zameer CND Citizenship.pdf",
+      "user": "jafrizameer@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67c8f763-4bec-427c-b765-3efd21c23f9d/document/1757932304987_02564946014687952-Zameer_CND_Citizenship.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "02607502762421876-CV Tito e Campos 2024.pdf",
+      "user": "tito_campos@hotmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6750546d-b7a4-4bc4-87c2-23af9f9981b6/document/1757932306125_02607502762421876-CV_Tito_e_Campos_2024.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "03299228335154991-FTI_DIP_Business Analysis.pdf",
+      "user": "vermaak.c@outlook.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6683d6c0-32d8-4c19-9445-d77ddd8089ba/document/1757932307122_03299228335154991-FTI_DIP_Business_Analysis.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "034469928617420376-Water_Bill_900026480338_19_02_2024 (1).pdf",
+      "user": "karangupta100@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67079f64-942b-406c-be3e-c4f35564da64/document/1757932309535_034469928617420376-Water_Bill_900026480338_19_02_2.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "039405005928815795-Veenal Praamraj - Attested MBA.pdf",
+      "user": "veenalpraamraj@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67bf68af-04d5-4c18-b0fd-e481aefebace/document/1757932316575_039405005928815795-Veenal_Praamraj_-_Attested_MBA.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "03972385406388246-UM 1.jpg",
+      "user": "robertfein@acm.org",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6650abc4-2e71-4570-8d01-647f99fcd42d/profile_photo/1757932321231_03972385406388246-UM_1.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "047610293339599874-Lisa Boodoo - Hydrogen Energy Expert Certificate.pdf",
+      "user": "lisa2.boodoo@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66a28ad4-fe06-40a4-bb4c-3cf04589b46d/certification/1757932324293_047610293339599874-Lisa_Boodoo_-_Hydrogen_Energy_E.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "0504664225496847-IMG_3322.jpeg",
+      "user": "carmenmarianavarro@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6835bd84-91f9-4543-abde-8dc08be09375/profile_photo/1757932326640_0504664225496847-IMG_3322.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "05264371045351468-LLM Certificate - University of South Wales.pdf",
+      "user": "omonigho28@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67cafdb0-96a8-4b5f-9bda-a4d5512a6178/certification/1757932329393_05264371045351468-LLM_Certificate_-_University_of_.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "05943742651925832-Douglas Black.pdf",
+      "user": "dblack@mindspring.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66a29ad8-74f5-4b68-b5f2-9fabf71383b0/document/1757932329867_05943742651925832-Douglas_Black.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "06066354289848164-Red & Yellow assessment grades.pdf",
+      "user": "riael.solomon@me.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6656bb6e-06b5-493a-acd1-d4e6a30f42c9/document/1757932331147_06066354289848164-Red___Yellow_assessment_grades.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "06236441677173521-HSBC-PAYSLIP-20230930-JAMESDUWAYNEIVAN (2).PDF",
+      "user": "duwayne2406@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66d7799e-11e9-4c82-97af-cb045250aeb8/document/1757932333394_06236441677173521-HSBC-PAYSLIP-20230930-JAMESDUWAY.PDF",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "06348900789836054-IMG_20220421_1101374.jpg",
+      "user": "poalospinelli@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66c39c85-6ab8-4260-9cd4-64b597a06c3e/profile_photo/1757932334141_06348900789836054-IMG_20220421_1101374.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "06796267366702424-Leon Cosgrove - University of Queensland 1981 to 1986.pdf",
+      "user": "leon@futurumin.digital",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66ec9e3d-34a1-403b-8d65-b6a25cfbd84f/document/1757932339212_06796267366702424-Leon_Cosgrove_-_University_of_Qu.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "06970016270804158-20250130_134855.jpg",
+      "user": "rtwaring1@hotmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/674da5f4-dcbe-4148-b81b-b87247132f0b/profile_photo/1757932344129_06970016270804158-20250130_134855.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "06988103015476899-MA Certificate.jpg",
+      "user": "rtwaring1@hotmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/674da5f4-dcbe-4148-b81b-b87247132f0b/certification/1757932346011_06988103015476899-MA_Certificate.jpg",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "08287762576477053-DUNEA - WATER BILL FOR AUGUST 2024.PDF",
+      "user": "chichi.nwosu@c-rowland.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66cde4ab-75f4-45ec-aa2a-8a231eefe78d/document/1757932347914_08287762576477053-DUNEA_-_WATER_BILL_FOR_AUGUST_20.PDF",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "08298866111545489-OTHM LEVEL 7 DIPLOMA.pdf",
+      "user": "veenalpraamraj@gmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/67bf68af-04d5-4c18-b0fd-e481aefebace/education/1757932348899_08298866111545489-OTHM_LEVEL_7_DIPLOMA.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "08581995305708667-Canada Divers Licence.jpg",
+      "user": "paulobiora@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66c3a60c-711d-4e8d-9110-a162f4679605/profile_photo/1757932351493_08581995305708667-Canada_Divers_Licence.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "09045870290061053-image.jpg",
+      "user": "joe.talik@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6741f9ab-c5d8-4c17-b580-c471d9da8aa0/profile_photo/1757932353570_09045870290061053-image.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "09179418537264272-IMG_7352.jpeg",
+      "user": "emily618@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67a18195-de03-4cc5-afbe-29083f8d808a/profile_photo/1757932356284_09179418537264272-IMG_7352.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "106770306292439-CISSP Certificate - Frederick Johnson - May 2 2024.pdf",
+      "user": "fjohnson@mail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6744c414-df5c-4613-8d40-25fd84172c0f/certification/1757932359059_106770306292439-CISSP_Certificate_-_Frederick_John.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "10769768186279238-image.jpg",
+      "user": "sos2004.midde@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66cf0823-2c94-40f4-b694-48cc3af49e98/profile_photo/1757932359917_10769768186279238-image.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "10950381241314666-Emmanuel Kwabena Owusu - 2024-07-31.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/68878e6f-9efe-4213-806c-230bf5d849b4/document/1757932368067_10950381241314666-Emmanuel_Kwabena_Owusu_-_2024-07.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "10956272089620578-M.Sc.+Certificate_120327_363347_11zon.pdf",
+      "user": "mehdi.kiani.t@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67f7df90-a554-4a1c-905a-f82666507f20/certification/1757932372620_10956272089620578-M_Sc__Certificate_120327_363347_.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "11295250264645951-VAP 2020 GAU 1 Final results (21-06-2021) R Salomon.pdf",
+      "user": "riael.solomon@me.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6656bb6e-06b5-493a-acd1-d4e6a30f42c9/document/1757932374431_11295250264645951-VAP_2020_GAU_1_Final_results__21.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "11487400220408661-Tech_DIPTravel&Tourism_2000.pdf",
+      "user": "vermaak.c@outlook.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6683d6c0-32d8-4c19-9445-d77ddd8089ba/document/1757932377149_11487400220408661-Tech_DIPTravel_Tourism_2000.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "1227558178229069-IMG_3538.jpeg",
+      "user": "carmenmarianavarro@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6835bd84-91f9-4543-abde-8dc08be09375/profile_photo/1757932378997_1227558178229069-IMG_3538.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "12615879097876292-PhD Certificate_AzikeOgo.pdf",
+      "user": "azikeogo@outlook.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67b8d771-5b92-4d08-82b4-50aaf821efb2/certification/1757932379965_12615879097876292-PhD_Certificate_AzikeOgo.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "13173729977418747-image.jpg",
+      "user": "karitoga06@hotmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/68086e0a-2caf-4530-9e7c-fe95d4d3eb7e/profile_photo/1757932380837_13173729977418747-image.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "1331751438183999-Address.pdf",
+      "user": "krendee@aol.com",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6735fde3-b078-4a8d-94e6-14a95930385b/address_proof/1757932383920_1331751438183999-Address.pdf",
+      "databaseUpdate": true,
+      "note": "Address proof file - requires address proof field update"
+    },
+    {
+      "file": "134794674497422-B.Sc. Certificate.pdf",
+      "user": "mehdi.kiani.t@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67f7df90-a554-4a1c-905a-f82666507f20/certification/1757932385399_134794674497422-B_Sc__Certificate.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "13479509635103937-Federal Aviation Administration.pdf",
+      "user": "laura@sicuromail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6741f9c4-3c15-4397-bc19-7d3b0d927258/document/1757932386562_13479509635103937-Federal_Aviation_Administration.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "14599152145115735-Ayman Gazawi Resume EL July 2025.pdf",
+      "user": "aghazzaoui@hotmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67873fbe-ab69-48cc-ac22-54d49a77dc77/document/1757932390164_14599152145115735-Ayman_Gazawi_Resume_EL_July_2025.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "14750305353454363-AWSResumeFSPDF.pdf",
+      "user": "davbrtlng@aol.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66a10f5a-a69b-41f3-af99-5c16d34085b2/document/1757932390917_14750305353454363-AWSResumeFSPDF.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "15251371466857178-Ike_s Master_s Degree.pdf",
+      "user": "ike@iiigallica.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/66a2a70f-71fc-4dde-a52d-6f9f3c69639e/education/1757932392655_15251371466857178-Ike_s_Master_s_Degree.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "16258262551784552-2024-411963559_20241216_234040.pdf",
+      "user": "eran.benavi@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6763253f-7301-4e81-a276-387508620da6/document/1757932393564_16258262551784552-2024-411963559_20241216_234040.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "16389818002347756-COJ_2024-11-04_557436103.pdf",
+      "user": "tonderai.kariwo@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66788749-5790-46b4-8729-d1e700b18db8/document/1757932394283_16389818002347756-COJ_2024-11-04_557436103.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "16490603093417655-image.jpg",
+      "user": "carmenmarianavarro@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6835bd84-91f9-4543-abde-8dc08be09375/profile_photo/1757932394765_16490603093417655-image.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "1650173584149519-494526_AI_202405_0604_234458.pdf",
+      "user": "ruan@rvconsulting.co.za",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66729a00-ad24-4b43-b361-337c9a6ef5a9/document/1757932396795_1650173584149519-494526_AI_202405_0604_234458.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "16502806160722838-IMG_3536.jpeg",
+      "user": "carmenmarianavarro@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6835bd84-91f9-4543-abde-8dc08be09375/profile_photo/1757932397511_16502806160722838-IMG_3536.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "17582258516093563-MSc Certificate_AzikeOgo.pdf",
+      "user": "azikeogo@outlook.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67b8d771-5b92-4d08-82b4-50aaf821efb2/certification/1757932401653_17582258516093563-MSc_Certificate_AzikeOgo.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "17710708166039058-20241219_231455.jpg",
+      "user": "mblethen@blethenminingassociates.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67b9ef1b-d1a9-47d3-acf1-a5f9b45dba0f/profile_photo/1757932402375_17710708166039058-20241219_231455.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "17857323384080392-pass.pdf",
+      "user": "yebiliye@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67a9b4ad-fd01-43c0-a471-f4d25db03b28/document/1757932404561_17857323384080392-pass.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "1806834563513149-BOWMAN UNOFFICIAL TRANSCRIPT.pdf",
+      "user": "thomasdbowman@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6733824e-b331-47d5-91be-d8f1ad543762/document/1757932406050_1806834563513149-BOWMAN_UNOFFICIAL_TRANSCRIPT.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "18151110539061088-Screenshot_20250117-000239.png",
+      "user": "rakeshawesum0189@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6791401a-e853-4808-88ba-257187576433/profile_photo/1757932406491_18151110539061088-Screenshot_20250117-000239.png",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "18443035548906916-Katzscan-FL-Sunbiz.pdf",
+      "user": "katzscan@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/667eb354-cf4f-4a6a-a58e-801e7c22956b/document/1757932407808_18443035548906916-Katzscan-FL-Sunbiz.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "1904084280666276-IndigoCube_2012.pdf",
+      "user": "vermaak.c@outlook.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6683d6c0-32d8-4c19-9445-d77ddd8089ba/document/1757932409302_1904084280666276-IndigoCube_2012.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "1923167975292055-FINRA Details.pdf",
+      "user": "jason@baileystationcapital.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67636afd-b094-4ac2-a3e2-7d5d68bf2866/document/1757932411436_1923167975292055-FINRA_Details.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "19513201257784685-Screenshot 2024-07-24 at 11.59.52â¯PM.png",
+      "user": "rscassell@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66a1cb97-54a9-420c-a490-20cb64d25ab1/profile_photo/1757932412098_19513201257784685-Screenshot_2024-07-24_at_11_59_5.png",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "19688287554925865-Dr Sanjay Mody  e-portfolio .pdf",
+      "user": "sanjay_mody@hotmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66e9355e-9c60-4e67-9d97-3893051dc917/document/1757932413591_19688287554925865-Dr_Sanjay_Mody__e-portfolio_.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "20852820163444297-BA FTI - Provisional Statement of Results.pdf",
+      "user": "riael.solomon@me.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6656bb6e-06b5-493a-acd1-d4e6a30f42c9/document/1757932418420_20852820163444297-BA_FTI_-_Provisional_Statement_o.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "21221790065549095-Proof of Address.pdf",
+      "user": "vermaak.c@outlook.com",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6683d6c0-32d8-4c19-9445-d77ddd8089ba/address_proof/1757932420438_21221790065549095-Proof_of_Address.pdf",
+      "databaseUpdate": true,
+      "note": "Address proof file - requires address proof field update"
+    },
+    {
+      "file": "2157299410281801-Water Bills Jan 25 on.pdf",
+      "user": "lynthomasuk@aol.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67b89e7b-5079-435c-906a-3b9f2cc97a80/document/1757932423652_2157299410281801-Water_Bills_Jan_25_on.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "2160697842858197-MBB - Driving Licence1.pdf",
+      "user": "adam.sketchley@reybridgecapital.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66f32565-331c-4f25-94db-c133bdabebdf/document/1757932429590_2160697842858197-MBB_-_Driving_Licence1.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "21662671362731323-IMG_5482.jpeg",
+      "user": "twinkler3@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67a0cab3-9d79-4b90-88ef-767f43490377/profile_photo/1757932431378_21662671362731323-IMG_5482.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "21802030116661486-Address and Location Verification.png",
+      "user": "javaidislam@hotmail.com",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/67a0e52a-de9a-483a-be38-43338ade00e3/address_proof/1757932440138_21802030116661486-Address_and_Location_Verificatio.png",
+      "databaseUpdate": true,
+      "note": "Address proof file - requires address proof field update"
+    },
+    {
+      "file": "21923383553253317-PhD scanned degree.pdf",
+      "user": "stamatios.chondrogiannis@gmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/67c6a626-1c0b-4296-9620-2c70c067a2d1/education/1757932441457_21923383553253317-PhD_scanned_degree.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "22110667305754705-008949678430-Apr_2024.pdf",
+      "user": "tomjames@tomjames.email",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66422eb5-5f1e-40bc-a835-6d508bdca1af/document/1757932442255_22110667305754705-008949678430-Apr_2024.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "23145750283959-Bachelor Certificate.pdf",
+      "user": "sunishnambiar@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/674ac455-9e0a-47c5-b890-23160e10ee2f/certification/1757932443114_23145750283959-Bachelor_Certificate.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "2461380051385711-UM 2.jpeg",
+      "user": "robertfein@acm.org",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6650abc4-2e71-4570-8d01-647f99fcd42d/profile_photo/1757932445505_2461380051385711-UM_2.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "24845898533105482-20230815_104610.jpg",
+      "user": "modiba_masilo@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6800f4d4-d14a-4362-bfc0-2fe9d585a7eb/profile_photo/1757932447772_24845898533105482-20230815_104610.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "2505019023238193-CISM-certification-242690794.pdf",
+      "user": "fjohnson@mail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6744c414-df5c-4613-8d40-25fd84172c0f/certification/1757932449924_2505019023238193-CISM-certification-242690794.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "258881292439437-PP2.jpeg.jpg",
+      "user": "chuma.shadreck@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67d1db2f-e861-47b3-b420-3f9452022119/profile_photo/1757932451686_258881292439437-PP2_jpeg.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "2597203295877375-Bachelors degree.jpg",
+      "user": "samrinder@hotmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/66c1beaf-edbb-423d-9621-ed3b03318940/education/1757932452626_2597203295877375-Bachelors_degree.jpg",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "26541411107606616-7f1b2b1b-266f-45f6-9208-b19f34a4bd90.jpeg",
+      "user": "sos2004.midde@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66cf0823-2c94-40f4-b694-48cc3af49e98/profile_photo/1757932453639_26541411107606616-7f1b2b1b-266f-45f6-9208-b19f34a4.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "2663301981106003-Canada Divers Licence.jpg",
+      "user": "paulobiora@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66c3a60c-711d-4e8d-9110-a162f4679605/profile_photo/1757932455009_2663301981106003-Canada_Divers_Licence.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "26735888076228465-CCMAP Certificate - Omonigho Oyoma Brown.pdf",
+      "user": "omonigho28@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67cafdb0-96a8-4b5f-9bda-a4d5512a6178/certification/1757932455981_26735888076228465-CCMAP_Certificate_-_Omonigho_Oyo.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "272708508646307-IMG_7933.jpeg",
+      "user": "gc_blaze@hotmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67a1baac-e95d-424b-a6a6-0b5aa40fbaf9/profile_photo/1757932459067_272708508646307-IMG_7933.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "2736906438824862-20240419_130047.jpg",
+      "user": "modiba_masilo@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6800f4d4-d14a-4362-bfc0-2fe9d585a7eb/profile_photo/1757932460320_2736906438824862-20240419_130047.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "2759057861286227-Yagnesh qualifications .pdf",
+      "user": "yagneshjshukla@hotmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67c8427f-5391-492a-8c9a-32ab4c315c66/document/1757932462488_2759057861286227-Yagnesh_qualifications_.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "2771231065793702-CV Marie Carey - Feb 24.pdf",
+      "user": "mcarey1333@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66daca40-5e1d-4eca-92d9-6ba60a70aad1/document/1757932463942_2771231065793702-CV_Marie_Carey_-_Feb_24.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "2823369668358149-NEBOSH_HSE_Certificate_in_PSM_-_Emmanuel_Owusu[1].pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/68878e6f-9efe-4213-806c-230bf5d849b4/certification/1757932466010_2823369668358149-NEBOSH_HSE_Certificate_in_PSM_-_E.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "2841881529015293-LegRegs.pdf",
+      "user": "tom@lrd-thebigidea.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66decd4a-60f9-416e-aec0-b59bfa5f84a6/document/1757932466809_2841881529015293-LegRegs.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "2847069939467375-money_transfers.pdf",
+      "user": "vermaak.c@outlook.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6683d6c0-32d8-4c19-9445-d77ddd8089ba/document/1757932468229_2847069939467375-money_transfers.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "28862181639787465-Internal Auditor.png",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/68878e6f-9efe-4213-806c-230bf5d849b4/profile_photo/1757932469678_28862181639787465-Internal_Auditor.png",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "2943190365377286-MD Diploma.jpg",
+      "user": "sanjay_mody@hotmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/66e9355e-9c60-4e67-9d97-3893051dc917/education/1757932470736_2943190365377286-MD_Diploma.jpg",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "2989867115962126-MIPA Accreditation Certificate.pdf",
+      "user": "tom@lrd-thebigidea.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66decd4a-60f9-416e-aec0-b59bfa5f84a6/certification/1757932473179_2989867115962126-MIPA_Accreditation_Certificate.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "3050088219167568-1. v3 TOP 2 page CV Ian Smith.pdf",
+      "user": "iansmoo@yahoo.co.uk",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66cd82c1-224a-4cde-a46c-0bc902e96f3b/document/1757932475212_3050088219167568-1__v3_TOP_2_page_CV_Ian_Smith.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "3182472355263566-PMP EXAM PREP.jpg",
+      "user": "veenalpraamraj@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67bf68af-04d5-4c18-b0fd-e481aefebace/profile_photo/1757932476175_3182472355263566-PMP_EXAM_PREP.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "32097457329257195-DL (2).jpg",
+      "user": "sherilyns@shawconsulting1857900.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66c6a076-5990-4795-b185-7856c50d4e67/profile_photo/1757932477479_32097457329257195-DL__2_.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "3277631599868027-Leon Cosgrove - QUT 1989 to 1993.pdf",
+      "user": "leon@futurumin.digital",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66ec9e3d-34a1-403b-8d65-b6a25cfbd84f/document/1757932483964_3277631599868027-Leon_Cosgrove_-_QUT_1989_to_1993.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "33043108834867807-IMG_7932.jpeg",
+      "user": "gc_blaze@hotmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67a1baac-e95d-424b-a6a6-0b5aa40fbaf9/profile_photo/1757932491753_33043108834867807-IMG_7932.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "3351907515516077-Christa C Vermaak-ScrumAlliance_CSPO_Certificate.pdf",
+      "user": "vermaak.c@outlook.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6683d6c0-32d8-4c19-9445-d77ddd8089ba/certification/1757932493501_3351907515516077-Christa_C_Vermaak-ScrumAlliance_C.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "33689764058263116-202408_011030.pdf",
+      "user": "ecisnerosvg@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66ec3e10-f38b-4960-a038-9acc9fd16be2/document/1757932494492_33689764058263116-202408_011030.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "33770183530579345-1730662460489.jpg",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/68878e6f-9efe-4213-806c-230bf5d849b4/profile_photo/1757932495442_33770183530579345-1730662460489.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "34224680471345725-IMG_2128.jpeg",
+      "user": "sliscomb@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66967fa3-7d15-4ee9-a4d8-3bb167598475/profile_photo/1757932496141_34224680471345725-IMG_2128.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "3475090083617547-MBA Con.pdf",
+      "user": "aejazpatel@yahoo.co.in",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67a9aa2c-d120-49e4-8d03-5532edfc08de/document/1757932497493_3475090083617547-MBA_Con.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "3477372850647076-Tom Robertshaw - Advanced Certificate Certificate - 00012210.pdf",
+      "user": "tom@lrd-thebigidea.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66decd4a-60f9-416e-aec0-b59bfa5f84a6/certification/1757932498314_3477372850647076-Tom_Robertshaw_-_Advanced_Certifi.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "3492076438226259-PHOTO-2025-01-29-22-00-50.jpg",
+      "user": "aayishaniz332@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67a9aa78-03ae-414a-979f-d2a2f18fa91a/profile_photo/1757932499272_3492076438226259-PHOTO-2025-01-29-22-00-50.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "3520987615904798-IMG_3537.jpeg",
+      "user": "carmenmarianavarro@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6835bd84-91f9-4543-abde-8dc08be09375/profile_photo/1757932501390_3520987615904798-IMG_3537.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "3574668725951773-degree.jpg",
+      "user": "yebiliye@gmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/67a9b4ad-fd01-43c0-a471-f4d25db03b28/education/1757932502508_3574668725951773-degree.jpg",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "35998839179426523-IMG_7929.jpeg",
+      "user": "gc_blaze@hotmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67a1baac-e95d-424b-a6a6-0b5aa40fbaf9/profile_photo/1757932503639_35998839179426523-IMG_7929.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "36194194789262424-F.jpg",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/profile_photo/1757932505520_36194194789262424-F.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "3620815348655244-Final MSc_Diploma.pdf",
+      "user": "diana_carolinac@hotmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/66d22322-6166-457e-b520-8ff5efd45861/education/1757932508101_3620815348655244-Final_MSc_Diploma.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "36226892781452924-Elise McGee Official Baylor University Transcript.pdf",
+      "user": "elisekm430@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/678e9d85-e77d-4597-acc8-3241d1af89d8/document/1757932510642_36226892781452924-Elise_McGee_Official_Baylor_Univ.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "3741003979025561-Degree.pdf",
+      "user": "tonnymhondiwa@gmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/67d32de0-0615-4592-b4f7-2b5d6132e4ba/education/1757932513680_3741003979025561-Degree.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "37602550837826154-ScrumFundamentalsCertified-ErnestoCisnerosVega-979587.pdf",
+      "user": "ecisnerosvg@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66ec3e10-f38b-4960-a038-9acc9fd16be2/certification/1757932515139_37602550837826154-ScrumFundamentalsCertified-Ernes.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "3874484849044697-Graduation_Certificate_En.pdf",
+      "user": "azim.engpetro@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6650ce23-7073-49d5-81ff-00f0b40bb7c7/certification/1757932517884_3874484849044697-Graduation_Certificate_En.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "387795733279767-octopus-energy-statement-2024-08-16 (1).pdf",
+      "user": "lindataylor2109@outlook.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66d88513-f0b4-4f1b-a8c2-60e412a5c216/document/1757932521713_387795733279767-octopus-energy-statement-2024-08-1.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "38887141949690296-MBA & Engg Degrees and Transcripts.pdf",
+      "user": "sainiprashant81@gmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/670788f8-bc0c-4d6c-b2b2-9bd9dcfb445c/education/1757932523076_38887141949690296-MBA___Engg_Degrees_and_Transcrip.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "3899340930723798-DL_01.07.21.jpg",
+      "user": "velkins@bellsouth.net",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6735efc9-1ddc-4401-b026-e1e626086ddc/profile_photo/1757932530357_3899340930723798-DL_01_07_21.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "39536628564576737-Adesh Mahepath Resume.pdf",
+      "user": "amahepath@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/68339c5a-3dfe-44e6-9c8d-311777c5f9e1/document/1757932531109_39536628564576737-Adesh_Mahepath_Resume.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "3972075498416461-CISA-certification-222009486 (2).pdf",
+      "user": "fjohnson@mail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6744c414-df5c-4613-8d40-25fd84172c0f/certification/1757932531915_3972075498416461-CISA-certification-222009486__2_.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "40049790541330776-Master of Science Degree - Capella University - Frederick Johnson - March 2008.pdf",
+      "user": "fjohnson@mail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/6744c414-df5c-4613-8d40-25fd84172c0f/education/1757932532893_40049790541330776-Master_of_Science_Degree_-_Capel.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "4017557417715918-DL 1.jpg",
+      "user": "velkins@bellsouth.net",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6735efc9-1ddc-4401-b026-e1e626086ddc/profile_photo/1757932534907_4017557417715918-DL_1.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "40233162469956296-RWW DL Front 5_24_23.jpeg",
+      "user": "roywwaltersiv@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66d74e2f-9141-4a30-b643-49fd5c24a8d0/profile_photo/1757932535653_40233162469956296-RWW_DL_Front_5_24_23.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "40466020896338817-N Adhaar card.pdf",
+      "user": "sos2004.midde@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66cf0823-2c94-40f4-b694-48cc3af49e98/document/1757932536651_40466020896338817-N_Adhaar_card.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "4081208693499887-PMI-RMP Certfication.pdf",
+      "user": "jafrizameer@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67c8f763-4bec-427c-b765-3efd21c23f9d/certification/1757932537703_4081208693499887-PMI-RMP_Certfication.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "4089166782080347-Certified Matric.pdf",
+      "user": "duwayne2406@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66d7799e-11e9-4c82-97af-cb045250aeb8/certification/1757932538645_4089166782080347-Certified_Matric.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "42386409045083284-cap mar certificat.pdf",
+      "user": "yebiliye@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67a9b4ad-fd01-43c0-a471-f4d25db03b28/certification/1757932540326_42386409045083284-cap_mar_certificat.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "42599116676886295-Bachelor of Science Degree - University of Phoenix - Frederick Johnson - March 2003.pdf",
+      "user": "fjohnson@mail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/6744c414-df5c-4613-8d40-25fd84172c0f/education/1757932543210_42599116676886295-Bachelor_of_Science_Degree_-_Uni.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "42864683607305554-Lean Six Sigma Green Belt Certificate.pdf",
+      "user": "ike@iiigallica.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66a2a70f-71fc-4dde-a52d-6f9f3c69639e/certification/1757932545362_42864683607305554-Lean_Six_Sigma_Green_Belt_Certif.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "43104844908615036-Jodie Orozco-CEP-Cert.pdf",
+      "user": "jodie@jodieo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66d88633-e950-4eaf-943e-d414f794ec2d/certification/1757932549191_43104844908615036-Jodie_Orozco-CEP-Cert.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "4422827071603608-Electricity Bill.JPG",
+      "user": "fsardas@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/670674cc-64a0-4a74-92c5-3e056c159574/profile_photo/1757932555481_4422827071603608-Electricity_Bill.JPG",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "4442440971874637-WhatsApp Image 2024-06-30 at 13.20.54_1b773780.jpg",
+      "user": "thom.noakes@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6800ec43-7445-48f1-a422-491595075d63/profile_photo/1757932557272_4442440971874637-WhatsApp_Image_2024-06-30_at_13_2.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "44831350608591825-MHSATranscript - Official.pdf",
+      "user": "sanjay_mody@hotmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66e9355e-9c60-4e67-9d97-3893051dc917/document/1757932559673_44831350608591825-MHSATranscript_-_Official.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "44949272169984456-Dewa Aug 2024.pdf",
+      "user": "sainiprashant81@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/670788f8-bc0c-4d6c-b2b2-9bd9dcfb445c/document/1757932570902_44949272169984456-Dewa_Aug_2024.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "45131468001981956-pegnl certificate.pdf",
+      "user": "lisa2.boodoo@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66a28ad4-fe06-40a4-bb4c-3cf04589b46d/certification/1757932571865_45131468001981956-pegnl_certificate.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "45163182958637993-VAP 2020 GAU 1 Final results (21-06-2021) R Salomon.pdf",
+      "user": "riael.solomon@me.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6656bb6e-06b5-493a-acd1-d4e6a30f42c9/document/1757932572777_45163182958637993-VAP_2020_GAU_1_Final_results__21.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "47017950518109153-IMG_20240324_0011.pdf",
+      "user": "hs.wahab12345@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/683d4ff7-6523-4af1-84c2-98f9802d5429/document/1757932574055_47017950518109153-IMG_20240324_0011.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "47471984713231885-Screenshot 2023-11-01 100424.png",
+      "user": "eschinsi@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67fe3711-a582-4b13-b103-21066ad5ebf5/profile_photo/1757932577299_47471984713231885-Screenshot_2023-11-01_100424.png",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "4777223627870715-Yagnesh qualifications .pdf",
+      "user": "yagneshjshukla@hotmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67c8427f-5391-492a-8c9a-32ab4c315c66/document/1757932579969_4777223627870715-Yagnesh_qualifications_.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "483653721779681-Teena Letter Of Recommendation_Dr Venard.pdf",
+      "user": "tahuja411@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66eb0aee-8fe7-44d8-a68b-6dd53f112128/document/1757932581655_483653721779681-Teena_Letter_Of_Recommendation_Dr_.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "4850795662538505-CTC Mcom.pdf",
+      "user": "lucasjoel1@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66f3db6a-9f4a-4a20-8f44-86b79d531cb6/document/1757932582696_4850795662538505-CTC_Mcom.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "4857167475906665-Certificate of Completion_GDPR&POPIA 2023.pdf",
+      "user": "vermaak.c@outlook.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6683d6c0-32d8-4c19-9445-d77ddd8089ba/certification/1757932583509_4857167475906665-Certificate_of_Completion_GDPR_PO.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "4868502362365166-IMG_0534.jpeg",
+      "user": "davbrtlng@aol.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66a10f5a-a69b-41f3-af99-5c16d34085b2/profile_photo/1757932584478_4868502362365166-IMG_0534.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "49102429772355394-20210308_174602.jpg",
+      "user": "toddlucas7895@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/663b8acb-b0eb-4924-bed9-a5b2d6fef3e5/profile_photo/1757932586577_49102429772355394-20210308_174602.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "49594934249610123-recognition-certificate-715643.pdf",
+      "user": "chris@collieresources.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66a16faa-476a-4e97-b579-91512813e002/certification/1757932592030_49594934249610123-recognition-certificate-715643.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "49760192998883124-Call to Bar Cert - AUG 85.pdf",
+      "user": "chichi.nwosu@c-rowland.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66cde4ab-75f4-45ec-aa2a-8a231eefe78d/certification/1757932592709_49760192998883124-Call_to_Bar_Cert_-_AUG_85.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "5047160837845235-v2. NOC 14th June 2024 Resume CV Ian Smith.pdf",
+      "user": "iansmoo@yahoo.co.uk",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66cd82c1-224a-4cde-a46c-0bc902e96f3b/document/1757932595153_5047160837845235-v2__NOC_14th_June_2024_Resume_CV_.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "504954623922641-Levy Notice 1 Ferry Road West End 4101 - Proof of co-ownership Debra Anne Dillon and Leon Gerard Cosgrove.pdf",
+      "user": "leon@futurumin.digital",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/66ec9e3d-34a1-403b-8d65-b6a25cfbd84f/address_proof/1757932595984_504954623922641-Levy_Notice_1_Ferry_Road_West_End_.pdf",
+      "databaseUpdate": true,
+      "note": "Address proof file - requires address proof field update"
+    },
+    {
+      "file": "5079140003005589-Bill Percy CV 24 1.pdf",
+      "user": "billjp@icloud.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6749d175-1fe1-4bdb-a229-4cf9eda3dddb/document/1757932596809_5079140003005589-Bill_Percy_CV_24_1.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "5079373993266343-TA-Final-2024.pdf",
+      "user": "tahuja411@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66eb0aee-8fe7-44d8-a68b-6dd53f112128/document/1757932597764_5079373993266343-TA-Final-2024.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "510753305673568-MBA certificate.pdf",
+      "user": "kreethanb@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66e6c2c2-c674-4022-a7c3-6a945edc9b28/certification/1757932598286_510753305673568-MBA_certificate.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "5110140112742856-Address verification.pdf",
+      "user": "laura@sicuromail.com",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6741f9c4-3c15-4397-bc19-7d3b0d927258/address_proof/1757932599011_5110140112742856-Address_verification.pdf",
+      "databaseUpdate": true,
+      "note": "Address proof file - requires address proof field update"
+    },
+    {
+      "file": "5164713701673966-dip.pdf",
+      "user": "yebiliye@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67a9b4ad-fd01-43c0-a471-f4d25db03b28/document/1757932602436_5164713701673966-dip.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "525433522088101-IMG_0485.jpg",
+      "user": "robertfein@acm.org",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6650abc4-2e71-4570-8d01-647f99fcd42d/profile_photo/1757932604684_525433522088101-IMG_0485.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "5313655428863735-1722636541727.jpg",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/68878e6f-9efe-4213-806c-230bf5d849b4/profile_photo/1757932606625_5313655428863735-1722636541727.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "535216104139353-Pass_1709102544213.jpg",
+      "user": "mehdi.kiani.t@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67f7df90-a554-4a1c-905a-f82666507f20/profile_photo/1757932607439_535216104139353-Pass_1709102544213.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "5423094930465402-20210308_174602.jpg",
+      "user": "toddlucas7895@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/663b8acb-b0eb-4924-bed9-a5b2d6fef3e5/profile_photo/1757932608684_5423094930465402-20210308_174602.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "5446338222342428-67bd68acb9401a1690686aa2.pdf",
+      "user": "willem.kruger@wlkservices.co.za",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67d88924-8bcc-45b3-a786-93a8bc896398/document/1757932611311_5446338222342428-67bd68acb9401a1690686aa2.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "5526739133833964-Certificate of Completion_AML Course 2023.pdf",
+      "user": "vermaak.c@outlook.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6683d6c0-32d8-4c19-9445-d77ddd8089ba/certification/1757932611991_5526739133833964-Certificate_of_Completion_AML_Cou.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "5588821295794457-FINRA Details.pdf",
+      "user": "jason@baileystationcapital.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67636afd-b094-4ac2-a3e2-7d5d68bf2866/document/1757932619470_5588821295794457-FINRA_Details.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "5618619328332055-Proof of address.pdf",
+      "user": "luisa.migheli@gmail.com",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/674ac058-c6ad-4b28-ae7b-100e46635317/address_proof/1757932620610_5618619328332055-Proof_of_address.pdf",
+      "databaseUpdate": true,
+      "note": "Address proof file - requires address proof field update"
+    },
+    {
+      "file": "5655632240571766-lisa boodoo-ScrumAlliance_CSM_Certificate.pdf",
+      "user": "lisa2.boodoo@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66a28ad4-fe06-40a4-bb4c-3cf04589b46d/certification/1757932621786_5655632240571766-lisa_boodoo-ScrumAlliance_CSM_Cer.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "567403869391474-Husni Khuffash_ Resume.pdf",
+      "user": "husni@khuffash.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/679b5087-d468-432a-a710-85a123c47681/document/1757932623312_567403869391474-Husni_Khuffash__Resume.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "5674819853947675-Energia Jan-24 bill.pdf",
+      "user": "faulkner.liam@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785678f-9748-41cb-87ac-af7576866cc8/document/1757932624285_5674819853947675-Energia_Jan-24_bill.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "567661754668721-Diploma.jpg",
+      "user": "laura@sicuromail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/6741f9c4-3c15-4397-bc19-7d3b0d927258/education/1757932627172_567661754668721-Diploma.jpg",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "5688213458044151-LLB Certificate.pdf",
+      "user": "omonigho28@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67cafdb0-96a8-4b5f-9bda-a4d5512a6178/certification/1757932632397_5688213458044151-LLB_Certificate.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "5689119518414778-MBA Certificate.jpg",
+      "user": "rtwaring1@hotmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/674da5f4-dcbe-4148-b81b-b87247132f0b/certification/1757932633603_5689119518414778-MBA_Certificate.jpg",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "5748313013194171-950B1D1F-913C-423A-B9A7-4050843DFE83.jpeg",
+      "user": "mattdcarstens@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/683b10cc-3757-4a9a-be9b-05f4e8ad0c96/profile_photo/1757932637530_5748313013194171-950B1D1F-913C-423A-B9A7-4050843DF.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "5760639171253294-Higher National Diploma.pdf",
+      "user": "pucj001@yahoo.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/67f7d456-0546-4bb9-9b60-fd9383150e99/education/1757932640905_5760639171253294-Higher_National_Diploma.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "5769792428872726-Attachment-1.jpeg",
+      "user": "matthewmorel@me.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66defc94-f602-41d1-be76-f06e80ced02d/profile_photo/1757932641633_5769792428872726-Attachment-1.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "5770879776921289-PMI Score Report.pdf",
+      "user": "jafrizameer@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67c8f763-4bec-427c-b765-3efd21c23f9d/document/1757932642493_5770879776921289-PMI_Score_Report.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "5787557896255873-SeriveMonitor_2004.pdf",
+      "user": "vermaak.c@outlook.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6683d6c0-32d8-4c19-9445-d77ddd8089ba/document/1757932643176_5787557896255873-SeriveMonitor_2004.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "5796568446326653-Resume -Thomas Mathai.pdf",
+      "user": "thomasuae@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67a9abf0-3f11-4492-9f05-cbdf715d942f/document/1757932644458_5796568446326653-Resume_-Thomas_Mathai.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "5814632764380854-Tom Robertshaw - Digital Performance Certificate Certificate - 00008737.pdf",
+      "user": "tom@lrd-thebigidea.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66decd4a-60f9-416e-aec0-b59bfa5f84a6/certification/1757932645281_5814632764380854-Tom_Robertshaw_-_Digital_Performa.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "5833226764568742-A.Orbetsova_Proof of address.pdf",
+      "user": "aorbetsova@gmail.com",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/66f2c9c7-2ba8-4213-8802-fe10f85dcc35/address_proof/1757932645898_5833226764568742-A_Orbetsova_Proof_of_address.pdf",
+      "databaseUpdate": true,
+      "note": "Address proof file - requires address proof field update"
+    },
+    {
+      "file": "5870711236495554-Degree.png",
+      "user": "ruan@rvconsulting.co.za",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/66729a00-ad24-4b43-b361-337c9a6ef5a9/education/1757932646586_5870711236495554-Degree.png",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "5887980868087932-Verification_Certificate_351806575.pdf",
+      "user": "velkins@bellsouth.net",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6735efc9-1ddc-4401-b026-e1e626086ddc/certification/1757932649528_5887980868087932-Verification_Certificate_35180657.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "5908723056549516-ECSA certificate.pdf",
+      "user": "tonnymhondiwa@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67d32de0-0615-4592-b4f7-2b5d6132e4ba/certification/1757932653397_5908723056549516-ECSA_certificate.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "5936703219729058-Walden_Official Transcripts.pdf",
+      "user": "rockylongworth@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66d63c60-bff3-45cc-bf7e-02422504d9f9/document/1757932654134_5936703219729058-Walden_Official_Transcripts.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "5951050915337013-20230105_152507.jpg",
+      "user": "ockert.vanschalkwyk@outlook.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/674eede5-3052-450e-b801-91d328b441c2/profile_photo/1757932655189_5951050915337013-20230105_152507.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "5954897467693137-image.jpg",
+      "user": "ryanking1013@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/680959c9-69fa-4233-abe2-d0849722d02b/profile_photo/1757932658241_5954897467693137-image.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "5994735334501069-LPT level 2 copy.jpeg",
+      "user": "sos2004.midde@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66cf0823-2c94-40f4-b694-48cc3af49e98/profile_photo/1757932662878_5994735334501069-LPT_level_2_copy.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "5998811786114013-Marcelo Cometti driver.jpg",
+      "user": "cometti.marcelo@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66deed26-2bd3-40ce-b9bf-b64aed0d4f7d/profile_photo/1757932666870_5998811786114013-Marcelo_Cometti_driver.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "6001001230755862-MS Degree.jpg",
+      "user": "mo_mccollum@fastmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/66d1ecab-2fe4-4a40-9c6c-7c0327ece0f5/education/1757932669835_6001001230755862-MS_Degree.jpg",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "6175873974227344-J Hager DL Front 051822.pdf",
+      "user": "john.hager.2018@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67bdb842-4e94-4c50-89f6-9bf92a39b672/document/1757932672771_6175873974227344-J_Hager_DL_Front_051822.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "6184698281513792-Mr. Geraldo2.jpg",
+      "user": "macjohngeraldo@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67c58295-da7e-4109-baa0-134be208360a/profile_photo/1757932673746_6184698281513792-Mr__Geraldo2.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "6246292429545726-ciscm+official.pdf",
+      "user": "moh_meh_2025@hotmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67c8c32c-d377-4f64-bf6f-7b3d28c8626e/document/1757932677449_6246292429545726-ciscm_official.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "6250687540968025-PasaporteECV001.pdf",
+      "user": "ecisnerosvg@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66ec3e10-f38b-4960-a038-9acc9fd16be2/document/1757932679128_6250687540968025-PasaporteECV001.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "6259183076541062-education certificates complete.pdf",
+      "user": "lisa2.boodoo@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66a28ad4-fe06-40a4-bb4c-3cf04589b46d/certification/1757932680327_6259183076541062-education_certificates_complete.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "6262430006338096-IMG_1884.jpeg",
+      "user": "nickdiana@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6819ac6a-b33e-4e2a-b5d9-c04796339fbd/profile_photo/1757932684456_6262430006338096-IMG_1884.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "6285850365793089-IMG_2676.jpeg",
+      "user": "jo@add10.co.uk",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66ded08a-e004-47a0-b6b0-f130c3f83ccc/profile_photo/1757932688540_6285850365793089-IMG_2676.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "6291143703918183-QMUL LLM CERTIFICATE - PTL.pdf",
+      "user": "chichi.nwosu@c-rowland.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66cde4ab-75f4-45ec-aa2a-8a231eefe78d/certification/1757932692776_6291143703918183-QMUL_LLM_CERTIFICATE_-_PTL.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "6325923554076092-20240620 UFS Post Grad Diploma in Fin Plan.pdf",
+      "user": "ruan@rvconsulting.co.za",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/66729a00-ad24-4b43-b361-337c9a6ef5a9/education/1757932694989_6325923554076092-20240620_UFS_Post_Grad_Diploma_in.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "6340818997646782-MBA Degree.jpg",
+      "user": "samrinder@hotmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/66c1beaf-edbb-423d-9621-ed3b03318940/education/1757932695811_6340818997646782-MBA_Degree.jpg",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "6353317065302981-image.jpg",
+      "user": "esnyderbd@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67a2d400-98f8-4f49-8a88-b64c85ef5d3f/profile_photo/1757932696599_6353317065302981-image.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "6370772987773063-Jose Guimaraes- Master degree-- Portugal- MOFA.pdf",
+      "user": "jose.ac.guimaraes@gmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/6749ec23-2307-4a9c-bb66-50b4690e1500/education/1757932698343_6370772987773063-Jose_Guimaraes-_Master_degree--_P.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "6382981024471321-SCOTTPARISHATSResume (1).pdf",
+      "user": "sparish66@charter.net",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/673619af-5a2a-4754-9148-57bac80ae24d/document/1757932699330_6382981024471321-SCOTTPARISHATSResume__1_.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "6417146231981075-FINRA Details.pdf",
+      "user": "jason@baileystationcapital.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67636afd-b094-4ac2-a3e2-7d5d68bf2866/document/1757932700223_6417146231981075-FINRA_Details.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "6524532595883663-Verification_Certificate_351806575_College.pdf",
+      "user": "velkins@bellsouth.net",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6735efc9-1ddc-4401-b026-e1e626086ddc/certification/1757932700830_6524532595883663-Verification_Certificate_35180657.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "6546435928193792-AOrbetsova_FCMA,CGMA_(AICPA,USA)_Jul 25,2013.pdf",
+      "user": "aorbetsova@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66f2c9c7-2ba8-4213-8802-fe10f85dcc35/document/1757932703915_6546435928193792-AOrbetsova_FCMA_CGMA__AICPA_USA__.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "6659270522967844-1735824064432.jpg",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/68878e6f-9efe-4213-806c-230bf5d849b4/profile_photo/1757932706941_6659270522967844-1735824064432.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "6705334890124666-IMG_0446.jpg",
+      "user": "laura@sicuromail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6741f9c4-3c15-4397-bc19-7d3b0d927258/profile_photo/1757932711046_6705334890124666-IMG_0446.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "6753771675266655-image.jpg",
+      "user": "joe.talik@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6741f9ab-c5d8-4c17-b580-c471d9da8aa0/profile_photo/1757932717236_6753771675266655-image.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "6756398108886432-7175195902_717407934332[1].pdf",
+      "user": "jaco.vandenheever@gigexecs.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6641d46e-56f8-4aca-8b58-09100d2d5c66/document/1757932722578_6756398108886432-7175195902_717407934332_1_.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "6775030057398854-J Hager DL Front 051822.pdf",
+      "user": "john.hager.2018@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67bdb842-4e94-4c50-89f6-9bf92a39b672/document/1757932723710_6775030057398854-J_Hager_DL_Front_051822.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "6782814479505697-ACCA MEMBERSHIP CERTIFICATE.jpg",
+      "user": "sohail_qadirpk@hotmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67a9ac04-845f-4e78-94c8-05fda82040f3/certification/1757932725464_6782814479505697-ACCA_MEMBERSHIP_CERTIFICATE.jpg",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "6798351213909459-mbadiploma.jpg",
+      "user": "dohstrom@gmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/66a144ff-f90f-420f-a5a3-e222158b98b7/education/1757932725994_6798351213909459-mbadiploma.jpg",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "6829682013787333-Benedicta Amponsah CV.pdf",
+      "user": "byamponsah@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66a0ea3a-33bf-4ef0-935f-0cc67c62128c/document/1757932730827_6829682013787333-Benedicta_Amponsah_CV.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "6867941160044417-Sacheen Singh Post Grad.jpg",
+      "user": "sacheen.ss@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66a21cc7-ea13-42a1-8f33-76f5442a188c/profile_photo/1757932731867_6867941160044417-Sacheen_Singh_Post_Grad.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "700836387638081-newfoundland power bill.pdf",
+      "user": "lisa2.boodoo@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66a28ad4-fe06-40a4-bb4c-3cf04589b46d/document/1757932733819_700836387638081-newfoundland_power_bill.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "7040407556898942-ICAEW_ResultsLetter.pdf",
+      "user": "sohail_qadirpk@hotmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67a9ac04-845f-4e78-94c8-05fda82040f3/document/1757932737487_7040407556898942-ICAEW_ResultsLetter.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "7046912829739582-EC Council CCISO Certificate Scan.pdf",
+      "user": "fjohnson@mail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6744c414-df5c-4613-8d40-25fd84172c0f/certification/1757932738030_7046912829739582-EC_Council_CCISO_Certificate_Scan.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "7156028106063594-IADC WellSharpS.pdf",
+      "user": "hs.wahab12345@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/683d4ff7-6523-4af1-84c2-98f9802d5429/document/1757932739786_7156028106063594-IADC_WellSharpS.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "7212979876576284-VAP 2020 GAU 1 Final results (21-06-2021) R Salomon.pdf",
+      "user": "riael.solomon@me.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6656bb6e-06b5-493a-acd1-d4e6a30f42c9/document/1757932743602_7212979876576284-VAP_2020_GAU_1_Final_results__21-.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "7244298728597043-CEDR CERT - CPN -TYLJ.jpg",
+      "user": "chichi.nwosu@c-rowland.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66cde4ab-75f4-45ec-aa2a-8a231eefe78d/certification/1757932744250_7244298728597043-CEDR_CERT_-_CPN_-TYLJ.jpg",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "7258489881882466-Lawrence Sullivan CV Senior Project Development Manager.pdf",
+      "user": "ldsul@msn.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785b2a1-86a0-452a-837c-3c11d09dd3fe/document/1757932745073_7258489881882466-Lawrence_Sullivan_CV_Senior_Proje.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "7306892642158245-Yagnesh qualifications .pdf",
+      "user": "yagneshjshukla@hotmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67c8427f-5391-492a-8c9a-32ab4c315c66/document/1757932745849_7306892642158245-Yagnesh_qualifications_.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "7319360831769501-20240724_165124.jpg",
+      "user": "alanajo81@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66a15be5-75ae-4e1e-8a83-11bf5b9d7ec9/profile_photo/1757932747410_7319360831769501-20240724_165124.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "7321902300846075-eon-next-statement-2023-12-23.pdf",
+      "user": "cometti.marcelo@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66deed26-2bd3-40ce-b9bf-b64aed0d4f7d/document/1757932750105_7321902300846075-eon-next-statement-2023-12-23.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "7397753244201333-AIPG CPG 11540.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757932750977_7397753244201333-AIPG_CPG_11540.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "7407660433330563-2022-09-04_191311 LBS MBA Degree Certificate with Distinction.pdf",
+      "user": "jose.ac.guimaraes@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6749ec23-2307-4a9c-bb66-50b4690e1500/certification/1757932752569_7407660433330563-2022-09-04_191311_LBS_MBA_Degree_.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "7417659983634621-User Experience (UX) Design Certificate for Riael Salomon - 2021-10-19.pdf",
+      "user": "riael.solomon@me.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6656bb6e-06b5-493a-acd1-d4e6a30f42c9/certification/1757932754058_7417659983634621-User_Experience__UX__Design_Certi.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "7417806346252902-MSc scanned degree.pdf",
+      "user": "stamatios.chondrogiannis@gmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/67c6a626-1c0b-4296-9620-2c70c067a2d1/education/1757932755751_7417806346252902-MSc_scanned_degree.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "7438801730008449-image.jpg",
+      "user": "joe.talik@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6741f9ab-c5d8-4c17-b580-c471d9da8aa0/profile_photo/1757932756215_7438801730008449-image.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "7533126889153212-Adhaar Rahul.jpg",
+      "user": "acarahulgoyal@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67a9fea6-04bf-48ed-b537-06c5030a0a79/profile_photo/1757932760542_7533126889153212-Adhaar_Rahul.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "7535172907723933-August-2024.pdf",
+      "user": "kreethanb@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66e6c2c2-c674-4022-a7c3-6a945edc9b28/document/1757932761721_7535172907723933-August-2024.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "7543166682359446-image.jpg",
+      "user": "joe.talik@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6741f9ab-c5d8-4c17-b580-c471d9da8aa0/profile_photo/1757932763029_7543166682359446-image.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "7593148768863511-ACI CERT.jpeg",
+      "user": "duwayne2406@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66d7799e-11e9-4c82-97af-cb045250aeb8/certification/1757932765795_7593148768863511-ACI_CERT.jpeg",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "7661720588966663-IMG_4397.jpeg",
+      "user": "husni@khuffash.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/679b5087-d468-432a-a710-85a123c47681/profile_photo/1757932769331_7661720588966663-IMG_4397.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "768376912060899-CTC DFM(Equivalent to MBA).pdf",
+      "user": "lucasjoel1@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66f3db6a-9f4a-4a20-8f44-86b79d531cb6/document/1757932773109_768376912060899-CTC_DFM_Equivalent_to_MBA_.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "7697446424907772-IBQMIÂ®___Certified_Lean_Project_ManagerÂ®-3._Download_your_certificate___IBQMIÂ®_Certified_Lean_Project_ManagerÂ®_362125916.pdf",
+      "user": "omonigho28@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67cafdb0-96a8-4b5f-9bda-a4d5512a6178/certification/1757932773668_7697446424907772-IBQMIA_____Certified_Lean_Project.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "7828750414578449-Accredited Master in Renewable Energy Award.pdf",
+      "user": "santanumishra444@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66c1ff5d-cb51-4140-a39b-ba4a14a1cae6/document/1757932775405_7828750414578449-Accredited_Master_in_Renewable_En.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "7831291267417082-EMD pasport photo1.jpg",
+      "user": "ted@takindustrialminerals.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6728a4ff-7385-4269-b4c4-5a87023bf5d9/profile_photo/1757932777284_7831291267417082-EMD_pasport_photo1.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "7919086269054283-CertificateOfCompletion_Developing a Competitive Strategy.pdf",
+      "user": "ecisnerosvg@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66ec3e10-f38b-4960-a038-9acc9fd16be2/certification/1757932780169_7919086269054283-CertificateOfCompletion_Developin.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "7999152658994337-product management for fintech.pdf",
+      "user": "vermaak.c@outlook.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6683d6c0-32d8-4c19-9445-d77ddd8089ba/document/1757932781651_7999152658994337-product_management_for_fintech.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "8040489854235513-LDSullivan Warwick.pdf",
+      "user": "ldsul@msn.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785b2a1-86a0-452a-837c-3c11d09dd3fe/document/1757932784205_8040489854235513-LDSullivan_Warwick.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "8049758644290554-DL FRONT.jpg",
+      "user": "matthewgranish@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66d70c20-47aa-4b82-9374-b467f0ad35e3/profile_photo/1757932785711_8049758644290554-DL_FRONT.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "8073013476011306-MBB - Driving Licence1.pdf",
+      "user": "adam.sketchley@reybridgecapital.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66f32565-331c-4f25-94db-c133bdabebdf/document/1757932787415_8073013476011306-MBB_-_Driving_Licence1.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "8097213211084575-IMG_1142.jpeg",
+      "user": "bh@brucejhershey.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/683513b5-5c20-45cd-a070-a07169bc3e56/profile_photo/1757932791760_8097213211084575-IMG_1142.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "8106614626733384-Albjon Kola. PO-1 Certificate Of Completion. CANADA 2016.pdf",
+      "user": "albjonkola@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67b32c85-6941-48b5-b252-ad8d2266c8e9/certification/1757932793521_8106614626733384-Albjon_Kola__PO-1_Certificate_Of_.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "811792415181539-BachelorCertificate_Geology.pdf",
+      "user": "diana_carolinac@hotmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66d22322-6166-457e-b520-8ff5efd45861/certification/1757932794377_811792415181539-BachelorCertificate_Geology.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "8167047659424636-Registration Confirmation Letter - Private - Tenant_RT-0623-00600461_Deirdre Lane (2).pdf",
+      "user": "shamrockspring@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/664229f8-b7e9-48c4-9764-1a7f15691417/document/1757932796309_8167047659424636-Registration_Confirmation_Letter_.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "8346451075950576-F.jpg",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/profile_photo/1757932797029_8346451075950576-F.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "8373369579612289-Transcript MBA_Omonigho Oyoma Brown.pdf",
+      "user": "omonigho28@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67cafdb0-96a8-4b5f-9bda-a4d5512a6178/document/1757932802135_8373369579612289-Transcript_MBA_Omonigho_Oyoma_Bro.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "8398398997052903-Test&DataServices_2008.pdf",
+      "user": "vermaak.c@outlook.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6683d6c0-32d8-4c19-9445-d77ddd8089ba/document/1757932804121_8398398997052903-Test_DataServices_2008.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "8426867251785732-IMG_7930.jpeg",
+      "user": "gc_blaze@hotmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67a1baac-e95d-424b-a6a6-0b5aa40fbaf9/profile_photo/1757932805734_8426867251785732-IMG_7930.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "8427617959549927-BA Certificate.jpg",
+      "user": "rtwaring1@hotmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/674da5f4-dcbe-4148-b81b-b87247132f0b/certification/1757932807724_8427617959549927-BA_Certificate.jpg",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "8491767806213621-HPLC certificate Dec 2003.pdf",
+      "user": "jafrizameer@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67c8f763-4bec-427c-b765-3efd21c23f9d/certification/1757932810633_8491767806213621-HPLC_certificate_Dec_2003.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "8493481715201032-ADHAAR.pdf",
+      "user": "aejazpatel@yahoo.co.in",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67a9aa2c-d120-49e4-8d03-5532edfc08de/document/1757932811318_8493481715201032-ADHAAR.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "8518860785856723-Ayman Gazawi Resume EL July 2025.pdf",
+      "user": "aghazzaoui@hotmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67873fbe-ab69-48cc-ac22-54d49a77dc77/document/1757932813402_8518860785856723-Ayman_Gazawi_Resume_EL_July_2025.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "8529737504026986-COLLEGE TRANSCRIPTS - BOWMAN.pdf",
+      "user": "thomasdbowman@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6733824e-b331-47d5-91be-d8f1ad543762/document/1757932814194_8529737504026986-COLLEGE_TRANSCRIPTS_-_BOWMAN.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "8540891136807081-image.jpg",
+      "user": "joe.talik@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6741f9ab-c5d8-4c17-b580-c471d9da8aa0/profile_photo/1757932817452_8540891136807081-image.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "8541649593418559-ND.pdf",
+      "user": "lunga.tungu@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67d141ad-ee63-4415-957b-2207e981b58b/document/1757932819262_8541649593418559-ND.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "8551780831050202-Red & Yellow assessment grades.pdf",
+      "user": "riael.solomon@me.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6656bb6e-06b5-493a-acd1-d4e6a30f42c9/document/1757932819994_8551780831050202-Red___Yellow_assessment_grades.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "8570271444056625-Emmanuel Owusu certificate copy.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/68878e6f-9efe-4213-806c-230bf5d849b4/certification/1757932821278_8570271444056625-Emmanuel_Owusu_certificate_copy.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "8571294562173328-driverslicencewembley.jpg",
+      "user": "sanjay_mody@hotmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66e9355e-9c60-4e67-9d97-3893051dc917/profile_photo/1757932822302_8571294562173328-driverslicencewembley.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "8593363650317025-Albjon Kola. CAW Certificate. United Kingdom  2017.pdf",
+      "user": "albjonkola@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67b32c85-6941-48b5-b252-ad8d2266c8e9/certification/1757932823240_8593363650317025-Albjon_Kola__CAW_Certificate__Uni.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "8597254406130401-proof of res.jpg",
+      "user": "jimmy.tsatsire@gmail.com",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/67d17ab9-6515-4dac-9508-62cda1cab5f0/address_proof/1757932824029_8597254406130401-proof_of_res.jpg",
+      "databaseUpdate": true,
+      "note": "Address proof file - requires address proof field update"
+    },
+    {
+      "file": "8605373246379195-40c40919-8658-43e7-931d-4a5691004346.jpeg",
+      "user": "tito_campos@hotmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6750546d-b7a4-4bc4-87c2-23af9f9981b6/profile_photo/1757932824752_8605373246379195-40c40919-8658-43e7-931d-4a5691004.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "8674625024009466-UCSD 2.jpeg",
+      "user": "robertfein@acm.org",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6650abc4-2e71-4570-8d01-647f99fcd42d/profile_photo/1757932828145_8674625024009466-UCSD_2.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "8724036303069027-Commercial.pdf",
+      "user": "tom@lrd-thebigidea.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66decd4a-60f9-416e-aec0-b59bfa5f84a6/document/1757932829689_8724036303069027-Commercial.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "88212502172208-Clemson Official Transcript.pdf",
+      "user": "elisekm430@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/678e9d85-e77d-4597-acc8-3241d1af89d8/document/1757932830514_88212502172208-Clemson_Official_Transcript.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "8842166831171481-SCRUMstudy_Omonigho Brown.pdf",
+      "user": "omonigho28@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67cafdb0-96a8-4b5f-9bda-a4d5512a6178/document/1757932831346_8842166831171481-SCRUMstudy_Omonigho_Brown.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "8881866195444492-Coursera 9QAEU92NLSFR.pdf",
+      "user": "avi.purkayastha@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6786a186-e8cb-4928-b8b3-2e8214d4f1ee/document/1757932832833_8881866195444492-Coursera_9QAEU92NLSFR.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "8947582372653109-image.jpg",
+      "user": "ryanking1013@yahoo.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/680959c9-69fa-4233-abe2-d0849722d02b/profile_photo/1757932833750_8947582372653109-image.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "8983894760300943-IMG_1884.jpeg",
+      "user": "nickdiana@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6819ac6a-b33e-4e2a-b5d9-c04796339fbd/profile_photo/1757932837409_8983894760300943-IMG_1884.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "9102157410625014-Screenshot 2023-11-01 100424.png",
+      "user": "eschinsi@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67fe3711-a582-4b13-b103-21066ad5ebf5/profile_photo/1757932841503_9102157410625014-Screenshot_2023-11-01_100424.png",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "9148265508269673-CTC University of Mumbai- BCOM.pdf",
+      "user": "lucasjoel1@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66f3db6a-9f4a-4a20-8f44-86b79d531cb6/document/1757932843692_9148265508269673-CTC_University_of_Mumbai-_BCOM.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "9165634200851225-Eran.jpg",
+      "user": "eran.benavi@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/6763253f-7301-4e81-a276-387508620da6/profile_photo/1757932844409_9165634200851225-Eran.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "9221662364768595-Certificate - CBDA.pdf",
+      "user": "sherilyns@shawconsulting1857900.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66c6a076-5990-4795-b185-7856c50d4e67/certification/1757932846265_9221662364768595-Certificate_-_CBDA.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "9333882313919899-SPE Certificate-Omar Azim.pdf",
+      "user": "azim.engpetro@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6650ce23-7073-49d5-81ff-00f0b40bb7c7/certification/1757932853791_9333882313919899-SPE_Certificate-Omar_Azim.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "933426648243993-MBA.pdf",
+      "user": "tonnymhondiwa@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67d32de0-0615-4592-b4f7-2b5d6132e4ba/document/1757932854399_933426648243993-MBA.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "9484319597994797-August 2024 e-Statement.pdf",
+      "user": "nkono_anyang@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/66c364d6-722a-44f2-afc0-f8fa3886675a/document/1757932859069_9484319597994797-August_2024_e-Statement.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "9535197226387966-Degree.pdf",
+      "user": "lunga.tungu@yahoo.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/67d141ad-ee63-4415-957b-2207e981b58b/education/1757932861192_9535197226387966-Degree.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "9603836244176809-RWW DL Front 5_24_23.jpeg",
+      "user": "roywwaltersiv@gmail.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/66d74e2f-9141-4a30-b643-49fd5c24a8d0/profile_photo/1757932861808_9603836244176809-RWW_DL_Front_5_24_23.jpeg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "960413746606823-Aristotle University of Thessaloniki scanned degree.pdf",
+      "user": "stamatios.chondrogiannis@gmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/67c6a626-1c0b-4296-9620-2c70c067a2d1/education/1757932862764_960413746606823-Aristotle_University_of_Thessaloni.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "9648532306612256-Kate_O_Neil_resume_Sr PM_CSPO.pdf",
+      "user": "katesawesomelife@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67a118d6-9cb4-41d1-b12a-9b587edd3f80/document/1757932865416_9648532306612256-Kate_O_Neil_resume_Sr_PM_CSPO.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "9659370491399433-PHD Certificate.pdf",
+      "user": "tonnymhondiwa@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67d32de0-0615-4592-b4f7-2b5d6132e4ba/certification/1757932866104_9659370491399433-PHD_Certificate.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "9793380628109145-Jorge Chegin-Resume24.pdf",
+      "user": "j.chegin@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67a107e5-0eb0-4d8e-b546-a016956ec53f/document/1757932867104_9793380628109145-Jorge_Chegin-Resume24.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "9839311501252679-IMG_20240324_0004.pdf",
+      "user": "hs.wahab12345@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/683d4ff7-6523-4af1-84c2-98f9802d5429/document/1757932867785_9839311501252679-IMG_20240324_0004.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "9843815982792845-Master of Laws Cert - UNILAG.pdf",
+      "user": "chichi.nwosu@c-rowland.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/66cde4ab-75f4-45ec-aa2a-8a231eefe78d/certification/1757932868488_9843815982792845-Master_of_Laws_Cert_-_UNILAG.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "9848146808920508-FU Diploma.jpg",
+      "user": "gary.t.long@gmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/67361dbb-2c7f-4ca1-8688-4087992297ae/education/1757932869320_9848146808920508-FU_Diploma.jpg",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "9849285702440784-pasport pdf.pdf",
+      "user": "hs.wahab12345@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/683d4ff7-6523-4af1-84c2-98f9802d5429/document/1757932870669_9849285702440784-pasport_pdf.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    },
+    {
+      "file": "9861356792436899-DiplomÃ« - Albjon Kola.pdf",
+      "user": "albjonkola@gmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/67b32c85-6941-48b5-b252-ad8d2266c8e9/education/1757932871396_9861356792436899-DiplomA___-_Albjon_Kola.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "9898166582822616-Google Project Management Certificate.pdf",
+      "user": "azikeogo@outlook.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67b8d771-5b92-4d08-82b4-50aaf821efb2/certification/1757932872182_9898166582822616-Google_Project_Management_Certifi.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update"
+    },
+    {
+      "file": "9907353665555723-DBlackdegree.jpg",
+      "user": "dblack@mindspring.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/66a29ad8-74f5-4b68-b5f2-9fabf71383b0/education/1757932873884_9907353665555723-DBlackdegree.jpg",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update"
+    },
+    {
+      "file": "9927502675311417-20241219_231455.jpg",
+      "user": "mblethen@blethenminingassociates.com",
+      "type": "profile_photo",
+      "bucket": "profile-photos",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/profile-photos/67b9ef1b-d1a9-47d3-acf1-a5f9b45dba0f/profile_photo/1757932874609_9927502675311417-20241219_231455.jpg",
+      "databaseUpdate": true,
+      "note": null
+    },
+    {
+      "file": "9963123509427632-COJ_2018-04-12_402817498.pdf",
+      "user": "jgtaylor@minequest.co.za",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6644d69b-d9b7-45cf-82e4-3945a2e782df/document/1757932877608_9963123509427632-COJ_2018-04-12_402817498.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update"
+    }
+  ],
+  "errors": [
+    {
+      "file": "011149490938487494-Deshen ID.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "03491683344998009-DriversLicense_Texas.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "039579777404875616-OK ID Card.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "08883972676462859-CN - NL ID.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "10247226598657244-Deirdre Lane Passport.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "11359381041750582-Duwayne James ID PDF.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "11373599757854591-PEHLERS_PASSPORT.JPG",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "13657273690642513-OK ID Card.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "14415179357867824-Dennis National ID.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "15107865392972375-license 2023.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "16640923391322016-Hamish Passport_Exp 9 Oct 33.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "16762115379804632-Passport .jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "2092437899825299-Drivers license.jpeg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "21274089346472436-2024-OK-Driving-license.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "21741737412764772-EID Sohail front.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "2420135381530506-SA ID front.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "2572065587109178-EID Sohail front.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "2718143192434912-DG_UK passport.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "279605199939325-WJ Kruger ID 2021.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "2986505368604051-Richard_American_Passport.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "32956754254618614-John Whittington Passport.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "35032145387487734-International Passport - CHIDI OKPALA.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "3665772557900946-2021 passport Naphan.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "3784926658086323-Moosa Yuseph Passport.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "387654180944059-Drivers License.png",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "42303926693142935-Passport_Omar_A27276390.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "42439705217239054-van Vuuren UK passport.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "43086318471850404-KreethanBudhuID.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "4339500790787538-YAGNESH  PASSPORT.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "44812090793149606-S.Chondrogiannis passport 2022.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "4486065421913634-Passport_LTaylor.png",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "47194751392813994-Leon Drivers License Front.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "49418175137560505-Jaco ID Certified 2023.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "49815495915662567-license4382534.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "5132887714401364-Passport TR.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "5561884975639468-Uma drivers license 2020.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "5728620376314948-SFB Passport Redacted.png",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "5757251625168627-PMP Certificate Uma Nidmarty.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "619302440176301-Joel Passport.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "630025353911515-JE_PID_0223.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "652698939454142-EID_Jose Guimaraes.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "6611284110225149-Uma drivers license 2020.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "6667259790616655-Passport - Santanu Mishra.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "6673920840384786-MODYpassport.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "6741142510082432-Jason Michael Payne -- US Passport.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "7025761104600567-Blue Passport copies.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "7202850496235567-JWG Passport.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "7406275248745522-20180404 ID Ruan van Rooyen.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "7459292795375472-License front.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "7622004309001971-Front ID Card.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "7902327002033636-Passport_DianaCastillo.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "8085772553253976-SA ID Tonderai Kariwo.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "8094636088614435-LDSullivan Passport 2023-33.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "8346956878194045-ID.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "8482669778825354-Personal-MB-ID-20230930.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "8507187951863364-RW Passport.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "8615105832317795-Lonny_s Passport 2023.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "8673355725823328-Teslim Driver License.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "8960581530471767-Nuno Rodrigues Passport Copy 2024 2.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "8960635991349422-FCJ US Passport Scan June 2023.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "9030289248949768-Passport card Redacted.jpeg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "9208001672374198-drivers license new front.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "9222442788191967-Joel Passport.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "923011472147995-CVermaak RSA ID.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "9298672378710493-Thomas Glyn James UK Passport.png",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "9402497060156096-licence .png",
+      "error": "Storage error: The object exceeded the maximum allowed size"
+    },
+    {
+      "file": "9518002458783241-CYP ID FRONT - M DANIEL.jpg",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "9608161216298183-Passport_Omar_A27276390.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "9613022980820982-Passport Own First & Last.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "9907062035292604-Passport.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "9936592666730606-Passport - Santanu Mishra.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    },
+    {
+      "file": "9965093383635075-SA Passport.pdf",
+      "error": "Database update failed: Database error: Could not find the 'id_doc_url' column of 'users' in the schema cache"
+    }
+  ]
+}

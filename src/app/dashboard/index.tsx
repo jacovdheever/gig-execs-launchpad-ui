@@ -133,6 +133,7 @@ export default function DashboardPage() {
   useEffect(() => {
     getCurrentUser()
       .then((userData) => {
+        console.log('Dashboard: User data loaded:', userData);
         setUser(userData);
       })
       .catch((err) => {
@@ -146,6 +147,9 @@ export default function DashboardPage() {
   // Calculate accurate profile completeness based on completed mandatory fields
   const calculateProfileCompleteness = async (userId: string, userRole: string) => {
     try {
+      console.log('=== PROFILE COMPLETENESS DEBUG ===');
+      console.log('Calculating for user:', userId, 'role:', userRole);
+      console.log('Timestamp:', new Date().toISOString());
       
       if (userRole === 'consultant') {
         // Consultant mandatory fields across all 6 steps
@@ -215,9 +219,45 @@ export default function DashboardPage() {
         if (hourlyRateMinComplete) completedFields++;
         if (hourlyRateMaxComplete) completedFields++;
 
+        console.log('=== DETAILED FIELD COMPLETION STATUS ===');
+        console.log('Step 2 - Personal & Location (3 mandatory + 1 optional):');
+        console.log('  - job_title (mandatory):', jobTitleComplete, 'value:', consultantProfile?.job_title);
+        console.log('  - bio (optional):', !!consultantProfile?.bio, 'value:', consultantProfile?.bio);
+        console.log('  - address1 (mandatory):', addressComplete, 'value:', consultantProfile?.address1);
+        console.log('  - country (mandatory):', countryComplete, 'value:', consultantProfile?.country);
+        console.log('Step 3 - Work Experience (mandatory):', workExpComplete, 'entries:', workExperience?.length);
+        console.log('Work experience data loaded:', workExperience);
+        if (workExpError) {
+          console.log('Work experience error:', workExpError);
+        }
+        console.log('Step 4 - Skills & Industries (both mandatory):');
+        console.log('  - skills:', skillsComplete, 'count:', userSkills?.length);
+        console.log('  - industries:', industriesComplete, 'count:', userIndustries?.length);
+        console.log('Step 5 - Languages (mandatory):', languagesComplete, 'count:', userLanguages?.length);
+        console.log('Step 6 - Hourly Rate (2 separate mandatory fields):');
+        console.log('  - hourly_rate_min:', hourlyRateMinComplete, 'value:', consultantProfile?.hourly_rate_min);
+        console.log('  - hourly_rate_max:', hourlyRateMaxComplete, 'value:', consultantProfile?.hourly_rate_max);
+        console.log('=== END FIELD COMPLETION STATUS ===');
+
+        console.log('Consultant profile data:', consultantProfile);
+        console.log('User skills:', userSkills);
+        console.log('User industries:', userIndustries);
+        console.log('User languages:', userLanguages);
+        console.log('Work experience:', workExperience);
+        console.log('=== FIELD COUNTING BREAKDOWN ===');
+        console.log('Step 2 - Personal & Location: +', (jobTitleComplete ? 1 : 0) + (addressComplete ? 1 : 0) + (countryComplete ? 1 : 0), 'fields');
+        console.log('Step 3 - Work Experience: +', (workExpComplete ? 1 : 0), 'fields');
+        console.log('Step 4 - Skills & Industries: +', (skillsComplete ? 1 : 0) + (industriesComplete ? 1 : 0), 'fields');
+        console.log('Step 5 - Languages: +', (languagesComplete ? 1 : 0), 'fields');
+        console.log('Step 6 - Hourly Rate: +', (hourlyRateMinComplete ? 1 : 0) + (hourlyRateMaxComplete ? 1 : 0), 'fields');
+        console.log('Total completed fields:', completedFields, 'of', totalFields);
+        console.log('Consultant completion percentage:', Math.round((completedFields / totalFields) * 100));
+        console.log('=== END FIELD COUNTING BREAKDOWN ===');
+
         return Math.round((completedFields / totalFields) * 100);
       } else {
         // Client mandatory fields
+        console.log('Loading client profile data...');
         const { data: clientProfile, error: clientError } = await supabase
           .from('client_profiles')
           .select('job_title, company_name, organisation_type, industry, address1, country_id')
@@ -228,6 +268,7 @@ export default function DashboardPage() {
           console.error('Error loading client profile:', clientError);
         }
 
+        console.log('Client profile data loaded:', clientProfile);
 
         // Calculate completion based on mandatory fields
         let completedFields = 0;
@@ -248,6 +289,16 @@ export default function DashboardPage() {
         if (addressComplete) completedFields++;
         if (countryComplete) completedFields++;
 
+        console.log('Field completion status:');
+        console.log('- job_title:', jobTitleComplete, 'value:', clientProfile?.job_title);
+        console.log('- company_name:', companyNameComplete, 'value:', clientProfile?.company_name);
+        console.log('- organisation_type:', orgTypeComplete, 'value:', clientProfile?.organisation_type);
+        console.log('- industry:', industryComplete, 'value:', clientProfile?.industry);
+        console.log('- address1:', addressComplete, 'value:', clientProfile?.address1);
+        console.log('- country_id:', countryComplete, 'value:', clientProfile?.country_id);
+        console.log('Completed fields:', completedFields, 'of', totalFields);
+        console.log('Client completion percentage:', Math.round((completedFields / totalFields) * 100));
+        console.log('=== END PROFILE COMPLETENESS DEBUG ===');
 
         return Math.round((completedFields / totalFields) * 100);
       }
@@ -268,6 +319,7 @@ export default function DashboardPage() {
   // Load profile completeness on component mount and when user changes
   useEffect(() => {
     if (user) {
+      console.log('User changed or component mounted, calculating profile completeness...');
       calculateProfileCompleteness(user.id, user.role).then(async (percentage) => {
         setProfileCompleteness(percentage);
         
@@ -310,6 +362,7 @@ export default function DashboardPage() {
               vettingStatus: profile?.vetting_status || 'pending'
             });
 
+            console.log('🔍 Setting profile completeness:', computedCompleteness.percent);
             
             setCompletenessData(completenessData);
             setComputedCompleteness(computedCompleteness);
@@ -328,11 +381,13 @@ export default function DashboardPage() {
   useEffect(() => {
     if (user) {
       const handleFocus = () => {
+        console.log('Component focused, refreshing profile completeness...');
         calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
       };
       
       const handleVisibilityChange = () => {
         if (!document.hidden) {
+          console.log('Component became visible, refreshing profile completeness...');
           calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
         }
       };
@@ -353,6 +408,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (!document.hidden && user) {
+        console.log('Dashboard became visible, refreshing profile completeness...');
         calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
       }
     };
@@ -362,6 +418,7 @@ export default function DashboardPage() {
     // Also refresh when the component gains focus (user navigates back)
     const handleFocus = () => {
       if (user) {
+        console.log('Dashboard gained focus, refreshing profile completeness...');
         calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
       }
     };
@@ -371,6 +428,7 @@ export default function DashboardPage() {
     // Refresh when user navigates back to dashboard (using navigation events)
     const handlePopState = () => {
       if (user) {
+        console.log('Navigation detected, refreshing profile completeness...');
         // Small delay to ensure data is saved
         setTimeout(() => {
           calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
@@ -383,6 +441,7 @@ export default function DashboardPage() {
     // Refresh when the page becomes active (user switches back to tab)
     const handlePageShow = () => {
       if (user) {
+        console.log('Page became active, refreshing profile completeness...');
         // Small delay to ensure data is saved
         setTimeout(() => {
           calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);

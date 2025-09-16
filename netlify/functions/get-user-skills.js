@@ -2,35 +2,7 @@ const { createClient } = require('@supabase/supabase-js');
 
 exports.handler = async (event, context) => {
   try {
-    // Validate request method
-    if (event.httpMethod !== 'POST') {
-      return {
-        statusCode: 405,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'Method not allowed' })
-      };
-    }
-
     const { userId } = JSON.parse(event.body);
-    
-    // Validate input
-    if (!userId || typeof userId !== 'string') {
-      return {
-        statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'Invalid userId: must be a non-empty string' })
-      };
-    }
-
-    // Validate UUID format
-    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-    if (!uuidRegex.test(userId)) {
-      return {
-        statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'Invalid userId format' })
-      };
-    }
     
     const supabase = createClient(
       process.env.VITE_SUPABASE_URL,
@@ -62,9 +34,7 @@ exports.handler = async (event, context) => {
       statusCode: 200,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production' ? 'https://gigexecs.com' : '*',
-        'Access-Control-Allow-Methods': 'POST',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Origin': '*',
       },
       body: JSON.stringify({
         userSkills: userSkills?.map(us => us.skill_id) || [],
@@ -79,9 +49,9 @@ exports.handler = async (event, context) => {
       statusCode: 500,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production' ? 'https://gigexecs.com' : '*',
+        'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({ error: 'Internal server error' })
+      body: JSON.stringify({ error: error.message })
     };
   }
 };

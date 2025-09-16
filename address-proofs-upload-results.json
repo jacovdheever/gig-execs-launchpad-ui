@@ -1,0 +1,134 @@
+{
+  "totalFiles": 14,
+  "successfulUploads": 14,
+  "failedUploads": 0,
+  "uploads": [
+    {
+      "file": "1331751438183999-Address.pdf",
+      "user": "6735fde3-b078-4a8d-94e6-14a95930385b",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6735fde3-b078-4a8d-94e6-14a95930385b/address_proof/1757937231914_1331751438183999-Address.pdf",
+      "databaseUpdate": true,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "21221790065549095-Proof of Address.pdf",
+      "user": "6683d6c0-32d8-4c19-9445-d77ddd8089ba",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6683d6c0-32d8-4c19-9445-d77ddd8089ba/address_proof/1757937234360_21221790065549095-Proof_of_Address.pdf",
+      "databaseUpdate": true,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "21802030116661486-Address and Location Verification.png",
+      "user": "67a0e52a-de9a-483a-be38-43338ade00e3",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/67a0e52a-de9a-483a-be38-43338ade00e3/address_proof/1757937237407_21802030116661486-Address_and_Location_Verification.png",
+      "databaseUpdate": true,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "3202381133528849-proof_test.pdf",
+      "user": "6785315a-e8c5-4ad7-9ab8-d7388b1247d7",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/address_proof/1757937240641_3202381133528849-proof_test.pdf",
+      "databaseUpdate": true,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "504954623922641-Levy Notice 1 Ferry Road West End 4101 - Proof of co-ownership Debra Anne Dillon and Leon Gerard Cosgrove.pdf",
+      "user": "66ec9e3d-34a1-403b-8d65-b6a25cfbd84f",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/66ec9e3d-34a1-403b-8d65-b6a25cfbd84f/address_proof/1757937241611_504954623922641-Levy_Notice_1_Ferry_Road_West_End_4101_-_Proof_of_co-ownership_Debra_Anne_Dillon_and_Leon_Gerard_Cosgrove.pdf",
+      "databaseUpdate": true,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5110140112742856-Address verification.pdf",
+      "user": "6741f9c4-3c15-4397-bc19-7d3b0d927258",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6741f9c4-3c15-4397-bc19-7d3b0d927258/address_proof/1757937243295_5110140112742856-Address_verification.pdf",
+      "databaseUpdate": true,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5618619328332055-Proof of address.pdf",
+      "user": "674ac058-c6ad-4b28-ae7b-100e46635317",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/674ac058-c6ad-4b28-ae7b-100e46635317/address_proof/1757937245228_5618619328332055-Proof_of_address.pdf",
+      "databaseUpdate": true,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5669211859648973-proof_test.pdf",
+      "user": "6785315a-e8c5-4ad7-9ab8-d7388b1247d7",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/address_proof/1757937246715_5669211859648973-proof_test.pdf",
+      "databaseUpdate": true,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5833226764568742-A.Orbetsova_Proof of address.pdf",
+      "user": "66f2c9c7-2ba8-4213-8802-fe10f85dcc35",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/66f2c9c7-2ba8-4213-8802-fe10f85dcc35/address_proof/1757937248320_5833226764568742-A.Orbetsova_Proof_of_address.pdf",
+      "databaseUpdate": true,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6367639573475075-proof_test.pdf",
+      "user": "6785315a-e8c5-4ad7-9ab8-d7388b1247d7",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/address_proof/1757937250153_6367639573475075-proof_test.pdf",
+      "databaseUpdate": true,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6831098638659707-proof_test.pdf",
+      "user": "6785315a-e8c5-4ad7-9ab8-d7388b1247d7",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/address_proof/1757937251565_6831098638659707-proof_test.pdf",
+      "databaseUpdate": true,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7365114539488382-proof_test.pdf",
+      "user": "6785315a-e8c5-4ad7-9ab8-d7388b1247d7",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/address_proof/1757937252598_7365114539488382-proof_test.pdf",
+      "databaseUpdate": true,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "8597254406130401-proof of res.jpg",
+      "user": "67d17ab9-6515-4dac-9508-62cda1cab5f0",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/67d17ab9-6515-4dac-9508-62cda1cab5f0/address_proof/1757937253719_8597254406130401-proof_of_res.jpg",
+      "databaseUpdate": true,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "899948748105708-proof_test.pdf",
+      "user": "6785315a-e8c5-4ad7-9ab8-d7388b1247d7",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/address_proof/1757937255144_899948748105708-proof_test.pdf",
+      "databaseUpdate": true,
+      "table": "consultant_profiles"
+    }
+  ],
+  "errors": []
+}

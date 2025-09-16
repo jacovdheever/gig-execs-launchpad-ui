@@ -1,0 +1,2547 @@
+{
+  "totalFiles": 303,
+  "successfulUploads": 221,
+  "failedUploads": 82,
+  "uploads": [
+    {
+      "file": "0002039810184235602-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933560163_0002039810184235602-Bid_for_Gig_Testing_18th_March.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "0021470235057032827-Test PDF.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933565306_0021470235057032827-Test_PDF.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "00258572559499215-Future of Work Lexicon_compressed.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933566132_00258572559499215-Future_of_Work_Lexicon_compresse.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "009324381408569726-Jaco ID Certified 2023.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933567187_009324381408569726-Jaco_ID_Certified_2023.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "011971348368781998-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933568488_011971348368781998-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "031199968240839704-Professional Scrum Master I.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933570837_031199968240839704-Professional_Scrum_Master_I.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "035358884171207805-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933572435_035358884171207805-Bid_for_Gig_Testing_18th_March_.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "036651619611371755-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933575537_036651619611371755-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "03893046730503902-ID.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933576362_03893046730503902-ID.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "04001573316535412-677fcaf7-4faf-44a6-8c2a-6dfd3d9bfd74OA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933579842_04001573316535412-677fcaf7-4faf-44a6-8c2a-6dfd3d9b.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "04946844303298037-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933581694_04946844303298037-Bid_for_Gig_Testing_18th_March_2.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "05523825435861829-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933587989_05523825435861829-Bid_for_Gig_Testing_18th_March_2.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "058000317589574024-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933595542_058000317589574024-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "05941343081832828-3783812.1 - Assay Certificate.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/certification/1757933596265_05941343081832828-3783812_1_-_Assay_Certificate.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update",
+      "table": null
+    },
+    {
+      "file": "06637008689227453-SCOTTPARISHATSResume (1).pdf",
+      "user": "sparish66@charter.net",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/673619af-5a2a-4754-9148-57bac80ae24d/document/1757933596763_06637008689227453-SCOTTPARISHATSResume__1_.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "08038173828439543-test.pdf",
+      "user": "veenalpraamraj@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67bf68af-04d5-4c18-b0fd-e481aefebace/document/1757933599197_08038173828439543-test.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "08232287227857737-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933599650_08232287227857737-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "0888810223860308-SRV Adhaar New.pdf",
+      "user": "aejazpatel@yahoo.co.in",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67a9aa2c-d120-49e4-8d03-5532edfc08de/document/1757933600339_0888810223860308-SRV_Adhaar_New.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "09688592401255325-id.png",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933603134_09688592401255325-id.png",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "09800700095839887-Passport 01.pdf",
+      "user": "yebiliye@gmail.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/67a9b4ad-fd01-43c0-a471-f4d25db03b28/id_document/1757933604140_09800700095839887-Passport_01.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "10024566043216532-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933605378_10024566043216532-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "10059542833101176-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933606022_10059542833101176-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "1044531682661407-Test PDF.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933606693_1044531682661407-Test_PDF.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "11172809224400893-6790f3db-c380-4408-934c-0e382f9f697bOA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933607119_11172809224400893-6790f3db-c380-4408-934c-0e382f9f.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "1133341087764217-678e12d4-e18f-440a-a8d1-44d43c698dd5OA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933607918_1133341087764217-678e12d4-e18f-440a-a8d1-44d43c698.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "12632828850763023-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933609353_12632828850763023-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "13616175860211754-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933611167_13616175860211754-Bid_for_Gig_Testing_18th_March_2.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "14202625756110043-Passport scan.jpg",
+      "user": "yebiliye@gmail.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/67a9b4ad-fd01-43c0-a471-f4d25db03b28/id_document/1757933615079_14202625756110043-Passport_scan.jpg",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "14387241947962126-678df038-661e-450f-9fe0-49d70c865f3fOA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933616044_14387241947962126-678df038-661e-450f-9fe0-49d70c86.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "14851173876455825-CERT.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/68878e6f-9efe-4213-806c-230bf5d849b4/certification/1757933617361_14851173876455825-CERT.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update",
+      "table": null
+    },
+    {
+      "file": "15496066579016254-Future of Work Lexicon_compressed.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933618375_15496066579016254-Future_of_Work_Lexicon_compresse.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "15601089409267765-Future of Work Lexicon_compressed.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933620078_15601089409267765-Future_of_Work_Lexicon_compresse.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "15756273286805356-articlesOfIncorporation.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933620850_15756273286805356-articlesOfIncorporation.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "1596824885114272-ID.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933621628_1596824885114272-ID.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "16449042548744064-icfcredentialcertificate__nficf_6c98acc9-a378-4b9d-b748-e2d835ebef267292024.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/certification/1757933625529_16449042548744064-icfcredentialcertificate__nficf_.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update",
+      "table": null
+    },
+    {
+      "file": "1670299655877432-673c64ed-658b-4e74-a56f-824b5c8f0df7OA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933626326_1670299655877432-673c64ed-658b-4e74-a56f-824b5c8f0.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "16896067446777896-EID Sohail back.jpg",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933627089_16896067446777896-EID_Sohail_back.jpg",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "16956282151455682-Future of Work Lexicon_compressed.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933627778_16956282151455682-Future_of_Work_Lexicon_compresse.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "17409043218895404-work_related_file.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933628535_17409043218895404-work_related_file.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "1788780733212585-679b86f1-c99f-407e-bdb8-298321695077OA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933629006_1788780733212585-679b86f1-c99f-407e-bdb8-298321695.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "18190344535507252-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933629824_18190344535507252-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "1826412943767266-BComm degree certificate.PDF",
+      "user": "tonnymhondiwa@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67d32de0-0615-4592-b4f7-2b5d6132e4ba/certification/1757933630504_1826412943767266-BComm_degree_certificate.PDF",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update",
+      "table": null
+    },
+    {
+      "file": "188950851169029-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933631123_188950851169029-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "1955673319600526-ID.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933632844_1955673319600526-ID.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "20082873329122197-UNH Diploma.jpg",
+      "user": "yebiliye@gmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/67a9b4ad-fd01-43c0-a471-f4d25db03b28/education/1757933633864_20082873329122197-UNH_Diploma.jpg",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update",
+      "table": null
+    },
+    {
+      "file": "20106836237061088-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933635168_20106836237061088-Bid_for_Gig_Testing_18th_March_2.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "2037925948639565-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933638531_2037925948639565-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "2039654443232637-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933641253_2039654443232637-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "21064102808159535-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933642683_21064102808159535-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "21202882837591863-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933643421_21202882837591863-Bid_for_Gig_Testing_18th_March_2.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "21619984849277496-A Akinyi_FCCA certificate.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/certification/1757933646058_21619984849277496-A_Akinyi_FCCA_certificate.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update",
+      "table": null
+    },
+    {
+      "file": "21885617332939966-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933646576_21885617332939966-Bid_for_Gig_Testing_18th_March_2.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "232581995140837-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933651569_232581995140837-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "2361837223020984-CNH-e.pdf.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933653727_2361837223020984-CNH-e_pdf.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "23679421754903318-Future of Work Lexicon_compressed.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933654430_23679421754903318-Future_of_Work_Lexicon_compresse.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "24064849141642464-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933655668_24064849141642464-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "25020746782399317-67814f04-b138-4326-ad3b-26b8e36c5a19OA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933656332_25020746782399317-67814f04-b138-4326-ad3b-26b8e36c.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "26017791424650705-work_related_file.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933658108_26017791424650705-work_related_file.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "2611141509190431-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933658531_2611141509190431-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "2643392912464799-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933660147_2643392912464799-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "27575291651595135-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933660900_27575291651595135-Bid_for_Gig_Testing_18th_March_2.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "28072806685174934-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933663276_28072806685174934-Bid_for_Gig_Testing_18th_March_2.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "2924981252673402-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933667582_2924981252673402-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "29398748217845894-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933668292_29398748217845894-Bid_for_Gig_Testing_18th_March_2.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "294277370769537-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933674297_294277370769537-Bid_for_Gig_Testing_18th_March_202.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "29741905053238993-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933677754_29741905053238993-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "29773041682530565-test.pdf",
+      "user": "veenalpraamraj@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67bf68af-04d5-4c18-b0fd-e481aefebace/document/1757933678435_29773041682530565-test.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "29807486645610903-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933678833_29807486645610903-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "3028382181920919-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933679470_3028382181920919-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "30385805938499355-SRV Adhaar New.pdf",
+      "user": "aejazpatel@yahoo.co.in",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67a9aa2c-d120-49e4-8d03-5532edfc08de/document/1757933680158_30385805938499355-SRV_Adhaar_New.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "31392062894969497-freelancer_gig_economy_report.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933680989_31392062894969497-freelancer_gig_economy_report.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "3149834240940801-work_related_file.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933682861_3149834240940801-work_related_file.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "3160051667630257-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933683410_3160051667630257-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "3169448904829646-676034a1-66cb-4f9c-9ed0-c19e3da85b09OA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933684057_3169448904829646-676034a1-66cb-4f9c-9ed0-c19e3da85.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "3185314465661748-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933684917_3185314465661748-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "31912346610865416-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933690176_31912346610865416-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "3202381133528849-proof_test.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/address_proof/1757933691200_3202381133528849-proof_test.pdf",
+      "databaseUpdate": true,
+      "note": "Address proof file - requires address proof field update",
+      "table": null
+    },
+    {
+      "file": "32919737278948924-Jaco ID Certified 2023.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933691616_32919737278948924-Jaco_ID_Certified_2023.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "33318177886972844-work_related_file.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933692580_33318177886972844-work_related_file.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "3403117216568423-Plett-FC-INTRO.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933693066_3403117216568423-Plett-FC-INTRO.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "34087478276081695-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933696647_34087478276081695-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "3529754372081735-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933699526_3529754372081735-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "35336061314549827-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933700247_35336061314549827-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "358313945477285-Baumgardner.Lonny-Resume - February 2025.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933703542_358313945477285-Baumgardner_Lonny-Resume_-_Februar.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "3592142601661532-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933704268_3592142601661532-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "3639598158922228-Angela Akinyi - British Passport.pdf",
+      "user": "yebiliye@gmail.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/67a9b4ad-fd01-43c0-a471-f4d25db03b28/id_document/1757933704904_3639598158922228-Angela_Akinyi_-_British_Passport.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "37010487640738265-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933706400_37010487640738265-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "3847735179094265-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933709561_3847735179094265-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "38714701802023765-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933712976_38714701802023765-Bid_for_Gig_Testing_18th_March_2.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "38924828218624397-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933715984_38924828218624397-Bid_for_Gig_Testing_18th_March_2.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "3905451513210365-business-idea-3683781_640.jpg",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933718584_3905451513210365-business-idea-3683781_640.jpg",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "39148553232286587-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933719902_39148553232286587-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "3965874825911573-work_related_file.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933720578_3965874825911573-work_related_file.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "40142022720259374-ID.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933721020_40142022720259374-ID.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "40996364210540115-work_related_file.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933721987_40996364210540115-work_related_file.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "41204992218265235-67c574f7-b279-43ad-9c61-8f031618193eOA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933722450_41204992218265235-67c574f7-b279-43ad-9c61-8f031618.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "4132399574507779-EID Sohail back.jpg",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933723198_4132399574507779-EID_Sohail_back.jpg",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "41497995379757735-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933724263_41497995379757735-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "4173225547431403-67444e81-af75-4fb3-88ad-a1558bee2f86OA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933724907_4173225547431403-67444e81-af75-4fb3-88ad-a1558bee2.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "4191575709379727-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933725636_4191575709379727-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "41995661957833175-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933728248_41995661957833175-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "42957809185161144-ID.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933729883_42957809185161144-ID.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "43383826337702547-67a22af9-5a04-4317-854c-4a036caf91e9OA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933730872_43383826337702547-67a22af9-5a04-4317-854c-4a036caf.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "4552936355830828-University Diploma.pdf",
+      "user": "yebiliye@gmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/67a9b4ad-fd01-43c0-a471-f4d25db03b28/education/1757933732239_4552936355830828-University_Diploma.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update",
+      "table": null
+    },
+    {
+      "file": "45681796149260157-Lucioles pre seed round final.pdf",
+      "user": "lunga.tungu@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67d141ad-ee63-4415-957b-2207e981b58b/document/1757933732953_45681796149260157-Lucioles_pre_seed_round_final.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "472211699169061-677d2620-1152-4fde-8ec5-0b8fd2aaf4a4OA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933734826_472211699169061-677d2620-1152-4fde-8ec5-0b8fd2aaf4.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "48755685077405864-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933738576_48755685077405864-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "48986844049255107-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933739278_48986844049255107-Bid_for_Gig_Testing_18th_March_2.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "49082451476617606-Lucioles pre seed round final.pdf",
+      "user": "lunga.tungu@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67d141ad-ee63-4415-957b-2207e981b58b/document/1757933741546_49082451476617606-Lucioles_pre_seed_round_final.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "4989300298266608-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933743769_4989300298266608-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5005382835256587-Banking details for your Discovery Vitality cash back benefits (2).pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933746390_5005382835256587-Banking_details_for_your_Discover.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "5039164850444633-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933747038_5039164850444633-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5095130826138095-work_related_file.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933750547_5095130826138095-work_related_file.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "5152525277436328-Berkeley - Vladimir Baranov Certificate.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/certification/1757933751045_5152525277436328-Berkeley_-_Vladimir_Baranov_Certi.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update",
+      "table": null
+    },
+    {
+      "file": "5154139855088653-work_related_file.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933751907_5154139855088653-work_related_file.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "5228352135880088-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933753107_5228352135880088-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5247678114536214-Professional Scrum Master I.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933754708_5247678114536214-Professional_Scrum_Master_I.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "5326269794088125-673de1ef-aca3-4ff9-8f5a-2c10d223349eOA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933755918_5326269794088125-673de1ef-aca3-4ff9-8f5a-2c10d2233.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "5380343788839146-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933756869_5380343788839146-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5450370961835629-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933757685_5450370961835629-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5463571531740097-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933761094_5463571531740097-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5521319441605441-679b769d-c9fd-4eed-8ce8-281ae3cf4ff1OA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933766165_5521319441605441-679b769d-c9fd-4eed-8ce8-281ae3cf4.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "5570977963959038-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933767653_5570977963959038-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5669211859648973-proof_test.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/address_proof/1757933769480_5669211859648973-proof_test.pdf",
+      "databaseUpdate": true,
+      "note": "Address proof file - requires address proof field update",
+      "table": null
+    },
+    {
+      "file": "57301465588386-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933769889_57301465588386-Bid_for_Gig_Testing_18th_March_2024.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5761292478619735-f_38456242_2023038_24-08-2023_24082023_162503.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933773084_5761292478619735-f_38456242_2023038_24-08-2023_240.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "5778652270334197-ID.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933773867_5778652270334197-ID.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5778703935139717-Test PDF.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933775602_5778703935139717-Test_PDF.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "588180899548149-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933777510_588180899548149-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5936571099184766-ID.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933779426_5936571099184766-ID.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5936920664105692-Onboarding_Issues_Today_-29th_Feb.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933780488_5936920664105692-Onboarding_Issues_Today_-29th_Feb.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "5943911533087749-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933782748_5943911533087749-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "5967931279816305-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933784326_5967931279816305-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6040979499154129-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933787884_6040979499154129-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6041059052621278-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933788526_6041059052621278-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6108616355715746-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933791540_6108616355715746-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6132202545918162-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933792926_6132202545918162-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "613494747663488-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933793576_613494747663488-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6192884863571064-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933794279_6192884863571064-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6201198201626339-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933795055_6201198201626339-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6275882428534187-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933797165_6275882428534187-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6288798020327406-67a0916b-1f1b-4930-bd98-12a4bbf7f919OA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933800052_6288798020327406-67a0916b-1f1b-4930-bd98-12a4bbf7f.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "6311277165278435-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933801248_6311277165278435-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6367639573475075-proof_test.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/address_proof/1757933803617_6367639573475075-proof_test.pdf",
+      "databaseUpdate": true,
+      "note": "Address proof file - requires address proof field update",
+      "table": null
+    },
+    {
+      "file": "6425843883475193-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933804070_6425843883475193-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6436746075580833-67ea9d57-b7f2-4cf6-99db-c6aea8541d6bOA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933804770_6436746075580833-67ea9d57-b7f2-4cf6-99db-c6aea8541.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "6437463441392532-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933805531_6437463441392532-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6449053400655007-Lucioles pre seed round final.pdf",
+      "user": "lunga.tungu@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67d141ad-ee63-4415-957b-2207e981b58b/document/1757933808607_6449053400655007-Lucioles_pre_seed_round_final.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "6474273465880747-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933810319_6474273465880747-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6731410183559836-678e138b-c05f-4c13-ad99-7de6bc3b991cOA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933816687_6731410183559836-678e138b-c05f-4c13-ad99-7de6bc3b9.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "6752148348611731-ID.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933817515_6752148348611731-ID.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6759318471703037-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933818405_6759318471703037-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6780334982113461-BCompt dergree certified.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/certification/1757933819053_6780334982113461-BCompt_dergree_certified.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update",
+      "table": null
+    },
+    {
+      "file": "6824601122389491-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933821455_6824601122389491-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6831098638659707-proof_test.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/address_proof/1757933822564_6831098638659707-proof_test.pdf",
+      "databaseUpdate": true,
+      "note": "Address proof file - requires address proof field update",
+      "table": null
+    },
+    {
+      "file": "6853597689493736-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933823194_6853597689493736-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "6985084338176615-test.pdf",
+      "user": "veenalpraamraj@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67bf68af-04d5-4c18-b0fd-e481aefebace/document/1757933826698_6985084338176615-test.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "7032213991380263-Embargoed.pdf",
+      "user": "tonnymhondiwa@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67d32de0-0615-4592-b4f7-2b5d6132e4ba/document/1757933828540_7032213991380263-Embargoed.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "7040946994439827-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933829483_7040946994439827-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7041274516686593-67efa9a9-b054-4506-8bbb-db5e405855deOA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933830257_7041274516686593-67efa9a9-b054-4506-8bbb-db5e40585.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "7066552179969017-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933831982_7066552179969017-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "71123655193494-Ayman Gazawi Resume EL July 2025.pdf",
+      "user": "aghazzaoui@hotmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67873fbe-ab69-48cc-ac22-54d49a77dc77/document/1757933833034_71123655193494-Ayman_Gazawi_Resume_EL_July_2025.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "7122358529267137-A Akinyi_FCCA certificate.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/certification/1757933833907_7122358529267137-A_Akinyi_FCCA_certificate.pdf",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update",
+      "table": null
+    },
+    {
+      "file": "714047011606546-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933834520_714047011606546-Bid_for_Gig_Testing_18th_March_202.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7180214486149075-6745c795-8ce7-4e63-bfed-78f5b3e9752fOA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933839969_7180214486149075-6745c795-8ce7-4e63-bfed-78f5b3e97.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "7187151569962327-Nuno Rodrigues - Passport Copy 2021.pdf",
+      "user": "yebiliye@gmail.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/67a9b4ad-fd01-43c0-a471-f4d25db03b28/id_document/1757933841267_7187151569962327-Nuno_Rodrigues_-_Passport_Copy_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7247007738066937-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933844319_7247007738066937-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7299823207818668-freelancer_gig_economy_report.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933845050_7299823207818668-freelancer_gig_economy_report.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "7317287528644223-673c65eb-19ca-4fa9-b4a8-29786ccc3de3OA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933847334_7317287528644223-673c65eb-19ca-4fa9-b4a8-29786ccc3.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "73276411292497-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933848553_73276411292497-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7365114539488382-proof_test.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/address_proof/1757933850231_7365114539488382-proof_test.pdf",
+      "databaseUpdate": true,
+      "note": "Address proof file - requires address proof field update",
+      "table": null
+    },
+    {
+      "file": "7372909183813448-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933850755_7372909183813448-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7373931728536427-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933856028_7373931728536427-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7404660008193515-test.pdf",
+      "user": "veenalpraamraj@gmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67bf68af-04d5-4c18-b0fd-e481aefebace/document/1757933856771_7404660008193515-test.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "7407205453940267-Todd Lucas UTA Official Transcript.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933857255_7407205453940267-Todd_Lucas_UTA_Official_Transcrip.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "751300527543306-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933859358_751300527543306-Bid_for_Gig_Testing_18th_March_202.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7532199672007793-677d08e1-6fb8-4d77-90e5-267e03e937cdOA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933865360_7532199672007793-677d08e1-6fb8-4d77-90e5-267e03e93.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "7555724463789399-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933866942_7555724463789399-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7572116243028133-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933867716_7572116243028133-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7588015727973922-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933872593_7588015727973922-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7608360854728788-67596e53-181c-4b09-8118-0f4ecbe99243OA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933873522_7608360854728788-67596e53-181c-4b09-8118-0f4ecbe99.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "7660188440281623-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933874910_7660188440281623-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7686388562291775-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933884710_7686388562291775-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7691541486752689-Yagnesh qualifications 01.pdf",
+      "user": "yagneshjshukla@hotmail.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67c8427f-5391-492a-8c9a-32ab4c315c66/document/1757933889509_7691541486752689-Yagnesh_qualifications_01.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "7697621657461142-ID.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933892032_7697621657461142-ID.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7724532329363412-work_related_file.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933894082_7724532329363412-work_related_file.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "7775991046809287-Passport scan.jpg",
+      "user": "yebiliye@gmail.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/67a9b4ad-fd01-43c0-a471-f4d25db03b28/id_document/1757933894543_7775991046809287-Passport_scan.jpg",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7782138737503694-LBS MiF degree attested scanned copy.pdf",
+      "user": "tonnymhondiwa@gmail.com",
+      "type": "education",
+      "bucket": "education-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/education-proofs/67d32de0-0615-4592-b4f7-2b5d6132e4ba/education/1757933895635_7782138737503694-LBS_MiF_degree_attested_scanned_c.pdf",
+      "databaseUpdate": true,
+      "note": "Education file - requires education table update",
+      "table": null
+    },
+    {
+      "file": "7918557678297655-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933897106_7918557678297655-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7924512923929705-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933897817_7924512923929705-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "7941616917051917-67e3fb70-3dc1-40db-886e-62645ec2869dOA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933902226_7941616917051917-67e3fb70-3dc1-40db-886e-62645ec28.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "7941647574058404-work_related_file.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933903760_7941647574058404-work_related_file.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "7977022334255073-conta-completa-pdf (1).pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933905698_7977022334255073-conta-completa-pdf__1_.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "8149252530509696-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933908822_8149252530509696-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "8160283242244313-BComm degree certificate.PDF",
+      "user": "tonnymhondiwa@gmail.com",
+      "type": "certification",
+      "bucket": "certification-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/certification-proofs/67d32de0-0615-4592-b4f7-2b5d6132e4ba/certification/1757933909534_8160283242244313-BComm_degree_certificate.PDF",
+      "databaseUpdate": true,
+      "note": "Certification file - requires certifications table update",
+      "table": null
+    },
+    {
+      "file": "8240408017975465-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933912293_8240408017975465-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "8360903812692553-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933913852_8360903812692553-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "8454005710703425-CV Filipe Pereira1.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933915709_8454005710703425-CV_Filipe_Pereira1.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "8507561753042372-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933918340_8507561753042372-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "8620683920965908-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933928662_8620683920965908-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "863122272420642-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933934127_863122272420642-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "8632206615481932-Lucioles pre seed round final.pdf",
+      "user": "lunga.tungu@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/67d141ad-ee63-4415-957b-2207e981b58b/document/1757933934804_8632206615481932-Lucioles_pre_seed_round_final.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "8730509274834877-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933936860_8730509274834877-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "8851114400055209-SA - passport.jpg",
+      "user": "yebiliye@gmail.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/67a9b4ad-fd01-43c0-a471-f4d25db03b28/id_document/1757933939277_8851114400055209-SA_-_passport.jpg",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "88793881394057-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933941204_88793881394057-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "8932620340916408-Future of Work Lexicon_compressed.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933943681_8932620340916408-Future_of_Work_Lexicon_compressed.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "8976460088819682-Walden_Official Transcripts.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933945531_8976460088819682-Walden_Official_Transcripts.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "899948748105708-proof_test.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "address_proof",
+      "bucket": "address-proofs",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/address-proofs/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/address_proof/1757933946475_899948748105708-proof_test.pdf",
+      "databaseUpdate": true,
+      "note": "Address proof file - requires address proof field update",
+      "table": null
+    },
+    {
+      "file": "9031416434252901-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933946891_9031416434252901-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "9154798146888006-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933951519_9154798146888006-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "9169380185229892-conta-completa-pdf (1).pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933952177_9169380185229892-conta-completa-pdf__1_.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "9240137002598003-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933953082_9240137002598003-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "9268320210347161-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933957066_9268320210347161-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "9308825824319329-Future of Work Lexicon_compressed.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933962867_9308825824319329-Future_of_Work_Lexicon_compressed.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "9355814316259337-Bid for Gig Testing 18th March 2024.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933963929_9355814316259337-Bid_for_Gig_Testing_18th_March_20.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "9412208456165625-work_related_file.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933966578_9412208456165625-work_related_file.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "951376910309957-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933967017_951376910309957-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "9721163304838141-678100b4-5e69-4f5d-aa1a-3dfdde77caddOA1.docx",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "unknown",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/unknown/1757933968533_9721163304838141-678100b4-5e69-4f5d-aa1a-3dfdde77c.docx",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "978113865455934-identity_test_pdf.pdf",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933970414_978113865455934-identity_test_pdf.pdf",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    },
+    {
+      "file": "9822892567831507-work_related_file.pdf",
+      "user": "mmelnyk2000@yahoo.com",
+      "type": "document",
+      "bucket": "portfolio-files",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/portfolio-files/6785315a-e8c5-4ad7-9ab8-d7388b1247d7/document/1757933972738_9822892567831507-work_related_file.pdf",
+      "databaseUpdate": true,
+      "note": "General document - no specific field update",
+      "table": null
+    },
+    {
+      "file": "9897420509816515-City ID (1).jpg",
+      "user": "emmanuelowusu38@yahoo.com",
+      "type": "id_document",
+      "bucket": "id-documents",
+      "url": "https://yvevlrsothtppvpaszuq.supabase.co/storage/v1/object/public/id-documents/68878e6f-9efe-4213-806c-230bf5d849b4/id_document/1757933974263_9897420509816515-City_ID__1_.jpg",
+      "databaseUpdate": true,
+      "note": null,
+      "table": "consultant_profiles"
+    }
+  ],
+  "errors": [
+    {
+      "file": "0018676403742603487-3.jpeg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "014363504533359217-3.jpeg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "01710423213395651-_8a333097-12ea-4bf9-9cab-9d1bde8d0a93.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "03368599782486448-Image (12).jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "03932454583307177-3.jpeg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "05160981282790589-18205480-group-of-business-people-presenting-empty-banner-isolated-on-white.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "05255134740694589-_8a333097-12ea-4bf9-9cab-9d1bde8d0a93.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "057310685492229396-4.jpeg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "0729707332040006-Client - Own profile.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "09559100864239545-profile_icon.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "11902421822353437-2.jpeg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "1280932505589416-6052302288709126-Image (11).jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "13823179205521274-a7864ded7de4f9ee4b37b3f536f878cf.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "15576918724143662-_8a333097-12ea-4bf9-9cab-9d1bde8d0a93.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "16038717136840885-Client - Own profile.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "19532173838519973-0-xMaFF2hSXpf_kIfG.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "22541740702636748-info_icon.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "23182274740698738-_8a333097-12ea-4bf9-9cab-9d1bde8d0a93.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "23511463594452597-Client - Own profile.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "23856609495271974-test-video.mp4",
+      "error": "Storage error: mime type video/mp4 is not supported"
+    },
+    {
+      "file": "2586417987399676-Client - Own profile.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "26182077815969507-_8a333097-12ea-4bf9-9cab-9d1bde8d0a93.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "3436301403019668-1.3 Client SearchPage - view cosultants profile.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "3547765968941863-image (18).png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "37175484128677816-test-video.mp4",
+      "error": "Storage error: mime type video/mp4 is not supported"
+    },
+    {
+      "file": "37222195001142966-Griffiths Bank Statement.JPG",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "37290595526503467-bc82cba264fb70948d3a3821722.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "38615922042225304-ian-keefe-OgcJIKRnRC8-unsplash-1738229809868.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "4142312060190154-test-video.mp4",
+      "error": "Storage error: mime type video/mp4 is not supported"
+    },
+    {
+      "file": "4204341031005685-_8a333097-12ea-4bf9-9cab-9d1bde8d0a93.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "4411629835010171-test-video.mp4",
+      "error": "Storage error: mime type video/mp4 is not supported"
+    },
+    {
+      "file": "4601805578247844-Image (10).jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "4763991841831037-Review profile client.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "47744910215395797-profile_icon.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "4843213909317241-Client - Own profile.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "4929681589610535-Client - Own profile.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "522231022269857-test.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "5245906696085438-Image (2).jpeg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "5454935805935801-Method_Fund_Screener_Overview.mp4",
+      "error": "Storage error: mime type video/mp4 is not supported"
+    },
+    {
+      "file": "5462887287115048-_8a333097-12ea-4bf9-9cab-9d1bde8d0a93.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "5495878718019076-2.jpeg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "5501619730763627-_8a333097-12ea-4bf9-9cab-9d1bde8d0a93.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "559534426579958-profile_icon.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "5771573147525992-test-video.mp4",
+      "error": "Storage error: mime type video/mp4 is not supported"
+    },
+    {
+      "file": "5802552455011942-MicrosoftTeams-image (29).png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "5922712906324628-R.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "5950676427223034-Image (10).jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "6037609341257413-0-xMaFF2hSXpf_kIfG.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "6044783286739723-_8a333097-12ea-4bf9-9cab-9d1bde8d0a93.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "6052302288709126-Image (11).jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "6095971960244979-59fdb868-5127-4e82-b141-2f3c1253fd77.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "6449684291482993-2.jpeg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "6476485288588605-Consultant - Own profile.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "6569243198269212-3.jpeg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "6628044342833781-_8a333097-12ea-4bf9-9cab-9d1bde8d0a93.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "6794927663557397-01710423213395651-_8a333097-12ea-4bf9-9cab-9d1bde8d0a93.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "7013948722399705-001.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "7191998155155497-Client - Own profile.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "7335565805970963-ben.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "7415273273939085-2.jpeg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "7701200693970804-profile_icon.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "7800693017759446-1.jpeg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "7956788492764797-Image (12).jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "7996433154785376-_8a333097-12ea-4bf9-9cab-9d1bde8d0a93.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "7999398907688953-test-wide.mp4",
+      "error": "Storage error: mime type video/mp4 is not supported"
+    },
+    {
+      "file": "822197764837137-QR_FC658650434GB.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "8234345557093572-image (8).png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "8258222175982537-profile_icon.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "840655264191168-3.jpeg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "8531631683798078-Client - Own profile.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "8546294419958049-Image (9).jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "8680470235342426-profile_icon.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "8793029492361408-_8a333097-12ea-4bf9-9cab-9d1bde8d0a93.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "8831752525715577-test.jpg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "8890267648695325-Client - Own profile.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "9031978816881436-test-wide.mp4",
+      "error": "Storage error: mime type video/mp4 is not supported"
+    },
+    {
+      "file": "906475369445745-3D8DDF42-AAE5-44FB-9BF5-AFE7DDCEFEE0.jpeg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "9560692045212296-info_icon.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "9776335820374622-3.jpeg",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "978665250036115-test-video.mp4",
+      "error": "Storage error: mime type video/mp4 is not supported"
+    },
+    {
+      "file": "9796003831092313-Consultant - Own profile.png",
+      "error": "Database update failed: Database error: column users.user_id does not exist"
+    },
+    {
+      "file": "987463784828684-test-video.mp4",
+      "error": "Storage error: mime type video/mp4 is not supported"
+    }
+  ]
+}
