@@ -138,10 +138,10 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     vettingStatus: user.vetting_status as any,
   });
   
-  // TEST: Add CompletenessMeter component
+  // TEST: Add CompletenessMeter + VettingStatus components
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4">ProfileEdit - Testing CompletenessMeter</h1>
+      <h1 className="text-2xl font-bold mb-4">ProfileEdit - Testing CompletenessMeter + VettingStatus</h1>
       <p>User: {user.first_name} {user.last_name}</p>
       <p>Job Title: {profile?.job_title}</p>
       
@@ -154,8 +154,17 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
         />
       </div>
       
+      <div className="mt-6">
+        <h2 className="text-lg font-semibold mb-4">Vetting Status</h2>
+        <VettingStatus 
+          status={status}
+          tier={completeness.tier}
+          vettingStatus={user.vetting_status || 'pending'}
+        />
+      </div>
+      
       <p className="mt-4 text-sm text-gray-600">
-        If this loads without error, CompletenessMeter is not the issue.
+        If this loads without error, VettingStatus is not the issue either.
       </p>
     </div>
   );
