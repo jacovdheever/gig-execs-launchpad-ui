@@ -7,7 +7,7 @@ import { getCurrentUser } from '@/lib/getCurrentUser';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 
-interface User {
+interface ProfileUser {
   id: string;
   first_name: string;
   last_name: string;
@@ -78,7 +78,7 @@ interface PortfolioItem {
 }
 
 interface ProfileData {
-  user: User;
+  user: ProfileUser;
   profile?: ConsultantProfile;
   references: Reference[];
   education: Education[];

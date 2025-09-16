@@ -9,7 +9,7 @@ import { CertificationsView } from '@/components/profile/CertificationsView';
 import { PortfolioView } from '@/components/profile/PortfolioView';
 import { computeCompleteness, computeProfileStatus, type CompletenessData } from '@/lib/profile';
 
-interface User {
+interface ProfileUser {
   id: string;
   first_name: string;
   last_name: string;
@@ -80,7 +80,7 @@ interface PortfolioItem {
 }
 
 interface ProfileData {
-  user: User;
+  user: ProfileUser;
   profile?: ConsultantProfile;
   references: Reference[];
   education: Education[];
