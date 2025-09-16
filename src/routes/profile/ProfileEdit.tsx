@@ -232,16 +232,84 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
           <ReferencesForm 
             references={references}
             onAdd={async (ref) => {
-              // TODO: Implement add reference
-              console.log('Add reference:', ref);
+              try {
+                const { data, error } = await supabase
+                  .from('reference_contacts')
+                  .insert([{
+                    user_id: user.id,
+                    first_name: ref.first_name,
+                    last_name: ref.last_name,
+                    email: ref.email,
+                    phone: ref.phone || null,
+                    company_name: ref.company_name || null,
+                    description: ref.description || null
+                  }])
+                  .select()
+                  .single();
+
+                if (error) throw error;
+
+                // Update local state
+                const newReference = { ...data, id: data.id };
+                onUpdate({
+                  ...profileData,
+                  references: [...references, newReference]
+                });
+              } catch (error) {
+                console.error('Error adding reference:', error);
+                throw error;
+              }
             }}
             onEdit={async (id, ref) => {
-              // TODO: Implement edit reference
-              console.log('Edit reference:', id, ref);
+              try {
+                const { error } = await supabase
+                  .from('reference_contacts')
+                  .update({
+                    first_name: ref.first_name,
+                    last_name: ref.last_name,
+                    email: ref.email,
+                    phone: ref.phone || null,
+                    company_name: ref.company_name || null,
+                    description: ref.description || null
+                  })
+                  .eq('id', id)
+                  .eq('user_id', user.id);
+
+                if (error) throw error;
+
+                // Update local state
+                const updatedReferences = references.map(r => 
+                  r.id === id ? { ...r, ...ref } : r
+                );
+                onUpdate({
+                  ...profileData,
+                  references: updatedReferences
+                });
+              } catch (error) {
+                console.error('Error updating reference:', error);
+                throw error;
+              }
             }}
             onDelete={async (id) => {
-              // TODO: Implement delete reference
-              console.log('Delete reference:', id);
+              try {
+                const { error } = await supabase
+                  .from('reference_contacts')
+                  .delete()
+                  .eq('id', id)
+                  .eq('user_id', user.id);
+
+                if (error) throw error;
+
+                // Update local state
+                const filteredReferences = references.filter(r => r.id !== id);
+                onUpdate({
+                  ...profileData,
+                  references: filteredReferences
+                });
+              } catch (error) {
+                console.error('Error deleting reference:', error);
+                throw error;
+              }
             }}
           />
         )}
@@ -250,21 +318,95 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
           <QualificationsForm 
             qualifications={education}
             onAdd={async (qual) => {
-              // TODO: Implement add qualification
-              console.log('Add qualification:', qual);
+              try {
+                const { data, error } = await supabase
+                  .from('education')
+                  .insert([{
+                    user_id: user.id,
+                    institution_name: qual.institution_name,
+                    degree_level: qual.degree_level,
+                    grade: qual.grade || null,
+                    start_date: qual.start_date || null,
+                    end_date: qual.end_date || null,
+                    description: qual.description || null,
+                    file_url: qual.file_url || null
+                  }])
+                  .select()
+                  .single();
+
+                if (error) throw error;
+
+                // Update local state
+                onUpdate({
+                  ...profileData,
+                  education: [...education, data]
+                });
+              } catch (error) {
+                console.error('Error adding qualification:', error);
+                throw error;
+              }
             }}
             onEdit={async (id, qual) => {
-              // TODO: Implement edit qualification
-              console.log('Edit qualification:', id, qual);
+              try {
+                const { error } = await supabase
+                  .from('education')
+                  .update({
+                    institution_name: qual.institution_name,
+                    degree_level: qual.degree_level,
+                    grade: qual.grade || null,
+                    start_date: qual.start_date || null,
+                    end_date: qual.end_date || null,
+                    description: qual.description || null,
+                    file_url: qual.file_url || null
+                  })
+                  .eq('id', id)
+                  .eq('user_id', user.id);
+
+                if (error) throw error;
+
+                // Update local state
+                const updatedEducation = education.map(e => 
+                  e.id === id ? { ...e, ...qual } : e
+                );
+                onUpdate({
+                  ...profileData,
+                  education: updatedEducation
+                });
+              } catch (error) {
+                console.error('Error updating qualification:', error);
+                throw error;
+              }
             }}
             onDelete={async (id) => {
-              // TODO: Implement delete qualification
-              console.log('Delete qualification:', id);
+              try {
+                const { error } = await supabase
+                  .from('education')
+                  .delete()
+                  .eq('id', id)
+                  .eq('user_id', user.id);
+
+                if (error) throw error;
+
+                // Update local state
+                const filteredEducation = education.filter(e => e.id !== id);
+                onUpdate({
+                  ...profileData,
+                  education: filteredEducation
+                });
+              } catch (error) {
+                console.error('Error deleting qualification:', error);
+                throw error;
+              }
             }}
             onUploadFile={async (file) => {
-              // TODO: Implement file upload
-              console.log('Upload file:', file);
-              return '';
+              try {
+                // TODO: Implement file upload to Supabase Storage
+                console.log('Upload file:', file);
+                return '';
+              } catch (error) {
+                console.error('Error uploading file:', error);
+                throw error;
+              }
             }}
           />
         )}
@@ -273,21 +415,95 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
           <CertificationsForm 
             certifications={certifications}
             onAdd={async (cert) => {
-              // TODO: Implement add certification
-              console.log('Add certification:', cert);
+              try {
+                const { data, error } = await supabase
+                  .from('certifications')
+                  .insert([{
+                    user_id: user.id,
+                    name: cert.name,
+                    awarding_body: cert.awarding_body,
+                    issue_date: cert.issue_date || null,
+                    expiry_date: cert.expiry_date || null,
+                    credential_id: cert.credential_id || null,
+                    credential_url: cert.credential_url || null,
+                    file_url: cert.file_url || null
+                  }])
+                  .select()
+                  .single();
+
+                if (error) throw error;
+
+                // Update local state
+                onUpdate({
+                  ...profileData,
+                  certifications: [...certifications, data]
+                });
+              } catch (error) {
+                console.error('Error adding certification:', error);
+                throw error;
+              }
             }}
             onEdit={async (id, cert) => {
-              // TODO: Implement edit certification
-              console.log('Edit certification:', id, cert);
+              try {
+                const { error } = await supabase
+                  .from('certifications')
+                  .update({
+                    name: cert.name,
+                    awarding_body: cert.awarding_body,
+                    issue_date: cert.issue_date || null,
+                    expiry_date: cert.expiry_date || null,
+                    credential_id: cert.credential_id || null,
+                    credential_url: cert.credential_url || null,
+                    file_url: cert.file_url || null
+                  })
+                  .eq('id', id)
+                  .eq('user_id', user.id);
+
+                if (error) throw error;
+
+                // Update local state
+                const updatedCertifications = certifications.map(c => 
+                  c.id === id ? { ...c, ...cert } : c
+                );
+                onUpdate({
+                  ...profileData,
+                  certifications: updatedCertifications
+                });
+              } catch (error) {
+                console.error('Error updating certification:', error);
+                throw error;
+              }
             }}
             onDelete={async (id) => {
-              // TODO: Implement delete certification
-              console.log('Delete certification:', id);
+              try {
+                const { error } = await supabase
+                  .from('certifications')
+                  .delete()
+                  .eq('id', id)
+                  .eq('user_id', user.id);
+
+                if (error) throw error;
+
+                // Update local state
+                const filteredCertifications = certifications.filter(c => c.id !== id);
+                onUpdate({
+                  ...profileData,
+                  certifications: filteredCertifications
+                });
+              } catch (error) {
+                console.error('Error deleting certification:', error);
+                throw error;
+              }
             }}
             onUploadFile={async (file) => {
-              // TODO: Implement file upload
-              console.log('Upload file:', file);
-              return '';
+              try {
+                // TODO: Implement file upload to Supabase Storage
+                console.log('Upload file:', file);
+                return '';
+              } catch (error) {
+                console.error('Error uploading file:', error);
+                throw error;
+              }
             }}
           />
         )}
@@ -296,21 +512,105 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
           <PortfolioForm 
             portfolio={portfolio}
             onAdd={async (proj) => {
-              // TODO: Implement add portfolio
-              console.log('Add portfolio:', proj);
+              try {
+                const { data, error } = await supabase
+                  .from('portfolio')
+                  .insert([{
+                    user_id: user.id,
+                    project_name: proj.project_name,
+                    project_role: proj.project_role || null,
+                    description: proj.description || null,
+                    start_date: proj.start_date || null,
+                    completed_date: proj.completed_date || null,
+                    currently_open: proj.currently_open || false,
+                    problem_video_url: proj.problem_video_url || null,
+                    problem_files: proj.problem_files || null,
+                    solution_video_url: proj.solution_video_url || null,
+                    solution_files: proj.solution_files || null,
+                    skills: proj.skills || null,
+                    portfolio_files: proj.portfolio_files || null
+                  }])
+                  .select()
+                  .single();
+
+                if (error) throw error;
+
+                // Update local state
+                onUpdate({
+                  ...profileData,
+                  portfolio: [...portfolio, data]
+                });
+              } catch (error) {
+                console.error('Error adding portfolio project:', error);
+                throw error;
+              }
             }}
             onEdit={async (id, proj) => {
-              // TODO: Implement edit portfolio
-              console.log('Edit portfolio:', id, proj);
+              try {
+                const { error } = await supabase
+                  .from('portfolio')
+                  .update({
+                    project_name: proj.project_name,
+                    project_role: proj.project_role || null,
+                    description: proj.description || null,
+                    start_date: proj.start_date || null,
+                    completed_date: proj.completed_date || null,
+                    currently_open: proj.currently_open || false,
+                    problem_video_url: proj.problem_video_url || null,
+                    problem_files: proj.problem_files || null,
+                    solution_video_url: proj.solution_video_url || null,
+                    solution_files: proj.solution_files || null,
+                    skills: proj.skills || null,
+                    portfolio_files: proj.portfolio_files || null
+                  })
+                  .eq('id', id)
+                  .eq('user_id', user.id);
+
+                if (error) throw error;
+
+                // Update local state
+                const updatedPortfolio = portfolio.map(p => 
+                  p.id === id ? { ...p, ...proj } : p
+                );
+                onUpdate({
+                  ...profileData,
+                  portfolio: updatedPortfolio
+                });
+              } catch (error) {
+                console.error('Error updating portfolio project:', error);
+                throw error;
+              }
             }}
             onDelete={async (id) => {
-              // TODO: Implement delete portfolio
-              console.log('Delete portfolio:', id);
+              try {
+                const { error } = await supabase
+                  .from('portfolio')
+                  .delete()
+                  .eq('id', id)
+                  .eq('user_id', user.id);
+
+                if (error) throw error;
+
+                // Update local state
+                const filteredPortfolio = portfolio.filter(p => p.id !== id);
+                onUpdate({
+                  ...profileData,
+                  portfolio: filteredPortfolio
+                });
+              } catch (error) {
+                console.error('Error deleting portfolio project:', error);
+                throw error;
+              }
             }}
             onUploadFile={async (file) => {
-              // TODO: Implement file upload
-              console.log('Upload file:', file);
-              return '';
+              try {
+                // TODO: Implement file upload to Supabase Storage
+                console.log('Upload file:', file);
+                return '';
+              } catch (error) {
+                console.error('Error uploading file:', error);
+                throw error;
+              }
             }}
           />
         )}
