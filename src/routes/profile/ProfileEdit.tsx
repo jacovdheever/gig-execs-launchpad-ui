@@ -516,6 +516,21 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   return (
     <div className="bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+          <h1>ProfileEdit Component - Minimal Test</h1>
+          <p>User: {user.first_name} {user.last_name}</p>
+          <p>Profile: {profile?.job_title || 'No job title'}</p>
+          <p>If this loads, we can add components back one by one.</p>
+        </div>
+      </div>
+    </div>
+  );
+  
+  // TEMPORARILY DISABLED - Original complex render
+  /*
+  return (
+    <div className="bg-slate-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
         <div className="mb-8">
           <nav className="flex items-center space-x-2 text-sm text-slate-500 mb-4">
@@ -621,4 +636,5 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
       </div>
     </div>
   );
+  */
 }
