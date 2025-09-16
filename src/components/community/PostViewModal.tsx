@@ -8,12 +8,11 @@ import { Input } from '@/components/ui/input';
 import type { ForumPost, ForumComment, ForumAttachment } from '@/lib/community.types';
 import { useCreateComment, useUpdateComment, useDeleteComment, useToggleReaction, useComments, useUpdatePost, useDeletePost } from '@/lib/community.hooks';
 import { getCurrentUser } from '@/lib/getCurrentUser';
-import type { CurrentUser } from '@/lib/getCurrentUser';
+import type { User } from '@/lib/database.types';
 import { uploadCommunityAttachment } from '@/lib/storage';
 import { formatRelativeTime } from '@/lib/time';
 import AttachmentsCarousel from '@/components/community/AttachmentsCarousel';
 import RichTextEditor from '@/components/community/RichTextEditor';
-import { sanitizeHtml } from '@/lib/sanitize';
 
 interface PostViewModalProps {
   post: ForumPost | null;
@@ -23,7 +22,7 @@ interface PostViewModalProps {
 }
 
 export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: PostViewModalProps) {
-  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [newComment, setNewComment] = useState('');
   const [editingComment, setEditingComment] = useState<string | null>(null);
   const [editContent, setEditContent] = useState('');
@@ -530,7 +529,7 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                 </div>
               ) : (
                 <div className="prose prose-slate max-w-none mb-6">
-                  <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.body) }} />
+                  <div dangerouslySetInnerHTML={{ __html: post.body }} />
                 </div>
               )}
 
