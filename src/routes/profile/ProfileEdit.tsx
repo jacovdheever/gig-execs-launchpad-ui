@@ -230,29 +230,88 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
         
         {activeTab === 'references' && (
           <ReferencesForm 
-            userId={user.id}
-            onUpdate={() => refetchData()}
+            references={references}
+            onAdd={async (ref) => {
+              // TODO: Implement add reference
+              console.log('Add reference:', ref);
+            }}
+            onEdit={async (id, ref) => {
+              // TODO: Implement edit reference
+              console.log('Edit reference:', id, ref);
+            }}
+            onDelete={async (id) => {
+              // TODO: Implement delete reference
+              console.log('Delete reference:', id);
+            }}
           />
         )}
         
         {activeTab === 'qualifications' && (
           <QualificationsForm 
-            userId={user.id}
-            onUpdate={() => refetchData()}
+            qualifications={education}
+            onAdd={async (qual) => {
+              // TODO: Implement add qualification
+              console.log('Add qualification:', qual);
+            }}
+            onEdit={async (id, qual) => {
+              // TODO: Implement edit qualification
+              console.log('Edit qualification:', id, qual);
+            }}
+            onDelete={async (id) => {
+              // TODO: Implement delete qualification
+              console.log('Delete qualification:', id);
+            }}
+            onUploadFile={async (file) => {
+              // TODO: Implement file upload
+              console.log('Upload file:', file);
+              return '';
+            }}
           />
         )}
         
         {activeTab === 'certifications' && (
           <CertificationsForm 
-            userId={user.id}
-            onUpdate={() => refetchData()}
+            certifications={certifications}
+            onAdd={async (cert) => {
+              // TODO: Implement add certification
+              console.log('Add certification:', cert);
+            }}
+            onEdit={async (id, cert) => {
+              // TODO: Implement edit certification
+              console.log('Edit certification:', id, cert);
+            }}
+            onDelete={async (id) => {
+              // TODO: Implement delete certification
+              console.log('Delete certification:', id);
+            }}
+            onUploadFile={async (file) => {
+              // TODO: Implement file upload
+              console.log('Upload file:', file);
+              return '';
+            }}
           />
         )}
         
         {activeTab === 'portfolio' && (
           <PortfolioForm 
-            userId={user.id}
-            onUpdate={() => refetchData()}
+            portfolio={portfolio}
+            onAdd={async (proj) => {
+              // TODO: Implement add portfolio
+              console.log('Add portfolio:', proj);
+            }}
+            onEdit={async (id, proj) => {
+              // TODO: Implement edit portfolio
+              console.log('Edit portfolio:', id, proj);
+            }}
+            onDelete={async (id) => {
+              // TODO: Implement delete portfolio
+              console.log('Delete portfolio:', id);
+            }}
+            onUploadFile={async (file) => {
+              // TODO: Implement file upload
+              console.log('Upload file:', file);
+              return '';
+            }}
           />
         )}
         
