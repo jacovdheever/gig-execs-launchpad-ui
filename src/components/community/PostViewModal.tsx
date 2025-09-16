@@ -23,7 +23,7 @@ interface PostViewModalProps {
 }
 
 export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: PostViewModalProps) {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
   const [newComment, setNewComment] = useState('');
   const [editingComment, setEditingComment] = useState<string | null>(null);
   const [editContent, setEditContent] = useState('');
