@@ -8,15 +8,8 @@ import { QualificationsView } from '@/components/profile/QualificationsView';
 import { CertificationsView } from '@/components/profile/CertificationsView';
 import { PortfolioView } from '@/components/profile/PortfolioView';
 import { computeCompleteness, computeProfileStatus, type CompletenessData } from '@/lib/profile';
+import type { User } from '@/types/User';
 
-interface ProfileUser {
-  id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  user_type: string;
-  vetting_status?: string;
-}
 
 interface ConsultantProfile {
   user_id: string;
@@ -80,7 +73,7 @@ interface PortfolioItem {
 }
 
 interface ProfileData {
-  user: ProfileUser;
+  user: User;
   profile?: ConsultantProfile;
   references: Reference[];
   education: Education[];

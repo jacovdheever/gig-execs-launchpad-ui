@@ -13,15 +13,8 @@ import { computeCompleteness, computeProfileStatus, type CompletenessData } from
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 import { uploadProfileDocument, uploadPortfolioFile } from '@/lib/storage';
+import type { User } from '@/types/User';
 
-interface ProfileUser {
-  id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  user_type: string;
-  vetting_status?: string;
-}
 
 interface ConsultantProfile {
   user_id: string;
@@ -85,7 +78,7 @@ interface PortfolioItem {
 }
 
 interface ProfileData {
-  user: ProfileUser;
+  user: User;
   profile?: ConsultantProfile;
   references: Reference[];
   education: Education[];
