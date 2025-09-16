@@ -6,8 +6,15 @@ import { ProfileEdit } from './ProfileEdit';
 import { getCurrentUser } from '@/lib/getCurrentUser';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
-import type { User } from '@/types/User';
 
+interface User {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  user_type: string;
+  vetting_status?: string;
+}
 
 interface ConsultantProfile {
   user_id: string;
@@ -80,7 +87,6 @@ interface ProfileData {
 }
 
 export function ProfilePage() {
-  console.log('🔍 ProfilePage component started loading');
   const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -92,10 +98,8 @@ export function ProfilePage() {
   useEffect(() => {
     const loadProfile = async () => {
       try {
-        console.log('🔍 ProfilePage: Starting loadProfile function');
         // Get current user
         const user = await getCurrentUser();
-        console.log('🔍 ProfilePage: getCurrentUser returned:', user);
         if (!user) {
           navigate('/auth/login');
           return;
@@ -232,7 +236,6 @@ export function ProfilePage() {
 
   // Only allow editing if user is viewing their own profile and is a consultant
   if (isOwner && profileData.user.user_type === 'consultant') {
-    console.log('🎯 TESTING: Enabling ProfileEdit with global User type fix');
     return (
       <AppShell>
         <ProfileEdit
@@ -244,7 +247,6 @@ export function ProfilePage() {
   }
 
   // View mode for others or non-consultants
-  console.log('🔍 ProfilePage: Rendering ProfileView component');
   return (
     <AppShell>
       <ProfileView

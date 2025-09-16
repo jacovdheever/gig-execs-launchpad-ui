@@ -13,8 +13,15 @@ import { computeCompleteness, computeProfileStatus, type CompletenessData } from
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 import { uploadProfileDocument, uploadPortfolioFile } from '@/lib/storage';
-import type { User } from '@/types/User';
 
+interface User {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  user_type: string;
+  vetting_status?: string;
+}
 
 interface ConsultantProfile {
   user_id: string;
@@ -92,7 +99,6 @@ interface ProfileEditProps {
 }
 
 export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
-  console.log('🔍 ProfileEdit: Component started rendering');
   const [isLoading, setIsLoading] = useState(false);
   const [currentProfileData, setCurrentProfileData] = useState(profileData);
   const { user, profile, references, education, certifications, portfolio } = currentProfileData;
@@ -128,15 +134,28 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     },
   };
 
-  console.log('🔍 ProfileEdit: About to call computeCompleteness');
   const completeness = computeCompleteness(user.id, completenessData);
-  console.log('🔍 ProfileEdit: computeCompleteness completed');
   const status = computeProfileStatus({
     tier: completeness.tier,
     vettingStatus: user.vetting_status as any,
   });
-  console.log('🔍 ProfileEdit: computeProfileStatus completed');
 
+  // Debug logging
+  console.log('=== PROFILE COMPLETENESS DEBUG ===');
+  console.log('User ID:', user.id);
+  console.log('User data:', { first_name: user.first_name, last_name: user.last_name, email: user.email });
+  console.log('Profile data:', { job_title: profile?.job_title, bio: profile?.bio, address1: profile?.address1, country: profile?.country });
+  console.log('References count:', references.length);
+  console.log('Education count:', education.length);
+  console.log('Certifications count:', certifications.length);
+  console.log('Portfolio count:', portfolio.length);
+  console.log('Has ID doc:', !!profile?.id_doc_url);
+  console.log('Completeness Data:', JSON.stringify(completenessData, null, 2));
+  console.log('Computed Completeness:', JSON.stringify(completeness, null, 2));
+  console.log('Profile Tier:', completeness.tier);
+  console.log('Vetting Status:', user.vetting_status);
+  console.log('Final Status:', status);
+  console.log('=== END DEBUG ===');
 
   // File upload helper
   const uploadFile = async (file: File, bucket: string): Promise<string> => {
@@ -367,6 +386,8 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
 
   // Portfolio handlers
   const handleAddPortfolio = async (item: Omit<PortfolioItem, 'id'>) => {
+    console.log('=== handleAddPortfolio called ===');
+    console.log('Original item:', item);
     
     setIsLoading(true);
     try {
@@ -411,6 +432,10 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   };
 
   const handleEditPortfolio = async (id: number, item: Omit<PortfolioItem, 'id'>) => {
+    console.log('=== handleEditPortfolio called ===');
+    console.log('ID:', id);
+    console.log('Item data:', item);
+    console.log('Item data JSON:', JSON.stringify(item, null, 2));
     
     // Clean the data before sending - convert empty strings to null for date fields
     const cleanItem = {
@@ -505,7 +530,6 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     });
   };
 
-  console.log('🔍 ProfileEdit: Starting render/return - AuthProvider restored');
   return (
     <div className="bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

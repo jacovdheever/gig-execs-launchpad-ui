@@ -8,8 +8,15 @@ import { QualificationsView } from '@/components/profile/QualificationsView';
 import { CertificationsView } from '@/components/profile/CertificationsView';
 import { PortfolioView } from '@/components/profile/PortfolioView';
 import { computeCompleteness, computeProfileStatus, type CompletenessData } from '@/lib/profile';
-import type { User } from '@/types/User';
 
+interface User {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  user_type: string;
+  vetting_status?: string;
+}
 
 interface ConsultantProfile {
   user_id: string;
@@ -87,7 +94,6 @@ interface ProfileViewProps {
 }
 
 export function ProfileView({ profileData, isOwner }: ProfileViewProps) {
-  console.log('🔍 ProfileView: Component started rendering');
   const { user, profile, references, education, certifications, portfolio } = profileData;
 
   // Calculate completeness
