@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { User, FileText, Award, Briefcase, Upload, GraduationCap } from 'lucide-react';
 import { SectionCard } from '@/components/profile/SectionCard';
 import { CompletenessMeter } from '@/components/profile/CompletenessMeter';
 import { StatusBadge } from '@/components/profile/StatusBadge';
@@ -115,6 +116,19 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   console.log('🔍 ProfileEdit: Testing with CompletenessMeter component');
   
   const { user, profile, references, education, certifications, portfolio } = profileData;
+  const [activeTab, setActiveTab] = useState('basic');
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+
+  // Define navigation tabs
+  const tabs = [
+    { id: 'basic', name: 'Basic Info', icon: User },
+    { id: 'references', name: 'References', icon: FileText },
+    { id: 'qualifications', name: 'Qualifications', icon: GraduationCap },
+    { id: 'certifications', name: 'Certifications', icon: Award },
+    { id: 'portfolio', name: 'Portfolio', icon: Briefcase },
+    { id: 'documents', name: 'Documents', icon: Upload },
+  ];
   
   // Calculate completeness for CompletenessMeter
   const completenessData: CompletenessData = {
@@ -137,6 +151,22 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     tier: completeness.tier,
     vettingStatus: user.vetting_status as any,
   });
+
+  // Handle profile updates
+  const handleProfileUpdate = (updatedData: any) => {
+    onUpdate({
+      ...profileData,
+      user: updatedData.user || profileData.user,
+      profile: updatedData.profile || profileData.profile,
+    });
+  };
+
+  // Refetch data (placeholder for now)
+  const refetchData = () => {
+    // This would trigger a refetch of all profile data
+    // For now, it's a placeholder
+    console.log('Refetching profile data...');
+  };
   
   return (
     <div className="max-w-4xl mx-auto p-6">
