@@ -239,17 +239,21 @@ export function ProfilePage() {
 
   // Only allow editing if user is viewing their own profile and is a consultant
   if (isOwner && profileData.user.user_type === 'consultant') {
+    console.log('🔍 ProfilePage: Would render ProfileEdit, but temporarily disabled for debugging');
     return (
       <AppShell>
-        <ProfileEdit
-          profileData={profileData}
-          onUpdate={setProfileData}
-        />
+        <div className="p-8">
+          <h1>Profile Edit Temporarily Disabled for Debugging</h1>
+          <p>User: {profileData.user.first_name} {profileData.user.last_name}</p>
+          <p>Type: {profileData.user.user_type}</p>
+          <p>If this loads without error, the issue is in ProfileEdit component.</p>
+        </div>
       </AppShell>
     );
   }
 
   // View mode for others or non-consultants
+  console.log('🔍 ProfilePage: Rendering ProfileView component');
   return (
     <AppShell>
       <ProfileView
