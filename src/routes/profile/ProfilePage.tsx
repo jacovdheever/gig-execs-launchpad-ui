@@ -239,14 +239,14 @@ export function ProfilePage() {
 
   // Only allow editing if user is viewing their own profile and is a consultant
   if (isOwner && profileData.user.user_type === 'consultant') {
-    console.log('🔍 ProfilePage: Would render ProfileEdit, but temporarily disabled for debugging');
+    console.log('🎯 FORCE DEPLOY: Rendering ProfileEdit - Build', new Date().toISOString());
     return (
       <AppShell>
         <div className="p-8">
-          <h1>Profile Edit Temporarily Disabled for Debugging</h1>
+          <h1 className="text-2xl font-bold mb-4">Profile Edit - Testing User Type Fix</h1>
           <p>User: {profileData.user.first_name} {profileData.user.last_name}</p>
-          <p>Type: {profileData.user.user_type}</p>
-          <p>If this loads without error, the issue is in ProfileEdit component.</p>
+          <p>If you see this message, Netlify deployed the latest code!</p>
+          <p>Next: We'll enable ProfileEdit component step by step.</p>
         </div>
       </AppShell>
     );
