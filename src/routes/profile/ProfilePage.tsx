@@ -87,6 +87,7 @@ interface ProfileData {
 }
 
 export function ProfilePage() {
+  console.log('🔍 ProfilePage component started loading');
   const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -98,8 +99,10 @@ export function ProfilePage() {
   useEffect(() => {
     const loadProfile = async () => {
       try {
+        console.log('🔍 ProfilePage: Starting loadProfile function');
         // Get current user
         const user = await getCurrentUser();
+        console.log('🔍 ProfilePage: getCurrentUser returned:', user);
         if (!user) {
           navigate('/auth/login');
           return;
