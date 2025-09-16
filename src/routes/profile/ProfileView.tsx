@@ -94,6 +94,7 @@ interface ProfileViewProps {
 }
 
 export function ProfileView({ profileData, isOwner }: ProfileViewProps) {
+  console.log('🔍 ProfileView: Component started rendering');
   const { user, profile, references, education, certifications, portfolio } = profileData;
 
   // Calculate completeness

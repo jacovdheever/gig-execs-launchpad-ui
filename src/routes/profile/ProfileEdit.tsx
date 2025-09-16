@@ -99,6 +99,7 @@ interface ProfileEditProps {
 }
 
 export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
+  console.log('🔍 ProfileEdit: Component started rendering');
   const [isLoading, setIsLoading] = useState(false);
   const [currentProfileData, setCurrentProfileData] = useState(profileData);
   const { user, profile, references, education, certifications, portfolio } = currentProfileData;
