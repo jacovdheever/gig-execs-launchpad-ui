@@ -5,7 +5,7 @@ import './index.css'
 console.log('🚀 DEPLOYMENT TEST: Build timestamp', new Date().toISOString());
 console.log('🔧 SECURITY FIXES DEPLOYED: User type conflicts resolved');
 
-// Temporary fix: Define User type to prevent runtime error
+// Global User type definition to resolve conflicts
 declare global {
   interface User {
     id: string;
@@ -14,6 +14,16 @@ declare global {
     email: string;
     user_type: string;
     vetting_status?: string;
+    profile_photo_url?: string;
+    headline?: string;
+    profile_status?: string;
+    status?: string;
+    t_and_c_accepted?: boolean;
+    profile_complete_pct?: number;
+    last_login?: string;
+    created_at?: string;
+    updated_at?: string;
+    deleted_at?: string;
   }
 }
 
