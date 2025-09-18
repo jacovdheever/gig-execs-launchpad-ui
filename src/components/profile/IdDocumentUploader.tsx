@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Upload, FileText, Eye, Trash2, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { getSignedDocumentUrl } from '@/lib/storage';
 
 interface IdDocumentUploaderProps {
   currentDocumentUrl?: string;
@@ -107,6 +108,35 @@ export function IdDocumentUploader({
     return 'Image Document';
   };
 
+  const handleViewDocument = async () => {
+    if (!currentDocumentUrl) return;
+    
+    try {
+      console.log('🔍 IdDocumentUploader: Generating signed URL for document:', currentDocumentUrl);
+      
+      // Generate signed URL for viewing
+      const signedUrl = await getSignedDocumentUrl(currentDocumentUrl);
+      
+      if (signedUrl) {
+        console.log('🔍 IdDocumentUploader: Opening document with signed URL:', signedUrl);
+        window.open(signedUrl, '_blank');
+      } else {
+        toast({
+          title: 'View failed',
+          description: 'Unable to generate secure link for document viewing.',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('🔍 IdDocumentUploader: Error viewing document:', error);
+      toast({
+        title: 'View failed',
+        description: 'Failed to open document. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -140,7 +170,7 @@ export function IdDocumentUploader({
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => window.open(currentDocumentUrl, '_blank')}
+                  onClick={handleViewDocument}
                   className="flex items-center gap-2"
                 >
                   <Eye className="w-4 h-4" />

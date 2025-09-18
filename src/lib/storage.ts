@@ -491,16 +491,27 @@ export async function uploadProfileDocument(file: File, userId: string, document
 
     console.log('🔍 uploadProfileDocument: Upload successful, data:', data);
 
-    // Get public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from(bucketName)
-      .getPublicUrl(fileName);
-
-    console.log('🔍 uploadProfileDocument: Generated public URL:', publicUrl);
+    // For private buckets, we need to store the file path, not a URL
+    // The URL will be generated when needed using signed URLs
+    const isPublicBucket = bucketName === 'profile-photos' || bucketName === 'company-logos';
+    
+    let fileUrl: string;
+    if (isPublicBucket) {
+      // Get public URL for public buckets
+      const { data: { publicUrl } } = supabase.storage
+        .from(bucketName)
+        .getPublicUrl(fileName);
+      fileUrl = publicUrl;
+      console.log('🔍 uploadProfileDocument: Generated public URL:', fileUrl);
+    } else {
+      // For private buckets, store the file path (we'll generate signed URLs when viewing)
+      fileUrl = `${bucketName}/${fileName}`;
+      console.log('🔍 uploadProfileDocument: Stored file path for private bucket:', fileUrl);
+    }
 
     return {
       success: true,
-      url: publicUrl
+      url: fileUrl
     };
 
   } catch (error) {
@@ -509,6 +520,48 @@ export async function uploadProfileDocument(file: File, userId: string, document
       success: false,
       error: 'An unexpected error occurred during upload.'
     };
+  }
+}
+
+/**
+ * Generate a signed URL for viewing a private document
+ * @param filePath - The file path stored in the database (e.g., "id-documents/user-id/file.pdf")
+ * @param expiresIn - Expiration time in seconds (default: 1 hour)
+ * @returns Promise<string | null> - Signed URL or null if error
+ */
+export async function getSignedDocumentUrl(filePath: string, expiresIn: number = 3600): Promise<string | null> {
+  try {
+    // Extract bucket name from file path
+    const [bucketName, ...pathParts] = filePath.split('/');
+    const fileName = pathParts.join('/');
+    
+    console.log('🔍 getSignedDocumentUrl: Generating signed URL for bucket:', bucketName, 'file:', fileName);
+    
+    // Check if it's a public bucket - return direct URL
+    const isPublicBucket = bucketName === 'profile-photos' || bucketName === 'company-logos';
+    if (isPublicBucket) {
+      const { data: { publicUrl } } = supabase.storage
+        .from(bucketName)
+        .getPublicUrl(fileName);
+      return publicUrl;
+    }
+    
+    // Generate signed URL for private buckets
+    const { data, error } = await supabase.storage
+      .from(bucketName)
+      .createSignedUrl(fileName, expiresIn);
+    
+    if (error) {
+      console.error('🔍 getSignedDocumentUrl: Error generating signed URL:', error);
+      return null;
+    }
+    
+    console.log('🔍 getSignedDocumentUrl: Generated signed URL:', data.signedUrl);
+    return data.signedUrl;
+    
+  } catch (error) {
+    console.error('🔍 getSignedDocumentUrl: Unexpected error:', error);
+    return null;
   }
 }
 
