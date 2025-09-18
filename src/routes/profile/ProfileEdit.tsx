@@ -168,11 +168,32 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     });
   };
 
-  // Refetch data (placeholder for now)
-  const refetchData = () => {
-    // This would trigger a refetch of all profile data
-    // For now, it's a placeholder
+  // Refetch data by updating the profile data
+  const refetchData = async () => {
     console.log('Refetching profile data...');
+    try {
+      // Reload consultant profile to get updated id_doc_url
+      const { data: updatedProfile, error } = await supabase
+        .from('consultant_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+      
+      if (error) {
+        console.error('Error refetching profile:', error);
+        return;
+      }
+      
+      // Update the profile data with the new information
+      onUpdate({
+        ...profileData,
+        profile: updatedProfile
+      });
+      
+      console.log('Profile data refreshed successfully');
+    } catch (error) {
+      console.error('Error during profile refresh:', error);
+    }
   };
   
   return (
@@ -653,7 +674,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                 console.log('🔍 ID Document Upload: Database updated successfully, refreshing data');
                 
                 // Refresh profile data
-                refetchData();
+                await refetchData();
                 
                 return result.url;
               } catch (error) {
@@ -672,7 +693,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                 if (error) throw error;
                 
                 // Refresh profile data
-                refetchData();
+                await refetchData();
               } catch (error) {
                 console.error('Error removing ID document:', error);
                 throw error;
