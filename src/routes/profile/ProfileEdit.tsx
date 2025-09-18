@@ -12,8 +12,8 @@ import { IdDocumentUploader } from '@/components/profile/IdDocumentUploader';
 import { VettingStatus } from '@/components/profile/VettingStatus';
 import { computeCompleteness, computeProfileStatus, type CompletenessData } from '@/lib/profile';
 import { supabase } from '@/lib/supabase';
-import { useToast } from '@/hooks/use-toast';
 import { uploadProfileDocument, uploadPortfolioFile } from '@/lib/storage';
+import { useToast } from '@/hooks/use-toast';
 
 interface User {
   id: string;
@@ -400,11 +400,13 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
             }}
             onUploadFile={async (file) => {
               try {
-                // TODO: Implement file upload to Supabase Storage
-                console.log('Upload file:', file);
-                return '';
+                const result = await uploadProfileDocument(file, user.id, 'qualification');
+                if (!result.success) {
+                  throw new Error(result.error);
+                }
+                return result.url;
               } catch (error) {
-                console.error('Error uploading file:', error);
+                console.error('Error uploading qualification document:', error);
                 throw error;
               }
             }}
@@ -497,11 +499,13 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
             }}
             onUploadFile={async (file) => {
               try {
-                // TODO: Implement file upload to Supabase Storage
-                console.log('Upload file:', file);
-                return '';
+                const result = await uploadProfileDocument(file, user.id, 'certification');
+                if (!result.success) {
+                  throw new Error(result.error);
+                }
+                return result.url;
               } catch (error) {
-                console.error('Error uploading file:', error);
+                console.error('Error uploading certification document:', error);
                 throw error;
               }
             }}
@@ -604,11 +608,13 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
             }}
             onUploadFile={async (file) => {
               try {
-                // TODO: Implement file upload to Supabase Storage
-                console.log('Upload file:', file);
-                return '';
+                const result = await uploadPortfolioFile(file, user.id);
+                if (!result.success) {
+                  throw new Error(result.error);
+                }
+                return result.url;
               } catch (error) {
-                console.error('Error uploading file:', error);
+                console.error('Error uploading portfolio file:', error);
                 throw error;
               }
             }}
@@ -617,9 +623,61 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
         
         {activeTab === 'documents' && (
           <IdDocumentUploader 
-            userId={user.id}
-            currentUrl={profile?.id_doc_url}
-            onUpdate={() => refetchData()}
+            currentDocumentUrl={profile?.id_doc_url}
+            onUpload={async (file) => {
+              try {
+                console.log('🔍 ID Document Upload: Starting upload for file:', file.name, 'Size:', file.size, 'Type:', file.type);
+                console.log('🔍 ID Document Upload: User ID:', user.id);
+                
+                const result = await uploadProfileDocument(file, user.id, 'id');
+                console.log('🔍 ID Document Upload: Upload result:', result);
+                
+                if (!result.success) {
+                  console.error('🔍 ID Document Upload: Upload failed:', result.error);
+                  throw new Error(result.error);
+                }
+                
+                console.log('🔍 ID Document Upload: Upload successful, updating database with URL:', result.url);
+                
+                // Update consultant_profiles table with the new document URL
+                const { error } = await supabase
+                  .from('consultant_profiles')
+                  .update({ id_doc_url: result.url })
+                  .eq('user_id', user.id);
+                
+                if (error) {
+                  console.error('🔍 ID Document Upload: Database update failed:', error);
+                  throw error;
+                }
+                
+                console.log('🔍 ID Document Upload: Database updated successfully, refreshing data');
+                
+                // Refresh profile data
+                refetchData();
+                
+                return result.url;
+              } catch (error) {
+                console.error('🔍 ID Document Upload: Error in upload process:', error);
+                throw error;
+              }
+            }}
+            onRemove={async () => {
+              try {
+                // Remove the document URL from the database
+                const { error } = await supabase
+                  .from('consultant_profiles')
+                  .update({ id_doc_url: null })
+                  .eq('user_id', user.id);
+                
+                if (error) throw error;
+                
+                // Refresh profile data
+                refetchData();
+              } catch (error) {
+                console.error('Error removing ID document:', error);
+                throw error;
+              }
+            }}
           />
         )}
       </div>

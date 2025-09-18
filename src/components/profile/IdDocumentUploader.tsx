@@ -23,11 +23,17 @@ export function IdDocumentUploader({
 
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (!file) return;
+    if (!file) {
+      console.log('🔍 IdDocumentUploader: No file selected');
+      return;
+    }
+
+    console.log('🔍 IdDocumentUploader: File selected:', file.name, 'Size:', file.size, 'Type:', file.type);
 
     // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
     if (!allowedTypes.includes(file.type)) {
+      console.log('🔍 IdDocumentUploader: File type validation failed:', file.type);
       toast({
         title: 'Invalid file type',
         description: 'Please upload a JPEG, PNG, or PDF file.',
@@ -39,6 +45,7 @@ export function IdDocumentUploader({
     // Validate file size (5MB limit)
     const maxSize = 5 * 1024 * 1024; // 5MB
     if (file.size > maxSize) {
+      console.log('🔍 IdDocumentUploader: File size validation failed:', file.size, 'bytes');
       toast({
         title: 'File too large',
         description: 'Please upload a file smaller than 5MB.',
@@ -47,14 +54,17 @@ export function IdDocumentUploader({
       return;
     }
 
+    console.log('🔍 IdDocumentUploader: File validation passed, starting upload');
     setIsUploading(true);
     try {
-      await onUpload(file);
+      const result = await onUpload(file);
+      console.log('🔍 IdDocumentUploader: Upload completed successfully:', result);
       toast({
         title: 'Document uploaded',
         description: 'Your ID document has been uploaded successfully.',
       });
     } catch (error) {
+      console.error('🔍 IdDocumentUploader: Upload failed:', error);
       toast({
         title: 'Upload failed',
         description: 'Failed to upload document. Please try again.',

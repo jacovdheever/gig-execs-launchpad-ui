@@ -424,49 +424,79 @@ export function getFileIcon(mimeType: string): string {
  */
 export async function uploadProfileDocument(file: File, userId: string, documentType: string): Promise<UploadResult> {
   try {
+    console.log('🔍 uploadProfileDocument: Starting upload process');
+    console.log('🔍 uploadProfileDocument: File:', file.name, 'Size:', file.size, 'Type:', file.type);
+    console.log('🔍 uploadProfileDocument: User ID:', userId, 'Document Type:', documentType);
+    
     // Validate file type
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
     if (!allowedTypes.includes(file.type)) {
+      console.log('🔍 uploadProfileDocument: File type validation failed:', file.type);
       return {
         success: false,
         error: 'Invalid file type. Please upload a JPEG, PNG, WebP, or PDF file.'
       };
     }
 
-    // Validate file size (5MB limit)
-    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    // Validate file size (10MB limit for documents)
+    const maxSize = 10 * 1024 * 1024; // 10MB in bytes
     if (file.size > maxSize) {
+      console.log('🔍 uploadProfileDocument: File size validation failed:', file.size, 'bytes');
       return {
         success: false,
-        error: 'File size too large. Please upload a file smaller than 5MB.'
+        error: 'File size too large. Please upload a file smaller than 10MB.'
       };
     }
+
+    // Determine bucket based on document type
+    let bucketName: string;
+    switch (documentType) {
+      case 'id':
+        bucketName = 'id-documents'; // Use dedicated ID documents bucket
+        break;
+      case 'qualification':
+        bucketName = 'education-proofs';
+        break;
+      case 'certification':
+        bucketName = 'certification-proofs';
+        break;
+      default:
+        bucketName = 'profile-photos';
+    }
+
+    console.log('🔍 uploadProfileDocument: Using bucket:', bucketName);
 
     // Generate unique filename
     const fileExt = file.name.split('.').pop();
     const timestamp = Date.now();
     const fileName = `${userId}/${documentType}_${timestamp}.${fileExt}`;
 
+    console.log('🔍 uploadProfileDocument: Generated filename:', fileName);
+
     // Upload to Supabase Storage
     const { data, error } = await supabase.storage
-      .from('profile-docs')
+      .from(bucketName)
       .upload(fileName, file, {
         cacheControl: '3600',
         upsert: false
       });
 
     if (error) {
-      console.error('Profile document upload error:', error);
+      console.error('🔍 uploadProfileDocument: Supabase storage error:', error);
       return {
         success: false,
         error: `Upload failed: ${error.message}`
       };
     }
 
+    console.log('🔍 uploadProfileDocument: Upload successful, data:', data);
+
     // Get public URL
     const { data: { publicUrl } } = supabase.storage
-      .from('profile-docs')
+      .from(bucketName)
       .getPublicUrl(fileName);
+
+    console.log('🔍 uploadProfileDocument: Generated public URL:', publicUrl);
 
     return {
       success: true,
@@ -474,7 +504,7 @@ export async function uploadProfileDocument(file: File, userId: string, document
     };
 
   } catch (error) {
-    console.error('Profile document upload error:', error);
+    console.error('🔍 uploadProfileDocument: Unexpected error:', error);
     return {
       success: false,
       error: 'An unexpected error occurred during upload.'
@@ -508,7 +538,7 @@ export async function uploadPortfolioFile(file: File, userId: string, projectId?
 
     // Upload to Supabase Storage
     const { data, error } = await supabase.storage
-      .from('portfolio')
+      .from('portfolio-files')
       .upload(fileName, file, {
         cacheControl: '3600',
         upsert: false
@@ -524,7 +554,7 @@ export async function uploadPortfolioFile(file: File, userId: string, projectId?
 
     // Get public URL
     const { data: { publicUrl } } = supabase.storage
-      .from('portfolio')
+      .from('portfolio-files')
       .getPublicUrl(fileName);
 
     return {
