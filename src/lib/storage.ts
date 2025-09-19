@@ -531,11 +531,36 @@ export async function uploadProfileDocument(file: File, userId: string, document
  */
 export async function getSignedDocumentUrl(filePath: string, expiresIn: number = 3600): Promise<string | null> {
   try {
-    // Extract bucket name from file path
-    const [bucketName, ...pathParts] = filePath.split('/');
-    const fileName = pathParts.join('/');
+    console.log('🔍 getSignedDocumentUrl: Input filePath:', filePath);
     
-    console.log('🔍 getSignedDocumentUrl: Generating signed URL for bucket:', bucketName, 'file:', fileName);
+    let bucketName: string;
+    let fileName: string;
+    
+    // Check if it's already a full URL (legacy format)
+    if (filePath.startsWith('https://')) {
+      console.log('🔍 getSignedDocumentUrl: Detected full URL format');
+      
+      // Extract bucket and file info from full URL
+      // URL format: https://domain/storage/v1/object/public/bucket-name/user-id/filename
+      const urlParts = filePath.split('/');
+      const bucketIndex = urlParts.findIndex(part => part === 'public') + 1;
+      
+      if (bucketIndex > 0 && bucketIndex < urlParts.length) {
+        bucketName = urlParts[bucketIndex];
+        fileName = urlParts.slice(bucketIndex + 1).join('/');
+      } else {
+        console.error('🔍 getSignedDocumentUrl: Could not parse bucket from URL');
+        return null;
+      }
+    } else {
+      // New format: bucket-name/user-id/filename
+      console.log('🔍 getSignedDocumentUrl: Detected file path format');
+      const [bucket, ...pathParts] = filePath.split('/');
+      bucketName = bucket;
+      fileName = pathParts.join('/');
+    }
+    
+    console.log('🔍 getSignedDocumentUrl: Parsed bucket:', bucketName, 'file:', fileName);
     
     // Check if it's a public bucket - return direct URL
     const isPublicBucket = bucketName === 'profile-photos' || bucketName === 'company-logos';
@@ -543,6 +568,7 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
       const { data: { publicUrl } } = supabase.storage
         .from(bucketName)
         .getPublicUrl(fileName);
+      console.log('🔍 getSignedDocumentUrl: Returning public URL:', publicUrl);
       return publicUrl;
     }
     
