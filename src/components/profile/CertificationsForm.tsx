@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Award, Calendar, FileText, Plus, Edit, Trash2, Upload, ExternalLink } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { getSignedDocumentUrl } from '@/lib/storage';
 
 interface Certification {
   id: number;
@@ -108,6 +109,35 @@ export function CertificationsForm({
       });
     } finally {
       setIsUploadingFile(false);
+    }
+  };
+
+  const handleViewDocument = async (fileUrl: string) => {
+    if (!fileUrl) return;
+    
+    try {
+      console.log('🔍 CertificationsForm: Generating signed URL for document:', fileUrl);
+      
+      // Generate signed URL for viewing
+      const signedUrl = await getSignedDocumentUrl(fileUrl);
+      
+      if (signedUrl) {
+        console.log('🔍 CertificationsForm: Opening document with signed URL:', signedUrl);
+        window.open(signedUrl, '_blank');
+      } else {
+        toast({
+          title: 'View failed',
+          description: 'Unable to generate secure link for document viewing.',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('🔍 CertificationsForm: Error viewing document:', error);
+      toast({
+        title: 'View failed',
+        description: 'Failed to open document. Please try again.',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -306,7 +336,7 @@ export function CertificationsForm({
                           type="button"
                           variant="outline"
                           size="sm"
-                          onClick={() => window.open(formData.file_url, '_blank')}
+                          onClick={() => handleViewDocument(formData.file_url)}
                         >
                           View
                         </Button>
@@ -433,7 +463,7 @@ export function CertificationsForm({
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => window.open(certification.file_url, '_blank')}
+                        onClick={() => handleViewDocument(certification.file_url)}
                         className="flex items-center gap-2"
                       >
                         <FileText className="w-4 h-4" />
