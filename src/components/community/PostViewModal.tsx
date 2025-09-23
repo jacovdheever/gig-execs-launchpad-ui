@@ -13,6 +13,7 @@ import { uploadCommunityAttachment } from '@/lib/storage';
 import { formatRelativeTime } from '@/lib/time';
 import AttachmentsCarousel from '@/components/community/AttachmentsCarousel';
 import RichTextEditor from '@/components/community/RichTextEditor';
+import DOMPurify from 'dompurify';
 
 interface PostViewModalProps {
   post: ForumPost | null;
@@ -529,7 +530,7 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                 </div>
               ) : (
                 <div className="prose prose-slate max-w-none mb-6">
-                  <div dangerouslySetInnerHTML={{ __html: post.body }} />
+                  <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.body) }} />
                 </div>
               )}
 

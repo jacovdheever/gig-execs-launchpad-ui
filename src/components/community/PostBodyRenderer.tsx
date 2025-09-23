@@ -1,4 +1,5 @@
 import React from 'react';
+import DOMPurify from 'dompurify';
 
 interface PostBodyRendererProps {
   body: string;
@@ -10,11 +11,11 @@ export default function PostBodyRenderer({ body, className = '' }: PostBodyRende
   const isHTML = body.includes('<') && body.includes('>');
   
   if (isHTML) {
-    // Render HTML content safely
+    // Render HTML content safely with DOMPurify sanitization
     return (
       <div 
         className={`prose prose-slate max-w-none ${className}`}
-        dangerouslySetInnerHTML={{ __html: body }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }}
       />
     );
   } else {
