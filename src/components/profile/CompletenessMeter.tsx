@@ -63,7 +63,7 @@ export function CompletenessMeter({ segments, percent, missing }: CompletenessMe
             ))}
           </div>
         </div>
-        <div className="text-2xl font-bold text-slate-900 min-w-[3rem] text-right">
+        <div className="text-xl sm:text-2xl font-bold text-slate-900 min-w-[2.5rem] sm:min-w-[3rem] text-right">
           {Math.round(percent)}%
         </div>
       </div>
@@ -80,7 +80,7 @@ export function CompletenessMeter({ segments, percent, missing }: CompletenessMe
                 <TooltipTrigger asChild>
                   <div className={`flex flex-col items-center gap-1 ${hasMissing ? 'cursor-help' : ''}`}>
                     <Icon 
-                      className={`w-5 h-5 ${
+                      className={`w-4 h-4 sm:w-5 sm:h-5 ${
                         segment.width > 0 
                           ? 'text-green-600' 
                           : 'text-gray-400'

@@ -257,7 +257,7 @@ export function CertificationsForm({
                 Add Certification
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto mx-4 sm:mx-0">
               <DialogHeader>
                 <DialogTitle>
                   {editingId ? 'Edit Certification' : 'Add Certification'}

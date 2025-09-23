@@ -199,12 +199,12 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   return (
     <div className="max-w-4xl mx-auto p-6">
       {/* Profile Header */}
-      <div className="flex items-start justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-900">Edit Profile</h1>
+      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-8 gap-6">
+        <div className="flex-1">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Edit Profile</h1>
           <p className="text-slate-600 mt-2">Manage your professional profile and settings</p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <CompletenessMeter
             segments={completeness.segments}
             percent={completeness.percent}

@@ -396,7 +396,7 @@ export function PortfolioForm({
                 Add Project
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto mx-4 sm:mx-0">
               <DialogHeader>
                 <DialogTitle>
                   {editingId ? 'Edit Portfolio Item' : 'Add Portfolio Item'}
