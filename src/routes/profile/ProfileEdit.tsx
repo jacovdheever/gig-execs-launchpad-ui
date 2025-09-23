@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, FileText, Award, Briefcase, Upload, GraduationCap } from 'lucide-react';
+import { User, FileText, Award, Briefcase, Upload, GraduationCap, Briefcase as WorkIcon } from 'lucide-react';
 import { SectionCard } from '@/components/profile/SectionCard';
 import { CompletenessMeter } from '@/components/profile/CompletenessMeter';
 import { StatusBadge } from '@/components/profile/StatusBadge';
@@ -8,6 +8,7 @@ import { ReferencesForm } from '@/components/profile/ReferencesForm';
 import { QualificationsForm } from '@/components/profile/QualificationsForm';
 import { CertificationsForm } from '@/components/profile/CertificationsForm';
 import { PortfolioForm } from '@/components/profile/PortfolioForm';
+import { WorkExperienceForm } from '@/components/profile/WorkExperienceForm';
 import { IdDocumentUploader } from '@/components/profile/IdDocumentUploader';
 import { VettingStatus } from '@/components/profile/VettingStatus';
 import { computeCompleteness, computeProfileStatus, type CompletenessData } from '@/lib/profile';
@@ -98,12 +99,27 @@ interface PortfolioItem {
   skills?: string[];
 }
 
+interface WorkExperience {
+  id: number;
+  company: string;
+  job_title: string;
+  city?: string;
+  country_id?: number;
+  start_date_month: string;
+  start_date_year: number;
+  end_date_month?: string;
+  end_date_year?: number;
+  currently_working: boolean;
+  description?: string;
+}
+
 interface ProfileData {
   user: User;
   profile?: ConsultantProfile;
   references: Reference[];
   education: Education[];
   certifications: Certification[];
+  workExperience: WorkExperience[];
   portfolio: PortfolioItem[];
 }
 
@@ -121,6 +137,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     references = [], 
     education = [], 
     certifications = [], 
+    workExperience = [],
     portfolio = [] 
   } = profileData;
   const [activeTab, setActiveTab] = useState('basic');
@@ -133,6 +150,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     { id: 'references', name: 'References', icon: FileText },
     { id: 'qualifications', name: 'Qualifications', icon: GraduationCap },
     { id: 'certifications', name: 'Certifications', icon: Award },
+    { id: 'work-experience', name: 'Work Experience', icon: WorkIcon },
     { id: 'portfolio', name: 'Portfolio', icon: Briefcase },
     { id: 'documents', name: 'Documents', icon: Upload },
   ];
@@ -530,6 +548,100 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                 throw error;
               }
             }}
+          />
+        )}
+        
+        {activeTab === 'work-experience' && (
+          <WorkExperienceForm 
+            workExperiences={workExperience}
+            onAdd={async (exp) => {
+              try {
+                const { data, error } = await supabase
+                  .from('work_experience')
+                  .insert([{
+                    user_id: user.id,
+                    company: exp.company,
+                    job_title: exp.job_title,
+                    city: exp.city || null,
+                    country_id: exp.country_id || null,
+                    start_date_month: exp.start_date_month,
+                    start_date_year: exp.start_date_year,
+                    end_date_month: exp.end_date_month || null,
+                    end_date_year: exp.end_date_year || null,
+                    currently_working: exp.currently_working || false,
+                    description: exp.description || null
+                  }])
+                  .select()
+                  .single();
+
+                if (error) throw error;
+
+                // Update local state
+                onUpdate({
+                  ...profileData,
+                  workExperience: [...workExperience, data]
+                });
+              } catch (error) {
+                console.error('Error adding work experience:', error);
+                throw error;
+              }
+            }}
+            onEdit={async (id, exp) => {
+              try {
+                const { error } = await supabase
+                  .from('work_experience')
+                  .update({
+                    company: exp.company,
+                    job_title: exp.job_title,
+                    city: exp.city || null,
+                    country_id: exp.country_id || null,
+                    start_date_month: exp.start_date_month,
+                    start_date_year: exp.start_date_year,
+                    end_date_month: exp.end_date_month || null,
+                    end_date_year: exp.end_date_year || null,
+                    currently_working: exp.currently_working || false,
+                    description: exp.description || null
+                  })
+                  .eq('id', id)
+                  .eq('user_id', user.id);
+
+                if (error) throw error;
+
+                // Update local state
+                const updatedWorkExperience = workExperience.map(w => 
+                  w.id === id ? { ...w, ...exp } : w
+                );
+                onUpdate({
+                  ...profileData,
+                  workExperience: updatedWorkExperience
+                });
+              } catch (error) {
+                console.error('Error updating work experience:', error);
+                throw error;
+              }
+            }}
+            onDelete={async (id) => {
+              try {
+                const { error } = await supabase
+                  .from('work_experience')
+                  .delete()
+                  .eq('id', id)
+                  .eq('user_id', user.id);
+
+                if (error) throw error;
+
+                // Update local state
+                const filteredWorkExperience = workExperience.filter(w => w.id !== id);
+                onUpdate({
+                  ...profileData,
+                  workExperience: filteredWorkExperience
+                });
+              } catch (error) {
+                console.error('Error deleting work experience:', error);
+                throw error;
+              }
+            }}
+            isLoading={isLoading}
           />
         )}
         

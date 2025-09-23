@@ -77,12 +77,27 @@ interface PortfolioItem {
   skills?: string[];
 }
 
+interface WorkExperience {
+  id: number;
+  company: string;
+  job_title: string;
+  city?: string;
+  country_id?: number;
+  start_date_month: string;
+  start_date_year: number;
+  end_date_month?: string;
+  end_date_year?: number;
+  currently_working: boolean;
+  description?: string;
+}
+
 interface ProfileData {
   user: User;
   profile?: ConsultantProfile;
   references: Reference[];
   education: Education[];
   certifications: Certification[];
+  workExperience: WorkExperience[];
   portfolio: PortfolioItem[];
 }
 
@@ -167,6 +182,18 @@ export function ProfilePage() {
           throw new Error(`Failed to load certifications: ${certificationsError.message}`);
         }
 
+        // Load work experience
+        const { data: workExperience, error: workExperienceError } = await supabase
+          .from('work_experience')
+          .select('*')
+          .eq('user_id', profileId)
+          .order('start_date_year', { ascending: false })
+          .order('start_date_month', { ascending: false });
+
+        if (workExperienceError) {
+          throw new Error(`Failed to load work experience: ${workExperienceError.message}`);
+        }
+
         // Load portfolio
         const { data: portfolio, error: portfolioError } = await supabase
           .from('portfolio')
@@ -184,6 +211,7 @@ export function ProfilePage() {
           references: references || [],
           education: education || [],
           certifications: certifications || [],
+          workExperience: workExperience || [],
           portfolio: portfolio || [],
         });
 
