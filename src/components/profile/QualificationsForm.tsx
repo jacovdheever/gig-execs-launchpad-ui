@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { GraduationCap, Calendar, Award, FileText, Plus, Edit, Trash2, Upload } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { getSignedDocumentUrl } from '@/lib/storage';
 
 interface Qualification {
   id: number;
@@ -181,6 +182,29 @@ export function QualificationsForm({
     }
   };
 
+  const handleViewDocument = async (fileUrl: string) => {
+    if (!fileUrl) return;
+    try {
+      const signedUrl = await getSignedDocumentUrl(fileUrl);
+      if (signedUrl) {
+        window.open(signedUrl, '_blank');
+      } else {
+        toast({
+          title: 'View failed',
+          description: 'Unable to generate secure link for document viewing.',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('🔍 QualificationsForm: Error viewing document:', error);
+      toast({
+        title: 'View failed',
+        description: 'Failed to open document. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const formatDate = (dateString?: string) => {
     if (!dateString) return 'Present';
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -303,7 +327,7 @@ export function QualificationsForm({
                           type="button"
                           variant="outline"
                           size="sm"
-                          onClick={() => window.open(formData.file_url, '_blank')}
+                          onClick={() => handleViewDocument(formData.file_url)}
                         >
                           View
                         </Button>
@@ -404,7 +428,7 @@ export function QualificationsForm({
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => window.open(qualification.file_url, '_blank')}
+                      onClick={() => handleViewDocument(qualification.file_url)}
                       className="flex items-center gap-2"
                     >
                       <FileText className="w-4 h-4" />
