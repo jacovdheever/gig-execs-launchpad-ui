@@ -108,7 +108,10 @@ export function UserProfileDropdown({ user }: Props) {
               </button>
               
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  navigate('/settings');
+                }}
                 className="w-full px-4 py-2 text-left text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors"
               >
                 <Settings className="w-4 h-4" />

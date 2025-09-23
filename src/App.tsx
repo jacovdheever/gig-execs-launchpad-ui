@@ -84,6 +84,9 @@ import CommunityTopic from "./routes/community/CommunityTopic";
 // Profile Components
 import { ProfilePage } from "./routes/profile/ProfilePage";
 
+// Settings Components
+import { SettingsPage } from "./routes/settings/SettingsPage";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -181,6 +184,9 @@ const App = () => (
             {/* Profile Routes */}
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/profile/:id" element={<ProfilePage />} />
+
+            {/* Settings Routes */}
+            <Route path="/settings" element={<SettingsPage />} />
 
             {/* Secure Help Page */}
             <Route path="/help-secure" element={<HelpAndSupportSecure />} />
