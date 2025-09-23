@@ -2,6 +2,32 @@ const { createClient } = require('@supabase/supabase-js');
 
 exports.handler = async (event, context) => {
   try {
+    // CORS validation
+    const origin = event.headers.origin || event.headers.Origin;
+    const allowedOrigins = [
+      'https://gigexecs.com',
+      'https://www.gigexecs.com',
+      'https://develop--gigexecs.netlify.app',
+      'https://gigexecs.netlify.app'
+    ];
+    
+    const corsHeaders = {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': allowedOrigins.includes(origin) ? origin : 'https://gigexecs.com',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Max-Age': '86400'
+    };
+
+    // Handle preflight requests
+    if (event.httpMethod === 'OPTIONS') {
+      return {
+        statusCode: 200,
+        headers: corsHeaders,
+        body: ''
+      };
+    }
+
     const { userId } = JSON.parse(event.body);
     
     const supabase = createClient(
@@ -32,10 +58,7 @@ exports.handler = async (event, context) => {
 
     return {
       statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
+      headers: corsHeaders,
       body: JSON.stringify({
         userSkills: userSkills?.map(us => us.skill_id) || [],
         userIndustries: userIndustries?.industries || [],
@@ -49,7 +72,7 @@ exports.handler = async (event, context) => {
       statusCode: 500,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': 'https://gigexecs.com',
       },
       body: JSON.stringify({ error: error.message })
     };
