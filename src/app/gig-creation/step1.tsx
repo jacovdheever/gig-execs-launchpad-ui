@@ -126,7 +126,7 @@ export default function GigCreationStep1() {
             Create Your Gig
           </h1>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Tell us about your project and what skills you're looking for in a professional.
+            Tell us about your project/role and what skills you're looking for in a professional.
           </p>
         </div>
 
@@ -139,10 +139,10 @@ export default function GigCreationStep1() {
                   Gig Name <span className="text-red-500">*</span>
                 </Label>
                 <p className="text-sm text-slate-600 mt-1 mb-3">
-                  Give your project a clear, descriptive title
+                  Give your project/role a clear, descriptive title
                 </p>
                 <Input
-                  placeholder="e.g., Build a React Native mobile app for e-commerce"
+                  placeholder="e.g., Fractional Chief Marketing Officer for Oil & Gas Industry"
                   value={gigName}
                   onChange={(e) => setGigName(e.target.value)}
                   className="text-base"
@@ -155,10 +155,10 @@ export default function GigCreationStep1() {
                   Gig Description <span className="text-red-500">*</span>
                 </Label>
                 <p className="text-sm text-slate-600 mt-1 mb-3">
-                  Provide detailed information about your project ({gigDescription.length}/2000 characters)
+                  Provide detailed information about the role or project ({gigDescription.length}/2000 characters)
                 </p>
                 <Textarea
-                  placeholder="Describe your project in detail. What are the main objectives? What deliverables do you expect? What challenges might the professional face?"
+                  placeholder="Describe your project/role in detail. What are the main objectives? What deliverables do you expect? What challenges might the professional face?"
                   value={gigDescription}
                   onChange={(e) => setGigDescription(e.target.value)}
                   className="min-h-[120px] text-base"
@@ -177,7 +177,7 @@ export default function GigCreationStep1() {
                   Required Skills <span className="text-red-500">*</span>
                 </Label>
                 <p className="text-sm text-slate-600 mt-1 mb-3">
-                  Select the skills needed for this project (minimum 1, maximum 15)
+                  Select the skills needed for this role/project (minimum 1, maximum 15)
                 </p>
                 
                 <div className="relative">
