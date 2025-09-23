@@ -137,13 +137,22 @@ export default function OnboardingStep3() {
 
         if (error) throw error;
 
-        setWorkExperiences(prev => 
-          prev.map(exp => 
+        setWorkExperiences(prev => {
+          const updated = prev.map(exp => 
             exp.id === editingExperience.id 
               ? { ...experienceData, id: editingExperience.id }
               : exp
-          )
-        );
+          );
+          return updated.sort((a, b) => {
+            // Sort by year first (descending), then by month (descending)
+            if (a.start_date_year !== b.start_date_year) {
+              return b.start_date_year - a.start_date_year;
+            }
+            // If years are equal, sort by month (descending)
+            const monthOrder = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return monthOrder.indexOf(b.start_date_month) - monthOrder.indexOf(a.start_date_month);
+          });
+        });
       } else {
         // Add new experience
         const { data, error } = await supabase
@@ -154,7 +163,18 @@ export default function OnboardingStep3() {
 
         if (error) throw error;
 
-        setWorkExperiences(prev => [data, ...prev]);
+        setWorkExperiences(prev => {
+          const updated = [data, ...prev];
+          return updated.sort((a, b) => {
+            // Sort by year first (descending), then by month (descending)
+            if (a.start_date_year !== b.start_date_year) {
+              return b.start_date_year - a.start_date_year;
+            }
+            // If years are equal, sort by month (descending)
+            const monthOrder = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return monthOrder.indexOf(b.start_date_month) - monthOrder.indexOf(a.start_date_month);
+          });
+        });
       }
 
       closeModal();

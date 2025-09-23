@@ -144,6 +144,19 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
+  // Helper function to sort work experience by latest first
+  const sortWorkExperience = (experiences: WorkExperience[]) => {
+    return experiences.sort((a, b) => {
+      // Sort by year first (descending), then by month (descending)
+      if (a.start_date_year !== b.start_date_year) {
+        return b.start_date_year - a.start_date_year;
+      }
+      // If years are equal, sort by month (descending)
+      const monthOrder = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      return monthOrder.indexOf(b.start_date_month) - monthOrder.indexOf(a.start_date_month);
+    });
+  };
+
   // Define navigation tabs
   const tabs = [
     { id: 'basic', name: 'Basic Info', icon: User },
@@ -576,10 +589,11 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
 
                 if (error) throw error;
 
-                // Update local state
+                // Update local state with proper sorting
+                const updatedWorkExperience = sortWorkExperience([...workExperience, data]);
                 onUpdate({
                   ...profileData,
-                  workExperience: [...workExperience, data]
+                  workExperience: updatedWorkExperience
                 });
               } catch (error) {
                 console.error('Error adding work experience:', error);
@@ -607,13 +621,14 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
 
                 if (error) throw error;
 
-                // Update local state
+                // Update local state with proper sorting
                 const updatedWorkExperience = workExperience.map(w => 
                   w.id === id ? { ...w, ...exp } : w
                 );
+                const sortedWorkExperience = sortWorkExperience(updatedWorkExperience);
                 onUpdate({
                   ...profileData,
-                  workExperience: updatedWorkExperience
+                  workExperience: sortedWorkExperience
                 });
               } catch (error) {
                 console.error('Error updating work experience:', error);
