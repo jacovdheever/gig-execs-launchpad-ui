@@ -220,12 +220,12 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
 
       {/* Navigation Tabs */}
       <div className="border-b border-slate-200 mb-8">
-        <nav className="-mb-px flex space-x-8">
+        <nav className="-mb-px flex space-x-8 overflow-x-auto scrollbar-hide">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              className={`py-2 px-1 border-b-2 font-medium text-sm whitespace-nowrap flex-shrink-0 ${
                 activeTab === tab.id
                   ? 'border-[#0284C7] text-[#0284C7]'
                   : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
