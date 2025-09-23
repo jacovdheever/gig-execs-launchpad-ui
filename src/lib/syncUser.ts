@@ -74,7 +74,7 @@ export async function syncUserFromAuth(userId: string): Promise<boolean> {
       updated_at: new Date().toISOString()
     };
     
-    let profileTable = userType === 'consultant' ? 'consultant_profiles' : 'client_profiles';
+    const profileTable = userType === 'consultant' ? 'consultant_profiles' : 'client_profiles';
     
     if (userType === 'client') {
       // Add required company_name field for clients

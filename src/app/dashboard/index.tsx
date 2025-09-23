@@ -312,7 +312,7 @@ export default function DashboardPage() {
   // State for profile completeness
   const [profileCompleteness, setProfileCompleteness] = useState(0);
   const [completenessData, setCompletenessData] = useState<CompletenessData | null>(null);
-  const [computedCompleteness, setComputedCompleteness] = useState<any>(null);
+  const [computedCompleteness, setComputedCompleteness] = useState<{ percent: number; segments: { basic: number; full: number; allStar: number }; missing: string[] } | null>(null);
   const [profileTier, setProfileTier] = useState<'BASIC' | 'FULL' | 'ALL_STAR'>('BASIC');
   const [vettingStatus, setVettingStatus] = useState<string | null>(null);
   

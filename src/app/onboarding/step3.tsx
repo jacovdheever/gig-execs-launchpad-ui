@@ -105,7 +105,7 @@ export default function OnboardingStep3() {
     resetForm();
   };
 
-  const handleInputChange = (field: keyof WorkExperience, value: any) => {
+  const handleInputChange = (field: keyof WorkExperience, value: string | number | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 

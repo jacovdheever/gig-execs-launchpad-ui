@@ -882,11 +882,7 @@ export interface Database {
         }
       }
     }
-    Views: {
-      // Add any database views here
-    }
-    Functions: {
-      // Add any database functions here
-    }
+    Views: Record<string, never>
+    Functions: Record<string, never>
   }
 }

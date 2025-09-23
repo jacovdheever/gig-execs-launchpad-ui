@@ -8,12 +8,12 @@ interface VideoEmbedProps {
 }
 
 export default function VideoEmbed({ attachment }: VideoEmbedProps) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
   if (attachment.type !== 'video' || !attachment.url.includes('embed')) {
     return null;
   }
-
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const getVideoThumbnail = () => {
     // Extract video ID from embed URL for thumbnail
@@ -57,7 +57,7 @@ export default function VideoEmbed({ attachment }: VideoEmbedProps) {
       embedUrl += '?autoplay=0&title=0&byline=0&portrait=0';
     } else if (embedUrl.includes('loom.com/embed/')) {
       // Loom embed URLs are already optimized
-      embedUrl = embedUrl;
+      // No changes needed
     } else if (embedUrl.includes('wistia.com/embed/medias/')) {
       // Convert Wistia URL to proper embed format
       const mediaId = embedUrl.split('/medias/')[1]?.split('.')[0];
