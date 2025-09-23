@@ -227,7 +227,7 @@ export default function RegisterPage() {
               Join GigExecs
             </CardTitle>
             <CardDescription className="text-center text-slate-600">
-              Start your journey as a consultant or client
+              Start your journey as a professional or client
             </CardDescription>
           </CardHeader>
           
@@ -245,7 +245,7 @@ export default function RegisterPage() {
                     <RadioGroupItem value="consultant" id="consultant" />
                     <Label htmlFor="consultant" className="flex items-center space-x-2 cursor-pointer">
                       <User className="h-4 w-4" />
-                      <span>Consultant</span>
+                      <span>Professional</span>
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2">
