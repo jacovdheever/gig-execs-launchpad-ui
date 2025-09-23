@@ -631,14 +631,13 @@ export async function uploadPortfolioFile(file: File, userId: string, projectId?
       };
     }
 
-    // Get public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from('portfolio-files')
-      .getPublicUrl(fileName);
+    // For private buckets, store the file path instead of public URL
+    const filePath = `portfolio-files/${fileName}`;
+    console.log('🔍 uploadPortfolioFile: Stored file path for private bucket:', filePath);
 
     return {
       success: true,
-      url: publicUrl
+      url: filePath
     };
 
   } catch (error) {

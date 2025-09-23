@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Briefcase, Calendar, Play, FileText, Plus, Edit, Trash2, Upload, Tag, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/lib/supabase';
+import { getSignedDocumentUrl } from '@/lib/storage';
 
 interface Skill {
   id: number;
@@ -64,6 +65,29 @@ export function PortfolioForm({
   });
   const [newSkill, setNewSkill] = useState('');
   const { toast } = useToast();
+
+  const handleViewDocument = async (fileUrl: string) => {
+    if (!fileUrl) return;
+    try {
+      const signedUrl = await getSignedDocumentUrl(fileUrl);
+      if (signedUrl) {
+        window.open(signedUrl, '_blank');
+      } else {
+        toast({
+          title: 'View failed',
+          description: 'Unable to generate secure link for document viewing.',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('🔍 PortfolioForm: Error viewing document:', error);
+      toast({
+        title: 'View failed',
+        description: 'Failed to open document. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
 
   // Load available skills on component mount
   useEffect(() => {
@@ -589,7 +613,7 @@ export function PortfolioForm({
                                 type="button"
                                 variant="outline"
                                 size="sm"
-                                onClick={() => window.open(file, '_blank')}
+                                onClick={() => handleViewDocument(file)}
                               >
                                 View
                               </Button>
@@ -705,7 +729,7 @@ export function PortfolioForm({
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => window.open(item.solution_video_url, '_blank')}
+                      onClick={() => handleViewDocument(item.solution_video_url)}
                       className="flex items-center gap-1 text-xs"
                     >
                       <Play className="w-3 h-3" />
@@ -720,7 +744,7 @@ export function PortfolioForm({
                           key={index}
                           variant="outline"
                           size="sm"
-                          onClick={() => window.open(file, '_blank')}
+                          onClick={() => handleViewDocument(file)}
                           className="flex items-center gap-1 text-xs"
                         >
                           {getFileIcon(file)}
