@@ -16,15 +16,71 @@
 [[headers]]
   for = "/*"
   [headers.values]
+    # Content Security Policy - Comprehensive protection against XSS and injection attacks
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.supabase.co https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://*.supabase.co https://images.unsplash.com https://img.youtube.com https://i.vimeocdn.com https://cdn.loom.com https://embed.wistia.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co https://api.stripe.com https://*.resend.com; frame-src https://js.stripe.com https://www.youtube.com https://player.vimeo.com https://www.loom.com https://fast.wistia.net; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
+    
+    # HTTP Strict Transport Security - Force HTTPS
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    
+    # Prevent clickjacking attacks
     X-Frame-Options = "DENY"
+    
+    # XSS Protection (legacy browsers)
     X-XSS-Protection = "1; mode=block"
+    
+    # Prevent MIME type sniffing
     X-Content-Type-Options = "nosniff"
+    
+    # Control referrer information
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(self), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
+    
+    # Feature Policy - Control browser features
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(self), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), autoplay=(), fullscreen=(self), display-capture=(), encrypted-media=(), picture-in-picture=(), sync-xhr=()"
+    
+    # Cross-Origin policies
     Cross-Origin-Opener-Policy = "same-origin"
     Cross-Origin-Resource-Policy = "same-origin"
+    Cross-Origin-Embedder-Policy = "unsafe-none"
+    
+    # Additional security headers
+    X-DNS-Prefetch-Control = "off"
+    X-Download-Options = "noopen"
+    X-Permitted-Cross-Domain-Policies = "none"
+    
+    # Server information hiding
+    Server = ""
+    X-Powered-By = ""
+    
+    # Cache control for security-sensitive content
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
+
+# Security headers for Netlify Functions (API endpoints)
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    # API-specific security headers
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+    # Prevent caching of API responses
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
+    
+    # CORS headers (handled by functions, but add as backup)
+    Access-Control-Allow-Origin = "https://gigexecs.com, https://www.gigexecs.com, https://develop--gigexecs.netlify.app, https://gigexecs.netlify.app"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type, Authorization, X-Requested-With"
+    Access-Control-Max-Age = "86400"
+    
+    # Server information hiding
+    Server = ""
+    X-Powered-By = ""
 
 # Cache static assets
 [[headers]]
