@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -7,9 +7,11 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '@/lib/supabase'
+import RecaptchaWrapper, { RecaptchaWrapperRef } from '@/components/auth/RecaptchaWrapper'
 
 export default function LoginPage() {
   const navigate = useNavigate()
+  const recaptchaRef = useRef<RecaptchaWrapperRef>(null)
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -17,6 +19,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -26,11 +29,28 @@ export default function LoginPage() {
     }
   }
 
+  const handleCaptchaVerify = (token: string | null) => {
+    setCaptchaToken(token)
+    if (errors.captcha) {
+      setErrors(prev => ({ ...prev, captcha: '' }))
+    }
+  }
+
+  const handleCaptchaExpire = () => {
+    setCaptchaToken(null)
+  }
+
+  const handleCaptchaError = () => {
+    setCaptchaToken(null)
+    setErrors(prev => ({ ...prev, captcha: 'CAPTCHA verification failed. Please try again.' }))
+  }
+
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
 
     if (!formData.email.trim()) newErrors.email = 'Email is required'
     if (!formData.password) newErrors.password = 'Password is required'
+    if (!captchaToken) newErrors.captcha = 'Please complete the CAPTCHA verification'
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -45,6 +65,22 @@ export default function LoginPage() {
     setErrors({})
 
     try {
+      // Verify CAPTCHA first
+      const captchaResponse = await fetch('/.netlify/functions/verify-captcha', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ captchaToken }),
+      });
+
+      if (!captchaResponse.ok) {
+        const captchaError = await captchaResponse.json();
+        setErrors({ captcha: 'CAPTCHA verification failed. Please try again.' });
+        recaptchaRef.current?.reset();
+        return;
+      }
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
@@ -157,6 +193,20 @@ export default function LoginPage() {
                 </div>
                 {errors.password && (
                   <p className="text-sm text-red-600">{errors.password}</p>
+                )}
+              </div>
+
+              {/* CAPTCHA */}
+              <div className="space-y-2">
+                <RecaptchaWrapper
+                  ref={recaptchaRef}
+                  onVerify={handleCaptchaVerify}
+                  onExpire={handleCaptchaExpire}
+                  onError={handleCaptchaError}
+                  className="flex justify-center"
+                />
+                {errors.captcha && (
+                  <p className="text-sm text-red-600 text-center">{errors.captcha}</p>
                 )}
               </div>
 

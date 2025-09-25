@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
 
@@ -13,9 +13,11 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Eye, EyeOff, Mail, Lock, User, Building2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import RecaptchaWrapper, { RecaptchaWrapperRef } from '@/components/auth/RecaptchaWrapper'
 
 export default function RegisterPage() {
   const navigate = useNavigate()
+  const recaptchaRef = useRef<RecaptchaWrapperRef>(null)
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -28,6 +30,7 @@ export default function RegisterPage() {
   })
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -38,6 +41,22 @@ export default function RegisterPage() {
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }))
     }
+  }
+
+  const handleCaptchaVerify = (token: string | null) => {
+    setCaptchaToken(token)
+    if (errors.captcha) {
+      setErrors(prev => ({ ...prev, captcha: '' }))
+    }
+  }
+
+  const handleCaptchaExpire = () => {
+    setCaptchaToken(null)
+  }
+
+  const handleCaptchaError = () => {
+    setCaptchaToken(null)
+    setErrors(prev => ({ ...prev, captcha: 'CAPTCHA verification failed. Please try again.' }))
   }
 
   const validateForm = () => {
@@ -51,6 +70,7 @@ export default function RegisterPage() {
     if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match'
     if (formData.userType === 'client' && !formData.companyName.trim()) newErrors.companyName = 'Company name is required'
     if (!formData.acceptTerms) newErrors.acceptTerms = 'You must accept the terms and conditions'
+    if (!captchaToken) newErrors.captcha = 'Please complete the CAPTCHA verification'
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -65,6 +85,22 @@ export default function RegisterPage() {
     setErrors({})
 
     try {
+      // Verify CAPTCHA first
+      const captchaResponse = await fetch('/.netlify/functions/verify-captcha', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ captchaToken }),
+      });
+
+      if (!captchaResponse.ok) {
+        const captchaError = await captchaResponse.json();
+        setErrors({ captcha: 'CAPTCHA verification failed. Please try again.' });
+        recaptchaRef.current?.reset();
+        return;
+      }
+
       // Step 1: Create user with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: formData.email,
@@ -426,6 +462,20 @@ export default function RegisterPage() {
               {errors.acceptTerms && (
                 <p className="text-sm text-red-600">{errors.acceptTerms}</p>
               )}
+
+              {/* CAPTCHA */}
+              <div className="space-y-2">
+                <RecaptchaWrapper
+                  ref={recaptchaRef}
+                  onVerify={handleCaptchaVerify}
+                  onExpire={handleCaptchaExpire}
+                  onError={handleCaptchaError}
+                  className="flex justify-center"
+                />
+                {errors.captcha && (
+                  <p className="text-sm text-red-600 text-center">{errors.captcha}</p>
+                )}
+              </div>
 
               {/* General Error */}
               {errors.general && (
