@@ -104,7 +104,7 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
       });
       
       setIsLiked(result.isLiked);
-      setReactionCount(prev => prev + result.reactionCount);
+      setReactionCount(result.reactionCount);
     } catch (error) {
       console.error('Error toggling reaction:', error);
     }

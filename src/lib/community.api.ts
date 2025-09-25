@@ -354,12 +354,17 @@ export async function createComment(commentData: CreateCommentData, authorId: st
  */
 export async function togglePostReaction(postId: number, userId: string): Promise<{ isLiked: boolean; reactionCount: number }> {
   // Check if user already liked the post
-  const { data: existingReaction } = await supabase
+  const { data: existingReaction, error: checkError } = await supabase
     .from('forum_post_reactions')
     .select('*')
     .eq('post_id', postId)
     .eq('user_id', userId)
-    .single();
+    .maybeSingle();
+
+  if (checkError) {
+    console.error('Error checking existing reaction:', checkError);
+    throw new Error('Failed to check existing reaction');
+  }
 
   if (existingReaction) {
     // Unlike: remove reaction
@@ -375,26 +380,17 @@ export async function togglePostReaction(postId: number, userId: string): Promis
     }
 
     // Decrement reaction count
-    const { error: decrementError } = await supabase.rpc('decrement', { 
-      row_id: postId, 
-      column_name: 'reaction_count' 
-    });
-
-    if (decrementError) {
-      console.error('❌ Error decrementing reaction count:', decrementError);
-      // Fallback: manually decrement the count
-      const { data: currentPost } = await supabase
+    const { data: currentPost } = await supabase
+      .from('forum_posts')
+      .select('reaction_count')
+      .eq('id', postId)
+      .single();
+    
+    if (currentPost) {
+      await supabase
         .from('forum_posts')
-        .select('reaction_count')
-        .eq('id', postId)
-        .single();
-      
-      if (currentPost) {
-        await supabase
-          .from('forum_posts')
-          .update({ reaction_count: Math.max(0, (currentPost.reaction_count || 0) - 1) })
-          .eq('id', postId);
-      }
+        .update({ reaction_count: Math.max(0, (currentPost.reaction_count || 0) - 1) })
+        .eq('id', postId);
     }
 
     // Get the updated reaction count
@@ -420,26 +416,17 @@ export async function togglePostReaction(postId: number, userId: string): Promis
     }
 
     // Increment reaction count
-    const { error: incrementError } = await supabase.rpc('increment', { 
-      row_id: postId, 
-      column_name: 'reaction_count' 
-    });
-
-    if (incrementError) {
-      console.error('❌ Error incrementing reaction count:', incrementError);
-      // Fallback: manually increment the count
-      const { data: currentPost } = await supabase
+    const { data: currentPost } = await supabase
+      .from('forum_posts')
+      .select('reaction_count')
+      .eq('id', postId)
+      .single();
+    
+    if (currentPost) {
+      await supabase
         .from('forum_posts')
-        .select('reaction_count')
-        .eq('id', postId)
-        .single();
-      
-      if (currentPost) {
-        await supabase
-          .from('forum_posts')
-          .update({ reaction_count: (currentPost.reaction_count || 0) + 1 })
-          .eq('id', postId);
-      }
+        .update({ reaction_count: (currentPost.reaction_count || 0) + 1 })
+        .eq('id', postId);
     }
 
     // Get the updated reaction count

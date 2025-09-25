@@ -49,7 +49,7 @@ export default function PostCard({ post, onCommentClick, onPostClick }: PostCard
       });
       
       setIsLiked(result.isLiked);
-      setReactionCount(prev => Math.max(0, prev + result.reactionCount));
+      setReactionCount(result.reactionCount);
       
       // Mark as read when user interacts
       markAsRead.mutate({ postId: post.id, userId: user.id });
