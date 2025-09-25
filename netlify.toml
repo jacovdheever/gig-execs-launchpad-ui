@@ -6,6 +6,13 @@
   NODE_VERSION = "18"
   SECRETS_SCAN_ENABLED = "false"
 
+# Build plugins for optimization
+[[plugins]]
+  package = "@netlify/plugin-gzip"
+
+[[plugins]]
+  package = "@netlify/plugin-brotli"
+
 # Redirects for SPA routing (if using React Router)
 [[redirects]]
   from = "/*"
@@ -81,6 +88,51 @@
     # Server information hiding
     Server = ""
     X-Powered-By = ""
+
+# Compression Configuration
+
+# Enable compression for all text-based files
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Content-Encoding = "gzip, br"
+    Vary = "Accept-Encoding"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Content-Encoding = "gzip, br"
+    Vary = "Accept-Encoding"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Content-Encoding = "gzip, br"
+    Vary = "Accept-Encoding"
+
+[[headers]]
+  for = "/*.json"
+  [headers.values]
+    Content-Encoding = "gzip, br"
+    Vary = "Accept-Encoding"
+
+[[headers]]
+  for = "/*.xml"
+  [headers.values]
+    Content-Encoding = "gzip, br"
+    Vary = "Accept-Encoding"
+
+[[headers]]
+  for = "/*.txt"
+  [headers.values]
+    Content-Encoding = "gzip, br"
+    Vary = "Accept-Encoding"
+
+[[headers]]
+  for = "/*.svg"
+  [headers.values]
+    Content-Encoding = "gzip, br"
+    Vary = "Accept-Encoding"
 
 # Optimized Caching Strategy
 
