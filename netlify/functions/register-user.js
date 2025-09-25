@@ -120,6 +120,15 @@ const handler = async (event, context) => {
 
     if (userError) {
       console.error('User creation error:', userError)
+      
+      // Handle duplicate key error specifically
+      if (userError.code === '23505') {
+        return createErrorResponse(409, 'User already exists', [
+          'An account with this email address already exists.',
+          'Please try logging in instead or use a different email address.'
+        ])
+      }
+      
       return createErrorResponse(500, 'User creation failed', [
         userError.message,
         `Code: ${userError.code}`,
