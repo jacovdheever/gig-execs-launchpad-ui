@@ -69,31 +69,12 @@ const RecaptchaWrapper = forwardRef<RecaptchaWrapperRef, RecaptchaWrapperProps>(
       isTestKey: siteKey === '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
     });
 
+    // Temporarily disable CAPTCHA to test site loading
     return (
       <div className={`recaptcha-wrapper ${className}`}>
-        {!isLoaded && (
-          <div className="flex items-center justify-center p-4 border border-gray-300 rounded bg-gray-50">
-            <div className="text-sm text-gray-600">Loading CAPTCHA...</div>
-          </div>
-        )}
-        
-        {hasError && (
-          <div className="flex items-center justify-center p-4 border border-red-300 rounded bg-red-50">
-            <div className="text-sm text-red-600">CAPTCHA failed to load. Please refresh the page.</div>
-          </div>
-        )}
-        
-        {isLoaded && !hasError && (
-          <ReCAPTCHA
-            ref={recaptchaRef}
-            sitekey={siteKey}
-            onChange={handleVerify}
-            onExpired={handleExpire}
-            onErrored={handleError}
-            theme="light"
-            size="normal"
-          />
-        )}
+        <div className="flex items-center justify-center p-4 border border-gray-300 rounded bg-gray-50">
+          <div className="text-sm text-gray-600">CAPTCHA temporarily disabled for testing</div>
+        </div>
       </div>
     );
   }
