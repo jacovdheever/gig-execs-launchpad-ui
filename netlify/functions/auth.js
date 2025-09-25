@@ -39,7 +39,14 @@ function verifyJWTToken(authHeader) {
     // For Supabase, we need to use the JWT secret from project settings
     const jwtSecret = process.env.SUPABASE_JWT_SECRET;
     
+    console.log('🔍 JWT Secret check:', {
+      hasSecret: !!jwtSecret,
+      secretLength: jwtSecret ? jwtSecret.length : 0,
+      secretStart: jwtSecret ? jwtSecret.substring(0, 10) + '...' : 'undefined'
+    });
+    
     if (!jwtSecret) {
+      console.log('❌ JWT secret not configured');
       return {
         isValid: false,
         error: 'JWT secret not configured',
@@ -47,13 +54,31 @@ function verifyJWTToken(authHeader) {
       };
     }
     
-    const decoded = jwt.verify(token, jwtSecret);
-    
-    // Validate token structure
-    if (!decoded.sub || !decoded.aud) {
+    let decoded;
+    try {
+      decoded = jwt.verify(token, jwtSecret);
+      console.log('✅ JWT verification successful:', {
+        sub: decoded.sub,
+        aud: decoded.aud,
+        role: decoded.role,
+        exp: decoded.exp,
+        iat: decoded.iat
+      });
+      
+      // Validate token structure
+      if (!decoded.sub || !decoded.aud) {
+        console.log('❌ Invalid token structure');
+        return {
+          isValid: false,
+          error: 'Invalid token structure',
+          user: null
+        };
+      }
+    } catch (error) {
+      console.log('❌ JWT verification failed:', error.message);
       return {
         isValid: false,
-        error: 'Invalid token structure',
+        error: `JWT verification failed: ${error.message}`,
         user: null
       };
     }
