@@ -1,20 +1,38 @@
 const { createErrorResponse } = require('./validation');
 
 exports.handler = async (event, context) => {
+  console.log('🔍 Function called with:', {
+    method: event.httpMethod,
+    hasBody: !!event.body,
+    bodyLength: event.body ? event.body.length : 0
+  });
+
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
     return createErrorResponse(405, 'Method not allowed. Only POST requests are allowed.');
   }
 
   try {
-    const { captchaToken } = JSON.parse(event.body);
+    console.log('🔍 Raw body:', event.body);
+    
+    let parsedBody;
+    try {
+      parsedBody = JSON.parse(event.body);
+    } catch (parseError) {
+      console.error('🔍 JSON Parse Error:', parseError);
+      return createErrorResponse(400, 'Invalid JSON in request body.');
+    }
+
+    const { captchaToken } = parsedBody;
 
     console.log('🔍 CAPTCHA Verification Request:', {
       hasToken: !!captchaToken,
-      tokenLength: captchaToken ? captchaToken.length : 0
+      tokenLength: captchaToken ? captchaToken.length : 0,
+      tokenValue: captchaToken ? captchaToken.substring(0, 20) + '...' : 'null'
     });
 
     if (!captchaToken) {
+      console.log('🔍 Missing CAPTCHA token');
       return createErrorResponse(400, 'CAPTCHA token is required.');
     }
 

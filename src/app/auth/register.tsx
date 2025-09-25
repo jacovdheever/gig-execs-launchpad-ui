@@ -86,6 +86,12 @@ export default function RegisterPage() {
 
     try {
       // Verify CAPTCHA first
+      console.log('🔍 Sending CAPTCHA token:', {
+        hasToken: !!captchaToken,
+        tokenLength: captchaToken ? captchaToken.length : 0,
+        tokenValue: captchaToken ? captchaToken.substring(0, 20) + '...' : 'null'
+      });
+
       const captchaResponse = await fetch('/.netlify/functions/verify-captcha', {
         method: 'POST',
         headers: {
