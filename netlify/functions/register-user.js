@@ -4,6 +4,7 @@ const {
   sanitizeString,
   createErrorResponse 
 } = require('./validation')
+const { authenticateRequest, createAuthErrorResponse } = require('./auth')
 
 exports.handler = async (event, context) => {
   console.log('=== Registration Function Started ===')
@@ -17,6 +18,15 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    // Optional authentication check (for admin registration or verification)
+    const authResult = authenticateRequest(event.headers);
+    if (authResult.isValid) {
+      console.log('Authenticated user making registration request:', authResult.user.id);
+      event.user = authResult.user;
+    } else {
+      console.log('Registration request without authentication (normal for new user registration)');
+    }
+
     // Parse the request body
     console.log('Raw request body:', event.body)
     let userData;

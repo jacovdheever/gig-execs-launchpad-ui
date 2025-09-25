@@ -3,8 +3,9 @@ const {
   validateGetUserSkillsInput, 
   createErrorResponse 
 } = require('./validation');
+const { withAuth, canAccessUserData } = require('./auth');
 
-exports.handler = async (event, context) => {
+const handler = async (event, context) => {
   try {
     // CORS validation
     const origin = event.headers.origin || event.headers.Origin;
@@ -53,6 +54,14 @@ exports.handler = async (event, context) => {
 
     const { userId } = requestBody;
     
+    // Verify user can access this data (users can only access their own skills)
+    if (!canAccessUserData(event.user, userId)) {
+      return createErrorResponse(403, 'Access denied. You can only access your own skills data.');
+    }
+    
+    // Log authenticated user for debugging
+    console.log('Authenticated user:', event.user?.id, 'requesting skills for:', userId);
+    
     const supabase = createClient(
       process.env.VITE_SUPABASE_URL,
       process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -94,3 +103,6 @@ exports.handler = async (event, context) => {
     return createErrorResponse(500, 'Internal server error', [error.message]);
   }
 };
+
+// Export the handler wrapped with authentication
+exports.handler = withAuth(handler);

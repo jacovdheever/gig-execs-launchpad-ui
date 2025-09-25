@@ -3,8 +3,9 @@ const {
   validateGetClientDataInput, 
   createErrorResponse 
 } = require('./validation');
+const { withAuth } = require('./auth');
 
-exports.handler = async (event, context) => {
+const handler = async (event, context) => {
   try {
     // CORS validation
     const origin = event.headers.origin || event.headers.Origin;
@@ -53,6 +54,9 @@ exports.handler = async (event, context) => {
 
     const { creatorIds } = requestBody;
     
+    // Log authenticated user for debugging
+    console.log('Authenticated user:', event.user?.id);
+    
     const supabase = createClient(
       process.env.VITE_SUPABASE_URL,
       process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -93,3 +97,6 @@ exports.handler = async (event, context) => {
     return createErrorResponse(500, 'Internal server error', [error.message]);
   }
 };
+
+// Export the handler wrapped with authentication
+exports.handler = withAuth(handler);
