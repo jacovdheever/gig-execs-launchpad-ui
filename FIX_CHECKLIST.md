@@ -216,12 +216,29 @@ This checklist provides a prioritized, step-by-step plan to address all security
 **Priority**: High  
 **Effort**: High  
 **Risk**: Medium
+**Status**: ✅ COMPLETED
 
 **Scope**: Add Supabase JWT verification to all functions
 **Files to Modify**:
-- `netlify/functions/get-client-data.js`
-- `netlify/functions/get-user-skills.js`
-- `netlify/functions/register-user.js`
+- `netlify/functions/auth.js` (new)
+- `netlify/functions/package.json` (add jsonwebtoken dependency)
+- `netlify/functions/get-client-data.js` (add auth wrapper)
+- `netlify/functions/get-user-skills.js` (add auth wrapper)
+- `netlify/functions/register-user.js` (add optional auth)
+
+### HIGH-004: Add Rate Limiting to Netlify Functions
+**Priority**: High  
+**Effort**: Medium  
+**Risk**: Low
+**Status**: ✅ COMPLETED
+
+**Scope**: Add rate limiting to all Netlify Functions to prevent abuse and DoS attacks
+**Files to Modify**:
+- `netlify/functions/rateLimiter.js` (new)
+- `netlify/functions/get-client-data.js` (add rate limiting)
+- `netlify/functions/get-user-skills.js` (add rate limiting)
+- `netlify/functions/register-user.js` (add rate limiting)
+- `netlify/functions/rate-limit-status.js` (new, optional)
 
 **Changes Required**:
 1. Add JWT verification to all functions

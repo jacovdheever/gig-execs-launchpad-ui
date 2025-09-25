@@ -4,6 +4,7 @@ const {
   createErrorResponse 
 } = require('./validation');
 const { withAuth, canAccessUserData } = require('./auth');
+const { withRateLimit } = require('./rateLimiter');
 
 const handler = async (event, context) => {
   try {
@@ -104,5 +105,5 @@ const handler = async (event, context) => {
   }
 };
 
-// Export the handler wrapped with authentication
-exports.handler = withAuth(handler);
+// Export the handler wrapped with authentication and rate limiting
+exports.handler = withRateLimit('data', withAuth(handler));

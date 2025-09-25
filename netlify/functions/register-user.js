@@ -5,8 +5,9 @@ const {
   createErrorResponse 
 } = require('./validation')
 const { authenticateRequest, createAuthErrorResponse } = require('./auth')
+const { withRateLimit } = require('./rateLimiter')
 
-exports.handler = async (event, context) => {
+const handler = async (event, context) => {
   console.log('=== Registration Function Started ===')
   console.log('HTTP Method:', event.httpMethod)
   console.log('Request Headers:', event.headers)
@@ -178,3 +179,6 @@ exports.handler = async (event, context) => {
     ])
   }
 }
+
+// Export the handler wrapped with rate limiting
+exports.handler = withRateLimit('registration', handler);
