@@ -13,6 +13,7 @@ import SortMenu from './SortMenu';
 import PostCard from './PostCard';
 import NewPostComposer from './NewPostComposer';
 import PostViewModal from '@/components/community/PostViewModal';
+import CommunityErrorBoundary from '@/components/community/CommunityErrorBoundary';
 import { useFeedFilters } from '@/lib/community.hooks';
 import { usePosts } from '@/lib/community.hooks';
 import { getCurrentUser } from '@/lib/getCurrentUser';
@@ -61,7 +62,8 @@ export default function CommunityLanding() {
   }
 
   return (
-    <div className="space-y-6">
+    <CommunityErrorBoundary>
+      <div className="space-y-6">
       {/* Write Something Input */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
         <div className="flex items-center gap-3">
@@ -183,6 +185,7 @@ export default function CommunityLanding() {
         onClose={handlePostModalClose}
         onPostUpdated={handlePostCreated}
       />
-    </div>
+      </div>
+    </CommunityErrorBoundary>
   );
 }

@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import Maintenance from "./pages/Maintenance";
 import MarketingHome from "./pages/MarketingHome";
 import Clients from "./pages/Clients";
@@ -202,5 +203,12 @@ const App = () => (
   </QueryClientProvider>
 );
 
-export default App;
+// Wrap the entire app with error boundary
+const AppWithErrorBoundary = () => (
+  <ErrorBoundary>
+    <App />
+  </ErrorBoundary>
+);
+
+export default AppWithErrorBoundary;
 // Fresh deployment Tue Sep 16 13:43:42 SAST 2025

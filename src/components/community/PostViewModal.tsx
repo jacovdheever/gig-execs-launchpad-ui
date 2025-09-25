@@ -13,6 +13,7 @@ import { uploadCommunityAttachment } from '@/lib/storage';
 import { formatRelativeTime } from '@/lib/time';
 import AttachmentsCarousel from '@/components/community/AttachmentsCarousel';
 import RichTextEditor from '@/components/community/RichTextEditor';
+import CommunityErrorBoundary from './CommunityErrorBoundary';
 import DOMPurify from 'dompurify';
 
 interface PostViewModalProps {
@@ -439,8 +440,9 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
   if (!isOpen || !post) return null;
 
   return (
-    <TooltipProvider>
-      <>
+    <CommunityErrorBoundary>
+      <TooltipProvider>
+        <>
         {/* Backdrop */}
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-[9999]"
@@ -1142,7 +1144,8 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
             </div>
           </div>
         )}
-      </>
-    </TooltipProvider>
+        </>
+      </TooltipProvider>
+    </CommunityErrorBoundary>
   );
 }
