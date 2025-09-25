@@ -5,14 +5,15 @@
  * to prevent injection attacks and ensure data integrity.
  */
 
+const { validate: uuidValidate } = require('uuid');
+
 /**
  * Validates UUID format
  * @param {string} uuid - UUID string to validate
  * @returns {boolean} - True if valid UUID format
  */
 function isValidUUID(uuid) {
-  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-  return typeof uuid === 'string' && uuidRegex.test(uuid);
+  return typeof uuid === 'string' && uuidValidate(uuid);
 }
 
 /**
