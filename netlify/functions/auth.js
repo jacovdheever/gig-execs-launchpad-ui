@@ -6,6 +6,7 @@
  */
 
 const { createClient } = require('@supabase/supabase-js');
+const jwt = require('jsonwebtoken');
 
 /**
  * Verifies JWT token from Authorization header

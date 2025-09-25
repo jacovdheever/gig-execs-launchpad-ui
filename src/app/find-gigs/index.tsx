@@ -95,13 +95,16 @@ export default function FindGigsPage() {
       if (userData.role === 'consultant') {
         console.log('🔍 Loading user skills via Netlify function for user:', userData.id);
         
-        // Temporarily disable auth for testing rate limiting
-        console.log('🔍 Loading user skills (no auth for testing)');
+        // Get the current session to get the JWT token
+        const { data: { session } } = await supabase.auth.getSession();
+        console.log('🔍 Session data:', session);
+        console.log('🔍 Access token:', session?.access_token);
         
         const userSkillsResponse = await fetch('/.netlify/functions/get-user-skills', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session?.access_token}`
           },
           body: JSON.stringify({ userId: userData.id })
         });
@@ -159,13 +162,16 @@ export default function FindGigsPage() {
       // Load client data using Netlify function to bypass RLS
       console.log('🔍 Loading client data via Netlify function for creator IDs:', creatorIds);
       
-      // Temporarily disable auth for testing rate limiting
-      console.log('🔍 Loading client data (no auth for testing)');
+      // Get the current session to get the JWT token
+      const { data: { session } } = await supabase.auth.getSession();
+      console.log('🔍 Client data session:', session);
+      console.log('🔍 Client data access token:', session?.access_token);
       
       const clientDataResponse = await fetch('/.netlify/functions/get-client-data', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token}`
         },
         body: JSON.stringify({ creatorIds })
       });

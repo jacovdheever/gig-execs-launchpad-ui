@@ -99,5 +99,5 @@ const handler = async (event, context) => {
   }
 };
 
-// Export the handler wrapped with rate limiting only (temporarily disable auth for testing)
-exports.handler = withRateLimit('data', handler);
+// Export the handler wrapped with authentication and rate limiting
+exports.handler = withRateLimit('data', withAuth(handler));

@@ -2335,6 +2335,41 @@ This security audit established critical patterns for maintaining enterprise-gra
 
 ---
 
+## 🚨 **CRITICAL DEVELOPMENT LESSONS - DECEMBER 2025**
+
+### **❌ What NOT to Do - Development Process**
+
+**NEVER disable important functionality without explicit permission:**
+- ❌ Don't disable authentication to "test other features"
+- ❌ Don't remove security measures without asking
+- ❌ Don't make assumptions about what the user wants
+- ❌ Don't jump ahead to solutions before fully understanding the problem
+
+**ALWAYS:**
+- ✅ **Ask permission** before disabling any important functionality
+- ✅ **Focus on the specific issue** the user is reporting
+- ✅ **Troubleshoot step by step** without making assumptions
+- ✅ **Explain what you're doing** and why before doing it
+- ✅ **Get confirmation** before making significant changes
+
+### **🔍 Proper Troubleshooting Process**
+
+1. **Understand the specific problem** the user is reporting
+2. **Investigate the root cause** systematically
+3. **Propose a solution** and ask for permission
+4. **Implement only what's needed** to fix the specific issue
+5. **Test the fix** before moving on
+
+### **📝 Example of Wrong Approach:**
+User: "Match badge not loading"
+Assistant: *Disables authentication without asking*
+
+### **📝 Example of Right Approach:**
+User: "Match badge not loading"
+Assistant: "Let me investigate why the match badge isn't loading. I can see 401 errors in the console. Should I first check if the authentication is working properly, or would you prefer a different approach?"
+
+---
+
 ## 🎯 **CHECKPOINT: DECEMBER 2025 - CRITICAL SECURITY FIXES COMPLETED**
 
 **Status**: ✅ **ALL CRITICAL FIXES COMPLETED**
