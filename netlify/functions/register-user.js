@@ -38,6 +38,15 @@ const handler = async (event, context) => {
       return createErrorResponse(400, 'Invalid JSON in request body', [parseError.message])
     }
     console.log('Parsed user data:', userData)
+    console.log('User data keys:', Object.keys(userData))
+    console.log('User data types:', {
+      id: typeof userData.id,
+      email: typeof userData.email,
+      firstName: typeof userData.firstName,
+      lastName: typeof userData.lastName,
+      userType: typeof userData.userType,
+      companyName: typeof userData.companyName
+    })
     
     // Validate input data with comprehensive validation
     const validation = validateRegisterUserInput(userData)
@@ -45,6 +54,7 @@ const handler = async (event, context) => {
       console.log('Validation failed:', validation.errors)
       return createErrorResponse(400, 'Invalid input data', validation.errors)
     }
+    console.log('Validation passed successfully')
 
     // Sanitize string inputs to prevent injection attacks
     userData.firstName = sanitizeString(userData.firstName)
@@ -68,11 +78,27 @@ const handler = async (event, context) => {
 
     // Create Supabase client with service role key (server-side only)
     console.log('Creating Supabase client...')
+    console.log('Supabase URL:', process.env.VITE_SUPABASE_URL)
+    console.log('Service role key length:', process.env.SUPABASE_SERVICE_ROLE_KEY ? process.env.SUPABASE_SERVICE_ROLE_KEY.length : 'MISSING')
+    
     const supabase = createClient(
       process.env.VITE_SUPABASE_URL,
       process.env.SUPABASE_SERVICE_ROLE_KEY
     )
     console.log('Supabase client created successfully')
+    
+    // Test the connection
+    console.log('Testing Supabase connection...')
+    const { data: testData, error: testError } = await supabase
+      .from('users')
+      .select('count')
+      .limit(1)
+    
+    if (testError) {
+      console.error('Supabase connection test failed:', testError)
+      return createErrorResponse(500, 'Database connection failed', [testError.message])
+    }
+    console.log('Supabase connection test successful')
 
     // Step 1: Create user record
     console.log('Attempting to create user record...')
