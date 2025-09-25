@@ -82,20 +82,95 @@
     Server = ""
     X-Powered-By = ""
 
-# Cache static assets
+# Optimized Caching Strategy
+
+# JavaScript and CSS assets (hashed filenames - can cache forever)
 [[headers]]
-  for = "/assets/*"
+  for = "/assets/*.js"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    Vary = "Accept-Encoding"
 
-# Cache fonts
+[[headers]]
+  for = "/assets/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Vary = "Accept-Encoding"
+
+# Images - long cache with revalidation
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000, must-revalidate"
+    Vary = "Accept-Encoding"
+
+# SVG files - long cache
+[[headers]]
+  for = "/*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000, must-revalidate"
+    Vary = "Accept-Encoding"
+
+# Video files - long cache
+[[headers]]
+  for = "/videos/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000, must-revalidate"
+    Vary = "Accept-Encoding"
+
+# Fonts - very long cache
 [[headers]]
   for = "/*.woff2"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    Vary = "Accept-Encoding"
 
-# Security headers for HTML files
+[[headers]]
+  for = "/*.woff"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Vary = "Accept-Encoding"
+
+[[headers]]
+  for = "/*.ttf"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Vary = "Accept-Encoding"
+
+# Icons and favicons - medium cache
+[[headers]]
+  for = "/*.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+    Vary = "Accept-Encoding"
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+    Vary = "Accept-Encoding"
+
+# HTML files - short cache with revalidation
 [[headers]]
   for = "/*.html"
   [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate" 
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Vary = "Accept-Encoding"
+
+# JSON files - short cache
+[[headers]]
+  for = "/*.json"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
+    Vary = "Accept-Encoding"
+
+# Robots.txt and sitemap - medium cache
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate" 
