@@ -89,9 +89,20 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     }
 
     try {
-      // Sanitize the post body before saving
+      // Decode HTML entities first, then sanitize before saving
       console.log('🔍 NewPostComposer - Original body:', formData.body);
-      const sanitizedBody = DOMPurify.sanitize(formData.body);
+      
+      const decodedBody = formData.body
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&')
+        .replace(/&quot;/g, '"')
+        .replace(/&#x27;/g, "'")
+        .replace(/&#x2F;/g, '/');
+      
+      console.log('🔍 NewPostComposer - Decoded body:', decodedBody);
+      
+      const sanitizedBody = DOMPurify.sanitize(decodedBody);
       console.log('🔍 NewPostComposer - Sanitized body:', sanitizedBody);
       
       const sanitizedFormData = {

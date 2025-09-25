@@ -14,8 +14,18 @@ export default function PostBodyRenderer({ body, className = '' }: PostBodyRende
   console.log('🔍 PostBodyRenderer - Is HTML:', isHTML);
   
   if (isHTML) {
-    // Render HTML content safely with DOMPurify sanitization
-    const sanitizedBody = DOMPurify.sanitize(body);
+    // Decode HTML entities first, then sanitize
+    const decodedBody = body
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&#x27;/g, "'")
+      .replace(/&#x2F;/g, '/');
+    
+    console.log('🔍 PostBodyRenderer - Decoded body:', decodedBody);
+    
+    const sanitizedBody = DOMPurify.sanitize(decodedBody);
     console.log('🔍 PostBodyRenderer - Sanitized body:', sanitizedBody);
     
     return (

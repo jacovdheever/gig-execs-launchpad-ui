@@ -145,9 +145,18 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
     });
 
     try {
+      // Decode HTML entities first, then sanitize
+      const decodedBody = replyContent.trim()
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&')
+        .replace(/&quot;/g, '"')
+        .replace(/&#x27;/g, "'")
+        .replace(/&#x2F;/g, '/');
+      
       const result = await createComment.mutateAsync({
         post_id: post.id,
-        body: DOMPurify.sanitize(replyContent.trim()),
+        body: DOMPurify.sanitize(decodedBody),
         parent_id: replyingTo
       });
       console.log('✅ Reply created successfully:', result);
@@ -170,9 +179,18 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
 
     setIsSubmitting(true);
     try {
+      // Decode HTML entities first, then sanitize
+      const decodedBody = newComment.trim()
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&')
+        .replace(/&quot;/g, '"')
+        .replace(/&#x27;/g, "'")
+        .replace(/&#x2F;/g, '/');
+      
       const result = await createComment.mutateAsync({
         post_id: post.id,
-        body: DOMPurify.sanitize(newComment.trim())
+        body: DOMPurify.sanitize(decodedBody)
       });
       console.log('✅ Comment created successfully:', result);
       setNewComment('');
