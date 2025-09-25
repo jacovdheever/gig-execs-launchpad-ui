@@ -10,12 +10,18 @@ export default function PostBodyRenderer({ body, className = '' }: PostBodyRende
   // Check if body contains HTML (from TinyMCE) or markdown
   const isHTML = body.includes('<') && body.includes('>');
   
+  console.log('🔍 PostBodyRenderer - Original body:', body);
+  console.log('🔍 PostBodyRenderer - Is HTML:', isHTML);
+  
   if (isHTML) {
     // Render HTML content safely with DOMPurify sanitization
+    const sanitizedBody = DOMPurify.sanitize(body);
+    console.log('🔍 PostBodyRenderer - Sanitized body:', sanitizedBody);
+    
     return (
       <div 
         className={`prose prose-slate max-w-none ${className}`}
-        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }}
+        dangerouslySetInnerHTML={{ __html: sanitizedBody }}
       />
     );
   } else {

@@ -90,9 +90,13 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
 
     try {
       // Sanitize the post body before saving
+      console.log('🔍 NewPostComposer - Original body:', formData.body);
+      const sanitizedBody = DOMPurify.sanitize(formData.body);
+      console.log('🔍 NewPostComposer - Sanitized body:', sanitizedBody);
+      
       const sanitizedFormData = {
         ...formData,
-        body: DOMPurify.sanitize(formData.body)
+        body: sanitizedBody
       };
       
       await createPost.mutateAsync(sanitizedFormData);
