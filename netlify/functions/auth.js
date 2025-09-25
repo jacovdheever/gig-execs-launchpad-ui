@@ -36,8 +36,8 @@ function verifyJWTToken(authHeader) {
     }
 
     // Verify JWT token using Supabase JWT secret
-    // For Supabase, we need to use the JWT secret, not the anon key
-    const jwtSecret = process.env.SUPABASE_JWT_SECRET || process.env.VITE_SUPABASE_ANON_KEY;
+    // For Supabase, we need to use the JWT secret from project settings
+    const jwtSecret = process.env.SUPABASE_JWT_SECRET;
     
     if (!jwtSecret) {
       return {
