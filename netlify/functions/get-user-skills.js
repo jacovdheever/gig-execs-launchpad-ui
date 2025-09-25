@@ -1,4 +1,8 @@
 const { createClient } = require('@supabase/supabase-js');
+const { 
+  validateGetUserSkillsInput, 
+  createErrorResponse 
+} = require('./validation');
 
 exports.handler = async (event, context) => {
   try {
@@ -28,7 +32,26 @@ exports.handler = async (event, context) => {
       };
     }
 
-    const { userId } = JSON.parse(event.body);
+    // Validate HTTP method
+    if (event.httpMethod !== 'POST') {
+      return createErrorResponse(405, 'Method not allowed. Only POST requests are accepted.');
+    }
+
+    // Parse and validate request body
+    let requestBody;
+    try {
+      requestBody = JSON.parse(event.body);
+    } catch (parseError) {
+      return createErrorResponse(400, 'Invalid JSON in request body', [parseError.message]);
+    }
+
+    // Validate input data
+    const validation = validateGetUserSkillsInput(requestBody);
+    if (!validation.isValid) {
+      return createErrorResponse(400, 'Invalid input data', validation.errors);
+    }
+
+    const { userId } = requestBody;
     
     const supabase = createClient(
       process.env.VITE_SUPABASE_URL,
@@ -68,13 +91,6 @@ exports.handler = async (event, context) => {
     };
   } catch (error) {
     console.error('Function error:', error);
-    return {
-      statusCode: 500,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'https://gigexecs.com',
-      },
-      body: JSON.stringify({ error: error.message })
-    };
+    return createErrorResponse(500, 'Internal server error', [error.message]);
   }
 };

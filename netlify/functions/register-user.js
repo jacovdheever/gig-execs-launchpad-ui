@@ -1,4 +1,9 @@
 const { createClient } = require('@supabase/supabase-js')
+const { 
+  validateRegisterUserInput, 
+  sanitizeString,
+  createErrorResponse 
+} = require('./validation')
 
 exports.handler = async (event, context) => {
   console.log('=== Registration Function Started ===')
@@ -8,40 +13,33 @@ exports.handler = async (event, context) => {
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
     console.log('Method not allowed:', event.httpMethod)
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ error: 'Method not allowed' })
-    }
+    return createErrorResponse(405, 'Method not allowed. Only POST requests are accepted.')
   }
 
   try {
     // Parse the request body
     console.log('Raw request body:', event.body)
-    const userData = JSON.parse(event.body)
+    let userData;
+    try {
+      userData = JSON.parse(event.body)
+    } catch (parseError) {
+      console.log('JSON parse error:', parseError.message)
+      return createErrorResponse(400, 'Invalid JSON in request body', [parseError.message])
+    }
     console.log('Parsed user data:', userData)
     
-    // Validate required fields
-    if (!userData.id || !userData.email || !userData.firstName || !userData.lastName || !userData.userType) {
-      console.log('Missing required fields:', {
-        id: !!userData.id,
-        email: !!userData.email,
-        firstName: !!userData.firstName,
-        lastName: !!userData.lastName,
-        userType: !!userData.userType
-      })
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ 
-          error: 'Missing required fields',
-          details: {
-            id: !!userData.id,
-            email: !!userData.email,
-            firstName: !!userData.firstName,
-            lastName: !!userData.lastName,
-            userType: !!userData.userType
-          }
-        })
-      }
+    // Validate input data with comprehensive validation
+    const validation = validateRegisterUserInput(userData)
+    if (!validation.isValid) {
+      console.log('Validation failed:', validation.errors)
+      return createErrorResponse(400, 'Invalid input data', validation.errors)
+    }
+
+    // Sanitize string inputs to prevent injection attacks
+    userData.firstName = sanitizeString(userData.firstName)
+    userData.lastName = sanitizeString(userData.lastName)
+    if (userData.companyName) {
+      userData.companyName = sanitizeString(userData.companyName)
     }
 
     // Check environment variables
@@ -52,13 +50,7 @@ exports.handler = async (event, context) => {
 
     if (!process.env.VITE_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
       console.error('Missing environment variables')
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ 
-          error: 'Server configuration error',
-          details: 'Missing required environment variables'
-        })
-      }
+      return createErrorResponse(500, 'Server configuration error', ['Missing required environment variables'])
     }
 
     // Create Supabase client with service role key (server-side only)
@@ -89,17 +81,12 @@ exports.handler = async (event, context) => {
 
     if (userError) {
       console.error('User creation error:', userError)
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ 
-          error: `User creation failed: ${userError.message}`,
-          details: {
-            code: userError.code,
-            details: userError.details,
-            hint: userError.hint
-          }
-        })
-      }
+      return createErrorResponse(500, 'User creation failed', [
+        userError.message,
+        `Code: ${userError.code}`,
+        `Details: ${userError.details}`,
+        `Hint: ${userError.hint}`
+      ])
     }
 
     console.log('User created successfully:', userDataResult)
@@ -146,17 +133,12 @@ exports.handler = async (event, context) => {
 
     if (profileError) {
       console.error('Profile creation error:', profileError)
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ 
-          error: `Profile creation failed: ${profileError.message}`,
-          details: {
-            code: profileError.code,
-            details: profileError.details,
-            hint: profileError.hint
-          }
-        })
-      }
+      return createErrorResponse(500, 'Profile creation failed', [
+        profileError.message,
+        `Code: ${profileError.code}`,
+        `Details: ${profileError.details}`,
+        `Hint: ${profileError.hint}`
+      ])
     }
 
     console.log('Profile created successfully:', profileDataResult)
@@ -179,16 +161,10 @@ exports.handler = async (event, context) => {
     console.error('Error stack:', error.stack)
     console.error('Full error object:', error)
     
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ 
-        error: 'Internal server error',
-        details: {
-          message: error.message,
-          type: error.constructor.name,
-          stack: error.stack
-        }
-      })
-    }
+    return createErrorResponse(500, 'Internal server error', [
+      error.message,
+      `Type: ${error.constructor.name}`,
+      `Stack: ${error.stack}`
+    ])
   }
 }
