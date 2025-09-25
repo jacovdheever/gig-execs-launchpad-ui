@@ -5,7 +5,7 @@
  * for all Netlify Functions to ensure secure access.
  */
 
-const jwt = require('jsonwebtoken');
+const { createClient } = require('@supabase/supabase-js');
 
 /**
  * Verifies JWT token from Authorization header
@@ -35,8 +35,8 @@ function verifyJWTToken(authHeader) {
     }
 
     // Verify JWT token using Supabase JWT secret
-    // The JWT secret is the same as the anon key for Supabase
-    const jwtSecret = process.env.VITE_SUPABASE_ANON_KEY;
+    // For Supabase, we need to use the JWT secret, not the anon key
+    const jwtSecret = process.env.SUPABASE_JWT_SECRET || process.env.VITE_SUPABASE_ANON_KEY;
     
     if (!jwtSecret) {
       return {
