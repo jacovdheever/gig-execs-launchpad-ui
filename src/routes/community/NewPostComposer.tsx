@@ -90,8 +90,6 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
 
     try {
       // Decode HTML entities first, then sanitize before saving
-      console.log('🔍 NewPostComposer - Original body:', formData.body);
-      
       const decodedBody = formData.body
         .replace(/&lt;/g, '<')
         .replace(/&gt;/g, '>')
@@ -100,10 +98,7 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
         .replace(/&#x27;/g, "'")
         .replace(/&#x2F;/g, '/');
       
-      console.log('🔍 NewPostComposer - Decoded body:', decodedBody);
-      
       const sanitizedBody = DOMPurify.sanitize(decodedBody);
-      console.log('🔍 NewPostComposer - Sanitized body:', sanitizedBody);
       
       const sanitizedFormData = {
         ...formData,
