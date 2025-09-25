@@ -5,13 +5,10 @@
 [build.environment]
   NODE_VERSION = "18"
   SECRETS_SCAN_ENABLED = "false"
+  VITE_RECAPTCHA_SITE_KEY = ""
 
 # Build plugins for optimization
-[[plugins]]
-  package = "@netlify/plugin-gzip"
-
-[[plugins]]
-  package = "@netlify/plugin-brotli"
+# Note: Compression is handled by Netlify automatically
 
 # Redirects for SPA routing (if using React Router)
 [[redirects]]
