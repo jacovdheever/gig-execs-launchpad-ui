@@ -31,6 +31,7 @@ import { uploadCommunityAttachment } from '@/lib/storage';
 import AttachmentsCarousel from '@/components/community/AttachmentsCarousel';
 import RichTextEditor from '@/components/community/RichTextEditor';
 import type { CreatePostData, ForumAttachment } from '@/lib/community.types';
+import DOMPurify from 'dompurify';
 
 interface NewPostComposerProps {
   isOpen: boolean;
@@ -88,7 +89,13 @@ export default function NewPostComposer({ isOpen, onClose, onPostCreated }: NewP
     }
 
     try {
-      await createPost.mutateAsync(formData);
+      // Sanitize the post body before saving
+      const sanitizedFormData = {
+        ...formData,
+        body: DOMPurify.sanitize(formData.body)
+      };
+      
+      await createPost.mutateAsync(sanitizedFormData);
       
       // Reset form
       setFormData({

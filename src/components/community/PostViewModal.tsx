@@ -147,7 +147,7 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
     try {
       const result = await createComment.mutateAsync({
         post_id: post.id,
-        body: replyContent.trim(),
+        body: DOMPurify.sanitize(replyContent.trim()),
         parent_id: replyingTo
       });
       console.log('✅ Reply created successfully:', result);
@@ -172,7 +172,7 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
     try {
       const result = await createComment.mutateAsync({
         post_id: post.id,
-        body: newComment.trim()
+        body: DOMPurify.sanitize(newComment.trim())
       });
       console.log('✅ Comment created successfully:', result);
       setNewComment('');
@@ -658,7 +658,10 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                               </div>
                             </div>
                           ) : (
-                            <div className="text-sm text-slate-700">{comment.body}</div>
+                            <div 
+                              className="text-sm text-slate-700"
+                              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(comment.body) }}
+                            />
                           )}
                           
                           <div className="text-xs text-slate-500 mt-2">
