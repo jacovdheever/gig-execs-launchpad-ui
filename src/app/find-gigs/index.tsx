@@ -95,10 +95,14 @@ export default function FindGigsPage() {
       if (userData.role === 'consultant') {
         console.log('🔍 Loading user skills via Netlify function for user:', userData.id);
         
+        // Get the current session to get the JWT token
+        const { data: { session } } = await supabase.auth.getSession();
+        
         const userSkillsResponse = await fetch('/.netlify/functions/get-user-skills', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session?.access_token}`
           },
           body: JSON.stringify({ userId: userData.id })
         });
@@ -156,10 +160,14 @@ export default function FindGigsPage() {
       // Load client data using Netlify function to bypass RLS
       console.log('🔍 Loading client data via Netlify function for creator IDs:', creatorIds);
       
+      // Get the current session to get the JWT token
+      const { data: { session } } = await supabase.auth.getSession();
+      
       const clientDataResponse = await fetch('/.netlify/functions/get-client-data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token}`
         },
         body: JSON.stringify({ creatorIds })
       });
