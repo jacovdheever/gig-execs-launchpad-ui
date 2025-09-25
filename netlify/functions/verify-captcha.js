@@ -9,11 +9,21 @@ exports.handler = async (event, context) => {
   try {
     const { captchaToken } = JSON.parse(event.body);
 
+    console.log('🔍 CAPTCHA Verification Request:', {
+      hasToken: !!captchaToken,
+      tokenLength: captchaToken ? captchaToken.length : 0
+    });
+
     if (!captchaToken) {
       return createErrorResponse(400, 'CAPTCHA token is required.');
     }
 
     const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+    console.log('🔍 Secret Key Check:', {
+      hasSecretKey: !!secretKey,
+      secretKeyLength: secretKey ? secretKey.length : 0
+    });
+
     if (!secretKey) {
       console.error('RECAPTCHA_SECRET_KEY not configured');
       return createErrorResponse(500, 'CAPTCHA verification not configured.');
