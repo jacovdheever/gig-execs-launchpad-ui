@@ -70,8 +70,8 @@ export default function RegisterPage() {
     if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match'
     if (formData.userType === 'client' && !formData.companyName.trim()) newErrors.companyName = 'Company name is required'
     if (!formData.acceptTerms) newErrors.acceptTerms = 'You must accept the terms and conditions'
-    // Temporarily disable CAPTCHA validation for testing
-    // if (!captchaToken) newErrors.captcha = 'Please complete the CAPTCHA verification'
+    // Re-enable CAPTCHA validation now that keys are fixed
+    if (!captchaToken) newErrors.captcha = 'Please complete the CAPTCHA verification'
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -91,9 +91,29 @@ export default function RegisterPage() {
       console.log('🔍 CAPTCHA token type:', typeof captchaToken);
       console.log('🔍 CAPTCHA token length:', captchaToken ? captchaToken.length : 'null');
 
-      // Temporarily skip CAPTCHA validation for testing
-      console.log('🔍 Skipping CAPTCHA validation for testing - proceeding with registration');
-      // TODO: Re-enable CAPTCHA validation once we fix the verify-captcha function
+      // Verify CAPTCHA with the fixed keys
+      if (captchaToken) {
+        console.log('🔍 Verifying CAPTCHA token:', captchaToken.substring(0, 20) + '...');
+        
+        const captchaResponse = await fetch('/.netlify/functions/verify-captcha', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ captchaToken }),
+        });
+
+        const captchaResult = await captchaResponse.json();
+        
+        if (!captchaResult.success) {
+          console.error('🔍 CAPTCHA verification failed:', captchaResult);
+          setErrors({ captcha: 'CAPTCHA verification failed. Please try again.' });
+          setIsLoading(false);
+          return;
+        }
+        
+        console.log('🔍 CAPTCHA verification successful:', captchaResult);
+      }
 
       // Step 1: Create user with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({

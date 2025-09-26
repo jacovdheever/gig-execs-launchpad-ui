@@ -66,9 +66,29 @@ export default function LoginPage() {
     setErrors({})
 
     try {
-      // Temporarily skip CAPTCHA validation for testing
-      console.log('🔍 Skipping CAPTCHA validation for testing - proceeding with login');
-      // TODO: Re-enable CAPTCHA validation once we fix the verify-captcha function
+      // Verify CAPTCHA with the fixed keys
+      if (captchaToken) {
+        console.log('🔍 Verifying CAPTCHA token:', captchaToken.substring(0, 20) + '...');
+        
+        const captchaResponse = await fetch('/.netlify/functions/verify-captcha', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ captchaToken }),
+        });
+
+        const captchaResult = await captchaResponse.json();
+        
+        if (!captchaResult.success) {
+          console.error('🔍 CAPTCHA verification failed:', captchaResult);
+          setErrors({ captcha: 'CAPTCHA verification failed. Please try again.' });
+          setIsLoading(false);
+          return;
+        }
+        
+        console.log('🔍 CAPTCHA verification successful:', captchaResult);
+      }
 
       const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email,
