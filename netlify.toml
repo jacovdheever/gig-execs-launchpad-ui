@@ -5,7 +5,6 @@
 [build.environment]
   NODE_VERSION = "18"
   SECRETS_SCAN_ENABLED = "false"
-  VITE_RECAPTCHA_SITE_KEY = ""
 
 # Build plugins for optimization
 # Note: Compression is handled by Netlify automatically
