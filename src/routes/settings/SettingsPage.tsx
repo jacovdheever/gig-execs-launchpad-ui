@@ -53,7 +53,10 @@ export function SettingsPage() {
     setIsEmailLoading(true);
     try {
       const { error } = await supabase.auth.updateUser({
-        email: email.trim()
+        email: email.trim(),
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`
+        }
       });
 
       if (error) throw error;
