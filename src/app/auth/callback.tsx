@@ -44,6 +44,28 @@ export default function AuthCallback() {
           setTimeout(() => {
             navigate('/auth/login', { replace: true })
           }, 3000)
+        } else if (type === 'recovery' && accessToken && refreshToken) {
+          // Handle password reset recovery
+          const { error } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          })
+
+          if (error) {
+            console.error('Recovery session error:', error)
+            setStatus('error')
+            setMessage('Invalid or expired password reset link. Please request a new one.')
+            return
+          }
+
+          // Password reset successful - redirect to reset password page
+          setStatus('success')
+          setMessage('Password reset link verified! Redirecting to password reset page...')
+          
+          // Redirect to reset password page
+          setTimeout(() => {
+            navigate('/auth/reset-password', { replace: true })
+          }, 2000)
         } else {
           setStatus('error')
           setMessage('Invalid verification link. Please check your email and try again.')

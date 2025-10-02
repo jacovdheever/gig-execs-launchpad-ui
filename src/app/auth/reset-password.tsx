@@ -30,15 +30,11 @@ export default function ResetPasswordPage() {
         const { data: { session } } = await supabase.auth.getSession()
         
         if (session) {
+          console.log('✅ Valid session found:', session.user.email)
           setIsValidSession(true)
         } else {
-          // Try to get session from URL hash
-          const { data, error } = await supabase.auth.getSession()
-          if (data.session) {
-            setIsValidSession(true)
-          } else {
-            setErrors({ general: 'Invalid or expired reset link. Please request a new password reset.' })
-          }
+          console.log('❌ No valid session found')
+          setErrors({ general: 'Invalid or expired reset link. Please request a new password reset.' })
         }
       } catch (error) {
         console.error('Session check error:', error)
