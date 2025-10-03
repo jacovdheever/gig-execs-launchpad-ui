@@ -525,7 +525,7 @@ export async function uploadProfileDocument(file: File, userId: string, document
 
 /**
  * Generate a signed URL for viewing a private document
- * @param filePath - The file path stored in the database (e.g., "id-documents/user-id/file.pdf")
+ * @param filePath - The file path stored in the database (e.g., "id-documents/user-id/file.pdf" or just "filename.pdf")
  * @param expiresIn - Expiration time in seconds (default: 1 hour)
  * @returns Promise<string | null> - Signed URL or null if error
  */
@@ -552,12 +552,17 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
         console.error('🔍 getSignedDocumentUrl: Could not parse bucket from URL');
         return null;
       }
-    } else {
-      // New format: bucket-name/user-id/filename
+    } else if (filePath.includes('/') && !filePath.includes(' ')) {
+      // New format: bucket-name/user-id/filename (no spaces, has slashes)
       console.log('🔍 getSignedDocumentUrl: Detected file path format');
       const [bucket, ...pathParts] = filePath.split('/');
       bucketName = bucket;
       fileName = pathParts.join('/');
+    } else {
+      // Legacy format: just filename (assume it's in id-documents bucket)
+      console.log('🔍 getSignedDocumentUrl: Detected legacy filename format, assuming id-documents bucket');
+      bucketName = 'id-documents';
+      fileName = filePath;
     }
     
     console.log('🔍 getSignedDocumentUrl: Parsed bucket:', bucketName, 'file:', fileName);
