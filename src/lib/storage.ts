@@ -577,18 +577,48 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
       return publicUrl;
     }
     
-    // Generate signed URL for private buckets
-    const { data, error } = await supabase.storage
-      .from(bucketName)
-      .createSignedUrl(fileName, expiresIn);
+    // For private buckets, use Netlify function to generate signed URL
+    console.log('🔍 getSignedDocumentUrl: Using Netlify function for private bucket');
     
-    if (error) {
-      console.error('🔍 getSignedDocumentUrl: Error generating signed URL:', error);
-      return null;
+    try {
+      const response = await fetch('/.netlify/functions/generate-signed-url', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          filePath: fileName,
+          expiresIn: expiresIn
+        })
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('🔍 getSignedDocumentUrl: Netlify function error:', errorData);
+        return null;
+      }
+      
+      const { signedUrl } = await response.json();
+      console.log('🔍 getSignedDocumentUrl: Generated signed URL via Netlify function:', signedUrl);
+      return signedUrl;
+      
+    } catch (netlifyError) {
+      console.error('🔍 getSignedDocumentUrl: Netlify function failed:', netlifyError);
+      
+      // Fallback to direct Supabase call (will likely fail due to RLS)
+      console.log('🔍 getSignedDocumentUrl: Falling back to direct Supabase call');
+      const { data, error } = await supabase.storage
+        .from(bucketName)
+        .createSignedUrl(fileName, expiresIn);
+      
+      if (error) {
+        console.error('🔍 getSignedDocumentUrl: Fallback also failed:', error);
+        return null;
+      }
+      
+      console.log('🔍 getSignedDocumentUrl: Fallback succeeded:', data.signedUrl);
+      return data.signedUrl;
     }
-    
-    console.log('🔍 getSignedDocumentUrl: Generated signed URL:', data.signedUrl);
-    return data.signedUrl;
     
   } catch (error) {
     console.error('🔍 getSignedDocumentUrl: Unexpected error:', error);
