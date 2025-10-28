@@ -66,7 +66,14 @@ export default function LoginPage() {
 
     try {
       // Verify CAPTCHA (required for security)
-      console.log('🔍 Verifying CAPTCHA token:', captchaToken?.substring(0, 20) + '...');
+      if (!captchaToken) {
+        console.error('❌ No CAPTCHA token provided');
+        setErrors({ captcha: 'CAPTCHA verification is required. Please complete the CAPTCHA.' });
+        setIsLoading(false);
+        return;
+      }
+      
+      console.log('🔍 Verifying CAPTCHA token:', captchaToken.substring(0, 20) + '...');
       
       const captchaResponse = await fetch('/.netlify/functions/verify-captcha', {
         method: 'POST',
@@ -79,14 +86,14 @@ export default function LoginPage() {
       const captchaResult = await captchaResponse.json();
       
       if (!captchaResult.success) {
-        console.error('🔍 CAPTCHA verification failed:', captchaResult);
+        console.error('❌ CAPTCHA verification failed:', captchaResult);
         setErrors({ captcha: 'CAPTCHA verification failed. Please try again.' });
         recaptchaRef.current?.reset();
         setIsLoading(false);
         return;
       }
       
-      console.log('🔍 CAPTCHA verification successful:', captchaResult);
+      console.log('✅ CAPTCHA verification successful:', captchaResult);
 
       const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email,
