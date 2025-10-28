@@ -4,7 +4,7 @@ import { Info, CheckCircle, Clock, XCircle, AlertCircle } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface VettingStatusProps {
-  vettingStatus?: 'pending' | 'in_progress' | 'verified' | 'rejected';
+  vettingStatus?: 'pending' | 'in_progress' | 'verified' | 'vetted' | 'rejected';
   profileTier: 'BASIC' | 'FULL' | 'ALL_STAR';
 }
 
@@ -48,7 +48,7 @@ export function VettingStatus({ vettingStatus, profileTier }: VettingStatusProps
     }
 
     // If verification is complete and approved
-    if (vettingStatus === 'verified') {
+    if (vettingStatus === 'verified' || vettingStatus === 'vetted') {
       return {
         status: 'verified',
         label: 'Profile Verified',

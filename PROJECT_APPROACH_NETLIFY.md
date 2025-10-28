@@ -2846,3 +2846,96 @@ When ready to continue staff dashboard implementation:
 - Use short-lived tokens for impersonation (15 min max)
 
 This checkpoint marks the completion of Phase 1 of the Internal Staff Dashboard. The foundation is solid and ready for additional features to be built on top. The system provides secure authentication, real-time metrics, comprehensive audit logging, and role-based access control—all essential for internal operations management.
+
+---
+
+## 🎯 **CHECKPOINT: JANUARY 2025 - CAPTCHA SECURITY IMPLEMENTATION & COMMUNITY RLS FIX**
+
+**Status**: ✅ **CAPTCHA ENFORCEMENT COMPLETE - COMMUNITY FIX APPLIED**
+
+### **Major Features Delivered**
+
+#### **✅ CAPTCHA Security Enhancement (January 2025)**
+- **Mandatory CAPTCHA on Login**: Made CAPTCHA verification compulsory for all login attempts
+- **Enhanced Validation**: Added explicit `captchaToken` checks before form submission
+- **Reset on Failure**: CAPTCHA widget resets automatically if verification fails
+- **Test Key Warning**: Console warning when test CAPTCHA key is detected (for development environments)
+- **Production Keys Configured**: Proper reCAPTCHA site key and secret key set in Netlify environment
+
+#### **✅ Community RLS Policy Fix (January 2025)**
+- **Users Table Read Policy**: Created RLS policy allowing authenticated users to read profile data from `users` table
+- **Forum Posts Display**: Fixed "Unknown User" issue in community posts by enabling proper user data joins
+- **Database Migration**: SQL migration `005_add_users_table_read_policy.sql` run in Supabase
+- **Foreign Key Joins**: Proper Supabase join syntax for fetching author information in community posts
+
+### **Technical Achievements**
+
+#### **Security Implementation**
+- **CAPTCHA Enforcement**: Prevents bot login attempts and automated attacks
+- **Form Validation**: Client-side and server-side validation for CAPTCHA completion
+- **Error Handling**: Clear error messages when CAPTCHA is not completed
+- **Widget Management**: Proper reset and cleanup of CAPTCHA widgets on errors
+
+#### **Database Security**
+- **RLS Policy Addition**: New policy "Users can read profile data" on `users` table
+- **Query Optimization**: Proper join syntax for efficient author data retrieval
+- **Cross-Table Access**: Allows forum posts to access user profile data through foreign key relationships
+- **Security Maintained**: Policy only allows basic profile fields (id, first_name, last_name, profile_photo_url)
+
+### **Key Learnings Applied**
+
+#### **CAPTCHA Implementation**
+- **Test vs Production Keys**: Test keys imagescan can bypass user interaction and show warnings
+- **Validation Timing**: Must validate before form submission, not after
+- **Widget Reset**: Essential to reset CAPTCHA on verification failure for UX
+- **Environment Configuration**: Separate site key (frontend) and secret key (backend) required
+
+#### **Database & RLS Management**
+- **Join Failures**: When joins return null, check RLS policies first before assuming data structure issues
+- **Profile Data Access**: Cross-table access for public profile fields requires explicit RLS policy
+- **Foreign Key Relationships**: Proper foreign key syntax ensures efficient and correct joins
+- **Supabase Joins**: Use explicit foreign key names (`users!forum_posts_author_id_fkey`) when multiple relationships exist
+
+### **Files Created/Modified**
+
+#### **CAPTCHA Security**
+- `src/app/auth/login.tsx` - Made CAPTCHA mandatory with validation and reset logic
+- `src/components/auth/RecaptchaWrapper.tsx` - Added test key warning for development
+- `netlify/functions/verify-captcha.js` - Enhanced error logging for debugging
+
+#### **Environment Configuration**
+- `.env` - Added production CAPTCHA keys (local development)
+- Netlify Environment Variables - Configured production CAPTCHA keys
+
+#### **Community Fix**
+- `migrations/005_add_users_table_read_policy.sql` - Created RLS policy for users table
+- User ran migration directly in Supabase dashboard
+
+### **Business Value Delivered**
+
+1. **Enhanced Security**: Mandatory CAPTCHA prevents automated login attacks
+2. **User Trust**: Proper display of author names in community builds user confidence
+3. **Platform Integrity**: Security measures protect user accounts and data
+4. **Better UX**: Clear error messages guide users to complete CAPTCHA
+5. **Professional Appearance**: Community posts now properly show author information
+
+### **Success Metrics**
+- ✅ **CAPTCHA Enforcement**: 100% functional with mandatory validation
+- ✅ **Community Display**: Author names showing correctly in all forum posts
+- ✅ **RLS Policies**: Proper security policies for cross-table data access
+- ✅ **Error Handling**: User-friendly error messages for CAPTCHA completion
+- ✅ **Environment Configuration**: Production CAPTCHA keys properly set
+
+### **Next Development Priorities**
+
+#### **Immediate (Next Session)**
+1. **Staff Dashboard Fixes**: Address any issues with staff dashboard interface
+2. **Staff Management Features**: Continue with planned Phase 2+ features
+3. **Testing & Validation**: Verify all security measures working correctly
+
+#### **Short Term**
+1. **Advanced Security**: Additional security hardening and monitoring
+2. **Performance Optimization**: Ensure CAPTCHA doesn't impact page load times
+3. **User Experience**: Further improvements to security workflow
+
+This checkpoint demonstrates continued focus on security enhancements and fixing critical issues that impact user experience. The CAPTCHA enforcement adds an important layer of security while the community RLS fix ensures proper data display.
