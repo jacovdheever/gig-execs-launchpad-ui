@@ -171,23 +171,44 @@ export default function StaffUsersPage() {
     try {
       setSaving(true);
 
-      const { error } = await supabase
-        .from('staff_users')
-        .update({
+      // Get current session for auth
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        alert('You must be logged in to update staff users');
+        return;
+      }
+
+      // Call Netlify function to update staff user
+      const response = await fetch('/.netlify/functions/staff-update-user', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`
+        },
+        body: JSON.stringify({
+          id: editingUser.id,
           first_name: editForm.first_name,
           last_name: editForm.last_name,
           role: editForm.role,
           is_active: editForm.is_active,
-          updated_at: new Date().toISOString()
+          old_values: {
+            first_name: editingUser.first_name,
+            last_name: editingUser.last_name,
+            role: editingUser.role,
+            is_active: editingUser.is_active
+          }
         })
-        .eq('id', editingUser.id);
+      });
 
-      if (error) {
-        console.error('❌ Error updating staff user:', error);
-        alert(`Error: ${error.message}`);
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error('❌ Error updating staff user:', data);
+        alert(`Error: ${data.error || 'Failed to update staff user'}`);
         return;
       }
 
+      console.log('✅ Staff user updated successfully');
       setIsEditDialogOpen(false);
       setEditingUser(null);
       loadStaffUsers();
