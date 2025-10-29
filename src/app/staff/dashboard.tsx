@@ -79,19 +79,70 @@ export default function StaffDashboardPage() {
         
         console.log('📊 Loading dashboard stats...', { dateFilter, dateRange });
         
-        // For now, we're using the summary view which doesn't support date filtering
-        // This will need to be updated when we implement custom queries
-        const { data, error } = await supabase
-          .from('dashboard_summary')
-          .select('*')
-          .single();
+        // Helper to apply date filters to a query
+        const withDate = (q: any, column: string) => {
+          if (!dateFilter) return q;
+          return q.gte(column, `${dateFilter.start}T00:00:00Z`).lte(column, `${dateFilter.end}T23:59:59Z`);
+        };
 
-        if (error) {
-          console.error('❌ Error loading stats:', error);
-        } else {
-          console.log('✅ Stats loaded:', data);
-          setStats(data);
+        // Build queries aligned to schema fields:
+        // users.created_at, users.updated_at, projects.created_at, bids.created_at, payments.created_at
+        const professionalsQ = withDate(
+          supabase.from('users').select('id', { count: 'exact', head: true }).eq('user_type', 'consultant'),
+          'created_at'
+        );
+        const clientsQ = withDate(
+          supabase.from('users').select('id', { count: 'exact', head: true }).eq('user_type', 'client'),
+          'created_at'
+        );
+        const verifiedQ = withDate(
+          supabase
+            .from('users')
+            .select('id', { count: 'exact', head: true })
+            .in('vetting_status', ['verified', 'vetted']),
+          // Use updated_at as the closest proxy to verification moment
+          'updated_at'
+        );
+        const gigsQ = withDate(
+          supabase.from('projects').select('id', { count: 'exact', head: true }),
+          'created_at'
+        );
+        const bidsQ = withDate(
+          supabase.from('bids').select('id', { count: 'exact', head: true }),
+          'created_at'
+        );
+        const paymentsQ = withDate(
+          supabase.from('payments').select('amount, created_at'),
+          'created_at'
+        );
+
+        const [prof, cli, ver, gigs, bids, payments] = await Promise.all([
+          professionalsQ,
+          clientsQ,
+          verifiedQ,
+          gigsQ,
+          bidsQ,
+          paymentsQ,
+        ]);
+
+        // Handle errors if any
+        const errs = [prof.error, cli.error, ver.error, gigs.error, bids.error, payments.error].filter(Boolean);
+        if (errs.length) {
+          console.error('❌ Error loading filtered stats:', errs[0]);
         }
+
+        const total_transaction_value = Array.isArray(payments.data)
+          ? (payments.data as Array<{ amount: number | null }>).reduce((sum, p) => sum + (Number(p.amount) || 0), 0)
+          : 0;
+
+        setStats({
+          total_professionals: prof.count || 0,
+          total_clients: cli.count || 0,
+          verified_users: ver.count || 0,
+          total_gigs: gigs.count || 0,
+          total_bids: bids.count || 0,
+          total_transaction_value,
+        });
       } catch (error) {
         console.error('❌ Unexpected error loading stats:', error);
       } finally {
