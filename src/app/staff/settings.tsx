@@ -158,6 +158,25 @@ export default function StaffSettingsPage() {
     }
   }
 
+  // Password validation function
+  const validatePassword = (password: string) => {
+    // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
+    const minLength = password.length >= 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    
+    return {
+      isValid: minLength && hasUpperCase && hasLowerCase && hasNumber,
+      requirements: {
+        minLength,
+        hasUpperCase,
+        hasLowerCase,
+        hasNumber
+      }
+    };
+  };
+
   async function handlePasswordChange(e: React.FormEvent) {
     e.preventDefault();
     
@@ -170,19 +189,20 @@ export default function StaffSettingsPage() {
       return;
     }
 
-    if (newPassword !== confirmPassword) {
+    const passwordValidation = validatePassword(newPassword);
+    if (!passwordValidation.isValid) {
       toast({
-        title: 'Passwords do not match',
-        description: 'New password and confirmation password must match.',
+        title: 'Password does not meet requirements',
+        description: 'Password must be at least 8 characters with uppercase, lowercase, and number.',
         variant: 'destructive',
       });
       return;
     }
 
-    if (newPassword.length < 6) {
+    if (newPassword !== confirmPassword) {
       toast({
-        title: 'Password too short',
-        description: 'Password must be at least 6 characters long.',
+        title: 'Passwords do not match',
+        description: 'New password and confirmation password must match.',
         variant: 'destructive',
       });
       return;
@@ -389,7 +409,7 @@ export default function StaffSettingsPage() {
                       onChange={(e) => setNewPassword(e.target.value)}
                       placeholder="Enter your new password"
                       required
-                      minLength={6}
+                      minLength={8}
                     />
                     <button
                       type="button"
@@ -399,9 +419,27 @@ export default function StaffSettingsPage() {
                       {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
-                  <p className="text-xs text-slate-500 mt-1">
-                    Password must be at least 6 characters long
-                  </p>
+                  
+                  {/* Password Requirements */}
+                  {newPassword && (
+                    <div className="text-xs text-slate-500 space-y-1 mt-2">
+                      <p>Password must contain:</p>
+                      <ul className="list-disc list-inside space-y-0.5">
+                        <li className={newPassword.length >= 8 ? 'text-green-600' : ''}>
+                          At least 8 characters
+                        </li>
+                        <li className={/[A-Z]/.test(newPassword) ? 'text-green-600' : ''}>
+                          One uppercase letter
+                        </li>
+                        <li className={/[a-z]/.test(newPassword) ? 'text-green-600' : ''}>
+                          One lowercase letter
+                        </li>
+                        <li className={/\d/.test(newPassword) ? 'text-green-600' : ''}>
+                          One number
+                        </li>
+                      </ul>
+                    </div>
+                  )}
                 </div>
 
                 <div>
@@ -416,7 +454,7 @@ export default function StaffSettingsPage() {
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="Confirm your new password"
                       required
-                      minLength={6}
+                      minLength={8}
                     />
                     <button
                       type="button"
