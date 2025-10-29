@@ -62,13 +62,12 @@ exports.handler = async (event) => {
       };
     }
 
-    // Verify requester is super_user using service role
+    // Get requester's staff record using service role
     const admin = createClient(supabaseUrl, supabaseServiceKey);
     const { data: requestingStaff, error: reqErr } = await admin
       .from('staff_users')
       .select('*')
       .eq('user_id', user.id)
-      .eq('role', 'super_user')
       .eq('is_active', true)
       .single();
 
@@ -76,7 +75,45 @@ exports.handler = async (event) => {
       return {
         statusCode: 403,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'Forbidden - Super user access required' })
+        body: JSON.stringify({ error: 'Forbidden - Staff access required' })
+      };
+    }
+
+    // Get target staff user being updated
+    const { data: targetStaff, error: targetErr } = await admin
+      .from('staff_users')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (targetErr || !targetStaff) {
+      return {
+        statusCode: 404,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'Staff user not found' })
+      };
+    }
+
+    // Check permissions:
+    // 1. Staff can update their own first_name and last_name only
+    // 2. Super users can update any staff member's all fields
+    const isSelfUpdate = requestingStaff.id === targetStaff.id;
+    const isSuperUser = requestingStaff.role === 'super_user';
+    const isAdminAction = role !== undefined || is_active !== undefined;
+
+    if (isAdminAction && !isSuperUser) {
+      return {
+        statusCode: 403,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'Forbidden - Only super users can update role or active status' })
+      };
+    }
+
+    if (!isSelfUpdate && !isSuperUser) {
+      return {
+        statusCode: 403,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'Forbidden - You can only update your own profile' })
       };
     }
 
@@ -85,10 +122,25 @@ exports.handler = async (event) => {
       updated_at: new Date().toISOString()
     };
 
-    if (first_name !== undefined) updateData.first_name = first_name;
-    if (last_name !== undefined) updateData.last_name = last_name;
-    if (role !== undefined) updateData.role = role;
-    if (is_active !== undefined) updateData.is_active = is_active;
+    // If self-update (not super_user), only allow first_name and last_name
+    if (isSelfUpdate && !isSuperUser) {
+      if (first_name !== undefined) updateData.first_name = first_name;
+      if (last_name !== undefined) updateData.last_name = last_name;
+      // Explicitly prevent role/is_active updates for self
+      if (role !== undefined || is_active !== undefined) {
+        return {
+          statusCode: 403,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ error: 'Forbidden - You cannot update your own role or active status' })
+        };
+      }
+    } else {
+      // Super user can update all fields
+      if (first_name !== undefined) updateData.first_name = first_name;
+      if (last_name !== undefined) updateData.last_name = last_name;
+      if (role !== undefined) updateData.role = role;
+      if (is_active !== undefined) updateData.is_active = is_active;
+    }
 
     // Update staff user using service role (bypasses RLS)
     const { data: updatedStaff, error: updateError } = await admin
