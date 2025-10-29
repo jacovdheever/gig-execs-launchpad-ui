@@ -103,29 +103,40 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Check if user already exists
-    const { data: existingUser } = await supabaseService.auth.admin.getUserByEmail(email);
-    if (existingUser?.user) {
-      return {
-        statusCode: 409,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'User with this email already exists' })
-      };
-    }
-
-    // Create auth user
+    // Try to create auth user - Supabase will return error if email exists
     const { data: newAuthUser, error: createAuthError } = await supabaseService.auth.admin.createUser({
       email,
       password,
-      email_confirm: true // Auto-confirm email
+      email_confirm: true
     });
 
-    if (createAuthError || !newAuthUser?.user) {
+    if (createAuthError) {
       console.error('Error creating auth user:', createAuthError);
+      
+      // Check if error is due to existing email
+      if (createAuthError.message?.includes('already exists') || 
+          createAuthError.message?.includes('already registered') ||
+          createAuthError.message?.includes('User already registered') ||
+          createAuthError.status === 422) {
+        return {
+          statusCode: 409,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ error: 'User with this email already exists' })
+        };
+      }
+      
       return {
         statusCode: 500,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'Failed to create auth user', details: createAuthError?.message })
+        body: JSON.stringify({ error: 'Failed to create auth user', details: createAuthError.message })
+      };
+    }
+
+    if (!newAuthUser?.user) {
+      return {
+        statusCode: 500,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'Auth user creation failed - no user returned' })
       };
     }
 
