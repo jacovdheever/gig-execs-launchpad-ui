@@ -91,6 +91,7 @@ import { SettingsPage } from "./routes/settings/SettingsPage";
 // Staff Components
 import StaffLoginPage from "./app/staff/login";
 import StaffDashboardPage from "./app/staff/dashboard";
+import StaffUsersPage from "./app/staff/users";
 
 const queryClient = new QueryClient();
 
@@ -196,6 +197,7 @@ const App = () => (
             {/* Staff Routes */}
             <Route path="/staff/login" element={<StaffLoginPage />} />
             <Route path="/staff/dashboard" element={<StaffDashboardPage />} />
+            <Route path="/staff/users" element={<StaffUsersPage />} />
 
             {/* Secure Help Page */}
             <Route path="/help-secure" element={<HelpAndSupportSecure />} />
