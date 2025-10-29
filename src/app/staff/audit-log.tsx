@@ -108,11 +108,11 @@ export default function AuditLogPage() {
       // Build filter object
       const filterParams: Parameters<typeof fetchAuditLogs>[0] = {};
 
-      if (filters.staffId) {
+      if (filters.staffId && filters.staffId !== '') {
         filterParams.staffId = filters.staffId;
       }
 
-      if (filters.actionType) {
+      if (filters.actionType && filters.actionType !== '') {
         filterParams.actionType = filters.actionType;
       }
 
@@ -127,8 +127,12 @@ export default function AuditLogPage() {
         filterParams.endDate = endDate;
       }
 
+      console.log('📋 Loading audit logs with filters:', filterParams);
+      
       // Fetch all logs with filters (no limit for now, we'll paginate client-side)
       const allLogs = await fetchAuditLogs(filterParams);
+      
+      console.log('✅ Loaded audit logs:', allLogs.length);
 
       // Extract unique action types for filter dropdown
       const uniqueActionTypes = Array.from(
@@ -276,14 +280,14 @@ export default function AuditLogPage() {
                 <div className="space-y-2">
                   <Label htmlFor="staff-filter">Staff Member</Label>
                   <Select
-                    value={filters.staffId}
-                    onValueChange={(value) => handleFilterChange('staffId', value)}
+                    value={filters.staffId || 'all'}
+                    onValueChange={(value) => handleFilterChange('staffId', value === 'all' ? '' : value)}
                   >
                     <SelectTrigger id="staff-filter">
                       <SelectValue placeholder="All staff" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All staff</SelectItem>
+                      <SelectItem value="all">All staff</SelectItem>
                       {staffUsers.map((staff) => (
                         <SelectItem key={staff.id} value={staff.id}>
                           {staff.first_name} {staff.last_name}
@@ -296,14 +300,14 @@ export default function AuditLogPage() {
                 <div className="space-y-2">
                   <Label htmlFor="action-filter">Action Type</Label>
                   <Select
-                    value={filters.actionType}
-                    onValueChange={(value) => handleFilterChange('actionType', value)}
+                    value={filters.actionType || 'all'}
+                    onValueChange={(value) => handleFilterChange('actionType', value === 'all' ? '' : value)}
                   >
                     <SelectTrigger id="action-filter">
                       <SelectValue placeholder="All actions" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All actions</SelectItem>
+                      <SelectItem value="all">All actions</SelectItem>
                       {actionTypes.map((action) => (
                         <SelectItem key={action} value={action}>
                           {action.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
