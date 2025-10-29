@@ -18,7 +18,8 @@ import {
   FileText,
   TrendingUp,
   LogOut,
-  Settings
+  Settings,
+  Calendar
 } from 'lucide-react';
 
 interface DashboardStats {
@@ -30,17 +31,56 @@ interface DashboardStats {
   total_transaction_value: number;
 }
 
+type DateRange = 'all' | 'week' | 'month' | 'quarter' | 'year';
+
 export default function StaffDashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [dateRange, setDateRange] = useState<DateRange>('all');
+  const [startDate, setStartDate] = useState<string | null>(null);
+  const [endDate, setEndDate] = useState<string | null>(null);
   const { staff } = useStaffUser();
   const navigate = useNavigate();
+
+  // Function to calculate date range based on selection
+  const getDateRange = () => {
+    if (startDate && endDate) {
+      return { start: startDate, end: endDate };
+    }
+
+    const now = new Date();
+    const ranges: Record<DateRange, { days: number }> = {
+      all: { days: Infinity },
+      week: { days: 7 },
+      month: { days: 30 },
+      quarter: { days: 90 },
+      year: { days: 365 }
+    };
+
+    const range = ranges[dateRange];
+    if (range.days === Infinity) {
+      return null;
+    }
+
+    const start = new Date(now);
+    start.setDate(start.getDate() - range.days);
+    
+    return {
+      start: start.toISOString().split('T')[0],
+      end: now.toISOString().split('T')[0]
+    };
+  };
 
   useEffect(() => {
     async function loadStats() {
       try {
-        console.log('📊 Loading dashboard stats...');
+        setLoading(true);
+        const dateFilter = getDateRange();
         
+        console.log('📊 Loading dashboard stats...', { dateFilter, dateRange });
+        
+        // For now, we're using the summary view which doesn't support date filtering
+        // This will need to be updated when we implement custom queries
         const { data, error } = await supabase
           .from('dashboard_summary')
           .select('*')
@@ -60,7 +100,7 @@ export default function StaffDashboardPage() {
     }
 
     loadStats();
-  }, []);
+  }, [dateRange, startDate, endDate]);
 
   async function handleLogout() {
     await supabase.auth.signOut();
@@ -99,6 +139,43 @@ export default function StaffDashboardPage() {
 
         {/* Main Content */}
         <div className="container mx-auto p-6">
+          {/* Date Range Filter */}
+          <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
+            <div className="flex items-center gap-4">
+              <Calendar className="h-5 w-5 text-gray-600" />
+              <div className="flex items-center gap-2">
+                <label className="text-sm font-medium text-gray-700">Time Period:</label>
+                <select
+                  value={dateRange}
+                  onChange={(e) => setDateRange(e.target.value as DateRange)}
+                  className="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="all">All Time</option>
+                  <option value="week">Last 7 Days</option>
+                  <option value="month">Last 30 Days</option>
+                  <option value="quarter">Last 90 Days</option>
+                  <option value="year">Last 12 Months</option>
+                </select>
+              </div>
+              <div className="flex items-center gap-2">
+                <label className="text-sm font-medium text-gray-700">Custom Range:</label>
+                <input
+                  type="date"
+                  value={startDate || ''}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <span className="text-gray-500">to</span>
+                <input
+                  type="date"
+                  value={endDate || ''}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  className="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </div>
+          </div>
+
           {/* Quick Actions */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <Button 
