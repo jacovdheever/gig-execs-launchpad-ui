@@ -92,6 +92,7 @@ import { SettingsPage } from "./routes/settings/SettingsPage";
 import StaffLoginPage from "./app/staff/login";
 import StaffDashboardPage from "./app/staff/dashboard";
 import StaffUsersPage from "./app/staff/users";
+import AuditLogPage from "./app/staff/audit-log";
 
 const queryClient = new QueryClient();
 
@@ -198,6 +199,7 @@ const App = () => (
             <Route path="/staff/login" element={<StaffLoginPage />} />
             <Route path="/staff/dashboard" element={<StaffDashboardPage />} />
             <Route path="/staff/users" element={<StaffUsersPage />} />
+            <Route path="/staff/audit-log" element={<AuditLogPage />} />
 
             {/* Secure Help Page */}
             <Route path="/help-secure" element={<HelpAndSupportSecure />} />
