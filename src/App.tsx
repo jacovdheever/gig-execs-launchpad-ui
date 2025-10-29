@@ -88,6 +88,13 @@ import { ProfilePage } from "./routes/profile/ProfilePage";
 // Settings Components
 import { SettingsPage } from "./routes/settings/SettingsPage";
 
+// Staff Components
+import StaffLoginPage from "./app/staff/login";
+import StaffDashboardPage from "./app/staff/dashboard";
+import StaffUsersPage from "./app/staff/users";
+import AuditLogPage from "./app/staff/audit-log";
+import StaffSettingsPage from "./app/staff/settings";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -188,6 +195,13 @@ const App = () => (
 
             {/* Settings Routes */}
             <Route path="/settings" element={<SettingsPage />} />
+
+            {/* Staff Routes */}
+            <Route path="/staff/login" element={<StaffLoginPage />} />
+            <Route path="/staff/dashboard" element={<StaffDashboardPage />} />
+            <Route path="/staff/settings" element={<StaffSettingsPage />} />
+            <Route path="/staff/users" element={<StaffUsersPage />} />
+            <Route path="/staff/audit-log" element={<AuditLogPage />} />
 
             {/* Secure Help Page */}
             <Route path="/help-secure" element={<HelpAndSupportSecure />} />

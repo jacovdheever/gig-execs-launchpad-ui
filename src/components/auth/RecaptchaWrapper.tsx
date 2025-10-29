@@ -65,12 +65,17 @@ const RecaptchaWrapper = forwardRef<RecaptchaWrapperRef, RecaptchaWrapperProps>(
     
     // Only log once when component mounts
     useEffect(() => {
+      const isTestKey = siteKey === '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
       console.log('🔍 CAPTCHA Debug:', {
         hasSiteKey: !!import.meta.env.VITE_RECAPTCHA_SITE_KEY,
         siteKey: siteKey,
-        isTestKey: siteKey === '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
+        isTestKey: isTestKey
       });
-    }, []);
+      
+      if (isTestKey) {
+        console.warn('⚠️ SECURITY WARNING: Using Google test CAPTCHA key. This will ALWAYS pass without user interaction. Use a production key for real security!');
+      }
+    }, [siteKey]);
 
     return (
       <div className={`recaptcha-wrapper ${className}`}>

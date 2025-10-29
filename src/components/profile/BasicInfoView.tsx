@@ -39,7 +39,7 @@ export function BasicInfoView({ user, profile }: BasicInfoViewProps) {
             <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
               Professional Account
             </Badge>
-            {user.vetting_status === 'verified' && (
+            {(user.vetting_status === 'verified' || user.vetting_status === 'vetted') && (
               <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
                 Verified
               </Badge>

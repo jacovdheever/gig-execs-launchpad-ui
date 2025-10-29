@@ -165,7 +165,7 @@ export function computeProfileStatus({
   
   // Handle full profiles
   if (tier === 'FULL') {
-    if (vettingStatus === 'verified') {
+    if (vettingStatus === 'verified' || vettingStatus === 'vetted') {
       return 'VERIFIED';
     }
     return 'FULL';
@@ -173,7 +173,7 @@ export function computeProfileStatus({
   
   // Handle all-star profiles
   if (tier === 'ALL_STAR') {
-    if (vettingStatus === 'verified') {
+    if (vettingStatus === 'verified' || vettingStatus === 'vetted') {
       return 'ALL_STAR';
     }
     return 'FULL'; // Still needs verification

@@ -50,8 +50,7 @@ export default function LoginPage() {
 
     if (!formData.email.trim()) newErrors.email = 'Email is required'
     if (!formData.password) newErrors.password = 'Password is required'
-    // Temporarily disable CAPTCHA validation for testing
-    // if (!captchaToken) newErrors.captcha = 'Please complete the CAPTCHA verification'
+    if (!captchaToken) newErrors.captcha = 'Please complete the CAPTCHA verification'
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -66,29 +65,35 @@ export default function LoginPage() {
     setErrors({})
 
     try {
-      // Verify CAPTCHA with the fixed keys
-      if (captchaToken) {
-        console.log('🔍 Verifying CAPTCHA token:', captchaToken.substring(0, 20) + '...');
-        
-        const captchaResponse = await fetch('/.netlify/functions/verify-captcha', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ captchaToken }),
-        });
-
-        const captchaResult = await captchaResponse.json();
-        
-        if (!captchaResult.success) {
-          console.error('🔍 CAPTCHA verification failed:', captchaResult);
-          setErrors({ captcha: 'CAPTCHA verification failed. Please try again.' });
-          setIsLoading(false);
-          return;
-        }
-        
-        console.log('🔍 CAPTCHA verification successful:', captchaResult);
+      // Verify CAPTCHA (required for security)
+      if (!captchaToken) {
+        console.error('❌ No CAPTCHA token provided');
+        setErrors({ captcha: 'CAPTCHA verification is required. Please complete the CAPTCHA.' });
+        setIsLoading(false);
+        return;
       }
+      
+      console.log('🔍 Verifying CAPTCHA token:', captchaToken.substring(0, 20) + '...');
+      
+      const captchaResponse = await fetch('/.netlify/functions/verify-captcha', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ captchaToken }),
+      });
+
+      const captchaResult = await captchaResponse.json();
+      
+      if (!captchaResult.success) {
+        console.error('❌ CAPTCHA verification failed:', captchaResult);
+        setErrors({ captcha: 'CAPTCHA verification failed. Please try again.' });
+        recaptchaRef.current?.reset();
+        setIsLoading(false);
+        return;
+      }
+      
+      console.log('✅ CAPTCHA verification successful:', captchaResult);
 
       const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email,
