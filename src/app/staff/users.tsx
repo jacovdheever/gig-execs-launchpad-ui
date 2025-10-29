@@ -87,33 +87,23 @@ export default function StaffUsersPage() {
   async function loadStaffUsers() {
     try {
       setLoading(true);
-      
-      // Fetch all staff users
-      const { data, error } = await supabase
-        .from('staff_users')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.error('❌ Error loading staff users:', error);
+      // Use Netlify function with service role to list staff users
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        console.error('❌ No session found while loading staff users');
         return;
       }
-
-      // Get email addresses from auth.users for each staff user
-      const staffWithEmails = await Promise.all(
-        (data || []).map(async (staffUser) => {
-          try {
-            // Note: We need to use service role for this, or create a Netlify function
-            // For now, we'll skip email and fetch it via backend if needed
-            return staffUser;
-          } catch (err) {
-            console.error('Error fetching email for staff user:', err);
-            return staffUser;
-          }
-        })
-      );
-
-      setStaffUsers(staffWithEmails);
+      const resp = await fetch('/.netlify/functions/staff-manage-users', {
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`
+        }
+      });
+      const json = await resp.json();
+      if (!resp.ok) {
+        console.error('❌ Error loading staff users:', json);
+        return;
+      }
+      setStaffUsers(json.staff || []);
     } catch (error) {
       console.error('❌ Unexpected error loading staff users:', error);
     } finally {
