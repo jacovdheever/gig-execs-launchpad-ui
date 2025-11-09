@@ -2939,3 +2939,23 @@ This checkpoint marks the completion of Phase 1 of the Internal Staff Dashboard.
 3. **User Experience**: Further improvements to security workflow
 
 This checkpoint demonstrates continued focus on security enhancements and fixing critical issues that impact user experience. The CAPTCHA enforcement adds an important layer of security while the community RLS fix ensures proper data display.
+
+### External Gigs Support (Q4 2025)
+
+- **Schema Extensions**
+  - Added `project_origin`, `external_url`, `expires_at`, and `source_name` on `projects`
+  - Default `project_origin='internal'`; explicit `CHECK` guarantees valid origins
+  - `expires_at` is optional but used to disable the external apply CTA when past due
+- **RLS Hardening**
+  - New policies enforce that `bids`, `contracts`, and `payments` only target `project_origin='internal'`
+  - Existing public project read policy persists; external records stay visible but are treated as read-only
+- **Staff Experience**
+  - New Netlify functions (`staff-external-gigs-{list,create,update,delete}`) run with service-role, check `staff_users` roles, and audit every action
+  - `/staff/external-gigs` route gives admins a filtered table, create/edit dialogs, and a soft-delete workflow (status → `cancelled`, `deleted_at` populated)
+- **Professional Experience**
+  - Find Gigs listing shows an **External** badge, origin filter, expiry messaging, and a secure `Apply Externally` button (`target="_blank" noopener`)
+  - Detail page surfaces a banner explaining external handling, disables internal bidding, and reuses shared `canApplyExternally` helper for button state
+- **Key Takeaways**
+  - External opportunities always stay read-only in-app; bidding, contracts, and payments remain internal-only
+  - Staff CRUD is fully audited and RLS compliant, aligning with “service role only for privileged actions”
+  - Professionals retain a consistent experience with clear labeling, accessibility hints, and expiry awareness

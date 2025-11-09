@@ -179,6 +179,10 @@ export interface Database {
           delivery_time_min: string | null
           delivery_time_max: string | null
           status: string | null
+          project_origin: string
+          external_url: string | null
+          expires_at: string | null
+          source_name: string | null
           screening_questions: string | null
           template_id: string | null
           created_at: string | null
@@ -202,6 +206,10 @@ export interface Database {
           delivery_time_min?: string | null
           delivery_time_max?: string | null
           status?: string | null
+          project_origin?: string
+          external_url?: string | null
+          expires_at?: string | null
+          source_name?: string | null
           screening_questions?: string | null
           template_id?: string | null
           created_at?: string | null
@@ -225,6 +233,10 @@ export interface Database {
           delivery_time_min?: string | null
           delivery_time_max?: string | null
           status?: string | null
+          project_origin?: string
+          external_url?: string | null
+          expires_at?: string | null
+          source_name?: string | null
           screening_questions?: string | null
           template_id?: string | null
           created_at?: string | null

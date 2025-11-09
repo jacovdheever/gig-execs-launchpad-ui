@@ -5,9 +5,9 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
-import { 
-  Search, 
-  Filter, 
+import {
+  Search,
+  Filter,
   MapPin,
   Clock,
   DollarSign,
@@ -15,12 +15,16 @@ import {
   Building2,
   CheckCircle,
   Calendar,
-  Briefcase
+  Briefcase,
+  ExternalLink
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser';
 import { supabase } from '@/lib/supabase';
 import { AppShell } from '@/components/AppShell';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
+import { canApplyExternally } from '@/lib/utils';
 
 interface Project {
   id: number;
@@ -36,6 +40,11 @@ interface Project {
   skills_required: number[];
   creator_id: string;
   industries?: number[];
+  project_origin?: 'internal' | 'external';
+  external_url?: string | null;
+  expires_at?: string | null;
+  source_name?: string | null;
+  is_expired?: boolean;
   client?: {
     first_name: string;
     last_name: string;
@@ -71,6 +80,7 @@ export default function FindGigsPage() {
   const [hourlyRateRange, setHourlyRateRange] = useState<[number, number]>([0, 0]);
   const [maxBudget, setMaxBudget] = useState<number>(1000000);
   const [showFilters, setShowFilters] = useState(false);
+  const [originFilter, setOriginFilter] = useState<'all' | 'internal' | 'external'>('all');
   const [userSkills, setUserSkills] = useState<number[]>([]);
   const [userIndustries, setUserIndustries] = useState<number[]>([]);
 
@@ -206,41 +216,57 @@ export default function FindGigsPage() {
 
       // Process projects data
       const processedProjects = (projectsResult.data || []).map(project => {
-        let skills_required = [];
+        let skills_required: number[] = [];
         try {
-          skills_required = project.skills_required ? JSON.parse(project.skills_required) : [];
+          const parsed = project.skills_required ? JSON.parse(project.skills_required) : [];
+          skills_required = Array.isArray(parsed)
+            ? parsed
+                .map((skillId: number | string) => Number(skillId))
+                .filter((skillId) => !Number.isNaN(skillId))
+            : [];
         } catch (error) {
           console.error('Error parsing skills_required for project', project.id, error);
           skills_required = [];
         }
 
-        // Get client data from loaded data
+        const projectOrigin: 'internal' | 'external' =
+          project.project_origin === 'external' ? 'external' : 'internal';
+        const sourceName = project.source_name || null;
+        const expiresAt = project.expires_at || null;
+        const externalUrl = project.external_url || null;
+
         const clientProfile = clientProfiles.find(cp => cp.user_id === project.creator_id) || {};
         const clientData = users.find(u => u.id === project.creator_id) || {};
-        
-        // Create client name with fallbacks
-        const clientName = clientProfile.company_name || 
-                          (clientData.first_name && clientData.last_name ? 
-                           `${clientData.first_name} ${clientData.last_name.charAt(0)}.` : 
-                           `Project Creator`);
-        
-        console.log('🔍 Processing project', project.id, 'with client data:');
-        console.log('  - clientProfile:', clientProfile);
-        console.log('  - clientData:', clientData);
-        console.log('  - clientName:', clientName);
+
+        const clientInfo =
+          projectOrigin === 'external'
+            ? {
+                first_name: sourceName || 'External',
+                last_name: 'Opportunity',
+                company_name: sourceName || 'External Opportunity',
+                logo_url: null,
+                verified: false,
+                rating: null,
+                total_ratings: null
+              }
+            : {
+                first_name: clientData.first_name || 'Project',
+                last_name: clientData.last_name || 'Creator',
+                company_name: clientProfile.company_name || null,
+                logo_url: clientProfile.logo_url || null,
+                verified: false,
+                rating: null,
+                total_ratings: null
+              };
 
         return {
           ...project,
+          project_origin: projectOrigin,
+          external_url: externalUrl,
+          expires_at: expiresAt,
+          is_expired: expiresAt ? new Date(expiresAt).getTime() <= Date.now() : false,
           skills_required,
-          client: {
-            first_name: clientData.first_name || 'Project',
-            last_name: clientData.last_name || 'Creator',
-            company_name: clientProfile.company_name || null,
-            logo_url: clientProfile.logo_url || null,
-            verified: false,
-            rating: null,
-            total_ratings: null
-          }
+          client: clientInfo
         };
       });
 
@@ -278,16 +304,23 @@ export default function FindGigsPage() {
     }
   };
 
-  const formatCurrency = (amount: number, currency: string) => {
+  const formatCurrency = (amount?: number | null, currency?: string | null) => {
+    const safeCurrency =
+      currency && currency.length >= 2 ? currency.toUpperCase() : 'USD';
+    const numericAmount = Number(amount ?? 0);
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: currency,
+      currency: safeCurrency,
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
-    }).format(amount);
+    }).format(numericAmount);
   };
 
-  const formatDuration = (minDays: number, maxDays: number) => {
+  const formatDuration = (minDays?: number | null, maxDays?: number | null) => {
+    if (minDays == null || maxDays == null) {
+      return 'Timeline TBD';
+    }
+
     if (minDays < 30) {
       return `${minDays}-${maxDays} days`;
     } else if (minDays < 365) {
@@ -299,6 +332,23 @@ export default function FindGigsPage() {
       const maxYears = Math.round(maxDays / 365);
       return `${minYears}-${maxYears} years`;
     }
+  };
+
+  const formatDate = (value?: string | null) => {
+    if (!value) {
+      return '—';
+    }
+
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+      return '—';
+    }
+
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
   };
 
   const getSkillName = (skillId: number) => {
@@ -399,12 +449,14 @@ export default function FindGigsPage() {
     const hasSkills = selectedSkills.length > 0;
     const hasIndustries = selectedIndustries.length > 0;
     const hasBudgetFilter = hourlyRateRange[0] > 0 || hourlyRateRange[1] < maxBudget;
+    const hasOriginFilter = originFilter !== 'all';
     
     console.log('🔍 Filter check:');
     console.log('  - hasSearch:', hasSearch);
     console.log('  - hasSkills:', hasSkills);
     console.log('  - hasIndustries:', hasIndustries);
     console.log('  - hasBudgetFilter:', hasBudgetFilter);
+    console.log('  - hasOriginFilter:', hasOriginFilter);
     console.log('  - searchTerm:', searchTerm);
     console.log('  - selectedSkills:', selectedSkills);
     console.log('  - selectedIndustries:', selectedIndustries);
@@ -413,8 +465,8 @@ export default function FindGigsPage() {
     console.log('  - hourlyRateRange[0] !== 0:', hourlyRateRange[0] !== 0);
     console.log('  - hourlyRateRange[1] !== maxBudget:', hourlyRateRange[1] !== maxBudget);
     
-    return hasSearch || hasSkills || hasIndustries || hasBudgetFilter;
-  }, [searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, maxBudget]);
+    return hasSearch || hasSkills || hasIndustries || hasBudgetFilter || hasOriginFilter;
+  }, [searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, maxBudget, originFilter]);
 
   const filteredProjects = useMemo(() => {
     console.log('🔍 Starting filtering with:');
@@ -426,6 +478,21 @@ export default function FindGigsPage() {
     console.log('  - hourlyRateRange:', hourlyRateRange);
 
     return projects.filter(project => {
+      const projectOrigin = project.project_origin === 'external' ? 'external' : 'internal';
+      const matchesOrigin =
+        originFilter === 'all' ||
+        (originFilter === 'external' && projectOrigin === 'external') ||
+        (originFilter === 'internal' && projectOrigin === 'internal');
+
+      if (!matchesOrigin) {
+        console.log('🔍 Excluding project due to origin filter:', {
+          id: project.id,
+          originFilter,
+          projectOrigin
+        });
+        return false;
+      }
+
       // If no active filters, show all projects
       if (!hasActiveFilters) {
         console.log('🔍 No active filters, showing project', project.id);
@@ -459,6 +526,8 @@ export default function FindGigsPage() {
     console.log('🔍 Filtering project:', {
       id: project.id,
       title: project.title,
+      projectOrigin,
+      matchesOrigin,
       matchesSearch,
       matchesSkills,
       matchesIndustries,
@@ -475,9 +544,9 @@ export default function FindGigsPage() {
     
     return matchesSearch && matchesSkills && matchesIndustries && matchesRate;
     });
-  }, [projects, hasActiveFilters, searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, user, userSkills, userIndustries]);
+  }, [projects, hasActiveFilters, searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, user, userSkills, userIndustries, originFilter]);
 
-  const sortedProjects = useMemo(() => filteredProjects.sort((a, b) => {
+  const sortedProjects = useMemo(() => [...filteredProjects].sort((a, b) => {
     // Sort by match quality: Excellent → Good → Partial → Low
     if (user?.role !== 'consultant') {
       return 0; // No sorting for non-consultants
@@ -588,7 +657,7 @@ export default function FindGigsPage() {
 
                 {/* Filters */}
                 {showFilters && (
-                  <div className="grid gap-6 md:grid-cols-3">
+                  <div className="grid gap-6 md:grid-cols-4">
                     {/* Skills Filter */}
                     <div>
                       <h3 className="font-semibold text-slate-900 mb-3">Skills Required</h3>
@@ -673,6 +742,37 @@ export default function FindGigsPage() {
                         <span>{formatCurrency(maxBudget, 'USD')}</span>
                       </div>
                     </div>
+
+                    {/* Origin Filter */}
+                    <div>
+                      <h3 className="font-semibold text-slate-900 mb-3">Origin</h3>
+                      <RadioGroup
+                        value={originFilter}
+                        onValueChange={(value) =>
+                          setOriginFilter(value as 'all' | 'internal' | 'external')
+                        }
+                        className="space-y-2"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="all" id="origin-all" />
+                          <Label htmlFor="origin-all" className="text-sm">
+                            All gigs
+                          </Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="internal" id="origin-internal" />
+                          <Label htmlFor="origin-internal" className="text-sm">
+                            Internal gigs
+                          </Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="external" id="origin-external" />
+                          <Label htmlFor="origin-external" className="text-sm">
+                            External gigs
+                          </Label>
+                        </div>
+                      </RadioGroup>
+                    </div>
                   </div>
                 )}
                 
@@ -686,6 +786,7 @@ export default function FindGigsPage() {
                       setSelectedSkills([]);
                       setSelectedIndustries([]);
                       setHourlyRateRange([0, maxBudget]);
+                      setOriginFilter('all');
                     }}
                     className="text-sm"
                   >
@@ -723,6 +824,7 @@ export default function FindGigsPage() {
                     setSelectedSkills([]);
                     setSelectedIndustries([]);
                     setHourlyRateRange([0, maxBudget]);
+                    setOriginFilter('all');
                   }}>
                     Clear All Filters
                   </Button>
@@ -731,151 +833,214 @@ export default function FindGigsPage() {
             </Card>
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {sortedProjects.map((project) => (
-                <Card key={project.id} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-100 flex items-center justify-center">
-                          {project.client?.logo_url ? (
-                            <img
-                              src={project.client.logo_url}
-                              alt={project.client.company_name || 'Company Logo'}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <Building2 className="w-6 h-6 text-slate-500" />
+              {sortedProjects.map((project) => {
+                const isExternal = project.project_origin === 'external';
+                const isExpired =
+                  project.is_expired ??
+                  (project.expires_at
+                    ? new Date(project.expires_at).getTime() <= Date.now()
+                    : false);
+                const hasExternalLink = Boolean(project.external_url);
+                const applyEnabled = isExternal && hasExternalLink && canApplyExternally(project);
+                const createdAtLabel = project.created_at
+                  ? new Date(project.created_at).toLocaleDateString()
+                  : '—';
+
+                return (
+                  <Card key={project.id} className="hover:shadow-lg transition-shadow">
+                    <CardHeader>
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-100 flex items-center justify-center">
+                            {project.client?.logo_url ? (
+                              <img
+                                src={project.client.logo_url}
+                                alt={project.client.company_name || 'Company Logo'}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <Building2 className="w-6 h-6 text-slate-500" />
+                            )}
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-slate-900">
+                              {project.client?.company_name ||
+                                (project.client?.first_name && project.client?.last_name
+                                  ? `${project.client.first_name} ${project.client.last_name.charAt(0)}.`
+                                  : `User ${project.creator_id?.slice(-4) || 'Unknown'}`)}
+                            </h3>
+                            <div className="flex items-center gap-2 mt-1">
+                              {project.client?.verified && (
+                                <div className="flex items-center gap-1">
+                                  <CheckCircle className="w-4 h-4 text-green-500" />
+                                  <span className="text-xs text-green-600 font-medium">Verified</span>
+                                </div>
+                              )}
+                              {project.client?.rating && project.client?.total_ratings ? (
+                                renderStars(project.client.rating)
+                              ) : (
+                                <span className="text-sm text-slate-500">No ratings yet</span>
+                              )}
+                            </div>
+                            {isExternal && project.source_name && (
+                              <p className="text-xs text-blue-600 mt-1">
+                                Source: {project.source_name}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Badge variant="outline" className="text-xs">
+                            {createdAtLabel}
+                          </Badge>
+                          {isExternal && (
+                            <Badge className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                              External
+                            </Badge>
                           )}
                         </div>
-                        <div>
-                          <h3 className="font-semibold text-slate-900">
-                            {project.client?.company_name || 
-                             (project.client?.first_name && project.client?.last_name ? 
-                              `${project.client.first_name} ${project.client.last_name.charAt(0)}.` : 
-                              `User ${project.creator_id?.slice(-4) || 'Unknown'}`)}
-                          </h3>
-                          <div className="flex items-center gap-2 mt-1">
-                            {project.client?.verified && (
-                              <div className="flex items-center gap-1">
-                                <CheckCircle className="w-4 h-4 text-green-500" />
-                                <span className="text-xs text-green-600 font-medium">Verified</span>
-                              </div>
-                            )}
-                            {project.client?.rating && project.client?.total_ratings ? (
-                              renderStars(project.client.rating)
-                            ) : (
-                              <span className="text-sm text-slate-500">No ratings yet</span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                      <Badge variant="outline" className="text-xs">
-                        {new Date(project.created_at).toLocaleDateString()}
-                      </Badge>
-                    </div>
-                    
-                    <div className="flex items-start justify-between mb-2">
-                      <CardTitle className="text-lg line-clamp-2 flex-1">{project.title}</CardTitle>
-                      {user?.role === 'consultant' && (() => {
-                        const match = calculateMatchQuality(project);
-                        console.log('🔍 Match badge for project', project.id, ':', match);
-                        return match ? (
-                          <Badge 
-                            variant="outline" 
-                            className={`ml-2 text-xs ${
-                              match.color === 'green' ? 'bg-green-50 text-green-700 border-green-200' :
-                              match.color === 'blue' ? 'bg-blue-50 text-blue-700 border-blue-200' :
-                              match.color === 'yellow' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
-                              'bg-gray-50 text-gray-700 border-gray-200'
-                            }`}
-                          >
-                            {match.level === 'excellent' ? 'Excellent Match' :
-                             match.level === 'good' ? 'Good Match' :
-                             match.level === 'partial' ? 'Partial Match' : 'Low Match'} ({match.percentage}%)
-                          </Badge>
-                        ) : null;
-                      })()}
-                    </div>
-                    <CardDescription className="line-clamp-3">
-                      {project.description.length > 500 
-                        ? `${project.description.substring(0, 500)}...`
-                        : project.description
-                      }
-                    </CardDescription>
-                  </CardHeader>
-                  
-                  <CardContent>
-                    <div className="space-y-4">
-                      {/* About Gig */}
-                      <div className="space-y-2">
-                        <h4 className="font-semibold text-slate-900 text-sm">About Gig:</h4>
-                        <div className="flex items-center gap-4 text-sm text-slate-600">
-                          <div className="flex items-center gap-1">
-                            <DollarSign className="w-4 h-4" />
-                            <span>
-                              {formatCurrency(project.budget_min, project.currency)}
-                              {project.budget_max !== project.budget_min && 
-                                ` - ${formatCurrency(project.budget_max, project.currency)}`
-                              }
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Clock className="w-4 h-4" />
-                            <span>{formatDuration(project.delivery_time_min, project.delivery_time_max)}</span>
-                          </div>
-                        </div>
                       </div>
 
-                      {/* Industries */}
-                      {project.industries && project.industries.length > 0 && (
-                        <div>
-                          <h4 className="font-semibold text-slate-900 text-sm mb-2">Industries:</h4>
-                          <div className="flex flex-wrap gap-1">
-                            {project.industries.slice(0, 3).map((industryId) => (
-                              <Badge key={industryId} variant="secondary" className="text-xs">
-                                {getIndustryName(industryId)}
-                              </Badge>
-                            ))}
-                            {project.industries.length > 3 && (
-                              <Badge variant="secondary" className="text-xs">
-                                +{project.industries.length - 3} more
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Skills Required */}
-                      {project.skills_required && project.skills_required.length > 0 && (
-                        <div>
-                          <h4 className="font-semibold text-slate-900 text-sm mb-2">Skills Required:</h4>
-                          <div className="flex flex-wrap gap-1">
-                            {project.skills_required.slice(0, 4).map((skillId) => (
-                              <Badge key={skillId} variant="outline" className="text-xs">
-                                {getSkillName(skillId)}
-                              </Badge>
-                            ))}
-                            {project.skills_required.length > 4 && (
-                              <Badge variant="outline" className="text-xs">
-                                +{project.skills_required.length - 4} more
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* View Details Button */}
-                      <div className="pt-4 border-t border-slate-200">
-                        <Button asChild className="w-full">
-                          <Link to={`/find-gigs/${project.id}`}>
-                            View Gig Details
-                          </Link>
-                        </Button>
+                      <div className="flex items-start justify-between mb-2">
+                        <CardTitle className="text-lg line-clamp-2 flex-1">{project.title}</CardTitle>
+                        {user?.role === 'consultant' && (() => {
+                          const match = calculateMatchQuality(project);
+                          console.log('🔍 Match badge for project', project.id, ':', match);
+                          return match ? (
+                            <Badge
+                              variant="outline"
+                              className={`ml-2 text-xs ${
+                                match.color === 'green'
+                                  ? 'bg-green-50 text-green-700 border-green-200'
+                                  : match.color === 'blue'
+                                    ? 'bg-blue-50 text-blue-700 border-blue-200'
+                                    : match.color === 'yellow'
+                                      ? 'bg-yellow-50 text-yellow-700 border-yellow-200'
+                                      : 'bg-gray-50 text-gray-700 border-gray-200'
+                              }`}
+                            >
+                              {match.level === 'excellent'
+                                ? 'Excellent Match'
+                                : match.level === 'good'
+                                  ? 'Good Match'
+                                  : match.level === 'partial'
+                                    ? 'Partial Match'
+                                    : 'Low Match'}{' '}
+                              ({match.percentage}%)
+                            </Badge>
+                          ) : null;
+                        })()}
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                      <CardDescription className="line-clamp-3">
+                        {project.description.length > 500
+                          ? `${project.description.substring(0, 500)}...`
+                          : project.description}
+                      </CardDescription>
+                    </CardHeader>
+
+                    <CardContent>
+                      <div className="space-y-4">
+                        {/* About Gig */}
+                        <div className="space-y-2">
+                          <h4 className="font-semibold text-slate-900 text-sm">About Gig:</h4>
+                          <div className="flex items-center gap-4 text-sm text-slate-600">
+                            <div className="flex items-center gap-1">
+                              <DollarSign className="w-4 h-4" />
+                              <span>
+                                {formatCurrency(project.budget_min, project.currency)}
+                                {project.budget_max !== project.budget_min &&
+                                  ` - ${formatCurrency(project.budget_max, project.currency)}`}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Clock className="w-4 h-4" />
+                              <span>
+                                {formatDuration(project.delivery_time_min, project.delivery_time_max)}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Industries */}
+                        {project.industries && project.industries.length > 0 && (
+                          <div>
+                            <h4 className="font-semibold text-slate-900 text-sm mb-2">Industries:</h4>
+                            <div className="flex flex-wrap gap-1">
+                              {project.industries.slice(0, 3).map((industryId) => (
+                                <Badge key={industryId} variant="secondary" className="text-xs">
+                                  {getIndustryName(industryId)}
+                                </Badge>
+                              ))}
+                              {project.industries.length > 3 && (
+                                <Badge variant="secondary" className="text-xs">
+                                  +{project.industries.length - 3} more
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Skills Required */}
+                        {project.skills_required && project.skills_required.length > 0 && (
+                          <div>
+                            <h4 className="font-semibold text-slate-900 text-sm mb-2">
+                              Skills Required:
+                            </h4>
+                            <div className="flex flex-wrap gap-1">
+                              {project.skills_required.slice(0, 4).map((skillId) => (
+                                <Badge key={skillId} variant="outline" className="text-xs">
+                                  {getSkillName(skillId)}
+                                </Badge>
+                              ))}
+                              {project.skills_required.length > 4 && (
+                                <Badge variant="outline" className="text-xs">
+                                  +{project.skills_required.length - 4} more
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Actions */}
+                        <div className="pt-4 border-t border-slate-200 space-y-2">
+                          <Button asChild className="w-full">
+                            <Link to={`/find-gigs/${project.id}`}>View Gig Details</Link>
+                          </Button>
+                          {isExternal && (
+                            <Button
+                              type="button"
+                              variant="secondary"
+                              className="w-full flex items-center justify-center gap-2"
+                              disabled={!applyEnabled}
+                              onClick={() => {
+                                if (project.external_url && applyEnabled) {
+                                  window.open(
+                                    project.external_url,
+                                    '_blank',
+                                    'noopener,noreferrer'
+                                  );
+                                }
+                              }}
+                            >
+                              Apply Externally
+                              <ExternalLink className="h-4 w-4" />
+                            </Button>
+                          )}
+                          {isExternal && (
+                            <p className="text-xs text-slate-500 text-center">
+                              {project.expires_at
+                                ? isExpired
+                                  ? 'This opportunity has expired.'
+                                  : `Apply before ${formatDate(project.expires_at)}`
+                                : 'No expiry date provided.'}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           )}
         </div>

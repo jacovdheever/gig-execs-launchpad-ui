@@ -6,9 +6,9 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { 
-  ArrowLeft, 
-  Clock, 
+import {
+  ArrowLeft,
+  Clock,
   DollarSign,
   Calendar,
   User,
@@ -18,11 +18,14 @@ import {
   MapPin,
   MessageSquare,
   FileText,
-  Send
+  Send,
+  ExternalLink
 } from 'lucide-react';
 import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser';
 import { supabase } from '@/lib/supabase';
 import { AppShell } from '@/components/AppShell';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { canApplyExternally } from '@/lib/utils';
 
 interface Project {
   id: number;
@@ -38,6 +41,11 @@ interface Project {
   skills_required: number[];
   creator_id: string;
   screening_questions?: string[];
+  project_origin?: 'internal' | 'external';
+  external_url?: string | null;
+  expires_at?: string | null;
+  source_name?: string | null;
+  is_expired?: boolean;
   client?: {
     first_name: string;
     last_name: string;
@@ -152,36 +160,71 @@ export default function GigDetailsPage() {
           .single();
         clientProfile = clientProfileData;
       }
-      let skills_required = [];
+      let skills_required: number[] = [];
       try {
-        skills_required = projectData.skills_required ? JSON.parse(projectData.skills_required) : [];
+        const parsedSkills = projectData.skills_required ? JSON.parse(projectData.skills_required) : [];
+        skills_required = Array.isArray(parsedSkills)
+          ? parsedSkills
+              .map((skillId: number | string) => Number(skillId))
+              .filter((skillId) => !Number.isNaN(skillId))
+          : [];
       } catch (error) {
         console.error('Error parsing skills_required:', error);
       }
 
-      let screening_questions = [];
+      let screening_questions: string[] = [];
       try {
-        screening_questions = projectData.screening_questions ? JSON.parse(projectData.screening_questions) : [];
+        const parsedQuestions = projectData.screening_questions
+          ? JSON.parse(projectData.screening_questions)
+          : [];
+        screening_questions = Array.isArray(parsedQuestions) ? parsedQuestions : [];
       } catch (error) {
         console.error('Error parsing screening_questions:', error);
       }
+
+      const projectOrigin: 'internal' | 'external' =
+        projectData.project_origin === 'external' ? 'external' : 'internal';
+      const externalUrl = projectData.external_url || null;
+      const expiresAt = projectData.expires_at || null;
+      const sourceName = projectData.source_name || null;
+      const isExpired = expiresAt ? new Date(expiresAt).getTime() <= Date.now() : false;
 
       // Mock client rating for now - in real app, this would come from database
       const clientRating = Math.random() * 2 + 3; // Random rating between 3-5
       const totalRatings = Math.floor(Math.random() * 50) + 1;
 
+      const clientInfo =
+        projectOrigin === 'external'
+          ? {
+              first_name: sourceName || 'External',
+              last_name: 'Opportunity',
+              company_name: sourceName || 'External Opportunity',
+              logo_url: null,
+              verified: false,
+              rating: null,
+              total_ratings: null,
+              headline: null,
+              location: null
+            }
+          : {
+              ...projectData.client,
+              company_name: clientProfile?.company_name,
+              logo_url: clientProfile?.logo_url,
+              country: clientProfile?.country,
+              rating: clientRating,
+              total_ratings: totalRatings
+            };
+
       setProject({
         ...projectData,
+        project_origin: projectOrigin,
+        external_url: externalUrl,
+        expires_at: expiresAt,
+        source_name: sourceName,
+        is_expired: isExpired,
         skills_required,
         screening_questions,
-        client: {
-          ...projectData.client,
-          company_name: clientProfile?.company_name,
-          logo_url: clientProfile?.logo_url,
-          country: clientProfile?.country,
-          rating: clientRating,
-          total_ratings: totalRatings
-        }
+        client: clientInfo
       });
 
     } catch (error) {
@@ -191,16 +234,23 @@ export default function GigDetailsPage() {
     }
   };
 
-  const formatCurrency = (amount: number, currency: string) => {
+  const formatCurrency = (amount?: number | null, currency?: string | null) => {
+    const safeCurrency =
+      currency && currency.length >= 2 ? currency.toUpperCase() : 'USD';
+    const numericAmount = Number(amount ?? 0);
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: currency,
+      currency: safeCurrency,
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
-    }).format(amount);
+    }).format(numericAmount);
   };
 
-  const formatDuration = (minDays: number, maxDays: number) => {
+  const formatDuration = (minDays?: number | null, maxDays?: number | null) => {
+    if (minDays == null || maxDays == null) {
+      return 'Timeline TBD';
+    }
+
     if (minDays < 30) {
       return `${minDays}-${maxDays} days`;
     } else if (minDays < 365) {
@@ -212,6 +262,17 @@ export default function GigDetailsPage() {
       const maxYears = Math.round(maxDays / 365);
       return `${minYears}-${maxYears} years`;
     }
+  };
+
+  const formatDate = (value?: string | null) => {
+    if (!value) return '—';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '—';
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
   };
 
   const getSkillName = (skillId: number) => {
@@ -313,6 +374,14 @@ export default function GigDetailsPage() {
     }
   };
 
+  const isExternal = !!project && project.project_origin === 'external';
+  const externalIsExpired =
+    isExternal &&
+    (project.is_expired ??
+      (project.expires_at ? new Date(project.expires_at).getTime() <= Date.now() : false));
+  const externalCanApply =
+    isExternal && !!project.external_url && canApplyExternally(project);
+
   if (loading) {
     return (
       <AppShell>
@@ -356,16 +425,36 @@ export default function GigDetailsPage() {
             </Button>
             <div>
               <h1 className="text-3xl font-bold text-slate-900">{project.title}</h1>
-              <div className="flex items-center gap-4 mt-2">
-                <span className="text-sm text-slate-600">
-                  Posted {new Date(project.created_at).toLocaleDateString()}
-                </span>
-                <Badge variant="outline" className="text-green-600 border-green-600">
-                  Open for Bids
-                </Badge>
+              <div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-slate-600">
+                <span>Posted {formatDate(project.created_at)}</span>
+                {isExternal ? (
+                  <Badge className="bg-blue-50 text-blue-700 border-blue-200">
+                    External Opportunity
+                  </Badge>
+                ) : (
+                  <Badge variant="outline" className="text-green-600 border-green-600">
+                    Open for Bids
+                  </Badge>
+                )}
+                {isExternal && project.expires_at && (
+                  <span className={externalIsExpired ? 'text-rose-600' : 'text-slate-500'}>
+                    {externalIsExpired
+                      ? `Expired on ${formatDate(project.expires_at)}`
+                      : `Apply before ${formatDate(project.expires_at)}`}
+                  </span>
+                )}
               </div>
             </div>
           </div>
+          {isExternal && (
+            <Alert className="mb-6 border-blue-200 bg-blue-50 text-blue-800">
+              <AlertTitle>External Opportunity</AlertTitle>
+              <AlertDescription>
+                Applications for this gig are submitted on an external site. Use the button on the
+                right to open the external application in a new tab.
+              </AlertDescription>
+            </Alert>
+          )}
 
           <div className="grid gap-8 lg:grid-cols-3">
             {/* Main Content */}
@@ -416,6 +505,11 @@ export default function GigDetailsPage() {
                           <span className="text-sm text-slate-500">Unrated</span>
                         )}
                       </div>
+                      {isExternal && project.source_name && (
+                        <div className="mt-3 text-sm text-blue-600">
+                          Source: {project.source_name}
+                        </div>
+                      )}
                       {project.client?.country && (
                         <div className="flex items-center gap-1 mt-2 text-sm text-slate-600">
                           <MapPin className="w-4 h-4" />
@@ -455,6 +549,29 @@ export default function GigDetailsPage() {
                         <strong>Timeline:</strong> {formatDuration(project.delivery_time_min, project.delivery_time_max)}
                       </span>
                     </div>
+                    {isExternal && (
+                      <div className="flex items-center gap-2 text-slate-600">
+                        <ExternalLink className="w-4 h-4" />
+                        <span>
+                          <strong>Application:</strong>{' '}
+                          {project.external_url ? (
+                            <button
+                              type="button"
+                              className="text-blue-600 hover:underline"
+                              onClick={() => {
+                                if (project.external_url) {
+                                  window.open(project.external_url, '_blank', 'noopener,noreferrer');
+                                }
+                              }}
+                            >
+                              Open external site
+                            </button>
+                          ) : (
+                            'Not provided'
+                          )}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Skills Required */}
@@ -501,89 +618,134 @@ export default function GigDetailsPage() {
 
             {/* Sidebar - Bid Form */}
             <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Submit Your Bid</CardTitle>
-                  <CardDescription>
-                    Submit your proposal for this project
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {success ? (
-                    <div className="text-center py-6">
-                      <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <CheckCircle className="w-8 h-8 text-green-600" />
-                      </div>
-                      <h3 className="font-semibold text-slate-900 mb-2">Bid Submitted Successfully!</h3>
-                      <p className="text-slate-600 text-sm mb-4">
-                        Your bid has been sent to the client. You'll be notified when they respond.
+              {isExternal ? (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Apply Externally</CardTitle>
+                    <CardDescription>
+                      {project.source_name
+                        ? `This opportunity is hosted on ${project.source_name}.`
+                        : 'This opportunity is hosted on an external site.'}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <Button
+                      className="w-full flex items-center justify-center gap-2"
+                      disabled={!externalCanApply}
+                      onClick={() => {
+                        if (project.external_url && externalCanApply) {
+                          window.open(project.external_url, '_blank', 'noopener,noreferrer');
+                        }
+                      }}
+                    >
+                      Apply Externally
+                      <ExternalLink className="w-4 h-4" />
+                    </Button>
+                    <div className="text-sm text-slate-600 space-y-2">
+                      <p>
+                        {project.external_url
+                          ? externalCanApply
+                            ? 'You will be redirected to the external application page in a new tab.'
+                            : externalIsExpired
+                              ? 'This opportunity has expired.'
+                              : 'External applications are currently unavailable.'
+                          : 'No external application URL was provided.'}
                       </p>
-                      <Button variant="outline" asChild className="w-full">
-                        <Link to="/find-gigs">Find More Gigs</Link>
-                      </Button>
-                    </div>
-                  ) : (
-                    <form onSubmit={handleSubmitBid} className="space-y-4">
-                      {error && (
-                        <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                          <p className="text-red-700 text-sm">{error}</p>
-                        </div>
+                      {project.expires_at && (
+                        <p className="text-xs text-slate-500">
+                          {externalIsExpired
+                            ? `Expired on ${formatDate(project.expires_at)}`
+                            : `Apply before ${formatDate(project.expires_at)}`}
+                        </p>
                       )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ) : (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Submit Your Bid</CardTitle>
+                    <CardDescription>
+                      Submit your proposal for this project
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {success ? (
+                      <div className="text-center py-6">
+                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                          <CheckCircle className="w-8 h-8 text-green-600" />
+                        </div>
+                        <h3 className="font-semibold text-slate-900 mb-2">Bid Submitted Successfully!</h3>
+                        <p className="text-slate-600 text-sm mb-4">
+                          Your bid has been sent to the client. You'll be notified when they respond.
+                        </p>
+                        <Button variant="outline" asChild className="w-full">
+                          <Link to="/find-gigs">Find More Gigs</Link>
+                        </Button>
+                      </div>
+                    ) : (
+                      <form onSubmit={handleSubmitBid} className="space-y-4">
+                        {error && (
+                          <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                            <p className="text-red-700 text-sm">{error}</p>
+                          </div>
+                        )}
 
-                      <div>
-                        <Label htmlFor="bidAmount" className="text-sm font-semibold text-slate-900">
-                          Your Bid Amount <span className="text-red-500">*</span>
-                        </Label>
-                        <div className="flex gap-2 mt-1">
-                          <span className="flex items-center px-3 py-2 bg-slate-100 text-slate-600 text-sm border border-slate-200 rounded-l-md">
-                            {project.currency}
-                          </span>
-                          <Input
-                            id="bidAmount"
-                            type="number"
-                            value={bidAmount}
-                            onChange={(e) => setBidAmount(e.target.value)}
-                            placeholder="Enter your bid"
-                            className="rounded-l-none"
+                        <div>
+                          <Label htmlFor="bidAmount" className="text-sm font-semibold text-slate-900">
+                            Your Bid Amount <span className="text-red-500">*</span>
+                          </Label>
+                          <div className="flex gap-2 mt-1">
+                            <span className="flex items-center px-3 py-2 bg-slate-100 text-slate-600 text-sm border border-slate-200 rounded-l-md">
+                              {project.currency}
+                            </span>
+                            <Input
+                              id="bidAmount"
+                              type="number"
+                              value={bidAmount}
+                              onChange={(e) => setBidAmount(e.target.value)}
+                              placeholder="Enter your bid"
+                              className="rounded-l-none"
+                              required
+                            />
+                          </div>
+                          <p className="text-xs text-slate-500 mt-1">
+                            Budget range: {formatCurrency(project.budget_min, project.currency)} - {formatCurrency(project.budget_max, project.currency)}
+                          </p>
+                        </div>
+
+                        <div>
+                          <Label htmlFor="bidMessage" className="text-sm font-semibold text-slate-900">
+                            Your Proposal <span className="text-red-500">*</span>
+                          </Label>
+                          <Textarea
+                            id="bidMessage"
+                            value={bidMessage}
+                            onChange={(e) => setBidMessage(e.target.value)}
+                            placeholder="Explain your approach, relevant experience, and why you're the right fit for this project..."
+                            className="mt-1 min-h-[120px]"
                             required
                           />
                         </div>
-                        <p className="text-xs text-slate-500 mt-1">
-                          Budget range: {formatCurrency(project.budget_min, project.currency)} - {formatCurrency(project.budget_max, project.currency)}
-                        </p>
-                      </div>
 
-                      <div>
-                        <Label htmlFor="bidMessage" className="text-sm font-semibold text-slate-900">
-                          Your Proposal <span className="text-red-500">*</span>
-                        </Label>
-                        <Textarea
-                          id="bidMessage"
-                          value={bidMessage}
-                          onChange={(e) => setBidMessage(e.target.value)}
-                          placeholder="Explain your approach, relevant experience, and why you're the right fit for this project..."
-                          className="mt-1 min-h-[120px]"
-                          required
-                        />
-                      </div>
-
-                      <Button type="submit" disabled={submitting} className="w-full">
-                        {submitting ? (
-                          <>
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                            Submitting Bid...
-                          </>
-                        ) : (
-                          <>
-                            <Send className="w-4 h-4 mr-2" />
-                            Submit Bid
-                          </>
-                        )}
-                      </Button>
-                    </form>
-                  )}
-                </CardContent>
-              </Card>
+                        <Button type="submit" disabled={submitting} className="w-full">
+                          {submitting ? (
+                            <>
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                              Submitting Bid...
+                            </>
+                          ) : (
+                            <>
+                              <Send className="w-4 h-4 mr-2" />
+                              Submit Bid
+                            </>
+                          )}
+                        </Button>
+                      </form>
+                    )}
+                  </CardContent>
+                </Card>
+              )}
 
               {/* Quick Actions */}
               <Card>
