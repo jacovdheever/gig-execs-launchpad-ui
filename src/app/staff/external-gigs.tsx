@@ -11,7 +11,9 @@ import {
   PenSquare,
   Plus,
   RefreshCw,
-  Trash2
+  Search,
+  Trash2,
+  X
 } from 'lucide-react';
 
 import { supabase } from '@/lib/supabase';
@@ -45,7 +47,6 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Tooltip,
   TooltipContent,
@@ -86,17 +87,15 @@ interface SkillOption {
 }
 
 interface ExternalGigFormState {
+  client_name: string;
   title: string;
   description: string;
   status: string;
   external_url: string;
   expires_at: string;
-  source_name: string;
-  currency: string;
-  budget_min: string;
-  budget_max: string;
-  delivery_time_min: string;
-  delivery_time_max: string;
+  budget_amount: string;
+  budget_to_be_confirmed: boolean;
+  timeline: string;
   skills: number[];
 }
 
@@ -116,19 +115,48 @@ const expiryOptions: { value: ExpiryFilter; label: string }[] = [
 ];
 
 const defaultFormState: ExternalGigFormState = {
+  client_name: '',
   title: '',
   description: '',
   status: 'draft',
   external_url: '',
   expires_at: '',
-  source_name: '',
-  currency: '',
-  budget_min: '',
-  budget_max: '',
-  delivery_time_min: '',
-  delivery_time_max: '',
+  budget_amount: '',
+  budget_to_be_confirmed: false,
+  timeline: '',
   skills: []
 };
+
+const TIMELINE_OPTIONS = [
+  { value: '1-7-days', label: '1-7 days', min: 1, max: 7 },
+  { value: '1-2-weeks', label: '1-2 weeks', min: 7, max: 14 },
+  { value: '2-4-weeks', label: '2-4 weeks', min: 14, max: 30 },
+  { value: '1-2-months', label: '1-2 months', min: 30, max: 60 },
+  { value: '2-6-months', label: '2-6 months', min: 60, max: 180 },
+  { value: '6-12-months', label: '6-12 months', min: 180, max: 365 },
+  { value: '1-2-years', label: '1-2 years', min: 365, max: 730 }
+] as const;
+
+type TimelineValue = (typeof TIMELINE_OPTIONS)[number]['value'];
+
+function mapTimelineToRange(value: TimelineValue | ''): { min: number | null; max: number | null } {
+  if (!value) {
+    return { min: null, max: null };
+  }
+  const option = TIMELINE_OPTIONS.find((item) => item.value === value);
+  if (!option) {
+    return { min: null, max: null };
+  }
+  return { min: option.min, max: option.max };
+}
+
+function mapRangeToTimeline(min: number | null | undefined, max: number | null | undefined): TimelineValue | '' {
+  if (min == null || max == null) {
+    return '';
+  }
+  const option = TIMELINE_OPTIONS.find((item) => item.min === min && item.max === max);
+  return option ? option.value : '';
+}
 
 function toLocalInputDate(iso: string | null | undefined) {
   if (!iso) return '';
@@ -217,6 +245,46 @@ export default function StaffExternalGigsPage() {
   const [selectedProject, setSelectedProject] = useState<ExternalProject | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [formState, setFormState] = useState<ExternalGigFormState>(defaultFormState);
+  const [skillSearch, setSkillSearch] = useState('');
+  const [showSkillDropdown, setShowSkillDropdown] = useState(false);
+
+  const filteredSkills = useMemo(() => {
+    if (!skillSearch.trim()) {
+      return skills.filter((skill) => !formState.skills.includes(skill.id));
+    }
+    const term = skillSearch.toLowerCase();
+    return skills.filter(
+      (skill) =>
+        skill.name.toLowerCase().includes(term) && !formState.skills.includes(skill.id)
+    );
+  }, [skillSearch, skills, formState.skills]);
+
+  const selectedSkillOptions = useMemo(
+    () =>
+      formState.skills
+        .map((id) => skills.find((skill) => skill.id === id))
+        .filter((skill): skill is SkillOption => Boolean(skill)),
+    [formState.skills, skills]
+  );
+
+  const maxSkillSelectionsReached = formState.skills.length >= 15;
+
+  function addSkillOption(skill: SkillOption) {
+    if (maxSkillSelectionsReached) return;
+    setFormState((prev) => ({
+      ...prev,
+      skills: prev.skills.includes(skill.id) ? prev.skills : [...prev.skills, skill.id]
+    }));
+    setSkillSearch('');
+    setShowSkillDropdown(false);
+  }
+
+  function removeSkillOption(skillId: number) {
+    setFormState((prev) => ({
+      ...prev,
+      skills: prev.skills.filter((id) => id !== skillId)
+    }));
+  }
 
   const canManage = useMemo(
     () => (staff?.role === 'admin' || staff?.role === 'super_user') as boolean,
@@ -329,6 +397,8 @@ export default function StaffExternalGigsPage() {
 
   function resetForm() {
     setFormState(defaultFormState);
+    setSkillSearch('');
+    setShowSkillDropdown(false);
   }
 
   function openCreateDialog() {
@@ -339,30 +409,26 @@ export default function StaffExternalGigsPage() {
 
   function openEditDialog(project: ExternalProject) {
     setSelectedProject(project);
+    const timeline = mapRangeToTimeline(project.delivery_time_min, project.delivery_time_max);
+    const budgetToBeConfirmed =
+      project.budget_min == null && project.budget_max == null;
+    const budgetAmount = budgetToBeConfirmed
+      ? ''
+      : String(project.budget_min ?? project.budget_max ?? '');
     setFormState({
+      client_name: project.source_name || '',
       title: project.title || '',
       description: project.description || '',
       status: project.status || 'draft',
       external_url: project.external_url || '',
       expires_at: toLocalInputDate(project.expires_at),
-      source_name: project.source_name || '',
-      currency: project.currency || '',
-      budget_min: project.budget_min !== null && project.budget_min !== undefined
-        ? String(project.budget_min)
-        : '',
-      budget_max: project.budget_max !== null && project.budget_max !== undefined
-        ? String(project.budget_max)
-        : '',
-      delivery_time_min:
-        project.delivery_time_min !== null && project.delivery_time_min !== undefined
-          ? String(project.delivery_time_min)
-          : '',
-      delivery_time_max:
-        project.delivery_time_max !== null && project.delivery_time_max !== undefined
-          ? String(project.delivery_time_max)
-          : '',
+      budget_amount: budgetAmount,
+      budget_to_be_confirmed: budgetToBeConfirmed,
+      timeline,
       skills: normalizeSkills(project.skills_required)
     });
+    setSkillSearch('');
+    setShowSkillDropdown(false);
     setEditOpen(true);
   }
 
@@ -386,18 +452,27 @@ export default function StaffExternalGigsPage() {
         return;
       }
 
+      const budgetProvided =
+        !formState.budget_to_be_confirmed && formState.budget_amount.trim() !== '';
+      const parsedBudget = budgetProvided ? Number(formState.budget_amount) : null;
+      const budgetValue =
+        parsedBudget !== null && !Number.isNaN(parsedBudget) ? parsedBudget : null;
+      const { min: timelineMin, max: timelineMax } = mapTimelineToRange(
+        formState.timeline as TimelineValue | ''
+      );
+
       const payload = {
         title: formState.title,
         description: formState.description,
         status: formState.status,
         external_url: formState.external_url,
         expires_at: toIso(formState.expires_at),
-        source_name: formState.source_name || null,
-        currency: formState.currency || null,
-        budget_min: formState.budget_min ? Number(formState.budget_min) : null,
-        budget_max: formState.budget_max ? Number(formState.budget_max) : null,
-        delivery_time_min: formState.delivery_time_min ? Number(formState.delivery_time_min) : null,
-        delivery_time_max: formState.delivery_time_max ? Number(formState.delivery_time_max) : null,
+        source_name: formState.client_name ? formState.client_name.trim() : null,
+        currency: 'USD',
+        budget_min: budgetValue,
+        budget_max: budgetValue,
+        delivery_time_min: timelineMin,
+        delivery_time_max: timelineMax,
         skills_required: formState.skills
       };
 
@@ -460,6 +535,15 @@ export default function StaffExternalGigsPage() {
         return;
       }
 
+      const budgetProvided =
+        !formState.budget_to_be_confirmed && formState.budget_amount.trim() !== '';
+      const parsedBudget = budgetProvided ? Number(formState.budget_amount) : null;
+      const budgetValue =
+        parsedBudget !== null && !Number.isNaN(parsedBudget) ? parsedBudget : null;
+      const { min: timelineMin, max: timelineMax } = mapTimelineToRange(
+        formState.timeline as TimelineValue | ''
+      );
+
       const payload = {
         id: selectedProject.id,
         title: formState.title,
@@ -467,12 +551,12 @@ export default function StaffExternalGigsPage() {
         status: formState.status,
         external_url: formState.external_url,
         expires_at: formState.expires_at ? toIso(formState.expires_at) : null,
-        source_name: formState.source_name || null,
-        currency: formState.currency || null,
-        budget_min: formState.budget_min ? Number(formState.budget_min) : null,
-        budget_max: formState.budget_max ? Number(formState.budget_max) : null,
-        delivery_time_min: formState.delivery_time_min ? Number(formState.delivery_time_min) : null,
-        delivery_time_max: formState.delivery_time_max ? Number(formState.delivery_time_max) : null,
+        source_name: formState.client_name ? formState.client_name.trim() : null,
+        currency: 'USD',
+        budget_min: budgetValue,
+        budget_max: budgetValue,
+        delivery_time_min: timelineMin,
+        delivery_time_max: timelineMax,
         skills_required: formState.skills
       };
 
@@ -695,6 +779,255 @@ export default function StaffExternalGigsPage() {
           Search
         </Button>
       </div>
+    </div>
+  );
+
+  const renderSkillSelector = () => (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <Label className="text-sm font-medium text-slate-700">
+          Required Skills <span className="text-xs text-slate-400">(optional)</span>
+        </Label>
+        <span className="text-xs text-slate-500">
+          {formState.skills.length}/15 selected
+        </span>
+      </div>
+
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+        <Input
+          value={skillSearch}
+          placeholder={
+            maxSkillSelectionsReached
+              ? 'Maximum skills selected'
+              : 'Search for skills...'
+          }
+          onChange={(event) => {
+            const value = event.target.value;
+            setSkillSearch(value);
+            setShowSkillDropdown(Boolean(value));
+          }}
+          onFocus={() => {
+            if (skillSearch) {
+              setShowSkillDropdown(true);
+            }
+          }}
+          disabled={skillsLoading || (maxSkillSelectionsReached && !skillSearch)}
+          className="pl-10"
+        />
+        {showSkillDropdown && !skillsLoading && (
+          <div className="absolute z-20 mt-1 max-h-56 w-full overflow-y-auto rounded-md border border-slate-200 bg-white shadow-lg">
+            {filteredSkills.length === 0 ? (
+              <div className="px-4 py-3 text-sm text-slate-500">
+                No skills match “{skillSearch}”.
+              </div>
+            ) : (
+              filteredSkills.map((skill) => (
+                <button
+                  key={skill.id}
+                  type="button"
+                  onMouseDown={(event) => {
+                    event.preventDefault();
+                    addSkillOption(skill);
+                  }}
+                  className="flex w-full items-center justify-between px-4 py-2 text-left text-sm hover:bg-slate-50"
+                >
+                  <span>{skill.name}</span>
+                  {formState.skills.includes(skill.id) && (
+                    <Badge variant="secondary">Added</Badge>
+                  )}
+                </button>
+              ))
+            )}
+          </div>
+        )}
+      </div>
+
+      {skillsLoading ? (
+        <div className="flex items-center gap-2 text-sm text-slate-500">
+          <Loader2 className="h-4 w-4 animate-spin" />
+          Loading skills…
+        </div>
+      ) : selectedSkillOptions.length === 0 ? (
+        <p className="text-xs text-slate-500">
+          You can leave this blank if no specific skills are required.
+        </p>
+      ) : (
+        <div className="flex flex-wrap gap-2">
+          {selectedSkillOptions.map((skill) => (
+            <span
+              key={skill.id}
+              className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-700"
+            >
+              {skill.name}
+              <button
+                type="button"
+                onClick={() => removeSkillOption(skill.id)}
+                className="rounded-full p-0.5 text-slate-500 hover:text-slate-700"
+                aria-label={`Remove ${skill.name}`}
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+
+  const renderExternalGigForm = (prefix: string) => (
+    <div className="grid gap-5 py-4">
+      <div className="grid gap-2">
+        <Label htmlFor={`${prefix}-client_name`}>External client name</Label>
+        <Input
+          id={`${prefix}-client_name`}
+          value={formState.client_name}
+          onChange={(event) =>
+            setFormState((prev) => ({ ...prev, client_name: event.target.value }))
+          }
+          placeholder="Company or hiring manager name"
+        />
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor={`${prefix}-title`}>Opportunity title</Label>
+        <Input
+          id={`${prefix}-title`}
+          value={formState.title}
+          onChange={(event) =>
+            setFormState((prev) => ({ ...prev, title: event.target.value }))
+          }
+          placeholder="Senior Product Strategist"
+        />
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor={`${prefix}-description`}>Description</Label>
+        <Textarea
+          id={`${prefix}-description`}
+          rows={5}
+          value={formState.description}
+          onChange={(event) =>
+            setFormState((prev) => ({ ...prev, description: event.target.value }))
+          }
+          placeholder="Brief description of the opportunity and key requirements."
+        />
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-2">
+          <Label htmlFor={`${prefix}-external_url`}>External application URL</Label>
+          <Input
+            id={`${prefix}-external_url`}
+            value={formState.external_url}
+            onChange={(event) =>
+              setFormState((prev) => ({ ...prev, external_url: event.target.value }))
+            }
+            placeholder="https://example.com/opportunity"
+          />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor={`${prefix}-expires_at`}>Expires at (optional)</Label>
+          <Input
+            id={`${prefix}-expires_at`}
+            type="datetime-local"
+            value={formState.expires_at}
+            onChange={(event) =>
+              setFormState((prev) => ({ ...prev, expires_at: event.target.value }))
+            }
+          />
+        </div>
+      </div>
+
+      <div className="grid gap-2 md:grid-cols-2">
+        <div className="grid gap-2">
+          <Label htmlFor={`${prefix}-status`}>Status</Label>
+          <Select
+            value={formState.status}
+            onValueChange={(value) => setFormState((prev) => ({ ...prev, status: value }))}
+          >
+            <SelectTrigger id={`${prefix}-status`}>
+              <SelectValue placeholder="Select status" />
+            </SelectTrigger>
+            <SelectContent>
+              {statusOptions.map((status) => (
+                <SelectItem key={status} value={status}>
+                  {statusLabels[status]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="grid gap-2">
+          <Label htmlFor={`${prefix}-timeline`}>Timeline</Label>
+          <Select
+            value={formState.timeline}
+            onValueChange={(value) =>
+              setFormState((prev) => ({ ...prev, timeline: value as TimelineValue }))
+            }
+          >
+            <SelectTrigger id={`${prefix}-timeline`}>
+              <SelectValue placeholder="Select timeline" />
+            </SelectTrigger>
+            <SelectContent>
+              {TIMELINE_OPTIONS.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="grid gap-2">
+        <Label>Budget (USD)</Label>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="relative w-full sm:flex-1">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-slate-400">
+              $
+            </span>
+            <Input
+              id={`${prefix}-budget_amount`}
+              type="number"
+              min="0"
+              step="100"
+              placeholder="4500"
+              value={formState.budget_amount}
+              disabled={formState.budget_to_be_confirmed}
+              onChange={(event) =>
+                setFormState((prev) => ({
+                  ...prev,
+                  budget_amount: event.target.value
+                }))
+              }
+              className="pl-7"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id={`${prefix}-budget_tbd`}
+              checked={formState.budget_to_be_confirmed}
+              onCheckedChange={(checked) =>
+                setFormState((prev) => ({
+                  ...prev,
+                  budget_to_be_confirmed: Boolean(checked),
+                  budget_amount: Boolean(checked) ? '' : prev.budget_amount
+                }))
+              }
+            />
+            <Label htmlFor={`${prefix}-budget_tbd`} className="text-sm text-slate-600">
+              To be confirmed
+            </Label>
+          </div>
+        </div>
+        <p className="text-xs text-slate-500">
+          Currency is fixed to USD. Professionals will see “To be confirmed” when checked.
+        </p>
+      </div>
+
+      {renderSkillSelector()}
     </div>
   );
 
@@ -970,185 +1303,7 @@ export default function StaffExternalGigsPage() {
                 Publish an external opportunity that will appear alongside internal gigs.
               </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid gap-2">
-                <Label htmlFor="title">Title</Label>
-                <Input
-                  id="title"
-                  value={formState.title}
-                  onChange={(event) =>
-                    setFormState((prev) => ({ ...prev, title: event.target.value }))
-                  }
-                  placeholder="Senior Product Strategist"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
-                  rows={5}
-                  value={formState.description}
-                  onChange={(event) =>
-                    setFormState((prev) => ({ ...prev, description: event.target.value }))
-                  }
-                  placeholder="Brief description of the opportunity and key requirements."
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="external_url">External Application URL</Label>
-                <Input
-                  id="external_url"
-                  value={formState.external_url}
-                  onChange={(event) =>
-                    setFormState((prev) => ({ ...prev, external_url: event.target.value }))
-                  }
-                  placeholder="https://example.com/opportunity"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="expires_at">Expires At</Label>
-                <Input
-                  id="expires_at"
-                  type="datetime-local"
-                  value={formState.expires_at}
-                  onChange={(event) =>
-                    setFormState((prev) => ({ ...prev, expires_at: event.target.value }))
-                  }
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="status">Status</Label>
-                <Select
-                  value={formState.status}
-                  onValueChange={(value) => setFormState((prev) => ({ ...prev, status: value }))}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {statusOptions.map((status) => (
-                      <SelectItem key={status} value={status}>
-                        {statusLabels[status]}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="source_name">Source Name</Label>
-                <Input
-                  id="source_name"
-                  value={formState.source_name}
-                  onChange={(event) =>
-                    setFormState((prev) => ({ ...prev, source_name: event.target.value }))
-                  }
-                  placeholder="LinkedIn, AngelList, Company Site, etc."
-                />
-              </div>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="currency">Currency</Label>
-                  <Input
-                    id="currency"
-                    value={formState.currency}
-                    onChange={(event) =>
-                      setFormState((prev) => ({ ...prev, currency: event.target.value.toUpperCase() }))
-                    }
-                    placeholder="USD"
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="budget_min">Budget Minimum</Label>
-                  <Input
-                    id="budget_min"
-                    type="number"
-                    value={formState.budget_min}
-                    onChange={(event) =>
-                      setFormState((prev) => ({ ...prev, budget_min: event.target.value }))
-                    }
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="budget_max">Budget Maximum</Label>
-                  <Input
-                    id="budget_max"
-                    type="number"
-                    value={formState.budget_max}
-                    onChange={(event) =>
-                      setFormState((prev) => ({ ...prev, budget_max: event.target.value }))
-                    }
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="delivery_time_min">Delivery Time (Min days)</Label>
-                  <Input
-                    id="delivery_time_min"
-                    type="number"
-                    value={formState.delivery_time_min}
-                    onChange={(event) =>
-                      setFormState((prev) => ({ ...prev, delivery_time_min: event.target.value }))
-                    }
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="delivery_time_max">Delivery Time (Max days)</Label>
-                  <Input
-                    id="delivery_time_max"
-                    type="number"
-                    value={formState.delivery_time_max}
-                    onChange={(event) =>
-                      setFormState((prev) => ({ ...prev, delivery_time_max: event.target.value }))
-                    }
-                  />
-                </div>
-              </div>
-              <div className="grid gap-2">
-                <Label>Required Skills (optional)</Label>
-                <ScrollArea className="h-40 border rounded-md p-3 bg-slate-50/50">
-                  {skillsLoading ? (
-                    <div className="flex items-center justify-center h-full text-sm text-slate-500">
-                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                      Loading skills…
-                    </div>
-                  ) : skills.length === 0 ? (
-                    <p className="text-sm text-slate-500">
-                      No skills available. External gigs can still be created without skills.
-                    </p>
-                  ) : (
-                    <div className="grid gap-2">
-                      {skills.map((skill) => {
-                        const checked = formState.skills.includes(skill.id);
-                        return (
-                          <label
-                            key={skill.id}
-                            className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer"
-                          >
-                            <Checkbox
-                              checked={checked}
-                              onCheckedChange={(value) => {
-                                setFormState((prev) => {
-                                  if (value) {
-                                    return {
-                                      ...prev,
-                                      skills: Array.from(new Set([...prev.skills, skill.id]))
-                                    };
-                                  }
-                                  return {
-                                    ...prev,
-                                    skills: prev.skills.filter((id) => id !== skill.id)
-                                  };
-                                });
-                              }}
-                            />
-                            <span>{skill.name}</span>
-                          </label>
-                        );
-                      })}
-                    </div>
-                  )}
-                </ScrollArea>
-              </div>
-            </div>
+            {renderExternalGigForm('create')}
             <DialogFooter className="flex flex-col gap-2 sm:flex-row sm:justify-end sm:gap-3">
               <Button variant="outline" onClick={() => setCreateOpen(false)} disabled={submitting}>
                 Cancel
@@ -1178,180 +1333,7 @@ export default function StaffExternalGigsPage() {
                 Update the external opportunity details. Changes are logged for auditing.
               </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid gap-2">
-                <Label htmlFor="edit_title">Title</Label>
-                <Input
-                  id="edit_title"
-                  value={formState.title}
-                  onChange={(event) =>
-                    setFormState((prev) => ({ ...prev, title: event.target.value }))
-                  }
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="edit_description">Description</Label>
-                <Textarea
-                  id="edit_description"
-                  rows={5}
-                  value={formState.description}
-                  onChange={(event) =>
-                    setFormState((prev) => ({ ...prev, description: event.target.value }))
-                  }
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="edit_external_url">External Application URL</Label>
-                <Input
-                  id="edit_external_url"
-                  value={formState.external_url}
-                  onChange={(event) =>
-                    setFormState((prev) => ({ ...prev, external_url: event.target.value }))
-                  }
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="edit_expires_at">Expires At</Label>
-                <Input
-                  id="edit_expires_at"
-                  type="datetime-local"
-                  value={formState.expires_at}
-                  onChange={(event) =>
-                    setFormState((prev) => ({ ...prev, expires_at: event.target.value }))
-                  }
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="edit_status">Status</Label>
-                <Select
-                  value={formState.status}
-                  onValueChange={(value) => setFormState((prev) => ({ ...prev, status: value }))}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {statusOptions.map((status) => (
-                      <SelectItem key={status} value={status}>
-                        {statusLabels[status]}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="edit_source_name">Source Name</Label>
-                <Input
-                  id="edit_source_name"
-                  value={formState.source_name}
-                  onChange={(event) =>
-                    setFormState((prev) => ({ ...prev, source_name: event.target.value }))
-                  }
-                />
-              </div>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="edit_currency">Currency</Label>
-                  <Input
-                    id="edit_currency"
-                    value={formState.currency}
-                    onChange={(event) =>
-                      setFormState((prev) => ({ ...prev, currency: event.target.value.toUpperCase() }))
-                    }
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="edit_budget_min">Budget Minimum</Label>
-                  <Input
-                    id="edit_budget_min"
-                    type="number"
-                    value={formState.budget_min}
-                    onChange={(event) =>
-                      setFormState((prev) => ({ ...prev, budget_min: event.target.value }))
-                    }
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="edit_budget_max">Budget Maximum</Label>
-                  <Input
-                    id="edit_budget_max"
-                    type="number"
-                    value={formState.budget_max}
-                    onChange={(event) =>
-                      setFormState((prev) => ({ ...prev, budget_max: event.target.value }))
-                    }
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="edit_delivery_time_min">Delivery Time (Min days)</Label>
-                  <Input
-                    id="edit_delivery_time_min"
-                    type="number"
-                    value={formState.delivery_time_min}
-                    onChange={(event) =>
-                      setFormState((prev) => ({ ...prev, delivery_time_min: event.target.value }))
-                    }
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="edit_delivery_time_max">Delivery Time (Max days)</Label>
-                  <Input
-                    id="edit_delivery_time_max"
-                    type="number"
-                    value={formState.delivery_time_max}
-                    onChange={(event) =>
-                      setFormState((prev) => ({ ...prev, delivery_time_max: event.target.value }))
-                    }
-                  />
-                </div>
-              </div>
-              <div className="grid gap-2">
-                <Label>Required Skills (optional)</Label>
-                <ScrollArea className="h-40 border rounded-md p-3 bg-slate-50/50">
-                  {skillsLoading ? (
-                    <div className="flex items-center justify-center h-full text-sm text-slate-500">
-                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                      Loading skills…
-                    </div>
-                  ) : skills.length === 0 ? (
-                    <p className="text-sm text-slate-500">
-                      No skills available. External gigs can still be updated without skills.
-                    </p>
-                  ) : (
-                    <div className="grid gap-2">
-                      {skills.map((skill) => {
-                        const checked = formState.skills.includes(skill.id);
-                        return (
-                          <label
-                            key={skill.id}
-                            className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer"
-                          >
-                            <Checkbox
-                              checked={checked}
-                              onCheckedChange={(value) => {
-                                setFormState((prev) => {
-                                  if (value) {
-                                    return {
-                                      ...prev,
-                                      skills: Array.from(new Set([...prev.skills, skill.id]))
-                                    };
-                                  }
-                                  return {
-                                    ...prev,
-                                    skills: prev.skills.filter((id) => id !== skill.id)
-                                  };
-                                });
-                              }}
-                            />
-                            <span>{skill.name}</span>
-                          </label>
-                        );
-                      })}
-                    </div>
-                  )}
-                </ScrollArea>
-              </div>
-            </div>
+            {renderExternalGigForm('edit')}
             <DialogFooter className="flex flex-col gap-2 sm:flex-row sm:justify-end sm:gap-3">
               <Button variant="outline" onClick={() => setEditOpen(false)} disabled={submitting}>
                 Cancel

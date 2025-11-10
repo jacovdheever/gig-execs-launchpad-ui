@@ -235,9 +235,12 @@ export default function GigDetailsPage() {
   };
 
   const formatCurrency = (amount?: number | null, currency?: string | null) => {
+    if (amount == null || Number.isNaN(Number(amount))) {
+      return 'Budget to be confirmed';
+    }
     const safeCurrency =
       currency && currency.length >= 2 ? currency.toUpperCase() : 'USD';
-    const numericAmount = Number(amount ?? 0);
+    const numericAmount = Number(amount);
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: safeCurrency,
@@ -248,7 +251,7 @@ export default function GigDetailsPage() {
 
   const formatDuration = (minDays?: number | null, maxDays?: number | null) => {
     if (minDays == null || maxDays == null) {
-      return 'Timeline TBD';
+      return 'Timeline to be confirmed';
     }
 
     if (minDays < 30) {
@@ -410,6 +413,30 @@ export default function GigDetailsPage() {
       </AppShell>
     );
   }
+
+  const displayClientName = isExternal
+    ? project.source_name || 'External client'
+    : project.client?.company_name ||
+      (project.client?.first_name && project.client?.last_name
+        ? `${project.client.first_name} ${project.client.last_name}`
+        : project.client?.first_name || project.client?.last_name || 'Client');
+  const currencyCode = project.currency || 'USD';
+  const hasBudgetMin = project.budget_min != null;
+  const hasBudgetMax = project.budget_max != null;
+  let budgetDisplay: string;
+  if (hasBudgetMin) {
+    if (hasBudgetMax && project.budget_max !== project.budget_min) {
+      budgetDisplay = `${formatCurrency(project.budget_min, currencyCode)} - ${formatCurrency(
+        project.budget_max,
+        currencyCode
+      )}`;
+    } else {
+      budgetDisplay = formatCurrency(project.budget_min, currencyCode);
+    }
+  } else {
+    budgetDisplay = 'Budget to be confirmed';
+  }
+  const timelineDisplay = formatDuration(project.delivery_time_min, project.delivery_time_max);
 
   return (
     <AppShell>

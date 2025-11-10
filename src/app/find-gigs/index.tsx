@@ -305,9 +305,12 @@ export default function FindGigsPage() {
   };
 
   const formatCurrency = (amount?: number | null, currency?: string | null) => {
+    if (amount == null || Number.isNaN(Number(amount))) {
+      return 'Budget to be confirmed';
+    }
     const safeCurrency =
       currency && currency.length >= 2 ? currency.toUpperCase() : 'USD';
-    const numericAmount = Number(amount ?? 0);
+    const numericAmount = Number(amount);
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: safeCurrency,
@@ -318,7 +321,7 @@ export default function FindGigsPage() {
 
   const formatDuration = (minDays?: number | null, maxDays?: number | null) => {
     if (minDays == null || maxDays == null) {
-      return 'Timeline TBD';
+      return 'Timeline to be confirmed';
     }
 
     if (minDays < 30) {
@@ -845,47 +848,71 @@ export default function FindGigsPage() {
                 const createdAtLabel = project.created_at
                   ? new Date(project.created_at).toLocaleDateString()
                   : '—';
+                const displayClientName = isExternal
+                  ? project.source_name || 'External client'
+                  : project.client?.company_name ||
+                    (project.client?.first_name && project.client?.last_name
+                      ? `${project.client.first_name} ${project.client.last_name.charAt(0)}.`
+                      : `Client ${project.creator_id?.slice(-4) || ''}`.trim() || 'Client');
+                const currencyCode = project.currency || 'USD';
+                const hasBudgetMin = project.budget_min != null;
+                const hasBudgetMax = project.budget_max != null;
+                let budgetDisplay: string;
+                if (hasBudgetMin) {
+                  if (hasBudgetMax && project.budget_max !== project.budget_min) {
+                    budgetDisplay = `${formatCurrency(project.budget_min, currencyCode)} - ${formatCurrency(project.budget_max, currencyCode)}`;
+                  } else {
+                    budgetDisplay = formatCurrency(project.budget_min, currencyCode);
+                  }
+                } else {
+                  budgetDisplay = 'Budget to be confirmed';
+                }
+                const timelineDisplay = formatDuration(
+                  project.delivery_time_min,
+                  project.delivery_time_max
+                );
 
                 return (
                   <Card key={project.id} className="hover:shadow-lg transition-shadow">
                     <CardHeader>
                       <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-100 flex items-center justify-center">
-                            {project.client?.logo_url ? (
+                        <div className="flex items-start gap-3">
+                          <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg bg-slate-100">
+                            {!isExternal && project.client?.logo_url ? (
                               <img
                                 src={project.client.logo_url}
                                 alt={project.client.company_name || 'Company Logo'}
-                                className="w-full h-full object-cover"
+                                className="h-full w-full object-cover"
                               />
                             ) : (
-                              <Building2 className="w-6 h-6 text-slate-500" />
+                              <Building2 className="h-6 w-6 text-slate-500" />
                             )}
                           </div>
                           <div>
                             <h3 className="font-semibold text-slate-900">
-                              {project.client?.company_name ||
-                                (project.client?.first_name && project.client?.last_name
-                                  ? `${project.client.first_name} ${project.client.last_name.charAt(0)}.`
-                                  : `User ${project.creator_id?.slice(-4) || 'Unknown'}`)}
+                              {displayClientName}
                             </h3>
-                            <div className="flex items-center gap-2 mt-1">
-                              {project.client?.verified && (
-                                <div className="flex items-center gap-1">
-                                  <CheckCircle className="w-4 h-4 text-green-500" />
-                                  <span className="text-xs text-green-600 font-medium">Verified</span>
-                                </div>
-                              )}
-                              {project.client?.rating && project.client?.total_ratings ? (
-                                renderStars(project.client.rating)
-                              ) : (
-                                <span className="text-sm text-slate-500">No ratings yet</span>
-                              )}
-                            </div>
-                            {isExternal && project.source_name && (
-                              <p className="text-xs text-blue-600 mt-1">
-                                Source: {project.source_name}
+                            {!isExternal ? (
+                              <div className="mt-1 flex items-center gap-2">
+                                {project.client?.verified && (
+                                  <div className="flex items-center gap-1">
+                                    <CheckCircle className="h-4 w-4 text-green-500" />
+                                    <span className="text-xs font-medium text-green-600">Verified</span>
+                                  </div>
+                                )}
+                                {project.client?.rating && project.client?.total_ratings ? (
+                                  renderStars(project.client.rating)
+                                ) : (
+                                  <span className="text-xs text-slate-500">No ratings yet</span>
+                                )}
+                              </div>
+                            ) : (
+                              <p className="mt-1 text-xs text-slate-500">
+                                External opportunity curated by GigExecs
                               </p>
+                            )}
+                            {isExternal && project.source_name && (
+                              <p className="mt-1 text-xs text-blue-600">Client: {project.source_name}</p>
                             )}
                           </div>
                         </div>
@@ -894,15 +921,15 @@ export default function FindGigsPage() {
                             {createdAtLabel}
                           </Badge>
                           {isExternal && (
-                            <Badge className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                            <Badge className="text-xs border-blue-200 bg-blue-50 text-blue-700">
                               External
                             </Badge>
                           )}
                         </div>
                       </div>
 
-                      <div className="flex items-start justify-between mb-2">
-                        <CardTitle className="text-lg line-clamp-2 flex-1">{project.title}</CardTitle>
+                      <div className="mb-2 flex items-start justify-between">
+                        <CardTitle className="flex-1 text-lg line-clamp-2">{project.title}</CardTitle>
                         {user?.role === 'consultant' && (() => {
                           const match = calculateMatchQuality(project);
                           console.log('🔍 Match badge for project', project.id, ':', match);
@@ -945,18 +972,12 @@ export default function FindGigsPage() {
                           <h4 className="font-semibold text-slate-900 text-sm">About Gig:</h4>
                           <div className="flex items-center gap-4 text-sm text-slate-600">
                             <div className="flex items-center gap-1">
-                              <DollarSign className="w-4 h-4" />
-                              <span>
-                                {formatCurrency(project.budget_min, project.currency)}
-                                {project.budget_max !== project.budget_min &&
-                                  ` - ${formatCurrency(project.budget_max, project.currency)}`}
-                              </span>
+                              <DollarSign className="h-4 w-4" />
+                              <span>{budgetDisplay}</span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <Clock className="w-4 h-4" />
-                              <span>
-                                {formatDuration(project.delivery_time_min, project.delivery_time_max)}
-                              </span>
+                              <Clock className="h-4 w-4" />
+                              <span>{timelineDisplay}</span>
                             </div>
                           </div>
                         </div>

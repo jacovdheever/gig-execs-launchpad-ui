@@ -63,6 +63,15 @@ exports.handler = async (event) => {
 
     const nowIso = new Date().toISOString();
 
+    const budgetMin =
+      payload.budget_min !== undefined && payload.budget_min !== null
+        ? Number(payload.budget_min)
+        : null;
+    const budgetMax =
+      payload.budget_max !== undefined && payload.budget_max !== null
+        ? Number(payload.budget_max)
+        : null;
+
     const projectToInsert = {
       title: sanitizeString(payload.title),
       description: payload.description,
@@ -71,15 +80,11 @@ exports.handler = async (event) => {
       expires_at: payload.expires_at || null,
       source_name: payload.source_name ? sanitizeString(payload.source_name) : null,
       type: 'client',
-      currency: payload.currency || null,
-      budget_min:
-        payload.budget_min !== undefined && payload.budget_min !== null
-          ? Number(payload.budget_min)
-          : null,
-      budget_max:
-        payload.budget_max !== undefined && payload.budget_max !== null
-          ? Number(payload.budget_max)
-          : null,
+      currency: 'USD',
+      budget_min: budgetMin,
+      budget_max: budgetMax,
+      desired_amount_min: budgetMin,
+      desired_amount_max: budgetMax,
       delivery_time_min:
         payload.delivery_time_min !== undefined && payload.delivery_time_min !== null
           ? Number(payload.delivery_time_min)

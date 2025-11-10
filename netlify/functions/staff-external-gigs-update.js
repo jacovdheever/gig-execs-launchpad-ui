@@ -111,16 +111,20 @@ exports.handler = async (event) => {
     }
 
     if (payload.currency !== undefined) {
-      updateFields.currency = payload.currency || null;
+      updateFields.currency = 'USD';
     }
 
     if (payload.budget_min !== undefined) {
       updateFields.budget_min =
         payload.budget_min !== null ? Number(payload.budget_min) : null;
+      updateFields.desired_amount_min =
+        payload.budget_min !== null ? Number(payload.budget_min) : null;
     }
 
     if (payload.budget_max !== undefined) {
       updateFields.budget_max =
+        payload.budget_max !== null ? Number(payload.budget_max) : null;
+      updateFields.desired_amount_max =
         payload.budget_max !== null ? Number(payload.budget_max) : null;
     }
 
