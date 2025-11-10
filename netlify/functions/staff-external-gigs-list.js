@@ -26,6 +26,18 @@ function parseSkills(value) {
   }
 }
 
+function parseIndustries(value) {
+  if (!value) return [];
+  if (Array.isArray(value)) return value;
+
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (_error) {
+    return [];
+  }
+}
+
 exports.handler = async (event) => {
   try {
     if (event.httpMethod === 'OPTIONS') {
@@ -84,6 +96,7 @@ exports.handler = async (event) => {
         delivery_time_min,
         delivery_time_max,
         skills_required,
+        industries,
         deleted_at,
         creator_id
       `)
@@ -119,6 +132,7 @@ exports.handler = async (event) => {
     const formattedProjects = (projects || []).map((project) => ({
       ...project,
       skills_required: parseSkills(project.skills_required),
+      industries: parseIndustries(project.industries),
       is_expired: project.expires_at
         ? new Date(project.expires_at).getTime() <= Date.now()
         : false

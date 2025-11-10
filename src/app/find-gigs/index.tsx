@@ -45,6 +45,7 @@ interface Project {
   expires_at?: string | null;
   source_name?: string | null;
   is_expired?: boolean;
+  is_active?: boolean;
   client?: {
     first_name: string;
     last_name: string;
@@ -77,6 +78,7 @@ export default function FindGigsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSkills, setSelectedSkills] = useState<number[]>([]);
   const [selectedIndustries, setSelectedIndustries] = useState<number[]>([]);
+  const [showActiveOnly, setShowActiveOnly] = useState<boolean>(false);
   const [hourlyRateRange, setHourlyRateRange] = useState<[number, number]>([0, 0]);
   const [maxBudget, setMaxBudget] = useState<number>(1000000);
   const [showFilters, setShowFilters] = useState(false);
@@ -142,7 +144,8 @@ export default function FindGigsPage() {
         supabase
           .from('projects')
           .select('*')
-          .eq('status', 'open')
+          .is('deleted_at', null)
+          .in('status', ['open', 'in_progress', 'completed', 'cancelled'])
           .order('created_at', { ascending: false }),
         supabase
           .from('skills')
@@ -240,12 +243,33 @@ export default function FindGigsPage() {
           console.error('Error parsing skills_required for project', project.id, error);
           skills_required = [];
         }
+ 
+        let industriesArray: number[] = [];
+        if (Array.isArray(project.industries)) {
+          industriesArray = project.industries
+            .map((industryId: number | string) => Number(industryId))
+            .filter((industryId) => !Number.isNaN(industryId));
+        } else if (typeof project.industries === 'string') {
+          try {
+            const parsedIndustries = JSON.parse(project.industries);
+            if (Array.isArray(parsedIndustries)) {
+              industriesArray = parsedIndustries
+                .map((industryId: number | string) => Number(industryId))
+                .filter((industryId) => !Number.isNaN(industryId));
+            }
+          } catch (error) {
+            console.error('Error parsing industries for project', project.id, error);
+            industriesArray = [];
+          }
+        }
 
         const projectOrigin: 'internal' | 'external' =
           project.project_origin === 'external' ? 'external' : 'internal';
         const sourceName = project.source_name || null;
         const expiresAt = project.expires_at || null;
         const externalUrl = project.external_url || null;
+        const expiryTimestamp = expiresAt ? new Date(expiresAt).getTime() : NaN;
+        const isExpired = Number.isNaN(expiryTimestamp) ? false : expiryTimestamp <= Date.now();
 
         const clientProfile = clientProfiles.find(cp => cp.user_id === project.creator_id) || {};
         const clientData = users.find(u => u.id === project.creator_id) || {};
@@ -283,8 +307,10 @@ export default function FindGigsPage() {
           project_origin: projectOrigin,
           external_url: externalUrl,
           expires_at: expiresAt,
-          is_expired: expiresAt ? new Date(expiresAt).getTime() <= Date.now() : false,
+          is_expired: isExpired,
           skills_required,
+          industries: industriesArray,
+          is_active: project.status === 'open' && !isExpired,
           client: clientInfo
         };
       });
@@ -293,11 +319,21 @@ export default function FindGigsPage() {
 
       // Calculate dynamic budget range based on loaded projects
       if (processedProjects.length > 0) {
-        const maxProjectBudget = Math.max(...processedProjects.map(p => p.budget_max));
-        const minProjectBudget = Math.min(...processedProjects.map(p => p.budget_min));
-        setMaxBudget(maxProjectBudget);
-        setHourlyRateRange([minProjectBudget, maxProjectBudget]);
-        console.log('🔍 Dynamic budget range set:', { min: minProjectBudget, max: maxProjectBudget });
+        const budgetValues = processedProjects
+          .flatMap((p) => [p.budget_min, p.budget_max])
+          .filter((value): value is number => typeof value === 'number' && !Number.isNaN(value));
+
+        if (budgetValues.length > 0) {
+          const minBudget = Math.min(...budgetValues);
+          const maxBudgetValue = Math.max(...budgetValues);
+          setMaxBudget(maxBudgetValue);
+          setHourlyRateRange([minBudget, maxBudgetValue]);
+          console.log('🔍 Dynamic budget range set:', { min: minBudget, max: maxBudgetValue });
+        } else {
+          setMaxBudget(0);
+          setHourlyRateRange([0, 0]);
+          console.log('🔍 Dynamic budget range set to defaults (no numeric budgets found).');
+        }
       }
 
       // Extract skills from projects for filtering
@@ -472,6 +508,7 @@ export default function FindGigsPage() {
     const hasIndustries = selectedIndustries.length > 0;
     const hasBudgetFilter = hourlyRateRange[0] > 0 || hourlyRateRange[1] < maxBudget;
     const hasOriginFilter = originFilter !== 'all';
+    const hasActiveToggle = showActiveOnly;
     
     console.log('🔍 Filter check:');
     console.log('  - hasSearch:', hasSearch);
@@ -479,6 +516,7 @@ export default function FindGigsPage() {
     console.log('  - hasIndustries:', hasIndustries);
     console.log('  - hasBudgetFilter:', hasBudgetFilter);
     console.log('  - hasOriginFilter:', hasOriginFilter);
+    console.log('  - showActiveOnly:', showActiveOnly);
     console.log('  - searchTerm:', searchTerm);
     console.log('  - selectedSkills:', selectedSkills);
     console.log('  - selectedIndustries:', selectedIndustries);
@@ -487,8 +525,23 @@ export default function FindGigsPage() {
     console.log('  - hourlyRateRange[0] !== 0:', hourlyRateRange[0] !== 0);
     console.log('  - hourlyRateRange[1] !== maxBudget:', hourlyRateRange[1] !== maxBudget);
     
-    return hasSearch || hasSkills || hasIndustries || hasBudgetFilter || hasOriginFilter;
-  }, [searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, maxBudget, originFilter]);
+    return (
+      hasSearch ||
+      hasSkills ||
+      hasIndustries ||
+      hasBudgetFilter ||
+      hasOriginFilter ||
+      hasActiveToggle
+    );
+  }, [
+    searchTerm,
+    selectedSkills,
+    selectedIndustries,
+    hourlyRateRange,
+    maxBudget,
+    originFilter,
+    showActiveOnly
+  ]);
 
   const filteredProjects = useMemo(() => {
     console.log('🔍 Starting filtering with:');
@@ -515,6 +568,17 @@ export default function FindGigsPage() {
         return false;
       }
 
+      const isActive = project.is_active ?? (project.status === 'open' && !project.is_expired);
+      if (showActiveOnly && !isActive) {
+        console.log('🔍 Excluding project due to active-only toggle:', {
+          id: project.id,
+          status: project.status,
+          isExpired: project.is_expired,
+          computedActive: isActive
+        });
+        return false;
+      }
+ 
       // If no active filters, show all projects
       if (!hasActiveFilters) {
         console.log('🔍 No active filters, showing project', project.id);
@@ -533,7 +597,12 @@ export default function FindGigsPage() {
                              (project.industries && selectedIndustries.some(industryId => project.industries.includes(industryId)));
     
     // Budget matching - project budget should overlap with filter range
-    const matchesRate = project.budget_min <= hourlyRateRange[1] && project.budget_max >= hourlyRateRange[0];
+    const hasBudget =
+      typeof project.budget_min === 'number' && !Number.isNaN(project.budget_min) &&
+      typeof project.budget_max === 'number' && !Number.isNaN(project.budget_max);
+    const matchesRate = !hasBudget
+      ? true
+      : project.budget_min <= hourlyRateRange[1] && project.budget_max >= hourlyRateRange[0];
     
     // Additional debug for rate matching
     console.log('🔍 Rate matching for project', project.id, ':', {
@@ -554,6 +623,8 @@ export default function FindGigsPage() {
       matchesSkills,
       matchesIndustries,
       matchesRate,
+      showActiveOnly,
+      isActive,
       selectedSkills: selectedSkills,
       projectSkills: project.skills_required,
       selectedIndustries: selectedIndustries,
@@ -566,7 +637,7 @@ export default function FindGigsPage() {
     
     return matchesSearch && matchesSkills && matchesIndustries && matchesRate;
     });
-  }, [projects, hasActiveFilters, searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, user, userSkills, userIndustries, originFilter]);
+  }, [projects, hasActiveFilters, searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, user, userSkills, userIndustries, originFilter, showActiveOnly]);
 
   const sortedProjects = useMemo(() => [...filteredProjects].sort((a, b) => {
     // Sort by match quality: Excellent → Good → Partial → Low
@@ -795,6 +866,22 @@ export default function FindGigsPage() {
                         </div>
                       </RadioGroup>
                     </div>
+
+                    <div className="pt-4 border-t border-slate-200">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="active-only-toggle"
+                          checked={showActiveOnly}
+                          onCheckedChange={(checked) => setShowActiveOnly(Boolean(checked))}
+                        />
+                        <Label htmlFor="active-only-toggle" className="text-sm">
+                          Show active gigs only
+                        </Label>
+                      </div>
+                      <p className="mt-1 text-xs text-slate-500">
+                        Hide gigs that are already filled, cancelled, or past their expiry date.
+                      </p>
+                    </div>
                   </div>
                 )}
                 
@@ -809,6 +896,7 @@ export default function FindGigsPage() {
                       setSelectedIndustries([]);
                       setHourlyRateRange([0, maxBudget]);
                       setOriginFilter('all');
+                      setShowActiveOnly(false);
                     }}
                     className="text-sm"
                   >
@@ -847,6 +935,7 @@ export default function FindGigsPage() {
                     setSelectedIndustries([]);
                     setHourlyRateRange([0, maxBudget]);
                     setOriginFilter('all');
+                    setShowActiveOnly(false);
                   }}>
                     Clear All Filters
                   </Button>

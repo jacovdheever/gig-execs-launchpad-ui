@@ -77,6 +77,7 @@ interface ExternalProject {
   delivery_time_min: number | null;
   delivery_time_max: number | null;
   skills_required: number[];
+  industries: number[];
   is_expired?: boolean;
   project_origin?: 'internal' | 'external';
 }
@@ -86,17 +87,24 @@ interface SkillOption {
   name: string;
 }
 
+interface IndustryOption {
+  id: number;
+  name: string;
+  category?: string | null;
+}
+
 interface ExternalGigFormState {
   client_name: string;
   title: string;
   description: string;
-  status: string;
+  status: 'draft' | 'open' | 'in_progress' | 'completed' | 'cancelled';
   external_url: string;
   expires_at: string;
   budget_amount: string;
   budget_to_be_confirmed: boolean;
   timeline: string;
   skills: number[];
+  industries: number[];
 }
 
 const statusOptions = ['draft', 'open', 'in_progress', 'completed', 'cancelled'] as const;
@@ -124,7 +132,8 @@ const defaultFormState: ExternalGigFormState = {
   budget_amount: '',
   budget_to_be_confirmed: false,
   timeline: '',
-  skills: []
+  skills: [],
+  industries: []
 };
 
 const TIMELINE_OPTIONS = [
@@ -211,6 +220,7 @@ function normalizeSkills(value: unknown): number[] {
   if (Array.isArray(value)) {
     return value.map((item) => Number(item)).filter((item) => !Number.isNaN(item));
   }
+
   if (typeof value === 'string') {
     try {
       const parsed = JSON.parse(value);
@@ -221,6 +231,27 @@ function normalizeSkills(value: unknown): number[] {
       return [];
     }
   }
+
+  return [];
+}
+
+function normalizeIndustries(value: unknown): number[] {
+  if (!value) return [];
+  if (Array.isArray(value)) {
+    return value.map((item) => Number(item)).filter((item) => !Number.isNaN(item));
+  }
+
+  if (typeof value === 'string') {
+    try {
+      const parsed = JSON.parse(value);
+      if (Array.isArray(parsed)) {
+        return parsed.map((item) => Number(item)).filter((item) => !Number.isNaN(item));
+      }
+    } catch (_error) {
+      return [];
+    }
+  }
+
   return [];
 }
 
@@ -238,6 +269,8 @@ export default function StaffExternalGigsPage() {
 
   const [skills, setSkills] = useState<SkillOption[]>([]);
   const [skillsLoading, setSkillsLoading] = useState(false);
+  const [industries, setIndustries] = useState<IndustryOption[]>([]);
+  const [industriesLoading, setIndustriesLoading] = useState(false);
 
   const [createOpen, setCreateOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
@@ -247,6 +280,8 @@ export default function StaffExternalGigsPage() {
   const [formState, setFormState] = useState<ExternalGigFormState>(defaultFormState);
   const [skillSearch, setSkillSearch] = useState('');
   const [showSkillDropdown, setShowSkillDropdown] = useState(false);
+  const [industrySearch, setIndustrySearch] = useState('');
+  const [showIndustryDropdown, setShowIndustryDropdown] = useState(false);
 
   const filteredSkills = useMemo(() => {
     if (!skillSearch.trim()) {
@@ -259,6 +294,18 @@ export default function StaffExternalGigsPage() {
     );
   }, [skillSearch, skills, formState.skills]);
 
+  const filteredIndustries = useMemo(() => {
+    if (!industrySearch.trim()) {
+      return industries.filter((industry) => !formState.industries.includes(industry.id));
+    }
+    const term = industrySearch.toLowerCase();
+    return industries.filter(
+      (industry) =>
+        industry.name.toLowerCase().includes(term) &&
+        !formState.industries.includes(industry.id)
+    );
+  }, [industrySearch, industries, formState.industries]);
+
   const selectedSkillOptions = useMemo(
     () =>
       formState.skills
@@ -267,7 +314,16 @@ export default function StaffExternalGigsPage() {
     [formState.skills, skills]
   );
 
+  const selectedIndustryOptions = useMemo(
+    () =>
+      formState.industries
+        .map((id) => industries.find((industry) => industry.id === id))
+        .filter((industry): industry is IndustryOption => Boolean(industry)),
+    [formState.industries, industries]
+  );
+
   const maxSkillSelectionsReached = formState.skills.length >= 15;
+  const maxIndustrySelectionsReached = formState.industries.length >= 10;
 
   function addSkillOption(skill: SkillOption) {
     if (maxSkillSelectionsReached) return;
@@ -286,6 +342,25 @@ export default function StaffExternalGigsPage() {
     }));
   }
 
+  function addIndustryOption(industry: IndustryOption) {
+    if (maxIndustrySelectionsReached) return;
+    setFormState((prev) => ({
+      ...prev,
+      industries: prev.industries.includes(industry.id)
+        ? prev.industries
+        : [...prev.industries, industry.id]
+    }));
+    setIndustrySearch('');
+    setShowIndustryDropdown(false);
+  }
+
+  function removeIndustryOption(industryId: number) {
+    setFormState((prev) => ({
+      ...prev,
+      industries: prev.industries.filter((id) => id !== industryId)
+    }));
+  }
+
   const canManage = useMemo(
     () => (staff?.role === 'admin' || staff?.role === 'super_user') as boolean,
     [staff?.role]
@@ -300,26 +375,55 @@ export default function StaffExternalGigsPage() {
 
   useEffect(() => {
     loadSkills();
+    loadIndustries();
   }, []);
 
   async function loadSkills() {
     try {
       setSkillsLoading(true);
-      const { data, error } = await supabase
-        .from('skills')
-        .select('id, name')
-        .order('name', { ascending: true });
+      const { data, error } = await supabase.from('skills').select('id, name').order('name');
 
       if (error) {
         console.error('❌ Failed to load skills for external gigs:', error);
+        toast({
+          title: 'Failed to load skills',
+          description: 'Unable to fetch skill options right now.',
+          variant: 'destructive'
+        });
         return;
       }
 
-      setSkills((data || []).map((skill) => ({ id: Number(skill.id), name: skill.name })));
+      setSkills(data || []);
     } catch (error) {
       console.error('❌ Unexpected error loading skills:', error);
     } finally {
       setSkillsLoading(false);
+    }
+  }
+
+  async function loadIndustries() {
+    try {
+      setIndustriesLoading(true);
+      const { data, error } = await supabase
+        .from('industries')
+        .select('id, name, category')
+        .order('name');
+
+      if (error) {
+        console.error('❌ Failed to load industries for external gigs:', error);
+        toast({
+          title: 'Failed to load industries',
+          description: 'Unable to fetch industry options right now.',
+          variant: 'destructive'
+        });
+        return;
+      }
+
+      setIndustries(data || []);
+    } catch (error) {
+      console.error('❌ Unexpected error loading industries:', error);
+    } finally {
+      setIndustriesLoading(false);
     }
   }
 
@@ -378,7 +482,8 @@ export default function StaffExternalGigsPage() {
         (project: ExternalProject) => ({
           ...project,
           project_origin: 'external',
-          skills_required: normalizeSkills(project.skills_required)
+          skills_required: normalizeSkills(project.skills_required),
+          industries: normalizeIndustries(project.industries)
         })
       );
 
@@ -399,6 +504,8 @@ export default function StaffExternalGigsPage() {
     setFormState(defaultFormState);
     setSkillSearch('');
     setShowSkillDropdown(false);
+    setIndustrySearch('');
+    setShowIndustryDropdown(false);
   }
 
   function openCreateDialog() {
@@ -425,10 +532,13 @@ export default function StaffExternalGigsPage() {
       budget_amount: budgetAmount,
       budget_to_be_confirmed: budgetToBeConfirmed,
       timeline,
-      skills: normalizeSkills(project.skills_required)
+      skills: normalizeSkills(project.skills_required),
+      industries: project.industries || []
     });
     setSkillSearch('');
     setShowSkillDropdown(false);
+    setIndustrySearch('');
+    setShowIndustryDropdown(false);
     setEditOpen(true);
   }
 
@@ -473,7 +583,8 @@ export default function StaffExternalGigsPage() {
         budget_max: budgetValue,
         delivery_time_min: timelineMin,
         delivery_time_max: timelineMax,
-        skills_required: formState.skills
+        skills_required: formState.skills,
+        industries: formState.industries
       };
 
       const response = await fetch('/.netlify/functions/staff-external-gigs-create', {
@@ -557,7 +668,8 @@ export default function StaffExternalGigsPage() {
         budget_max: budgetValue,
         delivery_time_min: timelineMin,
         delivery_time_max: timelineMax,
-        skills_required: formState.skills
+        skills_required: formState.skills,
+        industries: formState.industries
       };
 
       const response = await fetch('/.netlify/functions/staff-external-gigs-update', {
@@ -779,6 +891,106 @@ export default function StaffExternalGigsPage() {
           Search
         </Button>
       </div>
+    </div>
+  );
+
+  const renderIndustrySelector = () => (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <Label className="text-sm font-medium text-slate-700">
+          Industries <span className="text-xs text-slate-400">(optional)</span>
+        </Label>
+        <span className="text-xs text-slate-500">
+          {formState.industries.length}/10 selected
+        </span>
+      </div>
+
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+        <Input
+          value={industrySearch}
+          placeholder={
+            maxIndustrySelectionsReached
+              ? 'Maximum industries selected'
+              : 'Search for industries...'
+          }
+          onChange={(event) => {
+            const value = event.target.value;
+            setIndustrySearch(value);
+            setShowIndustryDropdown(Boolean(value));
+          }}
+          onFocus={() => {
+            if (industrySearch) {
+              setShowIndustryDropdown(true);
+            }
+          }}
+          disabled={
+            industriesLoading || (maxIndustrySelectionsReached && !industrySearch)
+          }
+          className="pl-10"
+        />
+        {showIndustryDropdown && !industriesLoading && (
+          <div className="absolute z-20 mt-1 max-h-56 w-full overflow-y-auto rounded-md border border-slate-200 bg-white shadow-lg">
+            {filteredIndustries.length === 0 ? (
+              <div className="px-4 py-3 text-sm text-slate-500">
+                No industries match “{industrySearch}”.
+              </div>
+            ) : (
+              filteredIndustries.map((industry) => (
+                <button
+                  key={industry.id}
+                  type="button"
+                  onMouseDown={(event) => {
+                    event.preventDefault();
+                    addIndustryOption(industry);
+                  }}
+                  className="flex w-full items-center justify-between px-4 py-2 text-left text-sm hover:bg-slate-50"
+                >
+                  <span className="flex flex-col">
+                    <span>{industry.name}</span>
+                    {industry.category && (
+                      <span className="text-xs text-slate-400">{industry.category}</span>
+                    )}
+                  </span>
+                  {formState.industries.includes(industry.id) && (
+                    <Badge variant="secondary">Added</Badge>
+                  )}
+                </button>
+              ))
+            )}
+          </div>
+        )}
+      </div>
+
+      {industriesLoading ? (
+        <div className="flex items-center gap-2 text-sm text-slate-500">
+          <Loader2 className="h-4 w-4 animate-spin" />
+          Loading industries…
+        </div>
+      ) : selectedIndustryOptions.length === 0 ? (
+        <p className="text-xs text-slate-500">
+          You can leave this blank if the industry is unspecified.
+        </p>
+      ) : (
+        <div className="flex flex-wrap gap-2">
+          {selectedIndustryOptions.map((industry) => (
+            <span
+              key={industry.id}
+              className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-3 py-1 text-xs text-blue-700"
+            >
+              {industry.name}
+              <button
+                type="button"
+                onClick={() => removeIndustryOption(industry.id)}
+                className="rounded-full p-0.5 text-blue-500 hover:text-blue-700"
+                aria-label={`Remove ${industry.name}`}
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 
@@ -1027,6 +1239,7 @@ export default function StaffExternalGigsPage() {
         </p>
       </div>
 
+      {renderIndustrySelector()}
       {renderSkillSelector()}
     </div>
   );

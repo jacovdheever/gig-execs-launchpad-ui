@@ -23,6 +23,13 @@ function normaliseSkills(skills) {
   return JSON.stringify(skills.map((skill) => Number(skill)));
 }
 
+function normaliseIndustries(industries) {
+  if (!Array.isArray(industries) || industries.length === 0) {
+    return [];
+  }
+  return industries.map((industry) => Number(industry));
+}
+
 exports.handler = async (event) => {
   try {
     if (event.httpMethod === 'OPTIONS') {
@@ -94,6 +101,7 @@ exports.handler = async (event) => {
           ? Number(payload.delivery_time_max)
           : null,
       skills_required: normaliseSkills(payload.skills_required),
+      industries: normaliseIndustries(payload.industries),
       project_origin: 'external',
       creator_id: null,
       updated_at: nowIso
@@ -126,7 +134,8 @@ exports.handler = async (event) => {
       {
         project: {
           ...project,
-          skills_required: payload.skills_required || []
+          skills_required: payload.skills_required || [],
+          industries: payload.industries || []
         }
       },
       201

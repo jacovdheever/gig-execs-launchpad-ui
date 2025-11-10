@@ -215,6 +215,12 @@ function validateExternalGigCreateInput(body) {
     errors.push('skills_required must be an array when provided');
   }
 
+  if (body.industries !== undefined && body.industries !== null) {
+    if (!isValidNumberArray(body.industries)) {
+      errors.push('industries must be an array of numeric industry identifiers');
+    }
+  }
+
   return {
     isValid: errors.length === 0,
     errors
@@ -248,7 +254,8 @@ function validateExternalGigUpdateInput(body) {
     'budget_max',
     'delivery_time_min',
     'delivery_time_max',
-    'skills_required'
+    'skills_required',
+    'industries'
   ];
 
   const providedFields = Object.keys(body).filter(key => key !== 'id');
@@ -310,6 +317,12 @@ function validateExternalGigUpdateInput(body) {
       errors.push('skills_required must be an array when provided');
     } else if (body.skills_required.some(skill => Number.isNaN(Number(skill)))) {
       errors.push('skills_required must contain numeric identifiers');
+    }
+  }
+
+  if (body.industries !== undefined && body.industries !== null) {
+    if (!isValidNumberArray(body.industries)) {
+      errors.push('industries must be an array of numeric industry identifiers');
     }
   }
 
@@ -454,12 +467,20 @@ function createErrorResponse(statusCode, message, details = []) {
   };
 }
 
+function isValidNumberArray(arr, allowEmpty = true, maxLength = 50) {
+  if (!Array.isArray(arr)) return false;
+  if (!allowEmpty && arr.length === 0) return false;
+  if (arr.length > maxLength) return false;
+  return arr.every((value) => !Number.isNaN(Number(value)));
+}
+
 module.exports = {
   isValidUUID,
   isValidEmail,
   isValidString,
   isValidUUIDArray,
   isValidUserType,
+  isValidNumberArray,
   sanitizeString,
   isValidProjectId,
   isValidUrl,
@@ -471,5 +492,6 @@ module.exports = {
   validateExternalGigCreateInput,
   validateExternalGigUpdateInput,
   validateExternalGigDeleteInput,
-  createErrorResponse
+  createErrorResponse,
+  isValidNumberArray
 };

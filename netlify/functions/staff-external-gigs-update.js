@@ -32,6 +32,22 @@ function normaliseSkills(skills) {
   return JSON.stringify(skills.map((skill) => Number(skill)));
 }
 
+function normaliseIndustries(industries) {
+  if (industries === null) {
+    return [];
+  }
+
+  if (!Array.isArray(industries)) {
+    return undefined;
+  }
+
+  if (industries.length === 0) {
+    return [];
+  }
+
+  return industries.map((industry) => Number(industry));
+}
+
 function parseProjectId(value) {
   if (typeof value === 'number') return value;
   if (typeof value === 'string' && value.trim().length > 0) {
@@ -142,6 +158,13 @@ exports.handler = async (event) => {
       updateFields.skills_required = normaliseSkills(payload.skills_required);
     }
 
+    if (payload.industries !== undefined) {
+      const normalizedIndustries = normaliseIndustries(payload.industries);
+      if (normalizedIndustries !== undefined) {
+        updateFields.industries = normalizedIndustries;
+      }
+    }
+
     updateFields.project_origin = 'external';
     updateFields.updated_at = new Date().toISOString();
 
@@ -181,7 +204,10 @@ exports.handler = async (event) => {
         ...project,
         skills_required: Array.isArray(payload.skills_required)
           ? payload.skills_required
-          : project.skills_required
+          : project.skills_required,
+        industries: Array.isArray(payload.industries)
+          ? payload.industries
+          : project.industries
       }
     });
 

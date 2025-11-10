@@ -11,6 +11,7 @@ interface GigCreationData {
   gigName: string;
   gigDescription: string;
   selectedSkills: Array<{ id: number; name: string }>;
+  selectedIndustries?: Array<{ id: number; name: string; category?: string | null }>;
   budget: string;
   duration: string;
   attachments: Array<{
@@ -55,7 +56,10 @@ export default function GigCreationStep5() {
       const savedData = sessionStorage.getItem('gigCreationData');
       if (savedData) {
         const data = JSON.parse(savedData);
-        setGigData(data);
+        setGigData({
+          ...data,
+          selectedIndustries: data.selectedIndustries || []
+        });
       } else {
         navigate('/gig-creation/step1');
       }
@@ -123,6 +127,7 @@ export default function GigCreationStep5() {
         title: gigData.gigName,
         description: gigData.gigDescription,
         skills_required: JSON.stringify(gigData.selectedSkills.map(skill => skill.id)),
+        industries: (gigData.selectedIndustries || []).map(industry => industry.id),
         currency: 'USD',
         budget_min: parseFloat(gigData.budget),
         budget_max: parseFloat(gigData.budget),
@@ -332,6 +337,21 @@ export default function GigCreationStep5() {
                         ))}
                       </div>
                     </div>
+                    {gigData.selectedIndustries && gigData.selectedIndustries.length > 0 && (
+                      <div>
+                        <h4 className="font-medium text-slate-900 mb-2">Industries</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {gigData.selectedIndustries.map((industry) => (
+                            <span
+                              key={industry.id}
+                              className="inline-flex items-center px-3 py-1 bg-slate-200 text-slate-800 rounded-full text-sm"
+                            >
+                              {industry.name}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </CollapsibleContent>

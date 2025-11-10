@@ -46,6 +46,7 @@ interface Project {
   expires_at?: string | null;
   source_name?: string | null;
   is_expired?: boolean;
+  industries?: number[];
   client?: {
     first_name: string;
     last_name: string;
@@ -116,7 +117,7 @@ export default function GigDetailsPage() {
             )
           `)
           .eq('id', id)
-          .eq('status', 'open')
+          .is('deleted_at', null)
           .single(),
         supabase
           .from('skills')
@@ -182,6 +183,24 @@ export default function GigDetailsPage() {
         console.error('Error parsing screening_questions:', error);
       }
 
+      let industriesArray: number[] = [];
+      if (Array.isArray(projectData.industries)) {
+        industriesArray = projectData.industries
+          .map((industryId: number | string) => Number(industryId))
+          .filter((industryId) => !Number.isNaN(industryId));
+      } else if (typeof projectData.industries === 'string') {
+        try {
+          const parsedIndustries = JSON.parse(projectData.industries);
+          if (Array.isArray(parsedIndustries)) {
+            industriesArray = parsedIndustries
+              .map((industryId: number | string) => Number(industryId))
+              .filter((industryId) => !Number.isNaN(industryId));
+          }
+        } catch (error) {
+          console.error('Error parsing industries:', error);
+        }
+      }
+
       const projectOrigin: 'internal' | 'external' =
         projectData.project_origin === 'external' ? 'external' : 'internal';
       const externalUrl = projectData.external_url || null;
@@ -224,6 +243,7 @@ export default function GigDetailsPage() {
         is_expired: isExpired,
         skills_required,
         screening_questions,
+        industries: industriesArray,
         client: clientInfo
       });
 
@@ -609,6 +629,22 @@ export default function GigDetailsPage() {
                         {project.skills_required.map((skillId) => (
                           <Badge key={skillId} variant="outline" className="text-sm">
                             {getSkillName(skillId)}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {project?.industries && project.industries.length > 0 && (
+                    <div>
+                      <h4 className="font-medium text-slate-900 mb-2">Industries</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {project.industries.map((industryId) => (
+                          <Badge
+                            key={industryId}
+                            variant="secondary"
+                            className="text-xs"
+                          >
+                            {getIndustryName(industryId)}
                           </Badge>
                         ))}
                       </div>
