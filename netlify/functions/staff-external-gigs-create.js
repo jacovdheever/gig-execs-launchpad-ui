@@ -70,6 +70,7 @@ exports.handler = async (event) => {
       external_url: payload.external_url.trim(),
       expires_at: payload.expires_at || null,
       source_name: payload.source_name ? sanitizeString(payload.source_name) : null,
+      type: 'client',
       currency: payload.currency || null,
       budget_min:
         payload.budget_min !== undefined && payload.budget_min !== null
