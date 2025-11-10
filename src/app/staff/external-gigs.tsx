@@ -963,7 +963,7 @@ export default function StaffExternalGigsPage() {
             }
           }}
         >
-          <DialogContent className="sm:max-w-2xl">
+          <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Create External Gig</DialogTitle>
               <DialogDescription>
@@ -1171,7 +1171,7 @@ export default function StaffExternalGigsPage() {
             }
           }}
         >
-          <DialogContent className="sm:max-w-2xl">
+          <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Edit External Gig</DialogTitle>
               <DialogDescription>
