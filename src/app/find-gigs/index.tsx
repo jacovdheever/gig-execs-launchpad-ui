@@ -5,9 +5,9 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
-import {
-  Search,
-  Filter,
+import { 
+  Search, 
+  Filter, 
   MapPin,
   Clock,
   DollarSign,
@@ -166,7 +166,8 @@ export default function FindGigsPage() {
       console.log('🔍 Loading client data with simple approach');
       
       // Get unique creator IDs
-      const creatorIds = [...new Set(projectsResult.data?.map(p => p.creator_id) || [])];
+      const rawCreatorIds = projectsResult.data?.map(p => p.creator_id) || [];
+      const creatorIds = [...new Set(rawCreatorIds.filter((id): id is string => typeof id === 'string' && id.trim().length > 0))];
       console.log('🔍 Unique creator IDs:', creatorIds);
       
       // Load client data using Netlify function to bypass RLS
@@ -177,6 +178,10 @@ export default function FindGigsPage() {
       console.log('🔍 Client data session:', session);
       console.log('🔍 Client data access token:', session?.access_token);
       
+      let users: any[] = [];
+      let clientProfiles: any[] = [];
+
+      if (creatorIds.length > 0) {
       const clientDataResponse = await fetch('/.netlify/functions/get-client-data', {
         method: 'POST',
         headers: {
@@ -186,11 +191,18 @@ export default function FindGigsPage() {
         body: JSON.stringify({ creatorIds })
       });
       
+        if (!clientDataResponse.ok) {
+          const errorBody = await clientDataResponse.text();
+          console.error('❌ Failed to load client data:', clientDataResponse.status, errorBody);
+        } else {
       const clientDataResult = await clientDataResponse.json();
       console.log('🔍 Client data from Netlify function:', clientDataResult);
-      
-      const users = clientDataResult.users || [];
-      const clientProfiles = clientDataResult.clientProfiles || [];
+          users = clientDataResult.users || [];
+          clientProfiles = clientDataResult.clientProfiles || [];
+        }
+      } else {
+        console.log('🔍 No valid creator IDs found, skipping client data fetch.');
+      }
       
       console.log('🔍 Users loaded from function:', users.length);
       console.log('🔍 Client profiles loaded from function:', clientProfiles.length);
@@ -237,6 +249,13 @@ export default function FindGigsPage() {
 
         const clientProfile = clientProfiles.find(cp => cp.user_id === project.creator_id) || {};
         const clientData = users.find(u => u.id === project.creator_id) || {};
+        const clientFirstName = typeof clientData.first_name === 'string' ? clientData.first_name : '';
+        const clientLastName = typeof clientData.last_name === 'string' ? clientData.last_name : '';
+        const normalizedCompanyName =
+          clientProfile.company_name ||
+          (clientFirstName || clientLastName
+            ? `${clientFirstName} ${clientLastName}`.trim()
+            : null);
 
         const clientInfo =
           projectOrigin === 'external'
@@ -245,14 +264,14 @@ export default function FindGigsPage() {
                 last_name: 'Opportunity',
                 company_name: sourceName || 'External Opportunity',
                 logo_url: null,
-                verified: false,
-                rating: null,
-                total_ratings: null
-              }
+            verified: false,
+            rating: null,
+            total_ratings: null
+          }
             : {
-                first_name: clientData.first_name || 'Project',
-                last_name: clientData.last_name || 'Creator',
-                company_name: clientProfile.company_name || null,
+                first_name: clientFirstName,
+                last_name: clientLastName,
+                company_name: normalizedCompanyName,
                 logo_url: clientProfile.logo_url || null,
                 verified: false,
                 rating: null,
@@ -873,39 +892,39 @@ export default function FindGigsPage() {
                 );
 
                 return (
-                  <Card key={project.id} className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <div className="flex items-start justify-between mb-4">
+                <Card key={project.id} className="hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <div className="flex items-start justify-between mb-4">
                         <div className="flex items-start gap-3">
                           <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg bg-slate-100">
                             {!isExternal && project.client?.logo_url ? (
-                              <img
-                                src={project.client.logo_url}
-                                alt={project.client.company_name || 'Company Logo'}
+                            <img
+                              src={project.client.logo_url}
+                              alt={project.client.company_name || 'Company Logo'}
                                 className="h-full w-full object-cover"
-                              />
-                            ) : (
+                            />
+                          ) : (
                               <Building2 className="h-6 w-6 text-slate-500" />
-                            )}
-                          </div>
-                          <div>
-                            <h3 className="font-semibold text-slate-900">
+                          )}
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-slate-900">
                               {displayClientName}
-                            </h3>
+                          </h3>
                             {!isExternal ? (
                               <div className="mt-1 flex items-center gap-2">
-                                {project.client?.verified && (
-                                  <div className="flex items-center gap-1">
+                            {project.client?.verified && (
+                              <div className="flex items-center gap-1">
                                     <CheckCircle className="h-4 w-4 text-green-500" />
                                     <span className="text-xs font-medium text-green-600">Verified</span>
-                                  </div>
-                                )}
-                                {project.client?.rating && project.client?.total_ratings ? (
-                                  renderStars(project.client.rating)
-                                ) : (
-                                  <span className="text-xs text-slate-500">No ratings yet</span>
-                                )}
                               </div>
+                            )}
+                            {project.client?.rating && project.client?.total_ratings ? (
+                              renderStars(project.client.rating)
+                            ) : (
+                                  <span className="text-xs text-slate-500">No ratings yet</span>
+                            )}
+                          </div>
                             ) : (
                               <p className="mt-1 text-xs text-slate-500">
                                 External opportunity curated by GigExecs
@@ -914,29 +933,29 @@ export default function FindGigsPage() {
                             {isExternal && project.source_name && (
                               <p className="mt-1 text-xs text-blue-600">Client: {project.source_name}</p>
                             )}
-                          </div>
                         </div>
+                      </div>
                         <div className="flex items-center gap-2">
-                          <Badge variant="outline" className="text-xs">
+                      <Badge variant="outline" className="text-xs">
                             {createdAtLabel}
-                          </Badge>
+                      </Badge>
                           {isExternal && (
                             <Badge className="text-xs border-blue-200 bg-blue-50 text-blue-700">
                               External
                             </Badge>
                           )}
                         </div>
-                      </div>
-
+                    </div>
+                    
                       <div className="mb-2 flex items-start justify-between">
                         <CardTitle className="flex-1 text-lg line-clamp-2">{project.title}</CardTitle>
-                        {user?.role === 'consultant' && (() => {
-                          const match = calculateMatchQuality(project);
-                          console.log('🔍 Match badge for project', project.id, ':', match);
-                          return match ? (
-                            <Badge
-                              variant="outline"
-                              className={`ml-2 text-xs ${
+                      {user?.role === 'consultant' && (() => {
+                        const match = calculateMatchQuality(project);
+                        console.log('🔍 Match badge for project', project.id, ':', match);
+                        return match ? (
+                          <Badge 
+                            variant="outline" 
+                            className={`ml-2 text-xs ${
                                 match.color === 'green'
                                   ? 'bg-green-50 text-green-700 border-green-200'
                                   : match.color === 'blue'
@@ -954,79 +973,79 @@ export default function FindGigsPage() {
                                     ? 'Partial Match'
                                     : 'Low Match'}{' '}
                               ({match.percentage}%)
-                            </Badge>
-                          ) : null;
-                        })()}
-                      </div>
-                      <CardDescription className="line-clamp-3">
-                        {project.description.length > 500
-                          ? `${project.description.substring(0, 500)}...`
+                          </Badge>
+                        ) : null;
+                      })()}
+                    </div>
+                    <CardDescription className="line-clamp-3">
+                      {project.description.length > 500 
+                        ? `${project.description.substring(0, 500)}...`
                           : project.description}
-                      </CardDescription>
-                    </CardHeader>
-
-                    <CardContent>
-                      <div className="space-y-4">
-                        {/* About Gig */}
-                        <div className="space-y-2">
-                          <h4 className="font-semibold text-slate-900 text-sm">About Gig:</h4>
-                          <div className="flex items-center gap-4 text-sm text-slate-600">
-                            <div className="flex items-center gap-1">
+                    </CardDescription>
+                  </CardHeader>
+                  
+                  <CardContent>
+                    <div className="space-y-4">
+                      {/* About Gig */}
+                      <div className="space-y-2">
+                        <h4 className="font-semibold text-slate-900 text-sm">About Gig:</h4>
+                        <div className="flex items-center gap-4 text-sm text-slate-600">
+                          <div className="flex items-center gap-1">
                               <DollarSign className="h-4 w-4" />
                               <span>{budgetDisplay}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
+                          </div>
+                          <div className="flex items-center gap-1">
                               <Clock className="h-4 w-4" />
                               <span>{timelineDisplay}</span>
-                            </div>
                           </div>
                         </div>
+                      </div>
 
-                        {/* Industries */}
-                        {project.industries && project.industries.length > 0 && (
-                          <div>
-                            <h4 className="font-semibold text-slate-900 text-sm mb-2">Industries:</h4>
-                            <div className="flex flex-wrap gap-1">
-                              {project.industries.slice(0, 3).map((industryId) => (
-                                <Badge key={industryId} variant="secondary" className="text-xs">
-                                  {getIndustryName(industryId)}
-                                </Badge>
-                              ))}
-                              {project.industries.length > 3 && (
-                                <Badge variant="secondary" className="text-xs">
-                                  +{project.industries.length - 3} more
-                                </Badge>
-                              )}
-                            </div>
+                      {/* Industries */}
+                      {project.industries && project.industries.length > 0 && (
+                        <div>
+                          <h4 className="font-semibold text-slate-900 text-sm mb-2">Industries:</h4>
+                          <div className="flex flex-wrap gap-1">
+                            {project.industries.slice(0, 3).map((industryId) => (
+                              <Badge key={industryId} variant="secondary" className="text-xs">
+                                {getIndustryName(industryId)}
+                              </Badge>
+                            ))}
+                            {project.industries.length > 3 && (
+                              <Badge variant="secondary" className="text-xs">
+                                +{project.industries.length - 3} more
+                              </Badge>
+                            )}
                           </div>
-                        )}
+                        </div>
+                      )}
 
-                        {/* Skills Required */}
-                        {project.skills_required && project.skills_required.length > 0 && (
-                          <div>
+                      {/* Skills Required */}
+                      {project.skills_required && project.skills_required.length > 0 && (
+                        <div>
                             <h4 className="font-semibold text-slate-900 text-sm mb-2">
                               Skills Required:
                             </h4>
-                            <div className="flex flex-wrap gap-1">
-                              {project.skills_required.slice(0, 4).map((skillId) => (
-                                <Badge key={skillId} variant="outline" className="text-xs">
-                                  {getSkillName(skillId)}
-                                </Badge>
-                              ))}
-                              {project.skills_required.length > 4 && (
-                                <Badge variant="outline" className="text-xs">
-                                  +{project.skills_required.length - 4} more
-                                </Badge>
-                              )}
-                            </div>
+                          <div className="flex flex-wrap gap-1">
+                            {project.skills_required.slice(0, 4).map((skillId) => (
+                              <Badge key={skillId} variant="outline" className="text-xs">
+                                {getSkillName(skillId)}
+                              </Badge>
+                            ))}
+                            {project.skills_required.length > 4 && (
+                              <Badge variant="outline" className="text-xs">
+                                +{project.skills_required.length - 4} more
+                              </Badge>
+                            )}
                           </div>
-                        )}
+                        </div>
+                      )}
 
                         {/* Actions */}
                         <div className="pt-4 border-t border-slate-200 space-y-2">
-                          <Button asChild className="w-full">
+                        <Button asChild className="w-full">
                             <Link to={`/find-gigs/${project.id}`}>View Gig Details</Link>
-                          </Button>
+                        </Button>
                           {isExternal && (
                             <Button
                               type="button"
@@ -1056,10 +1075,10 @@ export default function FindGigsPage() {
                                 : 'No expiry date provided.'}
                             </p>
                           )}
-                        </div>
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </CardContent>
+                </Card>
                 );
               })}
             </div>
