@@ -187,6 +187,25 @@ function toIso(value: string) {
   return date.toISOString();
 }
 
+function normalizeExternalUrl(value: string): string {
+  const trimmed = value.trim();
+  if (!trimmed) return '';
+  if (!/^https?:\/\//i.test(trimmed)) {
+    return `https://${trimmed}`;
+  }
+  return trimmed;
+}
+
+function isValidHttpUrl(value: string): boolean {
+  if (!value) return false;
+  try {
+    const url = new URL(value);
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  } catch (_error) {
+    return false;
+  }
+}
+
 function formatDate(value: string | null) {
   if (!value) return '—';
   const date = new Date(value);
@@ -570,6 +589,16 @@ export default function StaffExternalGigsPage() {
       const { min: timelineMin, max: timelineMax } = mapTimelineToRange(
         formState.timeline as TimelineValue | ''
       );
+      const externalUrl = normalizeExternalUrl(formState.external_url);
+
+      if (!isValidHttpUrl(externalUrl)) {
+        toast({
+          title: 'Unable to create external gig',
+          description: 'External URL must be a valid HTTP or HTTPS link.',
+          variant: 'destructive'
+        });
+        return;
+      }
 
       const normalizedIndustries = formState.industries
         .map((industryId) => Number(industryId))
@@ -591,7 +620,7 @@ export default function StaffExternalGigsPage() {
         title: formState.title,
         description: formState.description,
         status: formState.status,
-        external_url: formState.external_url,
+        external_url: externalUrl,
         expires_at: toIso(formState.expires_at),
         source_name: formState.client_name ? formState.client_name.trim() : null,
         currency: 'USD',
@@ -674,6 +703,16 @@ export default function StaffExternalGigsPage() {
       const normalizedIndustries = formState.industries
         .map((industryId) => Number(industryId))
         .filter((industryId) => !Number.isNaN(industryId));
+      const externalUrl = normalizeExternalUrl(formState.external_url);
+
+      if (!isValidHttpUrl(externalUrl)) {
+        toast({
+          title: 'Unable to update external gig',
+          description: 'External URL must be a valid HTTP or HTTPS link.',
+          variant: 'destructive'
+        });
+        return;
+      }
 
       if (
         formState.industries.length > 0 &&
@@ -692,7 +731,7 @@ export default function StaffExternalGigsPage() {
         title: formState.title,
         description: formState.description,
         status: formState.status,
-        external_url: formState.external_url,
+        external_url: externalUrl,
         expires_at: formState.expires_at ? toIso(formState.expires_at) : null,
         source_name: formState.client_name ? formState.client_name.trim() : null,
         currency: 'USD',
