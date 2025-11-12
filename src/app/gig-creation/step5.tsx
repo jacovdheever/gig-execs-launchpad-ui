@@ -120,6 +120,21 @@ export default function GigCreationStep5() {
         return;
       }
 
+      const industryIds = (gigData.selectedIndustries || [])
+        .map((industry) => Number(industry.id))
+        .filter((industryId) => !Number.isNaN(industryId));
+
+      if (
+        gigData.selectedIndustries &&
+        gigData.selectedIndustries.length > 0 &&
+        industryIds.length !== gigData.selectedIndustries.length
+      ) {
+        setError(
+          'One or more selected industries could not be interpreted. Please return to step 1 and reselect the industries.'
+        );
+        return;
+      }
+
       // Prepare project data for database
       const projectData = {
         creator_id: user.id,
@@ -127,7 +142,7 @@ export default function GigCreationStep5() {
         title: gigData.gigName,
         description: gigData.gigDescription,
         skills_required: JSON.stringify(gigData.selectedSkills.map(skill => skill.id)),
-        industries: (gigData.selectedIndustries || []).map(industry => industry.id),
+        industries: industryIds,
         currency: 'USD',
         budget_min: parseFloat(gigData.budget),
         budget_max: parseFloat(gigData.budget),

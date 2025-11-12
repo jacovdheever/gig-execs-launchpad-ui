@@ -571,6 +571,22 @@ export default function StaffExternalGigsPage() {
         formState.timeline as TimelineValue | ''
       );
 
+      const normalizedIndustries = formState.industries
+        .map((industryId) => Number(industryId))
+        .filter((industryId) => !Number.isNaN(industryId));
+
+      if (
+        formState.industries.length > 0 &&
+        normalizedIndustries.length !== formState.industries.length
+      ) {
+        toast({
+          title: 'Unable to create external gig',
+          description: 'One or more selected industries could not be interpreted. Please reselect the industries and try again.',
+          variant: 'destructive'
+        });
+        return;
+      }
+
       const payload = {
         title: formState.title,
         description: formState.description,
@@ -584,7 +600,7 @@ export default function StaffExternalGigsPage() {
         delivery_time_min: timelineMin,
         delivery_time_max: timelineMax,
         skills_required: formState.skills,
-        industries: formState.industries
+        industries: normalizedIndustries
       };
 
       const response = await fetch('/.netlify/functions/staff-external-gigs-create', {
@@ -655,6 +671,22 @@ export default function StaffExternalGigsPage() {
         formState.timeline as TimelineValue | ''
       );
 
+      const normalizedIndustries = formState.industries
+        .map((industryId) => Number(industryId))
+        .filter((industryId) => !Number.isNaN(industryId));
+
+      if (
+        formState.industries.length > 0 &&
+        normalizedIndustries.length !== formState.industries.length
+      ) {
+        toast({
+          title: 'Unable to update external gig',
+          description: 'One or more selected industries could not be interpreted. Please reselect the industries and try again.',
+          variant: 'destructive'
+        });
+        return;
+      }
+
       const payload = {
         id: selectedProject.id,
         title: formState.title,
@@ -669,7 +701,7 @@ export default function StaffExternalGigsPage() {
         delivery_time_min: timelineMin,
         delivery_time_max: timelineMax,
         skills_required: formState.skills,
-        industries: formState.industries
+        industries: normalizedIndustries
       };
 
       const response = await fetch('/.netlify/functions/staff-external-gigs-update', {
