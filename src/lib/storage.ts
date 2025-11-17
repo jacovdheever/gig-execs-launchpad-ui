@@ -344,16 +344,25 @@ export async function uploadProjectAttachment(file: File, userId: string): Promi
     }
 
     // Use the actual path returned by Supabase (this is how it's stored in Storage)
-    // This ensures we use the exact path format that Supabase uses internally
+    // The data.path is the exact path as stored, which we must use when generating signed URLs
     const actualPath = data.path;
-    console.log('🔍 uploadProjectAttachment: Supabase upload response:', JSON.stringify(data, null, 2));
-    console.log('🔍 uploadProjectAttachment: Supabase returned path:', actualPath);
-    console.log('🔍 uploadProjectAttachment: Path type:', typeof actualPath);
-    console.log('🔍 uploadProjectAttachment: Original fileName:', fileName);
+    console.log('🔍 uploadProjectAttachment: Supabase upload response data:', data);
+    console.log('🔍 uploadProjectAttachment: data.path:', actualPath);
+    console.log('🔍 uploadProjectAttachment: data.fullPath:', data.fullPath);
+    console.log('🔍 uploadProjectAttachment: data.id:', data.id);
+    console.log('🔍 uploadProjectAttachment: Original fileName used for upload:', fileName);
+    
+    // Verify the path matches what we uploaded
+    if (actualPath !== fileName) {
+      console.warn('🔍 uploadProjectAttachment: WARNING - data.path does not match fileName!');
+      console.warn('🔍 uploadProjectAttachment: data.path:', actualPath);
+      console.warn('🔍 uploadProjectAttachment: fileName:', fileName);
+    }
     
     // Store the path in format: bucket-name/actual-path
+    // Use data.path (the exact path as stored by Supabase)
     const filePath = `project-attachments/${actualPath}`;
-    console.log('🔍 uploadProjectAttachment: Stored file path for private bucket:', filePath);
+    console.log('🔍 uploadProjectAttachment: Final stored file path:', filePath);
 
     return {
       success: true,
@@ -618,29 +627,55 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
     console.log('🔍 getSignedDocumentUrl: File path length:', fileName.length);
     console.log('🔍 getSignedDocumentUrl: File path includes spaces:', fileName.includes(' '));
     
-    // First, try to list files to verify the exact path format
-    // Extract the directory and filename
+    // Supabase stores files with the exact filename provided (including spaces)
+    // The createSignedUrl function expects the path exactly as stored
+    // We need to use the path as-is, without any encoding
+    console.log('🔍 getSignedDocumentUrl: Attempting to create signed URL with path:', fileName);
+    console.log('🔍 getSignedDocumentUrl: Path character codes:', Array.from(fileName).map(c => c.charCodeAt(0)).join(','));
+    
+    // First, try to list files in the directory to see what's actually stored
     const pathParts = fileName.split('/');
     const directory = pathParts.slice(0, -1).join('/');
     const filename = pathParts[pathParts.length - 1];
     
     console.log('🔍 getSignedDocumentUrl: Directory:', directory);
     console.log('🔍 getSignedDocumentUrl: Filename:', filename);
+    console.log('🔍 getSignedDocumentUrl: Filename character codes:', Array.from(filename).map(c => c.charCodeAt(0)).join(','));
     
-    // List files in the directory to see what's actually stored
+    // List files to find the exact stored filename
     const { data: listData, error: listError } = await supabase.storage
       .from(bucketName)
       .list(directory || undefined, {
         limit: 100,
-        offset: 0
+        offset: 0,
+        sortBy: { column: 'name', order: 'asc' }
       });
     
-    if (!listError && listData) {
-      console.log('🔍 getSignedDocumentUrl: Files in directory:', listData.map(f => f.name));
-      const matchingFile = listData.find(f => f.name === filename || f.name === encodeURIComponent(filename) || decodeURIComponent(f.name) === filename);
+    if (!listError && listData && listData.length > 0) {
+      console.log('🔍 getSignedDocumentUrl: Files found in directory:', listData.length);
+      console.log('🔍 getSignedDocumentUrl: File names:', listData.map(f => ({
+        name: f.name,
+        charCodes: Array.from(f.name).map(c => c.charCodeAt(0)).join(',')
+      })));
+      
+      // Try to find exact match first
+      let matchingFile = listData.find(f => f.name === filename);
+      
+      // If no exact match, try to find by comparing decoded/encoded versions
+      if (!matchingFile) {
+        console.log('🔍 getSignedDocumentUrl: No exact match, trying variations...');
+        matchingFile = listData.find(f => {
+          const decoded = decodeURIComponent(f.name);
+          const encoded = encodeURIComponent(filename);
+          return decoded === filename || f.name === encoded || f.name === filename;
+        });
+      }
+      
       if (matchingFile) {
         console.log('🔍 getSignedDocumentUrl: Found matching file:', matchingFile.name);
-        // Use the exact name as stored
+        console.log('🔍 getSignedDocumentUrl: Matching file char codes:', Array.from(matchingFile.name).map(c => c.charCodeAt(0)).join(','));
+        
+        // Use the exact name as stored in Supabase
         const exactPath = directory ? `${directory}/${matchingFile.name}` : matchingFile.name;
         console.log('🔍 getSignedDocumentUrl: Using exact path from list:', exactPath);
         
@@ -648,21 +683,33 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
           .from(bucketName)
           .createSignedUrl(exactPath, expiresIn);
         
-        if (!error) {
-          console.log('🔍 getSignedDocumentUrl: Success with exact path from list');
+        if (!error && data) {
+          console.log('🔍 getSignedDocumentUrl: SUCCESS with exact path from list');
           return data.signedUrl;
+        } else {
+          console.error('🔍 getSignedDocumentUrl: Failed with exact path from list:', error);
         }
+      } else {
+        console.warn('🔍 getSignedDocumentUrl: No matching file found in list');
+        console.warn('🔍 getSignedDocumentUrl: Looking for:', filename);
+        console.warn('🔍 getSignedDocumentUrl: Available files:', listData.map(f => f.name));
       }
+    } else if (listError) {
+      console.error('🔍 getSignedDocumentUrl: Error listing files:', listError);
+    } else {
+      console.warn('🔍 getSignedDocumentUrl: No files found in directory');
     }
     
-    // Try with the exact path as stored (Supabase handles encoding internally)
+    // Fallback: Try with the path as provided (Supabase should handle it)
+    console.log('🔍 getSignedDocumentUrl: Trying with provided path as fallback');
     let signedUrlData = await supabase.storage
       .from(bucketName)
       .createSignedUrl(fileName, expiresIn);
     
     console.log('🔍 getSignedDocumentUrl: Signed URL response:', signedUrlData.error ? 'ERROR' : 'SUCCESS');
     if (signedUrlData.error) {
-      console.log('🔍 getSignedDocumentUrl: Error details:', JSON.stringify(signedUrlData.error, null, 2));
+      console.error('🔍 getSignedDocumentUrl: Error details:', JSON.stringify(signedUrlData.error, null, 2));
+      console.error('🔍 getSignedDocumentUrl: Error message:', signedUrlData.error.message);
     }
     
     // If that fails and we have a public URL with encoded characters, try the encoded path
