@@ -618,6 +618,43 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
     console.log('🔍 getSignedDocumentUrl: File path length:', fileName.length);
     console.log('🔍 getSignedDocumentUrl: File path includes spaces:', fileName.includes(' '));
     
+    // First, try to list files to verify the exact path format
+    // Extract the directory and filename
+    const pathParts = fileName.split('/');
+    const directory = pathParts.slice(0, -1).join('/');
+    const filename = pathParts[pathParts.length - 1];
+    
+    console.log('🔍 getSignedDocumentUrl: Directory:', directory);
+    console.log('🔍 getSignedDocumentUrl: Filename:', filename);
+    
+    // List files in the directory to see what's actually stored
+    const { data: listData, error: listError } = await supabase.storage
+      .from(bucketName)
+      .list(directory || undefined, {
+        limit: 100,
+        offset: 0
+      });
+    
+    if (!listError && listData) {
+      console.log('🔍 getSignedDocumentUrl: Files in directory:', listData.map(f => f.name));
+      const matchingFile = listData.find(f => f.name === filename || f.name === encodeURIComponent(filename) || decodeURIComponent(f.name) === filename);
+      if (matchingFile) {
+        console.log('🔍 getSignedDocumentUrl: Found matching file:', matchingFile.name);
+        // Use the exact name as stored
+        const exactPath = directory ? `${directory}/${matchingFile.name}` : matchingFile.name;
+        console.log('🔍 getSignedDocumentUrl: Using exact path from list:', exactPath);
+        
+        const { data, error } = await supabase.storage
+          .from(bucketName)
+          .createSignedUrl(exactPath, expiresIn);
+        
+        if (!error) {
+          console.log('🔍 getSignedDocumentUrl: Success with exact path from list');
+          return data.signedUrl;
+        }
+      }
+    }
+    
     // Try with the exact path as stored (Supabase handles encoding internally)
     let signedUrlData = await supabase.storage
       .from(bucketName)
