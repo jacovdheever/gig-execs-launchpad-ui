@@ -114,12 +114,14 @@ export default function ProjectsPage() {
       // Load bid counts for all projects
       if (processedProjects.length > 0) {
         const projectIds = processedProjects.map(p => p.id);
-        const { data: bidsData } = await supabase
+        const { data: bidsData, error: bidsError } = await supabase
           .from('bids')
           .select('project_id')
           .in('project_id', projectIds);
 
-        if (bidsData) {
+        if (bidsError) {
+          console.error('Error loading bid counts:', bidsError);
+        } else if (bidsData) {
           // Count bids per project
           const bidCounts = bidsData.reduce((acc: { [key: number]: number }, bid) => {
             const projectId = parseInt(bid.project_id?.toString() || '0', 10);

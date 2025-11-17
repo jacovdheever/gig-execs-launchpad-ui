@@ -30,7 +30,7 @@ import { supabase } from '@/lib/supabase';
 import { AppShell } from '@/components/AppShell';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { canApplyExternally } from '@/lib/utils';
-import { uploadProjectAttachment } from '@/lib/storage';
+import { uploadProjectAttachment, getSignedDocumentUrl } from '@/lib/storage';
 
 interface Project {
   id: number;
@@ -924,19 +924,100 @@ export default function GigDetailsPage() {
                                     Supporting Documents
                                   </Label>
                                   <div className="space-y-2">
-                                    {existingBid.bid_documents.map((url: string, index: number) => (
-                                      <div key={index} className="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200">
-                                        <FileText className="w-4 h-4 text-slate-500" />
-                                        <a
-                                          href={url}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="text-sm text-blue-600 hover:underline flex-1 truncate"
-                                        >
-                                          {url.split('/').pop() || `Document ${index + 1}`}
-                                        </a>
-                                      </div>
-                                    ))}
+                                    {existingBid.bid_documents.map((url: string, index: number) => {
+                                      const DocumentLink = ({ url, index }: { url: string; index: number }) => {
+                                        const [loading, setLoading] = useState(false);
+                                        const [error, setError] = useState<string | null>(null);
+
+                                        const handleClick = async (e: React.MouseEvent) => {
+                                          e.preventDefault();
+                                          setLoading(true);
+                                          setError(null);
+                                          
+                                          try {
+                                            let viewUrl = url;
+                                            
+                                            // If it's a full URL, try to get signed URL if needed
+                                            if (url.startsWith('https://')) {
+                                              const signed = await getSignedDocumentUrl(url);
+                                              if (signed) {
+                                                viewUrl = signed;
+                                              }
+                                            } else {
+                                              // It's a file path, generate signed URL
+                                              const signed = await getSignedDocumentUrl(url);
+                                              if (signed) {
+                                                viewUrl = signed;
+                                              } else {
+                                                setError('Unable to access document');
+                                                return;
+                                              }
+                                            }
+                                            
+                                            window.open(viewUrl, '_blank', 'noopener,noreferrer');
+                                          } catch (err) {
+                                            console.error('Error opening document:', err);
+                                            setError('Failed to open document');
+                                          } finally {
+                                            setLoading(false);
+                                          }
+                                        };
+
+                                        return (
+                                          <div key={index} className="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-200">
+                                            <div className="flex items-center gap-2 flex-1 min-w-0">
+                                              <FileText className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                                              <a
+                                                href="#"
+                                                onClick={handleClick}
+                                                className="text-sm text-blue-600 hover:underline flex-1 truncate"
+                                              >
+                                                {url.split('/').pop() || `Document ${index + 1}`}
+                                              </a>
+                                              {loading && (
+                                                <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-slate-600"></div>
+                                              )}
+                                              {error && (
+                                                <span className="text-xs text-red-600 ml-2">{error}</span>
+                                              )}
+                                            </div>
+                                            <Button
+                                              variant="outline"
+                                              size="sm"
+                                              onClick={async (e) => {
+                                                e.preventDefault();
+                                                setLoading(true);
+                                                try {
+                                                  let downloadUrl = url;
+                                                  if (!url.startsWith('https://')) {
+                                                    const signed = await getSignedDocumentUrl(url);
+                                                    if (signed) downloadUrl = signed;
+                                                  } else {
+                                                    const signed = await getSignedDocumentUrl(url);
+                                                    if (signed) downloadUrl = signed;
+                                                  }
+                                                  const link = document.createElement('a');
+                                                  link.href = downloadUrl;
+                                                  link.download = url.split('/').pop() || `document-${index + 1}`;
+                                                  link.target = '_blank';
+                                                  link.click();
+                                                } catch (err) {
+                                                  console.error('Error downloading:', err);
+                                                } finally {
+                                                  setLoading(false);
+                                                }
+                                              }}
+                                              disabled={loading}
+                                            >
+                                              <Download className="w-4 h-4 mr-1" />
+                                              Download
+                                            </Button>
+                                          </div>
+                                        );
+                                      };
+
+                                      return <DocumentLink key={index} url={url} index={index} />;
+                                    })}
                                   </div>
                                 </div>
                               )}

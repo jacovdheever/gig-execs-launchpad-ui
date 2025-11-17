@@ -29,6 +29,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown, ChevronUp, Download } from 'lucide-react';
+import { getSignedDocumentUrl } from '@/lib/storage';
 
 interface Project {
   id: number;
@@ -548,10 +549,10 @@ export default function GigViewPage() {
                               <div className="border border-slate-200 rounded-lg overflow-hidden">
                                 <CollapsibleTrigger asChild>
                                   <div className="p-4 hover:bg-slate-50 transition-colors cursor-pointer">
-                                    <div className="flex items-start justify-between">
-                                      <div className="flex-1">
+                                    <div className="flex items-start justify-between gap-4">
+                                      <div className="flex-1 min-w-0">
                                         <div className="flex items-center gap-3 mb-2">
-                                          <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center flex-shrink-0">
+                                          <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center flex-shrink-0">
                                             {bid.consultant?.profile_photo_url ? (
                                               <img
                                                 src={bid.consultant.profile_photo_url}
@@ -569,11 +570,11 @@ export default function GigViewPage() {
                                               {bid.consultant?.first_name} {bid.consultant?.last_name}
                                             </h4>
                                             {bid.consultant?.headline && (
-                                              <p className="text-sm text-slate-600 truncate">{bid.consultant.headline}</p>
+                                              <p className="text-sm text-slate-600 line-clamp-2">{bid.consultant.headline}</p>
                                             )}
                                           </div>
                                         </div>
-                                        <div className="flex items-center gap-4 text-sm text-slate-600 mt-2">
+                                        <div className="flex items-center gap-4 text-sm text-slate-600 mt-2 flex-wrap">
                                           <span className="font-semibold text-green-600">
                                             {formatCurrency(bid.amount, bid.currency)}
                                           </span>
@@ -587,7 +588,7 @@ export default function GigViewPage() {
                                           )}
                                         </div>
                                       </div>
-                                      <div className="flex items-center gap-2 ml-4">
+                                      <div className="flex items-center gap-2 flex-shrink-0">
                                         <Button
                                           size="sm"
                                           onClick={(e) => {
@@ -598,11 +599,13 @@ export default function GigViewPage() {
                                         >
                                           {awardingBid === bid.id ? 'Awarding...' : 'Award Bid'}
                                         </Button>
-                                        {isExpanded ? (
-                                          <ChevronUp className="w-5 h-5 text-slate-500" />
-                                        ) : (
-                                          <ChevronDown className="w-5 h-5 text-slate-500" />
-                                        )}
+                                        <div className="flex items-center justify-center w-8 h-8 rounded border border-slate-300 bg-white">
+                                          {isExpanded ? (
+                                            <ChevronUp className="w-4 h-4 text-slate-600" />
+                                          ) : (
+                                            <ChevronDown className="w-4 h-4 text-slate-600" />
+                                          )}
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
@@ -646,48 +649,128 @@ export default function GigViewPage() {
                                       <div>
                                         <h5 className="font-semibold text-slate-900 mb-2">Supporting Documents</h5>
                                         <div className="space-y-2">
-                                          {bid.bid_documents.map((url: string, index: number) => (
-                                            <div key={index} className="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-200">
-                                              <div className="flex items-center gap-2 flex-1 min-w-0">
-                                                <FileText className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                                                <span className="text-sm text-slate-700 truncate">
-                                                  {url.split('/').pop() || `Document ${index + 1}`}
-                                                </span>
-                                              </div>
-                                              <div className="flex gap-2 ml-2">
-                                                <Button
-                                                  variant="outline"
-                                                  size="sm"
-                                                  asChild
-                                                >
-                                                  <a
-                                                    href={url}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    onClick={(e) => e.stopPropagation()}
-                                                  >
-                                                    <FileText className="w-4 h-4 mr-1" />
-                                                    View
-                                                  </a>
-                                                </Button>
-                                                <Button
-                                                  variant="outline"
-                                                  size="sm"
-                                                  onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    const link = document.createElement('a');
-                                                    link.href = url;
-                                                    link.download = url.split('/').pop() || `document-${index + 1}`;
-                                                    link.target = '_blank';
-                                                    link.click();
-                                                  }}
-                                                >
-                                                  <Download className="w-4 h-4 mr-1" />
-                                                  Download
-                                                </Button>
-                                              </div>
-                                            </div>
-                                          ))}
+                                          {bid.bid_documents.map((url: string, index: number) => {
+                                            const DocumentViewer = ({ url, index }: { url: string; index: number }) => {
+                                              const [loading, setLoading] = useState(false);
+                                              const [error, setError] = useState<string | null>(null);
+                                              const [signedUrl, setSignedUrl] = useState<string | null>(null);
+
+                                              const handleView = async (e: React.MouseEvent) => {
+                                                e.stopPropagation();
+                                                setLoading(true);
+                                                setError(null);
+                                                
+                                                try {
+                                                  // Check if it's already a valid URL
+                                                  if (url.startsWith('https://')) {
+                                                    // Try to get signed URL if it's a private bucket
+                                                    const signed = await getSignedDocumentUrl(url);
+                                                    if (signed) {
+                                                      window.open(signed, '_blank', 'noopener,noreferrer');
+                                                    } else {
+                                                      // Fallback to direct URL
+                                                      window.open(url, '_blank', 'noopener,noreferrer');
+                                                    }
+                                                  } else {
+                                                    // It's a file path, generate signed URL
+                                                    const signed = await getSignedDocumentUrl(url);
+                                                    if (signed) {
+                                                      window.open(signed, '_blank', 'noopener,noreferrer');
+                                                    } else {
+                                                      setError('Unable to access document. Please try again.');
+                                                    }
+                                                  }
+                                                } catch (err) {
+                                                  console.error('Error viewing document:', err);
+                                                  setError('Failed to open document');
+                                                } finally {
+                                                  setLoading(false);
+                                                }
+                                              };
+
+                                              const handleDownload = async (e: React.MouseEvent) => {
+                                                e.stopPropagation();
+                                                setLoading(true);
+                                                setError(null);
+                                                
+                                                try {
+                                                  let downloadUrl = url;
+                                                  
+                                                  // If it's a file path, get signed URL
+                                                  if (!url.startsWith('https://')) {
+                                                    const signed = await getSignedDocumentUrl(url);
+                                                    if (signed) {
+                                                      downloadUrl = signed;
+                                                    } else {
+                                                      setError('Unable to download document. Please try again.');
+                                                      return;
+                                                    }
+                                                  } else {
+                                                    // Try to get signed URL for private buckets
+                                                    const signed = await getSignedDocumentUrl(url);
+                                                    if (signed) {
+                                                      downloadUrl = signed;
+                                                    }
+                                                  }
+                                                  
+                                                  const link = document.createElement('a');
+                                                  link.href = downloadUrl;
+                                                  link.download = url.split('/').pop() || `document-${index + 1}`;
+                                                  link.target = '_blank';
+                                                  link.click();
+                                                } catch (err) {
+                                                  console.error('Error downloading document:', err);
+                                                  setError('Failed to download document');
+                                                } finally {
+                                                  setLoading(false);
+                                                }
+                                              };
+
+                                              return (
+                                                <div className="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-200">
+                                                  <div className="flex items-center gap-2 flex-1 min-w-0">
+                                                    <FileText className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                                                    <span className="text-sm text-slate-700 truncate">
+                                                      {url.split('/').pop() || `Document ${index + 1}`}
+                                                    </span>
+                                                    {error && (
+                                                      <span className="text-xs text-red-600 ml-2">{error}</span>
+                                                    )}
+                                                  </div>
+                                                  <div className="flex gap-2 ml-2">
+                                                    <Button
+                                                      variant="outline"
+                                                      size="sm"
+                                                      onClick={handleView}
+                                                      disabled={loading}
+                                                    >
+                                                      {loading ? (
+                                                        <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-slate-600 mr-1"></div>
+                                                      ) : (
+                                                        <FileText className="w-4 h-4 mr-1" />
+                                                      )}
+                                                      View
+                                                    </Button>
+                                                    <Button
+                                                      variant="outline"
+                                                      size="sm"
+                                                      onClick={handleDownload}
+                                                      disabled={loading}
+                                                    >
+                                                      {loading ? (
+                                                        <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-slate-600 mr-1"></div>
+                                                      ) : (
+                                                        <Download className="w-4 h-4 mr-1" />
+                                                      )}
+                                                      Download
+                                                    </Button>
+                                                  </div>
+                                                </div>
+                                              );
+                                            };
+
+                                            return <DocumentViewer key={index} url={url} index={index} />;
+                                          })}
                                         </div>
                                       </div>
                                     )}
