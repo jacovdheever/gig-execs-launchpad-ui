@@ -6,26 +6,30 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   ArrowLeft,
   Clock,
   DollarSign,
   Calendar,
   User,
-  Star,
   Building2,
   CheckCircle,
   MapPin,
-  MessageSquare,
-  FileText,
   Send,
-  ExternalLink
+  ExternalLink,
+  ChevronDown,
+  ChevronUp,
+  Upload,
+  X,
+  FileText
 } from 'lucide-react';
 import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser';
 import { supabase } from '@/lib/supabase';
 import { AppShell } from '@/components/AppShell';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { canApplyExternally } from '@/lib/utils';
+import { uploadProjectAttachment } from '@/lib/storage';
 
 interface Project {
   id: number;
@@ -89,6 +93,9 @@ export default function GigDetailsPage() {
   const [bidAmount, setBidAmount] = useState('');
   const [bidMessage, setBidMessage] = useState('');
   const [screeningAnswers, setScreeningAnswers] = useState<{ [key: number]: string }>({});
+  const [bidDocuments, setBidDocuments] = useState<Array<{ name: string; url: string }>>([]);
+  const [uploadingDocument, setUploadingDocument] = useState(false);
+  const [bidCardOpen, setBidCardOpen] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -210,10 +217,6 @@ export default function GigDetailsPage() {
       const sourceName = projectData.source_name || null;
       const isExpired = expiresAt ? new Date(expiresAt).getTime() <= Date.now() : false;
 
-      // Mock client rating for now - in real app, this would come from database
-      const clientRating = Math.random() * 2 + 3; // Random rating between 3-5
-      const totalRatings = Math.floor(Math.random() * 50) + 1;
-
       const clientInfo =
         projectOrigin === 'external'
           ? {
@@ -222,8 +225,6 @@ export default function GigDetailsPage() {
               company_name: sourceName || 'External Opportunity',
               logo_url: null,
               verified: false,
-              rating: null,
-              total_ratings: null,
               headline: null,
               location: null
             }
@@ -231,9 +232,7 @@ export default function GigDetailsPage() {
               ...projectData.client,
               company_name: clientProfile?.company_name,
               logo_url: clientProfile?.logo_url,
-              country: clientProfile?.country,
-              rating: clientRating,
-              total_ratings: totalRatings
+              country: clientProfile?.country
             };
 
       setProject({
@@ -310,32 +309,40 @@ export default function GigDetailsPage() {
     return industry ? industry.name : `Industry ${industryId}`;
   };
 
-  const renderStars = (rating: number) => {
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
-    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+  const handleDocumentUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files || files.length === 0 || !user) return;
 
-    return (
-      <div className="flex items-center gap-1">
-        {[...Array(fullStars)].map((_, i) => (
-          <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
-        ))}
-        {hasHalfStar && (
-          <div className="relative">
-            <Star className="w-4 h-4 text-gray-300" />
-            <div className="absolute inset-0 overflow-hidden w-1/2">
-              <Star className="w-4 h-4 text-yellow-400 fill-current" />
-            </div>
-          </div>
-        )}
-        {[...Array(emptyStars)].map((_, i) => (
-          <Star key={i + fullStars + (hasHalfStar ? 1 : 0)} className="w-4 h-4 text-gray-300" />
-        ))}
-        <span className="text-sm text-slate-600 ml-1">
-          ({rating.toFixed(1)})
-        </span>
-      </div>
-    );
+    const file = files[0];
+    setUploadingDocument(true);
+
+    try {
+      const result = await uploadProjectAttachment(file, user.id);
+      if (result.success && result.url) {
+        setBidDocuments(prev => [...prev, { name: file.name, url: result.url! }]);
+      } else {
+        setError(result.error || 'Failed to upload document');
+      }
+    } catch (err) {
+      console.error('Error uploading document:', err);
+      setError('Failed to upload document');
+    } finally {
+      setUploadingDocument(false);
+      // Reset input
+      event.target.value = '';
+    }
+  };
+
+  const removeDocument = (index: number) => {
+    setBidDocuments(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const scrollToBidCard = () => {
+    const bidCardElement = document.getElementById('submit-bid-card');
+    if (bidCardElement) {
+      bidCardElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setBidCardOpen(true);
+    }
   };
 
   const handleSubmitBid = async (e: React.FormEvent) => {
@@ -370,7 +377,7 @@ export default function GigDetailsPage() {
         amount: parseFloat(bidAmount),
         currency: project.currency,
         status: 'pending',
-        bid_documents: [], // Could be enhanced to support file uploads
+        bid_documents: bidDocuments.map(doc => doc.url),
         created_at: new Date().toISOString()
       };
 
@@ -390,6 +397,7 @@ export default function GigDetailsPage() {
       setBidAmount('');
       setBidMessage('');
       setScreeningAnswers({});
+      setBidDocuments([]);
       
     } catch (error) {
       console.error('Error submitting bid:', error);
@@ -508,8 +516,10 @@ export default function GigDetailsPage() {
           <div className="grid gap-8 lg:grid-cols-3">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Client Information */}
-              <Card>
+              {/* Top Row - Client Info and Project Info (Desktop) */}
+              <div className="grid gap-6 lg:grid-cols-2">
+                {/* Client Information */}
+                <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Building2 className="w-5 h-5" />
@@ -569,6 +579,43 @@ export default function GigDetailsPage() {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Project Information */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Project Information</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-sm text-slate-600">Posted</span>
+                    <span className="font-semibold text-sm">
+                      {new Date(project.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-slate-600">Timeline</span>
+                    <span className="font-semibold text-sm">
+                      {formatDuration(project.delivery_time_min, project.delivery_time_max)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-slate-600">Budget</span>
+                    <span className="font-semibold text-sm">
+                      {formatCurrency(project.budget_min, project.currency)}
+                      {project.budget_max !== project.budget_min && 
+                        ` - ${formatCurrency(project.budget_max, project.currency)}`
+                      }
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-slate-600">Skills Required</span>
+                    <span className="font-semibold text-sm">
+                      {project.skills_required.length}
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
               {/* Project Details */}
               <Card>
@@ -675,37 +722,208 @@ export default function GigDetailsPage() {
                     </div>
                   )}
 
-                  {/* Screening Questions */}
-                  {project.screening_questions && project.screening_questions.length > 0 && (
-                    <div>
-                      <h3 className="font-semibold text-slate-900 mb-2">Screening Questions</h3>
-                      <div className="space-y-3">
-                        {project.screening_questions.map((question, index) => (
-                          <div key={index}>
-                            <p className="text-sm font-medium text-slate-700 mb-1">
-                              {index + 1}. {question}
-                            </p>
-                            <Textarea
-                              placeholder="Your answer..."
-                              value={screeningAnswers[index] || ''}
-                              onChange={(e) => setScreeningAnswers(prev => ({
-                                ...prev,
-                                [index]: e.target.value
-                              }))}
-                              className="min-h-[80px]"
-                            />
-                          </div>
-                        ))}
-                      </div>
+                  {!isExternal && (
+                    <div className="pt-4 border-t border-slate-200">
+                      <Button onClick={scrollToBidCard} className="w-full">
+                        <Send className="w-4 h-4 mr-2" />
+                        Submit Your Bid
+                      </Button>
                     </div>
                   )}
                 </CardContent>
               </Card>
+
+              {/* Submit Your Bid - Collapsible Card (for Client Gigs only) */}
+              {!isExternal && (
+                <Collapsible open={bidCardOpen} onOpenChange={setBidCardOpen} id="submit-bid-card">
+                  <Card>
+                    <CollapsibleTrigger asChild>
+                      <CardHeader className="cursor-pointer hover:bg-slate-50 transition-colors">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <CardTitle>Submit Your Bid</CardTitle>
+                            <CardDescription>
+                              Submit your proposal for this project
+                            </CardDescription>
+                          </div>
+                          {bidCardOpen ? (
+                            <ChevronUp className="w-5 h-5 text-slate-500" />
+                          ) : (
+                            <ChevronDown className="w-5 h-5 text-slate-500" />
+                          )}
+                        </div>
+                      </CardHeader>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <CardContent>
+                        {success ? (
+                          <div className="text-center py-6">
+                            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                              <CheckCircle className="w-8 h-8 text-green-600" />
+                            </div>
+                            <h3 className="font-semibold text-slate-900 mb-2">Bid Submitted Successfully!</h3>
+                            <p className="text-slate-600 text-sm mb-4">
+                              Your bid has been sent to the client. You'll be notified when they respond.
+                            </p>
+                            <Button variant="outline" asChild className="w-full">
+                              <Link to="/find-gigs">Find More Gigs</Link>
+                            </Button>
+                          </div>
+                        ) : (
+                          <form onSubmit={handleSubmitBid} className="space-y-6">
+                            {error && (
+                              <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                                <p className="text-red-700 text-sm">{error}</p>
+                              </div>
+                            )}
+
+                            <div>
+                              <Label htmlFor="bidAmount" className="text-sm font-semibold text-slate-900">
+                                Your Bid Amount <span className="text-red-500">*</span>
+                              </Label>
+                              <div className="flex gap-2 mt-1">
+                                <span className="flex items-center px-3 py-2 bg-slate-100 text-slate-600 text-sm border border-slate-200 rounded-l-md">
+                                  {project.currency}
+                                </span>
+                                <Input
+                                  id="bidAmount"
+                                  type="number"
+                                  value={bidAmount}
+                                  onChange={(e) => setBidAmount(e.target.value)}
+                                  placeholder="Enter your bid"
+                                  className="rounded-l-none"
+                                  required
+                                />
+                              </div>
+                              <p className="text-xs text-slate-500 mt-1">
+                                Budget range: {formatCurrency(project.budget_min, project.currency)} - {formatCurrency(project.budget_max, project.currency)}
+                              </p>
+                            </div>
+
+                            <div>
+                              <Label htmlFor="bidMessage" className="text-sm font-semibold text-slate-900">
+                                Your Proposal <span className="text-red-500">*</span>
+                              </Label>
+                              <Textarea
+                                id="bidMessage"
+                                value={bidMessage}
+                                onChange={(e) => setBidMessage(e.target.value)}
+                                placeholder="Explain your approach, relevant experience, and why you're the right fit for this project..."
+                                className="mt-1 min-h-[120px]"
+                                required
+                              />
+                            </div>
+
+                            {/* Screening Questions */}
+                            {project.screening_questions && project.screening_questions.length > 0 && (
+                              <div>
+                                <Label className="text-sm font-semibold text-slate-900">
+                                  Screening Questions <span className="text-red-500">*</span>
+                                </Label>
+                                <div className="space-y-4 mt-2">
+                                  {project.screening_questions.map((question, index) => (
+                                    <div key={index}>
+                                      <Label className="text-sm font-medium text-slate-700 mb-2 block">
+                                        {index + 1}. {question}
+                                      </Label>
+                                      <Textarea
+                                        placeholder="Your answer..."
+                                        value={screeningAnswers[index] || ''}
+                                        onChange={(e) => setScreeningAnswers(prev => ({
+                                          ...prev,
+                                          [index]: e.target.value
+                                        }))}
+                                        className="min-h-[80px]"
+                                        required
+                                      />
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Supporting Documents */}
+                            <div>
+                              <Label className="text-sm font-semibold text-slate-900 mb-2 block">
+                                Supporting Documents (Optional)
+                              </Label>
+                              <p className="text-xs text-slate-500 mb-3">
+                                Upload examples of work, detailed proposals, or supporting documentation
+                              </p>
+                              
+                              {bidDocuments.length > 0 && (
+                                <div className="space-y-2 mb-3">
+                                  {bidDocuments.map((doc, index) => (
+                                    <div key={index} className="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-200">
+                                      <div className="flex items-center gap-2 flex-1 min-w-0">
+                                        <FileText className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                                        <span className="text-sm text-slate-700 truncate">{doc.name}</span>
+                                      </div>
+                                      <button
+                                        type="button"
+                                        onClick={() => removeDocument(index)}
+                                        className="ml-2 p-1 hover:bg-slate-200 rounded transition-colors"
+                                      >
+                                        <X className="w-4 h-4 text-slate-500" />
+                                      </button>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+
+                              <div className="relative">
+                                <input
+                                  type="file"
+                                  id="documentUpload"
+                                  onChange={handleDocumentUpload}
+                                  className="hidden"
+                                  accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png"
+                                  disabled={uploadingDocument}
+                                />
+                                <Label
+                                  htmlFor="documentUpload"
+                                  className="flex items-center justify-center gap-2 p-3 border-2 border-dashed border-slate-300 rounded-lg cursor-pointer hover:border-slate-400 transition-colors"
+                                >
+                                  {uploadingDocument ? (
+                                    <>
+                                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-slate-600"></div>
+                                      <span className="text-sm text-slate-600">Uploading...</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Upload className="w-4 h-4 text-slate-600" />
+                                      <span className="text-sm text-slate-600">Upload Document</span>
+                                    </>
+                                  )}
+                                </Label>
+                              </div>
+                            </div>
+
+                            <Button type="submit" disabled={submitting} className="w-full">
+                              {submitting ? (
+                                <>
+                                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                                  Submitting Bid...
+                                </>
+                              ) : (
+                                <>
+                                  <Send className="w-4 h-4 mr-2" />
+                                  Submit Bid
+                                </>
+                              )}
+                            </Button>
+                          </form>
+                        )}
+                      </CardContent>
+                    </CollapsibleContent>
+                  </Card>
+                </Collapsible>
+              )}
             </div>
 
-            {/* Sidebar - Bid Form */}
-            <div className="space-y-6">
-              {isExternal ? (
+            {/* Sidebar - External Apply (External Gigs only) */}
+            {isExternal && (
+              <div className="space-y-6">
                 <Card>
                   <CardHeader>
                     <CardTitle>Apply Externally</CardTitle>
@@ -748,145 +966,8 @@ export default function GigDetailsPage() {
                     </div>
                   </CardContent>
                 </Card>
-              ) : (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Submit Your Bid</CardTitle>
-                    <CardDescription>
-                      Submit your proposal for this project
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    {success ? (
-                      <div className="text-center py-6">
-                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <CheckCircle className="w-8 h-8 text-green-600" />
-                        </div>
-                        <h3 className="font-semibold text-slate-900 mb-2">Bid Submitted Successfully!</h3>
-                        <p className="text-slate-600 text-sm mb-4">
-                          Your bid has been sent to the client. You'll be notified when they respond.
-                        </p>
-                        <Button variant="outline" asChild className="w-full">
-                          <Link to="/find-gigs">Find More Gigs</Link>
-                        </Button>
-                      </div>
-                    ) : (
-                      <form onSubmit={handleSubmitBid} className="space-y-4">
-                        {error && (
-                          <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                            <p className="text-red-700 text-sm">{error}</p>
-                          </div>
-                        )}
-
-                        <div>
-                          <Label htmlFor="bidAmount" className="text-sm font-semibold text-slate-900">
-                            Your Bid Amount <span className="text-red-500">*</span>
-                          </Label>
-                          <div className="flex gap-2 mt-1">
-                            <span className="flex items-center px-3 py-2 bg-slate-100 text-slate-600 text-sm border border-slate-200 rounded-l-md">
-                              {project.currency}
-                            </span>
-                            <Input
-                              id="bidAmount"
-                              type="number"
-                              value={bidAmount}
-                              onChange={(e) => setBidAmount(e.target.value)}
-                              placeholder="Enter your bid"
-                              className="rounded-l-none"
-                              required
-                            />
-                          </div>
-                          <p className="text-xs text-slate-500 mt-1">
-                            Budget range: {formatCurrency(project.budget_min, project.currency)} - {formatCurrency(project.budget_max, project.currency)}
-                          </p>
-                        </div>
-
-                        <div>
-                          <Label htmlFor="bidMessage" className="text-sm font-semibold text-slate-900">
-                            Your Proposal <span className="text-red-500">*</span>
-                          </Label>
-                          <Textarea
-                            id="bidMessage"
-                            value={bidMessage}
-                            onChange={(e) => setBidMessage(e.target.value)}
-                            placeholder="Explain your approach, relevant experience, and why you're the right fit for this project..."
-                            className="mt-1 min-h-[120px]"
-                            required
-                          />
-                        </div>
-
-                        <Button type="submit" disabled={submitting} className="w-full">
-                          {submitting ? (
-                            <>
-                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                              Submitting Bid...
-                            </>
-                          ) : (
-                            <>
-                              <Send className="w-4 h-4 mr-2" />
-                              Submit Bid
-                            </>
-                          )}
-                        </Button>
-                      </form>
-                    )}
-                  </CardContent>
-                </Card>
-              )}
-
-              {/* Quick Actions */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Quick Actions</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <Button variant="outline" className="w-full">
-                    <MessageSquare className="w-4 h-4 mr-2" />
-                    Message Client
-                  </Button>
-                  <Button variant="outline" className="w-full">
-                    <FileText className="w-4 h-4 mr-2" />
-                    Save for Later
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Project Stats */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Project Information</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-sm text-slate-600">Posted</span>
-                    <span className="font-semibold text-sm">
-                      {new Date(project.created_at).toLocaleDateString()}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-sm text-slate-600">Timeline</span>
-                    <span className="font-semibold text-sm">
-                      {formatDuration(project.delivery_time_min, project.delivery_time_max)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-sm text-slate-600">Budget</span>
-                    <span className="font-semibold text-sm">
-                      {formatCurrency(project.budget_min, project.currency)}
-                      {project.budget_max !== project.budget_min && 
-                        ` - ${formatCurrency(project.budget_max, project.currency)}`
-                      }
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-sm text-slate-600">Skills Required</span>
-                    <span className="font-semibold text-sm">
-                      {project.skills_required.length}
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
