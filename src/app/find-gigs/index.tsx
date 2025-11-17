@@ -16,7 +16,8 @@ import {
   CheckCircle,
   Calendar,
   Briefcase,
-  ExternalLink
+  ExternalLink,
+  User
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser';
@@ -44,6 +45,8 @@ interface Project {
   external_url?: string | null;
   expires_at?: string | null;
   source_name?: string | null;
+  role_type?: string | null;
+  gig_location?: string | null;
   is_expired?: boolean;
   is_active?: boolean;
   client?: {
@@ -1078,7 +1081,7 @@ export default function FindGigsPage() {
                       {/* About Gig */}
                       <div className="space-y-2">
                         <h4 className="font-semibold text-slate-900 text-sm">About Gig:</h4>
-                        <div className="flex items-center gap-4 text-sm text-slate-600">
+                        <div className="flex items-center gap-4 text-sm text-slate-600 flex-wrap">
                           <div className="flex items-center gap-1">
                               <DollarSign className="h-4 w-4" />
                               <span>{budgetDisplay}</span>
@@ -1087,6 +1090,22 @@ export default function FindGigsPage() {
                               <Clock className="h-4 w-4" />
                               <span>{timelineDisplay}</span>
                           </div>
+                          {project.role_type && (
+                            <div className="flex items-center gap-1">
+                              <User className="h-4 w-4" />
+                              <span>
+                                {project.role_type === 'in_person' ? 'In-person' : 
+                                 project.role_type === 'hybrid' ? 'Hybrid' : 
+                                 project.role_type === 'remote' ? 'Remote' : project.role_type}
+                              </span>
+                            </div>
+                          )}
+                          {project.gig_location && (
+                            <div className="flex items-center gap-1">
+                              <MapPin className="h-4 w-4" />
+                              <span>{project.gig_location}</span>
+                            </div>
+                          )}
                         </div>
                       </div>
 

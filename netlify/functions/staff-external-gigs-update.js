@@ -165,6 +165,14 @@ exports.handler = async (event) => {
       }
     }
 
+    if (payload.role_type !== undefined) {
+      updateFields.role_type = payload.role_type || null;
+    }
+
+    if (payload.gig_location !== undefined) {
+      updateFields.gig_location = payload.gig_location ? payload.gig_location.trim() : null;
+    }
+
     updateFields.project_origin = 'external';
     updateFields.updated_at = new Date().toISOString();
 

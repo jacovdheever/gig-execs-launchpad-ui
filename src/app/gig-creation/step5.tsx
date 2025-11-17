@@ -14,6 +14,8 @@ interface GigCreationData {
   selectedIndustries?: Array<{ id: number; name: string; category?: string | null }>;
   budget: string;
   duration: string;
+  roleType?: string;
+  gigLocation?: string;
   attachments: Array<{
     id: string;
     name: string;
@@ -151,6 +153,8 @@ export default function GigCreationStep5() {
         delivery_time_min: getDeliveryTimeMin(gigData.duration),
         delivery_time_max: getDeliveryTimeMax(gigData.duration),
         status: 'open',
+        role_type: gigData.roleType || null,
+        gig_location: gigData.gigLocation || null,
         screening_questions: gigData.screeningQuestions.length > 0 
           ? JSON.stringify(gigData.screeningQuestions.map(q => q.question))
           : null,
@@ -423,6 +427,22 @@ export default function GigCreationStep5() {
                       <h4 className="font-medium text-slate-900 mb-2">Duration</h4>
                       <p className="text-slate-700">{DURATION_LABELS[gigData.duration]}</p>
                     </div>
+                    {gigData.roleType && (
+                      <div>
+                        <h4 className="font-medium text-slate-900 mb-2">Role Type</h4>
+                        <p className="text-slate-700">
+                          {gigData.roleType === 'in_person' ? 'In-person' : 
+                           gigData.roleType === 'hybrid' ? 'Hybrid' : 
+                           gigData.roleType === 'remote' ? 'Remote' : gigData.roleType}
+                        </p>
+                      </div>
+                    )}
+                    {gigData.gigLocation && (
+                      <div>
+                        <h4 className="font-medium text-slate-900 mb-2">Gig Location</h4>
+                        <p className="text-slate-700">{gigData.gigLocation}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </CollapsibleContent>

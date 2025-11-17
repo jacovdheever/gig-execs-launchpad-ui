@@ -18,6 +18,8 @@ const DURATION_OPTIONS = [
 export default function GigCreationStep2() {
   const [budget, setBudget] = useState('');
   const [duration, setDuration] = useState('');
+  const [roleType, setRoleType] = useState<string>('');
+  const [gigLocation, setGigLocation] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -30,6 +32,8 @@ export default function GigCreationStep2() {
           const data = JSON.parse(savedData);
           if (data.budget) setBudget(data.budget);
           if (data.duration) setDuration(data.duration);
+          if (data.roleType) setRoleType(data.roleType);
+          if (data.gigLocation) setGigLocation(data.gigLocation);
         }
       } catch (error) {
         console.error('Error loading step data:', error);
@@ -44,7 +48,9 @@ export default function GigCreationStep2() {
   const isValid = budget.trim() !== '' && 
                  !isNaN(Number(budget)) && 
                  Number(budget) > 0 && 
-                 duration !== '';
+                 duration !== '' &&
+                 roleType !== '' &&
+                 gigLocation.trim() !== '';
 
   const handleContinue = () => {
     if (!isValid) return;
@@ -56,7 +62,9 @@ export default function GigCreationStep2() {
     const updatedData = {
       ...data,
       budget: budget.trim(),
-      duration: duration
+      duration: duration,
+      roleType: roleType,
+      gigLocation: gigLocation.trim()
     };
     
     sessionStorage.setItem('gigCreationData', JSON.stringify(updatedData));
@@ -170,6 +178,42 @@ export default function GigCreationStep2() {
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+
+              {/* Role Type */}
+              <div>
+                <Label className="text-lg font-semibold text-slate-900">
+                  Role Type <span className="text-red-500">*</span>
+                </Label>
+                <p className="text-sm text-slate-600 mt-1 mb-3">
+                  What type of work arrangement is this?
+                </p>
+                <Select value={roleType} onValueChange={setRoleType}>
+                  <SelectTrigger className="text-base">
+                    <SelectValue placeholder="Select role type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="in_person">In-person</SelectItem>
+                    <SelectItem value="hybrid">Hybrid</SelectItem>
+                    <SelectItem value="remote">Remote</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Gig Location */}
+              <div>
+                <Label className="text-lg font-semibold text-slate-900">
+                  Gig Location <span className="text-red-500">*</span>
+                </Label>
+                <p className="text-sm text-slate-600 mt-1 mb-3">
+                  Enter the city, country, or "Fully Remote" for the location of this gig
+                </p>
+                <Input
+                  placeholder="e.g., New York, USA or Fully Remote"
+                  value={gigLocation}
+                  onChange={(e) => setGigLocation(e.target.value)}
+                  className="text-base"
+                />
               </div>
 
               {/* Additional Info */}

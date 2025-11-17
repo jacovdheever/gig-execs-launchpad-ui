@@ -78,6 +78,8 @@ interface ExternalProject {
   delivery_time_max: number | null;
   skills_required: number[];
   industries: number[];
+  role_type?: string | null;
+  gig_location?: string | null;
   is_expired?: boolean;
   project_origin?: 'internal' | 'external';
 }
@@ -105,6 +107,8 @@ interface ExternalGigFormState {
   timeline: string;
   skills: number[];
   industries: number[];
+  role_type: string;
+  gig_location: string;
 }
 
 const statusOptions = ['draft', 'open', 'in_progress', 'completed', 'cancelled'] as const;
@@ -133,7 +137,9 @@ const defaultFormState: ExternalGigFormState = {
   budget_to_be_confirmed: false,
   timeline: '',
   skills: [],
-  industries: []
+  industries: [],
+  role_type: '',
+  gig_location: ''
 };
 
 const TIMELINE_OPTIONS = [
@@ -552,7 +558,9 @@ export default function StaffExternalGigsPage() {
       budget_to_be_confirmed: budgetToBeConfirmed,
       timeline,
       skills: normalizeSkills(project.skills_required),
-      industries: project.industries || []
+      industries: project.industries || [],
+      role_type: project.role_type || '',
+      gig_location: project.gig_location || ''
     });
     setSkillSearch('');
     setShowSkillDropdown(false);
@@ -629,7 +637,9 @@ export default function StaffExternalGigsPage() {
         delivery_time_min: timelineMin,
         delivery_time_max: timelineMax,
         skills_required: formState.skills,
-        industries: normalizedIndustries
+        industries: normalizedIndustries,
+        role_type: formState.role_type || null,
+        gig_location: formState.gig_location.trim() || null
       };
 
       const response = await fetch('/.netlify/functions/staff-external-gigs-create', {
@@ -1261,6 +1271,37 @@ export default function StaffExternalGigsPage() {
               ))}
             </SelectContent>
           </Select>
+        </div>
+      </div>
+
+      <div className="grid gap-2 md:grid-cols-2">
+        <div className="grid gap-2">
+          <Label htmlFor={`${prefix}-role_type`}>Role Type</Label>
+          <Select
+            value={formState.role_type}
+            onValueChange={(value) => setFormState((prev) => ({ ...prev, role_type: value }))}
+          >
+            <SelectTrigger id={`${prefix}-role_type`}>
+              <SelectValue placeholder="Select role type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="in_person">In-person</SelectItem>
+              <SelectItem value="hybrid">Hybrid</SelectItem>
+              <SelectItem value="remote">Remote</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="grid gap-2">
+          <Label htmlFor={`${prefix}-gig_location`}>Gig Location</Label>
+          <Input
+            id={`${prefix}-gig_location`}
+            value={formState.gig_location}
+            onChange={(event) =>
+              setFormState((prev) => ({ ...prev, gig_location: event.target.value }))
+            }
+            placeholder="e.g., New York, USA or Fully Remote"
+          />
         </div>
       </div>
 

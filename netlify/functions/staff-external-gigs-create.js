@@ -102,6 +102,8 @@ exports.handler = async (event) => {
           : null,
       skills_required: normaliseSkills(payload.skills_required),
       industries: normaliseIndustries(payload.industries),
+      role_type: payload.role_type || null,
+      gig_location: payload.gig_location ? payload.gig_location.trim() : null,
       project_origin: 'external',
       creator_id: null,
       updated_at: nowIso

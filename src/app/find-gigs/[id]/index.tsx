@@ -45,6 +45,8 @@ interface Project {
   external_url?: string | null;
   expires_at?: string | null;
   source_name?: string | null;
+  role_type?: string | null;
+  gig_location?: string | null;
   is_expired?: boolean;
   industries?: number[];
   client?: {
@@ -596,6 +598,28 @@ export default function GigDetailsPage() {
                         <strong>Timeline:</strong> {formatDuration(project.delivery_time_min, project.delivery_time_max)}
                       </span>
                     </div>
+
+                    {project.role_type && (
+                      <div className="flex items-center gap-2 text-slate-600">
+                        <User className="w-4 h-4" />
+                        <span>
+                          <strong>Role Type:</strong>{' '}
+                          {project.role_type === 'in_person' ? 'In-person' : 
+                           project.role_type === 'hybrid' ? 'Hybrid' : 
+                           project.role_type === 'remote' ? 'Remote' : project.role_type}
+                        </span>
+                      </div>
+                    )}
+
+                    {project.gig_location && (
+                      <div className="flex items-center gap-2 text-slate-600">
+                        <MapPin className="w-4 h-4" />
+                        <span>
+                          <strong>Location:</strong> {project.gig_location}
+                        </span>
+                      </div>
+                    )}
+
                     {isExternal && (
                       <div className="flex items-center gap-2 text-slate-600">
                         <ExternalLink className="w-4 h-4" />

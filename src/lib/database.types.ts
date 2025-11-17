@@ -189,6 +189,8 @@ export interface Database {
           updated_at: string | null
           deleted_at: string | null
           industries: number[] | null
+          role_type: string | null
+          gig_location: string | null
         }
         Insert: {
           id?: string
@@ -217,6 +219,8 @@ export interface Database {
           updated_at?: string | null
           deleted_at?: string | null
           industries?: number[] | null
+          role_type?: string | null
+          gig_location?: string | null
         }
         Update: {
           id?: string
@@ -245,6 +249,8 @@ export interface Database {
           updated_at?: string | null
           deleted_at?: string | null
           industries?: number[] | null
+          role_type?: string | null
+          gig_location?: string | null
         }
       }
 
