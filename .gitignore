@@ -103,6 +103,7 @@ Desktop.ini
 
 # Scripts folder (contains hardcoded secrets)
 scripts/
+!scripts/pre-deploy-security-check.sh
 
 # SQL files (may contain sensitive data)
 sql/
