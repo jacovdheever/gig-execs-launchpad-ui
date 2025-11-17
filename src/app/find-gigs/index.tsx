@@ -49,6 +49,7 @@ interface Project {
   gig_location?: string | null;
   is_expired?: boolean;
   is_active?: boolean;
+  hasBidSubmitted?: boolean;
   client?: {
     first_name: string;
     last_name: string;
@@ -88,10 +89,24 @@ export default function FindGigsPage() {
   const [originFilter, setOriginFilter] = useState<'all' | 'internal' | 'external'>('all');
   const [userSkills, setUserSkills] = useState<number[]>([]);
   const [userIndustries, setUserIndustries] = useState<number[]>([]);
+  const [userBids, setUserBids] = useState<Set<number>>(new Set());
+  const [showBidsOnly, setShowBidsOnly] = useState<boolean>(false);
 
   useEffect(() => {
     loadData();
   }, []);
+
+  // Update projects with bid status when userBids changes
+  useEffect(() => {
+    if (userBids.size > 0 && projects.length > 0) {
+      setProjects(prevProjects => 
+        prevProjects.map(project => ({
+          ...project,
+          hasBidSubmitted: userBids.has(project.id)
+        }))
+      );
+    }
+  }, [userBids]);
 
   const loadData = async () => {
     try {
@@ -139,6 +154,20 @@ export default function FindGigsPage() {
           setUserIndustries(userSkillsResult.userIndustries);
         } else {
           console.log('🔍 No user industries found for user:', userData.id);
+        }
+
+        // Load user's bids to check which gigs they've bid on
+        const { data: bidsData, error: bidsError } = await supabase
+          .from('bids')
+          .select('project_id')
+          .eq('consultant_id', userData.id);
+
+        if (!bidsError && bidsData) {
+          const bidProjectIds = new Set(bidsData.map(bid => parseInt(bid.project_id?.toString() || '0', 10)).filter(id => !isNaN(id) && id > 0));
+          console.log('🔍 User bids loaded:', Array.from(bidProjectIds));
+          setUserBids(bidProjectIds);
+        } else if (bidsError) {
+          console.error('Error loading user bids:', bidsError);
         }
       }
 
@@ -314,10 +343,13 @@ export default function FindGigsPage() {
           skills_required,
           industries: industriesArray,
           is_active: project.status === 'open' && !isExpired,
+          hasBidSubmitted: false, // Will be set after userBids is loaded
           client: clientInfo
         };
       });
 
+      // Update projects with bid status after userBids is loaded
+      // This will be done in a useEffect that watches userBids
       setProjects(processedProjects);
 
       // Calculate dynamic budget range based on loaded projects
@@ -512,6 +544,7 @@ export default function FindGigsPage() {
     const hasBudgetFilter = hourlyRateRange[0] > 0 || hourlyRateRange[1] < maxBudget;
     const hasOriginFilter = originFilter !== 'all';
     const hasActiveToggle = showActiveOnly;
+    const hasBidsFilter = showBidsOnly;
     
     console.log('🔍 Filter check:');
     console.log('  - hasSearch:', hasSearch);
@@ -520,6 +553,7 @@ export default function FindGigsPage() {
     console.log('  - hasBudgetFilter:', hasBudgetFilter);
     console.log('  - hasOriginFilter:', hasOriginFilter);
     console.log('  - showActiveOnly:', showActiveOnly);
+    console.log('  - showBidsOnly:', showBidsOnly);
     console.log('  - searchTerm:', searchTerm);
     console.log('  - selectedSkills:', selectedSkills);
     console.log('  - selectedIndustries:', selectedIndustries);
@@ -534,7 +568,8 @@ export default function FindGigsPage() {
       hasIndustries ||
       hasBudgetFilter ||
       hasOriginFilter ||
-      hasActiveToggle
+      hasActiveToggle ||
+      hasBidsFilter
     );
   }, [
     searchTerm,
@@ -543,7 +578,8 @@ export default function FindGigsPage() {
     hourlyRateRange,
     maxBudget,
     originFilter,
-    showActiveOnly
+    showActiveOnly,
+    showBidsOnly
   ]);
 
   const filteredProjects = useMemo(() => {
@@ -578,6 +614,15 @@ export default function FindGigsPage() {
           status: project.status,
           isExpired: project.is_expired,
           computedActive: isActive
+        });
+        return false;
+      }
+
+      // Filter by bid status
+      if (showBidsOnly && !project.hasBidSubmitted) {
+        console.log('🔍 Excluding project due to bids-only filter:', {
+          id: project.id,
+          hasBidSubmitted: project.hasBidSubmitted
         });
         return false;
       }
@@ -640,7 +685,7 @@ export default function FindGigsPage() {
     
     return matchesSearch && matchesSkills && matchesIndustries && matchesRate;
     });
-  }, [projects, hasActiveFilters, searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, user, userSkills, userIndustries, originFilter, showActiveOnly]);
+  }, [projects, hasActiveFilters, searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, user, userSkills, userIndustries, originFilter, showActiveOnly, showBidsOnly]);
 
   const sortedProjects = useMemo(() => [...filteredProjects].sort((a, b) => {
     // Sort by match quality: Excellent → Good → Partial → Low
@@ -870,7 +915,7 @@ export default function FindGigsPage() {
                       </RadioGroup>
                     </div>
 
-                    <div className="pt-4 border-t border-slate-200">
+                    <div className="pt-4 border-t border-slate-200 space-y-3">
                       <div className="flex items-center space-x-2">
                         <Checkbox
                           id="active-only-toggle"
@@ -881,9 +926,26 @@ export default function FindGigsPage() {
                           Show active gigs only
                         </Label>
                       </div>
-                      <p className="mt-1 text-xs text-slate-500">
+                      <p className="text-xs text-slate-500">
                         Hide gigs that are already filled, cancelled, or past their expiry date.
                       </p>
+                      {user?.role === 'consultant' && (
+                        <>
+                          <div className="flex items-center space-x-2">
+                            <Checkbox
+                              id="bids-only-toggle"
+                              checked={showBidsOnly}
+                              onCheckedChange={(checked) => setShowBidsOnly(Boolean(checked))}
+                            />
+                            <Label htmlFor="bids-only-toggle" className="text-sm">
+                              Show gigs I've bid on
+                            </Label>
+                          </div>
+                          <p className="text-xs text-slate-500">
+                            Only show gigs where you have submitted a bid.
+                          </p>
+                        </>
+                      )}
                     </div>
                   </div>
                 )}
@@ -900,6 +962,7 @@ export default function FindGigsPage() {
                       setHourlyRateRange([0, maxBudget]);
                       setOriginFilter('all');
                       setShowActiveOnly(false);
+                      setShowBidsOnly(false);
                     }}
                     className="text-sm"
                   >
@@ -939,6 +1002,7 @@ export default function FindGigsPage() {
                     setHourlyRateRange([0, maxBudget]);
                     setOriginFilter('all');
                     setShowActiveOnly(false);
+                    setShowBidsOnly(false);
                   }}>
                     Clear All Filters
                   </Button>
@@ -1027,13 +1091,18 @@ export default function FindGigsPage() {
                             )}
                         </div>
                       </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
                       <Badge variant="outline" className="text-xs">
                             {createdAtLabel}
                       </Badge>
                           {isExternal && (
                             <Badge className="text-xs border-blue-200 bg-blue-50 text-blue-700">
                               External
+                            </Badge>
+                          )}
+                          {project.hasBidSubmitted && (
+                            <Badge className="text-xs border-green-200 bg-green-50 text-green-700">
+                              Bid Submitted
                             </Badge>
                           )}
                         </div>
