@@ -24,7 +24,8 @@ FOR SELECT USING (
 
 -- Allow project owners to view files attached to their projects
 -- This is for project attachments uploaded by clients during gig creation
--- We check if the file path is referenced in any project's project_attachments array
+-- Note: Database stores "project-attachments/user-id/filename" but storage.objects.name is "user-id/filename"
+-- So we need to strip the "project-attachments/" prefix when comparing
 CREATE POLICY "Project owners can view project attachments" ON storage.objects
 FOR SELECT USING (
   bucket_id = 'project-attachments' AND
@@ -33,14 +34,15 @@ FOR SELECT USING (
     WHERE creator_id = auth.uid()
     AND project_attachments IS NOT NULL
     AND name = ANY(
-      SELECT unnest(project_attachments)
+      SELECT regexp_replace(unnest(project_attachments), '^project-attachments/', '')
     )
   )
 );
 
 -- Allow project owners to view bid documents for their projects
 -- This allows clients to view files uploaded by professionals as part of bids
--- We check if the file is referenced in any bid's bid_documents array for projects owned by the user
+-- Note: Database stores "project-attachments/user-id/filename" but storage.objects.name is "user-id/filename"
+-- So we need to strip the "project-attachments/" prefix when comparing
 CREATE POLICY "Project owners can view bid documents" ON storage.objects
 FOR SELECT USING (
   bucket_id = 'project-attachments' AND
@@ -50,7 +52,7 @@ FOR SELECT USING (
     WHERE p.creator_id = auth.uid()
     AND b.bid_documents IS NOT NULL
     AND name = ANY(
-      SELECT unnest(b.bid_documents)
+      SELECT regexp_replace(unnest(b.bid_documents), '^project-attachments/', '')
     )
   )
 );
