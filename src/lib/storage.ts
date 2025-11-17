@@ -554,14 +554,16 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
       
       if (publicIndex > 0 && publicIndex < urlParts.length - 1) {
         bucketName = urlParts[publicIndex + 1];
-        fileName = urlParts.slice(publicIndex + 2).join('/');
+        // Get the path after the bucket name
+        const pathAfterBucket = urlParts.slice(publicIndex + 2).join('/');
         // Decode URL-encoded filename (e.g., %20 -> space)
-        // But preserve the original for logging
-        const originalFileName = fileName;
+        // The file is stored with the actual filename (with spaces), not URL-encoded
         try {
-          fileName = decodeURIComponent(fileName);
-          console.log('🔍 getSignedDocumentUrl: Decoded filename from', originalFileName, 'to', fileName);
+          fileName = decodeURIComponent(pathAfterBucket);
+          console.log('🔍 getSignedDocumentUrl: Decoded filename from', pathAfterBucket, 'to', fileName);
         } catch (e) {
+          // If decoding fails, try using the path as-is (might already be decoded)
+          fileName = pathAfterBucket;
           console.log('🔍 getSignedDocumentUrl: Could not decode filename, using as-is:', fileName);
         }
       } else if (signIndex > 0 && signIndex < urlParts.length - 1) {
