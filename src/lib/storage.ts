@@ -326,7 +326,6 @@ export async function uploadProjectAttachment(file: File, userId: string): Promi
     const fileExt = file.name.split('.').pop();
     const timestamp = Date.now();
     const fileName = `${userId}/${timestamp}_${file.name}`;
-    const filePath = `project-attachments/${fileName}`;
 
     // Upload to Supabase Storage
     const { data, error } = await supabase.storage
