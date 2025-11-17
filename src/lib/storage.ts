@@ -344,14 +344,15 @@ export async function uploadProjectAttachment(file: File, userId: string): Promi
       };
     }
 
-    // Get public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from('project-attachments')
-      .getPublicUrl(fileName);
+    // For private buckets, store the file path (not a public URL)
+    // This matches the pattern used by uploadProfileDocument for private buckets
+    // The path format: bucket-name/user-id/filename
+    const filePath = `project-attachments/${fileName}`;
+    console.log('🔍 uploadProjectAttachment: Stored file path for private bucket:', filePath);
 
     return {
       success: true,
-      url: publicUrl
+      url: filePath
     };
 
   } catch (error) {
