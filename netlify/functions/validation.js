@@ -255,7 +255,9 @@ function validateExternalGigUpdateInput(body) {
     'delivery_time_min',
     'delivery_time_max',
     'skills_required',
-    'industries'
+    'industries',
+    'role_type',
+    'gig_location'
   ];
 
   const providedFields = Object.keys(body).filter(key => key !== 'id');
