@@ -750,7 +750,9 @@ export default function StaffExternalGigsPage() {
         delivery_time_min: timelineMin,
         delivery_time_max: timelineMax,
         skills_required: formState.skills,
-        industries: normalizedIndustries
+        industries: normalizedIndustries,
+        role_type: formState.role_type || null,
+        gig_location: formState.gig_location.trim() || null
       };
 
       const response = await fetch('/.netlify/functions/staff-external-gigs-update', {
