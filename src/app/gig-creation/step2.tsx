@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useNavigate } from 'react-router-dom';
 
 const DURATION_OPTIONS = [
@@ -17,7 +18,10 @@ const DURATION_OPTIONS = [
 
 export default function GigCreationStep2() {
   const [budget, setBudget] = useState('');
+  const [budgetToBeConfirmed, setBudgetToBeConfirmed] = useState(false);
   const [duration, setDuration] = useState('');
+  const [roleType, setRoleType] = useState<string>('');
+  const [gigLocation, setGigLocation] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -29,7 +33,10 @@ export default function GigCreationStep2() {
         if (savedData) {
           const data = JSON.parse(savedData);
           if (data.budget) setBudget(data.budget);
+          if (data.budgetToBeConfirmed !== undefined) setBudgetToBeConfirmed(data.budgetToBeConfirmed);
           if (data.duration) setDuration(data.duration);
+          if (data.roleType) setRoleType(data.roleType);
+          if (data.gigLocation) setGigLocation(data.gigLocation);
         }
       } catch (error) {
         console.error('Error loading step data:', error);
@@ -41,10 +48,13 @@ export default function GigCreationStep2() {
     loadStepData();
   }, []);
 
-  const isValid = budget.trim() !== '' && 
-                 !isNaN(Number(budget)) && 
-                 Number(budget) > 0 && 
-                 duration !== '';
+  const budgetProvided = !budgetToBeConfirmed && budget.trim() !== '';
+  const budgetValid = budgetToBeConfirmed || (budget.trim() !== '' && !isNaN(Number(budget)) && Number(budget) > 0);
+  
+  const isValid = budgetValid && 
+                 duration !== '' &&
+                 roleType !== '' &&
+                 gigLocation.trim() !== '';
 
   const handleContinue = () => {
     if (!isValid) return;
@@ -56,7 +66,10 @@ export default function GigCreationStep2() {
     const updatedData = {
       ...data,
       budget: budget.trim(),
-      duration: duration
+      budgetToBeConfirmed: budgetToBeConfirmed,
+      duration: duration,
+      roleType: roleType,
+      gigLocation: gigLocation.trim()
     };
     
     sessionStorage.setItem('gigCreationData', JSON.stringify(updatedData));
@@ -129,25 +142,48 @@ export default function GigCreationStep2() {
                 <p className="text-sm text-slate-600 mt-1 mb-3">
                   What's your budget range for this project? (in USD)
                 </p>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <span className="text-slate-500 sm:text-sm">$</span>
+                <div className="space-y-3">
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <span className="text-slate-500 sm:text-sm">$</span>
+                    </div>
+                    <Input
+                      type="number"
+                      placeholder="0"
+                      value={budget}
+                      onChange={(e) => setBudget(e.target.value)}
+                      className="pl-7 text-base"
+                      min="0"
+                      step="100"
+                      disabled={budgetToBeConfirmed}
+                    />
                   </div>
-                  <Input
-                    type="number"
-                    placeholder="0"
-                    value={budget}
-                    onChange={(e) => setBudget(e.target.value)}
-                    className="pl-7 text-base"
-                    min="0"
-                    step="100"
-                  />
+                  <div className="flex items-center gap-2">
+                    <Checkbox
+                      id="budget_tbc"
+                      checked={budgetToBeConfirmed}
+                      onCheckedChange={(checked) => {
+                        setBudgetToBeConfirmed(Boolean(checked));
+                        if (Boolean(checked)) {
+                          setBudget('');
+                        }
+                      }}
+                    />
+                    <Label htmlFor="budget_tbc" className="text-sm text-slate-600 cursor-pointer">
+                      To be confirmed
+                    </Label>
+                  </div>
+                  {budget && !budgetToBeConfirmed && !isNaN(Number(budget)) && Number(budget) > 0 && (
+                    <p className="text-sm text-slate-600">
+                      Budget: {formatCurrency(budget)}
+                    </p>
+                  )}
+                  {budgetToBeConfirmed && (
+                    <p className="text-sm text-slate-500 italic">
+                      Budget will be displayed as "To be confirmed" to professionals
+                    </p>
+                  )}
                 </div>
-                {budget && !isNaN(Number(budget)) && Number(budget) > 0 && (
-                  <p className="text-sm text-slate-600 mt-2">
-                    Budget: {formatCurrency(budget)}
-                  </p>
-                )}
               </div>
 
               {/* Duration */}
@@ -170,6 +206,42 @@ export default function GigCreationStep2() {
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+
+              {/* Role Type */}
+              <div>
+                <Label className="text-lg font-semibold text-slate-900">
+                  Role Type <span className="text-red-500">*</span>
+                </Label>
+                <p className="text-sm text-slate-600 mt-1 mb-3">
+                  What type of work arrangement is this?
+                </p>
+                <Select value={roleType} onValueChange={setRoleType}>
+                  <SelectTrigger className="text-base">
+                    <SelectValue placeholder="Select role type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="in_person">In-person</SelectItem>
+                    <SelectItem value="hybrid">Hybrid</SelectItem>
+                    <SelectItem value="remote">Remote</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Gig Location */}
+              <div>
+                <Label className="text-lg font-semibold text-slate-900">
+                  Gig Location <span className="text-red-500">*</span>
+                </Label>
+                <p className="text-sm text-slate-600 mt-1 mb-3">
+                  Enter the city, country, or "Fully Remote" for the location of this gig
+                </p>
+                <Input
+                  placeholder="e.g., New York, USA or Fully Remote"
+                  value={gigLocation}
+                  onChange={(e) => setGigLocation(e.target.value)}
+                  className="text-base"
+                />
               </div>
 
               {/* Additional Info */}

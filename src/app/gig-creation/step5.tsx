@@ -11,8 +11,12 @@ interface GigCreationData {
   gigName: string;
   gigDescription: string;
   selectedSkills: Array<{ id: number; name: string }>;
+  selectedIndustries?: Array<{ id: number; name: string; category?: string | null }>;
   budget: string;
+  budgetToBeConfirmed?: boolean;
   duration: string;
+  roleType?: string;
+  gigLocation?: string;
   attachments: Array<{
     id: string;
     name: string;
@@ -55,7 +59,10 @@ export default function GigCreationStep5() {
       const savedData = sessionStorage.getItem('gigCreationData');
       if (savedData) {
         const data = JSON.parse(savedData);
-        setGigData(data);
+        setGigData({
+          ...data,
+          selectedIndustries: data.selectedIndustries || []
+        });
       } else {
         navigate('/gig-creation/step1');
       }
@@ -116,6 +123,25 @@ export default function GigCreationStep5() {
         return;
       }
 
+      const industryIds = (gigData.selectedIndustries || [])
+        .map((industry) => Number(industry.id))
+        .filter((industryId) => !Number.isNaN(industryId));
+
+      if (
+        gigData.selectedIndustries &&
+        gigData.selectedIndustries.length > 0 &&
+        industryIds.length !== gigData.selectedIndustries.length
+      ) {
+        setError(
+          'One or more selected industries could not be interpreted. Please return to step 1 and reselect the industries.'
+        );
+        return;
+      }
+
+      // Handle budget - can be null if TBC
+      const budgetToBeConfirmed = gigData.budgetToBeConfirmed || false;
+      const budgetValue = budgetToBeConfirmed ? null : parseFloat(gigData.budget);
+
       // Prepare project data for database
       const projectData = {
         creator_id: user.id,
@@ -123,14 +149,17 @@ export default function GigCreationStep5() {
         title: gigData.gigName,
         description: gigData.gigDescription,
         skills_required: JSON.stringify(gigData.selectedSkills.map(skill => skill.id)),
+        industries: industryIds,
         currency: 'USD',
-        budget_min: parseFloat(gigData.budget),
-        budget_max: parseFloat(gigData.budget),
-        desired_amount_min: parseFloat(gigData.budget),
-        desired_amount_max: parseFloat(gigData.budget),
+        budget_min: budgetValue,
+        budget_max: budgetValue,
+        desired_amount_min: budgetValue,
+        desired_amount_max: budgetValue,
         delivery_time_min: getDeliveryTimeMin(gigData.duration),
         delivery_time_max: getDeliveryTimeMax(gigData.duration),
         status: 'open',
+        role_type: gigData.roleType || null,
+        gig_location: gigData.gigLocation || null,
         screening_questions: gigData.screeningQuestions.length > 0 
           ? JSON.stringify(gigData.screeningQuestions.map(q => q.question))
           : null,
@@ -332,6 +361,21 @@ export default function GigCreationStep5() {
                         ))}
                       </div>
                     </div>
+                    {gigData.selectedIndustries && gigData.selectedIndustries.length > 0 && (
+                      <div>
+                        <h4 className="font-medium text-slate-900 mb-2">Industries</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {gigData.selectedIndustries.map((industry) => (
+                            <span
+                              key={industry.id}
+                              className="inline-flex items-center px-3 py-1 bg-slate-200 text-slate-800 rounded-full text-sm"
+                            >
+                              {industry.name}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </CollapsibleContent>
@@ -382,12 +426,32 @@ export default function GigCreationStep5() {
                   <div className="pt-6 space-y-4">
                     <div>
                       <h4 className="font-medium text-slate-900 mb-2">Budget</h4>
-                      <p className="text-slate-700">{formatCurrency(gigData.budget)}</p>
+                      <p className="text-slate-700">
+                        {gigData.budgetToBeConfirmed 
+                          ? 'To be confirmed' 
+                          : formatCurrency(gigData.budget)}
+                      </p>
                     </div>
                     <div>
                       <h4 className="font-medium text-slate-900 mb-2">Duration</h4>
                       <p className="text-slate-700">{DURATION_LABELS[gigData.duration]}</p>
                     </div>
+                    {gigData.roleType && (
+                      <div>
+                        <h4 className="font-medium text-slate-900 mb-2">Role Type</h4>
+                        <p className="text-slate-700">
+                          {gigData.roleType === 'in_person' ? 'In-person' : 
+                           gigData.roleType === 'hybrid' ? 'Hybrid' : 
+                           gigData.roleType === 'remote' ? 'Remote' : gigData.roleType}
+                        </p>
+                      </div>
+                    )}
+                    {gigData.gigLocation && (
+                      <div>
+                        <h4 className="font-medium text-slate-900 mb-2">Gig Location</h4>
+                        <p className="text-slate-700">{gigData.gigLocation}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </CollapsibleContent>

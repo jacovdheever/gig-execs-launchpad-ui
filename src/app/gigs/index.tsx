@@ -29,6 +29,10 @@ interface Project {
   created_at: string;
   skills_required: number[];
   creator_id: string;
+  project_origin?: 'internal' | 'external';
+  external_url?: string | null;
+  expires_at?: string | null;
+  source_name?: string | null;
 }
 
 export default function GigsPage() {

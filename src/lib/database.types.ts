@@ -179,11 +179,18 @@ export interface Database {
           delivery_time_min: string | null
           delivery_time_max: string | null
           status: string | null
+          project_origin: string
+          external_url: string | null
+          expires_at: string | null
+          source_name: string | null
           screening_questions: string | null
           template_id: string | null
           created_at: string | null
           updated_at: string | null
           deleted_at: string | null
+          industries: number[] | null
+          role_type: string | null
+          gig_location: string | null
         }
         Insert: {
           id?: string
@@ -202,11 +209,18 @@ export interface Database {
           delivery_time_min?: string | null
           delivery_time_max?: string | null
           status?: string | null
+          project_origin?: string
+          external_url?: string | null
+          expires_at?: string | null
+          source_name?: string | null
           screening_questions?: string | null
           template_id?: string | null
           created_at?: string | null
           updated_at?: string | null
           deleted_at?: string | null
+          industries?: number[] | null
+          role_type?: string | null
+          gig_location?: string | null
         }
         Update: {
           id?: string
@@ -225,11 +239,18 @@ export interface Database {
           delivery_time_min?: string | null
           delivery_time_max?: string | null
           status?: string | null
+          project_origin?: string
+          external_url?: string | null
+          expires_at?: string | null
+          source_name?: string | null
           screening_questions?: string | null
           template_id?: string | null
           created_at?: string | null
           updated_at?: string | null
           deleted_at?: string | null
+          industries?: number[] | null
+          role_type?: string | null
+          gig_location?: string | null
         }
       }
 

@@ -76,6 +76,56 @@ function sanitizeString(str) {
 }
 
 /**
+ * Validates that a value can be treated as a project identifier
+ * Accepts numeric IDs or UUID strings since historical data may use either
+ * @param {string|number} value
+ * @returns {boolean}
+ */
+function isValidProjectId(value) {
+  if (typeof value === 'number') {
+    return Number.isInteger(value) && value > 0;
+  }
+
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+    if (trimmed.length === 0) return false;
+    // Accept UUIDs and numeric strings
+    if (isValidUUID(trimmed)) return true;
+    const numeric = Number(trimmed);
+    return Number.isInteger(numeric) && numeric > 0;
+  }
+
+  return false;
+}
+
+/**
+ * Validates URL format using WHATWG URL parser
+ * @param {string} url
+ * @returns {boolean}
+ */
+function isValidUrl(url) {
+  if (typeof url !== 'string' || url.trim().length === 0) return false;
+  try {
+    const parsed = new URL(url);
+    return ['http:', 'https:'].includes(parsed.protocol);
+  } catch (_error) {
+    return false;
+  }
+}
+
+/**
+ * Ensures value is a valid ISO date string
+ * @param {string|null|undefined} value
+ * @returns {boolean}
+ */
+function isValidIsoDate(value) {
+  if (value === null || value === undefined || value === '') return true;
+  if (typeof value !== 'string') return false;
+  const timestamp = Date.parse(value);
+  return !Number.isNaN(timestamp);
+}
+
+/**
  * Validates request body structure
  * @param {Object} body - Request body object
  * @param {Array} requiredFields - Array of required field names
@@ -97,6 +147,221 @@ function validateRequestBody(body, requiredFields = []) {
     }
   }
   
+  return {
+    isValid: errors.length === 0,
+    errors
+  };
+}
+
+const PROJECT_STATUSES = ['draft', 'open', 'in_progress', 'completed', 'cancelled'];
+
+/**
+ * Validates payload for creating an external gig
+ * @param {Object} body
+ * @returns {{isValid:boolean,errors:string[]}}
+ */
+function validateExternalGigCreateInput(body) {
+  const validation = validateRequestBody(body, ['title', 'description', 'status', 'external_url']);
+  if (!validation.isValid) return validation;
+
+  const errors = [...validation.errors];
+
+  if (!isValidString(body.title, 255)) {
+    errors.push('title must be a non-empty string up to 255 characters');
+  }
+
+  if (!isValidString(body.description, 10000)) {
+    errors.push('description must be a non-empty string up to 10,000 characters');
+  }
+
+  if (!PROJECT_STATUSES.includes(body.status)) {
+    errors.push(`status must be one of: ${PROJECT_STATUSES.join(', ')}`);
+  }
+
+  if (!isValidUrl(body.external_url)) {
+    errors.push('external_url must be a valid HTTP or HTTPS URL');
+  }
+
+  if (!isValidIsoDate(body.expires_at)) {
+    errors.push('expires_at must be a valid ISO date string if provided');
+  }
+
+  if (body.source_name && !isValidString(body.source_name, 255, true)) {
+    errors.push('source_name must be a string up to 255 characters');
+  }
+
+  if (body.currency && !isValidString(body.currency, 10)) {
+    errors.push('currency must be a valid currency code (max 10 characters)');
+  }
+
+  if (body.budget_min !== undefined && body.budget_min !== null) {
+    if (Number.isNaN(Number(body.budget_min))) {
+      errors.push('budget_min must be numeric');
+    }
+  }
+
+  if (body.budget_max !== undefined && body.budget_max !== null) {
+    if (Number.isNaN(Number(body.budget_max))) {
+      errors.push('budget_max must be numeric');
+    }
+  }
+
+  if (Array.isArray(body.skills_required)) {
+    const invalidSkill = body.skills_required.some(skill => Number.isNaN(Number(skill)));
+    if (invalidSkill) {
+      errors.push('skills_required must be an array of numeric skill identifiers');
+    }
+  } else if (body.skills_required !== undefined && body.skills_required !== null) {
+    errors.push('skills_required must be an array when provided');
+  }
+
+  if (body.industries !== undefined && body.industries !== null) {
+    if (!isValidNumberArray(body.industries)) {
+      errors.push('industries must be an array of numeric industry identifiers');
+    }
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors
+  };
+}
+
+/**
+ * Validates payload for updating an external gig
+ * @param {Object} body
+ * @returns {{isValid:boolean,errors:string[]}}
+ */
+function validateExternalGigUpdateInput(body) {
+  const validation = validateRequestBody(body, ['id']);
+  if (!validation.isValid) return validation;
+
+  const errors = [...validation.errors];
+
+  if (!isValidProjectId(body.id)) {
+    errors.push('id must be a valid project identifier');
+  }
+
+  const allowedFields = [
+    'title',
+    'description',
+    'status',
+    'external_url',
+    'expires_at',
+    'source_name',
+    'currency',
+    'budget_min',
+    'budget_max',
+    'delivery_time_min',
+    'delivery_time_max',
+    'skills_required',
+    'industries',
+    'role_type',
+    'gig_location'
+  ];
+
+  const providedFields = Object.keys(body).filter(key => key !== 'id');
+  if (providedFields.length === 0) {
+    errors.push('At least one field must be provided for update');
+  }
+
+  const unsupported = providedFields.filter(field => !allowedFields.includes(field));
+  if (unsupported.length > 0) {
+    errors.push(`Unsupported fields for update: ${unsupported.join(', ')}`);
+  }
+
+  if (body.title !== undefined && !isValidString(body.title, 255)) {
+    errors.push('title must be a non-empty string up to 255 characters');
+  }
+
+  if (body.description !== undefined && !isValidString(body.description, 10000)) {
+    errors.push('description must be a non-empty string up to 10,000 characters');
+  }
+
+  if (body.status !== undefined && !PROJECT_STATUSES.includes(body.status)) {
+    errors.push(`status must be one of: ${PROJECT_STATUSES.join(', ')}`);
+  }
+
+  if (body.external_url !== undefined && !isValidUrl(body.external_url)) {
+    errors.push('external_url must be a valid HTTP or HTTPS URL');
+  }
+
+  if (body.expires_at !== undefined && !isValidIsoDate(body.expires_at)) {
+    errors.push('expires_at must be a valid ISO date string or null');
+  }
+
+  if (body.source_name !== undefined && !isValidString(body.source_name ?? '', 255, true)) {
+    errors.push('source_name must be a string up to 255 characters');
+  }
+
+  if (body.currency !== undefined && body.currency !== null && !isValidString(body.currency, 10)) {
+    errors.push('currency must be a valid currency code (max 10 characters)');
+  }
+
+  if (body.budget_min !== undefined && body.budget_min !== null && Number.isNaN(Number(body.budget_min))) {
+    errors.push('budget_min must be numeric');
+  }
+
+  if (body.budget_max !== undefined && body.budget_max !== null && Number.isNaN(Number(body.budget_max))) {
+    errors.push('budget_max must be numeric');
+  }
+
+  if (body.delivery_time_min !== undefined && body.delivery_time_min !== null && Number.isNaN(Number(body.delivery_time_min))) {
+    errors.push('delivery_time_min must be numeric');
+  }
+
+  if (body.delivery_time_max !== undefined && body.delivery_time_max !== null && Number.isNaN(Number(body.delivery_time_max))) {
+    errors.push('delivery_time_max must be numeric');
+  }
+
+  if (body.skills_required !== undefined && body.skills_required !== null) {
+    if (!Array.isArray(body.skills_required)) {
+      errors.push('skills_required must be an array when provided');
+    } else if (body.skills_required.some(skill => Number.isNaN(Number(skill)))) {
+      errors.push('skills_required must contain numeric identifiers');
+    }
+  }
+
+  if (body.industries !== undefined && body.industries !== null) {
+    if (!isValidNumberArray(body.industries)) {
+      errors.push('industries must be an array of numeric industry identifiers');
+    }
+  }
+
+  if (body.role_type !== undefined && body.role_type !== null) {
+    const validRoleTypes = ['in_person', 'hybrid', 'remote'];
+    if (!validRoleTypes.includes(body.role_type)) {
+      errors.push(`role_type must be one of: ${validRoleTypes.join(', ')}`);
+    }
+  }
+
+  if (body.gig_location !== undefined && body.gig_location !== null) {
+    if (!isValidString(body.gig_location, 255, true)) {
+      errors.push('gig_location must be a string up to 255 characters');
+    }
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors
+  };
+}
+
+/**
+ * Validates payload for deleting an external gig
+ * @param {Object} body
+ * @returns {{isValid:boolean,errors:string[]}}
+ */
+function validateExternalGigDeleteInput(body) {
+  const validation = validateRequestBody(body, ['id']);
+  if (!validation.isValid) return validation;
+
+  const errors = [...validation.errors];
+
+  if (!isValidProjectId(body.id)) {
+    errors.push('id must be a valid project identifier');
+  }
+
   return {
     isValid: errors.length === 0,
     errors
@@ -217,16 +482,31 @@ function createErrorResponse(statusCode, message, details = []) {
   };
 }
 
+function isValidNumberArray(arr, allowEmpty = true, maxLength = 50) {
+  if (!Array.isArray(arr)) return false;
+  if (!allowEmpty && arr.length === 0) return false;
+  if (arr.length > maxLength) return false;
+  return arr.every((value) => !Number.isNaN(Number(value)));
+}
+
 module.exports = {
   isValidUUID,
   isValidEmail,
   isValidString,
   isValidUUIDArray,
   isValidUserType,
+  isValidNumberArray,
   sanitizeString,
+  isValidProjectId,
+  isValidUrl,
+  isValidIsoDate,
   validateRequestBody,
   validateGetClientDataInput,
   validateGetUserSkillsInput,
   validateRegisterUserInput,
-  createErrorResponse
+  validateExternalGigCreateInput,
+  validateExternalGigUpdateInput,
+  validateExternalGigDeleteInput,
+  createErrorResponse,
+  isValidNumberArray
 };

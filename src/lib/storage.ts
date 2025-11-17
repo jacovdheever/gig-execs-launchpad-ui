@@ -325,8 +325,11 @@ export async function uploadProjectAttachment(file: File, userId: string): Promi
     // Generate unique filename
     const fileExt = file.name.split('.').pop();
     const timestamp = Date.now();
-    const fileName = `${userId}/${timestamp}_${file.name}`;
-    const filePath = `project-attachments/${fileName}`;
+    // CRITICAL FIX: Sanitize filename to replace spaces with underscores
+    // Supabase Storage has issues with spaces in filenames when generating signed URLs
+    // The createSignedUrl function URL-encodes spaces, but files are stored with actual spaces
+    const sanitizedFileName = file.name.replace(/\s+/g, '_');
+    const fileName = `${userId}/${timestamp}_${sanitizedFileName}`;
 
     // Upload to Supabase Storage
     const { data, error } = await supabase.storage
@@ -344,14 +347,30 @@ export async function uploadProjectAttachment(file: File, userId: string): Promi
       };
     }
 
-    // Get public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from('project-attachments')
-      .getPublicUrl(fileName);
+    // Use the actual path returned by Supabase (this is how it's stored in Storage)
+    // The data.path is the exact path as stored, which we must use when generating signed URLs
+    const actualPath = data.path;
+    console.log('🔍 uploadProjectAttachment: Supabase upload response data:', data);
+    console.log('🔍 uploadProjectAttachment: data.path:', actualPath);
+    console.log('🔍 uploadProjectAttachment: data.fullPath:', data.fullPath);
+    console.log('🔍 uploadProjectAttachment: data.id:', data.id);
+    console.log('🔍 uploadProjectAttachment: Original fileName used for upload:', fileName);
+    
+    // Verify the path matches what we uploaded
+    if (actualPath !== fileName) {
+      console.warn('🔍 uploadProjectAttachment: WARNING - data.path does not match fileName!');
+      console.warn('🔍 uploadProjectAttachment: data.path:', actualPath);
+      console.warn('🔍 uploadProjectAttachment: fileName:', fileName);
+    }
+    
+    // Store the path in format: bucket-name/actual-path
+    // Use data.path (the exact path as stored by Supabase)
+    const filePath = `project-attachments/${actualPath}`;
+    console.log('🔍 uploadProjectAttachment: Final stored file path:', filePath);
 
     return {
       success: true,
-      url: publicUrl
+      url: filePath
     };
 
   } catch (error) {
@@ -491,21 +510,25 @@ export async function uploadProfileDocument(file: File, userId: string, document
 
     console.log('🔍 uploadProfileDocument: Upload successful, data:', data);
 
+    // Use the actual path returned by Supabase (this is how it's stored in Storage)
+    const actualPath = data.path;
+    console.log('🔍 uploadProfileDocument: Supabase returned path:', actualPath);
+
     // For private buckets, we need to store the file path, not a URL
     // The URL will be generated when needed using signed URLs
     const isPublicBucket = bucketName === 'profile-photos' || bucketName === 'company-logos';
     
     let fileUrl: string;
     if (isPublicBucket) {
-      // Get public URL for public buckets
+      // Get public URL for public buckets using the actual path
       const { data: { publicUrl } } = supabase.storage
         .from(bucketName)
-        .getPublicUrl(fileName);
+        .getPublicUrl(actualPath);
       fileUrl = publicUrl;
       console.log('🔍 uploadProfileDocument: Generated public URL:', fileUrl);
     } else {
-      // For private buckets, store the file path (we'll generate signed URLs when viewing)
-      fileUrl = `${bucketName}/${fileName}`;
+      // For private buckets, store the file path using the actual path from Supabase
+      fileUrl = `${bucketName}/${actualPath}`;
       console.log('🔍 uploadProfileDocument: Stored file path for private bucket:', fileUrl);
     }
 
@@ -533,41 +556,65 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
   try {
     console.log('🔍 getSignedDocumentUrl: Input filePath:', filePath);
     
+    // If it's already a signed URL, return it directly
+    if (filePath.includes('/storage/v1/object/sign/')) {
+      console.log('🔍 getSignedDocumentUrl: Already a signed URL, returning as-is');
+      return filePath;
+    }
+    
     let bucketName: string;
     let fileName: string;
     
-    // Check if it's already a full URL (legacy format)
+    // Check if it's already a full URL (public URL format)
     if (filePath.startsWith('https://')) {
       console.log('🔍 getSignedDocumentUrl: Detected full URL format');
       
       // Extract bucket and file info from full URL
       // URL format: https://domain/storage/v1/object/public/bucket-name/user-id/filename
       const urlParts = filePath.split('/');
-      const bucketIndex = urlParts.findIndex(part => part === 'public') + 1;
+      const publicIndex = urlParts.findIndex(part => part === 'public');
+      const signIndex = urlParts.findIndex(part => part === 'sign');
       
-      if (bucketIndex > 0 && bucketIndex < urlParts.length) {
-        bucketName = urlParts[bucketIndex];
-        fileName = urlParts.slice(bucketIndex + 1).join('/');
+      if (publicIndex > 0 && publicIndex < urlParts.length - 1) {
+        bucketName = urlParts[publicIndex + 1];
+        // Get the path after the bucket name (this is URL-encoded in the public URL)
+        const pathAfterBucket = urlParts.slice(publicIndex + 2).join('/');
+        // Store both encoded and decoded versions - we'll try both
+        const encodedPath = pathAfterBucket;
+        try {
+          fileName = decodeURIComponent(pathAfterBucket);
+          console.log('🔍 getSignedDocumentUrl: Decoded filename from', encodedPath, 'to', fileName);
+        } catch (e) {
+          // If decoding fails, use as-is
+          fileName = pathAfterBucket;
+          console.log('🔍 getSignedDocumentUrl: Could not decode filename, using as-is:', fileName);
+        }
+      } else if (signIndex > 0 && signIndex < urlParts.length - 1) {
+        // Already a signed URL (shouldn't reach here due to check above, but just in case)
+        bucketName = urlParts[signIndex + 1];
+        fileName = urlParts.slice(signIndex + 2).join('/');
+        // Remove query string if present
+        fileName = fileName.split('?')[0];
+        // Decode URL-encoded filename
+        fileName = decodeURIComponent(fileName);
       } else {
         console.error('🔍 getSignedDocumentUrl: Could not parse bucket from URL');
         return null;
       }
-    } else if (filePath.includes('/') && !filePath.includes(' ')) {
-      // New format: bucket-name/user-id/filename (no spaces, has slashes)
+    } else {
+      // New format: bucket-name/user-id/filename
+      // This format stores the actual filename (with spaces), not URL-encoded
       console.log('🔍 getSignedDocumentUrl: Detected file path format');
       const [bucket, ...pathParts] = filePath.split('/');
       bucketName = bucket;
       fileName = pathParts.join('/');
-    } else {
-      // Legacy format: just filename (assume it's in id-documents bucket)
-      console.log('🔍 getSignedDocumentUrl: Detected legacy filename format, assuming id-documents bucket');
-      bucketName = 'id-documents';
-      fileName = filePath;
+      // Don't decode - file paths in this format are stored with actual filenames (including spaces)
+      console.log('🔍 getSignedDocumentUrl: Using file path as-is (not URL-encoded):', fileName);
     }
     
     console.log('🔍 getSignedDocumentUrl: Parsed bucket:', bucketName, 'file:', fileName);
     
-    // Check if it's a public bucket - return direct URL
+    // Check if it's a public bucket - return direct public URL
     const isPublicBucket = bucketName === 'profile-photos' || bucketName === 'company-logos';
     if (isPublicBucket) {
       const { data: { publicUrl } } = supabase.storage
@@ -577,48 +624,108 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
       return publicUrl;
     }
     
-    // For private buckets, use Netlify function to generate signed URL
-    console.log('🔍 getSignedDocumentUrl: Using Netlify function for private bucket');
+    // For private buckets (including project-attachments), always generate signed URL
+    // Even if we have a public URL, we need to generate a signed URL for private buckets
+    console.log('🔍 getSignedDocumentUrl: Generating signed URL for private bucket:', bucketName);
+    console.log('🔍 getSignedDocumentUrl: File path to use:', fileName);
+    console.log('🔍 getSignedDocumentUrl: File path length:', fileName.length);
+    console.log('🔍 getSignedDocumentUrl: File path includes spaces:', fileName.includes(' '));
     
-    try {
-      const response = await fetch('/.netlify/functions/generate-signed-url', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          filePath: fileName,
-          expiresIn: expiresIn
-        })
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('🔍 getSignedDocumentUrl: Netlify function error:', errorData);
-        return null;
-      }
-      
-      const { signedUrl } = await response.json();
-      console.log('🔍 getSignedDocumentUrl: Generated signed URL via Netlify function:', signedUrl);
-      return signedUrl;
-      
-    } catch (netlifyError) {
-      console.error('🔍 getSignedDocumentUrl: Netlify function failed:', netlifyError);
-      
-      // Fallback to direct Supabase call (will likely fail due to RLS)
-      console.log('🔍 getSignedDocumentUrl: Falling back to direct Supabase call');
-      const { data, error } = await supabase.storage
-        .from(bucketName)
-        .createSignedUrl(fileName, expiresIn);
-      
-      if (error) {
-        console.error('🔍 getSignedDocumentUrl: Fallback also failed:', error);
-        return null;
-      }
-      
-      console.log('🔍 getSignedDocumentUrl: Fallback succeeded:', data.signedUrl);
-      return data.signedUrl;
+    // CRITICAL FIX: The file is stored with actual spaces (from data.path during upload)
+    // Supabase's createSignedUrl should handle this, but we need to ensure we're using
+    // the exact path as stored. The path format is: user-id/filename with spaces
+    console.log('🔍 getSignedDocumentUrl: Attempting to create signed URL with path:', fileName);
+    console.log('🔍 getSignedDocumentUrl: Path includes spaces:', fileName.includes(' '));
+    
+    // Try creating signed URL with the exact path as stored
+    // Supabase's client should handle URL encoding for the HTTP request
+    let signedUrlData = await supabase.storage
+      .from(bucketName)
+      .createSignedUrl(fileName, expiresIn);
+    
+    if (!signedUrlData.error && signedUrlData.data) {
+      console.log('🔍 getSignedDocumentUrl: SUCCESS - Generated signed URL');
+      return signedUrlData.data.signedUrl;
     }
+    
+    // If that fails, log the error and try fallbacks
+    console.error('🔍 getSignedDocumentUrl: Error generating signed URL:', signedUrlData.error);
+    console.error('🔍 getSignedDocumentUrl: Bucket:', bucketName);
+    console.error('🔍 getSignedDocumentUrl: File path tried:', fileName);
+    if (signedUrlData.error) {
+      console.error('🔍 getSignedDocumentUrl: Error details:', JSON.stringify(signedUrlData.error, null, 2));
+    }
+    
+    // If that fails and we have a public URL with encoded characters, try the encoded path
+    // (Supabase might store it with URL encoding in some cases)
+    if (signedUrlData.error && filePath.startsWith('https://') && filePath.includes('%')) {
+      console.log('🔍 getSignedDocumentUrl: First attempt failed, trying with URL-encoded path');
+      const urlParts = filePath.split('/');
+      const publicIndex = urlParts.findIndex(part => part === 'public');
+      if (publicIndex > 0 && publicIndex < urlParts.length - 1) {
+        const encodedPath = urlParts.slice(publicIndex + 2).join('/');
+        console.log('🔍 getSignedDocumentUrl: Trying with encoded path:', encodedPath);
+        signedUrlData = await supabase.storage
+          .from(bucketName)
+          .createSignedUrl(encodedPath, expiresIn);
+        
+        // If encoded also fails, try one more time with the path from the upload response
+        // (the actual stored path might be different)
+        if (signedUrlData.error) {
+          console.log('🔍 getSignedDocumentUrl: Encoded path also failed, file might not exist or path is incorrect');
+        }
+      }
+    }
+    
+    const { data, error } = signedUrlData;
+    
+    if (error) {
+      console.error('🔍 getSignedDocumentUrl: Error generating signed URL:', error);
+      console.error('🔍 getSignedDocumentUrl: Bucket:', bucketName, 'File tried:', fileName);
+      
+      // For legacy files with public URLs, if signed URL generation fails,
+      // the file might have been uploaded when the bucket was public
+      // Try to use the public URL directly, but convert it to a signed URL format if possible
+      if (filePath.startsWith('https://') && filePath.includes('/storage/v1/object/public/')) {
+        console.log('🔍 getSignedDocumentUrl: Legacy public URL detected, attempting to use directly');
+        
+        // For legacy public URLs, try converting to signed URL by extracting the path
+        // and generating a new signed URL with the exact path from the URL
+        try {
+          // Extract the exact path from the public URL (keep it URL-encoded as it appears)
+          const urlObj = new URL(filePath);
+          const pathParts = urlObj.pathname.split('/');
+          const publicIndex = pathParts.indexOf('public');
+          if (publicIndex > 0 && publicIndex < pathParts.length - 1) {
+            // Get the path exactly as it appears in the URL (URL-encoded)
+            const exactPath = pathParts.slice(publicIndex + 2).join('/');
+            console.log('🔍 getSignedDocumentUrl: Trying with exact path from URL:', exactPath);
+            
+            // Try creating signed URL with the exact encoded path
+            const retryData = await supabase.storage
+              .from(bucketName)
+              .createSignedUrl(exactPath, expiresIn);
+            
+            if (!retryData.error) {
+              console.log('🔍 getSignedDocumentUrl: Success with exact path from URL');
+              return retryData.data.signedUrl;
+            }
+          }
+        } catch (e) {
+          console.log('🔍 getSignedDocumentUrl: Could not parse URL, using original as fallback');
+        }
+        
+        // Final fallback: return the original public URL
+        // This will work if the bucket is actually public, or if RLS allows public access
+        console.log('🔍 getSignedDocumentUrl: Returning original public URL as final fallback');
+        return filePath;
+      }
+      
+      return null;
+    }
+    
+    console.log('🔍 getSignedDocumentUrl: Generated signed URL:', data.signedUrl);
+    return data.signedUrl;
     
   } catch (error) {
     console.error('🔍 getSignedDocumentUrl: Unexpected error:', error);
