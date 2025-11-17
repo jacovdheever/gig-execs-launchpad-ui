@@ -328,6 +328,19 @@ function validateExternalGigUpdateInput(body) {
     }
   }
 
+  if (body.role_type !== undefined && body.role_type !== null) {
+    const validRoleTypes = ['in_person', 'hybrid', 'remote'];
+    if (!validRoleTypes.includes(body.role_type)) {
+      errors.push(`role_type must be one of: ${validRoleTypes.join(', ')}`);
+    }
+  }
+
+  if (body.gig_location !== undefined && body.gig_location !== null) {
+    if (!isValidString(body.gig_location, 255, true)) {
+      errors.push('gig_location must be a string up to 255 characters');
+    }
+  }
+
   return {
     isValid: errors.length === 0,
     errors
