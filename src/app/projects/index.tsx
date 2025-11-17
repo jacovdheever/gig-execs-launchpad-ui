@@ -328,11 +328,11 @@ export default function ProjectsPage() {
                     </div>
 
                     {/* Bid Count */}
-                    {project.status === 'open' && (
+                    {(project.status === 'open' || project.status === 'in_progress') && (
                       <div className="flex items-center gap-2 text-slate-600">
                         <Briefcase className="w-4 h-4" />
                         <span className="text-sm">
-                          {project.bid_count || 0} {project.bid_count === 1 ? 'bid' : 'bids'} received
+                          {project.bid_count ?? 0} {(project.bid_count ?? 0) === 1 ? 'bid' : 'bids'} received
                         </span>
                       </div>
                     )}
