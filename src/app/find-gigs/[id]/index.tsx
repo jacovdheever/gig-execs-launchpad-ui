@@ -252,41 +252,50 @@ export default function GigDetailsPage() {
 
       // Load existing bid if user is a consultant
       if (userData && !isExternal) {
-        const { data: existingBidData, error: bidError } = await supabase
-          .from('bids')
-          .select('*')
-          .eq('project_id', id)
-          .eq('consultant_id', userData.id)
-          .single();
+        const projectIdNum = parseInt(id || '0', 10);
+        if (!isNaN(projectIdNum)) {
+          const { data: existingBidData, error: bidError } = await supabase
+            .from('bids')
+            .select('*')
+            .eq('project_id', projectIdNum)
+            .eq('consultant_id', userData.id)
+            .maybeSingle();
 
-        if (!bidError && existingBidData) {
-          setExistingBid(existingBidData);
-          // Pre-populate form with existing bid data
-          setBidAmount(existingBidData.amount?.toString() || '');
-          setBidMessage(existingBidData.message || existingBidData.proposal || '');
-          
-          // Load screening answers if stored
-          if (existingBidData.screening_answers) {
-            try {
-              const parsed = typeof existingBidData.screening_answers === 'string' 
-                ? JSON.parse(existingBidData.screening_answers)
-                : existingBidData.screening_answers;
-              setScreeningAnswers(parsed || {});
-            } catch (e) {
-              console.error('Error parsing screening answers:', e);
+          // Check if we got a bid (maybeSingle returns null if not found, but no error)
+          if (existingBidData && !bidError) {
+            console.log('Found existing bid:', existingBidData);
+            setExistingBid(existingBidData);
+            // Pre-populate form with existing bid data
+            setBidAmount(existingBidData.amount?.toString() || '');
+            setBidMessage(existingBidData.message || existingBidData.proposal || '');
+            
+            // Load screening answers if stored
+            if (existingBidData.screening_answers) {
+              try {
+                const parsed = typeof existingBidData.screening_answers === 'string' 
+                  ? JSON.parse(existingBidData.screening_answers)
+                  : existingBidData.screening_answers;
+                setScreeningAnswers(parsed || {});
+              } catch (e) {
+                console.error('Error parsing screening answers:', e);
+              }
             }
+            
+            // Load documents
+            if (existingBidData.bid_documents && Array.isArray(existingBidData.bid_documents)) {
+              setBidDocuments(existingBidData.bid_documents.map((url: string) => ({
+                name: url.split('/').pop() || 'Document',
+                url: url
+              })));
+            }
+            
+            // Open the bid card if there's an existing bid
+            setBidCardOpen(true);
+          } else if (bidError) {
+            console.error('Error loading existing bid:', bidError);
+          } else {
+            console.log('No existing bid found for this project');
           }
-          
-          // Load documents
-          if (existingBidData.bid_documents && Array.isArray(existingBidData.bid_documents)) {
-            setBidDocuments(existingBidData.bid_documents.map((url: string) => ({
-              name: url.split('/').pop() || 'Document',
-              url: url
-            })));
-          }
-          
-          // Open the bid card if there's an existing bid
-          setBidCardOpen(true);
         }
       }
 
@@ -453,7 +462,7 @@ export default function GigDetailsPage() {
         .select('*')
         .eq('project_id', project.id)
         .eq('consultant_id', user.id)
-        .single();
+        .maybeSingle();
 
       if (updatedBid) {
         setExistingBid(updatedBid);
