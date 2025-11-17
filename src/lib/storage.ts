@@ -494,21 +494,25 @@ export async function uploadProfileDocument(file: File, userId: string, document
 
     console.log('🔍 uploadProfileDocument: Upload successful, data:', data);
 
+    // Use the actual path returned by Supabase (this is how it's stored in Storage)
+    const actualPath = data.path;
+    console.log('🔍 uploadProfileDocument: Supabase returned path:', actualPath);
+
     // For private buckets, we need to store the file path, not a URL
     // The URL will be generated when needed using signed URLs
     const isPublicBucket = bucketName === 'profile-photos' || bucketName === 'company-logos';
     
     let fileUrl: string;
     if (isPublicBucket) {
-      // Get public URL for public buckets
+      // Get public URL for public buckets using the actual path
       const { data: { publicUrl } } = supabase.storage
         .from(bucketName)
-        .getPublicUrl(fileName);
+        .getPublicUrl(actualPath);
       fileUrl = publicUrl;
       console.log('🔍 uploadProfileDocument: Generated public URL:', fileUrl);
     } else {
-      // For private buckets, store the file path (we'll generate signed URLs when viewing)
-      fileUrl = `${bucketName}/${fileName}`;
+      // For private buckets, store the file path using the actual path from Supabase
+      fileUrl = `${bucketName}/${actualPath}`;
       console.log('🔍 uploadProfileDocument: Stored file path for private bucket:', fileUrl);
     }
 
