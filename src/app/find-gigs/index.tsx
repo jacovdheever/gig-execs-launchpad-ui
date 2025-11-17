@@ -99,14 +99,18 @@ export default function FindGigsPage() {
   // Update projects with bid status when userBids changes
   useEffect(() => {
     if (userBids.size > 0 && projects.length > 0) {
-      setProjects(prevProjects => 
-        prevProjects.map(project => ({
+      setProjects(prevProjects => {
+        // Only update if there's actually a change to avoid infinite loops
+        const needsUpdate = prevProjects.some(p => p.hasBidSubmitted !== userBids.has(p.id));
+        if (!needsUpdate) return prevProjects;
+        
+        return prevProjects.map(project => ({
           ...project,
           hasBidSubmitted: userBids.has(project.id)
-        }))
-      );
+        }));
+      });
     }
-  }, [userBids]);
+  }, [userBids, projects.length]);
 
   const loadData = async () => {
     try {
