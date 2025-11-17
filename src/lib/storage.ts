@@ -554,14 +554,13 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
       
       if (publicIndex > 0 && publicIndex < urlParts.length - 1) {
         bucketName = urlParts[publicIndex + 1];
-        // Get the path after the bucket name
+        // Get the path after the bucket name (this is URL-encoded in the public URL)
         const pathAfterBucket = urlParts.slice(publicIndex + 2).join('/');
-        // For Supabase Storage, we need to use the path as stored
-        // The public URL has URL-encoded paths, but the file is stored with the actual filename
-        // Try decoding first (most common case)
+        // Store both encoded and decoded versions - we'll try both
+        const encodedPath = pathAfterBucket;
         try {
           fileName = decodeURIComponent(pathAfterBucket);
-          console.log('🔍 getSignedDocumentUrl: Decoded filename from', pathAfterBucket, 'to', fileName);
+          console.log('🔍 getSignedDocumentUrl: Decoded filename from', encodedPath, 'to', fileName);
         } catch (e) {
           // If decoding fails, use as-is
           fileName = pathAfterBucket;
@@ -610,22 +609,29 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
     // Even if we have a public URL, we need to generate a signed URL for private buckets
     console.log('🔍 getSignedDocumentUrl: Generating signed URL for private bucket:', bucketName);
     
-    // Try with decoded filename first
+    // Try with decoded filename first (file is stored with actual filename, not URL-encoded)
     let signedUrlData = await supabase.storage
       .from(bucketName)
       .createSignedUrl(fileName, expiresIn);
     
-    // If that fails and we decoded the filename, try with the original encoded path
+    // If that fails and we have a public URL with encoded characters, try the encoded path
+    // (Supabase might store it with URL encoding in some cases)
     if (signedUrlData.error && filePath.startsWith('https://') && filePath.includes('%')) {
-      console.log('🔍 getSignedDocumentUrl: First attempt failed, trying with original encoded path');
+      console.log('🔍 getSignedDocumentUrl: First attempt failed, trying with URL-encoded path');
       const urlParts = filePath.split('/');
       const publicIndex = urlParts.findIndex(part => part === 'public');
       if (publicIndex > 0 && publicIndex < urlParts.length - 1) {
-        const originalPath = urlParts.slice(publicIndex + 2).join('/');
-        console.log('🔍 getSignedDocumentUrl: Trying with original path:', originalPath);
+        const encodedPath = urlParts.slice(publicIndex + 2).join('/');
+        console.log('🔍 getSignedDocumentUrl: Trying with encoded path:', encodedPath);
         signedUrlData = await supabase.storage
           .from(bucketName)
-          .createSignedUrl(originalPath, expiresIn);
+          .createSignedUrl(encodedPath, expiresIn);
+        
+        // If encoded also fails, try one more time with the path from the upload response
+        // (the actual stored path might be different)
+        if (signedUrlData.error) {
+          console.log('🔍 getSignedDocumentUrl: Encoded path also failed, file might not exist or path is incorrect');
+        }
       }
     }
     
