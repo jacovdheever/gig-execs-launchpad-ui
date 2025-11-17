@@ -1,7 +1,14 @@
 -- Fix RLS policies for project-attachments bucket
 -- This allows both uploaders and project owners to access files
+--
+-- IMPORTANT: Storage policies require service role permissions or must be created
+-- through the Supabase Dashboard. If you get "must be owner of relation objects" error,
+-- use the Supabase Dashboard: Storage → Policies → project-attachments → New Policy
+--
+-- See docs/storage-rls-policy-setup.md for detailed dashboard instructions
 
 -- Drop existing restrictive policies if they exist
+-- Note: These commands may fail if you don't have service role permissions
 DROP POLICY IF EXISTS "Users can upload project attachments" ON storage.objects;
 DROP POLICY IF EXISTS "Users can view their own project attachments" ON storage.objects;
 DROP POLICY IF EXISTS "Users can update their own project attachments" ON storage.objects;
