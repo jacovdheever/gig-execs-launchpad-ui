@@ -22,7 +22,8 @@ import {
   ChevronUp,
   Upload,
   X,
-  FileText
+  FileText,
+  Edit
 } from 'lucide-react';
 import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser';
 import { supabase } from '@/lib/supabase';
@@ -89,6 +90,8 @@ export default function GigDetailsPage() {
   const [success, setSuccess] = useState(false);
 
   // Bid form state
+  const [existingBid, setExistingBid] = useState<any | null>(null);
+  const [isEditingBid, setIsEditingBid] = useState(false);
   const [bidAmount, setBidAmount] = useState('');
   const [bidMessage, setBidMessage] = useState('');
   const [screeningAnswers, setScreeningAnswers] = useState<{ [key: number]: string }>({});
@@ -247,6 +250,46 @@ export default function GigDetailsPage() {
         client: clientInfo
       });
 
+      // Load existing bid if user is a consultant
+      if (userData && !isExternal) {
+        const { data: existingBidData, error: bidError } = await supabase
+          .from('bids')
+          .select('*')
+          .eq('project_id', id)
+          .eq('consultant_id', userData.id)
+          .single();
+
+        if (!bidError && existingBidData) {
+          setExistingBid(existingBidData);
+          // Pre-populate form with existing bid data
+          setBidAmount(existingBidData.amount?.toString() || '');
+          setBidMessage(existingBidData.message || existingBidData.proposal || '');
+          
+          // Load screening answers if stored
+          if (existingBidData.screening_answers) {
+            try {
+              const parsed = typeof existingBidData.screening_answers === 'string' 
+                ? JSON.parse(existingBidData.screening_answers)
+                : existingBidData.screening_answers;
+              setScreeningAnswers(parsed || {});
+            } catch (e) {
+              console.error('Error parsing screening answers:', e);
+            }
+          }
+          
+          // Load documents
+          if (existingBidData.bid_documents && Array.isArray(existingBidData.bid_documents)) {
+            setBidDocuments(existingBidData.bid_documents.map((url: string) => ({
+              name: url.split('/').pop() || 'Document',
+              url: url
+            })));
+          }
+          
+          // Open the bid card if there's an existing bid
+          setBidCardOpen(true);
+        }
+      }
+
     } catch (error) {
       console.error('Error loading data:', error);
     } finally {
@@ -370,19 +413,33 @@ export default function GigDetailsPage() {
         return;
       }
 
-      const bidData = {
+      const bidData: any = {
         project_id: project.id,
         consultant_id: user.id,
         amount: parseFloat(bidAmount),
         currency: project.currency,
-        status: 'pending',
+        status: existingBid?.status || 'pending',
+        message: bidMessage.trim(),
+        proposal: bidMessage.trim(), // Store in both fields for compatibility
+        screening_answers: JSON.stringify(screeningAnswers),
         bid_documents: bidDocuments.map(doc => doc.url),
-        created_at: new Date().toISOString()
+        updated_at: new Date().toISOString()
       };
 
-      const { error: bidError } = await supabase
-        .from('bids')
-        .insert(bidData);
+      let bidError;
+      if (existingBid) {
+        // Update existing bid
+        bidError = (await supabase
+          .from('bids')
+          .update(bidData)
+          .eq('id', existingBid.id)).error;
+      } else {
+        // Create new bid
+        bidData.created_at = new Date().toISOString();
+        bidError = (await supabase
+          .from('bids')
+          .insert(bidData)).error;
+      }
 
       if (bidError) {
         console.error('Error submitting bid:', bidError);
@@ -390,13 +447,20 @@ export default function GigDetailsPage() {
         return;
       }
 
+      // Reload the bid to get updated data
+      const { data: updatedBid } = await supabase
+        .from('bids')
+        .select('*')
+        .eq('project_id', project.id)
+        .eq('consultant_id', user.id)
+        .single();
+
+      if (updatedBid) {
+        setExistingBid(updatedBid);
+      }
+
       setSuccess(true);
-      
-      // Reset form
-      setBidAmount('');
-      setBidMessage('');
-      setScreeningAnswers({});
-      setBidDocuments([]);
+      setIsEditingBid(false);
       
     } catch (error) {
       console.error('Error submitting bid:', error);
@@ -404,6 +468,12 @@ export default function GigDetailsPage() {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleEditBid = () => {
+    setIsEditingBid(true);
+    setSuccess(false);
+    setBidCardOpen(true);
   };
 
   const isExternal = !!project && project.project_origin === 'external';
@@ -712,8 +782,17 @@ export default function GigDetailsPage() {
                   {!isExternal && (
                     <div className="pt-4 border-t border-slate-200">
                       <Button onClick={scrollToBidCard} className="w-full">
-                        <Send className="w-4 h-4 mr-2" />
-                        Submit Your Bid
+                        {existingBid ? (
+                          <>
+                            <FileText className="w-4 h-4 mr-2" />
+                            View Your Bid
+                          </>
+                        ) : (
+                          <>
+                            <Send className="w-4 h-4 mr-2" />
+                            Submit Your Bid
+                          </>
+                        )}
                       </Button>
                     </div>
                   )}
@@ -728,9 +807,13 @@ export default function GigDetailsPage() {
                       <CardHeader className="cursor-pointer hover:bg-slate-50 transition-colors">
                         <div className="flex items-center justify-between">
                           <div>
-                            <CardTitle>Submit Your Bid</CardTitle>
+                            <CardTitle>
+                              {existingBid && !isEditingBid ? 'Your Submitted Bid' : 'Submit Your Bid'}
+                            </CardTitle>
                             <CardDescription>
-                              Submit your proposal for this project
+                              {existingBid && !isEditingBid 
+                                ? 'View and manage your proposal for this project'
+                                : 'Submit your proposal for this project'}
                             </CardDescription>
                           </div>
                           {bidCardOpen ? (
@@ -748,13 +831,116 @@ export default function GigDetailsPage() {
                             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                               <CheckCircle className="w-8 h-8 text-green-600" />
                             </div>
-                            <h3 className="font-semibold text-slate-900 mb-2">Bid Submitted Successfully!</h3>
+                            <h3 className="font-semibold text-slate-900 mb-2">
+                              {existingBid ? 'Bid Updated Successfully!' : 'Bid Submitted Successfully!'}
+                            </h3>
                             <p className="text-slate-600 text-sm mb-4">
                               Your bid has been sent to the client. You'll be notified when they respond.
                             </p>
-                            <Button variant="outline" asChild className="w-full">
-                              <Link to="/find-gigs">Find More Gigs</Link>
-                            </Button>
+                            <div className="flex gap-2">
+                              <Button variant="outline" onClick={handleEditBid} className="flex-1">
+                                Edit Bid
+                              </Button>
+                              <Button variant="outline" asChild className="flex-1">
+                                <Link to="/find-gigs">Find More Gigs</Link>
+                              </Button>
+                            </div>
+                          </div>
+                        ) : existingBid && !isEditingBid ? (
+                          <div className="space-y-6">
+                            <div className="flex items-center justify-between">
+                              <h3 className="font-semibold text-slate-900">Your Submitted Bid</h3>
+                              <Button variant="outline" size="sm" onClick={handleEditBid}>
+                                <Edit className="w-4 h-4 mr-2" />
+                                Edit
+                              </Button>
+                            </div>
+
+                            <div className="space-y-4">
+                              <div>
+                                <Label className="text-sm font-semibold text-slate-900">Bid Amount</Label>
+                                <p className="text-slate-700 mt-1">
+                                  {formatCurrency(parseFloat(existingBid.amount || '0'), existingBid.currency || project.currency)}
+                                </p>
+                              </div>
+
+                              <div>
+                                <Label className="text-sm font-semibold text-slate-900">Your Proposal</Label>
+                                <p className="text-slate-700 mt-1 whitespace-pre-wrap">
+                                  {existingBid.message || existingBid.proposal || 'No proposal provided'}
+                                </p>
+                              </div>
+
+                              {/* Screening Questions Answers */}
+                              {project.screening_questions && project.screening_questions.length > 0 && (
+                                <div>
+                                  <Label className="text-sm font-semibold text-slate-900 mb-2 block">
+                                    Screening Questions
+                                  </Label>
+                                  <div className="space-y-4">
+                                    {project.screening_questions.map((question, index) => {
+                                      let answer = '';
+                                      if (existingBid.screening_answers) {
+                                        try {
+                                          const parsed = typeof existingBid.screening_answers === 'string'
+                                            ? JSON.parse(existingBid.screening_answers)
+                                            : existingBid.screening_answers;
+                                          answer = parsed[index] || '';
+                                        } catch (e) {
+                                          console.error('Error parsing screening answers:', e);
+                                        }
+                                      }
+                                      return (
+                                        <div key={index}>
+                                          <Label className="text-sm font-medium text-slate-700 mb-1 block">
+                                            {index + 1}. {question}
+                                          </Label>
+                                          <p className="text-slate-600 text-sm whitespace-pre-wrap bg-slate-50 p-3 rounded border border-slate-200">
+                                            {answer || 'No answer provided'}
+                                          </p>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Supporting Documents */}
+                              {existingBid.bid_documents && Array.isArray(existingBid.bid_documents) && existingBid.bid_documents.length > 0 && (
+                                <div>
+                                  <Label className="text-sm font-semibold text-slate-900 mb-2 block">
+                                    Supporting Documents
+                                  </Label>
+                                  <div className="space-y-2">
+                                    {existingBid.bid_documents.map((url: string, index: number) => (
+                                      <div key={index} className="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200">
+                                        <FileText className="w-4 h-4 text-slate-500" />
+                                        <a
+                                          href={url}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-sm text-blue-600 hover:underline flex-1 truncate"
+                                        >
+                                          {url.split('/').pop() || `Document ${index + 1}`}
+                                        </a>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+
+                              <div className="pt-4 border-t border-slate-200">
+                                <p className="text-xs text-slate-500">
+                                  Submitted on {formatDate(existingBid.created_at)}
+                                  {existingBid.updated_at && existingBid.updated_at !== existingBid.created_at && (
+                                    <span> • Last updated on {formatDate(existingBid.updated_at)}</span>
+                                  )}
+                                </p>
+                                <p className="text-xs text-slate-500 mt-1">
+                                  Status: <span className="font-medium capitalize">{existingBid.status || 'pending'}</span>
+                                </p>
+                              </div>
+                            </div>
                           </div>
                         ) : (
                           <form onSubmit={handleSubmitBid} className="space-y-6">
