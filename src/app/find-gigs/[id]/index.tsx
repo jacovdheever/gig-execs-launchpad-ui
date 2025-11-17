@@ -59,10 +59,9 @@ interface Project {
     company_name?: string;
     logo_url?: string;
     verified?: boolean;
-    rating?: number;
-    total_ratings?: number;
     headline?: string;
     location?: string;
+    country?: string;
   };
 }
 
@@ -546,24 +545,12 @@ export default function GigDetailsPage() {
                       {project.client?.headline && (
                         <p className="text-slate-600 mt-1">{project.client.headline}</p>
                       )}
-                      <div className="flex items-center gap-4 mt-3">
-                        {project.client?.verified && (
-                          <div className="flex items-center gap-1">
-                            <CheckCircle className="w-4 h-4 text-green-500" />
-                            <span className="text-sm text-green-600 font-medium">Verified Client</span>
-                          </div>
-                        )}
-                        {project.client?.rating ? (
-                          <div className="flex items-center gap-2">
-                            {renderStars(project.client.rating)}
-                            <span className="text-sm text-slate-500">
-                              ({project.client.total_ratings} reviews)
-                            </span>
-                          </div>
-                        ) : (
-                          <span className="text-sm text-slate-500">Unrated</span>
-                        )}
-                      </div>
+                      {project.client?.verified && (
+                        <div className="flex items-center gap-1 mt-3">
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          <span className="text-sm text-green-600 font-medium">Verified Client</span>
+                        </div>
+                      )}
                       {isExternal && project.source_name && (
                         <div className="mt-3 text-sm text-blue-600">
                           Source: {project.source_name}
