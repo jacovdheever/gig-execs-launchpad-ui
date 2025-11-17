@@ -23,7 +23,8 @@ import {
   Upload,
   X,
   FileText,
-  Edit
+  Edit,
+  Download
 } from 'lucide-react';
 import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser';
 import { supabase } from '@/lib/supabase';
