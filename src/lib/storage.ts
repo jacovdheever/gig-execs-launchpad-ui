@@ -580,17 +580,13 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
       }
     } else {
       // New format: bucket-name/user-id/filename
+      // This format stores the actual filename (with spaces), not URL-encoded
       console.log('🔍 getSignedDocumentUrl: Detected file path format');
       const [bucket, ...pathParts] = filePath.split('/');
       bucketName = bucket;
       fileName = pathParts.join('/');
-      // Decode URL-encoded filename if present
-      try {
-        fileName = decodeURIComponent(fileName);
-      } catch (e) {
-        // If decoding fails, use original filename
-        console.log('🔍 getSignedDocumentUrl: Could not decode filename, using as-is');
-      }
+      // Don't decode - file paths in this format are stored with actual filenames (including spaces)
+      console.log('🔍 getSignedDocumentUrl: Using file path as-is (not URL-encoded):', fileName);
     }
     
     console.log('🔍 getSignedDocumentUrl: Parsed bucket:', bucketName, 'file:', fileName);
