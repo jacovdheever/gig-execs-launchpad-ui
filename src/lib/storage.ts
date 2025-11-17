@@ -343,10 +343,13 @@ export async function uploadProjectAttachment(file: File, userId: string): Promi
       };
     }
 
-    // For private buckets, store the file path (not a public URL)
-    // This matches the pattern used by uploadProfileDocument for private buckets
-    // The path format: bucket-name/user-id/filename
-    const filePath = `project-attachments/${fileName}`;
+    // Use the actual path returned by Supabase (this is how it's stored in Storage)
+    // This ensures we use the exact path format that Supabase uses internally
+    const actualPath = data.path;
+    console.log('🔍 uploadProjectAttachment: Supabase returned path:', actualPath);
+    
+    // Store the path in format: bucket-name/actual-path
+    const filePath = `project-attachments/${actualPath}`;
     console.log('🔍 uploadProjectAttachment: Stored file path for private bucket:', filePath);
 
     return {
