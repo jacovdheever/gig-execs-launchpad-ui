@@ -264,6 +264,9 @@ export default function GigDetailsPage() {
           // Check if we got a bid (maybeSingle returns null if not found, but no error)
           if (existingBidData && !bidError) {
             console.log('Found existing bid:', existingBidData);
+            console.log('Bid fields:', Object.keys(existingBidData));
+            console.log('Bid message:', existingBidData.message);
+            console.log('Bid proposal:', existingBidData.proposal);
             setExistingBid(existingBidData);
             // Pre-populate form with existing bid data
             setBidAmount(existingBidData.amount?.toString() || '');
