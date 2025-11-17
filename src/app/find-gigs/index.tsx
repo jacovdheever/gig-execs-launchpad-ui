@@ -96,21 +96,6 @@ export default function FindGigsPage() {
     loadData();
   }, []);
 
-  // Update projects with bid status when userBids changes
-  useEffect(() => {
-    if (userBids.size > 0 && projects.length > 0) {
-      setProjects(prevProjects => {
-        // Only update if there's actually a change to avoid infinite loops
-        const needsUpdate = prevProjects.some(p => p.hasBidSubmitted !== userBids.has(p.id));
-        if (!needsUpdate) return prevProjects;
-        
-        return prevProjects.map(project => ({
-          ...project,
-          hasBidSubmitted: userBids.has(project.id)
-        }));
-      });
-    }
-  }, [userBids, projects.length]);
 
   const loadData = async () => {
     try {
@@ -170,6 +155,14 @@ export default function FindGigsPage() {
           const bidProjectIds = new Set(bidsData.map(bid => parseInt(bid.project_id?.toString() || '0', 10)).filter(id => !isNaN(id) && id > 0));
           console.log('🔍 User bids loaded:', Array.from(bidProjectIds));
           setUserBids(bidProjectIds);
+          
+          // Update projects with bid status immediately
+          setProjects(prevProjects => 
+            prevProjects.map(project => ({
+              ...project,
+              hasBidSubmitted: bidProjectIds.has(project.id)
+            }))
+          );
         } else if (bidsError) {
           console.error('Error loading user bids:', bidsError);
         }
