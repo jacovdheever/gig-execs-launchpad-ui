@@ -325,7 +325,11 @@ export async function uploadProjectAttachment(file: File, userId: string): Promi
     // Generate unique filename
     const fileExt = file.name.split('.').pop();
     const timestamp = Date.now();
-    const fileName = `${userId}/${timestamp}_${file.name}`;
+    // CRITICAL FIX: Sanitize filename to replace spaces with underscores
+    // Supabase Storage has issues with spaces in filenames when generating signed URLs
+    // The createSignedUrl function URL-encodes spaces, but files are stored with actual spaces
+    const sanitizedFileName = file.name.replace(/\s+/g, '_');
+    const fileName = `${userId}/${timestamp}_${sanitizedFileName}`;
 
     // Upload to Supabase Storage
     const { data, error } = await supabase.storage
