@@ -346,7 +346,10 @@ export async function uploadProjectAttachment(file: File, userId: string): Promi
     // Use the actual path returned by Supabase (this is how it's stored in Storage)
     // This ensures we use the exact path format that Supabase uses internally
     const actualPath = data.path;
+    console.log('🔍 uploadProjectAttachment: Supabase upload response:', JSON.stringify(data, null, 2));
     console.log('🔍 uploadProjectAttachment: Supabase returned path:', actualPath);
+    console.log('🔍 uploadProjectAttachment: Path type:', typeof actualPath);
+    console.log('🔍 uploadProjectAttachment: Original fileName:', fileName);
     
     // Store the path in format: bucket-name/actual-path
     const filePath = `project-attachments/${actualPath}`;
@@ -611,11 +614,19 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
     // For private buckets (including project-attachments), always generate signed URL
     // Even if we have a public URL, we need to generate a signed URL for private buckets
     console.log('🔍 getSignedDocumentUrl: Generating signed URL for private bucket:', bucketName);
+    console.log('🔍 getSignedDocumentUrl: File path to use:', fileName);
+    console.log('🔍 getSignedDocumentUrl: File path length:', fileName.length);
+    console.log('🔍 getSignedDocumentUrl: File path includes spaces:', fileName.includes(' '));
     
-    // Try with decoded filename first (file is stored with actual filename, not URL-encoded)
+    // Try with the exact path as stored (Supabase handles encoding internally)
     let signedUrlData = await supabase.storage
       .from(bucketName)
       .createSignedUrl(fileName, expiresIn);
+    
+    console.log('🔍 getSignedDocumentUrl: Signed URL response:', signedUrlData.error ? 'ERROR' : 'SUCCESS');
+    if (signedUrlData.error) {
+      console.log('🔍 getSignedDocumentUrl: Error details:', JSON.stringify(signedUrlData.error, null, 2));
+    }
     
     // If that fails and we have a public URL with encoded characters, try the encoded path
     // (Supabase might store it with URL encoding in some cases)
