@@ -145,29 +145,6 @@ export default function FindGigsPage() {
           console.log('🔍 No user industries found for user:', userData.id);
         }
 
-        // Load user's bids to check which gigs they've bid on
-        const { data: bidsData, error: bidsError } = await supabase
-          .from('bids')
-          .select('project_id')
-          .eq('consultant_id', userData.id);
-
-        if (!bidsError && bidsData) {
-          const bidProjectIds = new Set(bidsData.map(bid => parseInt(bid.project_id?.toString() || '0', 10)).filter(id => !isNaN(id) && id > 0));
-          console.log('🔍 User bids loaded:', Array.from(bidProjectIds));
-          setUserBids(bidProjectIds);
-          
-          // Update projects with bid status immediately
-          setProjects(prevProjects => 
-            prevProjects.map(project => ({
-              ...project,
-              hasBidSubmitted: bidProjectIds.has(project.id)
-            }))
-          );
-        } else if (bidsError) {
-          console.error('Error loading user bids:', bidsError);
-        }
-      }
-
       // Load projects, skills, and industries in parallel
       const [projectsResult, skillsResult, industriesResult] = await Promise.all([
         supabase
@@ -348,6 +325,30 @@ export default function FindGigsPage() {
       // Update projects with bid status after userBids is loaded
       // This will be done in a useEffect that watches userBids
       setProjects(processedProjects);
+
+      // Load user's bids to check which gigs they've bid on (after projects are loaded)
+      if (userData.role === 'consultant') {
+        const { data: bidsData, error: bidsError } = await supabase
+          .from('bids')
+          .select('project_id')
+          .eq('consultant_id', userData.id);
+
+        if (!bidsError && bidsData) {
+          const bidProjectIds = new Set(bidsData.map(bid => parseInt(bid.project_id?.toString() || '0', 10)).filter(id => !isNaN(id) && id > 0));
+          console.log('🔍 User bids loaded:', Array.from(bidProjectIds));
+          setUserBids(bidProjectIds);
+          
+          // Update projects with bid status
+          setProjects(prevProjects => 
+            prevProjects.map(project => ({
+              ...project,
+              hasBidSubmitted: bidProjectIds.has(project.id)
+            }))
+          );
+        } else if (bidsError) {
+          console.error('Error loading user bids:', bidsError);
+        }
+      }
 
       // Calculate dynamic budget range based on loaded projects
       if (processedProjects.length > 0) {
