@@ -556,13 +556,14 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
         bucketName = urlParts[publicIndex + 1];
         // Get the path after the bucket name
         const pathAfterBucket = urlParts.slice(publicIndex + 2).join('/');
-        // Decode URL-encoded filename (e.g., %20 -> space)
-        // The file is stored with the actual filename (with spaces), not URL-encoded
+        // For Supabase Storage, we need to use the path as stored
+        // The public URL has URL-encoded paths, but the file is stored with the actual filename
+        // Try decoding first (most common case)
         try {
           fileName = decodeURIComponent(pathAfterBucket);
           console.log('🔍 getSignedDocumentUrl: Decoded filename from', pathAfterBucket, 'to', fileName);
         } catch (e) {
-          // If decoding fails, try using the path as-is (might already be decoded)
+          // If decoding fails, use as-is
           fileName = pathAfterBucket;
           console.log('🔍 getSignedDocumentUrl: Could not decode filename, using as-is:', fileName);
         }
@@ -608,13 +609,31 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
     // For private buckets (including project-attachments), always generate signed URL
     // Even if we have a public URL, we need to generate a signed URL for private buckets
     console.log('🔍 getSignedDocumentUrl: Generating signed URL for private bucket:', bucketName);
-    const { data, error } = await supabase.storage
+    
+    // Try with decoded filename first
+    let signedUrlData = await supabase.storage
       .from(bucketName)
       .createSignedUrl(fileName, expiresIn);
     
+    // If that fails and we decoded the filename, try with the original encoded path
+    if (signedUrlData.error && filePath.startsWith('https://') && filePath.includes('%')) {
+      console.log('🔍 getSignedDocumentUrl: First attempt failed, trying with original encoded path');
+      const urlParts = filePath.split('/');
+      const publicIndex = urlParts.findIndex(part => part === 'public');
+      if (publicIndex > 0 && publicIndex < urlParts.length - 1) {
+        const originalPath = urlParts.slice(publicIndex + 2).join('/');
+        console.log('🔍 getSignedDocumentUrl: Trying with original path:', originalPath);
+        signedUrlData = await supabase.storage
+          .from(bucketName)
+          .createSignedUrl(originalPath, expiresIn);
+      }
+    }
+    
+    const { data, error } = signedUrlData;
+    
     if (error) {
       console.error('🔍 getSignedDocumentUrl: Error generating signed URL:', error);
-      console.error('🔍 getSignedDocumentUrl: Bucket:', bucketName, 'File:', fileName);
+      console.error('🔍 getSignedDocumentUrl: Bucket:', bucketName, 'File tried:', fileName);
       // If signed URL generation fails, try to return the original URL as fallback
       if (filePath.startsWith('https://')) {
         console.log('🔍 getSignedDocumentUrl: Returning original URL as fallback');
