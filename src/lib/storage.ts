@@ -640,11 +640,45 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
     if (error) {
       console.error('🔍 getSignedDocumentUrl: Error generating signed URL:', error);
       console.error('🔍 getSignedDocumentUrl: Bucket:', bucketName, 'File tried:', fileName);
-      // If signed URL generation fails, try to return the original URL as fallback
-      if (filePath.startsWith('https://')) {
-        console.log('🔍 getSignedDocumentUrl: Returning original URL as fallback');
+      
+      // For legacy files with public URLs, if signed URL generation fails,
+      // the file might have been uploaded when the bucket was public
+      // Try to use the public URL directly, but convert it to a signed URL format if possible
+      if (filePath.startsWith('https://') && filePath.includes('/storage/v1/object/public/')) {
+        console.log('🔍 getSignedDocumentUrl: Legacy public URL detected, attempting to use directly');
+        
+        // For legacy public URLs, try converting to signed URL by extracting the path
+        // and generating a new signed URL with the exact path from the URL
+        try {
+          // Extract the exact path from the public URL (keep it URL-encoded as it appears)
+          const urlObj = new URL(filePath);
+          const pathParts = urlObj.pathname.split('/');
+          const publicIndex = pathParts.indexOf('public');
+          if (publicIndex > 0 && publicIndex < pathParts.length - 1) {
+            // Get the path exactly as it appears in the URL (URL-encoded)
+            const exactPath = pathParts.slice(publicIndex + 2).join('/');
+            console.log('🔍 getSignedDocumentUrl: Trying with exact path from URL:', exactPath);
+            
+            // Try creating signed URL with the exact encoded path
+            const retryData = await supabase.storage
+              .from(bucketName)
+              .createSignedUrl(exactPath, expiresIn);
+            
+            if (!retryData.error) {
+              console.log('🔍 getSignedDocumentUrl: Success with exact path from URL');
+              return retryData.data.signedUrl;
+            }
+          }
+        } catch (e) {
+          console.log('🔍 getSignedDocumentUrl: Could not parse URL, using original as fallback');
+        }
+        
+        // Final fallback: return the original public URL
+        // This will work if the bucket is actually public, or if RLS allows public access
+        console.log('🔍 getSignedDocumentUrl: Returning original public URL as final fallback');
         return filePath;
       }
+      
       return null;
     }
     
