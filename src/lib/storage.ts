@@ -596,13 +596,21 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
       return publicUrl;
     }
     
-    // Generate signed URL for private buckets (including project-attachments)
+    // For private buckets (including project-attachments), always generate signed URL
+    // Even if we have a public URL, we need to generate a signed URL for private buckets
+    console.log('🔍 getSignedDocumentUrl: Generating signed URL for private bucket:', bucketName);
     const { data, error } = await supabase.storage
       .from(bucketName)
       .createSignedUrl(fileName, expiresIn);
     
     if (error) {
       console.error('🔍 getSignedDocumentUrl: Error generating signed URL:', error);
+      console.error('🔍 getSignedDocumentUrl: Bucket:', bucketName, 'File:', fileName);
+      // If signed URL generation fails, try to return the original URL as fallback
+      if (filePath.startsWith('https://')) {
+        console.log('🔍 getSignedDocumentUrl: Returning original URL as fallback');
+        return filePath;
+      }
       return null;
     }
     
