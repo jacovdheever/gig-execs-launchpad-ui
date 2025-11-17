@@ -935,26 +935,22 @@ export default function GigDetailsPage() {
                                           setError(null);
                                           
                                           try {
-                                            let viewUrl = url;
-                                            
-                                            // If it's a full URL, try to get signed URL if needed
-                                            if (url.startsWith('https://')) {
-                                              const signed = await getSignedDocumentUrl(url);
-                                              if (signed) {
-                                                viewUrl = signed;
-                                              }
-                                            } else {
-                                              // It's a file path, generate signed URL
-                                              const signed = await getSignedDocumentUrl(url);
-                                              if (signed) {
-                                                viewUrl = signed;
-                                              } else {
-                                                setError('Unable to access document');
-                                                return;
-                                              }
+                                            // If it's already a signed URL, use it directly
+                                            if (url.includes('/storage/v1/object/sign/')) {
+                                              window.open(url, '_blank', 'noopener,noreferrer');
+                                              return;
                                             }
                                             
-                                            window.open(viewUrl, '_blank', 'noopener,noreferrer');
+                                            // Get signed URL (handles both full URLs and file paths)
+                                            const signed = await getSignedDocumentUrl(url);
+                                            if (signed) {
+                                              window.open(signed, '_blank', 'noopener,noreferrer');
+                                            } else if (url.startsWith('https://')) {
+                                              // Fallback: try direct URL
+                                              window.open(url, '_blank', 'noopener,noreferrer');
+                                            } else {
+                                              setError('Unable to access document');
+                                            }
                                           } catch (err) {
                                             console.error('Error opening document:', err);
                                             setError('Failed to open document');
@@ -989,16 +985,21 @@ export default function GigDetailsPage() {
                                                 setLoading(true);
                                                 try {
                                                   let downloadUrl = url;
-                                                  if (!url.startsWith('https://')) {
+                                                  
+                                                  // If it's already a signed URL, use it directly
+                                                  if (!url.includes('/storage/v1/object/sign/')) {
                                                     const signed = await getSignedDocumentUrl(url);
-                                                    if (signed) downloadUrl = signed;
-                                                  } else {
-                                                    const signed = await getSignedDocumentUrl(url);
-                                                    if (signed) downloadUrl = signed;
+                                                    if (signed) {
+                                                      downloadUrl = signed;
+                                                    } else if (!url.startsWith('https://')) {
+                                                      console.error('Unable to generate download URL');
+                                                      return;
+                                                    }
                                                   }
+                                                  
                                                   const link = document.createElement('a');
                                                   link.href = downloadUrl;
-                                                  link.download = url.split('/').pop() || `document-${index + 1}`;
+                                                  link.download = url.split('/').pop()?.split('?')[0] || `document-${index + 1}`;
                                                   link.target = '_blank';
                                                   link.click();
                                                 } catch (err) {

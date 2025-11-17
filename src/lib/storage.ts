@@ -533,21 +533,34 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
   try {
     console.log('🔍 getSignedDocumentUrl: Input filePath:', filePath);
     
+    // If it's already a signed URL, return it directly
+    if (filePath.includes('/storage/v1/object/sign/')) {
+      console.log('🔍 getSignedDocumentUrl: Already a signed URL, returning as-is');
+      return filePath;
+    }
+    
     let bucketName: string;
     let fileName: string;
     
-    // Check if it's already a full URL (legacy format)
+    // Check if it's already a full URL (public URL format)
     if (filePath.startsWith('https://')) {
       console.log('🔍 getSignedDocumentUrl: Detected full URL format');
       
       // Extract bucket and file info from full URL
       // URL format: https://domain/storage/v1/object/public/bucket-name/user-id/filename
       const urlParts = filePath.split('/');
-      const bucketIndex = urlParts.findIndex(part => part === 'public') + 1;
+      const publicIndex = urlParts.findIndex(part => part === 'public');
+      const signIndex = urlParts.findIndex(part => part === 'sign');
       
-      if (bucketIndex > 0 && bucketIndex < urlParts.length) {
-        bucketName = urlParts[bucketIndex];
-        fileName = urlParts.slice(bucketIndex + 1).join('/');
+      if (publicIndex > 0 && publicIndex < urlParts.length - 1) {
+        bucketName = urlParts[publicIndex + 1];
+        fileName = urlParts.slice(publicIndex + 2).join('/');
+      } else if (signIndex > 0 && signIndex < urlParts.length - 1) {
+        // Already a signed URL (shouldn't reach here due to check above, but just in case)
+        bucketName = urlParts[signIndex + 1];
+        fileName = urlParts.slice(signIndex + 2).join('/');
+        // Remove query string if present
+        fileName = fileName.split('?')[0];
       } else {
         console.error('🔍 getSignedDocumentUrl: Could not parse bucket from URL');
         return null;
@@ -562,7 +575,7 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
     
     console.log('🔍 getSignedDocumentUrl: Parsed bucket:', bucketName, 'file:', fileName);
     
-    // Check if it's a public bucket - return direct URL
+    // Check if it's a public bucket - return direct public URL
     const isPublicBucket = bucketName === 'profile-photos' || bucketName === 'company-logos';
     if (isPublicBucket) {
       const { data: { publicUrl } } = supabase.storage
@@ -572,7 +585,7 @@ export async function getSignedDocumentUrl(filePath: string, expiresIn: number =
       return publicUrl;
     }
     
-    // Generate signed URL for private buckets
+    // Generate signed URL for private buckets (including project-attachments)
     const { data, error } = await supabase.storage
       .from(bucketName)
       .createSignedUrl(fileName, expiresIn);

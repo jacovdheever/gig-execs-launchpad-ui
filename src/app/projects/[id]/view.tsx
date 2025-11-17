@@ -661,21 +661,20 @@ export default function GigViewPage() {
                                                 setError(null);
                                                 
                                                 try {
-                                                  // Check if it's already a valid URL
-                                                  if (url.startsWith('https://')) {
-                                                    // Try to get signed URL if it's a private bucket
-                                                    const signed = await getSignedDocumentUrl(url);
-                                                    if (signed) {
-                                                      window.open(signed, '_blank', 'noopener,noreferrer');
-                                                    } else {
-                                                      // Fallback to direct URL
-                                                      window.open(url, '_blank', 'noopener,noreferrer');
-                                                    }
+                                                  // If it's already a signed URL, use it directly
+                                                  if (url.includes('/storage/v1/object/sign/')) {
+                                                    window.open(url, '_blank', 'noopener,noreferrer');
+                                                    return;
+                                                  }
+                                                  
+                                                  // Get signed URL (handles both full URLs and file paths)
+                                                  const signed = await getSignedDocumentUrl(url);
+                                                  if (signed) {
+                                                    window.open(signed, '_blank', 'noopener,noreferrer');
                                                   } else {
-                                                    // It's a file path, generate signed URL
-                                                    const signed = await getSignedDocumentUrl(url);
-                                                    if (signed) {
-                                                      window.open(signed, '_blank', 'noopener,noreferrer');
+                                                    // Fallback: try direct URL if it's a full URL
+                                                    if (url.startsWith('https://')) {
+                                                      window.open(url, '_blank', 'noopener,noreferrer');
                                                     } else {
                                                       setError('Unable to access document. Please try again.');
                                                     }
@@ -696,26 +695,23 @@ export default function GigViewPage() {
                                                 try {
                                                   let downloadUrl = url;
                                                   
-                                                  // If it's a file path, get signed URL
-                                                  if (!url.startsWith('https://')) {
+                                                  // If it's already a signed URL, use it directly
+                                                  if (url.includes('/storage/v1/object/sign/')) {
+                                                    downloadUrl = url;
+                                                  } else {
+                                                    // Get signed URL (handles both full URLs and file paths)
                                                     const signed = await getSignedDocumentUrl(url);
                                                     if (signed) {
                                                       downloadUrl = signed;
-                                                    } else {
+                                                    } else if (!url.startsWith('https://')) {
                                                       setError('Unable to download document. Please try again.');
                                                       return;
-                                                    }
-                                                  } else {
-                                                    // Try to get signed URL for private buckets
-                                                    const signed = await getSignedDocumentUrl(url);
-                                                    if (signed) {
-                                                      downloadUrl = signed;
                                                     }
                                                   }
                                                   
                                                   const link = document.createElement('a');
                                                   link.href = downloadUrl;
-                                                  link.download = url.split('/').pop() || `document-${index + 1}`;
+                                                  link.download = url.split('/').pop()?.split('?')[0] || `document-${index + 1}`;
                                                   link.target = '_blank';
                                                   link.click();
                                                 } catch (err) {
