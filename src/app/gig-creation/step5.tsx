@@ -13,6 +13,7 @@ interface GigCreationData {
   selectedSkills: Array<{ id: number; name: string }>;
   selectedIndustries?: Array<{ id: number; name: string; category?: string | null }>;
   budget: string;
+  budgetToBeConfirmed?: boolean;
   duration: string;
   roleType?: string;
   gigLocation?: string;
@@ -137,6 +138,10 @@ export default function GigCreationStep5() {
         return;
       }
 
+      // Handle budget - can be null if TBC
+      const budgetToBeConfirmed = gigData.budgetToBeConfirmed || false;
+      const budgetValue = budgetToBeConfirmed ? null : parseFloat(gigData.budget);
+
       // Prepare project data for database
       const projectData = {
         creator_id: user.id,
@@ -146,10 +151,10 @@ export default function GigCreationStep5() {
         skills_required: JSON.stringify(gigData.selectedSkills.map(skill => skill.id)),
         industries: industryIds,
         currency: 'USD',
-        budget_min: parseFloat(gigData.budget),
-        budget_max: parseFloat(gigData.budget),
-        desired_amount_min: parseFloat(gigData.budget),
-        desired_amount_max: parseFloat(gigData.budget),
+        budget_min: budgetValue,
+        budget_max: budgetValue,
+        desired_amount_min: budgetValue,
+        desired_amount_max: budgetValue,
         delivery_time_min: getDeliveryTimeMin(gigData.duration),
         delivery_time_max: getDeliveryTimeMax(gigData.duration),
         status: 'open',
@@ -421,7 +426,11 @@ export default function GigCreationStep5() {
                   <div className="pt-6 space-y-4">
                     <div>
                       <h4 className="font-medium text-slate-900 mb-2">Budget</h4>
-                      <p className="text-slate-700">{formatCurrency(gigData.budget)}</p>
+                      <p className="text-slate-700">
+                        {gigData.budgetToBeConfirmed 
+                          ? 'To be confirmed' 
+                          : formatCurrency(gigData.budget)}
+                      </p>
                     </div>
                     <div>
                       <h4 className="font-medium text-slate-900 mb-2">Duration</h4>

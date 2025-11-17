@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 import { 
   ArrowLeft, 
   Save,
@@ -36,6 +37,8 @@ interface Project {
   external_url?: string | null;
   expires_at?: string | null;
   source_name?: string | null;
+  role_type?: string | null;
+  gig_location?: string | null;
 }
 
 interface Skill {
@@ -58,8 +61,11 @@ export default function GigEditPage() {
     title: '',
     description: '',
     budget: '',
+    budgetToBeConfirmed: false,
     currency: 'USD',
     duration: '',
+    roleType: '',
+    gigLocation: '',
     skills: [] as Skill[],
     screeningQuestions: [] as string[]
   });
@@ -133,12 +139,18 @@ export default function GigEditPage() {
         skillsResult.data?.find(s => s.id === skillId)
       ).filter(Boolean) as Skill[];
 
+      const budgetToBeConfirmed = projectData.budget_min == null && projectData.budget_max == null;
+      const budgetValue = budgetToBeConfirmed ? '' : (projectData.budget_min?.toString() || '');
+
       setFormData({
         title: projectData.title || '',
         description: projectData.description || '',
-        budget: projectData.budget_min?.toString() || '',
+        budget: budgetValue,
+        budgetToBeConfirmed: budgetToBeConfirmed,
         currency: projectData.currency || 'USD',
         duration: getDurationFromDays(projectData.delivery_time_min, projectData.delivery_time_max),
+        roleType: projectData.role_type || '',
+        gigLocation: projectData.gig_location || '',
         skills: selectedSkills,
         screeningQuestions: screening_questions
       });
@@ -232,8 +244,19 @@ export default function GigEditPage() {
         return;
       }
 
-      const budget = parseFloat(formData.budget);
-      if (isNaN(budget) || budget <= 0) {
+      if (!formData.roleType) {
+        setError('Please select a role type');
+        return;
+      }
+
+      if (!formData.gigLocation.trim()) {
+        setError('Please enter a gig location');
+        return;
+      }
+
+      const budgetProvided = !formData.budgetToBeConfirmed && formData.budget.trim() !== '';
+      const budget = budgetProvided ? parseFloat(formData.budget) : null;
+      if (budgetProvided && (isNaN(budget!) || budget! <= 0)) {
         setError('Please enter a valid budget amount');
         return;
       }
@@ -248,6 +271,8 @@ export default function GigEditPage() {
         currency: formData.currency,
         delivery_time_min: deliveryTimeMin,
         delivery_time_max: deliveryTimeMax,
+        role_type: formData.roleType || null,
+        gig_location: formData.gigLocation.trim() || null,
         skills_required: JSON.stringify(formData.skills.map(skill => skill.id)),
         screening_questions: formData.screeningQuestions.length > 0 
           ? JSON.stringify(formData.screeningQuestions.filter(q => q.trim()))
@@ -386,27 +411,46 @@ export default function GigEditPage() {
                     <Label htmlFor="budget" className="text-lg font-semibold text-slate-900">
                       Budget <span className="text-red-500">*</span>
                     </Label>
-                    <div className="flex gap-2 mt-2">
-                      <Select value={formData.currency} onValueChange={(value) => setFormData(prev => ({ ...prev, currency: value }))}>
-                        <SelectTrigger className="w-20">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="USD">USD</SelectItem>
-                          <SelectItem value="EUR">EUR</SelectItem>
-                          <SelectItem value="GBP">GBP</SelectItem>
-                          <SelectItem value="ZAR">ZAR</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Input
-                        id="budget"
-                        type="number"
-                        value={formData.budget}
-                        onChange={(e) => setFormData(prev => ({ ...prev, budget: e.target.value }))}
-                        placeholder="Enter budget amount"
-                        className="flex-1"
-                        required
-                      />
+                    <div className="space-y-3 mt-2">
+                      <div className="flex gap-2">
+                        <Select value={formData.currency} onValueChange={(value) => setFormData(prev => ({ ...prev, currency: value }))}>
+                          <SelectTrigger className="w-20">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="USD">USD</SelectItem>
+                            <SelectItem value="EUR">EUR</SelectItem>
+                            <SelectItem value="GBP">GBP</SelectItem>
+                            <SelectItem value="ZAR">ZAR</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <Input
+                          id="budget"
+                          type="number"
+                          value={formData.budget}
+                          onChange={(e) => setFormData(prev => ({ ...prev, budget: e.target.value }))}
+                          placeholder="Enter budget amount"
+                          className="flex-1"
+                          disabled={formData.budgetToBeConfirmed}
+                          required={!formData.budgetToBeConfirmed}
+                        />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Checkbox
+                          id="budget_tbc"
+                          checked={formData.budgetToBeConfirmed}
+                          onCheckedChange={(checked) =>
+                            setFormData(prev => ({
+                              ...prev,
+                              budgetToBeConfirmed: Boolean(checked),
+                              budget: Boolean(checked) ? '' : prev.budget
+                            }))
+                          }
+                        />
+                        <Label htmlFor="budget_tbc" className="text-sm text-slate-600 cursor-pointer">
+                          To be confirmed
+                        </Label>
+                      </div>
                     </div>
                   </div>
 
@@ -428,6 +472,38 @@ export default function GigEditPage() {
                         <SelectItem value="1-2 years">1-2 years</SelectItem>
                       </SelectContent>
                     </Select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <Label htmlFor="roleType" className="text-lg font-semibold text-slate-900">
+                      Role Type <span className="text-red-500">*</span>
+                    </Label>
+                    <Select value={formData.roleType} onValueChange={(value) => setFormData(prev => ({ ...prev, roleType: value }))}>
+                      <SelectTrigger className="mt-2">
+                        <SelectValue placeholder="Select role type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="in_person">In-person</SelectItem>
+                        <SelectItem value="hybrid">Hybrid</SelectItem>
+                        <SelectItem value="remote">Remote</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="gigLocation" className="text-lg font-semibold text-slate-900">
+                      Gig Location <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                      id="gigLocation"
+                      value={formData.gigLocation}
+                      onChange={(e) => setFormData(prev => ({ ...prev, gigLocation: e.target.value }))}
+                      placeholder="e.g., New York, USA or Fully Remote"
+                      className="mt-2"
+                      required
+                    />
                   </div>
                 </div>
               </CardContent>
