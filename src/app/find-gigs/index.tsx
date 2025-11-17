@@ -144,6 +144,7 @@ export default function FindGigsPage() {
         } else {
           console.log('🔍 No user industries found for user:', userData.id);
         }
+      }
 
       // Load projects, skills, and industries in parallel
       const [projectsResult, skillsResult, industriesResult] = await Promise.all([
@@ -182,10 +183,10 @@ export default function FindGigsPage() {
       // Load client data using Netlify function to bypass RLS
       console.log('🔍 Loading client data via Netlify function for creator IDs:', creatorIds);
       
-      // Get the current session to get the JWT token
-      const { data: { session } } = await supabase.auth.getSession();
-      console.log('🔍 Client data session:', session);
-      console.log('🔍 Client data access token:', session?.access_token);
+      // Get the current session to get the JWT token (reuse session from earlier if available)
+      const { data: { session: clientDataSession } } = await supabase.auth.getSession();
+      console.log('🔍 Client data session:', clientDataSession);
+      console.log('🔍 Client data access token:', clientDataSession?.access_token);
       
       let users: any[] = [];
       let clientProfiles: any[] = [];
@@ -195,7 +196,7 @@ export default function FindGigsPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session?.access_token}`
+          'Authorization': `Bearer ${clientDataSession?.access_token}`
         },
         body: JSON.stringify({ creatorIds })
       });
