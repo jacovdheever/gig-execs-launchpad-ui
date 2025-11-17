@@ -27,6 +27,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown, ChevronUp, Download } from 'lucide-react';
 
 interface Project {
   id: number;
@@ -64,6 +66,10 @@ interface Bid {
   currency: string;
   status: string;
   created_at: string;
+  updated_at?: string;
+  message?: string;
+  proposal?: string;
+  screening_answers?: string;
   bid_documents?: string[];
   consultant?: {
     first_name: string;
@@ -95,6 +101,7 @@ export default function GigViewPage() {
   const [contract, setContract] = useState<Contract | null>(null);
   const [loading, setLoading] = useState(true);
   const [awardingBid, setAwardingBid] = useState<number | null>(null);
+  const [expandedBids, setExpandedBids] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     loadData();
@@ -332,6 +339,28 @@ export default function GigViewPage() {
     }
   };
 
+  const toggleBidExpansion = (bidId: number) => {
+    setExpandedBids(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(bidId)) {
+        newSet.delete(bidId);
+      } else {
+        newSet.add(bidId);
+      }
+      return newSet;
+    });
+  };
+
+  const parseScreeningAnswers = (answers: string | null | undefined): { [key: number]: string } => {
+    if (!answers) return {};
+    try {
+      return typeof answers === 'string' ? JSON.parse(answers) : answers;
+    } catch (e) {
+      console.error('Error parsing screening answers:', e);
+      return {};
+    }
+  };
+
   if (loading) {
     return (
       <AppShell>
@@ -505,52 +534,169 @@ export default function GigViewPage() {
                       </div>
                     ) : (
                       <div className="space-y-4">
-                        {bids.map((bid) => (
-                          <div key={bid.id} className="border border-slate-200 rounded-lg p-4">
-                            <div className="flex items-start justify-between">
-                              <div className="flex-1">
-                                <div className="flex items-center gap-3 mb-2">
-                                  <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center">
-                                    {bid.consultant?.profile_photo_url ? (
-                                      <img
-                                        src={bid.consultant.profile_photo_url}
-                                        alt={`${bid.consultant.first_name} ${bid.consultant.last_name}`}
-                                        className="w-full h-full object-cover rounded-full"
-                                      />
-                                    ) : (
-                                      <span className="text-sm font-semibold text-slate-700">
-                                        {bid.consultant?.first_name?.charAt(0)}{bid.consultant?.last_name?.charAt(0)}
-                                      </span>
+                        {bids.map((bid) => {
+                          const isExpanded = expandedBids.has(bid.id);
+                          const screeningAnswers = parseScreeningAnswers(bid.screening_answers);
+                          const proposalText = bid.message || bid.proposal || '';
+                          
+                          return (
+                            <Collapsible
+                              key={bid.id}
+                              open={isExpanded}
+                              onOpenChange={() => toggleBidExpansion(bid.id)}
+                            >
+                              <div className="border border-slate-200 rounded-lg overflow-hidden">
+                                <CollapsibleTrigger asChild>
+                                  <div className="p-4 hover:bg-slate-50 transition-colors cursor-pointer">
+                                    <div className="flex items-start justify-between">
+                                      <div className="flex-1">
+                                        <div className="flex items-center gap-3 mb-2">
+                                          <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center flex-shrink-0">
+                                            {bid.consultant?.profile_photo_url ? (
+                                              <img
+                                                src={bid.consultant.profile_photo_url}
+                                                alt={`${bid.consultant.first_name} ${bid.consultant.last_name}`}
+                                                className="w-full h-full object-cover rounded-full"
+                                              />
+                                            ) : (
+                                              <span className="text-sm font-semibold text-slate-700">
+                                                {bid.consultant?.first_name?.charAt(0)}{bid.consultant?.last_name?.charAt(0)}
+                                              </span>
+                                            )}
+                                          </div>
+                                          <div className="flex-1 min-w-0">
+                                            <h4 className="font-semibold text-slate-900">
+                                              {bid.consultant?.first_name} {bid.consultant?.last_name}
+                                            </h4>
+                                            {bid.consultant?.headline && (
+                                              <p className="text-sm text-slate-600 truncate">{bid.consultant.headline}</p>
+                                            )}
+                                          </div>
+                                        </div>
+                                        <div className="flex items-center gap-4 text-sm text-slate-600 mt-2">
+                                          <span className="font-semibold text-green-600">
+                                            {formatCurrency(bid.amount, bid.currency)}
+                                          </span>
+                                          <span>
+                                            Bid on {new Date(bid.created_at).toLocaleDateString()}
+                                          </span>
+                                          {bid.updated_at && bid.updated_at !== bid.created_at && (
+                                            <span className="text-xs text-slate-500">
+                                              Updated {new Date(bid.updated_at).toLocaleDateString()}
+                                            </span>
+                                          )}
+                                        </div>
+                                      </div>
+                                      <div className="flex items-center gap-2 ml-4">
+                                        <Button
+                                          size="sm"
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleAwardBid(bid.id);
+                                          }}
+                                          disabled={awardingBid === bid.id}
+                                        >
+                                          {awardingBid === bid.id ? 'Awarding...' : 'Award Bid'}
+                                        </Button>
+                                        {isExpanded ? (
+                                          <ChevronUp className="w-5 h-5 text-slate-500" />
+                                        ) : (
+                                          <ChevronDown className="w-5 h-5 text-slate-500" />
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </CollapsibleTrigger>
+                                <CollapsibleContent>
+                                  <div className="px-4 pb-4 pt-0 border-t border-slate-200 space-y-4">
+                                    {/* Proposal */}
+                                    {proposalText && (
+                                      <div>
+                                        <h5 className="font-semibold text-slate-900 mb-2">Proposal</h5>
+                                        <p className="text-sm text-slate-700 whitespace-pre-wrap bg-slate-50 p-3 rounded border border-slate-200">
+                                          {proposalText}
+                                        </p>
+                                      </div>
+                                    )}
+
+                                    {/* Screening Questions Answers */}
+                                    {project.screening_questions && project.screening_questions.length > 0 && (
+                                      <div>
+                                        <h5 className="font-semibold text-slate-900 mb-2">Screening Questions</h5>
+                                        <div className="space-y-3">
+                                          {project.screening_questions.map((question, index) => {
+                                            const answer = screeningAnswers[index] || 'No answer provided';
+                                            return (
+                                              <div key={index}>
+                                                <p className="text-sm font-medium text-slate-700 mb-1">
+                                                  {index + 1}. {question}
+                                                </p>
+                                                <p className="text-sm text-slate-600 bg-slate-50 p-3 rounded border border-slate-200 whitespace-pre-wrap">
+                                                  {answer}
+                                                </p>
+                                              </div>
+                                            );
+                                          })}
+                                        </div>
+                                      </div>
+                                    )}
+
+                                    {/* Supporting Documents */}
+                                    {bid.bid_documents && Array.isArray(bid.bid_documents) && bid.bid_documents.length > 0 && (
+                                      <div>
+                                        <h5 className="font-semibold text-slate-900 mb-2">Supporting Documents</h5>
+                                        <div className="space-y-2">
+                                          {bid.bid_documents.map((url: string, index: number) => (
+                                            <div key={index} className="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-200">
+                                              <div className="flex items-center gap-2 flex-1 min-w-0">
+                                                <FileText className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                                                <span className="text-sm text-slate-700 truncate">
+                                                  {url.split('/').pop() || `Document ${index + 1}`}
+                                                </span>
+                                              </div>
+                                              <div className="flex gap-2 ml-2">
+                                                <Button
+                                                  variant="outline"
+                                                  size="sm"
+                                                  asChild
+                                                >
+                                                  <a
+                                                    href={url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                  >
+                                                    <FileText className="w-4 h-4 mr-1" />
+                                                    View
+                                                  </a>
+                                                </Button>
+                                                <Button
+                                                  variant="outline"
+                                                  size="sm"
+                                                  onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    const link = document.createElement('a');
+                                                    link.href = url;
+                                                    link.download = url.split('/').pop() || `document-${index + 1}`;
+                                                    link.target = '_blank';
+                                                    link.click();
+                                                  }}
+                                                >
+                                                  <Download className="w-4 h-4 mr-1" />
+                                                  Download
+                                                </Button>
+                                              </div>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      </div>
                                     )}
                                   </div>
-                                  <div>
-                                    <h4 className="font-semibold text-slate-900">
-                                      {bid.consultant?.first_name} {bid.consultant?.last_name}
-                                    </h4>
-                                    {bid.consultant?.headline && (
-                                      <p className="text-sm text-slate-600">{bid.consultant.headline}</p>
-                                    )}
-                                  </div>
-                                </div>
-                                <div className="flex items-center gap-4 text-sm text-slate-600">
-                                  <span className="font-semibold text-green-600">
-                                    {formatCurrency(bid.amount, bid.currency)}
-                                  </span>
-                                  <span>
-                                    Bid on {new Date(bid.created_at).toLocaleDateString()}
-                                  </span>
-                                </div>
+                                </CollapsibleContent>
                               </div>
-                              <Button
-                                size="sm"
-                                onClick={() => handleAwardBid(bid.id)}
-                                disabled={awardingBid === bid.id}
-                              >
-                                {awardingBid === bid.id ? 'Awarding...' : 'Award Bid'}
-                              </Button>
-                            </div>
-                          </div>
-                        ))}
+                            </Collapsible>
+                          );
+                        })}
                       </div>
                     )}
                   </CardContent>
@@ -670,10 +816,6 @@ export default function GigViewPage() {
                       <FileText className="w-4 h-4 mr-2" />
                       Edit Gig
                     </Link>
-                  </Button>
-                  <Button variant="outline" className="w-full">
-                    <MessageSquare className="w-4 h-4 mr-2" />
-                    Message Professional
                   </Button>
                   {project.status === 'in_progress' && (
                     <Button variant="outline" className="w-full" onClick={handleMarkCompleted}>

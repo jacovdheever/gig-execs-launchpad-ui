@@ -36,6 +36,7 @@ interface Project {
   external_url?: string | null;
   expires_at?: string | null;
   source_name?: string | null;
+  bid_count?: number;
 }
 
 interface Skill {
@@ -105,9 +106,35 @@ export default function ProjectsPage() {
         }
         return {
           ...project,
-          skills_required
+          skills_required,
+          bid_count: 0 // Will be updated below
         };
       });
+
+      // Load bid counts for all projects
+      if (processedProjects.length > 0) {
+        const projectIds = processedProjects.map(p => p.id);
+        const { data: bidsData } = await supabase
+          .from('bids')
+          .select('project_id')
+          .in('project_id', projectIds);
+
+        if (bidsData) {
+          // Count bids per project
+          const bidCounts = bidsData.reduce((acc: { [key: number]: number }, bid) => {
+            const projectId = parseInt(bid.project_id?.toString() || '0', 10);
+            if (projectId > 0) {
+              acc[projectId] = (acc[projectId] || 0) + 1;
+            }
+            return acc;
+          }, {});
+
+          // Update projects with bid counts
+          processedProjects.forEach(project => {
+            project.bid_count = bidCounts[project.id] || 0;
+          });
+        }
+      }
 
       setProjects(processedProjects);
     } catch (error) {
@@ -297,6 +324,16 @@ export default function ProjectsPage() {
                         Created {new Date(project.created_at).toLocaleDateString()}
                       </span>
                     </div>
+
+                    {/* Bid Count */}
+                    {project.status === 'open' && (
+                      <div className="flex items-center gap-2 text-slate-600">
+                        <Briefcase className="w-4 h-4" />
+                        <span className="text-sm">
+                          {project.bid_count || 0} {project.bid_count === 1 ? 'bid' : 'bids'} received
+                        </span>
+                      </div>
+                    )}
 
                     {/* Skills */}
                     {project.skills_required && project.skills_required.length > 0 && (
