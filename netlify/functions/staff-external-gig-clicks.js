@@ -76,18 +76,7 @@ exports.handler = async (event) => {
       // Drill-down: Get detailed clicks for a specific project
       let clicksQuery = supabase
         .from('external_gig_clicks')
-        .select(`
-          id,
-          user_id,
-          click_source,
-          created_at,
-          users!user_id (
-            id,
-            first_name,
-            last_name,
-            email
-          )
-        `)
+        .select('id, user_id, click_source, created_at')
         .eq('project_id', projectId);
       
       if (startDate) {
@@ -102,7 +91,7 @@ exports.handler = async (event) => {
 
       if (clicksError) {
         console.error('❌ Failed to fetch click details:', clicksError);
-        return createErrorResponse(500, 'Failed to fetch click details');
+        return createErrorResponse(500, `Failed to fetch click details: ${clicksError.message}`);
       }
 
       // Get project info
@@ -126,16 +115,39 @@ exports.handler = async (event) => {
         }
       });
 
+      // Fetch user data for all unique user IDs
+      const userIds = Array.from(userFirstClicks.keys());
+      const userDataMap = new Map();
+      
+      if (userIds.length > 0) {
+        const { data: users, error: usersError } = await supabase
+          .from('users')
+          .select('id, first_name, last_name, email')
+          .in('id', userIds);
+
+        if (usersError) {
+          console.error('❌ Failed to fetch user data:', usersError);
+          // Continue without user data rather than failing completely
+        } else if (users) {
+          users.forEach(user => {
+            userDataMap.set(user.id, user);
+          });
+        }
+      }
+
       // Format response with user details
       const detailedClicks = Array.from(userFirstClicks.values())
-        .map(click => ({
-          user_id: click.user_id,
-          first_name: click.users?.first_name || 'Unknown',
-          last_name: click.users?.last_name || 'Unknown',
-          email: click.users?.email || 'Unknown',
-          first_clicked_at: click.created_at,
-          click_source: click.click_source
-        }))
+        .map(click => {
+          const userData = userDataMap.get(click.user_id);
+          return {
+            user_id: click.user_id,
+            first_name: userData?.first_name || 'Unknown',
+            last_name: userData?.last_name || 'Unknown',
+            email: userData?.email || 'Unknown',
+            first_clicked_at: click.created_at,
+            click_source: click.click_source
+          };
+        })
         .sort((a, b) => new Date(b.first_clicked_at) - new Date(a.first_clicked_at));
 
       return createSuccessResponse({
