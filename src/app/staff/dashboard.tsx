@@ -19,7 +19,8 @@ import {
   TrendingUp,
   LogOut,
   Settings,
-  Calendar
+  Calendar,
+  ExternalLink
 } from 'lucide-react';
 
 interface DashboardStats {
@@ -228,7 +229,7 @@ export default function StaffDashboardPage() {
           </div>
 
           {/* Quick Actions */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <Button 
               variant="outline" 
               className="h-auto py-4 justify-start"
@@ -250,6 +251,18 @@ export default function StaffDashboardPage() {
               <div className="text-left">
                 <div className="font-semibold">Audit Logs</div>
                 <div className="text-xs text-gray-600">View staff activity</div>
+              </div>
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              className="h-auto py-4 justify-start"
+              onClick={() => navigate('/staff/external-gig-clicks')}
+            >
+              <ExternalLink className="h-5 w-5 mr-2 text-green-600" />
+              <div className="text-left">
+                <div className="font-semibold">External Gig Clicks</div>
+                <div className="text-xs text-gray-600">View click analytics</div>
               </div>
             </Button>
             
