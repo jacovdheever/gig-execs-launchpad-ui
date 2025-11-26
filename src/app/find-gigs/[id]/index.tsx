@@ -32,6 +32,7 @@ import { AppShell } from '@/components/AppShell';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { canApplyExternally } from '@/lib/utils';
 import { uploadProjectAttachment, getSignedDocumentUrl } from '@/lib/storage';
+import { trackExternalGigClick } from '@/lib/trackExternalGigClick';
 
 interface Project {
   id: number;
@@ -746,8 +747,10 @@ export default function GigDetailsPage() {
                             <button
                               type="button"
                               className="text-blue-600 hover:underline"
-                              onClick={() => {
-                                if (project.external_url) {
+                              onClick={async () => {
+                                if (project.external_url && project.id) {
+                                  // Track the click before opening the external URL
+                                  await trackExternalGigClick(project.id, 'detail');
                                   window.open(project.external_url, '_blank', 'noopener,noreferrer');
                                 }
                               }}
@@ -1205,8 +1208,10 @@ export default function GigDetailsPage() {
                     <Button
                       className="w-full flex items-center justify-center gap-2"
                       disabled={!externalCanApply}
-                      onClick={() => {
-                        if (project.external_url && externalCanApply) {
+                      onClick={async () => {
+                        if (project.external_url && externalCanApply && project.id) {
+                          // Track the click before opening the external URL
+                          await trackExternalGigClick(project.id, 'detail');
                           window.open(project.external_url, '_blank', 'noopener,noreferrer');
                         }
                       }}

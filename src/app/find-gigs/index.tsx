@@ -26,6 +26,7 @@ import { AppShell } from '@/components/AppShell';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { canApplyExternally } from '@/lib/utils';
+import { trackExternalGigClick } from '@/lib/trackExternalGigClick';
 
 interface Project {
   id: number;
@@ -1228,8 +1229,10 @@ export default function FindGigsPage() {
                               variant="secondary"
                               className="w-full flex items-center justify-center gap-2"
                               disabled={!applyEnabled}
-                              onClick={() => {
+                              onClick={async () => {
                                 if (project.external_url && applyEnabled) {
+                                  // Track the click before opening the external URL
+                                  await trackExternalGigClick(project.id, 'listing');
                                   window.open(
                                     project.external_url,
                                     '_blank',

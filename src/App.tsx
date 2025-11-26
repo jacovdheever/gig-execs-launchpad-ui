@@ -95,6 +95,7 @@ import StaffUsersPage from "./app/staff/users";
 import AuditLogPage from "./app/staff/audit-log";
 import StaffSettingsPage from "./app/staff/settings";
 import StaffExternalGigsPage from "./app/staff/external-gigs";
+import ExternalGigClicksPage from "./app/staff/external-gig-clicks";
 
 const queryClient = new QueryClient();
 
@@ -204,6 +205,7 @@ const App = () => (
             <Route path="/staff/users" element={<StaffUsersPage />} />
             <Route path="/staff/audit-log" element={<AuditLogPage />} />
             <Route path="/staff/external-gigs" element={<StaffExternalGigsPage />} />
+            <Route path="/staff/external-gig-clicks" element={<ExternalGigClicksPage />} />
 
             {/* Secure Help Page */}
             <Route path="/help-secure" element={<HelpAndSupportSecure />} />
