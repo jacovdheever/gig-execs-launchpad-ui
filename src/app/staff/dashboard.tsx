@@ -30,6 +30,7 @@ interface DashboardStats {
   total_gigs: number;
   total_bids: number;
   total_transaction_value: number;
+  active_external_gigs: number;
 }
 
 type DateRange = 'all' | 'week' | 'month' | 'quarter' | 'year';
@@ -116,18 +117,30 @@ export default function StaffDashboardPage() {
           supabase.from('payments').select('amount, created_at'),
           'created_at'
         );
+        
+        // Active external gigs: project_origin='external', status='open', not expired, not deleted
+        // Note: expires_at can be null (never expires) or in the future
+        const now = new Date().toISOString();
+        const externalGigsQ = supabase
+          .from('projects')
+          .select('id', { count: 'exact', head: true })
+          .eq('project_origin', 'external')
+          .eq('status', 'open')
+          .is('deleted_at', null)
+          .or(`expires_at.is.null,expires_at.gt.${now}`);
 
-        const [prof, cli, ver, gigs, bids, payments] = await Promise.all([
+        const [prof, cli, ver, gigs, bids, payments, externalGigs] = await Promise.all([
           professionalsQ,
           clientsQ,
           verifiedQ,
           gigsQ,
           bidsQ,
           paymentsQ,
+          externalGigsQ,
         ]);
 
         // Handle errors if any
-        const errs = [prof.error, cli.error, ver.error, gigs.error, bids.error, payments.error].filter(Boolean);
+        const errs = [prof.error, cli.error, ver.error, gigs.error, bids.error, payments.error, externalGigs.error].filter(Boolean);
         if (errs.length) {
           console.error('❌ Error loading filtered stats:', errs[0]);
         }
@@ -143,6 +156,7 @@ export default function StaffDashboardPage() {
           total_gigs: gigs.count || 0,
           total_bids: bids.count || 0,
           total_transaction_value,
+          active_external_gigs: externalGigs.count || 0,
         });
       } catch (error) {
         console.error('❌ Unexpected error loading stats:', error);
@@ -367,6 +381,22 @@ export default function StaffDashboardPage() {
                     ${(stats?.total_transaction_value || 0).toLocaleString()}
                   </div>
                   <p className="text-xs text-gray-600 mt-1">Total payments processed</p>
+                </CardContent>
+              </Card>
+
+              <Card 
+                className="cursor-pointer hover:shadow-md transition-shadow"
+                onClick={() => navigate('/staff/external-gigs')}
+              >
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-sm font-medium text-gray-600">
+                    Active External Gigs
+                  </CardTitle>
+                  <ExternalLink className="h-4 w-4 text-blue-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold">{stats?.active_external_gigs || 0}</div>
+                  <p className="text-xs text-gray-600 mt-1">Click to manage external gigs</p>
                 </CardContent>
               </Card>
             </div>
