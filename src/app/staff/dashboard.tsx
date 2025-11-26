@@ -179,24 +179,24 @@ export default function StaffDashboardPage() {
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
         <div className="bg-white border-b">
-          <div className="container mx-auto px-6 py-4">
-            <div className="flex items-center justify-between">
+          <div className="container mx-auto px-4 sm:px-6 py-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <h1 className="text-2xl font-bold text-slate-900">GigExecs Staff Dashboard</h1>
+                <h1 className="text-xl sm:text-2xl font-bold text-slate-900">GigExecs Staff Dashboard</h1>
                 {staff && (
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-xs sm:text-sm text-gray-600 mt-1">
                     Welcome back, {staff.first_name} ({staff.role})
                   </p>
                 )}
               </div>
-              <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" onClick={() => navigate('/staff/settings')}>
-                  <Settings className="h-4 w-4 mr-2" />
-                  Settings
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <Button variant="outline" size="sm" onClick={() => navigate('/staff/settings')} className="text-xs sm:text-sm">
+                  <Settings className="h-4 w-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Settings</span>
                 </Button>
-                <Button variant="outline" size="sm" onClick={handleLogout}>
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Logout
+                <Button variant="outline" size="sm" onClick={handleLogout} className="text-xs sm:text-sm">
+                  <LogOut className="h-4 w-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Logout</span>
                 </Button>
               </div>
             </div>
@@ -204,78 +204,82 @@ export default function StaffDashboardPage() {
         </div>
 
         {/* Main Content */}
-        <div className="container mx-auto p-6">
+        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
           {/* Date Range Filter */}
-          <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
-            <div className="flex items-center gap-4">
-              <Calendar className="h-5 w-5 text-gray-600" />
+          <div className="bg-white p-4 rounded-lg shadow-sm mb-4 sm:mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="flex items-center gap-2">
-                <label className="text-sm font-medium text-gray-700">Time Period:</label>
-                <select
-                  value={dateRange}
-                  onChange={(e) => setDateRange(e.target.value as DateRange)}
-                  className="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="all">All Time</option>
-                  <option value="week">Last 7 Days</option>
-                  <option value="month">Last 30 Days</option>
-                  <option value="quarter">Last 90 Days</option>
-                  <option value="year">Last 12 Months</option>
-                </select>
+                <Calendar className="h-5 w-5 text-gray-600 flex-shrink-0" />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 flex-1">
+                  <label className="text-xs sm:text-sm font-medium text-gray-700 whitespace-nowrap">Time Period:</label>
+                  <select
+                    value={dateRange}
+                    onChange={(e) => setDateRange(e.target.value as DateRange)}
+                    className="border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto"
+                  >
+                    <option value="all">All Time</option>
+                    <option value="week">Last 7 Days</option>
+                    <option value="month">Last 30 Days</option>
+                    <option value="quarter">Last 90 Days</option>
+                    <option value="year">Last 12 Months</option>
+                  </select>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <label className="text-sm font-medium text-gray-700">Custom Range:</label>
-                <input
-                  type="date"
-                  value={startDate || ''}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <span className="text-gray-500">to</span>
-                <input
-                  type="date"
-                  value={endDate || ''}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 border-t sm:border-t-0 pt-4 sm:pt-0">
+                <label className="text-xs sm:text-sm font-medium text-gray-700 whitespace-nowrap">Custom Range:</label>
+                <div className="flex items-center gap-2 flex-1 sm:flex-initial">
+                  <input
+                    type="date"
+                    value={startDate || ''}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1 sm:flex-initial"
+                  />
+                  <span className="text-gray-500 text-xs sm:text-sm">to</span>
+                  <input
+                    type="date"
+                    value={endDate || ''}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    className="border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1 sm:flex-initial"
+                  />
+                </div>
               </div>
             </div>
           </div>
 
           {/* Quick Actions */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
             <Button 
               variant="outline" 
-              className="h-auto py-4 justify-start"
+              className="h-auto py-3 sm:py-4 justify-start w-full"
               onClick={() => navigate('/staff/verifications')}
             >
-              <CheckCircle className="h-5 w-5 mr-2 text-green-600" />
-              <div className="text-left">
-                <div className="font-semibold">User Verifications</div>
+              <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-green-600 flex-shrink-0" />
+              <div className="text-left min-w-0">
+                <div className="font-semibold text-sm sm:text-base">User Verifications</div>
                 <div className="text-xs text-gray-600">Review pending users</div>
               </div>
             </Button>
             
             <Button 
               variant="outline" 
-              className="h-auto py-4 justify-start"
+              className="h-auto py-3 sm:py-4 justify-start w-full"
               onClick={() => navigate('/staff/audit-log')}
             >
-              <FileText className="h-5 w-5 mr-2 text-blue-600" />
-              <div className="text-left">
-                <div className="font-semibold">Audit Logs</div>
+              <FileText className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-blue-600 flex-shrink-0" />
+              <div className="text-left min-w-0">
+                <div className="font-semibold text-sm sm:text-base">Audit Logs</div>
                 <div className="text-xs text-gray-600">View staff activity</div>
               </div>
             </Button>
             
             <Button 
               variant="outline" 
-              className="h-auto py-4 justify-start"
+              className="h-auto py-3 sm:py-4 justify-start w-full"
               onClick={() => navigate('/staff/external-gig-clicks')}
             >
-              <ExternalLink className="h-5 w-5 mr-2 text-green-600" />
-              <div className="text-left">
-                <div className="font-semibold">External Gig Clicks</div>
+              <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-green-600 flex-shrink-0" />
+              <div className="text-left min-w-0">
+                <div className="font-semibold text-sm sm:text-base">External Gig Clicks</div>
                 <div className="text-xs text-gray-600">View click analytics</div>
               </div>
             </Button>
@@ -283,12 +287,12 @@ export default function StaffDashboardPage() {
             {staff?.role === 'super_user' && (
               <Button 
                 variant="outline" 
-                className="h-auto py-4 justify-start"
+                className="h-auto py-3 sm:py-4 justify-start w-full"
                 onClick={() => navigate('/staff/users')}
               >
-                <Users className="h-5 w-5 mr-2 text-purple-600" />
-                <div className="text-left">
-                  <div className="font-semibold">Staff Management</div>
+                <Users className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-purple-600 flex-shrink-0" />
+                <div className="text-left min-w-0">
+                  <div className="font-semibold text-sm sm:text-base">Staff Management</div>
                   <div className="text-xs text-gray-600">Manage staff accounts</div>
                 </div>
               </Button>
@@ -296,88 +300,88 @@ export default function StaffDashboardPage() {
           </div>
 
           {/* Stats Cards */}
-          <h2 className="text-lg font-semibold mb-4">Platform Statistics</h2>
+          <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Platform Statistics</h2>
           
           {loading ? (
-            <div className="flex items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+            <div className="flex items-center justify-center py-8 sm:py-12">
+              <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-gray-900"></div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">
+                  <CardTitle className="text-xs sm:text-sm font-medium text-gray-600">
                     Total Professionals
                   </CardTitle>
-                  <Users className="h-4 w-4 text-gray-400" />
+                  <Users className="h-4 w-4 text-gray-400 flex-shrink-0" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold">{stats?.total_professionals || 0}</div>
+                  <div className="text-2xl sm:text-3xl font-bold">{stats?.total_professionals || 0}</div>
                   <p className="text-xs text-gray-600 mt-1">Active consultant accounts</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">
+                  <CardTitle className="text-xs sm:text-sm font-medium text-gray-600">
                     Total Clients
                   </CardTitle>
-                  <Briefcase className="h-4 w-4 text-gray-400" />
+                  <Briefcase className="h-4 w-4 text-gray-400 flex-shrink-0" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold">{stats?.total_clients || 0}</div>
+                  <div className="text-2xl sm:text-3xl font-bold">{stats?.total_clients || 0}</div>
                   <p className="text-xs text-gray-600 mt-1">Active client accounts</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">
+                  <CardTitle className="text-xs sm:text-sm font-medium text-gray-600">
                     Verified Users
                   </CardTitle>
-                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold">{stats?.verified_users || 0}</div>
+                  <div className="text-2xl sm:text-3xl font-bold">{stats?.verified_users || 0}</div>
                   <p className="text-xs text-gray-600 mt-1">Completed vetting process</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">
+                  <CardTitle className="text-xs sm:text-sm font-medium text-gray-600">
                     Total Gigs
                   </CardTitle>
-                  <FileText className="h-4 w-4 text-gray-400" />
+                  <FileText className="h-4 w-4 text-gray-400 flex-shrink-0" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold">{stats?.total_gigs || 0}</div>
+                  <div className="text-2xl sm:text-3xl font-bold">{stats?.total_gigs || 0}</div>
                   <p className="text-xs text-gray-600 mt-1">Projects created</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">
+                  <CardTitle className="text-xs sm:text-sm font-medium text-gray-600">
                     Total Bids
                   </CardTitle>
-                  <TrendingUp className="h-4 w-4 text-gray-400" />
+                  <TrendingUp className="h-4 w-4 text-gray-400 flex-shrink-0" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold">{stats?.total_bids || 0}</div>
+                  <div className="text-2xl sm:text-3xl font-bold">{stats?.total_bids || 0}</div>
                   <p className="text-xs text-gray-600 mt-1">Professional proposals</p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">
+                  <CardTitle className="text-xs sm:text-sm font-medium text-gray-600">
                     Transaction Value
                   </CardTitle>
-                  <DollarSign className="h-4 w-4 text-green-600" />
+                  <DollarSign className="h-4 w-4 text-green-600 flex-shrink-0" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold">
+                  <div className="text-2xl sm:text-3xl font-bold">
                     ${(stats?.total_transaction_value || 0).toLocaleString()}
                   </div>
                   <p className="text-xs text-gray-600 mt-1">Total payments processed</p>
@@ -389,13 +393,13 @@ export default function StaffDashboardPage() {
                 onClick={() => navigate('/staff/external-gigs')}
               >
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">
+                  <CardTitle className="text-xs sm:text-sm font-medium text-gray-600">
                     Active External Gigs
                   </CardTitle>
-                  <ExternalLink className="h-4 w-4 text-blue-600" />
+                  <ExternalLink className="h-4 w-4 text-blue-600 flex-shrink-0" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold">{stats?.active_external_gigs || 0}</div>
+                  <div className="text-2xl sm:text-3xl font-bold">{stats?.active_external_gigs || 0}</div>
                   <p className="text-xs text-gray-600 mt-1">Click to manage external gigs</p>
                 </CardContent>
               </Card>
