@@ -176,25 +176,25 @@ export default function StaffDashboardPage() {
 
   return (
     <StaffRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 overflow-x-hidden">
         {/* Header */}
         <div className="bg-white border-b">
-          <div className="container mx-auto px-4 sm:px-6 py-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <h1 className="text-xl sm:text-2xl font-bold text-slate-900">GigExecs Staff Dashboard</h1>
+          <div className="w-full max-w-full px-3 sm:px-4 md:px-6 py-3 sm:py-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+              <div className="min-w-0 flex-1">
+                <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 break-words">GigExecs Staff Dashboard</h1>
                 {staff && (
-                  <p className="text-xs sm:text-sm text-gray-600 mt-1">
+                  <p className="text-xs sm:text-sm text-gray-600 mt-1 break-words">
                     Welcome back, {staff.first_name} ({staff.role})
                   </p>
                 )}
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
-                <Button variant="outline" size="sm" onClick={() => navigate('/staff/settings')} className="text-xs sm:text-sm">
+                <Button variant="outline" size="sm" onClick={() => navigate('/staff/settings')} className="text-xs sm:text-sm px-2 sm:px-3">
                   <Settings className="h-4 w-4 sm:mr-2" />
                   <span className="hidden sm:inline">Settings</span>
                 </Button>
-                <Button variant="outline" size="sm" onClick={handleLogout} className="text-xs sm:text-sm">
+                <Button variant="outline" size="sm" onClick={handleLogout} className="text-xs sm:text-sm px-2 sm:px-3">
                   <LogOut className="h-4 w-4 sm:mr-2" />
                   <span className="hidden sm:inline">Logout</span>
                 </Button>
@@ -204,18 +204,18 @@ export default function StaffDashboardPage() {
         </div>
 
         {/* Main Content */}
-        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
+        <div className="w-full max-w-full px-3 sm:px-4 md:px-6 py-4 sm:py-6">
           {/* Date Range Filter */}
-          <div className="bg-white p-4 rounded-lg shadow-sm mb-4 sm:mb-6">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-              <div className="flex items-center gap-2">
-                <Calendar className="h-5 w-5 text-gray-600 flex-shrink-0" />
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 flex-1">
-                  <label className="text-xs sm:text-sm font-medium text-gray-700 whitespace-nowrap">Time Period:</label>
+          <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm mb-4 sm:mb-6">
+            <div className="flex flex-col gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-gray-600 flex-shrink-0" />
+                  <label className="text-xs sm:text-sm font-medium text-gray-700 whitespace-nowrap flex-shrink-0">Time Period:</label>
                   <select
                     value={dateRange}
                     onChange={(e) => setDateRange(e.target.value as DateRange)}
-                    className="border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto"
+                    className="border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1 min-w-0"
                   >
                     <option value="all">All Time</option>
                     <option value="week">Last 7 Days</option>
@@ -225,21 +225,21 @@ export default function StaffDashboardPage() {
                   </select>
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 border-t sm:border-t-0 pt-4 sm:pt-0">
-                <label className="text-xs sm:text-sm font-medium text-gray-700 whitespace-nowrap">Custom Range:</label>
-                <div className="flex items-center gap-2 flex-1 sm:flex-initial">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 border-t pt-3 sm:pt-0 sm:border-t-0">
+                <label className="text-xs sm:text-sm font-medium text-gray-700 whitespace-nowrap flex-shrink-0">Custom Range:</label>
+                <div className="flex items-center gap-2 flex-1 min-w-0">
                   <input
                     type="date"
                     value={startDate || ''}
                     onChange={(e) => setStartDate(e.target.value)}
-                    className="border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1 sm:flex-initial"
+                    className="border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1 min-w-0"
                   />
-                  <span className="text-gray-500 text-xs sm:text-sm">to</span>
+                  <span className="text-gray-500 text-xs sm:text-sm flex-shrink-0">to</span>
                   <input
                     type="date"
                     value={endDate || ''}
                     onChange={(e) => setEndDate(e.target.value)}
-                    className="border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1 sm:flex-initial"
+                    className="border border-gray-300 rounded-md px-2 sm:px-3 py-1.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1 min-w-0"
                   />
                 </div>
               </div>
@@ -247,53 +247,53 @@ export default function StaffDashboardPage() {
           </div>
 
           {/* Quick Actions */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6 w-full">
             <Button 
               variant="outline" 
-              className="h-auto py-3 sm:py-4 justify-start w-full"
+              className="h-auto py-3 sm:py-4 justify-start w-full max-w-full"
               onClick={() => navigate('/staff/verifications')}
             >
               <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-green-600 flex-shrink-0" />
-              <div className="text-left min-w-0">
-                <div className="font-semibold text-sm sm:text-base">User Verifications</div>
-                <div className="text-xs text-gray-600">Review pending users</div>
+              <div className="text-left min-w-0 flex-1 overflow-hidden">
+                <div className="font-semibold text-sm sm:text-base truncate">User Verifications</div>
+                <div className="text-xs text-gray-600 truncate">Review pending users</div>
               </div>
             </Button>
             
             <Button 
               variant="outline" 
-              className="h-auto py-3 sm:py-4 justify-start w-full"
+              className="h-auto py-3 sm:py-4 justify-start w-full max-w-full"
               onClick={() => navigate('/staff/audit-log')}
             >
               <FileText className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-blue-600 flex-shrink-0" />
-              <div className="text-left min-w-0">
-                <div className="font-semibold text-sm sm:text-base">Audit Logs</div>
-                <div className="text-xs text-gray-600">View staff activity</div>
+              <div className="text-left min-w-0 flex-1 overflow-hidden">
+                <div className="font-semibold text-sm sm:text-base truncate">Audit Logs</div>
+                <div className="text-xs text-gray-600 truncate">View staff activity</div>
               </div>
             </Button>
             
             <Button 
               variant="outline" 
-              className="h-auto py-3 sm:py-4 justify-start w-full"
+              className="h-auto py-3 sm:py-4 justify-start w-full max-w-full"
               onClick={() => navigate('/staff/external-gig-clicks')}
             >
               <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-green-600 flex-shrink-0" />
-              <div className="text-left min-w-0">
-                <div className="font-semibold text-sm sm:text-base">External Gig Clicks</div>
-                <div className="text-xs text-gray-600">View click analytics</div>
+              <div className="text-left min-w-0 flex-1 overflow-hidden">
+                <div className="font-semibold text-sm sm:text-base truncate">External Gig Clicks</div>
+                <div className="text-xs text-gray-600 truncate">View click analytics</div>
               </div>
             </Button>
             
             {staff?.role === 'super_user' && (
               <Button 
                 variant="outline" 
-                className="h-auto py-3 sm:py-4 justify-start w-full"
+                className="h-auto py-3 sm:py-4 justify-start w-full max-w-full"
                 onClick={() => navigate('/staff/users')}
               >
                 <Users className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-purple-600 flex-shrink-0" />
-                <div className="text-left min-w-0">
-                  <div className="font-semibold text-sm sm:text-base">Staff Management</div>
-                  <div className="text-xs text-gray-600">Manage staff accounts</div>
+                <div className="text-left min-w-0 flex-1 overflow-hidden">
+                  <div className="font-semibold text-sm sm:text-base truncate">Staff Management</div>
+                  <div className="text-xs text-gray-600 truncate">Manage staff accounts</div>
                 </div>
               </Button>
             )}
@@ -307,7 +307,7 @@ export default function StaffDashboardPage() {
               <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-gray-900"></div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 w-full">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                   <CardTitle className="text-xs sm:text-sm font-medium text-gray-600">
