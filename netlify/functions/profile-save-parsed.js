@@ -15,12 +15,6 @@ const {
   updateProfileCompleteness 
 } = require('./lib/profile-mapper');
 
-// Initialize Supabase client with service role
-const supabase = createClient(
-  process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
-
 /**
  * Validates the parsed data structure
  * @param {Object} parsedData - The parsed profile data
@@ -110,6 +104,12 @@ const handler = async (event, context) => {
 
   const userId = authResult.user.id;
   console.log('Authenticated user:', userId);
+
+  // Initialize Supabase client with service role
+  const supabase = createClient(
+    process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
 
   try {
     // Parse the request body

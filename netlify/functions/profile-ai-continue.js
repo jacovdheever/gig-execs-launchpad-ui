@@ -11,12 +11,6 @@ const { withRateLimit } = require('./rateLimiter');
 const { createErrorResponse } = require('./validation');
 const { continueConversation, assessEligibility } = require('./lib/openai-client');
 
-// Initialize Supabase client with service role
-const supabase = createClient(
-  process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
-
 /**
  * Main handler for continuing AI profile creation
  */
@@ -56,6 +50,12 @@ const handler = async (event, context) => {
 
   const userId = authResult.user.id;
   console.log('Authenticated user:', userId);
+
+  // Initialize Supabase client with service role
+  const supabase = createClient(
+    process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
 
   try {
     // Parse the request body

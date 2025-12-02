@@ -10,12 +10,6 @@ const { authenticateRequest, createAuthErrorResponse } = require('./auth');
 const { withRateLimit } = require('./rateLimiter');
 const { createErrorResponse } = require('./validation');
 
-// Initialize Supabase client with service role
-const supabase = createClient(
-  process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
-
 // Allowed MIME types for CV uploads
 const ALLOWED_MIME_TYPES = [
   'application/pdf',
@@ -59,6 +53,12 @@ const handler = async (event, context) => {
 
   const userId = authResult.user.id;
   console.log('Authenticated user:', userId);
+
+  // Initialize Supabase client with service role
+  const supabase = createClient(
+    process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
 
   try {
     // Parse the request body

@@ -12,12 +12,6 @@ const { createErrorResponse } = require('./validation');
 const { extractText, validateExtractedContent, truncateToMaxTokens } = require('./lib/text-extraction');
 const { parseCVWithAI, assessEligibility } = require('./lib/openai-client');
 
-// Initialize Supabase client with service role
-const supabase = createClient(
-  process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
-
 // Maximum tokens to send to OpenAI (to control costs)
 const MAX_CV_TOKENS = 6000;
 
@@ -60,6 +54,12 @@ const handler = async (event, context) => {
 
   const userId = authResult.user.id;
   console.log('Authenticated user:', userId);
+
+  // Initialize Supabase client with service role
+  const supabase = createClient(
+    process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
 
   try {
     // Parse the request body
