@@ -6,7 +6,7 @@
  */
 
 const { createClient } = require('@supabase/supabase-js');
-const { authenticateRequest, createAuthErrorResponse } = require('./auth');
+const { withAuth } = require('./auth');
 const { withRateLimit } = require('./rateLimiter');
 const { createErrorResponse } = require('./validation');
 const { continueConversation, assessEligibility } = require('./lib/openai-client');
@@ -15,47 +15,56 @@ const { continueConversation, assessEligibility } = require('./lib/openai-client
  * Main handler for continuing AI profile creation
  */
 const handler = async (event, context) => {
-  console.log('=== Profile AI Continue Function Started ===');
-
-  // Handle CORS preflight
-  if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS'
-      },
-      body: ''
+  try {
+    // CORS validation
+    const origin = event.headers.origin || event.headers.Origin;
+    const allowedOrigins = [
+      'https://gigexecs.com',
+      'https://www.gigexecs.com',
+      'https://develop--gigexecs.netlify.app',
+      'https://gigexecs.netlify.app'
+    ];
+    
+    const corsHeaders = {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': allowedOrigins.includes(origin) ? origin : 'https://gigexecs.com',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Max-Age': '86400'
     };
-  }
 
-  // Only allow POST
-  if (event.httpMethod !== 'POST') {
-    return createErrorResponse(405, 'Method not allowed. Only POST requests are accepted.');
-  }
+    // Handle preflight requests
+    if (event.httpMethod === 'OPTIONS') {
+      return {
+        statusCode: 200,
+        headers: corsHeaders,
+        body: ''
+      };
+    }
 
-  // Check for OpenAI API key
-  if (!process.env.OPENAI_API_KEY) {
-    console.error('OPENAI_API_KEY not configured');
-    return createErrorResponse(500, 'AI service not configured. Please contact support.');
-  }
+    // Validate HTTP method
+    if (event.httpMethod !== 'POST') {
+      return createErrorResponse(405, 'Method not allowed. Only POST requests are accepted.');
+    }
 
-  // Authenticate the request
-  const authResult = authenticateRequest(event.headers);
-  if (!authResult.isValid) {
-    console.log('Authentication failed:', authResult.error);
-    return createAuthErrorResponse(authResult.error);
-  }
+    // Check for OpenAI API key
+    if (!process.env.OPENAI_API_KEY) {
+      console.error('OPENAI_API_KEY not configured');
+      return createErrorResponse(500, 'AI service not configured. Please contact support.');
+    }
 
-  const userId = authResult.user.id;
-  console.log('Authenticated user:', userId);
+    const userId = event.user?.id;
+    if (!userId) {
+      return createErrorResponse(401, 'Unauthorized');
+    }
+    
+    console.log('Authenticated user:', userId);
 
-  // Initialize Supabase client with service role
-  const supabase = createClient(
-    process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
-  );
+    // Initialize Supabase client with service role
+    const supabase = createClient(
+      process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    );
 
   try {
     // Parse the request body
@@ -220,10 +229,7 @@ const handler = async (event, context) => {
 
     return {
       statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
+      headers: corsHeaders,
       body: JSON.stringify({
         success: true,
         assistantMessage: response.assistantMessage,
@@ -243,8 +249,6 @@ const handler = async (event, context) => {
 };
 
 // Export with rate limiting
-exports.handler = withRateLimit(handler, {
-  windowMs: 60 * 1000, // 1 minute
-  maxRequests: 30 // 30 messages per minute per user
-});
+// Export the handler wrapped with authentication and rate limiting
+exports.handler = withRateLimit('data', withAuth(handler));
 
