@@ -53,6 +53,7 @@ import OnboardingStep4 from "./app/onboarding/step4";
 import OnboardingStep5 from "./app/onboarding/step5";
 import OnboardingStep6 from "./app/onboarding/step6"; // Added
 import ReviewProfile from "./app/onboarding/review"; // Added
+import OnboardingAIProfile from "./app/onboarding/ai-profile"; // AI Profile Creation
 
 // Client Onboarding Components
 import ClientOnboardingStep1 from "./app/onboarding/client/step1";
@@ -161,6 +162,7 @@ const App = () => (
             <Route path="/onboarding/step5" element={<OnboardingStep5 />} />
             <Route path="/onboarding/step6" element={<OnboardingStep6 />} /> {/* Added */}
             <Route path="/onboarding/review" element={<ReviewProfile />} /> {/* Added */}
+            <Route path="/onboarding/ai-profile" element={<OnboardingAIProfile />} /> {/* AI Profile Creation */}
             
             {/* Client Onboarding Routes */}
             <Route path="/onboarding/client/step1" element={<ClientOnboardingStep1 />} />

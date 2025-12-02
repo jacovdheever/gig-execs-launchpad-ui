@@ -1,15 +1,42 @@
 import { useState, useRef, useEffect } from 'react';
-import { ArrowLeft, Upload, User, X } from 'lucide-react';
+import { ArrowLeft, Upload, User, X, Sparkles, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { getCurrentUser } from '@/lib/getCurrentUser';
 import { uploadProfilePhoto, deleteProfilePhoto } from '@/lib/storage';
+
+interface CVParsedData {
+  sourceFileId: string;
+  parsedData: {
+    basicInfo?: {
+      firstName?: string;
+      lastName?: string;
+      email?: string;
+      phone?: string;
+      linkedinUrl?: string;
+      location?: string;
+      headline?: string;
+    };
+    summary?: string;
+    workExperience?: Array<any>;
+    education?: Array<any>;
+    skills?: string[];
+  };
+  eligibility?: {
+    yearsOfExperienceEstimate: number;
+    meetsThreshold: boolean;
+    confidence: string;
+    reasons: string[];
+  };
+}
 
 export default function OnboardingStep2() {
   const [formData, setFormData] = useState({
@@ -18,12 +45,16 @@ export default function OnboardingStep2() {
     headline: '',
     bio: '',
     city: '',
-    country: ''
+    country: '',
+    phone: '',
+    linkedinUrl: ''
   });
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [cvData, setCvData] = useState<CVParsedData | null>(null);
+  const [showCvBanner, setShowCvBanner] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
@@ -62,31 +93,77 @@ export default function OnboardingStep2() {
   useEffect(() => {
     const loadUserData = async () => {
       try {
+        // Check for CV parsed data from step 1
+        const cvDataString = sessionStorage.getItem('cvParsedData');
+        if (cvDataString) {
+          try {
+            const parsedCvData: CVParsedData = JSON.parse(cvDataString);
+            setCvData(parsedCvData);
+            setShowCvBanner(true);
+            
+            // Pre-fill form with CV data
+            const basicInfo = parsedCvData.parsedData.basicInfo || {};
+            const location = basicInfo.location || '';
+            
+            // Try to extract city and country from location
+            let city = '';
+            let country = '';
+            if (location) {
+              const parts = location.split(',').map(p => p.trim());
+              if (parts.length >= 2) {
+                city = parts[0];
+                country = parts[parts.length - 1];
+              } else {
+                city = location;
+              }
+            }
+
+            setFormData(prev => ({
+              ...prev,
+              firstName: basicInfo.firstName || prev.firstName,
+              lastName: basicInfo.lastName || prev.lastName,
+              headline: basicInfo.headline || prev.headline,
+              bio: parsedCvData.parsedData.summary || prev.bio,
+              city: city || prev.city,
+              country: country || prev.country,
+              phone: basicInfo.phone || '',
+              linkedinUrl: basicInfo.linkedinUrl || ''
+            }));
+
+            console.log('Step 2: Pre-filled form with CV data:', basicInfo);
+          } catch (parseError) {
+            console.error('Error parsing CV data:', parseError);
+          }
+        }
+
         const user = await getCurrentUser();
         if (user) {
-          // Load basic user data
+          // Only update fields that are still empty (don't override CV data)
           setFormData(prev => ({
             ...prev,
-            firstName: user.firstName || '',
-            lastName: user.lastName || ''
+            firstName: prev.firstName || user.firstName || '',
+            lastName: prev.lastName || user.lastName || ''
           }));
 
           // Load existing profile data from consultant_profiles table
           const { data: profileData } = await supabase
             .from('consultant_profiles')
-            .select('job_title, bio, address1, country')
+            .select('job_title, bio, address1, country, phone, linkedin_url')
             .eq('user_id', user.id)
             .single();
 
           console.log('Step 2: Loaded profile data:', profileData);
 
           if (profileData) {
+            // Only update fields that are still empty (don't override CV data)
             setFormData(prev => ({
               ...prev,
-              headline: profileData.job_title || '',
-              bio: profileData.bio || '',
-              city: profileData.address1 || '',
-              country: profileData.country || ''
+              headline: prev.headline || profileData.job_title || '',
+              bio: prev.bio || profileData.bio || '',
+              city: prev.city || profileData.address1 || '',
+              country: prev.country || profileData.country || '',
+              phone: prev.phone || profileData.phone || '',
+              linkedinUrl: prev.linkedinUrl || profileData.linkedin_url || ''
             }));
             console.log('Step 2: Updated form data with profile data');
           } else {
@@ -196,6 +273,8 @@ export default function OnboardingStep2() {
           bio: formData.bio || null,
           address1: formData.city,
           country: formData.country,
+          phone: formData.phone || null,
+          linkedin_url: formData.linkedinUrl || null,
           updated_at: new Date().toISOString()
         })
         .eq('user_id', user.id);
@@ -210,6 +289,9 @@ export default function OnboardingStep2() {
         });
         return;
       }
+
+      // Clear CV data from session storage after saving
+      sessionStorage.removeItem('cvParsedData');
 
       console.log('Profile data saved successfully');
     } catch (error) {
@@ -289,9 +371,33 @@ export default function OnboardingStep2() {
           <Card className="bg-white shadow-lg border-0">
             <CardContent className="p-4 sm:p-6 lg:p-8">
               {/* Title */}
-              <h1 className="text-2xl sm:text-3xl font-bold text-[#012E46] mb-6 sm:mb-8 text-center">
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#012E46] mb-4 text-center">
                 Your Profile
               </h1>
+
+              {/* CV Import Banner */}
+              {showCvBanner && cvData && (
+                <Alert className="mb-6 bg-green-50 border-green-200">
+                  <CheckCircle2 className="h-4 w-4 text-green-600" />
+                  <AlertTitle className="text-green-800 flex items-center gap-2">
+                    <Sparkles className="h-4 w-4" />
+                    CV Imported Successfully
+                  </AlertTitle>
+                  <AlertDescription className="text-green-700">
+                    <p>We've pre-filled your profile with information from your CV. Please review and complete any missing fields.</p>
+                    {cvData.eligibility && (
+                      <div className="mt-2 flex items-center gap-2">
+                        <Badge variant={cvData.eligibility.meetsThreshold ? "default" : "secondary"}>
+                          ~{cvData.eligibility.yearsOfExperienceEstimate} years experience
+                        </Badge>
+                        {cvData.eligibility.meetsThreshold && (
+                          <span className="text-xs">Great match for GigExecs!</span>
+                        )}
+                      </div>
+                    )}
+                  </AlertDescription>
+                </Alert>
+              )}
 
               {/* Profile Picture Section */}
               <div className="mb-6 sm:mb-8">
@@ -456,6 +562,38 @@ export default function OnboardingStep2() {
                     </SelectContent>
                   </Select>
                 </div>
+
+                {/* Phone (Optional - shown if CV was imported) */}
+                {(cvData || formData.phone) && (
+                  <div>
+                    <Label htmlFor="phone" className="text-sm font-medium text-[#012E46]">
+                      Phone (Optional)
+                    </Label>
+                    <Input
+                      id="phone"
+                      value={formData.phone}
+                      onChange={(e) => handleInputChange('phone', e.target.value)}
+                      className="mt-2"
+                      placeholder="Enter your phone number"
+                    />
+                  </div>
+                )}
+
+                {/* LinkedIn URL (Optional - shown if CV was imported) */}
+                {(cvData || formData.linkedinUrl) && (
+                  <div>
+                    <Label htmlFor="linkedinUrl" className="text-sm font-medium text-[#012E46]">
+                      LinkedIn URL (Optional)
+                    </Label>
+                    <Input
+                      id="linkedinUrl"
+                      value={formData.linkedinUrl}
+                      onChange={(e) => handleInputChange('linkedinUrl', e.target.value)}
+                      className="mt-2"
+                      placeholder="https://linkedin.com/in/yourprofile"
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Required Fields Note */}
