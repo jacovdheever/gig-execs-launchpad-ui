@@ -8,16 +8,33 @@
 const OpenAI = require('openai');
 const { createClient } = require('@supabase/supabase-js');
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
+// Lazy initialization of OpenAI client (only when needed)
+let openai = null;
+function getOpenAIClient() {
+  if (!openai) {
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error('OPENAI_API_KEY is not configured');
+    }
+    openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY
+    });
+  }
+  return openai;
+}
 
-// Initialize Supabase client with service role for logging
-const supabase = createClient(
-  process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
+// Lazy initialization of Supabase client (only when needed)
+let supabase = null;
+function getSupabaseClient() {
+  if (!supabase) {
+    const url = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!url || !key) {
+      throw new Error('Supabase configuration is missing');
+    }
+    supabase = createClient(url, key);
+  }
+  return supabase;
+}
 
 // ============================================================================
 // Model Pricing (USD per 1M tokens) - Updated for current OpenAI pricing
@@ -235,7 +252,7 @@ async function logAIUsage(userId, feature, model, usage, metadata = {}) {
       usage.completion_tokens || 0
     );
 
-    const { error } = await supabase
+    const { error } = await getSupabaseClient()
       .from('ai_usage_events')
       .insert({
         user_id: userId,
@@ -299,7 +316,7 @@ Guidelines:
 
 The user is applying to a platform for senior professionals, so pay attention to seniority indicators.`;
 
-    const response = await openai.chat.completions.create({
+    const response = await getOpenAIClient().chat.completions.create({
       model,
       messages: [
         { role: 'system', content: systemPrompt },
@@ -381,7 +398,7 @@ Be fair but thorough. Consider:
 - Industry experience
 - Leadership positions`;
 
-    const response = await openai.chat.completions.create({
+    const response = await getOpenAIClient().chat.completions.create({
       model,
       messages: [
         { role: 'system', content: systemPrompt },
@@ -481,7 +498,7 @@ Respond with the next step in the flow and an updated draft profile.`;
       { role: 'user', content: userMessage }
     ];
 
-    const response = await openai.chat.completions.create({
+    const response = await getOpenAIClient().chat.completions.create({
       model,
       messages,
       response_format: {
@@ -559,7 +576,7 @@ This is the START of a profile creation conversation. Your goals:
 
 Start by greeting them and asking about their professional background if no CV was provided, or confirming/clarifying information from their CV if one was provided.`;
 
-    const response = await openai.chat.completions.create({
+    const response = await getOpenAIClient().chat.completions.create({
       model,
       messages: [
         { role: 'system', content: systemPrompt },

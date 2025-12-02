@@ -7,11 +7,19 @@
 
 const { createClient } = require('@supabase/supabase-js');
 
-// Initialize Supabase client with service role for database operations
-const supabase = createClient(
-  process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
+// Lazy initialization of Supabase client (only when needed)
+let supabase = null;
+function getSupabaseClient() {
+  if (!supabase) {
+    const url = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!url || !key) {
+      throw new Error('Supabase configuration is missing');
+    }
+    supabase = createClient(url, key);
+  }
+  return supabase;
+}
 
 // ============================================================================
 // Skill Matching
@@ -34,7 +42,7 @@ async function matchSkillsToDatabase(skillNames, userId) {
     const normalizedSkills = skillNames.map(s => s.toLowerCase().trim());
 
     // Fetch all skills from database
-    const { data: allSkills, error: fetchError } = await supabase
+    const { data: allSkills, error: fetchError } = await getSupabaseClient()
       .from('skills')
       .select('id, name');
 
@@ -63,7 +71,7 @@ async function matchSkillsToDatabase(skillNames, userId) {
     });
 
     // Delete existing user_skills for this user
-    const { error: deleteError } = await supabase
+    const { error: deleteError } = await getSupabaseClient()
       .from('user_skills')
       .delete()
       .eq('user_id', userId);
@@ -79,7 +87,7 @@ async function matchSkillsToDatabase(skillNames, userId) {
         skill_id: skillId
       }));
 
-      const { error: insertError } = await supabase
+      const { error: insertError } = await getSupabaseClient()
         .from('user_skills')
         .insert(userSkillsData);
 
@@ -118,7 +126,7 @@ async function matchLanguagesToDatabase(languages, userId) {
     }
 
     // Fetch all languages from database
-    const { data: allLanguages, error: fetchError } = await supabase
+    const { data: allLanguages, error: fetchError } = await getSupabaseClient()
       .from('languages')
       .select('id, name');
 
@@ -147,7 +155,7 @@ async function matchLanguagesToDatabase(languages, userId) {
     });
 
     // Delete existing user_languages for this user
-    const { error: deleteError } = await supabase
+    const { error: deleteError } = await getSupabaseClient()
       .from('user_languages')
       .delete()
       .eq('user_id', userId);
@@ -158,7 +166,7 @@ async function matchLanguagesToDatabase(languages, userId) {
 
     // Insert matched languages
     if (matchedLanguages.length > 0) {
-      const { error: insertError } = await supabase
+      const { error: insertError } = await getSupabaseClient()
         .from('user_languages')
         .insert(matchedLanguages);
 
@@ -213,7 +221,7 @@ async function saveWorkExperience(workExperience, userId) {
     }
 
     // Fetch countries for mapping
-    const { data: countries } = await supabase
+    const { data: countries } = await getSupabaseClient()
       .from('countries')
       .select('id, name');
 
@@ -242,7 +250,7 @@ async function saveWorkExperience(workExperience, userId) {
     }));
 
     // Delete existing work experience for this user
-    const { error: deleteError } = await supabase
+    const { error: deleteError } = await getSupabaseClient()
       .from('work_experience')
       .delete()
       .eq('user_id', userId);
@@ -252,7 +260,7 @@ async function saveWorkExperience(workExperience, userId) {
     }
 
     // Insert new work experience
-    const { data, error: insertError } = await supabase
+    const { data, error: insertError } = await getSupabaseClient()
       .from('work_experience')
       .insert(mappedExperience)
       .select();
@@ -300,7 +308,7 @@ async function saveEducation(education, userId) {
     }));
 
     // Delete existing education for this user
-    const { error: deleteError } = await supabase
+    const { error: deleteError } = await getSupabaseClient()
       .from('education')
       .delete()
       .eq('user_id', userId);
@@ -310,7 +318,7 @@ async function saveEducation(education, userId) {
     }
 
     // Insert new education
-    const { data, error: insertError } = await supabase
+    const { data, error: insertError } = await getSupabaseClient()
       .from('education')
       .insert(mappedEducation)
       .select();
@@ -358,7 +366,7 @@ async function saveCertifications(certifications, userId) {
     }));
 
     // Delete existing certifications for this user
-    const { error: deleteError } = await supabase
+    const { error: deleteError } = await getSupabaseClient()
       .from('certifications')
       .delete()
       .eq('user_id', userId);
@@ -368,7 +376,7 @@ async function saveCertifications(certifications, userId) {
     }
 
     // Insert new certifications
-    const { data, error: insertError } = await supabase
+    const { data, error: insertError } = await getSupabaseClient()
       .from('certifications')
       .insert(mappedCertifications)
       .select();
@@ -421,7 +429,7 @@ async function mapToDatabase(parsedData, userId, userType) {
     userUpdate.updated_at = new Date().toISOString();
 
     if (Object.keys(userUpdate).length > 1) { // More than just updated_at
-      const { error: userError } = await supabase
+      const { error: userError } = await getSupabaseClient()
         .from('users')
         .update(userUpdate)
         .eq('id', userId);
@@ -450,7 +458,7 @@ async function mapToDatabase(parsedData, userId, userType) {
       }
       if (parsedData.summary) profileUpdate.bio = parsedData.summary;
 
-      const { error: profileError } = await supabase
+      const { error: profileError } = await getSupabaseClient()
         .from('consultant_profiles')
         .update(profileUpdate)
         .eq('user_id', userId);
@@ -470,7 +478,7 @@ async function mapToDatabase(parsedData, userId, userType) {
       if (basicInfo.linkedinUrl) profileUpdate.linkedin_url = basicInfo.linkedinUrl;
       if (parsedData.summary) profileUpdate.description = parsedData.summary;
 
-      const { error: profileError } = await supabase
+      const { error: profileError } = await getSupabaseClient()
         .from('client_profiles')
         .update(profileUpdate)
         .eq('user_id', userId);
@@ -534,7 +542,7 @@ async function mapToDatabase(parsedData, userId, userType) {
  */
 async function recordProfileCreationEvent(userId, method, metadata = {}) {
   try {
-    const { error } = await supabase
+    const { error } = await getSupabaseClient()
       .from('profile_creation_events')
       .insert({
         user_id: userId,
@@ -566,7 +574,7 @@ async function updateProfileCompleteness(userId, userType) {
     let totalFields = 0;
 
     // Fetch user data
-    const { data: user } = await supabase
+    const { data: user } = await getSupabaseClient()
       .from('users')
       .select('first_name, last_name, email, profile_photo_url, headline')
       .eq('id', userId)
@@ -582,7 +590,7 @@ async function updateProfileCompleteness(userId, userType) {
 
     if (userType === 'consultant') {
       // Fetch consultant profile
-      const { data: profile } = await supabase
+      const { data: profile } = await getSupabaseClient()
         .from('consultant_profiles')
         .select('job_title, bio, address1, country, hourly_rate_min, hourly_rate_max, phone, linkedin_url')
         .eq('user_id', userId)
@@ -599,7 +607,7 @@ async function updateProfileCompleteness(userId, userType) {
       totalFields += 8;
 
       // Check for work experience
-      const { count: expCount } = await supabase
+      const { count: expCount } = await getSupabaseClient()
         .from('work_experience')
         .select('id', { count: 'exact', head: true })
         .eq('user_id', userId);
@@ -608,7 +616,7 @@ async function updateProfileCompleteness(userId, userType) {
       totalFields++;
 
       // Check for skills
-      const { count: skillCount } = await supabase
+      const { count: skillCount } = await getSupabaseClient()
         .from('user_skills')
         .select('skill_id', { count: 'exact', head: true })
         .eq('user_id', userId);
@@ -617,7 +625,7 @@ async function updateProfileCompleteness(userId, userType) {
       totalFields++;
 
       // Check for languages
-      const { count: langCount } = await supabase
+      const { count: langCount } = await getSupabaseClient()
         .from('user_languages')
         .select('language_id', { count: 'exact', head: true })
         .eq('user_id', userId);
@@ -630,7 +638,7 @@ async function updateProfileCompleteness(userId, userType) {
     const percentage = Math.round((completedFields / totalFields) * 100);
 
     // Update user
-    const { error } = await supabase
+    const { error } = await getSupabaseClient()
       .from('users')
       .update({ 
         profile_complete_pct: percentage,
