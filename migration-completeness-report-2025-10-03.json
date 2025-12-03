@@ -1,0 +1,112 @@
+{
+  "timestamp": "2025-10-03T12:54:54.556Z",
+  "summary": {
+    "total": 873,
+    "processed": 799,
+    "fixed": 542,
+    "errors": [],
+    "skipped": [
+      "mi@chae.la",
+      "lisa.e.ireland@gmail.com",
+      "donnavallario@gmail.com",
+      "davidjperrett2014@gmail.com",
+      "dohstrom@gmail.com",
+      "steveb@bciee.com",
+      "jamesnevin1980@gmail.com",
+      "iansmoo@yahoo.co.uk",
+      "guillaumemoog@gmail.com",
+      "gustavospanholi@gmail.com",
+      "georgestringer513@gmail.com",
+      "ecisnerosvg@gmail.com",
+      "jrdalla@outlook.com",
+      "aorbetsova@gmail.com",
+      "covenant2@yahoo.com",
+      "aegorovacpa@gmail.com",
+      "nadeem.askari@equostech.co.za",
+      "mehmetatillatopcu@gmail.com",
+      "shubhanga59@gmail.com",
+      "ophillips163@gmail.com",
+      "turekul@gmail.com",
+      "jmorgan1.mcm@gmail.com",
+      "kennyhocpa@gmail.com",
+      "eunice@wybenam.com",
+      "cj.christianjohnson97@gmail.com",
+      "lwei0411@gmail.com",
+      "prodeepakjain@gmail.com",
+      "rizalyubaraj@gmail.com",
+      "kolayisandeep@gmail.com",
+      "jojiav@gmail.com",
+      "mhmd.tharwatt@gmail.com",
+      "jim@agileexecsearch.com",
+      "venu.babla@gmail.com",
+      "chris.nichols@dimesy.com",
+      "markoldfield007@gmail.com",
+      "bawa.nidhi@gmail.com",
+      "shende.takshak@gmail.com",
+      "krumaneb@gmail.com",
+      "mblethen@blethenminingassociates.com",
+      "john.hager.2018@gmail.com",
+      "khdick@gmail.com",
+      "talentschaft.md@gmail.com",
+      "cristian.borcescu@gmail.com",
+      "erwinbayu@gmail.com",
+      "nerubenkoanton@gmail.com",
+      "junaid.limbada@gmail.com",
+      "megabula@gmail.com",
+      "sandy1crack@gmail.com",
+      "kellythooft@gmail.com",
+      "charles.deutsch@gmail.com",
+      "eschinsi@gmail.com",
+      "esleosbrown@comcast.net",
+      "luke@wildmindlearning.com",
+      "hellsbellsthomas@gmail.com",
+      "patrickraney@gmail.com",
+      "rickcardoso4040@gmail.com",
+      "geologistbaskar@gmail.com",
+      "mbratowski@gmail.com",
+      "ashish.sanghavi@gmail.com",
+      "jjeades63@lilrok.com",
+      "luchen1212@gmail.com",
+      "gtovar.h@gmail.com",
+      "alq1235r@gmail.com",
+      "moxieakarasek@gmail.com",
+      "suzemcb@gmail.com",
+      "david@digidistiller.com",
+      "nuno.rodrigues+01@gigexecs.com",
+      "nuno.rodrigues+02@gigexecs.com",
+      "jaco@sanddollardesign.co.za",
+      "nuno.rodrigues+03@gigexecs.com",
+      "nuno.rodrigues+1@gigexecs.com",
+      "jacovdh1982+4@gmail.com",
+      "jacovdh1982+5@gmail.com",
+      "jacovdh1982+6@gmail.com"
+    ],
+    "summary": {
+      "consultantProfiles": {
+        "updated": 542,
+        "missing": 0
+      },
+      "industries": {
+        "migrated": 462,
+        "missing": 0
+      },
+      "references": {
+        "migrated": 0,
+        "missing": 0
+      },
+      "phoneNumbers": {
+        "updated": 0,
+        "missing": 0
+      },
+      "idDocuments": {
+        "updated": 0,
+        "missing": 0
+      }
+    }
+  },
+  "configuration": {
+    "batchSize": 10,
+    "delayBetweenBatches": 1000,
+    "csvFilePath": "/Users/jacosanddollar/Library/Mobile Documents/com~apple~CloudDocs/Documents/Sand Dollar Design/GigExecs DotCom/gig-execs-launchpad-ui/data/secure/gigexecscom-deleted-2025-04-25-1745577673277-users.csv"
+  }
+}

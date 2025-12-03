@@ -377,7 +377,7 @@ export function ProfileCVUpload({ onParseComplete, onCancel }: ProfileCVUploadPr
                 disabled={!selectedFile}
               >
                 <Sparkles className="h-4 w-4 mr-2" />
-                Parse CV with AI
+                Extract with AI
               </Button>
             </div>
           </>

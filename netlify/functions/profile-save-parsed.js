@@ -169,6 +169,14 @@ const handler = async (event, context) => {
 
     // Map parsed data to database
     console.log('Mapping parsed data to database...');
+    console.log('Parsed data summary:', {
+      workExperience: parsedData.workExperience?.length || 0,
+      education: parsedData.education?.length || 0,
+      skills: parsedData.skills?.length || 0,
+      industries: parsedData.industries?.length || 0,
+      languages: parsedData.languages?.length || 0,
+      certifications: parsedData.certifications?.length || 0
+    });
     const { mapToDatabase } = getProfileMapper();
     const mapResult = await mapToDatabase(parsedData, userId, userType);
 
@@ -224,6 +232,10 @@ const handler = async (event, context) => {
           skills: {
             matched: mapResult.results.skills.matched || 0,
             unmatched: mapResult.results.skills.unmatched || []
+          },
+          industries: {
+            matched: mapResult.results.industries.matched || 0,
+            unmatched: mapResult.results.industries.unmatched || []
           },
           languages: {
             matched: mapResult.results.languages.matched || 0

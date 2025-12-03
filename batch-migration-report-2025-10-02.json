@@ -1,0 +1,14 @@
+{
+  "total": 20,
+  "processed": 20,
+  "created": 20,
+  "skipped": 0,
+  "failed": 1,
+  "errors": [
+    {
+      "email": "test.expert@test.com",
+      "userId": "2b5dc726-1c94-4795-9ecb-f398ec131b23",
+      "error": "Email address \"test.expert@test.com\" is invalid"
+    }
+  ]
+}

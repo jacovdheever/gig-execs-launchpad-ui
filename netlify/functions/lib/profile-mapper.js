@@ -498,15 +498,28 @@ async function saveWorkExperience(workExperience, userId) {
     });
     
     // Filter out entries that don't have required fields after normalization
-    const validExperience = mappedExperience.filter(exp => 
-      exp.company && 
-      exp.job_title && 
-      exp.start_date_month && 
-      exp.start_date_year
-    );
+    // Note: start_date_month and start_date_year are preferred but not strictly required in DB
+    // We'll allow entries with just company and job_title, but log warnings for missing dates
+    const validExperience = mappedExperience.filter(exp => {
+      const hasRequired = exp.company && exp.job_title;
+      if (!hasRequired) {
+        console.warn('Filtering out work experience entry missing company or job_title:', exp);
+        return false;
+      }
+      if (!exp.start_date_month || !exp.start_date_year) {
+        console.warn('Work experience entry missing dates (will save with null dates):', {
+          company: exp.company,
+          job_title: exp.job_title,
+          start_date_month: exp.start_date_month,
+          start_date_year: exp.start_date_year
+        });
+      }
+      return true;
+    });
     
     if (validExperience.length === 0) {
       console.warn('No valid work experience entries after normalization');
+      console.warn('Original entries:', JSON.stringify(workExperience, null, 2));
       return { success: true, count: 0 };
     }
     

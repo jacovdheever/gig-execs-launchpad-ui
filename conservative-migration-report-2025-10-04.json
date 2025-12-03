@@ -1,0 +1,640 @@
+{
+  "total": 806,
+  "processed": 806,
+  "emailsSent": 701,
+  "authUsersCreated": 0,
+  "skipped": 0,
+  "failed": 105,
+  "errors": [
+    {
+      "email": "nuno.g.rodrigues01@gmail.com",
+      "userId": "9b6508b9-0dc1-4cb8-bd01-88760db32cb6",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "jaco.vandenheever@gigexecs.com",
+      "userId": "978aa8c2-7c6e-4669-951f-ace95d47d9ab",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "test.expert@test.com",
+      "userId": "2b5dc726-1c94-4795-9ecb-f398ec131b23",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "alan.stirling@gigexecs.com",
+      "userId": "49d9f69f-18e7-497b-a381-dd631ccd7623",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "camayag@gmail.com",
+      "userId": "0bfa5124-d2a4-4827-aa73-df4edc4cb44f",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "yacinedjillali@gmail.com",
+      "userId": "2bbb2020-cc8e-40cd-b449-cd1c9b378fee",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "abdulazizladan@gmail.com",
+      "userId": "87d7b908-6ff7-4fb8-ab33-7955b3209940",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "wnaomik@gmail.com",
+      "userId": "485e7fb1-7312-4dca-a00a-4a726866a795",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "moxiekarasek@gmail.com",
+      "userId": "2a79c707-7ab4-48d2-85c6-b01f8b897a4b",
+      "category": "needsEmailOnly",
+      "error": "email rate limit exceeded"
+    },
+    {
+      "email": "davidjperrett2014@gmail.com",
+      "userId": "e9021185-bb39-40ca-9d5a-5f3258019bf9",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "david.frederick.ouellette@gmail.com",
+      "userId": "0b4a2bf7-c991-4abb-923f-3c2b65344430",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "lsm5611@gmail.com",
+      "userId": "6be1ce5d-86f3-4df0-be1b-e978d6250416",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "pavalerio@gmail.com",
+      "userId": "344d489f-1326-482b-a0c3-a1df2484d4eb",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "leo@hcr.digital",
+      "userId": "d78fd462-bda1-43c0-9400-9322f1aadd21",
+      "category": "needsEmailOnly",
+      "error": "email rate limit exceeded"
+    },
+    {
+      "email": "andythompson0011@yahoo.co.uk",
+      "userId": "2ebe41df-295d-4305-989c-b3921954e9f3",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "davdon@shaw.ca",
+      "userId": "1ec2d9d7-aac6-45ae-b3ce-93c8e8ddab30",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "pradaconsultantsindia@gmail.com",
+      "userId": "895b41b1-7ab2-45bc-a68e-6cc6cbfc4f10",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "rbristow@gmail.com",
+      "userId": "6d1e124d-dc69-42aa-8f6c-091b36f05783",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "byamponsah@gmail.com",
+      "userId": "8b59b07f-6b40-4f06-aeae-c3e69fe390d8",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "jim_stephens@attglobal.net",
+      "userId": "36a2b86f-3cfe-45d7-8ef9-14742c473d4f",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "davbrtlng@aol.com",
+      "userId": "5ae09906-c15a-4eff-a549-bf02c58b952b",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "r_walla@msn.com",
+      "userId": "81573ac4-c512-4dff-9d50-0f17b4592711",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "sehgal.geetika@gmail.com",
+      "userId": "299711a7-6a7e-4db5-ab5a-967b02f2f612",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "brucekagan18@yahoo.com",
+      "userId": "21903b56-afa4-4b9f-b3dc-c0c76eb289f3",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "g.a.bacchus@gmail.com",
+      "userId": "bd362558-109b-4c93-9ebe-796cb5de49c2",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "p.venkataraman@ymail.com",
+      "userId": "bdb8ee1a-7a45-47ba-a854-9968613fb625",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "jwtracy@outlook.com",
+      "userId": "f000b137-7a2f-4dee-92a6-65c7917eadfd",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "achantav9@gmail.com",
+      "userId": "571f1158-2635-4a78-8152-55b74c76520b",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "ruslanchaplygin@gmail.com",
+      "userId": "e6546f54-38f7-4155-808f-a93471df4630",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "carloscalandra@yahoo.com.ar",
+      "userId": "f51d409b-c6c1-4e7b-ae96-23550f8e45bc",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "dohstrom@gmail.com",
+      "userId": "e3a733fe-7aa1-4211-bc2f-d425bb1b0dea",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "jay.miller@utexas.edu",
+      "userId": "98db28a7-388b-4a48-a888-0a14b8fcdf0d",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "alanajo81@gmail.com",
+      "userId": "bbcab384-fe8f-4508-b285-d1062708fc38",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "grantlowey@ymail.com",
+      "userId": "5a47acfe-65b0-4892-a8ce-2a5ea0fa3b47",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "vineeta.saini@gmail.com",
+      "userId": "59abbefb-eedf-469c-a463-a066f8f164b8",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "chris@collieresources.com",
+      "userId": "d31df590-01dd-4907-abb6-d287b6c48ba6",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "steveb@bciee.com",
+      "userId": "544b791b-536a-4a9a-ade6-1f3fd833c249",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "venkataramanasr.office@gmail.com",
+      "userId": "56a45e2f-de33-41c8-b09c-db4f0ca48874",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "nirvikar@alumni.gsb.stanford.edu",
+      "userId": "e376354c-1ecc-4000-8b46-43d01ca1de93",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "sacheen.ss@gmail.com",
+      "userId": "37ffa803-810b-4bbc-ba4c-b76e6845b0b6",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "daniel@coelho.org",
+      "userId": "a72827c5-f2b0-4d6e-b971-56ac20df18f4",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "dansalazarct@gmail.com",
+      "userId": "ffd016a5-e8b3-45d5-8ed9-e22ab4598a7c",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "lisa2.boodoo@gmail.com",
+      "userId": "60e35a1c-29e3-4aae-9549-e65cf9d867bc",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "dblack@mindspring.com",
+      "userId": "19aa6aa1-3cb6-43a6-b003-68bc536c0622",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "ike@iiigallica.com",
+      "userId": "f88788e7-209f-40ce-9f5f-e511154076e1",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "ptc1178@icloud.com",
+      "userId": "59bb8bdf-4d5c-4d2a-97eb-9cbef2554312",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "jamesnevin1980@gmail.com",
+      "userId": "8714b5c0-c4fb-42f3-9a57-82ad7795e659",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "james@zenithog.com",
+      "userId": "888ed591-b98f-4a63-ac28-12469d3a2d85",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "rachael+testing@sanddollardesign.co.za",
+      "userId": "8a2e3c11-f3c2-42fe-be12-eade7601a013",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "apycal.solutions@gmail.com",
+      "userId": "a14e989f-bb17-437b-a6db-eb1607a00ca1",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "jkelley.rockwise@att.net",
+      "userId": "e3afa397-f7bf-4148-b1e3-5e6d0ca9754f",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "stacey@shakemktg.com",
+      "userId": "afac51fe-575b-49b2-b7f0-f97b05963317",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "pillay.h@gmail.com",
+      "userId": "d0d07cb3-675b-4935-bcc4-8ab963335d90",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "saituysal@gmail.com",
+      "userId": "3c7353bc-cd2e-44c0-a4cd-04824a3b8ab0",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "hasnainadl@gmail.com",
+      "userId": "e59d3960-aa5c-4a63-9447-f5911a742f98",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "clive.dcruz@epic.com.au",
+      "userId": "7cbd38af-73b6-4aa0-b071-6173ae027c5e",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "cnhachi27@gmail.com",
+      "userId": "c1ae326e-ae48-46c3-bcdb-e749b5ae129c",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "anahitaram@gmail.com",
+      "userId": "9dc43586-fb19-4bd9-9ccf-93e6d36a0210",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "aymen.chagour@gmail.com",
+      "userId": "34428b20-23b4-48a9-a00d-b21c54546e7c",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "tom@teamlambda.com",
+      "userId": "dd4dc184-3a94-4572-87c7-9443d852c4f9",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "nkono_anyang@yahoo.com",
+      "userId": "c1e708a2-6d35-41c0-8230-174118712134",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "laird1510@gmail.com",
+      "userId": "13e5596d-02fe-4180-a42e-39c63a5a5e12",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "cjrai2010@gmail.com",
+      "userId": "6f9ff7e9-bd5d-4528-bcdf-8832819e42cf",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "...lvillaoq4@hotmail.com",
+      "userId": "99b59c0f-35b2-48d4-b3c3-ca1828f1c87a",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "samulsun@hotmail.com",
+      "userId": "bfc79c77-546d-47c3-a17e-088003076368",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "khanfarrukhali98@gmail.com",
+      "userId": "71f3efb3-13be-4779-aa70-31fc8f58973e",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "jackselin.mathew@outlook.com",
+      "userId": "b03adf9a-426f-4599-bd63-9caee6599fdd",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "eirik.hooper@gmail.com",
+      "userId": "979db1a4-0079-47b4-92d7-53b9ed7bbba4",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "sherilyns@shawconsulting1857900.com",
+      "userId": "f7734ff9-2cce-41f4-a427-d0bb1ac41254",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "iansmoo@yahoo.co.uk",
+      "userId": "8e368944-f471-4a61-87e4-7fdb0f1c48a3",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "hadaniels@compuserve.com",
+      "userId": "989ebc90-f886-4482-80c3-2debbc6e8aa5",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "kmark28@gmail.com",
+      "userId": "87025996-4371-44d5-ab25-38851511d064",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "tunde.salami@gmail.com",
+      "userId": "14f1dadc-6256-4eaf-855f-80f1a8ec775b",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "chichi.nwosu@c-rowland.com",
+      "userId": "2ed6ccbe-6916-4b6c-8949-043bc8a82b84",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "nuno.rodrigues+02@gigexecs.com",
+      "userId": "d790981d-3c3b-41c4-ab5d-b65706522f51",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "jaco@sanddollardesign.co.za",
+      "userId": "44b0f42d-8a6f-48a0-aa58-5277c0ab8952",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "nuno.rodrigues+03@gigexecs.com",
+      "userId": "345ce77f-a516-4c24-84d2-7900397d0b32",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "nuno.rodrigues+1@gigexecs.com",
+      "userId": "8194eeb7-3cc8-4d3c-97b0-9416b8ff8170",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "jacovdh1982+4@gmail.com",
+      "userId": "fa3cf232-797c-4ee5-aa72-f435aced06c8",
+      "category": "needsEmailOnly",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "dnargelx59@gmail.com",
+      "userId": "140c7101-b2ac-4d28-86a1-0ee2de5262d3",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "sanjeevacharya7@gmail.com",
+      "userId": "4b01b71d-9330-4b85-a78e-b54b24e51653",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "sos2004.midde@gmail.com",
+      "userId": "556f95ba-f468-4752-b1b8-69c8ba7df8af",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "anjan.tamuli@gmail.com",
+      "userId": "4c49c181-6ee0-4cf8-b457-a56b2eacda6f",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "barbra.hargreaves@tiscali.co.uk",
+      "userId": "856c9c04-df83-4f28-951e-99200811657c",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "kumarakkp@gmail.com",
+      "userId": "ac4eb461-391b-429f-993b-9fed3a015ceb",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "sergioestradaf@gmail.com",
+      "userId": "5bdb1886-2707-4419-b15b-643540e58578",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "ahmed_djidda@yahoo.fr",
+      "userId": "68d12fd3-f06f-4a7a-8ee1-488f0ddf06fe",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "lmc3401@gmail.com",
+      "userId": "78d44d50-dc81-4af8-b14a-b9744c6802e3",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "arcadie.angelo@gmail.com",
+      "userId": "2ff82724-b1f7-4120-ae9b-b3507fc8becf",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "mariselyurdaneta@gmail.com",
+      "userId": "13ac1779-5267-45cf-ad3b-d3488f22c1d4",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "mo_mccollum@fastmail.com",
+      "userId": "778d9bba-e015-4c2a-9ccf-ea367a8bd137",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "robertc.reinbold@gmail.com",
+      "userId": "2ab22949-1aff-4e3c-9e13-90c5bcb813bd",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "w.eian@hotmail.com",
+      "userId": "3ce694d5-3bd4-4627-9e21-001d41b49492",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "emiliafbarreto@gmail.com",
+      "userId": "c47ef2f1-cad6-48c9-8e64-14389e995c17",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "roywwaltersiv@gmail.com",
+      "userId": "94269edd-fdb4-4f06-926e-87403f241b72",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "brennanjterry@yahoo.com",
+      "userId": "666e25af-247a-4e5d-a85c-022790b691b4",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "vignesh.naidu@outlook.com",
+      "userId": "7e015701-0a5d-4f60-852a-2a5d019b5677",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "christabeljames@gmail.com",
+      "userId": "96c6b899-450c-4ccd-93af-13c0a6e93241",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "imwats78@gmail.com",
+      "userId": "26b50305-536b-47eb-8753-8d63bc3cf42c",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "lee@cloudsphere.co.uk",
+      "userId": "84b16e56-0670-493d-aa8d-ee24dcf51a7d",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "jodie@jodieo.com",
+      "userId": "b9a61599-34bc-49fd-9133-fd844f8956c6",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "colmsocodu@gmail.com",
+      "userId": "8ebee658-280a-4e15-875e-3aa2cc2058a7",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "jonna.kivipelto@gmail.com",
+      "userId": "8913d49c-d344-446b-86c6-4efca148f0fb",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "emma@bebrilliant.org.uk",
+      "userId": "5e64b03c-9fd2-450a-8147-fdb11047799c",
+      "category": "needsMigration",
+      "error": "Request rate limit reached"
+    },
+    {
+      "email": "devscoconsulting@gmail.com",
+      "userId": "db5b2c66-b09b-4ec4-ac56-3ddde4ed7d68",
+      "category": "needsMigration",
+      "error": "Failed to check auth users: fetch failed"
+    }
+  ]
+}

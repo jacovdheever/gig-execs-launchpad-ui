@@ -1,0 +1,5342 @@
+{
+  "sent": [
+    {
+      "email": "nuno.rodrigues+2@gigexecs.com",
+      "userId": "d94eb530-de82-47cd-94ab-e689f9c265c1",
+      "emailId": "09fbf639-974a-49ff-9e26-10b192d56d3d",
+      "timestamp": "2025-11-26T12:57:50.375Z"
+    },
+    {
+      "email": "accraze@gmail.com",
+      "userId": "7e726567-5e32-4302-a5a7-29ce2151c444",
+      "emailId": "bdbed4f3-d82d-4ddc-a3a9-7ecf6ef483fd",
+      "timestamp": "2025-11-26T12:57:51.485Z"
+    },
+    {
+      "email": "rahman.kalilur@outlook.com",
+      "userId": "afd15e66-cc68-48c3-8bab-64d5b53c9d08",
+      "emailId": "7778bd92-3e39-4eb5-a60c-0ca22f52d2d3",
+      "timestamp": "2025-11-26T12:57:52.465Z"
+    },
+    {
+      "email": "charityve@gmail.com",
+      "userId": "19fd40b1-9e91-4d9e-a48b-ad5a0f8f1172",
+      "emailId": "709583a3-0d4c-421e-88d2-f760f7bef12c",
+      "timestamp": "2025-11-26T12:57:53.468Z"
+    },
+    {
+      "email": "bogdan.tenea@trilogy.com",
+      "userId": "0fd4d167-fd7d-40a6-9944-022c07119f22",
+      "emailId": "0401752e-a5a1-4620-af8a-a6a7cb26a992",
+      "timestamp": "2025-11-26T12:57:54.405Z"
+    },
+    {
+      "email": "jaco.vandenheever+10@gigexecs.com",
+      "userId": "8ebf982b-4f61-42a0-b38b-001dd18f38b7",
+      "emailId": "da320524-1c45-438d-ac1b-7036556246ed",
+      "timestamp": "2025-11-26T12:58:27.638Z"
+    },
+    {
+      "email": "charity@alterahr.com",
+      "userId": "66bf318d-bd07-4450-a8d1-114af3ce4b23",
+      "emailId": "38f90499-4738-4c3a-944b-5fb2b3257e9e",
+      "timestamp": "2025-11-26T12:58:28.607Z"
+    },
+    {
+      "email": "jaco.vandenheever+client@gigexecs.com",
+      "userId": "5c9e1666-5b85-458a-81d9-2d3619454b62",
+      "emailId": "3e986ee5-db16-4327-94fc-9426e43fb660",
+      "timestamp": "2025-11-26T12:58:29.600Z"
+    },
+    {
+      "email": "jaco.vandenheever+1@gigexecs.com",
+      "userId": "0aeed0a0-59cc-4ae3-9a47-5f099b783aac",
+      "emailId": "39bdee6f-dd34-44f7-ad90-ce30198fa659",
+      "timestamp": "2025-11-26T12:58:30.567Z"
+    },
+    {
+      "email": "dutoit.appelcryn@gmail.com",
+      "userId": "416f1a30-1bec-4ae0-af67-787609b8d4a8",
+      "emailId": "2c846b12-c476-45b7-8301-866b9df13f77",
+      "timestamp": "2025-11-26T12:58:31.515Z"
+    },
+    {
+      "email": "davegargaro@gmail.com",
+      "userId": "700fb075-b7e2-49df-98e4-504d2998f603",
+      "emailId": "bedcf04c-fe04-48a4-b088-8ec4025a0350",
+      "timestamp": "2025-11-26T12:58:32.471Z"
+    },
+    {
+      "email": "ggaenssler@gmail.com",
+      "userId": "a251cf2c-a9e7-4cf6-8edf-a605b4ab187e",
+      "emailId": "850441de-0333-4ad1-9685-5a64928ba779",
+      "timestamp": "2025-11-26T12:58:33.436Z"
+    },
+    {
+      "email": "garth@gbccs.co.za",
+      "userId": "744a1b0e-cd63-4565-b412-9bd17c14afe1",
+      "emailId": "f880fd62-3e81-4cf1-93a2-24ad48079a9d",
+      "timestamp": "2025-11-26T12:58:34.414Z"
+    },
+    {
+      "email": "jason.w.louis@gmail.com",
+      "userId": "59d0362e-4071-4ecf-afd3-ff4acf75c6f9",
+      "emailId": "3e712488-2ae1-416b-ba3b-788752ea4835",
+      "timestamp": "2025-11-26T12:58:35.405Z"
+    },
+    {
+      "email": "raj.20332@iimtrichy.ac.in",
+      "userId": "c01b2a9d-2b45-4871-bff9-56c46df24ad2",
+      "emailId": "4100cbf5-f04f-45ca-b6e4-b3de54344349",
+      "timestamp": "2025-11-26T12:58:36.408Z"
+    },
+    {
+      "email": "SteveB@BCIEE.com",
+      "userId": "a84e185a-d744-4861-8521-888fc935b33c",
+      "emailId": "efa93df5-feb2-4702-8bca-e1f854b57178",
+      "timestamp": "2025-11-26T12:58:37.371Z"
+    },
+    {
+      "email": "jacovdh1982+6@gmail.com",
+      "userId": "2e520cd3-a385-4324-acf7-4168252d859f",
+      "emailId": "27389792-12be-4d41-b305-69cd202106f8",
+      "timestamp": "2025-11-26T12:58:38.359Z"
+    },
+    {
+      "email": "jacovdh1982+5@gmail.com",
+      "userId": "f88d9c07-9533-4e7e-9f8f-a3dfa06c3282",
+      "emailId": "9dd5c291-6dc8-443b-8205-4adb46c1e566",
+      "timestamp": "2025-11-26T12:58:39.327Z"
+    },
+    {
+      "email": "jacovdh1982+4@gmail.com",
+      "userId": "fa3cf232-797c-4ee5-aa72-f435aced06c8",
+      "emailId": "57c1249b-d695-4244-a367-2832a4f0b038",
+      "timestamp": "2025-11-26T12:58:40.293Z"
+    },
+    {
+      "email": "nuno.rodrigues+1@gigexecs.com",
+      "userId": "8194eeb7-3cc8-4d3c-97b0-9416b8ff8170",
+      "emailId": "5d49f8c5-53f5-4f18-8645-86888d98838f",
+      "timestamp": "2025-11-26T12:58:41.269Z"
+    },
+    {
+      "email": "nuno.rodrigues+03@gigexecs.com",
+      "userId": "345ce77f-a516-4c24-84d2-7900397d0b32",
+      "emailId": "b93bea65-deaa-4eea-abc7-b9b0991cf2c3",
+      "timestamp": "2025-11-26T12:58:42.204Z"
+    },
+    {
+      "email": "jaco@sanddollardesign.co.za",
+      "userId": "44b0f42d-8a6f-48a0-aa58-5277c0ab8952",
+      "emailId": "393f6dce-3d24-48b1-a33c-f08f99f35b42",
+      "timestamp": "2025-11-26T12:58:43.131Z"
+    },
+    {
+      "email": "nuno.rodrigues+02@gigexecs.com",
+      "userId": "d790981d-3c3b-41c4-ab5d-b65706522f51",
+      "emailId": "7408d0db-0811-4efb-b5da-b67084c30493",
+      "timestamp": "2025-11-26T12:58:44.082Z"
+    },
+    {
+      "email": "nuno.rodrigues+01@gigexecs.com",
+      "userId": "1dd4eaae-4347-4990-a679-3a5395075451",
+      "emailId": "8411c828-1530-420f-b845-16591e2a21c3",
+      "timestamp": "2025-11-26T12:58:45.040Z"
+    },
+    {
+      "email": "gomajoaquim31@gmail.com",
+      "userId": "6b23383b-faba-438c-9a5f-63fb9bb9e567",
+      "emailId": "aee51d74-c9e9-44b4-a280-26a03bdc933a",
+      "timestamp": "2025-11-26T12:58:46.019Z"
+    },
+    {
+      "email": "emmanuelowusu38@yahoo.com",
+      "userId": "b9cf483f-7ef5-46cc-9bf8-ba3065a30058",
+      "emailId": "49b98a31-489f-4efc-9b90-46f1a58448c3",
+      "timestamp": "2025-11-26T12:58:46.983Z"
+    },
+    {
+      "email": "david@digidistiller.com",
+      "userId": "cd82132f-da88-41e3-968e-72ae72fbd6c1",
+      "emailId": "8bca2d68-28c1-46b9-bb8b-e7977c79eec9",
+      "timestamp": "2025-11-26T12:58:47.929Z"
+    },
+    {
+      "email": "todd@tecamplify.com",
+      "userId": "cb3358b9-8f2e-46a0-9acb-8a989dc7dcb2",
+      "emailId": "720b7397-84ba-441b-b883-75905c9d1c20",
+      "timestamp": "2025-11-26T12:58:48.916Z"
+    },
+    {
+      "email": "marianne.ulloa1@gmail.com",
+      "userId": "949b8692-8f9c-4dc4-b3b4-879b2c162f4f",
+      "emailId": "9258ea77-dd9a-43e3-b575-47e5798fe39b",
+      "timestamp": "2025-11-26T12:58:49.982Z"
+    },
+    {
+      "email": "pramirez1030@yahoo.com",
+      "userId": "81ae9e86-531e-4bd8-86cb-db66e0dcfd70",
+      "emailId": "ae4115b2-225c-49a9-b3ef-512e3878958f",
+      "timestamp": "2025-11-26T12:58:50.962Z"
+    },
+    {
+      "email": "nitisha.singh@gmail.com",
+      "userId": "bbca6cf8-dd7f-4ef5-9940-e73da9c0e84c",
+      "emailId": "bd20637c-1d11-4181-b363-044e72018cd1",
+      "timestamp": "2025-11-26T12:58:52.005Z"
+    },
+    {
+      "email": "oren@pineventures.com",
+      "userId": "63021ef7-90be-411e-b011-15aabd472629",
+      "emailId": "8e1b1805-ffb6-4eca-a322-452dd6b5da8e",
+      "timestamp": "2025-11-26T12:58:52.961Z"
+    },
+    {
+      "email": "e.p.hunzeker@gmail.com",
+      "userId": "6ef7aa4c-63c5-4d1e-979d-86351a6be8f9",
+      "emailId": "39bf1343-aa6a-4621-8420-110bdd5de5ad",
+      "timestamp": "2025-11-26T12:58:53.903Z"
+    },
+    {
+      "email": "jeff.quantrill67@gmail.com",
+      "userId": "6400774b-e940-4bc3-84d7-824f0a044220",
+      "emailId": "2aa60880-38d9-4e9c-9b76-3bba5960bab3",
+      "timestamp": "2025-11-26T12:58:54.878Z"
+    },
+    {
+      "email": "jason.butler.17@gmail.com",
+      "userId": "270cc73c-b0de-441d-8e15-4f4c65847728",
+      "emailId": "d0f72577-82fd-4edb-b9cc-55d64bb9f5a0",
+      "timestamp": "2025-11-26T12:58:55.881Z"
+    },
+    {
+      "email": "garyralphmr@gmail.com",
+      "userId": "176863f9-ef6a-41cc-9b40-3cd56747bc44",
+      "emailId": "907734da-e0d3-4293-91a0-faf370a7eb13",
+      "timestamp": "2025-11-26T12:58:56.866Z"
+    },
+    {
+      "email": "mel@metisenergyconsultants.com",
+      "userId": "1fafa1c2-1dea-4b4d-ac5c-0cf115d9920d",
+      "emailId": "0260a338-17f2-4695-b70f-be951bd47c43",
+      "timestamp": "2025-11-26T12:58:57.820Z"
+    },
+    {
+      "email": "verlier.quan-vie@ngc.co.tt",
+      "userId": "cbd95955-c87b-4f69-a081-24a7689e45f3",
+      "emailId": "f5084ef8-95c2-4497-bfee-cd9f5d16b8bc",
+      "timestamp": "2025-11-26T12:58:58.774Z"
+    },
+    {
+      "email": "suzemcb@gmail.com",
+      "userId": "f7da1147-19c3-4cee-9f6e-7cb1a092510a",
+      "emailId": "d9f9968a-fe3f-4854-a506-8169947d0cf9",
+      "timestamp": "2025-11-26T12:58:59.722Z"
+    },
+    {
+      "email": "tzvidzie@gmail.com",
+      "userId": "6e5cc221-1f32-48ed-83ed-75c93c8cb5cc",
+      "emailId": "2bee4b2b-4deb-421c-ad58-d6b72ba18202",
+      "timestamp": "2025-11-26T12:59:00.688Z"
+    },
+    {
+      "email": "ricardorodil@yahoo.com",
+      "userId": "a0bd04ec-e687-44f1-88ae-9ed19bff801d",
+      "emailId": "437e9113-a779-47c3-992d-9cbff79e9454",
+      "timestamp": "2025-11-26T12:59:01.640Z"
+    },
+    {
+      "email": "yonas11130@gmail.com",
+      "userId": "19945411-c618-4ec0-a183-9ae148ba096b",
+      "emailId": "f602b0f3-fe26-4342-a396-5f036bb375d4",
+      "timestamp": "2025-11-26T12:59:02.645Z"
+    },
+    {
+      "email": "moxieakarasek@gmail.com",
+      "userId": "9bcfc5a1-bf30-47ef-a2ec-2fb3dab69d6b",
+      "emailId": "859a5152-a0f3-4c9b-ba59-dc8e63420ca9",
+      "timestamp": "2025-11-26T12:59:03.610Z"
+    },
+    {
+      "email": "hs.wahab12345@gmail.com",
+      "userId": "6f9cad9b-7183-4ed2-b7e5-2e540e979a71",
+      "emailId": "992e26da-5834-4559-a018-7c9266e03e2a",
+      "timestamp": "2025-11-26T12:59:04.582Z"
+    },
+    {
+      "email": "alq1235r@gmail.com",
+      "userId": "956b9960-806c-4ea9-ad29-a07f6b2a7c2f",
+      "emailId": "c4ae2f21-d357-4c89-9d83-b02bec318aed",
+      "timestamp": "2025-11-26T12:59:05.625Z"
+    },
+    {
+      "email": "maxjallad@gmail.com",
+      "userId": "bb790b0e-8539-4bab-b2e8-b17139651c21",
+      "emailId": "fc106182-240d-4ff7-912f-22c69a46fb66",
+      "timestamp": "2025-11-26T12:59:06.573Z"
+    },
+    {
+      "email": "naomi.esfahani@gmail.com",
+      "userId": "5dba4c8d-bb7f-4d1b-858c-5ea56eabb8d4",
+      "emailId": "869a73a6-4b56-4380-bbed-1d6c1dd545b7",
+      "timestamp": "2025-11-26T12:59:07.562Z"
+    },
+    {
+      "email": "mattdcarstens@gmail.com",
+      "userId": "db50951e-ec72-4cb0-af28-4dc0213ff2e9",
+      "emailId": "dbef6871-adb0-47b0-9592-dfc9535fd266",
+      "timestamp": "2025-11-26T12:59:08.521Z"
+    },
+    {
+      "email": "bmohamadieh@gmail.com",
+      "userId": "3eb64248-9cca-4ce6-aaec-b995a4dd9f2d",
+      "emailId": "01a1fed6-a91f-4bbb-b375-c4671c95a406",
+      "timestamp": "2025-11-26T12:59:09.487Z"
+    },
+    {
+      "email": "tnhines@gmail.com",
+      "userId": "f16e198b-10de-458e-a05f-07ff31f3b300",
+      "emailId": "3f165b83-2cc9-44b3-bdd9-89307dc4f0c1",
+      "timestamp": "2025-11-26T12:59:10.445Z"
+    },
+    {
+      "email": "amybkennedy@gmail.com",
+      "userId": "c92d03f1-2cf4-47dd-861e-5ce229945c3a",
+      "emailId": "4b45dae4-a0fa-4157-94d7-c76a8996ecf6",
+      "timestamp": "2025-11-26T12:59:11.399Z"
+    },
+    {
+      "email": "kathleen@thekmmgroup.com",
+      "userId": "9422c8cc-b512-4029-a50f-c7d6e1088a4c",
+      "emailId": "68463e23-f61a-488c-b879-0fc32b539991",
+      "timestamp": "2025-11-26T12:59:12.407Z"
+    },
+    {
+      "email": "brucemillard00@gmail.com",
+      "userId": "1f65be4d-c32d-4bf1-9dde-afba20b0df98",
+      "emailId": "7ca58d59-7a2b-4f42-883b-41072f55bf58",
+      "timestamp": "2025-11-26T12:59:13.369Z"
+    },
+    {
+      "email": "isabel.pett@gmail.com",
+      "userId": "3f7cc807-1d4b-47c0-8863-483db8976127",
+      "emailId": "ddc42a1f-4f42-40b5-b509-f6f040241e8d",
+      "timestamp": "2025-11-26T12:59:14.335Z"
+    },
+    {
+      "email": "joe@weinlickworks.com",
+      "userId": "a9233191-b8da-416b-8b1f-ca9dcc41da2b",
+      "emailId": "798e6404-46d2-4833-9727-30eddbd60d20",
+      "timestamp": "2025-11-26T12:59:15.315Z"
+    },
+    {
+      "email": "carmenmarianavarro@yahoo.com",
+      "userId": "dae927c8-f23e-427c-909d-bb869b9b7828",
+      "emailId": "b1e4a9d3-2635-48b0-94cd-012b6786ba9f",
+      "timestamp": "2025-11-26T12:59:16.261Z"
+    },
+    {
+      "email": "prado_marcelo@yahoo.com",
+      "userId": "8b1ae762-d078-40e2-9a9c-0f9023e631b3",
+      "emailId": "78bb40cb-e507-4cfe-b1c1-234083adc816",
+      "timestamp": "2025-11-26T12:59:17.300Z"
+    },
+    {
+      "email": "dkondak@gmail.com",
+      "userId": "52e00d02-4c2e-4cab-baef-1798a70b77b3",
+      "emailId": "d2ea22df-042c-45de-b7f7-ecde5b51745b",
+      "timestamp": "2025-11-26T12:59:18.269Z"
+    },
+    {
+      "email": "rishi_dhar@rediffmail.com",
+      "userId": "97783233-b49f-40bc-94d4-cff0d4803651",
+      "emailId": "0a860db7-5f31-4266-b704-a9ecadbbd880",
+      "timestamp": "2025-11-26T12:59:19.234Z"
+    },
+    {
+      "email": "gtovar.h@gmail.com",
+      "userId": "0098362a-d2dd-4fef-954b-f1ae429777be",
+      "emailId": "5f2717fc-36db-475a-9448-6f59dec4a058",
+      "timestamp": "2025-11-26T12:59:20.200Z"
+    },
+    {
+      "email": "luchen1212@gmail.com",
+      "userId": "8a8e4917-a3c1-43c5-be60-fd3c77c2b674",
+      "emailId": "7da38fb9-71ea-4501-99ab-e630f872d78d",
+      "timestamp": "2025-11-26T12:59:21.174Z"
+    },
+    {
+      "email": "bh@brucejhershey.com",
+      "userId": "da6e5185-bf65-44b4-87cf-6ec80ea68c8c",
+      "emailId": "c96ace38-80ae-48a2-b012-0ca160f978f1",
+      "timestamp": "2025-11-26T12:59:22.145Z"
+    },
+    {
+      "email": "nvisconti@gmail.com",
+      "userId": "e6d67662-40c3-4628-9b22-2fde643f3948",
+      "emailId": "12247392-17a7-4df8-9784-d4330e670658",
+      "timestamp": "2025-11-26T12:59:23.098Z"
+    },
+    {
+      "email": "barnes.kourtney@gmail.com",
+      "userId": "982e5897-62d2-4191-aba5-946b25daeb31",
+      "emailId": "990485a0-d07e-472a-9b29-b235f4e49728",
+      "timestamp": "2025-11-26T12:59:24.056Z"
+    },
+    {
+      "email": "charlene.coleman@gmail.com",
+      "userId": "92f0aa9f-90e2-48f7-8652-0ce9173aadc6",
+      "emailId": "e3c636f3-5680-466d-9bd4-85c4d499faf9",
+      "timestamp": "2025-11-26T12:59:25.015Z"
+    },
+    {
+      "email": "rosarioisabelverasgranados@gmail.com",
+      "userId": "f80eb248-6b8b-4b08-aa07-73f5cc78d916",
+      "emailId": "b85c7b00-6249-4bf1-a372-7b1934708838",
+      "timestamp": "2025-11-26T12:59:25.971Z"
+    },
+    {
+      "email": "r_smith3412@yahoo.com",
+      "userId": "7e9fc4a9-226d-4bf8-a81e-0c38f3854024",
+      "emailId": "4090a880-8394-42ac-94e4-20e5255c99af",
+      "timestamp": "2025-11-26T12:59:26.922Z"
+    },
+    {
+      "email": "nliu@threedify.com",
+      "userId": "3d67c11b-78de-4e26-b1e4-a2e3760555cc",
+      "emailId": "03bb60dc-8367-4c45-a2de-da1a47195117",
+      "timestamp": "2025-11-26T12:59:27.900Z"
+    },
+    {
+      "email": "amahepath@gmail.com",
+      "userId": "7b6cd0ba-ea49-4713-a92a-718d4a409bb3",
+      "emailId": "567805c9-aad3-414c-a797-3e5e4572db4f",
+      "timestamp": "2025-11-26T12:59:28.917Z"
+    },
+    {
+      "email": "jjeades63@lilrok.com",
+      "userId": "efa662ab-b941-49ce-85bd-9823d643559e",
+      "emailId": "2b893b44-f4da-4a91-bc4f-11f2b0ffae7c",
+      "timestamp": "2025-11-26T12:59:29.873Z"
+    },
+    {
+      "email": "joshua.larson10@gmail.com",
+      "userId": "8addd582-05f1-43d5-b620-3ec0769d9d69",
+      "emailId": "f1f4e52e-5bc2-4ac5-a097-3445f82777e5",
+      "timestamp": "2025-11-26T12:59:30.844Z"
+    },
+    {
+      "email": "phillip.leung@gmail.com",
+      "userId": "7d43efce-7a71-4ad7-8c68-8045eb8b3e07",
+      "emailId": "3e45ec21-f964-4c43-b31f-0a0f291aa9a0",
+      "timestamp": "2025-11-26T12:59:31.842Z"
+    },
+    {
+      "email": "vvgary@hotmail.com",
+      "userId": "674c7051-5d72-42c2-b558-a8e3cba88e64",
+      "emailId": "a0590e0c-9948-418a-aeb1-a3db68a9ba06",
+      "timestamp": "2025-11-26T12:59:32.793Z"
+    },
+    {
+      "email": "marcus.herbert2017@gmail.com",
+      "userId": "158933cf-5daa-42dd-8ebe-dbfd826f77d1",
+      "emailId": "fc37c640-3a48-45b7-8e4b-dd28e9c19a8c",
+      "timestamp": "2025-11-26T12:59:33.762Z"
+    },
+    {
+      "email": "christina@cmaraconsulting.com",
+      "userId": "7dff972c-6c7e-402e-8cde-1bdad1d7a951",
+      "emailId": "a2ce8312-37f9-4295-ba66-454594a6937c",
+      "timestamp": "2025-11-26T12:59:34.728Z"
+    },
+    {
+      "email": "hervasmpatricia@gmail.com",
+      "userId": "9f402fc1-b5e4-4cfd-8036-ec2bfbadc1eb",
+      "emailId": "99a8847c-5e6a-413b-b279-ee800242ef90",
+      "timestamp": "2025-11-26T12:59:35.688Z"
+    },
+    {
+      "email": "tvacapereira@gmail.com",
+      "userId": "89e2d39c-aeb8-4522-a735-fae9f940e8a9",
+      "emailId": "66989041-6223-4be6-ba5d-72758d5e2b74",
+      "timestamp": "2025-11-26T12:59:36.655Z"
+    },
+    {
+      "email": "ashish.sanghavi@gmail.com",
+      "userId": "5bc6fda8-2f57-4af7-af17-075f23c6c510",
+      "emailId": "e3645fa0-7e03-464b-be13-cbb3832c145f",
+      "timestamp": "2025-11-26T12:59:37.617Z"
+    },
+    {
+      "email": "fionayangliyun89@gmail.com",
+      "userId": "ea3a4e07-ae8d-4afb-a81f-f16db33b2c83",
+      "emailId": "424aec07-8a6e-4c1c-9306-7c6ccb165606",
+      "timestamp": "2025-11-26T12:59:38.632Z"
+    },
+    {
+      "email": "nickdiana@gmail.com",
+      "userId": "c9820aea-c3c4-4392-b41f-073ee3b37bd5",
+      "emailId": "c22cdc36-066d-4c92-9f68-33dfc20b6fc4",
+      "timestamp": "2025-11-26T12:59:39.584Z"
+    },
+    {
+      "email": "s@eastpac.com",
+      "userId": "63a9454e-3cf6-4c3a-8e38-369ceccbf5a7",
+      "emailId": "b9d7648b-cf11-4c6d-bef0-5908b86aed4c",
+      "timestamp": "2025-11-26T12:59:40.575Z"
+    },
+    {
+      "email": "mbratowski@gmail.com",
+      "userId": "ef9379ac-f779-40eb-aee7-41728e1977cd",
+      "emailId": "32e50c9f-ef7d-4c6f-ac5b-0a65a162042c",
+      "timestamp": "2025-11-26T12:59:41.525Z"
+    },
+    {
+      "email": "lj-morris@hotmail.co.uk",
+      "userId": "ea8aaf51-fbaa-46ee-9499-8206bd4587f8",
+      "emailId": "1bb4fec2-de9e-423b-8614-cd3985543f55",
+      "timestamp": "2025-11-26T12:59:42.466Z"
+    },
+    {
+      "email": "geologistbaskar@gmail.com",
+      "userId": "82a55ada-754a-4dc3-ba0b-b4529c260090",
+      "emailId": "70531428-23fd-43a2-9e40-483ae215d57c",
+      "timestamp": "2025-11-26T12:59:43.438Z"
+    },
+    {
+      "email": "kavilazez@gmail.com",
+      "userId": "f167d0b0-55cb-4276-8185-317e7f1a421c",
+      "emailId": "1bf23d36-6794-431e-bfe3-348feb3f1c1e",
+      "timestamp": "2025-11-26T12:59:44.454Z"
+    },
+    {
+      "email": "ryanking1013@yahoo.com",
+      "userId": "45cb752b-a318-485e-96e7-e0cf05ba1777",
+      "emailId": "f3dacfd4-c774-452e-90ff-748aa086907a",
+      "timestamp": "2025-11-26T12:59:45.417Z"
+    },
+    {
+      "email": "rickcardoso4040@gmail.com",
+      "userId": "97a1938c-1351-43f9-8caa-9f201656767f",
+      "emailId": "2cee9487-5339-40d7-820a-b9771cd9b9a8",
+      "timestamp": "2025-11-26T12:59:46.376Z"
+    },
+    {
+      "email": "bhockett@yahoo.com",
+      "userId": "50581a92-cc3b-4c88-8a9e-62afc3ffa526",
+      "emailId": "bcab44ba-d628-47a7-b2bb-efe712267c6a",
+      "timestamp": "2025-11-26T12:59:47.342Z"
+    },
+    {
+      "email": "andrewogilvie@live.co.uk",
+      "userId": "c38304ac-3efc-44ca-a66a-83bb5f943c48",
+      "emailId": "92eaa7ec-2151-484c-8835-d1b045536a5c",
+      "timestamp": "2025-11-26T12:59:48.356Z"
+    },
+    {
+      "email": "mikedaviesis@hotmail.com",
+      "userId": "246f1d58-5e88-480a-86fb-58881c5fb855",
+      "emailId": "6309e4ec-eb44-41e1-84f7-19389cabf713",
+      "timestamp": "2025-11-26T12:59:49.306Z"
+    },
+    {
+      "email": "chris_reid11@hotmail.com",
+      "userId": "3f142193-821d-448f-bda7-20f46ef15ff3",
+      "emailId": "cf8067d4-c7ea-482a-8725-8e1cce4e00b8",
+      "timestamp": "2025-11-26T12:59:50.405Z"
+    },
+    {
+      "email": "david@rhinecapital.co.uk",
+      "userId": "f6010b02-b43e-42e3-b998-88f04f0ef932",
+      "emailId": "906111da-4f73-40cc-a127-123524ebcf74",
+      "timestamp": "2025-11-26T12:59:51.501Z"
+    },
+    {
+      "email": "jim.kilpatrick@manufacturingis.co.uk",
+      "userId": "62f1a830-6d86-4427-bc58-2434fe939547",
+      "emailId": "371463e0-007f-4790-a7bd-e658e612018d",
+      "timestamp": "2025-11-26T12:59:52.482Z"
+    },
+    {
+      "email": "martin.bruce1@hotmail.com",
+      "userId": "c86dbe5d-155f-4f7a-a001-e22637ef9fa0",
+      "emailId": "7d3da0bb-8015-4634-9ca7-c872ce376fe3",
+      "timestamp": "2025-11-26T12:59:53.474Z"
+    },
+    {
+      "email": "roma.frisby@outlook.com",
+      "userId": "4e7b4705-b15a-4b1e-bb6b-05bbb32142d4",
+      "emailId": "0e91fd83-657c-490b-9491-d084a04d2a21",
+      "timestamp": "2025-11-26T12:59:54.434Z"
+    },
+    {
+      "email": "rekha.thade@gmail.com",
+      "userId": "87a5fab6-c706-4706-84d6-96897d026fbc",
+      "emailId": "be67a715-700d-43a7-8f30-762825be0bf0",
+      "timestamp": "2025-11-26T12:59:55.396Z"
+    },
+    {
+      "email": "karitoga06@hotmail.com",
+      "userId": "160809b3-7823-4e36-8473-59cb9cbe4f03",
+      "emailId": "7fcecc78-d533-490a-8ad6-375e5db50120",
+      "timestamp": "2025-11-26T12:59:56.521Z"
+    },
+    {
+      "email": "mensahkwabena0@gmail.com",
+      "userId": "5731fc2c-555a-4cc4-8147-f01099c41cd6",
+      "emailId": "74af919d-27f8-4213-a168-4291b05423c7",
+      "timestamp": "2025-11-26T12:59:57.508Z"
+    },
+    {
+      "email": "patrickraney@gmail.com",
+      "userId": "58257987-9b22-43ab-8583-ca4f49de8db2",
+      "emailId": "97786a2c-1adf-4248-b13c-44318a01b003",
+      "timestamp": "2025-11-26T12:59:58.513Z"
+    },
+    {
+      "email": "gis.vignesh@gmail.com",
+      "userId": "02e96634-845d-4b3a-9c36-d697138214d8",
+      "emailId": "f8ffa3ca-71ba-4fb8-b15f-f42e057e91fe",
+      "timestamp": "2025-11-26T12:59:59.523Z"
+    },
+    {
+      "email": "ripudaman.sarna@gmail.com",
+      "userId": "77a17ee7-9e6f-4f3e-8bce-1c7b837cc01d",
+      "emailId": "d774dc57-bda5-43d4-beee-e9ca2a83efe8",
+      "timestamp": "2025-11-26T13:00:00.533Z"
+    },
+    {
+      "email": "devan.gopal@yahoo.com",
+      "userId": "2193d53a-203c-40f3-8061-b0f9724c5bd7",
+      "emailId": "c9e484bc-2f61-4c3c-8e19-9ad1e95ecf88",
+      "timestamp": "2025-11-26T13:00:01.652Z"
+    },
+    {
+      "email": "james-smyth@live.co.uk",
+      "userId": "0ca96df4-f225-4558-90b9-125cee74fd11",
+      "emailId": "3dfefe8f-a7d2-4c8a-993c-774f03ec6ac7",
+      "timestamp": "2025-11-26T13:00:02.687Z"
+    },
+    {
+      "email": "shabah.209@hotmail.com",
+      "userId": "546de737-1cdb-4d94-b8a3-8f382b34427a",
+      "emailId": "4e324bb6-c458-4090-bd73-a4976c99f7d3",
+      "timestamp": "2025-11-26T13:00:03.740Z"
+    },
+    {
+      "email": "hellsbellsthomas@gmail.com",
+      "userId": "3ec53b72-ee64-4b3b-87c3-13c62091b2ed",
+      "emailId": "21478f6f-4b7c-4ce7-aabb-3070cfc9a278",
+      "timestamp": "2025-11-26T13:00:04.703Z"
+    },
+    {
+      "email": "rajamohan247@gmail.com",
+      "userId": "99b1d5a9-0908-4c2f-a7c3-e385be2c502d",
+      "emailId": "a90fbdbc-f3a3-4dad-9ea7-4e405c933953",
+      "timestamp": "2025-11-26T13:00:05.731Z"
+    },
+    {
+      "email": "erikadiboe@aol.com",
+      "userId": "ec45f9d6-06ce-440c-815d-ddb4321432cb",
+      "emailId": "57b4ed09-4c50-46b5-81a3-7e6e84fb0658",
+      "timestamp": "2025-11-26T13:00:06.745Z"
+    },
+    {
+      "email": "simplylevy@aol.com",
+      "userId": "036cec22-09ed-415c-a930-4cd97597db73",
+      "emailId": "d3546e5e-021f-45fb-8cbe-4b295d98d0fa",
+      "timestamp": "2025-11-26T13:00:07.741Z"
+    },
+    {
+      "email": "marinos@mweb.co.za",
+      "userId": "3e3ab7a6-c0e4-4676-a40c-04ae5cd0b9d2",
+      "emailId": "df250b5b-e45a-40e5-a59b-109b8556f2ec",
+      "timestamp": "2025-11-26T13:00:08.706Z"
+    },
+    {
+      "email": "h.u.ahmed@outlook.com",
+      "userId": "a6da5451-48a3-4f6c-b5a5-d4fa6595a5c3",
+      "emailId": "d7e91c5e-295d-4223-8d66-5b7c23c5ecfc",
+      "timestamp": "2025-11-26T13:00:09.691Z"
+    },
+    {
+      "email": "paul.holliday3@googlemail.com",
+      "userId": "33bbf31b-f8eb-484c-b4c5-145e3a310223",
+      "emailId": "41661b93-5eca-4e00-a861-54042b227647",
+      "timestamp": "2025-11-26T13:00:10.752Z"
+    },
+    {
+      "email": "richardjwebb@live.co.uk",
+      "userId": "a440cc5d-25e5-4869-9d64-0d51dcbe9da7",
+      "emailId": "938db05e-339a-4d68-bde3-759c69413a55",
+      "timestamp": "2025-11-26T13:00:11.770Z"
+    },
+    {
+      "email": "javidghani@gmail.com",
+      "userId": "2dc0fa02-158d-480d-80f0-b59906f8c063",
+      "emailId": "ab15d1f7-f3fa-4fe5-87a7-0f308048a009",
+      "timestamp": "2025-11-26T13:00:12.745Z"
+    },
+    {
+      "email": "denniswilson4@me.com",
+      "userId": "f688418f-8bb0-485d-ae58-dbfa43917d75",
+      "emailId": "775b7788-ad1f-49ef-b45a-b5e3c2716dc3",
+      "timestamp": "2025-11-26T13:00:13.736Z"
+    },
+    {
+      "email": "howard@apym.co.uk",
+      "userId": "3ec78928-0b0d-467a-b34d-1322ac55a38e",
+      "emailId": "3d483332-9211-4f97-9e6f-734423ef04b2",
+      "timestamp": "2025-11-26T13:00:14.716Z"
+    },
+    {
+      "email": "danharpham@me.com",
+      "userId": "71d0d4e6-7e56-48ff-9236-17c32083d409",
+      "emailId": "d4f42fa5-c964-426e-8190-78ff9a182d61",
+      "timestamp": "2025-11-26T13:00:15.690Z"
+    },
+    {
+      "email": "gil2256@hotmail.co.uk",
+      "userId": "74c80bcf-70ad-499e-8fb3-14269f195531",
+      "emailId": "b140e97b-195d-4ea8-bfc9-40942a70e387",
+      "timestamp": "2025-11-26T13:00:16.702Z"
+    },
+    {
+      "email": "allaire.virginie@gmail.com",
+      "userId": "a6dfda77-8216-475c-b55e-f109fe1c1297",
+      "emailId": "cd786ddb-81d8-4d80-9a87-a4aa7c648289",
+      "timestamp": "2025-11-26T13:00:17.664Z"
+    },
+    {
+      "email": "lin.curtis@me.com",
+      "userId": "f2426f0a-7bbb-4fda-bc3a-17fae24b3703",
+      "emailId": "da37e6ff-a5a4-4723-9b9e-edd9fe7d2988",
+      "timestamp": "2025-11-26T13:00:18.648Z"
+    },
+    {
+      "email": "descartebase@gmail.com",
+      "userId": "f8d6a7db-d43a-4710-92d0-8be0e997acc2",
+      "emailId": "f26acf4e-76ca-4c23-bad8-abb4f03ae3b9",
+      "timestamp": "2025-11-26T13:00:19.598Z"
+    },
+    {
+      "email": "apope1@live.co.uk",
+      "userId": "28a6cf48-f927-4714-9ed7-07d20169ba65",
+      "emailId": "c22ffce5-30d7-4e8d-a32a-ccac82990a53",
+      "timestamp": "2025-11-26T13:00:20.578Z"
+    },
+    {
+      "email": "modiba_masilo@yahoo.com",
+      "userId": "6aca2dc3-0fed-421f-ac64-baed110b387e",
+      "emailId": "88699e64-8bd3-4377-8b54-b981117a69ed",
+      "timestamp": "2025-11-26T13:00:21.608Z"
+    },
+    {
+      "email": "louisemilne1979@live.com",
+      "userId": "9460fd35-0ae6-4f04-8609-c9b0e3c8626f",
+      "emailId": "de71a544-698e-4e5a-8666-3cdb3c6d959b",
+      "timestamp": "2025-11-26T13:00:22.598Z"
+    },
+    {
+      "email": "luke@wildmindlearning.com",
+      "userId": "c83f3ab7-82b8-477e-bf03-bfe2e39074d0",
+      "emailId": "7d97f71b-c57c-404e-812a-c3edcfd00e1c",
+      "timestamp": "2025-11-26T13:00:23.590Z"
+    },
+    {
+      "email": "thom.noakes@gmail.com",
+      "userId": "db71f5db-2734-40e5-924a-7e7aa76c7cba",
+      "emailId": "89ac7013-c2ea-4a4c-99b5-cc7a34a975ce",
+      "timestamp": "2025-11-26T13:00:24.550Z"
+    },
+    {
+      "email": "richard.jones@aegisdm.com",
+      "userId": "80408b42-4cbf-4aa8-b012-09a14b522fb4",
+      "emailId": "b4d9c2b6-fa05-410c-a49b-2fc89b388f97",
+      "timestamp": "2025-11-26T13:00:25.489Z"
+    },
+    {
+      "email": "esleosbrown@comcast.net",
+      "userId": "81d93d39-9b2f-41c5-8f3b-ec47e517a403",
+      "emailId": "409f52ba-40ee-4079-b069-00d6ad2a1318",
+      "timestamp": "2025-11-26T13:00:26.452Z"
+    },
+    {
+      "email": "eschinsi@gmail.com",
+      "userId": "5b7925c1-6c2a-47ec-abf9-56e06cc7df19",
+      "emailId": "e39bfc4b-c49d-442b-b1df-935f3b062536",
+      "timestamp": "2025-11-26T13:00:27.408Z"
+    },
+    {
+      "email": "stevec@minex.org",
+      "userId": "16f07640-9276-46dd-a41b-0a3b1b6a1201",
+      "emailId": "f22c5165-a967-4854-843d-2437f0be435d",
+      "timestamp": "2025-11-26T13:00:28.356Z"
+    },
+    {
+      "email": "carteroj24@gmail.com",
+      "userId": "8a49d0ac-b2f1-4cb5-9465-ca70f6715d12",
+      "emailId": "29b2e9a6-88b3-4776-8745-272e0fbfd6db",
+      "timestamp": "2025-11-26T13:00:29.339Z"
+    },
+    {
+      "email": "arsamal@geoglobal.co",
+      "userId": "7e81c0d5-aa9c-4cc8-b5e1-3298ff1dbc72",
+      "emailId": "4409697e-8321-4dcb-8b18-d7e5cb87dea5",
+      "timestamp": "2025-11-26T13:00:30.300Z"
+    },
+    {
+      "email": "tiagoesferreira16@gmail.com",
+      "userId": "1f5e491b-2a23-48d5-ba95-3d1fec0e881b",
+      "emailId": "3fe911a6-bcb2-4934-af28-0ba75e11b989",
+      "timestamp": "2025-11-26T13:00:31.256Z"
+    },
+    {
+      "email": "patriciamartinezn@gmail.com",
+      "userId": "b49f79c9-9ca2-43ce-ad7f-7fa43a634bf6",
+      "emailId": "66620033-9f58-4482-b555-5e3d66c0579c",
+      "timestamp": "2025-11-26T13:00:32.249Z"
+    },
+    {
+      "email": "jbmitchell1@icloud.com",
+      "userId": "ad0703b5-cdec-4247-9513-2836c2859577",
+      "emailId": "73b937a6-763b-4d18-9fed-65d19edddee7",
+      "timestamp": "2025-11-26T13:00:33.214Z"
+    },
+    {
+      "email": "lance.sissing@me.com",
+      "userId": "2adc7433-3303-4022-aa4d-8092543dafa5",
+      "emailId": "5fe90ad0-68a9-48eb-b068-a0e2c7736793",
+      "timestamp": "2025-11-26T13:00:34.160Z"
+    },
+    {
+      "email": "scott.e.crooks@gmail.com",
+      "userId": "cd734024-f68a-4a25-8ff2-d4148caa80a1",
+      "emailId": "39054f1b-768d-4483-9fc7-c60cac60283e",
+      "timestamp": "2025-11-26T13:00:35.122Z"
+    },
+    {
+      "email": "tesbee2001@gmail.com",
+      "userId": "0862329e-60ec-4de3-9b14-65cf345a6e69",
+      "emailId": "48d33f3d-b679-4a5f-9a51-863854b2d80d",
+      "timestamp": "2025-11-26T13:00:36.079Z"
+    },
+    {
+      "email": "nitesh6684@gmail.com",
+      "userId": "d83b9858-e000-428e-806a-d066596b13e9",
+      "emailId": "982b3a72-c8ce-4ea4-9b33-192e8f52337d",
+      "timestamp": "2025-11-26T13:00:37.095Z"
+    },
+    {
+      "email": "edarwish067@gmail.com",
+      "userId": "afea52ba-1c6e-4958-b6e4-6ee999f68460",
+      "emailId": "f60fe251-5564-4a36-bcf3-addfdf3ae0cf",
+      "timestamp": "2025-11-26T13:00:38.066Z"
+    },
+    {
+      "email": "byronfry68@hotmail.com",
+      "userId": "0d348d6c-3d3d-4a34-ad1f-f8e67ea06765",
+      "emailId": "0058285b-4bdf-42ad-995d-9dd00e6b9eed",
+      "timestamp": "2025-11-26T13:00:39.021Z"
+    },
+    {
+      "email": "william.wen.li@gmail.com",
+      "userId": "141dfc8f-acd1-4dfa-8567-ed8303a41ca2",
+      "emailId": "63d46624-4a61-4dee-ba4e-1b7044ebf308",
+      "timestamp": "2025-11-26T13:00:39.993Z"
+    },
+    {
+      "email": "christopher.muracco@gmail.com",
+      "userId": "97e3fa9d-9752-45cd-935d-6c4b1d27a9a9",
+      "emailId": "75271409-7da8-453a-92f9-b5f9c9eeabd7",
+      "timestamp": "2025-11-26T13:00:40.958Z"
+    },
+    {
+      "email": "hera.mpondo@gmail.com",
+      "userId": "258e174c-2113-4f13-93f5-d85caeff7c55",
+      "emailId": "d3a258a1-7469-4af7-a00e-85db4340d3eb",
+      "timestamp": "2025-11-26T13:00:41.946Z"
+    },
+    {
+      "email": "nadine.resha@gmail.com",
+      "userId": "0fd4a439-e908-46ec-a6b8-5ac1aa2d28e8",
+      "emailId": "929b4238-ebb1-4fe2-b46f-f949279dae11",
+      "timestamp": "2025-11-26T13:00:42.914Z"
+    },
+    {
+      "email": "sohailawan743@yahoo.com",
+      "userId": "1d5019f2-8ce2-4823-b907-9a192da3f789",
+      "emailId": "2247a047-3dba-4951-add9-fccfe77034d5",
+      "timestamp": "2025-11-26T13:00:43.940Z"
+    },
+    {
+      "email": "filipemocambique@gmail.com",
+      "userId": "6f5daccd-4839-4765-88ba-918e9dc52c8b",
+      "emailId": "cc1b8070-08b9-4f65-a80f-f1dd5c5df3e6",
+      "timestamp": "2025-11-26T13:00:44.910Z"
+    },
+    {
+      "email": "carol@pepperinternational.com",
+      "userId": "45bfcead-da8b-4ad5-908b-5d0d15b34046",
+      "emailId": "9fcd490d-e1ba-4c3d-9d88-244cac796831",
+      "timestamp": "2025-11-26T13:00:45.869Z"
+    },
+    {
+      "email": "akaracsonyi@gmail.com",
+      "userId": "c004637d-224c-4613-97b6-f86f0498312a",
+      "emailId": "20f08cb3-a140-4b53-a30a-c8605878563d",
+      "timestamp": "2025-11-26T13:00:46.825Z"
+    },
+    {
+      "email": "kerkhof.sacha@gmail.com",
+      "userId": "0eec7de7-8ecb-492e-8e34-c78cb1156444",
+      "emailId": "dac0953f-c62d-4dc6-9b4b-9ca60d96c0e8",
+      "timestamp": "2025-11-26T13:00:47.819Z"
+    },
+    {
+      "email": "charles.deutsch@gmail.com",
+      "userId": "e038ff71-a7f7-4fa2-81fc-3002aa5fb016",
+      "emailId": "133ad2f3-cce4-4fd6-a205-58577d1321ac",
+      "timestamp": "2025-11-26T13:00:48.820Z"
+    },
+    {
+      "email": "petermackey0@gmail.com",
+      "userId": "c1abc524-9812-4ee4-b545-95001e931747",
+      "emailId": "5a563dfa-72c4-4247-ad59-41e27208c250",
+      "timestamp": "2025-11-26T13:00:49.804Z"
+    },
+    {
+      "email": "alexandrebarbosa.souza@yahoo.co.uk",
+      "userId": "ad2fd1c0-c38e-4aa8-a116-a7cfec83fbdc",
+      "emailId": "ef7a14e8-7f8a-4167-8891-7bfa6cc38b02",
+      "timestamp": "2025-11-26T13:00:50.763Z"
+    },
+    {
+      "email": "rontr8@gmail.com",
+      "userId": "afb80017-9952-4e7a-8e2f-4024373aab47",
+      "emailId": "a2db9daf-e407-4cb6-bf5e-1cd0eb1bfed0",
+      "timestamp": "2025-11-26T13:00:51.798Z"
+    },
+    {
+      "email": "sam@mahocapitalpartners.com",
+      "userId": "72256212-31a5-4c21-97e1-f4f1920d0d8d",
+      "emailId": "2176f615-d79a-437b-a555-44668d7e060f",
+      "timestamp": "2025-11-26T13:00:52.834Z"
+    },
+    {
+      "email": "dhiraj_bhandary@outlook.com",
+      "userId": "de384bf5-807d-416e-a0e2-d04d2062be0f",
+      "emailId": "aff530e3-25c5-41f4-82fa-46539c1c2347",
+      "timestamp": "2025-11-26T13:00:53.789Z"
+    },
+    {
+      "email": "auscro8256@yahoo.com",
+      "userId": "6dd0316f-bfa4-4bd7-bcac-20a18fbe2a6d",
+      "emailId": "da407c79-8ae2-48d4-9921-39d877bd0651",
+      "timestamp": "2025-11-26T13:00:54.742Z"
+    },
+    {
+      "email": "kellythooft@gmail.com",
+      "userId": "256ae94f-8a58-47ea-9cbc-f1a971b07a75",
+      "emailId": "a3a21cbb-40b5-4dfc-9722-bdd277968914",
+      "timestamp": "2025-11-26T13:00:55.737Z"
+    },
+    {
+      "email": "herbmaz@gmail.com",
+      "userId": "c3b578fc-d5ee-406a-b89c-5cb1b5ffd200",
+      "emailId": "a6bdc433-1497-45ab-be5f-2ec0d68d417f",
+      "timestamp": "2025-11-26T13:00:56.782Z"
+    },
+    {
+      "email": "wassemalward@hotmail.com",
+      "userId": "ec1625cf-0016-4ee8-bf5e-f7877eebe1f2",
+      "emailId": "23df0e5f-7db5-44cf-8afc-c15b7ba3863a",
+      "timestamp": "2025-11-26T13:00:57.770Z"
+    },
+    {
+      "email": "hammed.bakare@outlook.com",
+      "userId": "b31b00c4-a933-4ecf-aa34-66bb3c09e453",
+      "emailId": "c3c41402-0201-464b-8b5d-b4204c90f389",
+      "timestamp": "2025-11-26T13:00:58.918Z"
+    },
+    {
+      "email": "devscoconsulting@gmail.com",
+      "userId": "db5b2c66-b09b-4ec4-ac56-3ddde4ed7d68",
+      "emailId": "c2ef5779-b5e2-4245-8436-9e383c91d6ae",
+      "timestamp": "2025-11-26T13:00:59.945Z"
+    },
+    {
+      "email": "mark.wigham780@gmail.com",
+      "userId": "0c7ab269-c1c7-4b0d-8107-10943d008747",
+      "emailId": "cd21531e-80a1-4c26-9771-3b5c70cdadc1",
+      "timestamp": "2025-11-26T13:01:00.933Z"
+    },
+    {
+      "email": "ahmad1975syr@hotmail.com",
+      "userId": "e410c13d-d70e-4500-a95b-7b7d3dcc63a1",
+      "emailId": "e7ff1481-924b-4c82-81e6-fbd028b1797c",
+      "timestamp": "2025-11-26T13:01:01.905Z"
+    },
+    {
+      "email": "nigel@nigelwalls.com",
+      "userId": "9c1aab09-af1b-4abd-b282-499381d8334c",
+      "emailId": "6642767b-054d-4388-a878-228d2020c3ee",
+      "timestamp": "2025-11-26T13:01:02.879Z"
+    },
+    {
+      "email": "mehdi.kiani.t@gmail.com",
+      "userId": "bb17b4e9-147a-4f9d-9122-d2b0f6da45d6",
+      "emailId": "df82d24a-14b0-4f81-8e3a-29f70d4f9b14",
+      "timestamp": "2025-11-26T13:01:03.825Z"
+    },
+    {
+      "email": "pucj001@yahoo.com",
+      "userId": "42cb74de-0b00-4463-b6aa-5c5771e096d4",
+      "emailId": "8c41394f-eaae-42d7-acd1-6ec735e92d03",
+      "timestamp": "2025-11-26T13:01:04.799Z"
+    },
+    {
+      "email": "aqdavila@outlook.com",
+      "userId": "08b9d17f-9550-44fd-9c48-93d1fc47ab4c",
+      "emailId": "10800862-1636-4230-8ce0-274281575401",
+      "timestamp": "2025-11-26T13:01:05.767Z"
+    },
+    {
+      "email": "sandy1crack@gmail.com",
+      "userId": "a5fe9cc0-aaf8-4f08-93ac-3dc24e8747c5",
+      "emailId": "e2cf7ac7-138f-4ad1-bfdc-24374b5e65ef",
+      "timestamp": "2025-11-26T13:01:06.732Z"
+    },
+    {
+      "email": "deven.agra@gmail.com",
+      "userId": "51d10f7f-7dfe-4ebd-af25-0a375119d04c",
+      "emailId": "1fe39db7-86d2-44d9-a838-bb62e0193b9a",
+      "timestamp": "2025-11-26T13:01:07.716Z"
+    },
+    {
+      "email": "lonnyb@icloud.com",
+      "userId": "db0e9610-2e51-4188-a48c-2e7a37ccda69",
+      "emailId": "6451fb29-7544-4113-8cef-956edc0e32d8",
+      "timestamp": "2025-11-26T13:01:08.676Z"
+    },
+    {
+      "email": "amin.m.raja@gmail.com",
+      "userId": "eabf3065-138b-468c-86b4-462cfcec7b7f",
+      "emailId": "a27b0c62-cc66-4faa-9d70-cf6d8118dbe6",
+      "timestamp": "2025-11-26T13:01:09.799Z"
+    },
+    {
+      "email": "phillip.julian@gmail.com",
+      "userId": "f0b4b3ce-e5d4-42c0-a7ba-d8a5e1716b15",
+      "emailId": "ba4ac0bc-c002-4d15-be04-3ba333a0a57f",
+      "timestamp": "2025-11-26T13:01:10.817Z"
+    },
+    {
+      "email": "willem.kruger@wlkservices.co.za",
+      "userId": "fee41866-713b-401e-82fb-33c7e4fc1bf9",
+      "emailId": "77a10a63-12fc-4c53-8a3e-156eb354b0c4",
+      "timestamp": "2025-11-26T13:01:11.794Z"
+    },
+    {
+      "email": "les.hirsch@yahoo.com",
+      "userId": "6840aec4-8c3d-4877-a2f7-d0c1872846b5",
+      "emailId": "629397c0-6929-4d6a-984f-80ff547c10c8",
+      "timestamp": "2025-11-26T13:01:12.733Z"
+    },
+    {
+      "email": "emipasat+1@gmail.com",
+      "userId": "951629e9-0a80-48e8-9103-38ebb8720a82",
+      "emailId": "bf3d2ad3-135d-4b72-8249-1f136c4676fc",
+      "timestamp": "2025-11-26T13:01:13.679Z"
+    },
+    {
+      "email": "afouquet1@gmail.com",
+      "userId": "3d2c6cba-55f7-4169-924e-89aef88904c5",
+      "emailId": "e5d71407-7cc8-400b-83ae-1ab1ed50aa32",
+      "timestamp": "2025-11-26T13:01:14.670Z"
+    },
+    {
+      "email": "tonnymhondiwa@gmail.com",
+      "userId": "c3694538-f218-4990-ad02-9d2940aaa953",
+      "emailId": "42da6a3b-1f6e-48ef-8fd0-3bb2a80d04e8",
+      "timestamp": "2025-11-26T13:01:15.645Z"
+    },
+    {
+      "email": "megabula@gmail.com",
+      "userId": "b6aa67a0-56e7-415d-bd32-10d26d0c659d",
+      "emailId": "1057c141-52c2-4677-af95-7d7579343ca5",
+      "timestamp": "2025-11-26T13:01:16.669Z"
+    },
+    {
+      "email": "junaid.limbada@gmail.com",
+      "userId": "1a7885f0-588e-4dbb-8584-fb005b938ad3",
+      "emailId": "8afb5dd4-45d6-4ca3-9ea0-8c4cd7dcfafe",
+      "timestamp": "2025-11-26T13:01:17.639Z"
+    },
+    {
+      "email": "segodic@gmail.com",
+      "userId": "ca97ea9a-94b1-468d-9315-1fdcd17811a3",
+      "emailId": "6cf6e9de-6c25-4afd-b1a4-b022c4d648f8",
+      "timestamp": "2025-11-26T13:01:18.616Z"
+    },
+    {
+      "email": "boakye1804@gmail.com",
+      "userId": "cc8cb863-a8ee-4e8a-853e-18565bb0de3d",
+      "emailId": "afa7578e-c592-422c-afa6-201aefaefac5",
+      "timestamp": "2025-11-26T13:01:19.639Z"
+    },
+    {
+      "email": "bhungs25@gmail.com",
+      "userId": "4c069d9f-e4cf-425d-9a8c-9fb1e9ea4052",
+      "emailId": "70fe6f34-f0ad-4c53-b616-07cfc45d3ca6",
+      "timestamp": "2025-11-26T13:01:20.596Z"
+    },
+    {
+      "email": "chuma.shadreck@gmail.com",
+      "userId": "6cd01b2a-566f-4d4d-9306-572cfc956d0c",
+      "emailId": "e6368174-9537-47c6-9256-50f9c07ad0ee",
+      "timestamp": "2025-11-26T13:01:21.558Z"
+    },
+    {
+      "email": "drcoldren63@gmail.com",
+      "userId": "99198281-9beb-40b1-b003-b0c6abd3c824",
+      "emailId": "90e78e7b-3667-445c-a815-f326309f7146",
+      "timestamp": "2025-11-26T13:01:22.526Z"
+    },
+    {
+      "email": "carl.scholtz24@gmail.com",
+      "userId": "b973988e-573a-448b-ae7a-81642b6b125c",
+      "emailId": "af511932-b03a-46a8-9db8-56a357a52a9d",
+      "timestamp": "2025-11-26T13:01:23.479Z"
+    },
+    {
+      "email": "jlmudau@yahoo.com",
+      "userId": "ef47acdf-d607-4c8d-9069-87aa49f461d9",
+      "emailId": "33690ba2-084c-4050-880d-de9ae3d61436",
+      "timestamp": "2025-11-26T13:01:24.423Z"
+    },
+    {
+      "email": "kyra.rautenbach@gmail.com",
+      "userId": "05e8269f-e1b7-44cf-a913-c54fe0955438",
+      "emailId": "c793dd69-0e0b-4558-a617-b8e701e2c9a4",
+      "timestamp": "2025-11-26T13:01:25.366Z"
+    },
+    {
+      "email": "jimmy.tsatsire@gmail.com",
+      "userId": "d1f4f8b6-cc1a-4a16-98a7-da65996cd354",
+      "emailId": "0b0be8ff-655a-43c0-a4f2-491492deefff",
+      "timestamp": "2025-11-26T13:01:26.316Z"
+    },
+    {
+      "email": "gayle.marillier@gmail.com",
+      "userId": "3b781d87-86e5-4fd7-afee-d7e09682e29e",
+      "emailId": "5acd8138-2de2-4648-ba86-bc05f861655c",
+      "timestamp": "2025-11-26T13:01:27.322Z"
+    },
+    {
+      "email": "phumie.mtande@gmail.com",
+      "userId": "c06d32ab-9b97-4066-9991-ced6466ef35b",
+      "emailId": "89632716-3c4c-4f85-b142-f0691ba9ff1a",
+      "timestamp": "2025-11-26T13:01:28.275Z"
+    },
+    {
+      "email": "dkkabongo@gmail.com",
+      "userId": "c41f85e6-7d25-45ff-b23b-1159cc7415ea",
+      "emailId": "81bbd879-706d-4a6f-aaf1-457a9f9861da",
+      "timestamp": "2025-11-26T13:01:29.295Z"
+    },
+    {
+      "email": "jk1ng@pm.me",
+      "userId": "d7db00c7-4297-4ed0-b603-b1f90ef83df0",
+      "emailId": "4e485812-9e0c-484c-a97a-4b7d342bcfde",
+      "timestamp": "2025-11-26T13:01:30.285Z"
+    },
+    {
+      "email": "rakeshsinch@gmail.com",
+      "userId": "7b6a6c4b-bb4c-4746-8f84-dd8268cbb401",
+      "emailId": "4e45f033-6e12-4014-b3a6-7c83751b0beb",
+      "timestamp": "2025-11-26T13:01:31.268Z"
+    },
+    {
+      "email": "brenny.seima@gmail.com",
+      "userId": "58fd32a5-bd86-4c0f-a461-41aa0513cd61",
+      "emailId": "8760bb94-4007-4067-8b4c-a634545b4a97",
+      "timestamp": "2025-11-26T13:01:32.246Z"
+    },
+    {
+      "email": "abustech@gmail.com",
+      "userId": "8c63dc04-c4a1-4fd0-a29f-e69a5c7871eb",
+      "emailId": "774cb66f-a033-4949-b609-b354864b9d85",
+      "timestamp": "2025-11-26T13:01:33.211Z"
+    },
+    {
+      "email": "lunga.tungu@yahoo.com",
+      "userId": "19bd6952-c6c9-4643-b953-5c3991959683",
+      "emailId": "8b4109c6-c5fd-4952-82d6-7e5535b542d3",
+      "timestamp": "2025-11-26T13:01:34.189Z"
+    },
+    {
+      "email": "desheng@mweb.co.za",
+      "userId": "352ba46c-99f5-45f8-909f-8ab38570d9a5",
+      "emailId": "575aad14-db19-49b3-bb0a-88784eca7e2b",
+      "timestamp": "2025-11-26T13:01:35.256Z"
+    },
+    {
+      "email": "kevmoodley@gmail.com",
+      "userId": "b39c7055-e352-460d-8405-9997cb205079",
+      "emailId": "004792a4-9aa7-498d-95b8-9db159704ff4",
+      "timestamp": "2025-11-26T13:01:36.221Z"
+    },
+    {
+      "email": "sbukunene@hotmail.com",
+      "userId": "ec4a6dda-96e8-45d4-a4f8-b0643b247fc9",
+      "emailId": "cef170c5-946f-45d9-86dd-4ed2bac25ff9",
+      "timestamp": "2025-11-26T13:01:37.397Z"
+    },
+    {
+      "email": "mfleckson@yahoo.com",
+      "userId": "f0fa5988-38e7-4619-8c6e-fe84be29c8c7",
+      "emailId": "9c066ec0-e088-4f87-82f0-f4e9e446ba9d",
+      "timestamp": "2025-11-26T13:01:38.362Z"
+    },
+    {
+      "email": "nhamodhlamini@hotmail.com",
+      "userId": "06bb0484-e636-413e-a5d5-978e14bece9c",
+      "emailId": "c572f13e-dab5-4d21-82b8-dfcda087b784",
+      "timestamp": "2025-11-26T13:01:39.342Z"
+    },
+    {
+      "email": "ronaldzembe@gmail.com",
+      "userId": "53625168-eaf8-4fe6-a6f0-5d873032fd3c",
+      "emailId": "22559b57-d420-4ab2-bca4-23eb0336cb65",
+      "timestamp": "2025-11-26T13:01:40.312Z"
+    },
+    {
+      "email": "nadine.magrath@gmail.com",
+      "userId": "592b2541-387a-4128-9c93-18c02998b2fc",
+      "emailId": "31b21664-613e-402a-a853-b40438fad0b8",
+      "timestamp": "2025-11-26T13:01:41.282Z"
+    },
+    {
+      "email": "lucas.micheletto.sobral@gmail.com",
+      "userId": "2ad0c48f-6459-4677-8a18-6f3327386a0f",
+      "emailId": "535c87de-5f0a-4a6e-9826-02c2508005a7",
+      "timestamp": "2025-11-26T13:01:42.255Z"
+    },
+    {
+      "email": "nerubenkoanton@gmail.com",
+      "userId": "880a89f8-ec32-4209-b1cd-72f30ed1dca4",
+      "emailId": "64ff5c7a-fb6c-4bd1-9871-b84db22b0c13",
+      "timestamp": "2025-11-26T13:01:43.352Z"
+    },
+    {
+      "email": "jolanta.i.doroz@gmail.com",
+      "userId": "3c43f540-4525-43ea-b537-55395a486c99",
+      "emailId": "3a5d33fb-d392-4559-bf2c-56ac2a6fed4d",
+      "timestamp": "2025-11-26T13:01:44.287Z"
+    },
+    {
+      "email": "dinshvinayagam@outlook.com",
+      "userId": "2052a9f6-8b13-476c-b253-4e9ea958748f",
+      "emailId": "1c53b556-8ccb-4ac9-877d-259d15f7960f",
+      "timestamp": "2025-11-26T13:01:45.293Z"
+    },
+    {
+      "email": "melissamckerrow@gmail.com",
+      "userId": "56d1ffa0-97a6-4778-b03a-af0fa57ef7de",
+      "emailId": "10d9c2e1-ee16-4f9f-9805-4535a38852e7",
+      "timestamp": "2025-11-26T13:01:46.257Z"
+    },
+    {
+      "email": "rafael.cabello@sbcglobal.net",
+      "userId": "b6da8f70-96eb-4774-915c-0f211fca1f2b",
+      "emailId": "d7fb9884-c6d5-45fe-b99b-a22631daf37c",
+      "timestamp": "2025-11-26T13:01:47.338Z"
+    },
+    {
+      "email": "frederic.j.washburn@gmail.com",
+      "userId": "b1cba777-149c-491f-8fb6-fd9a44af7f1a",
+      "emailId": "1d217b81-0edc-4880-9749-dfc57173f3c3",
+      "timestamp": "2025-11-26T13:01:48.391Z"
+    },
+    {
+      "email": "brodrig561@gmail.com",
+      "userId": "d0512f63-5211-407f-ad0c-76318181f537",
+      "emailId": "47e8cf1c-95c5-45cb-84af-1a02e430ce04",
+      "timestamp": "2025-11-26T13:01:49.373Z"
+    },
+    {
+      "email": "donovanbhardin@gmail.com",
+      "userId": "f36927a4-2e19-4f68-9147-bd5fe7b673dc",
+      "emailId": "28eb052f-836e-4b69-8ff3-7d27d3dc0509",
+      "timestamp": "2025-11-26T13:01:50.326Z"
+    },
+    {
+      "email": "omonigho28@yahoo.com",
+      "userId": "7a324116-8f22-4006-98d8-4ce76d03fdc6",
+      "emailId": "37bb7df1-7f76-4145-a2d2-e6067b09e007",
+      "timestamp": "2025-11-26T13:01:51.277Z"
+    },
+    {
+      "email": "ashraf@toojan.com",
+      "userId": "e8f40240-0760-4b33-8b4d-2e7f65a843f0",
+      "emailId": "a973fe88-5d02-4b6c-9048-7dcbf937e85e",
+      "timestamp": "2025-11-26T13:01:52.274Z"
+    },
+    {
+      "email": "seanchapman718@yahoo.com",
+      "userId": "932da8a5-a980-4a35-825f-03f807cdf502",
+      "emailId": "e2f91713-f8e1-4bf9-b08d-7530c46794c7",
+      "timestamp": "2025-11-26T13:01:53.322Z"
+    },
+    {
+      "email": "lvillaoq@gmail.com",
+      "userId": "513aad0a-bf1c-44a8-bd77-65b0bcc2d0fa",
+      "emailId": "7d5779d3-dc82-4a32-84a3-44425f801f6d",
+      "timestamp": "2025-11-26T13:01:54.268Z"
+    },
+    {
+      "email": "lou.ogaard@yahoo.com",
+      "userId": "ea939f7d-00da-452b-926f-b4c55e465c43",
+      "emailId": "9b35bd8d-240e-4e1a-83bb-52291532aa56",
+      "timestamp": "2025-11-26T13:01:55.238Z"
+    },
+    {
+      "email": "robin.borley@gmail.com",
+      "userId": "0bd26dbd-3719-4df3-925a-50b9ad73f868",
+      "emailId": "7b881b15-5d98-417a-a616-ef1eb27512c1",
+      "timestamp": "2025-11-26T13:01:56.187Z"
+    },
+    {
+      "email": "erwinbayu@gmail.com",
+      "userId": "8d027111-0ae1-4551-b2cc-b95f07025ae5",
+      "emailId": "175ce46c-a477-44f7-8b0d-5a41d5757cd4",
+      "timestamp": "2025-11-26T13:01:57.138Z"
+    },
+    {
+      "email": "layeeq588@gmail.com",
+      "userId": "ed89548d-60e9-4c22-a3f1-cb6810d17c9b",
+      "emailId": "3aaeed25-6eac-4e4a-af07-652170178df4",
+      "timestamp": "2025-11-26T13:01:58.116Z"
+    },
+    {
+      "email": "jafrizameer@yahoo.com",
+      "userId": "35aac4d3-229c-44bc-80e8-ee7fdcfde2a5",
+      "emailId": "23211ea0-7b32-4a39-a2bb-40e48c366093",
+      "timestamp": "2025-11-26T13:01:59.079Z"
+    },
+    {
+      "email": "sshantz1717@gmail.com",
+      "userId": "b66555c1-8180-4150-bca7-adaeb7610189",
+      "emailId": "351fd789-21ba-4bfa-8d71-7e9f696afb99",
+      "timestamp": "2025-11-26T13:02:00.052Z"
+    },
+    {
+      "email": "tmchigbo@yahoo.com",
+      "userId": "52453a54-c439-4649-b435-db32e5bff182",
+      "emailId": "57a70ea6-f368-4d26-89a8-5f41f6dc3834",
+      "timestamp": "2025-11-26T13:02:01.044Z"
+    },
+    {
+      "email": "karinab27@hotmail.com",
+      "userId": "a9dac7ee-1689-4468-9951-a0c91d9a5801",
+      "emailId": "2971c784-9b33-4c0e-9176-2733c4ff8c62",
+      "timestamp": "2025-11-26T13:02:02.031Z"
+    },
+    {
+      "email": "moh_meh_2025@hotmail.com",
+      "userId": "c0cb86b3-90e8-4056-8302-efce94e0e93f",
+      "emailId": "531009fd-3f4b-468f-b4be-5a2870014f48",
+      "timestamp": "2025-11-26T13:02:02.989Z"
+    },
+    {
+      "email": "craigrlane@gmail.com",
+      "userId": "bb95c1f8-a1dd-44a0-8dc9-f705bac0d709",
+      "emailId": "c09d6c49-ae8d-455e-8e27-c04e4f18c643",
+      "timestamp": "2025-11-26T13:02:03.966Z"
+    },
+    {
+      "email": "jhosick@gmail.com",
+      "userId": "bd3d2400-7dba-4d0f-88bd-deacb631c284",
+      "emailId": "2cb3146b-b239-4183-859f-07d47004f511",
+      "timestamp": "2025-11-26T13:02:04.916Z"
+    },
+    {
+      "email": "shtoppazzini@gmail.com",
+      "userId": "f7d33a5c-cd6f-4d42-b29a-7a755e365e20",
+      "emailId": "e5b253a6-e462-4500-bec4-47efaab2e184",
+      "timestamp": "2025-11-26T13:02:05.928Z"
+    },
+    {
+      "email": "p.medina.angulo@gmail.com",
+      "userId": "a55c49d0-71ae-43d1-b120-cb816a21d3cc",
+      "emailId": "eccaf658-4cb3-4e6b-a9c5-23e4e1d0e76f",
+      "timestamp": "2025-11-26T13:02:06.901Z"
+    },
+    {
+      "email": "adegbemiroa@gmail.com",
+      "userId": "ff4ba8fe-44ec-4383-846e-15420231b406",
+      "emailId": "e231174c-f216-418a-95ff-a8f815d3fff1",
+      "timestamp": "2025-11-26T13:02:07.856Z"
+    },
+    {
+      "email": "yokwembulelo@gmail.com",
+      "userId": "f46ce3ab-a093-447f-b72c-53e8800d2928",
+      "emailId": "cbd538c3-c0ad-407d-89f1-2e3bbdf2c20c",
+      "timestamp": "2025-11-26T13:02:08.890Z"
+    },
+    {
+      "email": "kcnaresh@mail.com",
+      "userId": "dc0c2b81-36f1-4934-8eec-c13dbe28f6ef",
+      "emailId": "310ea856-64b7-4b2d-9205-d189975df285",
+      "timestamp": "2025-11-26T13:02:09.813Z"
+    },
+    {
+      "email": "prashant_pnd67@yahoo.com",
+      "userId": "ea9db4d7-284b-469c-920e-ee511efe693d",
+      "emailId": "c6d887a8-2e55-4df3-bc60-e6bd59531778",
+      "timestamp": "2025-11-26T13:02:10.804Z"
+    },
+    {
+      "email": "yagneshjshukla@hotmail.com",
+      "userId": "16236567-e1a0-4358-ab7f-29b5993c0e88",
+      "emailId": "000a37bd-abbf-43d2-afa4-f8a066b5f15f",
+      "timestamp": "2025-11-26T13:02:11.773Z"
+    },
+    {
+      "email": "andersonhamish31@gmail.com",
+      "userId": "6fea9d64-94c1-4528-b112-04e9a9e052f5",
+      "emailId": "5ed9905b-1844-41a6-99f2-b14ec37ed905",
+      "timestamp": "2025-11-26T13:02:12.753Z"
+    },
+    {
+      "email": "cristian.borcescu@gmail.com",
+      "userId": "bf490c6a-3f85-4b9a-a67f-b90c02a556e9",
+      "emailId": "2255b883-e147-4c01-8297-7c17d871b102",
+      "timestamp": "2025-11-26T13:02:13.731Z"
+    },
+    {
+      "email": "kamgonzales@gmail.com",
+      "userId": "0b579bfc-d3b9-4133-adfb-efdc08ca50e6",
+      "emailId": "35213b9b-e8df-4a53-bca8-bd0d7ef55941",
+      "timestamp": "2025-11-26T13:02:14.721Z"
+    },
+    {
+      "email": "rehal_zineddine@yahoo.fr",
+      "userId": "842d4b31-05eb-4614-a355-0b05e0836c24",
+      "emailId": "a83af70c-9e81-44f5-8983-5ade180e2418",
+      "timestamp": "2025-11-26T13:02:15.741Z"
+    },
+    {
+      "email": "stamatios.chondrogiannis@gmail.com",
+      "userId": "62b58cf6-c700-47cd-90a7-5fed0f22b404",
+      "emailId": "3b956bad-148f-4a6c-b50f-49814aa2a405",
+      "timestamp": "2025-11-26T13:02:16.720Z"
+    },
+    {
+      "email": "ajadhav22@gmail.com",
+      "userId": "ca9c47d1-86c0-4728-81ea-f8b09445fbca",
+      "emailId": "1c545882-f673-4bce-8468-3bfd23784d2b",
+      "timestamp": "2025-11-26T13:02:17.650Z"
+    },
+    {
+      "email": "maryam_haider@yahoo.com",
+      "userId": "36294696-a348-48c0-9351-f676e37405f5",
+      "emailId": "cf76fefd-e6e2-4a25-a951-290c6ad55392",
+      "timestamp": "2025-11-26T13:02:18.610Z"
+    },
+    {
+      "email": "macjohngeraldo@gmail.com",
+      "userId": "8b9a7b9f-c1e6-40d9-8dae-58c692d3d79f",
+      "emailId": "7ce90a19-f731-48e1-bb97-3bf5d8d92f29",
+      "timestamp": "2025-11-26T13:02:19.554Z"
+    },
+    {
+      "email": "dineshvinayagam@outlook.com",
+      "userId": "a0083813-0ef3-4e64-ba93-a4af367ae2e8",
+      "emailId": "3c9eefbe-6931-4a10-b0b8-0958d8d535e2",
+      "timestamp": "2025-11-26T13:02:20.545Z"
+    },
+    {
+      "email": "anita.le.909@gmail.com",
+      "userId": "56f50949-824a-4da3-b764-a4e3ce62316f",
+      "emailId": "69b16413-f93b-4d1f-a34c-0a0599e8ae43",
+      "timestamp": "2025-11-26T13:02:21.618Z"
+    },
+    {
+      "email": "mohamed.elbashir@gmail.com",
+      "userId": "c45a8ad3-ec98-4417-8fe9-59b89a3be038",
+      "emailId": "d1168094-6316-4443-8f37-0f15a823bbd0",
+      "timestamp": "2025-11-26T13:02:22.596Z"
+    },
+    {
+      "email": "veenalpraamraj@gmail.com",
+      "userId": "104ed1bb-23a0-43e3-b75d-48bc069df9df",
+      "emailId": "e585d611-fe8c-454c-89d8-547cf1365a29",
+      "timestamp": "2025-11-26T13:02:23.576Z"
+    },
+    {
+      "email": "rikky.keane@gmail.com",
+      "userId": "8e1269bd-4cd0-4f6a-a1bf-51872aaf03ec",
+      "emailId": "7cfc42e9-3579-424a-8fc0-e805240f572a",
+      "timestamp": "2025-11-26T13:02:24.532Z"
+    },
+    {
+      "email": "talentschaft.md@gmail.com",
+      "userId": "c564ef14-fc87-4bc7-8427-08ac3eb8c9cc",
+      "emailId": "6d7369c1-2d4b-4c80-b3fe-a4b751a25bb9",
+      "timestamp": "2025-11-26T13:02:25.530Z"
+    },
+    {
+      "email": "taha.abulaynin@gmail.com",
+      "userId": "c9131405-77b9-4441-ad66-14b2e6ff9c0d",
+      "emailId": "24faddfe-1974-4fad-b763-1091fae81e7f",
+      "timestamp": "2025-11-26T13:02:26.479Z"
+    },
+    {
+      "email": "geoff_hamilton@outlook.com",
+      "userId": "827f3c75-bfa2-4a1e-9332-085e4c021dbc",
+      "emailId": "e6dec9a6-71be-4fea-829c-a9377c195e89",
+      "timestamp": "2025-11-26T13:02:27.423Z"
+    },
+    {
+      "email": "khdick@gmail.com",
+      "userId": "2bd20c6b-a2f2-4471-9ae4-d40816ab7aac",
+      "emailId": "98b210b1-a600-40b6-904f-c0bb486007d4",
+      "timestamp": "2025-11-26T13:02:28.377Z"
+    },
+    {
+      "email": "jaco.vandenheever+2@gigexecs.com",
+      "userId": "c7496f6d-dca4-4df4-b58d-1e38fe287b15",
+      "emailId": "5e87249b-3ee9-4ecc-9a9d-a4554f316753",
+      "timestamp": "2025-11-26T13:02:29.403Z"
+    },
+    {
+      "email": "iisidorenko.ru@gmail.com",
+      "userId": "8154df58-035c-4498-8c16-a55855472e3f",
+      "emailId": "caab4fb7-ef8d-47af-8786-ed5834a5ab29",
+      "timestamp": "2025-11-26T13:02:30.371Z"
+    },
+    {
+      "email": "jiivan.k@gmail.com",
+      "userId": "0a928555-cd47-4abc-bb96-4d7bb2f092fb",
+      "emailId": "097aac74-6db1-431d-8c23-4e61bd6e7a73",
+      "timestamp": "2025-11-26T13:02:31.359Z"
+    },
+    {
+      "email": "ahmedk174@gmail.com",
+      "userId": "05fe21eb-e278-42c5-82a5-2d657a76ecf3",
+      "emailId": "8fb88515-f0aa-4d43-bc62-493b31d7e53c",
+      "timestamp": "2025-11-26T13:02:32.337Z"
+    },
+    {
+      "email": "thomas.schultz22@yahoo.de",
+      "userId": "9f92e806-534a-4403-9d95-402d55e66898",
+      "emailId": "f45526dc-c1d6-4888-9789-43b10ec9995b",
+      "timestamp": "2025-11-26T13:02:33.320Z"
+    },
+    {
+      "email": "john.hager.2018@gmail.com",
+      "userId": "6f1109b8-cf9f-4a46-a879-c635a261364a",
+      "emailId": "dce50d94-7174-4310-9007-7be2b287e836",
+      "timestamp": "2025-11-26T13:02:34.270Z"
+    },
+    {
+      "email": "odinaka.onwurah@gmail.com",
+      "userId": "5a78ea99-0705-41a0-8d4d-05c016492d29",
+      "emailId": "fd927abd-9d7b-4a77-a955-46815e885b3e",
+      "timestamp": "2025-11-26T13:02:35.214Z"
+    },
+    {
+      "email": "kennethkirkwood38@yahoo.com",
+      "userId": "332a9034-6613-46bd-800c-bbaea0d42dff",
+      "emailId": "94b64027-1d44-4f08-8f69-df197f0d2fbb",
+      "timestamp": "2025-11-26T13:02:36.205Z"
+    },
+    {
+      "email": "andrewjohnhaley@hotmail.com",
+      "userId": "b3d04b15-0850-49da-bba2-3dfa68a66f0c",
+      "emailId": "7395b48d-3a18-43bd-b433-3e27a1c0a742",
+      "timestamp": "2025-11-26T13:02:37.220Z"
+    },
+    {
+      "email": "jwg@jwg99.plus.com",
+      "userId": "a0bf4fd9-c10c-47b3-9f0f-1a7f8c3e50f9",
+      "emailId": "967dc854-fab8-480f-9692-39f6f091e4ae",
+      "timestamp": "2025-11-26T13:02:38.258Z"
+    },
+    {
+      "email": "manuel.rey.guijarro@walkia.es",
+      "userId": "770be5b7-e446-4378-bd1d-a60ca96c090b",
+      "emailId": "8d09bc5b-59ba-4c61-8314-b63e11e32f46",
+      "timestamp": "2025-11-26T13:02:39.223Z"
+    },
+    {
+      "email": "mblethen@blethenminingassociates.com",
+      "userId": "3119ca93-0def-41d5-bfb4-3621badb025c",
+      "emailId": "a679d620-0280-4340-939f-e1e52c4be05a",
+      "timestamp": "2025-11-26T13:02:40.204Z"
+    },
+    {
+      "email": "soran76v@gmail.com",
+      "userId": "979fd877-cc5b-4401-9331-f4e2ad45fdec",
+      "emailId": "d45340da-cc18-4872-996c-db1219ca0cb9",
+      "timestamp": "2025-11-26T13:02:41.177Z"
+    },
+    {
+      "email": "mr.jtgutierrez@gmail.com",
+      "userId": "3f150ae9-05e3-43ce-b613-4c5771d88efa",
+      "emailId": "e6b28d17-29a2-4453-bf1f-d3045f6c98cd",
+      "timestamp": "2025-11-26T13:02:42.147Z"
+    },
+    {
+      "email": "krumaneb@gmail.com",
+      "userId": "210e3632-4dda-460c-8ad5-6a550cfb2400",
+      "emailId": "12370a82-6f4f-4c8d-a763-b9add4b0a44c",
+      "timestamp": "2025-11-26T13:02:43.101Z"
+    },
+    {
+      "email": "sdienes@outlook.com",
+      "userId": "5ed47c1f-2568-49db-842e-8f7c2fb4e882",
+      "emailId": "e1596c11-165b-47b3-b459-a44a80f17455",
+      "timestamp": "2025-11-26T13:02:44.101Z"
+    },
+    {
+      "email": "azikeogo@outlook.com",
+      "userId": "78eb3c53-a05f-46a3-9f60-217b5e74bd2b",
+      "emailId": "fa69fe03-85c1-4715-88bc-f47c242a50ed",
+      "timestamp": "2025-11-26T13:02:45.065Z"
+    },
+    {
+      "email": "nloughlin4@gmail.com",
+      "userId": "b7ee2ff6-f87b-471c-a232-a56200ffd7cc",
+      "emailId": "e81f9903-85f1-4566-9624-501e0bba5e73",
+      "timestamp": "2025-11-26T13:02:46.031Z"
+    },
+    {
+      "email": "abframe@gmail.com",
+      "userId": "d4a10edd-fc96-4155-9f7a-b8e95fb7358c",
+      "emailId": "0dafd6cf-0b77-4c5b-85d4-9e5807abfe16",
+      "timestamp": "2025-11-26T13:02:47.025Z"
+    },
+    {
+      "email": "tossho@hotmail.com",
+      "userId": "071a9f6b-bd72-46f0-96ae-d0f7c49c5f1b",
+      "emailId": "0ab6f3fc-f462-4924-8454-c5f3c2a774d3",
+      "timestamp": "2025-11-26T13:02:47.982Z"
+    },
+    {
+      "email": "lynthomasuk@aol.com",
+      "userId": "8163158d-4317-4986-9432-ac97e251605b",
+      "emailId": "8dc85f4c-e281-4cb1-aa93-994458651fef",
+      "timestamp": "2025-11-26T13:02:48.927Z"
+    },
+    {
+      "email": "dem@atherion.co.uk",
+      "userId": "5ab8c00d-db9e-471a-b4f5-7a6289aad27a",
+      "emailId": "e53c201d-ebf7-4b35-a4ca-1ccf433425b4",
+      "timestamp": "2025-11-26T13:02:49.922Z"
+    },
+    {
+      "email": "mattdvh@gmail.com",
+      "userId": "1295b725-dae4-4690-af91-123d5eba5c67",
+      "emailId": "b8decb29-7096-40df-b184-01ee2b9ceea4",
+      "timestamp": "2025-11-26T13:02:51.125Z"
+    },
+    {
+      "email": "augeo653@gmail.com",
+      "userId": "96accc7c-2cd3-43e5-b53a-3420cac6b08f",
+      "emailId": "bc30fd86-5052-44f6-b8fc-e29103cf5cc1",
+      "timestamp": "2025-11-26T13:02:52.116Z"
+    },
+    {
+      "email": "shende.takshak@gmail.com",
+      "userId": "affdd31b-e3de-4918-8946-94f45f7a0f66",
+      "emailId": "40752722-de95-4940-908e-97e39189cb36",
+      "timestamp": "2025-11-26T13:02:53.081Z"
+    },
+    {
+      "email": "bawa.nidhi@gmail.com",
+      "userId": "0f649f70-3051-46fc-963e-92184fbd35ea",
+      "emailId": "055a7acd-30b3-4622-8cb5-4b3e778abb81",
+      "timestamp": "2025-11-26T13:02:54.107Z"
+    },
+    {
+      "email": "gargibose123@yahoo.com",
+      "userId": "5ffb2037-d91f-47d2-ad3f-fca990c6f6c2",
+      "emailId": "96c8d208-0390-49ad-b7d9-052515d7c86c",
+      "timestamp": "2025-11-26T13:02:55.090Z"
+    },
+    {
+      "email": "markoldfield007@gmail.com",
+      "userId": "e2df8eb4-ff92-490c-890e-16026e541b6e",
+      "emailId": "ecba28dc-7830-4dea-9c6c-47212cae0716",
+      "timestamp": "2025-11-26T13:02:56.049Z"
+    },
+    {
+      "email": "jrodlw@gmail.com",
+      "userId": "a01256b7-c9c9-4f8a-91d0-94d18c075f02",
+      "emailId": "e38d6bdc-4674-4b04-8b15-2acedeab738c",
+      "timestamp": "2025-11-26T13:02:56.998Z"
+    },
+    {
+      "email": "tcb2217@usa.net",
+      "userId": "8017b82f-82c5-4d8a-a14e-f5e1f9848ae7",
+      "emailId": "c373b11a-c790-4fd9-adb8-5d91024ed9ff",
+      "timestamp": "2025-11-26T13:02:57.976Z"
+    },
+    {
+      "email": "dmminer@outlook.com",
+      "userId": "0875c572-9073-4d96-a311-a14afe7c0e7d",
+      "emailId": "052453e0-d855-424e-b344-2b1773aa7df3",
+      "timestamp": "2025-11-26T13:02:58.963Z"
+    },
+    {
+      "email": "d.e.dunn89@gmail.com",
+      "userId": "5ea3d4c2-e443-49f0-b0b3-d89c65f278cf",
+      "emailId": "8f2858e0-8de5-4db0-9182-162b7c6bbd29",
+      "timestamp": "2025-11-26T13:02:59.955Z"
+    },
+    {
+      "email": "chris.nichols@dimesy.com",
+      "userId": "127b1437-a1d9-4674-9648-963d4e2fc527",
+      "emailId": "3ef3e675-764c-4f88-a7e1-17acc0d7d2c0",
+      "timestamp": "2025-11-26T13:03:00.911Z"
+    },
+    {
+      "email": "david_radley@yahoo.com",
+      "userId": "75d306e7-4076-4234-8039-f7c7b2fe8eaf",
+      "emailId": "6db3610d-7dbd-44b7-9b54-22a4db0e8b4d",
+      "timestamp": "2025-11-26T13:03:01.902Z"
+    },
+    {
+      "email": "venu.babla@gmail.com",
+      "userId": "99476120-0408-47cd-9a91-410ce22c6999",
+      "emailId": "3a307f8b-aa71-4c63-82d2-79ab0063184f",
+      "timestamp": "2025-11-26T13:03:02.881Z"
+    },
+    {
+      "email": "albjonkola@gmail.com",
+      "userId": "13171d4a-1b0a-42a7-b7b4-48577c5d232a",
+      "emailId": "84166218-a4fd-47f1-9d8b-3d93def7f18d",
+      "timestamp": "2025-11-26T13:03:03.835Z"
+    },
+    {
+      "email": "jim@agileexecsearch.com",
+      "userId": "45dea213-f45d-4153-b98e-0e62c2a5357c",
+      "emailId": "eb3dcb34-20a1-4f68-ad86-8692ace3f200",
+      "timestamp": "2025-11-26T13:03:04.805Z"
+    },
+    {
+      "email": "brunomeirelesdesousa@gmail.com",
+      "userId": "ad148397-6c95-48bd-8cd1-3690647bbdaa",
+      "emailId": "ae6920cc-7ff0-4bab-8ad3-07c916d3c94f",
+      "timestamp": "2025-11-26T13:03:05.755Z"
+    },
+    {
+      "email": "ilircuka1984@gmail.com",
+      "userId": "8d9a7160-0030-4535-8bcf-8578d80f29e6",
+      "emailId": "a4a9a9d5-0148-4a9d-869a-6cd3f60b6fa8",
+      "timestamp": "2025-11-26T13:03:06.728Z"
+    },
+    {
+      "email": "lok2011@gmail.com",
+      "userId": "543fb1f7-5131-4e91-ae43-e128d000be09",
+      "emailId": "12cc7447-4b47-4603-a3b1-bc7b070ec1bc",
+      "timestamp": "2025-11-26T13:03:07.683Z"
+    },
+    {
+      "email": "nidalk6@hotmail.com",
+      "userId": "32348bb8-0e7d-4bf1-bd7d-e31d4bb655b4",
+      "emailId": "d74e6003-6284-4ce3-8ae1-1309db335728",
+      "timestamp": "2025-11-26T13:03:08.675Z"
+    },
+    {
+      "email": "rejid@emirates.net.ae",
+      "userId": "30a2d9bc-c73c-48ef-9bb9-f92f6d4b3c88",
+      "emailId": "25f83ffc-3455-47a2-b30f-47c47414e143",
+      "timestamp": "2025-11-26T13:03:09.633Z"
+    },
+    {
+      "email": "jinan.bnassif@hotmail.com",
+      "userId": "a568f9f3-36cd-43d3-ba8a-4854fa689558",
+      "emailId": "7e873c6a-544d-4873-9312-685525b448d1",
+      "timestamp": "2025-11-26T13:03:10.588Z"
+    },
+    {
+      "email": "rhcooper@btopenworld.com",
+      "userId": "ce0e8e2d-714a-4f24-aff7-70362ad52686",
+      "emailId": "7a2da5e8-758c-45de-8d78-b8b55432ee7d",
+      "timestamp": "2025-11-26T13:03:11.572Z"
+    },
+    {
+      "email": "vs.research@yahoo.com",
+      "userId": "0d3c2a0d-889f-42ad-a07b-2d873fd0c909",
+      "emailId": "9b906383-fc9f-4b09-a591-490dd619e429",
+      "timestamp": "2025-11-26T13:03:12.532Z"
+    },
+    {
+      "email": "saufeerali@gmail.com",
+      "userId": "bf9f2b6a-4414-477a-a0f9-921ed7954f50",
+      "emailId": "edae4a26-a0eb-41d7-ab4a-15e04a13b769",
+      "timestamp": "2025-11-26T13:03:13.476Z"
+    },
+    {
+      "email": "rodney@technologistkiwi.com",
+      "userId": "070c7bfb-dbff-4905-bf7b-2cfea85010ca",
+      "emailId": "085fef54-64ed-4d66-9082-c676153bf03e",
+      "timestamp": "2025-11-26T13:03:14.450Z"
+    },
+    {
+      "email": "acarahulgoyal@gmail.com",
+      "userId": "49752728-99f7-46a2-9c41-af01162ac9f5",
+      "emailId": "7cbf8e26-0f62-439f-b113-6b46eead3697",
+      "timestamp": "2025-11-26T13:03:15.399Z"
+    },
+    {
+      "email": "jacson.jack10@gmail.com",
+      "userId": "4229c839-4b33-4f9f-a1c6-75d979e4b6cd",
+      "emailId": "80fa255f-269a-4641-89af-0b25f9e23739",
+      "timestamp": "2025-11-26T13:03:16.348Z"
+    },
+    {
+      "email": "ayush.0012@gmail.com",
+      "userId": "20fbc1c8-c3f9-4b4a-9d0a-7f9c3525260d",
+      "emailId": "fdbf2075-3c6c-4d08-bb79-ceae4bc474c2",
+      "timestamp": "2025-11-26T13:03:17.316Z"
+    },
+    {
+      "email": "kuhle.zondo@gmail.com",
+      "userId": "1976e1fa-fe1e-4bc8-ae60-937dbdedfb62",
+      "emailId": "d38f6937-4cd1-4f14-a86d-71b3578e2f70",
+      "timestamp": "2025-11-26T13:03:18.276Z"
+    },
+    {
+      "email": "ahat0001@gmail.com",
+      "userId": "253897af-7d49-46d5-89cd-efbedd7f79fa",
+      "emailId": "bcc89e0c-83d5-4cba-a91f-2ca61dc4ce04",
+      "timestamp": "2025-11-26T13:03:19.241Z"
+    },
+    {
+      "email": "cabraangelica1827@gmail.com",
+      "userId": "ad89e495-f0da-4ab8-b7bf-752cab036cd6",
+      "emailId": "bb06e349-184e-4fdd-a71b-2cb0442d9719",
+      "timestamp": "2025-11-26T13:03:20.178Z"
+    },
+    {
+      "email": "haitham.meslemani@gmail.com",
+      "userId": "9b74d280-2911-451f-8e4b-16e827b02795",
+      "emailId": "0b817ed2-3c57-4505-beb7-5126fcf7916b",
+      "timestamp": "2025-11-26T13:03:21.128Z"
+    },
+    {
+      "email": "lewis.kilroe@eastemblem.com",
+      "userId": "2b27c3b2-2d8e-412b-bcd9-afddbc81217f",
+      "emailId": "58f6e550-ee24-4f56-aefb-ba475d66c935",
+      "timestamp": "2025-11-26T13:03:22.264Z"
+    },
+    {
+      "email": "ushevanatalie@gmail.com",
+      "userId": "79bae82a-4e1d-4fce-8c55-8e547a23ed70",
+      "emailId": "0000749f-c828-40cf-b312-a20191056bdb",
+      "timestamp": "2025-11-26T13:03:23.246Z"
+    },
+    {
+      "email": "mhmd.tharwatt@gmail.com",
+      "userId": "d1fd0c93-a015-4bc7-a1be-adaa1b605bbc",
+      "emailId": "03ce3f1d-2f55-4045-b3b4-8343b1ba2d20",
+      "timestamp": "2025-11-26T13:03:24.190Z"
+    },
+    {
+      "email": "mohamedghandour@outlook.com",
+      "userId": "a4f87f2e-6b62-473d-99ec-f6844f4745e3",
+      "emailId": "8bb0cdd3-63fd-450d-b7ee-23840af7c3c3",
+      "timestamp": "2025-11-26T13:03:25.142Z"
+    },
+    {
+      "email": "sohailraza.acca@gmail.com",
+      "userId": "393f99a0-0451-4b95-8a64-cfebbdf23c4d",
+      "emailId": "e370c6cd-f1cb-4a7b-b88f-f88e23894162",
+      "timestamp": "2025-11-26T13:03:26.163Z"
+    },
+    {
+      "email": "mardibernardino@hotmail.com",
+      "userId": "4dd2dfdd-7276-4779-9667-aebd2d71c678",
+      "emailId": "1f8e1915-1215-4813-9b29-e8c81028d37d",
+      "timestamp": "2025-11-26T13:03:27.141Z"
+    },
+    {
+      "email": "zareefa.nifam@gmail.com",
+      "userId": "a43bcbe7-bc55-4199-a685-be13b22459d6",
+      "emailId": "3b452594-bbc9-4082-b042-7f53ceb5e960",
+      "timestamp": "2025-11-26T13:03:28.126Z"
+    },
+    {
+      "email": "rekhajoseph82@gmail.com",
+      "userId": "25289b6a-632d-447b-9ced-be626cb98ba6",
+      "emailId": "ac95a3d4-2eb6-4492-a656-8b9a419e0642",
+      "timestamp": "2025-11-26T13:03:29.094Z"
+    },
+    {
+      "email": "jojiav@gmail.com",
+      "userId": "a92d4388-aaea-46c3-a254-cf40af8fb6d4",
+      "emailId": "22250832-0c73-4b95-813b-ad63ad5ec9e5",
+      "timestamp": "2025-11-26T13:03:30.061Z"
+    },
+    {
+      "email": "noronhamercy59@gmail.com",
+      "userId": "af0564e9-8f5d-4949-947e-3b2c0cbd0509",
+      "emailId": "d84eb8c2-8f81-46e6-bd94-ddaf35d1a7ac",
+      "timestamp": "2025-11-26T13:03:31.033Z"
+    },
+    {
+      "email": "gopakumar78@gmail.com",
+      "userId": "389e0a66-1b5c-405e-be70-c3c58f674951",
+      "emailId": "97413d31-c194-4c40-80f5-68c7fda985b0",
+      "timestamp": "2025-11-26T13:03:31.991Z"
+    },
+    {
+      "email": "milosz.mateja@gmail.com",
+      "userId": "c4b0fa69-6147-46d7-9ae3-caf32aae3df6",
+      "emailId": "631c1c6f-54bf-4718-b248-2906321e3a74",
+      "timestamp": "2025-11-26T13:03:33.145Z"
+    },
+    {
+      "email": "kolayisandeep@gmail.com",
+      "userId": "3e575814-7406-45f8-baba-f555b61b783d",
+      "emailId": "1225febd-467e-4313-83ee-b759953b7e88",
+      "timestamp": "2025-11-26T13:03:34.084Z"
+    },
+    {
+      "email": "khizar27ali@gmail.com",
+      "userId": "051f82b7-d334-4411-8062-8be003a2df71",
+      "emailId": "f292fe75-28e1-4609-b63b-4815a3083329",
+      "timestamp": "2025-11-26T13:03:35.048Z"
+    },
+    {
+      "email": "peer.shaikh@gmail.com",
+      "userId": "e3cc5357-75f6-4dc3-a510-0be97964fdcd",
+      "emailId": "3819bfa0-3881-41ca-a1f0-9c8e4947f541",
+      "timestamp": "2025-11-26T13:03:36.000Z"
+    },
+    {
+      "email": "yebiliye@gmail.com",
+      "userId": "20b9a17c-347b-417b-a9c7-b1a367958ac3",
+      "emailId": "692c2f17-a41c-49fc-aa62-fbdc1adec63a",
+      "timestamp": "2025-11-26T13:03:36.944Z"
+    },
+    {
+      "email": "khasimb78@gmail.com",
+      "userId": "a36e5224-eb72-44b2-9720-4fefa27cb154",
+      "emailId": "28ff2d8e-ec76-4f19-b2f3-501304836972",
+      "timestamp": "2025-11-26T13:03:37.905Z"
+    },
+    {
+      "email": "basar.munsif5@gmail.com",
+      "userId": "e881f577-2d5b-469d-9e7b-4d341bf262a2",
+      "emailId": "7b1c69c9-a2dd-4e06-94d3-26c8345a1305",
+      "timestamp": "2025-11-26T13:03:38.840Z"
+    },
+    {
+      "email": "jafirkhanniazi@gmail.com",
+      "userId": "a23c0f45-3bb7-4a25-8171-52d1e6fb17d4",
+      "emailId": "ff621877-2a80-4bdd-8d8c-1a1c41565e67",
+      "timestamp": "2025-11-26T13:03:39.806Z"
+    },
+    {
+      "email": "jagetia.neelam@gmail.com",
+      "userId": "2c4cc14e-813f-4147-99cf-d196918d1348",
+      "emailId": "057f762a-4e8f-4ebd-8377-02aea0e8f305",
+      "timestamp": "2025-11-26T13:03:40.806Z"
+    },
+    {
+      "email": "rizwanamjad0557@gmail.com",
+      "userId": "39c1e7f0-4184-44ca-9ce5-beafacc5ac56",
+      "emailId": "83abeb02-6e4e-44a2-89ab-df25b92ed007",
+      "timestamp": "2025-11-26T13:03:41.816Z"
+    },
+    {
+      "email": "mariglo.lagdamat@gmail.com",
+      "userId": "b8eb9761-e002-4013-94e3-384be4061b4a",
+      "emailId": "da362bd9-0337-4290-aee5-2aee745a7abc",
+      "timestamp": "2025-11-26T13:03:42.800Z"
+    },
+    {
+      "email": "sujith2525@gmail.com",
+      "userId": "383a52b2-1263-4f73-a82b-f79188035096",
+      "emailId": "abd46880-5147-4bce-9b84-b42c1388e757",
+      "timestamp": "2025-11-26T13:03:43.811Z"
+    },
+    {
+      "email": "atikram2009@gmail.com",
+      "userId": "33b37361-e102-43e2-bed0-f2df167f331c",
+      "emailId": "9545d36d-5b74-4368-9479-ca4b6d3a53ee",
+      "timestamp": "2025-11-26T13:03:44.778Z"
+    },
+    {
+      "email": "rizalyubaraj@gmail.com",
+      "userId": "5b71f832-cbfd-461a-8305-06b75b4c33d8",
+      "emailId": "82c4c971-8990-426c-a6b1-2007c74d9d9a",
+      "timestamp": "2025-11-26T13:03:45.763Z"
+    },
+    {
+      "email": "alqudaha@gmail.com",
+      "userId": "c60e5a1e-8f04-43b0-a34e-79fbba0c73bd",
+      "emailId": "d01927d1-0573-4d42-bc3f-31d6b17e9c18",
+      "timestamp": "2025-11-26T13:03:46.728Z"
+    },
+    {
+      "email": "shwetusurve2011@gmail.com",
+      "userId": "f2c4d7e4-5b8a-4dbd-ad9d-d4214cab91d4",
+      "emailId": "84630779-24b2-4122-99e3-e01dea4ea3d1",
+      "timestamp": "2025-11-26T13:03:47.704Z"
+    },
+    {
+      "email": "nahidmammadov@hotmail.com",
+      "userId": "29d9d61f-3d63-4bde-8ff2-de5650334cb4",
+      "emailId": "a2a911de-1abd-4099-99d4-8beed768f923",
+      "timestamp": "2025-11-26T13:03:48.672Z"
+    },
+    {
+      "email": "3alya.adel0@gmail.com",
+      "userId": "33584078-89e3-43cc-805e-269ee47417c2",
+      "emailId": "3c2567d3-f7e7-489d-b38c-561bd37993a0",
+      "timestamp": "2025-11-26T13:03:49.640Z"
+    },
+    {
+      "email": "hsp.sajidh@gmail.com",
+      "userId": "74beda27-845e-448e-be5a-4d552c92a9a9",
+      "emailId": "402dfab1-d094-44a1-802e-6b1d8d9a17f3",
+      "timestamp": "2025-11-26T13:03:50.610Z"
+    },
+    {
+      "email": "almalikmalik51@gmail.com",
+      "userId": "2ae79eb1-eb48-4180-b79a-b3f78227a9b9",
+      "emailId": "b32f9172-f01d-4ba2-9d12-77a1fc74de63",
+      "timestamp": "2025-11-26T13:03:51.603Z"
+    },
+    {
+      "email": "sohail_qadirpk@hotmail.com",
+      "userId": "cfb5cfc6-7c58-4ce1-98dd-97a7047172d2",
+      "emailId": "0d34513b-85e3-49f8-8a89-f031a62638cd",
+      "timestamp": "2025-11-26T13:03:52.612Z"
+    },
+    {
+      "email": "thomasuae@yahoo.com",
+      "userId": "888c630d-bbbe-4c1c-a59b-5b1beed9cc65",
+      "emailId": "9467f5b6-07a6-479f-8669-3a0d0e49c57d",
+      "timestamp": "2025-11-26T13:03:53.596Z"
+    },
+    {
+      "email": "magdysameh25800@gmail.com",
+      "userId": "bb678197-ff14-4f06-8f10-a1b41ce6f9fd",
+      "emailId": "cd78e193-ade3-4943-b4df-123f89f6f68d",
+      "timestamp": "2025-11-26T13:03:54.699Z"
+    },
+    {
+      "email": "johncyullas@gmail.com",
+      "userId": "08041b9e-5755-4095-8217-8e660288d07b",
+      "emailId": "226aa208-2815-4678-ae16-2c99445e5582",
+      "timestamp": "2025-11-26T13:03:55.723Z"
+    },
+    {
+      "email": "canavjotsinghkheda@gmail.com",
+      "userId": "07eadee5-173a-4c4b-8900-53157306bed1",
+      "emailId": "9a71d920-af18-4c4b-a3f1-f08f0974ab00",
+      "timestamp": "2025-11-26T13:03:56.731Z"
+    },
+    {
+      "email": "remi.varghese@yahoo.com",
+      "userId": "b9b6755f-e8a5-4321-8dec-36422328d112",
+      "emailId": "b7234284-ba84-4c9e-a56f-a813856ce20b",
+      "timestamp": "2025-11-26T13:03:57.679Z"
+    },
+    {
+      "email": "abdullahssaeed94@outlook.com",
+      "userId": "81e2f50d-fb14-4f84-b31d-b535348dd645",
+      "emailId": "694e0355-e638-4bf8-8528-9b33b816e612",
+      "timestamp": "2025-11-26T13:03:58.656Z"
+    },
+    {
+      "email": "jjyithi63@yahoo.in",
+      "userId": "67705b85-812c-4c8a-9b17-bb26235849bd",
+      "emailId": "90637229-6f1b-4e84-ba88-b1e73655a64c",
+      "timestamp": "2025-11-26T13:03:59.885Z"
+    },
+    {
+      "email": "aayishaniz332@gmail.com",
+      "userId": "f1babec8-9938-402f-8832-7c8bc537da6f",
+      "emailId": "3d1d4b7c-8ad0-463d-8428-eaff7d67aea4",
+      "timestamp": "2025-11-26T13:04:00.877Z"
+    },
+    {
+      "email": "prodeepakjain@gmail.com",
+      "userId": "f892ca36-79c2-4cb5-a7a4-b2e99ec0f944",
+      "emailId": "4567397e-e34e-4590-8d3f-fa4e63d327a8",
+      "timestamp": "2025-11-26T13:04:01.904Z"
+    },
+    {
+      "email": "aejazpatel@yahoo.co.in",
+      "userId": "b11ad5fa-a96e-4ac4-a189-9b32c15feedb",
+      "emailId": "835eae98-18bf-4f5d-8d35-a56514802a66",
+      "timestamp": "2025-11-26T13:04:02.890Z"
+    },
+    {
+      "email": "farristrey@gmail.com",
+      "userId": "8350dc5a-6fd1-464f-8bc6-645b6f921743",
+      "emailId": "ee526d81-b30a-46a6-9025-adfa107da03b",
+      "timestamp": "2025-11-26T13:04:03.893Z"
+    },
+    {
+      "email": "jimmyat86@hotmail.com",
+      "userId": "f645dc96-ef46-4796-ac9f-afbf428c9201",
+      "emailId": "50381fc0-f09b-4374-8b6d-757e3aad45a0",
+      "timestamp": "2025-11-26T13:04:04.839Z"
+    },
+    {
+      "email": "esnyderbd@gmail.com",
+      "userId": "5856284e-fd6f-43ac-9cd0-94e25b569182",
+      "emailId": "5e0ed8a4-f7e3-4f63-98f0-a37f894639ac",
+      "timestamp": "2025-11-26T13:04:05.844Z"
+    },
+    {
+      "email": "sff1712@yahoo.com",
+      "userId": "3248c8a5-91be-4606-933e-7d9d9b54fb60",
+      "emailId": "d1507f79-8fc8-4911-98e9-4acfdbf7c582",
+      "timestamp": "2025-11-26T13:04:06.825Z"
+    },
+    {
+      "email": "parsonsgeo@comcast.net",
+      "userId": "f9d51e11-9e74-4791-818d-0acae199de2e",
+      "emailId": "c467eac5-e530-4226-9d07-3c92de851f9e",
+      "timestamp": "2025-11-26T13:04:07.813Z"
+    },
+    {
+      "email": "joeydean01@gmail.com",
+      "userId": "e9afc874-b060-4ec5-805c-4a4a70cc1509",
+      "emailId": "ef8c3719-c120-4d7c-995f-508133b52b9e",
+      "timestamp": "2025-11-26T13:04:08.765Z"
+    },
+    {
+      "email": "troy.carrothers@gmail.com",
+      "userId": "ad6f840c-7a91-44a6-9ec3-10ecb2c03a4a",
+      "emailId": "7f00fc65-bc4f-4a7f-9009-61e0b42869a7",
+      "timestamp": "2025-11-26T13:04:09.764Z"
+    },
+    {
+      "email": "anpgsilva@gmail.com",
+      "userId": "8db478fd-718c-443a-9cb1-2376868a5ff3",
+      "emailId": "76043740-8ed3-470c-b6d9-fe664588a3dd",
+      "timestamp": "2025-11-26T13:04:10.822Z"
+    },
+    {
+      "email": "gc_blaze@hotmail.com",
+      "userId": "56392440-7447-446c-9223-a6da1ed3c7b1",
+      "emailId": "bcde07bb-808e-430e-bb67-a4d7a49faa25",
+      "timestamp": "2025-11-26T13:04:11.884Z"
+    },
+    {
+      "email": "mayntrazi@ee-capital.com",
+      "userId": "964746ee-9783-4cd4-bbb4-f8d1d6ee8fb5",
+      "emailId": "7af456d7-5a35-4ec2-bdf6-9179d17bc6a6",
+      "timestamp": "2025-11-26T13:04:12.895Z"
+    },
+    {
+      "email": "jodeyreis@gmail.com",
+      "userId": "7aa1e5d9-69ea-4aac-b35e-7924e40fcc76",
+      "emailId": "72252145-ac48-4bc2-9f3e-cf3df9e62c01",
+      "timestamp": "2025-11-26T13:04:13.882Z"
+    },
+    {
+      "email": "lwei0411@gmail.com",
+      "userId": "2bd9ba4b-30b4-44d3-9d9e-de982c3dba96",
+      "emailId": "5b6ce1c7-4432-4247-bebf-27972ac267b1",
+      "timestamp": "2025-11-26T13:04:14.865Z"
+    },
+    {
+      "email": "bryanbarnes165@gmail.com",
+      "userId": "c5491a39-7923-437f-b5b0-c79f82f845fb",
+      "emailId": "cda7d205-ae7a-43e5-9988-07caa5d64b8e",
+      "timestamp": "2025-11-26T13:04:15.834Z"
+    },
+    {
+      "email": "emily618@gmail.com",
+      "userId": "b9b24e3b-8e2d-4413-867c-285e876365fa",
+      "emailId": "9be31933-eb26-4782-9a9c-75b0d98910d3",
+      "timestamp": "2025-11-26T13:04:16.809Z"
+    },
+    {
+      "email": "sinyc3866@gmail.com",
+      "userId": "61f66e62-62e6-4bfe-9733-ffd5604e0019",
+      "emailId": "dfab5d0b-858f-4d19-a83c-4ed327ba9a44",
+      "timestamp": "2025-11-26T13:04:17.743Z"
+    },
+    {
+      "email": "george.dames@att.net",
+      "userId": "e4102ccc-a7aa-4ab5-9944-304667b92789",
+      "emailId": "4e0dd71d-869e-46b7-9bdf-2b4ed5211b74",
+      "timestamp": "2025-11-26T13:04:18.698Z"
+    },
+    {
+      "email": "leetrevor6@gmail.com",
+      "userId": "e63acc6e-f515-474d-816f-02e2ad3569de",
+      "emailId": "a275a5ad-9c40-441f-9aeb-af403548d1cd",
+      "timestamp": "2025-11-26T13:04:19.659Z"
+    },
+    {
+      "email": "kristinmd1984@live.com",
+      "userId": "e0dd2886-9015-4ade-a42f-0a3dc93f8a84",
+      "emailId": "46ad0465-367e-48da-b0a9-fdacfe6a0e97",
+      "timestamp": "2025-11-26T13:04:20.608Z"
+    },
+    {
+      "email": "thattenbach@mail.com",
+      "userId": "2fa87483-7f21-4c90-9790-c671cc0e0f77",
+      "emailId": "6a3c3661-9fe3-4136-a8b8-990bc67c709f",
+      "timestamp": "2025-11-26T13:04:21.559Z"
+    },
+    {
+      "email": "jmdickey314@gmail.com",
+      "userId": "26f4de83-2744-4136-9e4c-b97e0ddd8bb8",
+      "emailId": "72f684fe-2696-4859-9172-caf855f96d74",
+      "timestamp": "2025-11-26T13:04:22.559Z"
+    },
+    {
+      "email": "newmail2020@gmail.com",
+      "userId": "c65fc4d1-5f6b-4961-a5aa-6f4ff4e92c91",
+      "emailId": "0e57c6fe-fba2-463a-b15b-7b8095859a5a",
+      "timestamp": "2025-11-26T13:04:23.538Z"
+    },
+    {
+      "email": "bill@wfgleason.com",
+      "userId": "c7cdebfd-b9b8-4d8b-9c99-1b79751f3a9e",
+      "emailId": "bf172298-cfb6-45e9-9f6e-2ff7175c2464",
+      "timestamp": "2025-11-26T13:04:24.542Z"
+    },
+    {
+      "email": "katesawesomelife@gmail.com",
+      "userId": "7ab9ffae-c138-4181-97ca-ad73462a8967",
+      "emailId": "610b3897-9d05-4129-995e-a991b293e899",
+      "timestamp": "2025-11-26T13:04:25.520Z"
+    },
+    {
+      "email": "tmflitter@gmail.com",
+      "userId": "6ec4c070-d50b-492f-953e-32460c72af4a",
+      "emailId": "501b5292-15eb-4f51-a979-6d81f6aadd28",
+      "timestamp": "2025-11-26T13:04:26.473Z"
+    },
+    {
+      "email": "billbailer@verizon.net",
+      "userId": "920e2d6b-a030-4941-bfb6-e53e077d9c29",
+      "emailId": "9bccf81e-b3aa-445c-9c94-6d2693ead55a",
+      "timestamp": "2025-11-26T13:04:27.423Z"
+    },
+    {
+      "email": "cj.christianjohnson97@gmail.com",
+      "userId": "f0068b01-f459-4956-8d27-41db3876222a",
+      "emailId": "92bd86ea-7963-4c69-89fd-70ccdc3515f5",
+      "timestamp": "2025-11-26T13:04:28.406Z"
+    },
+    {
+      "email": "mcgee.jl@hotmail.com",
+      "userId": "2c206306-b20e-4179-9711-ff98b30ca3ff",
+      "emailId": "429367e9-05c3-42dd-b648-d20218352934",
+      "timestamp": "2025-11-26T13:04:29.422Z"
+    },
+    {
+      "email": "eunice@wybenam.com",
+      "userId": "816696f9-b2b8-4137-8114-da246a190b84",
+      "emailId": "276be36a-6cb1-4288-acda-6a2d01420e5c",
+      "timestamp": "2025-11-26T13:04:30.400Z"
+    },
+    {
+      "email": "wochanda02@gmail.com",
+      "userId": "394e481e-6b0b-4701-9da8-6f32c444496c",
+      "emailId": "a466db30-31b1-4770-a400-6f193a6469c8",
+      "timestamp": "2025-11-26T13:04:31.374Z"
+    },
+    {
+      "email": "vcoviello1@hotmail.com",
+      "userId": "2240b595-418d-4ec2-b069-cdae07c84fb8",
+      "emailId": "ce042fa1-bec0-43ed-9dd2-256bb9d1cc82",
+      "timestamp": "2025-11-26T13:04:32.325Z"
+    },
+    {
+      "email": "j.chegin@gmail.com",
+      "userId": "90aac0bc-3c27-4f96-a128-ea225e1c056a",
+      "emailId": "28ec37ce-5dd1-432d-a325-55f3dda62b95",
+      "timestamp": "2025-11-26T13:04:33.374Z"
+    },
+    {
+      "email": "jsordoni1@gmail.com",
+      "userId": "2ac3e1b9-b4c1-4dc0-8162-ac84d4f675ac",
+      "emailId": "c4a78999-3d1a-482f-9c1d-097e99de1a39",
+      "timestamp": "2025-11-26T13:04:34.341Z"
+    },
+    {
+      "email": "martintpick@gmail.com",
+      "userId": "51ca2641-1608-47ce-907b-ec720462510b",
+      "emailId": "063a2c0f-ea33-441c-9134-c5e314d92073",
+      "timestamp": "2025-11-26T13:04:35.312Z"
+    },
+    {
+      "email": "werhammond@yahoo.com",
+      "userId": "96ea9575-d441-42aa-ae59-41f36bdc0603",
+      "emailId": "c967e531-ca22-4262-b124-e3474037a776",
+      "timestamp": "2025-11-26T13:04:36.279Z"
+    },
+    {
+      "email": "rodzava266@gmail.com",
+      "userId": "3721ba7f-0954-4dd8-a727-202cc47d4d4c",
+      "emailId": "aaac3e3d-52c2-42f2-a1e8-d80b66398f74",
+      "timestamp": "2025-11-26T13:04:37.298Z"
+    },
+    {
+      "email": "esantana0165@gmail.com",
+      "userId": "b527d1f9-93b8-473f-bf69-2bfff863d3f2",
+      "emailId": "21a8786e-dde8-4e03-aaab-4de70d107452",
+      "timestamp": "2025-11-26T13:04:38.272Z"
+    },
+    {
+      "email": "javaidislam@hotmail.com",
+      "userId": "1905ad42-52ac-4244-8181-64ba569cfa2d",
+      "emailId": "267633fe-3e38-477f-af03-acc37b285406",
+      "timestamp": "2025-11-26T13:04:39.232Z"
+    },
+    {
+      "email": "armandonavarro@msn.com",
+      "userId": "48bb3bdd-5986-450d-96e8-63ce12a9eb8c",
+      "emailId": "9378307c-1703-446d-afd7-7925a47bc0b9",
+      "timestamp": "2025-11-26T13:04:40.267Z"
+    },
+    {
+      "email": "kylepoplos@gmail.com",
+      "userId": "a7d8b4b4-41a0-43d4-991e-6b2428d947a3",
+      "emailId": "89553a30-f7cf-45be-aad0-6bc1073fbf3f",
+      "timestamp": "2025-11-26T13:04:41.211Z"
+    },
+    {
+      "email": "steven_draper@yahoo.com",
+      "userId": "22c5f557-a5ec-4e2e-944c-4b4c8b95b34b",
+      "emailId": "7966f977-672a-4f9b-b034-3f4c72616af5",
+      "timestamp": "2025-11-26T13:04:42.189Z"
+    },
+    {
+      "email": "imack@idapmack.com",
+      "userId": "3a1588c4-b2bf-4c2e-894c-985ba09ec78a",
+      "emailId": "93d87df2-be06-42c9-b220-921c0503ed7b",
+      "timestamp": "2025-11-26T13:04:43.134Z"
+    },
+    {
+      "email": "kennyhocpa@gmail.com",
+      "userId": "aac70010-80d3-48bc-81e2-b66babbd0a77",
+      "emailId": "1cce1f4f-a114-461a-81a5-a94b272d8ecc",
+      "timestamp": "2025-11-26T13:04:44.096Z"
+    },
+    {
+      "email": "gorodisky@mail.ru",
+      "userId": "1c1d68fd-c146-4314-9c20-8448c2f91626",
+      "emailId": "d340d618-f5dd-451e-a522-17432edab47f",
+      "timestamp": "2025-11-26T13:04:45.052Z"
+    },
+    {
+      "email": "twinkler3@gmail.com",
+      "userId": "8402a274-bcab-4002-9955-1825eb4412c4",
+      "emailId": "c1f6fd93-d1f9-4d49-80fc-445c164bb0f4",
+      "timestamp": "2025-11-26T13:04:46.006Z"
+    },
+    {
+      "email": "saileshjha@hotmail.com",
+      "userId": "0a4b5664-c139-4187-a103-9def348d251a",
+      "emailId": "59e80086-df0b-403b-8d06-904c06b5cfb7",
+      "timestamp": "2025-11-26T13:04:46.948Z"
+    },
+    {
+      "email": "husni@khuffash.com",
+      "userId": "8611fb66-2818-4b34-b4ee-dbf6d8ea13b5",
+      "emailId": "9af6ef5b-d9cb-4a37-b273-784a59257f23",
+      "timestamp": "2025-11-26T13:04:48.003Z"
+    },
+    {
+      "email": "eeatman3@gmail.com",
+      "userId": "faf625d1-5e52-47fb-80f8-b75194332d96",
+      "emailId": "c5d7d3b2-07a7-4697-8c04-21734654d17f",
+      "timestamp": "2025-11-26T13:04:48.973Z"
+    },
+    {
+      "email": "carlosferrari@hotmail.com.br",
+      "userId": "fc9cdf1b-6e6c-4044-8fc7-b13ec735e078",
+      "emailId": "423bfab5-2ebc-4230-b1f9-d8942dce9316",
+      "timestamp": "2025-11-26T13:04:49.977Z"
+    },
+    {
+      "email": "jcgomez@acquavalor.com",
+      "userId": "2fb17b91-b01c-4f74-aa61-21b304cd7d3d",
+      "emailId": "cdfc1877-62ba-4b98-913d-94396d7c5137",
+      "timestamp": "2025-11-26T13:04:50.944Z"
+    },
+    {
+      "email": "mmotawea@outlook.com",
+      "userId": "2f331d37-f038-4bb5-9243-c8a9c490bb86",
+      "emailId": "8579bd5d-2d6c-4b4c-ad2d-2bb9138c9588",
+      "timestamp": "2025-11-26T13:04:51.878Z"
+    },
+    {
+      "email": "ishunter06483@gmail.com",
+      "userId": "3c82570f-b856-4435-a57f-6e589e1db1e3",
+      "emailId": "627d5eb9-f25f-433e-8496-2bd488bbeae8",
+      "timestamp": "2025-11-26T13:04:52.854Z"
+    },
+    {
+      "email": "markbouder1@gmail.com",
+      "userId": "d5eb4c30-7e13-414b-b313-07dfa9c72223",
+      "emailId": "f153d345-d2b8-4727-8580-0c40bf71d822",
+      "timestamp": "2025-11-26T13:04:53.838Z"
+    },
+    {
+      "email": "michael@linkstreet.consulting",
+      "userId": "14c04397-e605-40d9-9509-761b03fa38d6",
+      "emailId": "f334347a-5ce7-4bd7-8baa-9becec6d371c",
+      "timestamp": "2025-11-26T13:04:54.796Z"
+    },
+    {
+      "email": "rakeshawesum0189@gmail.com",
+      "userId": "ef67e3b8-e15a-451c-b488-901da9cc3672",
+      "emailId": "4d2f004a-36b5-47f8-a3cd-8e2f4d8591da",
+      "timestamp": "2025-11-26T13:04:55.751Z"
+    },
+    {
+      "email": "imanihorne@icloud.com",
+      "userId": "50376da6-5170-422c-80b7-e223bb92caee",
+      "emailId": "ac40bf0b-1338-439d-9cd9-956ec39db4e7",
+      "timestamp": "2025-11-26T13:04:56.699Z"
+    },
+    {
+      "email": "elisekm430@gmail.com",
+      "userId": "857dad07-699f-4489-9b4b-cdd25b500f1f",
+      "emailId": "be181af5-6f60-4fce-b6ab-10778156e400",
+      "timestamp": "2025-11-26T13:04:57.647Z"
+    },
+    {
+      "email": "kmrichardson331@gmail.com",
+      "userId": "b75c636a-884f-4998-8fff-7d16c9b7a201",
+      "emailId": "92b3d258-b409-4960-bb87-b27ad679c5f5",
+      "timestamp": "2025-11-26T13:04:58.643Z"
+    },
+    {
+      "email": "dana.t@me.com",
+      "userId": "cbc20b40-8940-4aa8-be96-0a03eec6a520",
+      "emailId": "68f14642-267b-464d-9b93-646ec7066421",
+      "timestamp": "2025-11-26T13:04:59.625Z"
+    },
+    {
+      "email": "wrightbruce80@gmail.com",
+      "userId": "383171bf-a07b-43b3-9d2a-6bbb7b5a8d9c",
+      "emailId": "bf4b4db0-97da-4f38-9cf0-5033e57f0331",
+      "timestamp": "2025-11-26T13:05:00.596Z"
+    },
+    {
+      "email": "jeff@jeffbosworth.com",
+      "userId": "f1422656-e8a5-454d-976d-5e9efbd02889",
+      "emailId": "bd426644-1200-42b4-b3dd-befd85922861",
+      "timestamp": "2025-11-26T13:05:01.574Z"
+    },
+    {
+      "email": "stephaniegold76@gmail.com",
+      "userId": "8190cf12-b74b-401f-92f1-d13cf9ff71df",
+      "emailId": "0f040fd7-a19f-46dd-a200-4c83e19f22f5",
+      "timestamp": "2025-11-26T13:05:02.542Z"
+    },
+    {
+      "email": "bk147111@gmail.com",
+      "userId": "1b9798b3-bdd5-41ed-b0b7-5284c3864ba6",
+      "emailId": "c5f82677-b985-40f6-bf58-5b1ef88927ba",
+      "timestamp": "2025-11-26T13:05:03.541Z"
+    },
+    {
+      "email": "aghazzaoui@hotmail.com",
+      "userId": "d9f499de-d82e-46bc-bf30-faedf15e4564",
+      "emailId": "2e0fce4e-6ee7-4775-9c94-5157eff9481e",
+      "timestamp": "2025-11-26T13:05:04.490Z"
+    },
+    {
+      "email": "dwarak.salpg@gmail.com",
+      "userId": "ad399967-0002-4e9f-b669-09ada35d3b28",
+      "emailId": "36d85e64-3e9a-4817-95d0-397866268003",
+      "timestamp": "2025-11-26T13:05:05.496Z"
+    },
+    {
+      "email": "ipelletier@hotmail.com",
+      "userId": "ae3b0f6c-19e0-4052-8135-6bb973f5ce5f",
+      "emailId": "e0960bbb-19a1-4b19-bb63-b55236811d72",
+      "timestamp": "2025-11-26T13:05:06.488Z"
+    },
+    {
+      "email": "drewbiemer@gmail.com",
+      "userId": "c461bb31-ae74-4573-932a-a98c3b1840f8",
+      "emailId": "e9f88b91-3a07-4569-9b4b-9d5cbeeb0b07",
+      "timestamp": "2025-11-26T13:05:07.509Z"
+    },
+    {
+      "email": "avi.purkayastha@gmail.com",
+      "userId": "44b7c8f9-e597-4bc6-b24a-5755176d0557",
+      "emailId": "61a4f51f-38f8-4c82-a28b-da42e3c70a43",
+      "timestamp": "2025-11-26T13:05:08.494Z"
+    },
+    {
+      "email": "scottm95@gmail.com",
+      "userId": "41d5b28c-5a67-4371-b71a-feaf59e12163",
+      "emailId": "c0abc364-123f-418d-a460-40a77098aa20",
+      "timestamp": "2025-11-26T13:05:09.487Z"
+    },
+    {
+      "email": "ldsul@msn.com",
+      "userId": "94bfbe4e-58f7-45aa-93e1-2dc55e085e27",
+      "emailId": "bdd830be-1777-4c74-b9e2-479f5783252f",
+      "timestamp": "2025-11-26T13:05:10.445Z"
+    },
+    {
+      "email": "nsachivichik@yahoo.com",
+      "userId": "495d4178-8944-47cf-a4f7-53bebe907304",
+      "emailId": "9ee473c3-00d4-4661-9407-fb63fe0f5949",
+      "timestamp": "2025-11-26T13:05:11.412Z"
+    },
+    {
+      "email": "faulkner.liam@gmail.com",
+      "userId": "b2f3e2b6-69b7-48fc-b400-c4625ad8c425",
+      "emailId": "67fbe112-7fcf-4fbe-ae6d-afd5f8341426",
+      "timestamp": "2025-11-26T13:05:12.423Z"
+    },
+    {
+      "email": "gscottmyers@hotmail.com",
+      "userId": "03e86cfb-593f-4810-9273-a8a88faac3fd",
+      "emailId": "8ff02613-1dac-402b-ac58-e75e8fd8989c",
+      "timestamp": "2025-11-26T13:05:13.393Z"
+    },
+    {
+      "email": "borgi_drilling@yahoo.com",
+      "userId": "eb34e2dd-b9cc-4437-b2ad-343be2aaa398",
+      "emailId": "537257ec-455a-431c-8a52-2621e0fdffaf",
+      "timestamp": "2025-11-26T13:05:14.363Z"
+    },
+    {
+      "email": "mmcallister@gmail.com",
+      "userId": "e74da3b2-ce76-42aa-9ea2-65e821ae8238",
+      "emailId": "492f78d0-65ab-4742-8bad-4a38e2f1fa2d",
+      "timestamp": "2025-11-26T13:05:15.308Z"
+    },
+    {
+      "email": "molis.jp@gmail.com",
+      "userId": "e07e16b5-f646-420e-888b-e6ec080bbfc5",
+      "emailId": "44ba1bac-aebf-473f-ba9c-e0b7f37b9d91",
+      "timestamp": "2025-11-26T13:05:16.243Z"
+    },
+    {
+      "email": "josh@firstflatironea.com",
+      "userId": "82c24d8e-060a-4a53-aa4f-298cdd5c42b4",
+      "emailId": "c324d51c-9943-4b77-95c9-790518a994da",
+      "timestamp": "2025-11-26T13:05:17.218Z"
+    },
+    {
+      "email": "lkinney00@yahoo.com",
+      "userId": "0e5401f1-30c2-4492-aa52-5fcc168863d4",
+      "emailId": "6baedaac-1a98-46a7-aa4f-32db85193783",
+      "timestamp": "2025-11-26T13:05:18.178Z"
+    },
+    {
+      "email": "mmelnyk2000@yahoo.com",
+      "userId": "4c6ea897-d31b-4503-b253-63e0a5dd29fd",
+      "emailId": "ca80277e-5afb-46b3-a427-a69c7f9c8866",
+      "timestamp": "2025-11-26T13:05:19.134Z"
+    },
+    {
+      "email": "chiedu.adigwe@yahoo.com",
+      "userId": "b266aa31-1438-4c40-ae59-d75612b3fbfe",
+      "emailId": "434e77a5-5a73-4413-a0b6-ccb85dcd2f8f",
+      "timestamp": "2025-11-26T13:05:20.129Z"
+    },
+    {
+      "email": "mark.alun.saunders@gmail.com",
+      "userId": "88f19a13-f5e7-4dbf-972f-bb62583877a6",
+      "emailId": "3caea35e-40f6-4885-aa61-5b8528271d9b",
+      "timestamp": "2025-11-26T13:05:21.113Z"
+    },
+    {
+      "email": "robasherwin@hotmail.com",
+      "userId": "d63348e7-1b7f-4394-a490-1692593739fb",
+      "emailId": "a1095eb5-1cf9-4f88-81cf-9b87dd5af87d",
+      "timestamp": "2025-11-26T13:05:22.109Z"
+    },
+    {
+      "email": "essam.salehm@icloud.com",
+      "userId": "10b99a16-25f5-4a71-96a9-59d7fb632006",
+      "emailId": "7d7be254-2196-4515-b54c-65b53b63f30f",
+      "timestamp": "2025-11-26T13:05:23.082Z"
+    },
+    {
+      "email": "rakeshawesum01892@gmail.com",
+      "userId": "2f510b04-b9fe-45a3-b7e1-0381b12ea0d5",
+      "emailId": "9fab26de-96e1-4d7d-a9fa-f9c6a0c1946b",
+      "timestamp": "2025-11-26T13:05:24.103Z"
+    },
+    {
+      "email": "a.tunoglu@btinternet.com",
+      "userId": "23058b10-723b-45b8-8eaf-4a37d5042b02",
+      "emailId": "5c95549f-1990-4167-a6ff-a49386fa62f3",
+      "timestamp": "2025-11-26T13:05:25.049Z"
+    },
+    {
+      "email": "linatsang@cantab.net",
+      "userId": "c1e76649-daad-4ea7-b31d-e41768df28a5",
+      "emailId": "c6cd156f-819c-47bd-8c8f-1d4edb1e53f9",
+      "timestamp": "2025-11-26T13:05:26.066Z"
+    },
+    {
+      "email": "daveferg@sky.com",
+      "userId": "614d9feb-29e6-413b-9a4b-def66b69c810",
+      "emailId": "a842dba9-6f34-472d-bfd9-0abbc26a1df2",
+      "timestamp": "2025-11-26T13:05:27.011Z"
+    },
+    {
+      "email": "lukin2002@yandex.ru",
+      "userId": "a60646b2-e898-4e73-9fc1-c6a4a785dffe",
+      "emailId": "1093c25e-8d9d-4b83-8e33-f80d0c612482",
+      "timestamp": "2025-11-26T13:05:27.987Z"
+    },
+    {
+      "email": "jflynn@kennedywilson.com",
+      "userId": "000222b8-ff04-46fc-bc79-8520b47355d8",
+      "emailId": "18b88846-442e-4bee-b669-0eab16831613",
+      "timestamp": "2025-11-26T13:05:28.947Z"
+    },
+    {
+      "email": "coach.me.1two1@gmail.com",
+      "userId": "5bd49f07-f0b3-4a45-9ddc-1f8c4a4782e1",
+      "emailId": "ae9bef70-3a4b-43b3-a8bd-0f3b9c967dbd",
+      "timestamp": "2025-11-26T13:05:29.935Z"
+    },
+    {
+      "email": "jmorgan1.mcm@gmail.com",
+      "userId": "f7c8bb43-b1bb-4d17-b3e2-99eb2dc6ed30",
+      "emailId": "da599703-14ce-4e97-abfc-a8582614ef02",
+      "timestamp": "2025-11-26T13:05:30.932Z"
+    },
+    {
+      "email": "ygorodiskiy@gmail.com",
+      "userId": "0c32c09f-3f42-405c-b716-320b8941154f",
+      "emailId": "1d2dc218-fb47-4365-824b-eb23c6b3cc7a",
+      "timestamp": "2025-11-26T13:05:31.967Z"
+    },
+    {
+      "email": "vindim@gmail.com",
+      "userId": "50e9b183-5636-46c2-9382-2d89c9b065d3",
+      "emailId": "2e0fa478-9170-4f78-b916-2cb1c5e180f4",
+      "timestamp": "2025-11-26T13:05:32.963Z"
+    },
+    {
+      "email": "keith.matthews.one@gmail.com",
+      "userId": "a86474f4-b371-4a60-9a4f-055c15f0b3c5",
+      "emailId": "0381aebd-475f-4ab3-99d5-7c4062535a4b",
+      "timestamp": "2025-11-26T13:05:33.938Z"
+    },
+    {
+      "email": "k.odowd1@sky.com",
+      "userId": "29e24fd8-c134-4d08-9d00-bc06cccc721a",
+      "emailId": "919ba760-224b-47e4-a6f3-dd8da2683483",
+      "timestamp": "2025-11-26T13:05:34.888Z"
+    },
+    {
+      "email": "mohamed_sallam77@yahoo.com",
+      "userId": "3413c9f0-783e-40eb-966b-b8948202a13c",
+      "emailId": "af1d4f12-85b6-496a-a27f-fcac2a3a2704",
+      "timestamp": "2025-11-26T13:05:35.875Z"
+    },
+    {
+      "email": "jason@baileystationcapital.com",
+      "userId": "3bf91f64-90a5-4b2f-a747-d26f3a1ae9f4",
+      "emailId": "45e31514-7485-4b31-9167-13eed125d7f5",
+      "timestamp": "2025-11-26T13:05:36.884Z"
+    },
+    {
+      "email": "tracey@tlj712.co.uk",
+      "userId": "e66cb9a5-6516-4e5b-9365-e48c221a43b2",
+      "emailId": "c9204944-848d-48ce-a487-d2e4771440e4",
+      "timestamp": "2025-11-26T13:05:37.845Z"
+    },
+    {
+      "email": "manoharsinghjpr@gmail.com",
+      "userId": "f966c21b-f8d5-4325-82c9-198a422dd114",
+      "emailId": "73be2534-5fb4-4eba-8ea7-17202795bf11",
+      "timestamp": "2025-11-26T13:05:38.820Z"
+    },
+    {
+      "email": "eran.benavi@gmail.com",
+      "userId": "c426a1da-fd57-4282-8d35-7e598ace1ac7",
+      "emailId": "c5925110-0983-4d28-8150-ef85ce03862b",
+      "timestamp": "2025-11-26T13:05:39.792Z"
+    },
+    {
+      "email": "jonxana@icloud.com",
+      "userId": "115921f5-e9a7-4fc2-981e-857fdcd6d585",
+      "emailId": "f7324562-0e33-4322-9580-6114796ec937",
+      "timestamp": "2025-11-26T13:05:40.756Z"
+    },
+    {
+      "email": "jbaran@me.com",
+      "userId": "677df782-627e-47dd-9741-17200ac9cd7e",
+      "emailId": "c7bc2bc5-0d59-45c6-9da1-4744e00beada",
+      "timestamp": "2025-11-26T13:05:41.753Z"
+    },
+    {
+      "email": "pedrobobiao@hotmail.com",
+      "userId": "60cf62c8-51c0-42f7-80aa-360572ed3f76",
+      "emailId": "d9b0f9d2-d87d-4877-854b-499a84c6ed4d",
+      "timestamp": "2025-11-26T13:05:42.727Z"
+    },
+    {
+      "email": "turekul@gmail.com",
+      "userId": "a4e2edbb-45bd-4e82-a041-7a79eb0f5b12",
+      "emailId": "97b92920-70bc-4385-b958-2537e9fe2440",
+      "timestamp": "2025-11-26T13:05:43.705Z"
+    },
+    {
+      "email": "lchinghk@yahoo.co.uk",
+      "userId": "77980577-2482-48d5-85ad-1e6789409f6f",
+      "emailId": "1b548b26-e90b-4ff1-9c72-f7663da5fe81",
+      "timestamp": "2025-11-26T13:05:44.686Z"
+    },
+    {
+      "email": "tito_campos@hotmail.com",
+      "userId": "2ad6be8f-e664-495e-914d-ffd85fb4186f",
+      "emailId": "e2520ffb-639a-4af6-b186-20a67d238c79",
+      "timestamp": "2025-11-26T13:05:45.699Z"
+    },
+    {
+      "email": "devie@turya.co",
+      "userId": "26dd8f06-750a-4ad2-a9b5-3989472266ec",
+      "emailId": "b98b8258-0ff4-437d-a966-3435c08cacb0",
+      "timestamp": "2025-11-26T13:05:46.667Z"
+    },
+    {
+      "email": "williamrobertgerman@gmail.com",
+      "userId": "6ed84c90-9fc5-44df-b8dd-72db8a320ed9",
+      "emailId": "ecc5caf3-26ad-42ef-aa9e-632a38a68d03",
+      "timestamp": "2025-11-26T13:05:47.621Z"
+    },
+    {
+      "email": "helenngada@yahoo.com",
+      "userId": "9be9dd5b-3fbb-4adc-a45d-171a8c315385",
+      "emailId": "81ac6539-7484-45d6-b9ce-1100360a8678",
+      "timestamp": "2025-11-26T13:05:48.570Z"
+    },
+    {
+      "email": "ockert.vanschalkwyk@outlook.com",
+      "userId": "d0d7b4cc-d488-44eb-b661-c7c6760b79af",
+      "emailId": "7a8f51f6-c4fc-4d6a-8cae-f083642d11d2",
+      "timestamp": "2025-11-26T13:05:49.523Z"
+    },
+    {
+      "email": "onehitvirtualsoltuionsllc@gmail.com",
+      "userId": "ae352c10-b44c-4baa-88d5-bef0d775174a",
+      "emailId": "a3bf1c41-8fc7-477d-b5b6-71d970aabb78",
+      "timestamp": "2025-11-26T13:05:50.497Z"
+    },
+    {
+      "email": "ophillips163@gmail.com",
+      "userId": "81e37936-e5de-49ad-b4c1-4399440bc3ec",
+      "emailId": "42ea5edb-1206-4c7a-b687-b0f7eda26989",
+      "timestamp": "2025-11-26T13:05:51.494Z"
+    },
+    {
+      "email": "rtwaring1@hotmail.com",
+      "userId": "2aa16739-3472-4943-ba97-636674c030d7",
+      "emailId": "c12e2652-6a1b-4eec-9f42-c83071cd9bb7",
+      "timestamp": "2025-11-26T13:05:52.457Z"
+    },
+    {
+      "email": "mark@carnaby-west.com",
+      "userId": "5d0c05f4-dd39-4a4b-8aca-4486a0a431cc",
+      "emailId": "10f75fd5-653e-4a5d-98ec-fd6b9854f59f",
+      "timestamp": "2025-11-26T13:05:53.481Z"
+    },
+    {
+      "email": "nsylvester@sky.com",
+      "userId": "da552820-f982-466a-9276-c81aaff63946",
+      "emailId": "c4eba614-dd85-4fcb-bb6b-7a0018a025e7",
+      "timestamp": "2025-11-26T13:05:54.452Z"
+    },
+    {
+      "email": "benjaminhalfacre@hotmail.com",
+      "userId": "9db7a424-0af1-4880-be15-af5f45be696e",
+      "emailId": "2e05e597-cfa6-42d7-95fc-c5ea11abc46b",
+      "timestamp": "2025-11-26T13:05:55.416Z"
+    },
+    {
+      "email": "in_nasim@yahoo.co.uk",
+      "userId": "198abbe0-b336-4632-ba93-0e7d44991561",
+      "emailId": "3ddc97f0-7214-4480-b7f5-0d4f3939a282",
+      "timestamp": "2025-11-26T13:05:56.376Z"
+    },
+    {
+      "email": "malcolmtowlson@mail.com",
+      "userId": "bf6e2a15-e5ea-4305-8a3f-c526012f877b",
+      "emailId": "61528256-1e8c-4a6a-a1df-ba2f5b8dcfe5",
+      "timestamp": "2025-11-26T13:05:57.334Z"
+    },
+    {
+      "email": "shubhanga59@gmail.com",
+      "userId": "aba66585-81c0-4619-899b-398c803651fb",
+      "emailId": "5383fe69-457e-4bb3-9b9f-c2fddc9d1acb",
+      "timestamp": "2025-11-26T13:05:58.413Z"
+    },
+    {
+      "email": "michael.okwusogu@valuexadvisory.com",
+      "userId": "940866e5-9e4d-4124-a860-79bf2b55df99",
+      "emailId": "89d2b79b-c149-4cf5-afc5-da310c89ae3a",
+      "timestamp": "2025-11-26T13:05:59.388Z"
+    },
+    {
+      "email": "mehmetatillatopcu@gmail.com",
+      "userId": "7171607b-23b2-491e-866d-eeb0a4be085c",
+      "emailId": "d1233166-09c5-43e0-9b37-2284f91ba56c",
+      "timestamp": "2025-11-26T13:06:00.371Z"
+    },
+    {
+      "email": "jcmiffy@hotmail.com",
+      "userId": "682876db-d175-468b-898d-faf3f483c384",
+      "emailId": "cfa57f99-e9e5-4452-8dbf-330b2aaf257f",
+      "timestamp": "2025-11-26T13:06:01.357Z"
+    },
+    {
+      "email": "alicenker@yahoo.com",
+      "userId": "92610cca-6c15-4d00-b068-08b84216569f",
+      "emailId": "5b0d72b6-6d39-4e4d-971b-586f377e2e67",
+      "timestamp": "2025-11-26T13:06:02.329Z"
+    },
+    {
+      "email": "sunishnambiar@gmail.com",
+      "userId": "42fef0bc-e4ed-47ae-a2ba-a82e3e69057c",
+      "emailId": "fb6b2cce-88a8-4b54-b0c9-3132faa11501",
+      "timestamp": "2025-11-26T13:06:03.346Z"
+    },
+    {
+      "email": "luisa.migheli@gmail.com",
+      "userId": "fdf1da4c-4098-4793-8565-db59edf7e1f5",
+      "emailId": "fd2c0d85-8a22-46e7-b4ec-7ec44dc51c7a",
+      "timestamp": "2025-11-26T13:06:04.366Z"
+    },
+    {
+      "email": "viatcheslav@sky.com",
+      "userId": "b629f3e4-8f89-4409-9351-031bbd6442c8",
+      "emailId": "fbb4f049-6ee6-4edb-bf38-1aafacb690ac",
+      "timestamp": "2025-11-26T13:06:05.306Z"
+    },
+    {
+      "email": "mah1973@gmail.com",
+      "userId": "a74f6aba-377c-4340-b6bf-0d0b4c305e32",
+      "emailId": "e65952f3-285c-499a-8b02-daf73aa416dc",
+      "timestamp": "2025-11-26T13:06:06.239Z"
+    },
+    {
+      "email": "victor.garraboutrotha@vt-capital.eu",
+      "userId": "a2d6816f-30c5-494f-9a30-335405766606",
+      "emailId": "14f95adf-51d1-4e5a-8aac-ca4ae3eb1e3d",
+      "timestamp": "2025-11-26T13:06:07.184Z"
+    },
+    {
+      "email": "rishabmahade@gmail.com",
+      "userId": "6d748dfc-7d38-4c7e-9388-0caf13787cff",
+      "emailId": "09bd1732-d59b-48a6-a544-4eca318bf27d",
+      "timestamp": "2025-11-26T13:06:08.116Z"
+    },
+    {
+      "email": "jose.ac.guimaraes@gmail.com",
+      "userId": "3aa0e530-eacd-42f6-a6b4-43c05e2d3c45",
+      "emailId": "bafa9c09-34a6-41ad-9bb0-dbf0dab9ab3c",
+      "timestamp": "2025-11-26T13:06:09.078Z"
+    },
+    {
+      "email": "sa.freeman@icloud.com",
+      "userId": "5515eb59-fc46-48f7-8019-164bdeb64814",
+      "emailId": "a10964de-5ccc-40dd-9d8f-c974b574568f",
+      "timestamp": "2025-11-26T13:06:10.024Z"
+    },
+    {
+      "email": "billjp@icloud.com",
+      "userId": "20e0335c-761d-4c20-bac2-884364c6e09a",
+      "emailId": "30238b7e-851a-478b-aa26-611995e52d2c",
+      "timestamp": "2025-11-26T13:06:10.961Z"
+    },
+    {
+      "email": "tonychidwick@gmail.com",
+      "userId": "743ee983-503b-46fd-9001-8f26a89037b9",
+      "emailId": "7d424f9d-011c-47ad-b870-85c6a2ce40ab",
+      "timestamp": "2025-11-26T13:06:11.913Z"
+    },
+    {
+      "email": "naveed_nasar@hotmail.com",
+      "userId": "41ea2d54-cf55-42e4-bf1a-1c94b05db8a3",
+      "emailId": "dd278115-eca2-446b-9bde-3f169c4d1e0e",
+      "timestamp": "2025-11-26T13:06:12.855Z"
+    },
+    {
+      "email": "kdbhachu@gmail.com",
+      "userId": "581a519d-30dd-4460-a579-5e673a94d84b",
+      "emailId": "c63a76eb-f708-4b79-8904-1f10fedc8f6d",
+      "timestamp": "2025-11-26T13:06:13.802Z"
+    },
+    {
+      "email": "ryno.e87@gmail.com",
+      "userId": "72a5d5e0-376b-4c9a-ac41-07aeef9d6d23",
+      "emailId": "a0f475cf-3a39-4764-941b-d03e3e34f35d",
+      "timestamp": "2025-11-26T13:06:14.755Z"
+    },
+    {
+      "email": "nadeem.askari@equostech.co.za",
+      "userId": "a1ba5353-498d-4eb3-bb61-5b1f2376232f",
+      "emailId": "9ed2adb2-fc6b-4e3f-bfbb-ed226cbfcd3f",
+      "timestamp": "2025-11-26T13:06:15.711Z"
+    },
+    {
+      "email": "me@jamesmcgovern.com",
+      "userId": "e83a93fa-da58-416b-917b-f30f27c185c2",
+      "emailId": "30c6b39e-f4c2-412d-8822-baa799738b2e",
+      "timestamp": "2025-11-26T13:06:16.667Z"
+    },
+    {
+      "email": "fjohnson@mail.com",
+      "userId": "7d05eddc-491b-4362-9af3-6dff75d8dac5",
+      "emailId": "aa6f8a78-a7df-4a56-b2a3-0c821351a19b",
+      "timestamp": "2025-11-26T13:06:17.710Z"
+    },
+    {
+      "email": "brandon@netsmith.net",
+      "userId": "4bc44859-998d-4764-927b-10aac1c15113",
+      "emailId": "5702725c-8f14-4221-bc5b-6447e000a0f0",
+      "timestamp": "2025-11-26T13:06:18.672Z"
+    },
+    {
+      "email": "marius.burger@m-konsult.com",
+      "userId": "c370e2d7-8ce9-43ab-a373-48b24bb2ac3c",
+      "emailId": "679e9cb6-743d-499d-97cf-44f5f845878f",
+      "timestamp": "2025-11-26T13:06:19.627Z"
+    },
+    {
+      "email": "laura@sicuromail.com",
+      "userId": "e72ae3e8-6948-4876-a59d-a067751ecbac",
+      "emailId": "1edae083-2b70-4b0e-bc5d-6e5e4bf2cb38",
+      "timestamp": "2025-11-26T13:06:20.587Z"
+    },
+    {
+      "email": "joe.talik@gmail.com",
+      "userId": "8fadf648-a060-4e53-94c2-d1cf20770955",
+      "emailId": "b7e20045-33dd-4da1-a80f-3829ece53216",
+      "timestamp": "2025-11-26T13:06:21.531Z"
+    },
+    {
+      "email": "todd@toddscot.com",
+      "userId": "846a28b6-5e04-4a24-b66b-88f1badac903",
+      "emailId": "8dd8dfc8-ef42-4985-a714-e57752e68e4f",
+      "timestamp": "2025-11-26T13:06:22.558Z"
+    },
+    {
+      "email": "g_s_vprasad@yahoo.com",
+      "userId": "afd0b2a8-76fd-4bd1-8059-b0d9e6218d1f",
+      "emailId": "e2f646ac-4221-418f-ab94-90d6166f28ea",
+      "timestamp": "2025-11-26T13:06:23.596Z"
+    },
+    {
+      "email": "nchisley@gmail.com",
+      "userId": "b0d5575b-e967-4c8e-90e0-6f5c8d7011c7",
+      "emailId": "0fb3e5a7-12b9-4289-b3b8-fed222810cf9",
+      "timestamp": "2025-11-26T13:06:24.563Z"
+    },
+    {
+      "email": "jeremyrks@gmail.com",
+      "userId": "e389c041-b00c-4920-90e7-b7717c49a48e",
+      "emailId": "1e2d5a6f-3642-4815-af81-4f2efe2dbc31",
+      "timestamp": "2025-11-26T13:06:25.498Z"
+    },
+    {
+      "email": "eric.poston@gmail.com",
+      "userId": "0b918380-7cbf-451e-8d27-cd7a1b02d7e8",
+      "emailId": "49fcfd00-d708-4fc6-a3b2-104f53189ff7",
+      "timestamp": "2025-11-26T13:06:26.480Z"
+    },
+    {
+      "email": "alinescoo@gmail.com",
+      "userId": "c365c230-611e-4674-805c-1565a46e4400",
+      "emailId": "877f6d2a-85ba-424a-af3d-2a8f34d9f790",
+      "timestamp": "2025-11-26T13:06:27.468Z"
+    },
+    {
+      "email": "lorenroetman@gmail.com",
+      "userId": "cf8d419e-d82c-45ef-9c84-5d114e3b55dd",
+      "emailId": "d3fd952e-fae0-4e5d-b835-6e10f2746226",
+      "timestamp": "2025-11-26T13:06:28.467Z"
+    },
+    {
+      "email": "natieignatius@gmail.com",
+      "userId": "9c6d16e9-935f-4169-bae0-a55bd9d3d1ce",
+      "emailId": "83ad8553-c498-4bc6-8b3a-3855589a902f",
+      "timestamp": "2025-11-26T13:06:29.518Z"
+    },
+    {
+      "email": "steven.southwell.99@gmail.com",
+      "userId": "48ec464a-7eef-4fac-9944-32483f1f47f1",
+      "emailId": "c6614087-8991-4e99-9de3-6b244eae592f",
+      "timestamp": "2025-11-26T13:06:30.511Z"
+    },
+    {
+      "email": "louise.dorney@prosource.it",
+      "userId": "7f474be5-e557-4d66-a526-b46f58859f6b",
+      "emailId": "6d2f1a32-67b1-4b5c-a7eb-9b97e941a30b",
+      "timestamp": "2025-11-26T13:06:31.498Z"
+    },
+    {
+      "email": "kiewatt50@gmail.com",
+      "userId": "8aabb45d-de47-46bb-a652-ed8816b2889c",
+      "emailId": "bb9ac2b9-2eba-4b48-b435-73223c6a27b0",
+      "timestamp": "2025-11-26T13:06:32.472Z"
+    },
+    {
+      "email": "victor.cao@att.net",
+      "userId": "f731076c-cc73-4597-90e6-43a3df420ff9",
+      "emailId": "76cac001-e76c-45df-8977-db2335cc04ff",
+      "timestamp": "2025-11-26T13:06:33.469Z"
+    },
+    {
+      "email": "avazarrabi47@gmail.com",
+      "userId": "87fde32b-42bb-41d2-8713-34891df53671",
+      "emailId": "e826e0c9-e20d-4da7-8a41-3a64d21e5499",
+      "timestamp": "2025-11-26T13:06:34.419Z"
+    },
+    {
+      "email": "hiremeganmoran@gmail.com",
+      "userId": "45056caf-cf70-49dd-852d-203f77accd28",
+      "emailId": "7ee683e2-f5cc-4fb4-9e05-eeee360226bf",
+      "timestamp": "2025-11-26T13:06:35.388Z"
+    },
+    {
+      "email": "pearsj1@outlook.com",
+      "userId": "2d5f8f4d-2a46-4139-b9cf-2ff7dc4ac128",
+      "emailId": "d1b4a79d-a149-40f3-864d-7aefdbcc1761",
+      "timestamp": "2025-11-26T13:06:36.359Z"
+    },
+    {
+      "email": "joe.classen05@gmail.com",
+      "userId": "8ac7a1dd-15c2-4503-a2bb-7a3badafa60c",
+      "emailId": "79a7e43c-2aca-4994-b1e6-b7643fa34068",
+      "timestamp": "2025-11-26T13:06:37.320Z"
+    },
+    {
+      "email": "nwcurtis76@gmail.com",
+      "userId": "c56acc29-cf23-435a-9462-a7fd1c74e8e8",
+      "emailId": "3240ec6d-bf82-4009-b1ae-a648691f3f5e",
+      "timestamp": "2025-11-26T13:06:38.311Z"
+    },
+    {
+      "email": "chan18131855@gmail.com",
+      "userId": "c0011630-526c-4926-98b6-f7fcb280321d",
+      "emailId": "93730d72-9ccf-4263-8405-948580668ccc",
+      "timestamp": "2025-11-26T13:06:39.279Z"
+    },
+    {
+      "email": "tashimia@gmail.com",
+      "userId": "3f1f487b-1e18-4e69-937b-cdd8f64404c8",
+      "emailId": "266f85f0-ec68-48e9-845e-25c80d2313f7",
+      "timestamp": "2025-11-26T13:06:40.248Z"
+    },
+    {
+      "email": "jmp0543@gmail.com",
+      "userId": "285487e2-1e23-4993-ad7c-12dac68f1fec",
+      "emailId": "b23736fb-1790-46cd-88c0-c5fb0f7c4a60",
+      "timestamp": "2025-11-26T13:06:41.207Z"
+    },
+    {
+      "email": "maaz.khalid@gmail.com",
+      "userId": "405347da-5ef3-4d8e-8b4d-e7384990a6a3",
+      "emailId": "468afabe-352b-49ff-b691-87803e31afa8",
+      "timestamp": "2025-11-26T13:06:42.207Z"
+    },
+    {
+      "email": "chris.boucher@outlook.com",
+      "userId": "8804138e-5d66-496b-849c-cb238bf0cdf8",
+      "emailId": "ee9ec53f-8d00-4120-921d-c7d424c121b0",
+      "timestamp": "2025-11-26T13:06:43.252Z"
+    },
+    {
+      "email": "dhportis@gmail.com",
+      "userId": "d9a2ed98-6e33-4de4-b0be-7690d32e749c",
+      "emailId": "77d87247-2bc3-42b9-a442-8ecb8a746809",
+      "timestamp": "2025-11-26T13:06:44.205Z"
+    },
+    {
+      "email": "gary.t.long@gmail.com",
+      "userId": "9de33e36-8ebf-4548-b2b8-9c84b6d89ee0",
+      "emailId": "dffec58d-e9b2-452e-bc6a-6d7cae9f198a",
+      "timestamp": "2025-11-26T13:06:45.213Z"
+    },
+    {
+      "email": "stephanieheath1@outlook.com",
+      "userId": "2dae611e-c718-4776-ae7d-a5d8000d19ae",
+      "emailId": "e9c1db87-a1d3-4b29-aecf-0b6bc8f6eea4",
+      "timestamp": "2025-11-26T13:06:46.188Z"
+    },
+    {
+      "email": "sparish66@charter.net",
+      "userId": "af73bacf-1f42-4028-92a9-6fee8fc3ab8f",
+      "emailId": "60afabba-5315-432c-8def-2c08e2845ba9",
+      "timestamp": "2025-11-26T13:06:47.150Z"
+    },
+    {
+      "email": "pbhamornsiri@gmail.com",
+      "userId": "29dabf59-0313-4bdd-bedd-bc536e032ecc",
+      "emailId": "cd646cee-c350-425b-9e43-5fedfea2e21e",
+      "timestamp": "2025-11-26T13:06:48.118Z"
+    },
+    {
+      "email": "jrivera.cardona@gmail.com",
+      "userId": "b3736942-2506-4e1a-91bd-57338c1b8e50",
+      "emailId": "6d3bb846-c1b9-4ba3-8b9e-5d2e15d3aa96",
+      "timestamp": "2025-11-26T13:06:49.066Z"
+    },
+    {
+      "email": "mikedotanderson@gmail.com",
+      "userId": "771c6119-65bd-4687-bcd2-0133bcc2e6ee",
+      "emailId": "cd902a2e-4d46-4038-adc4-616e081f0675",
+      "timestamp": "2025-11-26T13:06:50.049Z"
+    },
+    {
+      "email": "danytheriault@hotmail.com",
+      "userId": "6f51e400-d8fc-4dbb-b736-d895e574dd9e",
+      "emailId": "dd20ab0a-0f8e-4909-894b-cad4d84cfca8",
+      "timestamp": "2025-11-26T13:06:51.058Z"
+    },
+    {
+      "email": "craigabroder@gmail.com",
+      "userId": "32bd7d20-7e8f-4c87-868d-0ffaa507b04f",
+      "emailId": "84a8b060-fe93-4ed8-8644-79ab9e5d6f3d",
+      "timestamp": "2025-11-26T13:06:52.012Z"
+    },
+    {
+      "email": "krendee@aol.com",
+      "userId": "a6e13b99-d5b9-4c43-9d75-86a3e2c8db7d",
+      "emailId": "ab4da1ce-045c-4752-abb5-f54dead72bd1",
+      "timestamp": "2025-11-26T13:06:53.005Z"
+    },
+    {
+      "email": "alonzo.dority@gmail.com",
+      "userId": "2ad95996-08f3-4de1-9367-f5d24fcc33ae",
+      "emailId": "b2f1fcaf-225a-44f6-abca-0c3da077ac45",
+      "timestamp": "2025-11-26T13:06:53.995Z"
+    },
+    {
+      "email": "velkins@bellsouth.net",
+      "userId": "21281d48-22e7-43fa-b3fb-3331af14225e",
+      "emailId": "276153f9-9ace-40e5-92be-34c67f8da265",
+      "timestamp": "2025-11-26T13:06:55.035Z"
+    },
+    {
+      "email": "fjcm572@gmail.com",
+      "userId": "a0711385-2c4c-4904-aa4c-41a6a2f9d855",
+      "emailId": "feb3a5c3-2080-4589-b4ac-d1a9637114fb",
+      "timestamp": "2025-11-26T13:06:56.017Z"
+    },
+    {
+      "email": "tenilaw@gmail.com",
+      "userId": "57875589-ef03-488b-a6f8-fc9e7b819d61",
+      "emailId": "b5680d17-ca8d-4aac-91bc-947d987dbf57",
+      "timestamp": "2025-11-26T13:06:57.035Z"
+    },
+    {
+      "email": "melanie717@gmail.com",
+      "userId": "f9f8ca1c-de6e-4ea1-8583-8e601b1ef6de",
+      "emailId": "d3c715d6-486c-4297-93d4-51278ddbd3be",
+      "timestamp": "2025-11-26T13:06:58.010Z"
+    },
+    {
+      "email": "nikki.burnett31@gmail.com",
+      "userId": "ea766106-77f5-4644-9f88-510a942e94b0",
+      "emailId": "d00cc05d-9693-4240-a186-93a519e256c2",
+      "timestamp": "2025-11-26T13:06:59.097Z"
+    },
+    {
+      "email": "gortonsm@gmail.com",
+      "userId": "54d4e9c4-2b3d-4ac8-8dfb-b5244120eb24",
+      "emailId": "5e0c6445-bbd9-4d36-bc88-0107042e4353",
+      "timestamp": "2025-11-26T13:07:00.121Z"
+    },
+    {
+      "email": "omar.bermudez@gmail.com",
+      "userId": "d804dc00-427d-4884-9f5c-4a55bc9cd0c1",
+      "emailId": "1cbfcd20-aad0-4a99-bdfe-c7b4bf7572b3",
+      "timestamp": "2025-11-26T13:07:01.093Z"
+    },
+    {
+      "email": "thomasdbowman@gmail.com",
+      "userId": "a95695d8-a09f-43df-a769-dc3516412429",
+      "emailId": "a86a4534-4398-4370-a757-1c411619e08a",
+      "timestamp": "2025-11-26T13:07:02.175Z"
+    },
+    {
+      "email": "stanarabie@hotmail.com",
+      "userId": "3ec0bd0c-9c95-4a26-8fbc-c38f052a194c",
+      "emailId": "c5c5e956-c147-4865-a77b-c655f710aa85",
+      "timestamp": "2025-11-26T13:07:03.123Z"
+    },
+    {
+      "email": "anaderib@gmail.com",
+      "userId": "04651479-6c69-4261-8503-6594ab60a244",
+      "emailId": "70078115-9f97-4e0d-bf8d-5d452b99d955",
+      "timestamp": "2025-11-26T13:07:04.221Z"
+    },
+    {
+      "email": "johnwhittington@comcast.net",
+      "userId": "e475d4a1-5738-48d6-bc27-988cbe2cd9bb",
+      "emailId": "e0cec6fa-b5d4-41c1-898e-136241d5d1c8",
+      "timestamp": "2025-11-26T13:07:05.173Z"
+    },
+    {
+      "email": "awelshhans@gmail.com",
+      "userId": "6eb686ee-4d25-4f5b-9be5-9d4842b470bf",
+      "emailId": "8d014afe-bb60-4039-b78b-47efaa00c00e",
+      "timestamp": "2025-11-26T13:07:06.309Z"
+    },
+    {
+      "email": "tsperduti@gmail.com",
+      "userId": "35e8af6b-d1cd-464b-8aab-7a27e4bb7e4b",
+      "emailId": "673fb7c5-c33c-4c3e-8603-f2426a1b0715",
+      "timestamp": "2025-11-26T13:07:07.275Z"
+    },
+    {
+      "email": "bennett@aclarar-group.com",
+      "userId": "6eecb851-62cb-4e66-94c5-cae1bce9eb3b",
+      "emailId": "e0435a2d-5315-4bd4-b6df-6747e5bf9a3f",
+      "timestamp": "2025-11-26T13:07:08.201Z"
+    },
+    {
+      "email": "stuarth405@gmail.com",
+      "userId": "28866c47-8f6b-4932-8d58-7dd000e40966",
+      "emailId": "8182bed3-058b-4682-ab6c-f75133a12476",
+      "timestamp": "2025-11-26T13:07:09.183Z"
+    },
+    {
+      "email": "alexandercbaron@gmail.com",
+      "userId": "bf707dba-f261-4996-86bd-8fa68fb4b8e1",
+      "emailId": "50d1a55c-a322-4567-9c55-1ef1f9aa24c1",
+      "timestamp": "2025-11-26T13:07:10.137Z"
+    },
+    {
+      "email": "hsharmandeep@gmail.com",
+      "userId": "4d00baa7-2f3c-4741-86f0-fb73f6942288",
+      "emailId": "6f5028de-60b7-4dbf-82dd-c81bc06f315e",
+      "timestamp": "2025-11-26T13:07:11.578Z"
+    },
+    {
+      "email": "sscott.mifpt2025@london.edu",
+      "userId": "6e981bb5-b413-49c0-b983-c29370289e2e",
+      "emailId": "b1ee139e-f264-44ef-b65d-e047f7b9980b",
+      "timestamp": "2025-11-26T13:07:12.582Z"
+    },
+    {
+      "email": "shirin.patwa@gmail.com",
+      "userId": "59e35e0b-0ac4-4905-b665-64ea89bf3ba6",
+      "emailId": "8ee2a749-9e6b-48d2-8d15-8d0736ec4b57",
+      "timestamp": "2025-11-26T13:07:13.549Z"
+    },
+    {
+      "email": "angela.akinyi@gmail.com",
+      "userId": "3dc43ed4-485d-4293-9d37-81ef83b87783",
+      "emailId": "7dddd7dc-5952-4715-8211-4e8f34e2319d",
+      "timestamp": "2025-11-26T13:07:14.514Z"
+    },
+    {
+      "email": "t.amiesimaka@gmail.com",
+      "userId": "8131fed8-adb2-47d3-a710-857fe812d5b5",
+      "emailId": "2baeb82d-1868-48bb-88b8-b38555c117cf",
+      "timestamp": "2025-11-26T13:07:15.494Z"
+    },
+    {
+      "email": "ssaxena.lbs@gmail.com",
+      "userId": "df4b71ec-3b8f-49ba-ac5f-316761cacefc",
+      "emailId": "39f20284-d25d-4eec-b044-f9f80313c8ed",
+      "timestamp": "2025-11-26T13:07:16.427Z"
+    },
+    {
+      "email": "celarsaveta@yahoo.com",
+      "userId": "d816f713-044b-4297-9f9e-6e681a49e4ff",
+      "emailId": "f4e18db2-809f-49f0-a69e-374ffebd227d",
+      "timestamp": "2025-11-26T13:07:17.403Z"
+    },
+    {
+      "email": "jps@meridia-solutions.com",
+      "userId": "ebf45537-2f63-439f-b3a6-a9e1c63eb0f0",
+      "emailId": "1dc7ecb0-c2c9-49c4-a9cb-2bb12f9c5b91",
+      "timestamp": "2025-11-26T13:07:18.452Z"
+    },
+    {
+      "email": "steveschechter88@gmail.com",
+      "userId": "0ce2c30c-cce7-4f0d-8627-505697508263",
+      "emailId": "5b3e415d-ac7a-4812-80ec-f789c3eb37e8",
+      "timestamp": "2025-11-26T13:07:19.424Z"
+    },
+    {
+      "email": "ravi.rakesh@gmail.com",
+      "userId": "8816b8b0-2f0a-4acb-ae3a-75e90755f1aa",
+      "emailId": "782900bd-aa0b-4c97-9c73-83c7564fde32",
+      "timestamp": "2025-11-26T13:07:20.480Z"
+    },
+    {
+      "email": "sue012012@gmail.com",
+      "userId": "6dc5e8f5-4d22-47fa-bd0b-a947a04a2340",
+      "emailId": "d2122c97-a6aa-46b0-a47a-68743ed79315",
+      "timestamp": "2025-11-26T13:07:21.500Z"
+    },
+    {
+      "email": "ted@takindustrialminerals.com",
+      "userId": "ca543862-49ec-4599-84a7-c7321a9ef5bf",
+      "emailId": "83d16be1-054e-4fa7-b222-19e6b57117fa",
+      "timestamp": "2025-11-26T13:07:22.466Z"
+    },
+    {
+      "email": "hassanumar@hotmail.co.uk",
+      "userId": "c95df3dc-d81c-47ac-8620-f1e71b89f1af",
+      "emailId": "bcc67ec4-6d7c-48be-a1fc-df72d10cd327",
+      "timestamp": "2025-11-26T13:07:23.417Z"
+    },
+    {
+      "email": "ross.s.hunter@gmail.com",
+      "userId": "d6bddc1c-636f-42b0-86f4-68267a1db32a",
+      "emailId": "079a2dc4-a35f-44d9-a61e-beae621d8f21",
+      "timestamp": "2025-11-26T13:07:24.388Z"
+    },
+    {
+      "email": "michaud_stephane@yahoo.com",
+      "userId": "7e52e065-d41c-497f-ba55-8f38a86309a4",
+      "emailId": "e09f9742-e971-47e0-8b4b-6bcb32ff19fb",
+      "timestamp": "2025-11-26T13:07:25.447Z"
+    },
+    {
+      "email": "stefano.next@eggcelerate.com",
+      "userId": "8444bc0c-7dd8-4e42-a6eb-3fa3a4b2c645",
+      "emailId": "9dea80b9-e100-4d93-88ae-44da5062536a",
+      "timestamp": "2025-11-26T13:07:26.390Z"
+    },
+    {
+      "email": "nicksallon@gmail.com",
+      "userId": "5e211be1-ef79-4052-bd23-4ee00fcf954e",
+      "emailId": "1a6e8559-06ee-4e9d-ae4d-9ce9142ef8ab",
+      "timestamp": "2025-11-26T13:07:27.378Z"
+    },
+    {
+      "email": "robin@robincarswell.com",
+      "userId": "7f747f4b-1743-4837-bab1-fbe6f7996b1f",
+      "emailId": "253515f0-a26e-4136-a34f-9a2aea746d8a",
+      "timestamp": "2025-11-26T13:07:28.414Z"
+    },
+    {
+      "email": "lynnlyyap@gmail.com",
+      "userId": "573e36e1-8fc9-4ff8-93aa-07d3eb884d9e",
+      "emailId": "426ee922-d3db-4b79-a3ae-ce0db4637e66",
+      "timestamp": "2025-11-26T13:07:29.369Z"
+    },
+    {
+      "email": "dpacheson@yahoo.com",
+      "userId": "ddb6a48b-d2c3-468b-b51d-239d66937503",
+      "emailId": "f82174e2-0e7b-4b94-a837-d0ef80052c06",
+      "timestamp": "2025-11-26T13:07:30.344Z"
+    },
+    {
+      "email": "amr@diabs.com",
+      "userId": "dd39998e-e46a-44d3-b8d5-5e5dd798a6ee",
+      "emailId": "e87e74d4-1fac-43db-9c8b-9e92e5308374",
+      "timestamp": "2025-11-26T13:07:31.327Z"
+    },
+    {
+      "email": "pvenugopal@gmail.com",
+      "userId": "27a90104-c938-46c0-a8a3-c161840827fe",
+      "emailId": "6acafdb9-e5d7-465c-b397-e8e6f7b620d4",
+      "timestamp": "2025-11-26T13:07:32.281Z"
+    },
+    {
+      "email": "jackson@carroll.global",
+      "userId": "68102e83-c1e3-4da9-b9d9-3046e7451749",
+      "emailId": "4ed55321-d1cd-49c9-8eaf-c4b00996a848",
+      "timestamp": "2025-11-26T13:07:33.312Z"
+    },
+    {
+      "email": "nitin_srv@outlook.com",
+      "userId": "11f24070-e712-49d5-985d-18aba707151b",
+      "emailId": "7de88d09-5952-4c62-8563-54d7ba901a38",
+      "timestamp": "2025-11-26T13:07:34.796Z"
+    },
+    {
+      "email": "p.sharf@gmail.com",
+      "userId": "a4baec4f-79ee-4d2d-98ac-dcc85e95f5ee",
+      "emailId": "134fbced-abe9-4261-b2ff-1aaad60c513d",
+      "timestamp": "2025-11-26T13:07:35.741Z"
+    },
+    {
+      "email": "g.karyotakis@yahoo.com",
+      "userId": "90b8e602-a04e-4715-91d3-f5e52f20269a",
+      "emailId": "b1b0d134-f87b-4ab0-a060-ce030d05f2e7",
+      "timestamp": "2025-11-26T13:07:36.813Z"
+    },
+    {
+      "email": "amine.tazi@gmail.com",
+      "userId": "ed5c3215-432c-466b-8f0d-cf153ef51e14",
+      "emailId": "d8731226-3b5d-4322-a519-1592cdc8fc9a",
+      "timestamp": "2025-11-26T13:07:37.796Z"
+    },
+    {
+      "email": "karangupta100@gmail.com",
+      "userId": "09f86342-eebb-4880-bf83-8464ecc646e3",
+      "emailId": "fc1e0f83-186a-4d1c-84f9-90dc494f82bf",
+      "timestamp": "2025-11-26T13:07:39.705Z"
+    },
+    {
+      "email": "shah.kunj@gmail.com",
+      "userId": "cf9f7c64-06dc-4894-a145-c8baac6e7fd2",
+      "emailId": "df41504b-150a-4fb1-8c8d-6134c93313ee",
+      "timestamp": "2025-11-26T13:07:40.690Z"
+    },
+    {
+      "email": "sainiprashant81@gmail.com",
+      "userId": "49af288d-ba19-4a73-8c19-032ec0f40827",
+      "emailId": "f7b3de5b-796e-4a5a-80e0-2f1ba85042f8",
+      "timestamp": "2025-11-26T13:07:41.650Z"
+    },
+    {
+      "email": "neel@inmarserv.com",
+      "userId": "49b59da5-f9e5-4b9f-8837-a4636ae3197f",
+      "emailId": "c6859ab4-9a1d-4ad8-b173-c9c3082de3bb",
+      "timestamp": "2025-11-26T13:07:42.596Z"
+    },
+    {
+      "email": "vladimir@humaninterfaces.co",
+      "userId": "4e01a168-9059-4883-9181-47976f2f247d",
+      "emailId": "8209c5d5-4260-49f6-b13e-f17c0e67aad0",
+      "timestamp": "2025-11-26T13:07:43.580Z"
+    },
+    {
+      "email": "alvaro.aguilar.lopez@gmail.com",
+      "userId": "eeae870c-3946-4521-b912-560b43d953d9",
+      "emailId": "1c69a80e-6b29-4ef9-b67b-9caf7aee8ce4",
+      "timestamp": "2025-11-26T13:07:44.565Z"
+    },
+    {
+      "email": "bonitacio@gmail.com",
+      "userId": "470fd338-a832-4f97-b844-91970eaa5f9d",
+      "emailId": "a512af32-9025-4208-a535-f4959449cb5b",
+      "timestamp": "2025-11-26T13:07:45.531Z"
+    },
+    {
+      "email": "chaturvedi.akshay@gmail.com",
+      "userId": "e193aa40-f5dc-4d0f-9c05-7c978f5ffb18",
+      "emailId": "b9639579-b190-4c37-93a8-91b75aa09743",
+      "timestamp": "2025-11-26T13:07:46.600Z"
+    },
+    {
+      "email": "mehakagarwal6@gmail.com",
+      "userId": "0e77321c-f184-4fde-af58-54408bd3270b",
+      "emailId": "5be38b44-5a0b-481a-8295-f0725508346c",
+      "timestamp": "2025-11-26T13:07:47.579Z"
+    },
+    {
+      "email": "gianna.palyvou@gmail.com",
+      "userId": "d86d4ffe-5d7c-418a-b58b-e70034ddcfc2",
+      "emailId": "8f354658-1ad2-45ec-9c57-a93042f534a5",
+      "timestamp": "2025-11-26T13:07:48.568Z"
+    },
+    {
+      "email": "can.ergelmis@gmail.com",
+      "userId": "4851d9cc-5e7e-4d15-9809-f7babe0c3789",
+      "emailId": "23282acf-9f3c-45a4-b777-81df8d400930",
+      "timestamp": "2025-11-26T13:07:49.581Z"
+    },
+    {
+      "email": "fsardas@gmail.com",
+      "userId": "08f92eac-d81d-45ca-9484-c60d5e7f5ebb",
+      "emailId": "7c3b4368-3f90-448c-afdc-70752358fcc7",
+      "timestamp": "2025-11-26T13:07:50.544Z"
+    },
+    {
+      "email": "kbitopoulos@gmail.com",
+      "userId": "43dc068e-894a-46ce-9c28-e09fe9cf955f",
+      "emailId": "436321d9-9d18-48e6-9fd4-1afa4cdfd397",
+      "timestamp": "2025-11-26T13:07:51.592Z"
+    },
+    {
+      "email": "theodore.chartier@gmail.com",
+      "userId": "f1fcdb7b-c5e3-4866-ae86-39e55dbace6d",
+      "emailId": "c396ba9f-b0f6-4d00-8faa-f514018ab37d",
+      "timestamp": "2025-11-26T13:07:52.583Z"
+    },
+    {
+      "email": "ekat.freuchet@gmail.com",
+      "userId": "7b8fcd7d-703e-45a2-8c6f-1c8c0eee8666",
+      "emailId": "442cd40c-aeae-434c-806e-6400f0a103bf",
+      "timestamp": "2025-11-26T13:07:53.530Z"
+    },
+    {
+      "email": "juste.zabarskaite@gmail.com",
+      "userId": "74ba74b8-7451-42f4-a3ee-37307c2972da",
+      "emailId": "3ba5d747-281b-4919-afa6-6dbe4de6a4e6",
+      "timestamp": "2025-11-26T13:07:54.502Z"
+    },
+    {
+      "email": "mzabalet@gmail.com",
+      "userId": "f3ec23ad-148a-48ee-9f8e-7a8e9c51accc",
+      "emailId": "69c19278-7cc0-490b-a884-a78efa94fe82",
+      "timestamp": "2025-11-26T13:07:55.457Z"
+    },
+    {
+      "email": "suzette.loubser@gmail.com",
+      "userId": "ec62d2fe-6a75-4815-bfb5-9b8a1903b580",
+      "emailId": "79ef8053-0c94-4368-9ae8-82b585d68fcc",
+      "timestamp": "2025-11-26T13:07:56.400Z"
+    },
+    {
+      "email": "robertgmwilliams@gmail.com",
+      "userId": "5f41196d-9fba-41cf-a2ce-6852442e3772",
+      "emailId": "49cb1f55-2b08-461d-85bd-efcd31fbdeac",
+      "timestamp": "2025-11-26T13:07:57.379Z"
+    },
+    {
+      "email": "contact@metavallo.co.uk",
+      "userId": "d0b7efdc-1ddb-47e6-a0e6-1994e98d5377",
+      "emailId": "604a0cce-3abd-4f79-ba83-99a2792f4be3",
+      "timestamp": "2025-11-26T13:07:58.347Z"
+    },
+    {
+      "email": "ronkus32@hotmail.com",
+      "userId": "cfb1c312-a3c1-46ec-8bf4-45158c577c53",
+      "emailId": "4433d364-1968-4dfe-912f-0f200c747ab0",
+      "timestamp": "2025-11-26T13:07:59.312Z"
+    },
+    {
+      "email": "michaelpduffy1@gmail.com",
+      "userId": "f730fcbd-434c-4dc8-9411-c2ee0116b650",
+      "emailId": "0b30a8d0-d248-4963-b653-154b024e07d2",
+      "timestamp": "2025-11-26T13:08:00.280Z"
+    },
+    {
+      "email": "fred.p.santos@gmail.com",
+      "userId": "62ecf66d-e018-4345-af53-0801d83b0254",
+      "emailId": "537811d3-7674-4672-a3c4-bf7ddf225bc2",
+      "timestamp": "2025-11-26T13:08:01.225Z"
+    },
+    {
+      "email": "lori.murray1012@gmail.com",
+      "userId": "74227ca4-aa83-4290-be29-91fea9102aae",
+      "emailId": "d3a05bdf-d6c8-46d2-a9cd-cd69e5249e30",
+      "timestamp": "2025-11-26T13:08:02.245Z"
+    },
+    {
+      "email": "melvin.steals@gmail.com",
+      "userId": "dea7988d-cdb5-4a1b-aad4-33f4c81ca563",
+      "emailId": "0b190692-ad44-4550-97c7-58f6b9cde984",
+      "timestamp": "2025-11-26T13:08:03.219Z"
+    },
+    {
+      "email": "adzh@hotmail.com",
+      "userId": "faef0b5d-21e5-4a5f-8c46-50f0cfd81136",
+      "emailId": "9fafcd84-1b43-46da-b7c9-060a8dfbaeb2",
+      "timestamp": "2025-11-26T13:08:04.256Z"
+    },
+    {
+      "email": "richard@citadeladvantage.com",
+      "userId": "88a76644-4fba-4925-916f-51cefff6e257",
+      "emailId": "e0fe4d72-34ff-4d74-8fd0-793dd37d9ff2",
+      "timestamp": "2025-11-26T13:08:05.269Z"
+    },
+    {
+      "email": "martin.haschka1@yahoo.com",
+      "userId": "93da6a13-5465-42f0-996b-746f345241b5",
+      "emailId": "91bcf6c4-ec63-45dd-b99c-072ba71fae81",
+      "timestamp": "2025-11-26T13:08:06.237Z"
+    },
+    {
+      "email": "apanayotopoulos@gmail.com",
+      "userId": "74eb45dc-884b-46b7-b460-9ea698679ddb",
+      "emailId": "95691f1e-d808-4d45-aae6-bb0d6b8d0cd0",
+      "timestamp": "2025-11-26T13:08:07.188Z"
+    },
+    {
+      "email": "falizaga@dons.usfca.edu",
+      "userId": "5133a5ed-6f29-4d66-9cc6-6d079d0d30a5",
+      "emailId": "9f038291-e68f-4e73-8c31-bc02947d3e8a",
+      "timestamp": "2025-11-26T13:08:08.155Z"
+    },
+    {
+      "email": "aegorovacpa@gmail.com",
+      "userId": "a3327642-1036-4d96-beaf-e8b010655569",
+      "emailId": "f0f85309-685c-439c-bf33-6036fcc40a29",
+      "timestamp": "2025-11-26T13:08:09.118Z"
+    },
+    {
+      "email": "lynae.addy@qfdaccounting.com",
+      "userId": "3754cc50-4b9f-457a-8799-0e13424e68f8",
+      "emailId": "6edac365-682f-4b5f-82b9-26324d979909",
+      "timestamp": "2025-11-26T13:08:10.068Z"
+    },
+    {
+      "email": "thegeehen@gmail.com",
+      "userId": "a28cf7e8-83d6-46be-9454-db948f3e3cdd",
+      "emailId": "8fb904c5-5536-4c65-ba5e-ca17b1a3ee34",
+      "timestamp": "2025-11-26T13:08:11.055Z"
+    },
+    {
+      "email": "ericpglass@hotmail.com",
+      "userId": "d84c55f9-0e4c-426a-9912-bf32624ac211",
+      "emailId": "8713007c-ee26-482b-8f60-cdf51c73027f",
+      "timestamp": "2025-11-26T13:08:12.001Z"
+    },
+    {
+      "email": "covenant2@yahoo.com",
+      "userId": "36d4ddf8-e653-4c24-a218-5c899ef6568d",
+      "emailId": "0cc54aa1-945d-4a8a-8d71-3fe9da70c5b4",
+      "timestamp": "2025-11-26T13:08:12.982Z"
+    },
+    {
+      "email": "nobearmarket27@gmail.com",
+      "userId": "7b51406d-1ba1-4f29-82bf-58c17b7e4b78",
+      "emailId": "69bdbaa7-7231-4c6c-bce2-ac35a4de9354",
+      "timestamp": "2025-11-26T13:08:13.929Z"
+    },
+    {
+      "email": "austinambrose1@gmail.com",
+      "userId": "1c69052b-8369-4382-ab6c-ff1897e7645e",
+      "emailId": "1dcbbe7c-cc2b-43ff-8a58-4da3b2c74d17",
+      "timestamp": "2025-11-26T13:08:14.926Z"
+    },
+    {
+      "email": "steve@slaminallc.com",
+      "userId": "e4c4fd3c-9a22-457e-baee-6dc6f9943529",
+      "emailId": "47adf409-98f0-429c-81fe-c3e436882819",
+      "timestamp": "2025-11-26T13:08:15.920Z"
+    },
+    {
+      "email": "michael.m.baudo@gmail.com",
+      "userId": "f1302328-7991-4d95-a337-fe81f8d9cc98",
+      "emailId": "f9905300-0b24-4f3b-8b56-8a230cebada5",
+      "timestamp": "2025-11-26T13:08:16.931Z"
+    },
+    {
+      "email": "jbharvey811@gmail.com",
+      "userId": "1273af13-1caa-402f-9761-9bf5c3b9083a",
+      "emailId": "29ef2257-31a4-4724-a8b9-f58dadc383f0",
+      "timestamp": "2025-11-26T13:08:17.929Z"
+    },
+    {
+      "email": "hubert.willam@gmail.com",
+      "userId": "13f0e910-7fee-457a-a364-a18a86025318",
+      "emailId": "5d481e9b-33f9-4570-a710-823e67abfe2d",
+      "timestamp": "2025-11-26T13:08:18.889Z"
+    },
+    {
+      "email": "shaferm2@gmail.com",
+      "userId": "a2532a60-8f71-4b7d-b40d-fff9ea3e8aa4",
+      "emailId": "1d3aa231-c4d6-4b22-8d79-4275852e0faa",
+      "timestamp": "2025-11-26T13:08:19.883Z"
+    },
+    {
+      "email": "michael.corcoran@grcerm.com",
+      "userId": "6cef7a28-8cf3-4db4-a787-8e0062f46add",
+      "emailId": "23c25779-7564-4167-a613-9c91fd7e3f0a",
+      "timestamp": "2025-11-26T13:08:20.845Z"
+    },
+    {
+      "email": "josefschaible224@gmail.com",
+      "userId": "ad303600-297c-4b5c-8f5c-f49e312b6446",
+      "emailId": "51355875-3df2-4338-aee5-e6a85dcc34aa",
+      "timestamp": "2025-11-26T13:08:21.807Z"
+    },
+    {
+      "email": "wilks.laurenm@gmail.com",
+      "userId": "5d343520-e0e7-42e5-9454-b06a2e17c0f6",
+      "emailId": "fa2eeece-e6af-4208-8813-aedcb09e03e8",
+      "timestamp": "2025-11-26T13:08:22.784Z"
+    },
+    {
+      "email": "darvin.hooey@gmail.com",
+      "userId": "e2a18590-1127-4bf7-90a3-dbdd8b6e138e",
+      "emailId": "1ec54678-0357-4ba0-a823-73786536854f",
+      "timestamp": "2025-11-26T13:08:23.767Z"
+    },
+    {
+      "email": "eileen.sivaguru@gmail.com",
+      "userId": "fc56a8b2-a567-4a83-8aed-339ae379779e",
+      "emailId": "336d7470-4607-431f-adee-aa604347b678",
+      "timestamp": "2025-11-26T13:08:24.737Z"
+    },
+    {
+      "email": "jfkarle@gmail.com",
+      "userId": "85e387b0-40c0-4c42-8a7c-afc7b83d6042",
+      "emailId": "d538c25a-08d4-45c9-97c7-a3bcdbf69bcb",
+      "timestamp": "2025-11-26T13:08:25.980Z"
+    },
+    {
+      "email": "simonmacleod@hotmail.com",
+      "userId": "9d6d82ec-17e4-47de-9f55-96c322c58f96",
+      "emailId": "6eb47377-ad5b-43f8-953e-68282e73676e",
+      "timestamp": "2025-11-26T13:08:27.309Z"
+    },
+    {
+      "email": "landrywanmeni@gmail.com",
+      "userId": "d5a29ebe-ef3c-4277-bdf8-d1b125a60bb5",
+      "emailId": "3a0b4172-62e2-4fbc-924a-0ab9ef7c36db",
+      "timestamp": "2025-11-26T13:08:28.279Z"
+    },
+    {
+      "email": "arun.nahal@gmail.com",
+      "userId": "18650502-2e25-4fc1-be80-7723b6cb5edf",
+      "emailId": "bc081a20-8d69-4dd2-b534-223c6e74abce",
+      "timestamp": "2025-11-26T13:08:29.426Z"
+    },
+    {
+      "email": "lucasjoel1@gmail.com",
+      "userId": "9616aa5f-06c1-4f4c-ae86-9059d12d4940",
+      "emailId": "6076feb6-27ed-42e7-b52d-c5405cb90140",
+      "timestamp": "2025-11-26T13:08:30.852Z"
+    },
+    {
+      "email": "gavinmurphy1976@gmail.com",
+      "userId": "a03ee78c-3eb6-473d-9501-a0280d0abbed",
+      "emailId": "984f177d-fa09-4b92-b052-4452a1c7c5ce",
+      "timestamp": "2025-11-26T13:08:31.785Z"
+    },
+    {
+      "email": "adam.sketchley@reybridgecapital.com",
+      "userId": "9d07342c-a99c-4197-ade3-25a74466dbb6",
+      "emailId": "de576223-140f-4882-a670-8da6b8ceeede",
+      "timestamp": "2025-11-26T13:08:32.806Z"
+    },
+    {
+      "email": "s.aiyngkaran@gmail.com",
+      "userId": "f78bf079-fce2-4c29-8d8d-4bf569461795",
+      "emailId": "2a58849c-83dd-4736-8061-956c1b60dc6f",
+      "timestamp": "2025-11-26T13:08:33.847Z"
+    },
+    {
+      "email": "adamr@arcequities.com",
+      "userId": "42a637a6-ea59-4de1-9e5e-88edae45f957",
+      "emailId": "c7f9e156-4069-4853-92fc-091c864b43cc",
+      "timestamp": "2025-11-26T13:08:34.887Z"
+    },
+    {
+      "email": "extracfc@aol.com",
+      "userId": "6c50ab70-90d6-4808-8ced-d0d6474ad369",
+      "emailId": "61db0343-b6c1-449d-aa64-671cf1dea91e",
+      "timestamp": "2025-11-26T13:08:35.886Z"
+    },
+    {
+      "email": "aorbetsova@gmail.com",
+      "userId": "25d32931-3143-4ee9-bddf-ba3baf75a94e",
+      "emailId": "96155e1a-9280-4e5a-95cc-3559e4e6859b",
+      "timestamp": "2025-11-26T13:08:36.894Z"
+    },
+    {
+      "email": "jrdalla@outlook.com",
+      "userId": "d478b7ec-3104-4588-b749-6de7c86a719c",
+      "emailId": "dff5f214-6b58-488f-bd9a-7ffc950ef653",
+      "timestamp": "2025-11-26T13:08:37.938Z"
+    },
+    {
+      "email": "ceejloujohns@gmail.com",
+      "userId": "ee82f0c2-39b2-47df-80b1-71203d5aec20",
+      "emailId": "debbf140-4e76-44c3-ba7f-2230a293b49e",
+      "timestamp": "2025-11-26T13:08:38.952Z"
+    },
+    {
+      "email": "leon@futurumin.digital",
+      "userId": "d282e228-a766-4427-8b9d-756debc90f9d",
+      "emailId": "3aa53b22-08f1-4c31-8713-a47fb156fb7c",
+      "timestamp": "2025-11-26T13:08:39.995Z"
+    },
+    {
+      "email": "ecisnerosvg@gmail.com",
+      "userId": "4198a26a-9810-4437-acbf-32faaea919e8",
+      "emailId": "63004416-7f78-4382-855f-100c51ccf35f",
+      "timestamp": "2025-11-26T13:08:41.031Z"
+    },
+    {
+      "email": "keith.welham1@gmail.com",
+      "userId": "83e3a228-63d6-412d-b2ea-6ee11455434f",
+      "emailId": "5e4e60d8-54e2-4c08-87b2-795ef6e6e814",
+      "timestamp": "2025-11-26T13:08:41.988Z"
+    },
+    {
+      "email": "purdueann@gmail.com",
+      "userId": "88b07c6b-e998-4a70-9923-0aa85cabbfc0",
+      "emailId": "5913e089-e9a8-4e85-a857-d1f25a38731a",
+      "timestamp": "2025-11-26T13:08:42.962Z"
+    },
+    {
+      "email": "david.edwards4873@gmail.com",
+      "userId": "328e2f76-0bb9-49b2-8d17-24da298bd11c",
+      "emailId": "32e00716-f59d-4000-b8b7-eecff3b2402a",
+      "timestamp": "2025-11-26T13:08:43.920Z"
+    },
+    {
+      "email": "tahuja411@gmail.com",
+      "userId": "6cf7d91c-b9a2-46de-8962-f5f63a457de3",
+      "emailId": "e86c95fb-896f-45a7-9cb8-e49e3b55aa7a",
+      "timestamp": "2025-11-26T13:08:44.896Z"
+    },
+    {
+      "email": "george.jalil@gmail.com",
+      "userId": "49729846-ee81-4b20-ad58-e049d79d6dd0",
+      "emailId": "f4082f3e-abe5-44fe-a8d4-9bb1bc9cd70e",
+      "timestamp": "2025-11-26T13:08:45.842Z"
+    },
+    {
+      "email": "virginiaharitaki@gmail.com",
+      "userId": "c830a4a9-a542-4626-b325-e04e5a8bbb45",
+      "emailId": "f03b0060-6f39-467c-8bbd-8e76a648a8a3",
+      "timestamp": "2025-11-26T13:08:46.805Z"
+    },
+    {
+      "email": "rpkalman42@gmail.com",
+      "userId": "febf8d2d-b23d-4b19-8766-a32d64bd5958",
+      "emailId": "5d08c983-f7a9-419b-a1c0-374cc094250b",
+      "timestamp": "2025-11-26T13:08:47.795Z"
+    },
+    {
+      "email": "karenahurley360@gmail.com",
+      "userId": "395b9c6f-f45d-4ad3-913f-b9b23b3d093e",
+      "emailId": "2da9d40c-e793-419d-847e-27cf87d10d87",
+      "timestamp": "2025-11-26T13:08:48.816Z"
+    },
+    {
+      "email": "johnb@ariestexas.com",
+      "userId": "9b777297-92e3-4b78-8606-cf26baef3dd2",
+      "emailId": "f71fe55c-a777-4119-9449-4eeed9fd5620",
+      "timestamp": "2025-11-26T13:08:49.801Z"
+    },
+    {
+      "email": "lac51311@gmail.com",
+      "userId": "0830dba2-9e32-4d49-8bd2-fac65f9835d9",
+      "emailId": "89f08c57-ea08-4033-a793-5f2f077e983b",
+      "timestamp": "2025-11-26T13:08:50.781Z"
+    },
+    {
+      "email": "georgestringer513@gmail.com",
+      "userId": "e26a9fc2-c1c3-4398-b6cd-4e4826a0ba0e",
+      "emailId": "eff69afb-e16b-4946-87a0-ff789cafe649",
+      "timestamp": "2025-11-26T13:08:51.745Z"
+    },
+    {
+      "email": "rainbowindow1@gmail.com",
+      "userId": "5035b675-177e-4a67-95fd-06642f08c996",
+      "emailId": "9bf77918-4d72-49a7-8f68-b4928a0f3db7",
+      "timestamp": "2025-11-26T13:08:52.723Z"
+    },
+    {
+      "email": "sanjay_mody@hotmail.com",
+      "userId": "09474410-e87a-478e-9344-cefaf9f18698",
+      "emailId": "422af5a0-c395-4158-8480-4eb756152997",
+      "timestamp": "2025-11-26T13:08:53.725Z"
+    },
+    {
+      "email": "kreethanb@gmail.com",
+      "userId": "ff81c430-fecb-42b5-a5ad-1c32ed5fac7d",
+      "emailId": "b02475ac-db85-4261-934d-1d32dcce000d",
+      "timestamp": "2025-11-26T13:08:54.694Z"
+    },
+    {
+      "email": "kevinkay1@comcast.net",
+      "userId": "973bf436-bfe0-498d-84c9-4b93135c0f1c",
+      "emailId": "5f1613d1-0fba-4115-b7c0-038a35e3b620",
+      "timestamp": "2025-11-26T13:08:55.665Z"
+    },
+    {
+      "email": "cary.cannon@gmail.com",
+      "userId": "18731d33-e6d0-44b0-854c-41383de42f9c",
+      "emailId": "b48be0c8-c9ba-4273-bf2e-87cb2ccd8ccf",
+      "timestamp": "2025-11-26T13:08:56.817Z"
+    },
+    {
+      "email": "goodtimetobe@live.co.uk",
+      "userId": "2905d06d-f660-412b-ae5b-ee5b1994fead",
+      "emailId": "d9e2a089-a58b-409d-a334-9f4dbc8b8116",
+      "timestamp": "2025-11-26T13:08:57.841Z"
+    },
+    {
+      "email": "2ndseasonconsult@gmail.com",
+      "userId": "f5da5855-77d1-453d-aea2-4d4cbb63db0e",
+      "emailId": "edec8199-2682-4aed-b79b-9f3db1794ef4",
+      "timestamp": "2025-11-26T13:08:58.819Z"
+    },
+    {
+      "email": "louise@revop.io",
+      "userId": "f5e3b5f2-e469-4680-807c-b5c082fb8b93",
+      "emailId": "af24a236-29a0-47ae-acaa-4a698f61edd8",
+      "timestamp": "2025-11-26T13:08:59.782Z"
+    },
+    {
+      "email": "walker.jennifergb@gmail.com",
+      "userId": "08d15c73-8ab1-4ec2-b39e-033dd5019be6",
+      "emailId": "5e679e05-a9f0-4461-b7ed-998f5e0ff254",
+      "timestamp": "2025-11-26T13:09:00.749Z"
+    },
+    {
+      "email": "willworsdell@gmail.com",
+      "userId": "b05ba2ed-c6d4-4540-9c29-5b8515c9b1ac",
+      "emailId": "b4b64a7b-b8fa-4df4-8d40-daeb723ea27d",
+      "timestamp": "2025-11-26T13:09:01.786Z"
+    },
+    {
+      "email": "thoughtleader.uk@gmail.com",
+      "userId": "069c1606-15e6-4064-813e-682217e382ac",
+      "emailId": "5100bfc3-ecdb-4927-8e1a-916d588c6aaa",
+      "timestamp": "2025-11-26T13:09:02.743Z"
+    },
+    {
+      "email": "janine.morrisonpitt@gmail.com",
+      "userId": "ce409c9b-c252-474c-8211-cab370626bd1",
+      "emailId": "1481b83b-07db-453a-8c6b-ceec5d8f1cb1",
+      "timestamp": "2025-11-26T13:09:03.736Z"
+    },
+    {
+      "email": "matthewmorel@me.com",
+      "userId": "fafd5d8c-1ee9-4a04-b798-217f56dd8a89",
+      "emailId": "26849c6f-bd58-466e-a618-0d9066539512",
+      "timestamp": "2025-11-26T13:09:04.700Z"
+    },
+    {
+      "email": "michael@paytonmarketing.com",
+      "userId": "df0e126a-4dec-4efa-9aa9-0dd86f1833ae",
+      "emailId": "8e58e5d6-ede0-4658-83e4-ceb22329faec",
+      "timestamp": "2025-11-26T13:09:05.644Z"
+    },
+    {
+      "email": "cometti.marcelo@gmail.com",
+      "userId": "879db0d8-67dc-42e9-a2e3-fa027c168d7e",
+      "emailId": "1178691d-a24e-4b10-a2ba-224e977c48b6",
+      "timestamp": "2025-11-26T13:09:06.596Z"
+    },
+    {
+      "email": "jo@add10.co.uk",
+      "userId": "595a7083-5263-4f6d-ae76-a749537bf46d",
+      "emailId": "d4189463-3f7c-43aa-88a5-6f6cead23ed2",
+      "timestamp": "2025-11-26T13:09:07.572Z"
+    },
+    {
+      "email": "tom@lrd-thebigidea.com",
+      "userId": "8f5e93b1-6172-49d0-80d3-c4544ce1088e",
+      "emailId": "91483cd3-c2ac-4741-aa96-8cb4eb88e4ce",
+      "timestamp": "2025-11-26T13:09:08.566Z"
+    },
+    {
+      "email": "scott.mcgougan@outlook.com",
+      "userId": "b75d8ab9-e7d1-45b3-ac8e-8d87b95036bd",
+      "emailId": "4718a2df-21c5-441e-af37-adf62d90c5d8",
+      "timestamp": "2025-11-26T13:09:09.515Z"
+    },
+    {
+      "email": "andrew@conjunction.tv",
+      "userId": "a4f93a60-1cfc-421d-8479-3519f3cdf1a3",
+      "emailId": "f285ba15-0162-4525-8cd0-ab2e13922cba",
+      "timestamp": "2025-11-26T13:09:10.471Z"
+    },
+    {
+      "email": "charmcmullan@hotmail.co.uk",
+      "userId": "65faee05-7d02-456c-aecc-444b5c3b6abb",
+      "emailId": "fadf3fd2-e0ed-46a2-85a7-7837017e6f19",
+      "timestamp": "2025-11-26T13:09:11.414Z"
+    },
+    {
+      "email": "karoo@theoptimisergroup.com",
+      "userId": "e0585f32-cea8-45e0-8ee1-164803c32f5d",
+      "emailId": "38c467c8-0a08-4072-8495-7791b8fb376b",
+      "timestamp": "2025-11-26T13:09:12.401Z"
+    },
+    {
+      "email": "gustavospanholi@gmail.com",
+      "userId": "8e508076-7d75-4b8f-bb74-e0dfa6719d27",
+      "emailId": "cdad50b3-daee-414b-be90-8b71a8249821",
+      "timestamp": "2025-11-26T13:09:13.352Z"
+    },
+    {
+      "email": "emma@emmaclayton.com",
+      "userId": "3f41baa1-622f-4b30-85e8-cd9b909428b3",
+      "emailId": "72185e01-b4ec-47db-90a5-3b4220849586",
+      "timestamp": "2025-11-26T13:09:14.306Z"
+    },
+    {
+      "email": "emma@bebrilliant.org.uk",
+      "userId": "5e64b03c-9fd2-450a-8147-fdb11047799c",
+      "emailId": "149640d9-3bf0-4fec-9067-95514c192416",
+      "timestamp": "2025-11-26T13:09:15.273Z"
+    },
+    {
+      "email": "mehnaznazia@gmail.com",
+      "userId": "b9c30345-a8c5-473d-9e41-0c0678e656a1",
+      "emailId": "d0f1913e-b226-4489-b030-7c54c5406626",
+      "timestamp": "2025-11-26T13:09:16.250Z"
+    },
+    {
+      "email": "pattibalbas@gmail.com",
+      "userId": "5fe0f3c8-091f-4a73-939b-ab10087c31d8",
+      "emailId": "a4cd0776-ac4f-4b07-92ad-f487101a59a8",
+      "timestamp": "2025-11-26T13:09:17.195Z"
+    },
+    {
+      "email": "veemoe@gmail.com",
+      "userId": "22640761-37f2-439d-bc1d-282a77ac8d92",
+      "emailId": "e35a8a81-3e6d-4ac1-921b-1590960600ec",
+      "timestamp": "2025-11-26T13:09:18.144Z"
+    },
+    {
+      "email": "mcarey1333@gmail.com",
+      "userId": "dccba1d1-6834-4083-a72b-47631139fb76",
+      "emailId": "31e77145-0279-4f33-862a-3339ad0e0e7b",
+      "timestamp": "2025-11-26T13:09:19.136Z"
+    },
+    {
+      "email": "jonna.kivipelto@gmail.com",
+      "userId": "8913d49c-d344-446b-86c6-4efca148f0fb",
+      "emailId": "40ebb2db-03fd-4c82-aa9a-c59ae21feedd",
+      "timestamp": "2025-11-26T13:09:20.077Z"
+    },
+    {
+      "email": "colmsocodu@gmail.com",
+      "userId": "8ebee658-280a-4e15-875e-3aa2cc2058a7",
+      "emailId": "f310e4a6-9e60-49eb-9677-b2f53d9b642c",
+      "timestamp": "2025-11-26T13:09:21.023Z"
+    },
+    {
+      "email": "nievey@hotmail.co.uk",
+      "userId": "6f6cc7ab-6fb4-480a-849f-19fd87823dfc",
+      "emailId": "723b8d57-e090-45ba-b6ac-c23b189dad73",
+      "timestamp": "2025-11-26T13:09:21.982Z"
+    },
+    {
+      "email": "jodie@jodieo.com",
+      "userId": "b9a61599-34bc-49fd-9133-fd844f8956c6",
+      "emailId": "a744845d-dc81-4926-85e2-a4c38d3ab5f3",
+      "timestamp": "2025-11-26T13:09:22.951Z"
+    },
+    {
+      "email": "lindataylor2109@outlook.com",
+      "userId": "5f53087d-cf02-4ec6-b5fe-f69756ded71d",
+      "emailId": "feb6d647-2cb7-499b-8a87-3461bffa1c06",
+      "timestamp": "2025-11-26T13:09:23.938Z"
+    },
+    {
+      "email": "lee@cloudsphere.co.uk",
+      "userId": "84b16e56-0670-493d-aa8d-ee24dcf51a7d",
+      "emailId": "53b576af-4fc2-4778-bfd8-e0a6e2d5a024",
+      "timestamp": "2025-11-26T13:09:24.876Z"
+    },
+    {
+      "email": "cokpala@yahoo.com",
+      "userId": "ccc56e44-bb93-484b-845e-342e3ef4bcdb",
+      "emailId": "05c4262c-d997-4478-b957-be3157a2455e",
+      "timestamp": "2025-11-26T13:09:25.831Z"
+    },
+    {
+      "email": "mehrina@mehrina.com",
+      "userId": "76d6331f-6c54-437f-8acd-a63156e16db4",
+      "emailId": "55788bc0-6378-4468-a25c-00f5ccdf4944",
+      "timestamp": "2025-11-26T13:09:26.794Z"
+    },
+    {
+      "email": "duwayne2406@gmail.com",
+      "userId": "aa427939-6caa-4a62-906e-f5f1bd65b985",
+      "emailId": "adaccd8e-5b65-4c3b-8b6a-f1ca9bfefef8",
+      "timestamp": "2025-11-26T13:09:27.778Z"
+    },
+    {
+      "email": "themuz@gmail.com",
+      "userId": "c57303fd-6aee-45e8-b042-ce5d62211976",
+      "emailId": "643493ec-1ed7-489f-ad20-04b2c3a91d8a",
+      "timestamp": "2025-11-26T13:09:28.723Z"
+    },
+    {
+      "email": "imwats78@gmail.com",
+      "userId": "26b50305-536b-47eb-8753-8d63bc3cf42c",
+      "emailId": "8ef76305-e76d-4631-9873-71e3936a99b3",
+      "timestamp": "2025-11-26T13:09:29.700Z"
+    },
+    {
+      "email": "christabeljames@gmail.com",
+      "userId": "96c6b899-450c-4ccd-93af-13c0a6e93241",
+      "emailId": "c5e788b7-0c17-40d7-afd1-cc59e99ec1cf",
+      "timestamp": "2025-11-26T13:09:30.685Z"
+    },
+    {
+      "email": "kalpsdahiya@gmail.com",
+      "userId": "65cf8314-c496-48d1-9ee3-aa6eabd483c2",
+      "emailId": "1fa2789b-57f3-4ba6-a469-4495b3a1ffa5",
+      "timestamp": "2025-11-26T13:09:31.710Z"
+    },
+    {
+      "email": "mpersichini17@gmail.com",
+      "userId": "9565e0c1-3cd6-40b6-aa33-3062f45baf68",
+      "emailId": "781dcb25-69cb-4397-aa17-7539abf9b299",
+      "timestamp": "2025-11-26T13:09:32.690Z"
+    },
+    {
+      "email": "vignesh.naidu@outlook.com",
+      "userId": "7e015701-0a5d-4f60-852a-2a5d019b5677",
+      "emailId": "12c07745-651c-46d7-a20d-bb6f97f39d5c",
+      "timestamp": "2025-11-26T13:09:33.673Z"
+    },
+    {
+      "email": "ssquireesquire@hotmail.com",
+      "userId": "c812a524-40f2-4bf0-afde-76a5da725cc4",
+      "emailId": "05f9ca92-0443-43fd-a8ac-d200cb316d20",
+      "timestamp": "2025-11-26T13:09:34.669Z"
+    },
+    {
+      "email": "brennanjterry@yahoo.com",
+      "userId": "666e25af-247a-4e5d-a85c-022790b691b4",
+      "emailId": "d0fdd740-fdc4-41ce-b2ce-e3fb4a206782",
+      "timestamp": "2025-11-26T13:09:35.759Z"
+    },
+    {
+      "email": "roywwaltersiv@gmail.com",
+      "userId": "94269edd-fdb4-4f06-926e-87403f241b72",
+      "emailId": "330890f7-c3fa-4441-ac75-8b6d36bb55b4",
+      "timestamp": "2025-11-26T13:09:36.759Z"
+    },
+    {
+      "email": "amyschweitzer623@gmail.com",
+      "userId": "1eb7fa36-a79b-43f8-9479-d0eed04c9a61",
+      "emailId": "0d162c42-8022-44f5-88fb-56897c07f57d",
+      "timestamp": "2025-11-26T13:09:37.730Z"
+    },
+    {
+      "email": "catherine.heckler@gmail.com",
+      "userId": "f40b86d0-9e35-46b4-8326-05b5376b55ea",
+      "emailId": "93b9a6e5-8cb5-4d3d-9926-38a9ca654801",
+      "timestamp": "2025-11-26T13:09:38.719Z"
+    },
+    {
+      "email": "jeffcremens10@gmail.com",
+      "userId": "1a5c74e3-fc8e-40a4-819a-739c14b6a154",
+      "emailId": "d62770d1-5281-46c8-a1cf-84033968694f",
+      "timestamp": "2025-11-26T13:09:39.668Z"
+    },
+    {
+      "email": "eldon@intheblacq.com",
+      "userId": "85b7590f-7d60-48f8-99b7-8b8a9df5dab3",
+      "emailId": "2f6c8829-ee93-4913-a7f5-387672203e0f",
+      "timestamp": "2025-11-26T13:09:40.646Z"
+    },
+    {
+      "email": "mohsenhajhassan@gmail.com",
+      "userId": "8d187207-d866-4587-a5df-5a5432e8ac6f",
+      "emailId": "7d919d09-1b73-43db-8b1a-498ccf4b330d",
+      "timestamp": "2025-11-26T13:09:41.620Z"
+    },
+    {
+      "email": "aws7660@gmail.com",
+      "userId": "2927a05e-e8b1-4953-968e-99284cf056e5",
+      "emailId": "bfdfdc99-8105-49fd-a391-b344aa1f2bd2",
+      "timestamp": "2025-11-26T13:09:42.594Z"
+    },
+    {
+      "email": "cdk138@gmail.com",
+      "userId": "6de58efc-de61-40f2-b383-63235056ae20",
+      "emailId": "5167c10a-3d4f-466c-a53c-723cf7c688c9",
+      "timestamp": "2025-11-26T13:09:43.551Z"
+    },
+    {
+      "email": "lewispjessica@yahoo.com",
+      "userId": "2ece2fb7-323d-4e53-82f5-ee38ebbe7f7d",
+      "emailId": "df6e712f-aa3e-4e66-9c9f-f2dc9880706f",
+      "timestamp": "2025-11-26T13:09:44.527Z"
+    },
+    {
+      "email": "floyd.robsr23@gmail.com",
+      "userId": "d33778a8-b548-4370-b806-a9c38b64c6fa",
+      "emailId": "cf3b2824-c7b2-4a7e-8c22-01d68bf597ce",
+      "timestamp": "2025-11-26T13:09:45.537Z"
+    },
+    {
+      "email": "calvin.scott.marshall@gmail.com",
+      "userId": "33e64f36-4bc5-448f-86ae-f4dd1a9a5025",
+      "emailId": "b7477c3f-efb3-4036-8246-52dd102d2b4e",
+      "timestamp": "2025-11-26T13:09:46.554Z"
+    },
+    {
+      "email": "emiliafbarreto@gmail.com",
+      "userId": "c47ef2f1-cad6-48c9-8e64-14389e995c17",
+      "emailId": "f1a28f86-0d25-49c2-8dd9-c5e4b8f44dda",
+      "timestamp": "2025-11-26T13:09:47.537Z"
+    },
+    {
+      "email": "rubiofernando@mac.com",
+      "userId": "c983774b-d182-42bb-9bf1-1cd03897ef0a",
+      "emailId": "cffea3cd-dbb7-4133-9089-3022ef1a1b97",
+      "timestamp": "2025-11-26T13:09:48.518Z"
+    },
+    {
+      "email": "pcxt10002@gmail.com",
+      "userId": "815414cf-ecc9-4d73-a8af-f0b44d1cf1d1",
+      "emailId": "86d02c31-c1be-463f-ac69-c4df32fedbdc",
+      "timestamp": "2025-11-26T13:09:49.519Z"
+    },
+    {
+      "email": "w.eian@hotmail.com",
+      "userId": "3ce694d5-3bd4-4627-9e21-001d41b49492",
+      "emailId": "c9abdae2-eb2e-4aee-b8fd-c4f625d26713",
+      "timestamp": "2025-11-26T13:09:50.475Z"
+    },
+    {
+      "email": "rparthas98@gmail.com",
+      "userId": "981dfdfc-780d-445c-82c4-7edeb184551a",
+      "emailId": "6c92fc33-2b92-42f9-9de5-d8f4429a94d6",
+      "timestamp": "2025-11-26T13:09:51.423Z"
+    },
+    {
+      "email": "matthewgranish@yahoo.com",
+      "userId": "ffd0a676-f600-4599-bfe6-30a0df08fdff",
+      "emailId": "c8167cbd-c644-48bc-82ee-c519c700878d",
+      "timestamp": "2025-11-26T13:09:52.407Z"
+    },
+    {
+      "email": "myuseph@hotmail.com",
+      "userId": "e1e77f37-d39f-4fde-a285-eebeae82e921",
+      "emailId": "6a55c096-a54d-4699-b2ed-2d64763a1737",
+      "timestamp": "2025-11-26T13:09:53.361Z"
+    },
+    {
+      "email": "jess.jakubas@gmail.com",
+      "userId": "c0874b28-0eee-4052-8209-ba0741c6e455",
+      "emailId": "e6bb1f96-8f88-41ed-8119-3f3b72c7fbc2",
+      "timestamp": "2025-11-26T13:09:54.438Z"
+    },
+    {
+      "email": "unidmarty@gmail.com",
+      "userId": "27577a48-9e04-4bf9-9a23-bae274f17909",
+      "emailId": "b618f1ab-2972-4ba1-9036-78f11d255533",
+      "timestamp": "2025-11-26T13:09:55.376Z"
+    },
+    {
+      "email": "khoganjr@icloud.com",
+      "userId": "568faf4e-257c-4a1f-bef0-c39bb63aa6f9",
+      "emailId": "4a7ded13-ad53-4aab-94b0-9524f85b4b55",
+      "timestamp": "2025-11-26T13:09:56.334Z"
+    },
+    {
+      "email": "rmdowdy31@bellsouth.net",
+      "userId": "3e178156-49a0-4447-b297-d2a507b18b44",
+      "emailId": "90e118e7-908c-4338-a0cb-67aa7036ed6b",
+      "timestamp": "2025-11-26T13:09:57.374Z"
+    },
+    {
+      "email": "christinesdeaver@gmail.com",
+      "userId": "1384c6d3-b2db-4025-a58b-9900b628de4b",
+      "emailId": "2c0086d5-569d-48bb-958c-1062d2c29a6f",
+      "timestamp": "2025-11-26T13:09:58.329Z"
+    },
+    {
+      "email": "croweannie4@gmail.com",
+      "userId": "82f43368-49a2-4f47-ad34-e8407861eaa1",
+      "emailId": "36b27718-122f-4aae-a116-96cd0e022221",
+      "timestamp": "2025-11-26T13:09:59.267Z"
+    },
+    {
+      "email": "rockylongworth@gmail.com",
+      "userId": "7f76919b-e446-43d2-b01a-326d908937cd",
+      "emailId": "52cd7db2-13fc-46d9-bde6-764116e1814b",
+      "timestamp": "2025-11-26T13:10:00.249Z"
+    },
+    {
+      "email": "marneharding17@gmail.com",
+      "userId": "09e456de-5299-46fa-b196-22871e5d8b64",
+      "emailId": "05c18fa5-0a02-4b20-a544-2a84e77f280b",
+      "timestamp": "2025-11-26T13:10:01.241Z"
+    },
+    {
+      "email": "kellstclair@gmail.com",
+      "userId": "b56399e5-1eb1-4394-8dcb-f6fafe4acb28",
+      "emailId": "ce6f78aa-eb79-4806-9a7f-2ca8e5c9161e",
+      "timestamp": "2025-11-26T13:10:02.235Z"
+    },
+    {
+      "email": "cstclair1@hotmail.com",
+      "userId": "c830d0cd-13c3-4765-b1e9-bfc7064edde9",
+      "emailId": "80a2f46d-e30d-488f-90c2-c45affe773e4",
+      "timestamp": "2025-11-26T13:10:03.187Z"
+    },
+    {
+      "email": "bemdel23@comcast.net",
+      "userId": "233b5ce0-c99c-4e57-b97c-217d943b4560",
+      "emailId": "87c455d5-f0e3-4921-904f-39f4e93a3228",
+      "timestamp": "2025-11-26T13:10:04.155Z"
+    },
+    {
+      "email": "geobajek@hotmail.com",
+      "userId": "2d971a4d-1086-44f7-922a-e053964e763c",
+      "emailId": "88663ec5-ed4c-4f70-96e8-f62ae3b0ca47",
+      "timestamp": "2025-11-26T13:10:05.132Z"
+    },
+    {
+      "email": "yurubchen@gmail.com",
+      "userId": "d3a3ebcc-9398-49c5-a23e-8e0e198e2520",
+      "emailId": "8091f3e8-b0a7-47bb-a95e-a1e08caeea48",
+      "timestamp": "2025-11-26T13:10:06.085Z"
+    },
+    {
+      "email": "diana_carolinac@hotmail.com",
+      "userId": "43637413-d150-40fd-91ab-44e0d7d6a1e3",
+      "emailId": "7b22a564-ddd1-4366-8d89-0066da828ee8",
+      "timestamp": "2025-11-26T13:10:07.043Z"
+    },
+    {
+      "email": "guillaumemoog@gmail.com",
+      "userId": "bfa497ff-0c67-4505-985e-a5d856ddf46e",
+      "emailId": "c764fadc-59b6-4106-93b4-104da9b315a5",
+      "timestamp": "2025-11-26T13:10:08.001Z"
+    },
+    {
+      "email": "robertc.reinbold@gmail.com",
+      "userId": "2ab22949-1aff-4e3c-9e13-90c5bcb813bd",
+      "emailId": "b27770d7-2fb5-472d-91ae-7afb35f9771e",
+      "timestamp": "2025-11-26T13:10:08.939Z"
+    },
+    {
+      "email": "mo_mccollum@fastmail.com",
+      "userId": "778d9bba-e015-4c2a-9ccf-ea367a8bd137",
+      "emailId": "d124b105-f9ae-4291-ab10-55eb4f80a62b",
+      "timestamp": "2025-11-26T13:10:09.915Z"
+    },
+    {
+      "email": "mariselyurdaneta@gmail.com",
+      "userId": "13ac1779-5267-45cf-ad3b-d3488f22c1d4",
+      "emailId": "4b4a9f05-7ef9-46c2-895c-bd52a3e81e4c",
+      "timestamp": "2025-11-26T13:10:10.923Z"
+    },
+    {
+      "email": "arcadie.angelo@gmail.com",
+      "userId": "2ff82724-b1f7-4120-ae9b-b3507fc8becf",
+      "emailId": "18439618-cde8-4388-a716-ddff8634e145",
+      "timestamp": "2025-11-26T13:10:11.868Z"
+    },
+    {
+      "email": "lmc3401@gmail.com",
+      "userId": "78d44d50-dc81-4af8-b14a-b9744c6802e3",
+      "emailId": "e9a5adea-f228-4857-af8f-acdc1f60851d",
+      "timestamp": "2025-11-26T13:10:12.803Z"
+    },
+    {
+      "email": "ahmed_djidda@yahoo.fr",
+      "userId": "68d12fd3-f06f-4a7a-8ee1-488f0ddf06fe",
+      "emailId": "eebd4a7c-d7c1-43c4-9ed3-cb301da88cc0",
+      "timestamp": "2025-11-26T13:10:13.786Z"
+    },
+    {
+      "email": "sergioestradaf@gmail.com",
+      "userId": "5bdb1886-2707-4419-b15b-643540e58578",
+      "emailId": "d0952161-59cf-49c2-9858-f6d2be5289f0",
+      "timestamp": "2025-11-26T13:10:14.733Z"
+    },
+    {
+      "email": "kumarakkp@gmail.com",
+      "userId": "ac4eb461-391b-429f-993b-9fed3a015ceb",
+      "emailId": "8a38e01d-0eac-4ff1-a700-0e80c8f3c746",
+      "timestamp": "2025-11-26T13:10:15.680Z"
+    },
+    {
+      "email": "barbra.hargreaves@tiscali.co.uk",
+      "userId": "856c9c04-df83-4f28-951e-99200811657c",
+      "emailId": "ab1a8838-1cd0-4a7f-90d9-d9c4391903c7",
+      "timestamp": "2025-11-26T13:10:16.668Z"
+    },
+    {
+      "email": "anjan.tamuli@gmail.com",
+      "userId": "4c49c181-6ee0-4cf8-b457-a56b2eacda6f",
+      "emailId": "bfa4843c-6d3f-4d02-9b39-cbf4f139df27",
+      "timestamp": "2025-11-26T13:10:17.622Z"
+    },
+    {
+      "email": "sos2004.midde@gmail.com",
+      "userId": "556f95ba-f468-4752-b1b8-69c8ba7df8af",
+      "emailId": "6cd8df72-3268-416e-8573-0f617c9cfe98",
+      "timestamp": "2025-11-26T13:10:18.585Z"
+    },
+    {
+      "email": "dgafiyatullin@gmail.com",
+      "userId": "bad3cd94-f344-46a2-98d6-fe4081b7025d",
+      "emailId": "a9d4aed0-aeeb-4633-af1a-608db6d1c99c",
+      "timestamp": "2025-11-26T13:10:19.534Z"
+    },
+    {
+      "email": "akeemadio@yahoo.com",
+      "userId": "73a8c5a6-dd50-4f46-a268-f08a565ea462",
+      "emailId": "72682874-4dc2-4e72-8e1e-b62cd65f9227",
+      "timestamp": "2025-11-26T13:10:20.491Z"
+    },
+    {
+      "email": "sanjeevacharya7@gmail.com",
+      "userId": "4b01b71d-9330-4b85-a78e-b54b24e51653",
+      "emailId": "8cb4c058-fd7a-428a-8d4e-b65761fb7f5b",
+      "timestamp": "2025-11-26T13:10:21.452Z"
+    },
+    {
+      "email": "dnargelx59@gmail.com",
+      "userId": "140c7101-b2ac-4d28-86a1-0ee2de5262d3",
+      "emailId": "8e27efb6-d4a1-4e1d-b9ea-4a83ac5afcba",
+      "timestamp": "2025-11-26T13:10:22.430Z"
+    },
+    {
+      "email": "chichi.nwosu@c-rowland.com",
+      "userId": "2ed6ccbe-6916-4b6c-8949-043bc8a82b84",
+      "emailId": "52cbba71-2cfc-4608-98b5-9e8c7a614909",
+      "timestamp": "2025-11-26T13:10:23.432Z"
+    },
+    {
+      "email": "tunde.salami@gmail.com",
+      "userId": "14f1dadc-6256-4eaf-855f-80f1a8ec775b",
+      "emailId": "9d3d7706-fa8d-422a-8f86-d9515301c9d4",
+      "timestamp": "2025-11-26T13:10:24.547Z"
+    },
+    {
+      "email": "kmark28@gmail.com",
+      "userId": "87025996-4371-44d5-ab25-38851511d064",
+      "emailId": "a9d38084-7b95-46e4-ba93-5e51a1c7a2d0",
+      "timestamp": "2025-11-26T13:10:25.508Z"
+    },
+    {
+      "email": "hadaniels@compuserve.com",
+      "userId": "989ebc90-f886-4482-80c3-2debbc6e8aa5",
+      "emailId": "e5238e5f-11c6-4552-bf7d-854dd476a9b7",
+      "timestamp": "2025-11-26T13:10:26.564Z"
+    },
+    {
+      "email": "micuonzo79@msn.com",
+      "userId": "aab55d75-6370-49de-b570-da4ead178f63",
+      "emailId": "32e9a7d1-382f-43e5-84df-2bfff6f77a89",
+      "timestamp": "2025-11-26T13:10:27.507Z"
+    },
+    {
+      "email": "iansmoo@yahoo.co.uk",
+      "userId": "8e368944-f471-4a61-87e4-7fdb0f1c48a3",
+      "emailId": "7217c9b9-9909-40ff-b425-7e20911c4ea5",
+      "timestamp": "2025-11-26T13:10:28.485Z"
+    },
+    {
+      "email": "mno22@cornell.edu",
+      "userId": "9e735510-d129-4432-854a-cf919d081375",
+      "emailId": "07f29de0-3a10-4abf-90bb-e6a91cbdf6c2",
+      "timestamp": "2025-11-26T13:10:29.435Z"
+    },
+    {
+      "email": "inter@dublin.com",
+      "userId": "0ca90aec-ab6b-4303-a45d-7387f982e336",
+      "emailId": "100886a0-835e-4d37-beab-35e981fafe38",
+      "timestamp": "2025-11-26T13:10:30.425Z"
+    },
+    {
+      "email": "rosswick1@hotmail.com",
+      "userId": "6b4d2ce9-e568-4709-9263-679ce7ae1c20",
+      "emailId": "6c509e54-ca94-43de-b895-ba80706569fc",
+      "timestamp": "2025-11-26T13:10:31.439Z"
+    },
+    {
+      "email": "michael.booyens@gmail.com",
+      "userId": "4576cb0b-acfb-4705-b4e9-f0f8f0ef7890",
+      "emailId": "e808fca0-70ac-4c50-b5f9-7fc500aed333",
+      "timestamp": "2025-11-26T13:10:32.389Z"
+    },
+    {
+      "email": "sherilyns@shawconsulting1857900.com",
+      "userId": "f7734ff9-2cce-41f4-a427-d0bb1ac41254",
+      "emailId": "d9841351-2486-40ef-ac13-194729bbbe6f",
+      "timestamp": "2025-11-26T13:10:33.364Z"
+    },
+    {
+      "email": "eirik.hooper@gmail.com",
+      "userId": "979db1a4-0079-47b4-92d7-53b9ed7bbba4",
+      "emailId": "f1a8234d-fe83-452a-b527-9b34a3f4f4ce",
+      "timestamp": "2025-11-26T13:10:34.622Z"
+    },
+    {
+      "email": "randy.herrmann@gmail.com",
+      "userId": "be7287b8-96d4-4b54-9e0d-f9717ef356be",
+      "emailId": "d01ab97d-5e12-487b-8075-5c8cd373539a",
+      "timestamp": "2025-11-26T13:10:35.605Z"
+    },
+    {
+      "email": "mike_flewelling@hotmail.com",
+      "userId": "ce787ecb-49ae-47f9-988c-a158c45638ab",
+      "emailId": "48bd7e78-ada8-4847-9023-d7d1a2381d8a",
+      "timestamp": "2025-11-26T13:10:36.560Z"
+    },
+    {
+      "email": "paulobiora@yahoo.com",
+      "userId": "ea05e42d-8485-4841-b3e4-e4f528a6818b",
+      "emailId": "6c62a69f-cda0-4218-9d48-3ccc2e891d6a",
+      "timestamp": "2025-11-26T13:10:37.517Z"
+    },
+    {
+      "email": "jackselin.mathew@outlook.com",
+      "userId": "b03adf9a-426f-4599-bd63-9caee6599fdd",
+      "emailId": "da7c7aac-eb8b-4a6e-9da9-b258cd7ff2a3",
+      "timestamp": "2025-11-26T13:10:38.480Z"
+    },
+    {
+      "email": "poalospinelli@yahoo.com",
+      "userId": "bd404a08-054d-4ef4-9f30-0e2bbfc06b99",
+      "emailId": "4af420f9-50cf-46b4-a02d-5abe6b06131a",
+      "timestamp": "2025-11-26T13:10:39.489Z"
+    },
+    {
+      "email": "khanfarrukhali98@gmail.com",
+      "userId": "71f3efb3-13be-4779-aa70-31fc8f58973e",
+      "emailId": "c7d0e39b-ab88-4fef-8231-e884846c0296",
+      "timestamp": "2025-11-26T13:10:40.437Z"
+    },
+    {
+      "email": "samulsun@hotmail.com",
+      "userId": "bfc79c77-546d-47c3-a17e-088003076368",
+      "emailId": "ff4225de-7333-4dcd-945b-0cfdefb2aa7a",
+      "timestamp": "2025-11-26T13:10:41.440Z"
+    },
+    {
+      "email": "cjrai2010@gmail.com",
+      "userId": "6f9ff7e9-bd5d-4528-bcdf-8832819e42cf",
+      "emailId": "e424d689-6741-4429-a16d-d31d1b30eff4",
+      "timestamp": "2025-11-26T13:10:43.330Z"
+    },
+    {
+      "email": "laird1510@gmail.com",
+      "userId": "13e5596d-02fe-4180-a42e-39c63a5a5e12",
+      "emailId": "462a1662-4d2c-48f9-8ec9-d540bbe7f412",
+      "timestamp": "2025-11-26T13:10:44.298Z"
+    },
+    {
+      "email": "nkono_anyang@yahoo.com",
+      "userId": "c1e708a2-6d35-41c0-8230-174118712134",
+      "emailId": "510c4d65-dee6-46dc-a40b-c1b05fe4d696",
+      "timestamp": "2025-11-26T13:10:45.256Z"
+    },
+    {
+      "email": "freddy.corredor@geostrap.com",
+      "userId": "1101186e-e8cb-476d-9b7d-16cc1bf4fe6f",
+      "emailId": "0ebee4ea-1094-4985-9bd6-dc925ea5ab6c",
+      "timestamp": "2025-11-26T13:10:46.297Z"
+    },
+    {
+      "email": "tom@teamlambda.com",
+      "userId": "dd4dc184-3a94-4572-87c7-9443d852c4f9",
+      "emailId": "fe4c4cab-23b7-47a8-8ecd-a10f0219281a",
+      "timestamp": "2025-11-26T13:10:47.574Z"
+    },
+    {
+      "email": "aymen.chagour@gmail.com",
+      "userId": "34428b20-23b4-48a9-a00d-b21c54546e7c",
+      "emailId": "37a1b042-5f99-4f73-ad64-6685b48850bf",
+      "timestamp": "2025-11-26T13:10:48.546Z"
+    },
+    {
+      "email": "anahitaram@gmail.com",
+      "userId": "9dc43586-fb19-4bd9-9ccf-93e6d36a0210",
+      "emailId": "2f8990b6-6eac-4c58-80ef-50ec69538c93",
+      "timestamp": "2025-11-26T13:10:49.540Z"
+    },
+    {
+      "email": "mchan6288@gmail.com",
+      "userId": "a7bd9251-fb98-42d8-9dbe-a7bbdce56af2",
+      "emailId": "153cfe66-90bf-47cf-88ff-a37506c8f462",
+      "timestamp": "2025-11-26T13:10:50.495Z"
+    },
+    {
+      "email": "cnhachi27@gmail.com",
+      "userId": "c1ae326e-ae48-46c3-bcdb-e749b5ae129c",
+      "emailId": "01ad3d35-8f7c-4fbf-90e6-4c00f60dfba4",
+      "timestamp": "2025-11-26T13:10:51.479Z"
+    },
+    {
+      "email": "salazarichard@gmail.com",
+      "userId": "55695e49-cf77-4e56-8110-7e9e63ba19a1",
+      "emailId": "ba7713c3-127b-4846-a876-ce77ce6f8647",
+      "timestamp": "2025-11-26T13:10:52.437Z"
+    },
+    {
+      "email": "clive.dcruz@epic.com.au",
+      "userId": "7cbd38af-73b6-4aa0-b071-6173ae027c5e",
+      "emailId": "6c3f8438-ddbe-4f34-b9f4-8c7e116ec389",
+      "timestamp": "2025-11-26T13:10:53.400Z"
+    },
+    {
+      "email": "ralf.oppermann@opptimal.com",
+      "userId": "7eef404a-10b8-45ac-95ad-5dce01101481",
+      "emailId": "9eebc411-b52b-4ec1-99fa-7c55a7686d59",
+      "timestamp": "2025-11-26T13:10:54.369Z"
+    },
+    {
+      "email": "santanumishra444@gmail.com",
+      "userId": "90a1e15c-5710-48cd-8c63-98c3350b54f3",
+      "emailId": "f357db29-574f-4315-be35-78d3da7daa56",
+      "timestamp": "2025-11-26T13:10:55.312Z"
+    },
+    {
+      "email": "samrinder@hotmail.com",
+      "userId": "cd6c4dba-aae3-425a-b8c1-478f4a50d9e4",
+      "emailId": "72e9bfcb-433f-4fa8-a342-26b2725fe651",
+      "timestamp": "2025-11-26T13:10:56.251Z"
+    },
+    {
+      "email": "hasnainadl@gmail.com",
+      "userId": "e59d3960-aa5c-4a63-9447-f5911a742f98",
+      "emailId": "de67f08d-1df4-472b-b926-a530431e8eac",
+      "timestamp": "2025-11-26T13:10:57.228Z"
+    },
+    {
+      "email": "adejager@executioninfo.com",
+      "userId": "41860726-8fc2-4a9e-bf39-14f1d46ee172",
+      "emailId": "0e5f8554-1803-4b65-9f63-4edc2fec3671",
+      "timestamp": "2025-11-26T13:10:58.219Z"
+    },
+    {
+      "email": "saituysal@gmail.com",
+      "userId": "3c7353bc-cd2e-44c0-a4cd-04824a3b8ab0",
+      "emailId": "7082551e-a810-4f4b-ab16-9c58bf77f3a1",
+      "timestamp": "2025-11-26T13:10:59.159Z"
+    },
+    {
+      "email": "pillay.h@gmail.com",
+      "userId": "d0d07cb3-675b-4935-bcc4-8ab963335d90",
+      "emailId": "b7be4ae8-2eeb-4f6a-9c0b-668bc620b742",
+      "timestamp": "2025-11-26T13:11:00.140Z"
+    },
+    {
+      "email": "stacey@shakemktg.com",
+      "userId": "afac51fe-575b-49b2-b7f0-f97b05963317",
+      "emailId": "b08476c4-d39d-4af2-931e-d818c0470995",
+      "timestamp": "2025-11-26T13:11:01.087Z"
+    },
+    {
+      "email": "antonvdb84@gmail.com",
+      "userId": "0f3f44f0-5471-4bf8-a03f-beae1dc72643",
+      "emailId": "a951777d-812a-41bb-83fe-0a771699ab3e",
+      "timestamp": "2025-11-26T13:11:02.038Z"
+    },
+    {
+      "email": "jkelley.rockwise@att.net",
+      "userId": "e3afa397-f7bf-4148-b1e3-5e6d0ca9754f",
+      "emailId": "6a84e6e2-2490-4c53-ba80-8406a0bf0b3d",
+      "timestamp": "2025-11-26T13:11:03.029Z"
+    },
+    {
+      "email": "apycal.solutions@gmail.com",
+      "userId": "a14e989f-bb17-437b-a6db-eb1607a00ca1",
+      "emailId": "bc67a42e-e25b-4721-95e9-c1054ac4b8b7",
+      "timestamp": "2025-11-26T13:11:03.988Z"
+    },
+    {
+      "email": "rachael+testing@sanddollardesign.co.za",
+      "userId": "8a2e3c11-f3c2-42fe-be12-eade7601a013",
+      "emailId": "db431c0a-da8d-4695-bba8-a987b08c803e",
+      "timestamp": "2025-11-26T13:11:04.976Z"
+    },
+    {
+      "email": "scgillespie@flatlanderinvestments.com",
+      "userId": "1180318f-8c38-4cd9-8732-810ee416f6d9",
+      "emailId": "d1be12ec-1a45-40bb-8bef-034c0b9fa7de",
+      "timestamp": "2025-11-26T13:11:05.946Z"
+    },
+    {
+      "email": "james@zenithog.com",
+      "userId": "888ed591-b98f-4a63-ac28-12469d3a2d85",
+      "emailId": "9fa96ec7-4398-44ee-ae13-5323f20af08d",
+      "timestamp": "2025-11-26T13:11:07.039Z"
+    },
+    {
+      "email": "jamesnevin1980@gmail.com",
+      "userId": "8714b5c0-c4fb-42f3-9a57-82ad7795e659",
+      "emailId": "b4db3704-1b29-4227-a8c4-3a84cecc293b",
+      "timestamp": "2025-11-26T13:11:08.013Z"
+    },
+    {
+      "email": "ptc1178@icloud.com",
+      "userId": "59bb8bdf-4d5c-4d2a-97eb-9cbef2554312",
+      "emailId": "37de9669-a1c0-4ecf-a3f5-c5db2346260b",
+      "timestamp": "2025-11-26T13:11:08.952Z"
+    },
+    {
+      "email": "brenxl@gmail.com",
+      "userId": "1c6936a7-0218-4f5b-8149-45fd1fa9cf11",
+      "emailId": "5d0dda15-a2f1-41f5-b19c-7c63c3c829fc",
+      "timestamp": "2025-11-26T13:11:09.938Z"
+    },
+    {
+      "email": "ike@iiigallica.com",
+      "userId": "f88788e7-209f-40ce-9f5f-e511154076e1",
+      "emailId": "ed417cb9-3ad2-42bb-9cc4-97fbdab2ad9e",
+      "timestamp": "2025-11-26T13:11:10.878Z"
+    },
+    {
+      "email": "dblack@mindspring.com",
+      "userId": "19aa6aa1-3cb6-43a6-b003-68bc536c0622",
+      "emailId": "ebea49d1-57b9-44b0-abd0-413ed9d8bbe9",
+      "timestamp": "2025-11-26T13:11:11.910Z"
+    },
+    {
+      "email": "lisa2.boodoo@gmail.com",
+      "userId": "60e35a1c-29e3-4aae-9549-e65cf9d867bc",
+      "emailId": "54fd0274-3d4d-4b7e-a0f6-1b19b8e2924d",
+      "timestamp": "2025-11-26T13:11:12.911Z"
+    },
+    {
+      "email": "agclems@gmail.com",
+      "userId": "6c145896-336e-461f-ac68-ac09fe93710f",
+      "emailId": "02553188-c618-4fed-ba4d-e8db6bb08a47",
+      "timestamp": "2025-11-26T13:11:13.978Z"
+    },
+    {
+      "email": "dansalazarct@gmail.com",
+      "userId": "ffd016a5-e8b3-45d5-8ed9-e22ab4598a7c",
+      "emailId": "3987ae1d-cc94-4e7b-a21f-921b3176eb63",
+      "timestamp": "2025-11-26T13:11:15.113Z"
+    },
+    {
+      "email": "daniel@coelho.org",
+      "userId": "a72827c5-f2b0-4d6e-b971-56ac20df18f4",
+      "emailId": "e6eb04fb-ed07-446a-94a8-159007330377",
+      "timestamp": "2025-11-26T13:11:16.079Z"
+    },
+    {
+      "email": "sacheen.ss@gmail.com",
+      "userId": "37ffa803-810b-4bbc-ba4c-b76e6845b0b6",
+      "emailId": "f38d9252-4b59-49de-8380-ef0c4c788835",
+      "timestamp": "2025-11-26T13:11:17.108Z"
+    },
+    {
+      "email": "rscassell@gmail.com",
+      "userId": "e5a287d3-7887-4b03-b93d-a923d1df84cd",
+      "emailId": "a80c0343-8e80-42a4-9294-bb1dab15c0da",
+      "timestamp": "2025-11-26T13:11:18.062Z"
+    },
+    {
+      "email": "nirvikar@alumni.gsb.stanford.edu",
+      "userId": "e376354c-1ecc-4000-8b46-43d01ca1de93",
+      "emailId": "d38ef168-b7f0-47d1-9bfc-ad07b2b0b303",
+      "timestamp": "2025-11-26T13:11:19.082Z"
+    },
+    {
+      "email": "khurram_tufail@live.com",
+      "userId": "03b2df76-4d3f-40f9-bee7-6e04f05d16e7",
+      "emailId": "37cc5526-5afb-4f75-8303-919cc51af9fc",
+      "timestamp": "2025-11-26T13:11:20.027Z"
+    },
+    {
+      "email": "venkataramanasr.office@gmail.com",
+      "userId": "56a45e2f-de33-41c8-b09c-db4f0ca48874",
+      "emailId": "5dc656a3-06b3-4a31-ba29-a3e6dba1b226",
+      "timestamp": "2025-11-26T13:11:20.989Z"
+    },
+    {
+      "email": "steveb@bciee.com",
+      "userId": "544b791b-536a-4a9a-ade6-1f3fd833c249",
+      "emailId": "bca832c1-b29b-4d47-9129-23d6ec7222f5",
+      "timestamp": "2025-11-26T13:11:21.965Z"
+    },
+    {
+      "email": "p.alex.clayton@gmail.com",
+      "userId": "5fbf2be8-89ce-4e0a-ae3a-ae37f9da8b83",
+      "emailId": "5a141121-b9c8-4379-91e4-980e9817f73e",
+      "timestamp": "2025-11-26T13:11:22.919Z"
+    },
+    {
+      "email": "35dabra@gmail.com",
+      "userId": "90cf2284-9f65-436b-a88e-bc43dbc319fd",
+      "emailId": "a61b65f8-ab93-4632-9050-ad43fab7cd99",
+      "timestamp": "2025-11-26T13:11:23.890Z"
+    },
+    {
+      "email": "william.zee@gmail.com",
+      "userId": "42dc397a-76a6-4e8e-886c-5a2db4b1d698",
+      "emailId": "297e89b4-d600-402a-b459-d91f523b2125",
+      "timestamp": "2025-11-26T13:11:24.913Z"
+    },
+    {
+      "email": "juarez.lenin@gmail.com",
+      "userId": "0b16a798-6904-4c16-8947-6f2e749b5b76",
+      "emailId": "97ecccbe-63fa-4978-92d6-227ba0f5eeb4",
+      "timestamp": "2025-11-26T13:11:26.000Z"
+    },
+    {
+      "email": "rubyshernandez@gmail.com",
+      "userId": "18315a91-570a-4ec1-a0e8-472847fafc4b",
+      "emailId": "991d50e8-acda-4a3c-b209-cbfbb0deacc1",
+      "timestamp": "2025-11-26T13:11:26.988Z"
+    },
+    {
+      "email": "ravivaithi@aol.com",
+      "userId": "be67420d-6037-4f29-a197-e31b152e8ee4",
+      "emailId": "53c11928-69a5-4c33-9f44-89a33652cc3f",
+      "timestamp": "2025-11-26T13:11:28.010Z"
+    },
+    {
+      "email": "chris@collieresources.com",
+      "userId": "d31df590-01dd-4907-abb6-d287b6c48ba6",
+      "emailId": "7d2785e1-9e69-48fb-ae9a-545b8c494dfb",
+      "timestamp": "2025-11-26T13:11:28.963Z"
+    },
+    {
+      "email": "ted@dsoilgas.com",
+      "userId": "d33c7d0c-1439-4446-89cc-115983acd350",
+      "emailId": "bc064ae6-2fcd-4fe5-a302-a2ba49f9a12e",
+      "timestamp": "2025-11-26T13:11:29.944Z"
+    },
+    {
+      "email": "vineeta.saini@gmail.com",
+      "userId": "59abbefb-eedf-469c-a463-a066f8f164b8",
+      "emailId": "ed941e5b-3f91-4491-9864-39be42950b95",
+      "timestamp": "2025-11-26T13:11:30.925Z"
+    },
+    {
+      "email": "grantlowey@ymail.com",
+      "userId": "5a47acfe-65b0-4892-a8ce-2a5ea0fa3b47",
+      "emailId": "1e0d29a5-0b72-47fa-a3d4-a37c07ddc686",
+      "timestamp": "2025-11-26T13:11:31.973Z"
+    },
+    {
+      "email": "alanajo81@gmail.com",
+      "userId": "bbcab384-fe8f-4508-b285-d1062708fc38",
+      "emailId": "d31f6868-3bdf-47c1-b9db-7a3127f9411a",
+      "timestamp": "2025-11-26T13:11:32.930Z"
+    },
+    {
+      "email": "sebasduarte2@hotmail.com",
+      "userId": "45dd7373-dd12-42f6-ba31-2099693dbc93",
+      "emailId": "6cfb32f8-9e42-4999-a9a3-784c3380b0a7",
+      "timestamp": "2025-11-26T13:11:33.900Z"
+    },
+    {
+      "email": "jay.miller@utexas.edu",
+      "userId": "98db28a7-388b-4a48-a888-0a14b8fcdf0d",
+      "emailId": "e50cfd06-d23e-4743-aef5-f68a3e52b813",
+      "timestamp": "2025-11-26T13:11:34.886Z"
+    },
+    {
+      "email": "dohstrom@gmail.com",
+      "userId": "e3a733fe-7aa1-4211-bc2f-d425bb1b0dea",
+      "emailId": "2ba23886-d893-43ea-b694-2522c55d5b8c",
+      "timestamp": "2025-11-26T13:11:35.828Z"
+    },
+    {
+      "email": "carloscalandra@yahoo.com.ar",
+      "userId": "f51d409b-c6c1-4e7b-ae96-23550f8e45bc",
+      "emailId": "e3acb719-9d7a-4227-9c83-d240be9d9d0d",
+      "timestamp": "2025-11-26T13:11:36.800Z"
+    },
+    {
+      "email": "ashish.galav@gmail.com",
+      "userId": "c7566024-592d-4cec-95f3-68e82b8152f4",
+      "emailId": "1277a6e4-0f80-460e-9c6b-c529a17dfd84",
+      "timestamp": "2025-11-26T13:11:37.742Z"
+    },
+    {
+      "email": "ruslanchaplygin@gmail.com",
+      "userId": "e6546f54-38f7-4155-808f-a93471df4630",
+      "emailId": "1b3a9b89-d273-4b30-aea5-9efb82024fae",
+      "timestamp": "2025-11-26T13:11:38.679Z"
+    },
+    {
+      "email": "achantav9@gmail.com",
+      "userId": "571f1158-2635-4a78-8152-55b74c76520b",
+      "emailId": "8892dcaa-dcd1-489d-a6c6-e4fb110b7cb1",
+      "timestamp": "2025-11-26T13:11:39.652Z"
+    },
+    {
+      "email": "jwtracy@outlook.com",
+      "userId": "f000b137-7a2f-4dee-92a6-65c7917eadfd",
+      "emailId": "353f4d00-75a0-435f-9ff9-b924a2bdbf6e",
+      "timestamp": "2025-11-26T13:11:40.621Z"
+    },
+    {
+      "email": "bakersamson@gmail.com",
+      "userId": "ca54705b-980c-4475-a878-5cb06441cf75",
+      "emailId": "7195ea64-e68c-4649-9833-23d119905b29",
+      "timestamp": "2025-11-26T13:11:41.650Z"
+    },
+    {
+      "email": "p.venkataraman@ymail.com",
+      "userId": "bdb8ee1a-7a45-47ba-a854-9968613fb625",
+      "emailId": "dc31ff9a-24e4-42c1-a73a-c98a448f1017",
+      "timestamp": "2025-11-26T13:11:42.612Z"
+    },
+    {
+      "email": "g.a.bacchus@gmail.com",
+      "userId": "bd362558-109b-4c93-9ebe-796cb5de49c2",
+      "emailId": "6d4fbcad-4042-4bec-b21e-185deb5e8d4c",
+      "timestamp": "2025-11-26T13:11:43.670Z"
+    },
+    {
+      "email": "brucekagan18@yahoo.com",
+      "userId": "21903b56-afa4-4b9f-b3dc-c0c76eb289f3",
+      "emailId": "cb0897ed-fe3b-4fe2-9ea3-ee769bbb1ef7",
+      "timestamp": "2025-11-26T13:11:44.603Z"
+    },
+    {
+      "email": "wyman@growthcapital.pro",
+      "userId": "3fdf147d-c82f-4c3b-820c-9d4326b9ab9b",
+      "emailId": "5825e29b-1fa6-4cc6-98ff-38625560d9df",
+      "timestamp": "2025-11-26T13:11:45.703Z"
+    },
+    {
+      "email": "werner@ten10.group",
+      "userId": "2db92ec9-a399-4098-9618-b26a6561f79e",
+      "emailId": "413916f2-9d68-48f1-a1c1-935929d3f516",
+      "timestamp": "2025-11-26T13:11:46.698Z"
+    },
+    {
+      "email": "sehgal.geetika@gmail.com",
+      "userId": "299711a7-6a7e-4db5-ab5a-967b02f2f612",
+      "emailId": "b0ae7da3-45b2-4084-9a63-8f49e99e5fa6",
+      "timestamp": "2025-11-26T13:11:47.717Z"
+    },
+    {
+      "email": "r_walla@msn.com",
+      "userId": "81573ac4-c512-4dff-9d50-0f17b4592711",
+      "emailId": "1a163068-a12c-48cb-ac27-1a368b0b89ee",
+      "timestamp": "2025-11-26T13:11:48.662Z"
+    },
+    {
+      "email": "escapitalventures@gmail.com",
+      "userId": "41de843c-2c33-4c72-b918-13a725fd9982",
+      "emailId": "8020a172-9d1e-43ad-bc05-c76d51bcce0c",
+      "timestamp": "2025-11-26T13:11:49.612Z"
+    },
+    {
+      "email": "davbrtlng@aol.com",
+      "userId": "5ae09906-c15a-4eff-a549-bf02c58b952b",
+      "emailId": "a0a921e9-8be3-42b3-a04d-f7a01857b33c",
+      "timestamp": "2025-11-26T13:11:50.570Z"
+    },
+    {
+      "email": "jim_stephens@attglobal.net",
+      "userId": "36a2b86f-3cfe-45d7-8ef9-14742c473d4f",
+      "emailId": "e7970ecd-4bbc-415b-ad73-3590695a0b63",
+      "timestamp": "2025-11-26T13:11:51.510Z"
+    },
+    {
+      "email": "byamponsah@gmail.com",
+      "userId": "8b59b07f-6b40-4f06-aeae-c3e69fe390d8",
+      "emailId": "5029a143-8033-4bfb-93cd-d67ef3b29f4a",
+      "timestamp": "2025-11-26T13:11:52.474Z"
+    },
+    {
+      "email": "nuella.anasoh@gmail.com",
+      "userId": "0233cb4f-02c1-4eef-befc-6a9b101acaea",
+      "emailId": "0a845cb6-a997-43f3-b792-51de464dbb06",
+      "timestamp": "2025-11-26T13:11:53.429Z"
+    },
+    {
+      "email": "rbristow@gmail.com",
+      "userId": "6d1e124d-dc69-42aa-8f6c-091b36f05783",
+      "emailId": "9587168f-715d-48d3-836c-162b29a4fb10",
+      "timestamp": "2025-11-26T13:11:54.373Z"
+    },
+    {
+      "email": "pradaconsultantsindia@gmail.com",
+      "userId": "895b41b1-7ab2-45bc-a68e-6cc6cbfc4f10",
+      "emailId": "e3629295-2646-4af0-80e9-7c16872f3adf",
+      "timestamp": "2025-11-26T13:11:55.363Z"
+    },
+    {
+      "email": "davdon@shaw.ca",
+      "userId": "1ec2d9d7-aac6-45ae-b3ce-93c8e8ddab30",
+      "emailId": "0eb5e3f1-f95c-41cb-a5cf-9e91b9753f33",
+      "timestamp": "2025-11-26T13:11:56.307Z"
+    },
+    {
+      "email": "fletcherrj2k@yahoo.com",
+      "userId": "b7c86c06-2cdd-4a94-8b8b-070ad80942fc",
+      "emailId": "5993e9a4-7787-4a62-a8c5-17ffaeac87df",
+      "timestamp": "2025-11-26T13:11:57.270Z"
+    },
+    {
+      "email": "andythompson0011@yahoo.co.uk",
+      "userId": "2ebe41df-295d-4305-989c-b3921954e9f3",
+      "emailId": "b847cb35-af4a-4957-b393-0fede24829e3",
+      "timestamp": "2025-11-26T13:11:58.247Z"
+    },
+    {
+      "email": "leo@hcr.digital",
+      "userId": "d78fd462-bda1-43c0-9400-9322f1aadd21",
+      "emailId": "47b4f199-7079-4817-8f75-fd709b712db9",
+      "timestamp": "2025-11-26T13:11:59.202Z"
+    },
+    {
+      "email": "pavalerio@gmail.com",
+      "userId": "344d489f-1326-482b-a0c3-a1df2484d4eb",
+      "emailId": "81bae198-989a-4495-91c3-18a3ab1c71e0",
+      "timestamp": "2025-11-26T13:12:00.170Z"
+    },
+    {
+      "email": "daniellecardile@gmail.com",
+      "userId": "164b10c5-b018-435a-b704-3461aa71f766",
+      "emailId": "ec37afba-8b38-44a9-8292-441055aecf21",
+      "timestamp": "2025-11-26T13:12:01.124Z"
+    },
+    {
+      "email": "lsm5611@gmail.com",
+      "userId": "6be1ce5d-86f3-4df0-be1b-e978d6250416",
+      "emailId": "26ba0294-8def-4c8b-bbc9-b72bb1f0d1c8",
+      "timestamp": "2025-11-26T13:12:02.112Z"
+    },
+    {
+      "email": "david.frederick.ouellette@gmail.com",
+      "userId": "0b4a2bf7-c991-4abb-923f-3c2b65344430",
+      "emailId": "bb82c67d-a486-4030-9047-422d15e541cc",
+      "timestamp": "2025-11-26T13:12:03.075Z"
+    },
+    {
+      "email": "jennifermcazares@gmail.com",
+      "userId": "42b40fd6-c795-45ef-86fe-9fff7a884f03",
+      "emailId": "9226d0cd-a31d-49a4-a9a8-9417f9de12b3",
+      "timestamp": "2025-11-26T13:12:04.046Z"
+    },
+    {
+      "email": "sliscomb@yahoo.com",
+      "userId": "16cad226-c276-4738-9441-facdafffe8da",
+      "emailId": "49074e47-92cd-4c31-8017-6f70fd2f55ec",
+      "timestamp": "2025-11-26T13:12:05.012Z"
+    },
+    {
+      "email": "davidjperrett2014@gmail.com",
+      "userId": "e9021185-bb39-40ca-9d5a-5f3258019bf9",
+      "emailId": "37603e24-f685-40e6-a059-317cbfe90db7",
+      "timestamp": "2025-11-26T13:12:05.991Z"
+    },
+    {
+      "email": "moxiekarasek@gmail.com",
+      "userId": "2a79c707-7ab4-48d2-85c6-b01f8b897a4b",
+      "emailId": "e7088a82-a41e-4b07-8d99-975997154c1e",
+      "timestamp": "2025-11-26T13:12:06.944Z"
+    },
+    {
+      "email": "wnaomik@gmail.com",
+      "userId": "485e7fb1-7312-4dca-a00a-4a726866a795",
+      "emailId": "a14e53ff-f114-45b8-be43-9913cf452536",
+      "timestamp": "2025-11-26T13:12:07.930Z"
+    },
+    {
+      "email": "donnavallario@gmail.com",
+      "userId": "eee73ddf-3287-44de-bbdd-81d9e49137c8",
+      "emailId": "ee79dc80-402b-4c6d-886a-c2ea45f115b0",
+      "timestamp": "2025-11-26T13:12:08.899Z"
+    },
+    {
+      "email": "abdulazizladan@gmail.com",
+      "userId": "87d7b908-6ff7-4fb8-ab33-7955b3209940",
+      "emailId": "a526e56f-90c6-4a45-ae8b-a21a354b65f8",
+      "timestamp": "2025-11-26T13:12:09.854Z"
+    },
+    {
+      "email": "yacinedjillali@gmail.com",
+      "userId": "2bbb2020-cc8e-40cd-b449-cd1c9b378fee",
+      "emailId": "bc7fc267-bf48-4a8d-ac88-07506852936c",
+      "timestamp": "2025-11-26T13:12:10.789Z"
+    },
+    {
+      "email": "judyalyceking@gmail.com",
+      "userId": "bd3f29fb-a916-4f6f-8a11-f731327eb519",
+      "emailId": "ff4c3588-234d-40c4-9282-ae2b33621c18",
+      "timestamp": "2025-11-26T13:12:11.767Z"
+    },
+    {
+      "email": "bethel24juwobor@gmail.com",
+      "userId": "be69fa43-bf29-43a7-b027-420b4f13853d",
+      "emailId": "81f0165b-4425-430a-9e15-629454fedfd3",
+      "timestamp": "2025-11-26T13:12:12.721Z"
+    },
+    {
+      "email": "lorenroetman@cloudburst-technology.com",
+      "userId": "3bede77f-4755-486c-9a68-ee93ed83cd07",
+      "emailId": "017433a6-06d8-438b-a4a6-598880dcce25",
+      "timestamp": "2025-11-26T13:12:13.729Z"
+    },
+    {
+      "email": "mygreatlife2020@gmail.com",
+      "userId": "10fc27d7-6589-4e0d-9cb8-d567ffa78be0",
+      "emailId": "a8f9bfd2-a705-4416-84d0-d66fc45a770f",
+      "timestamp": "2025-11-26T13:12:14.696Z"
+    },
+    {
+      "email": "marketing@konnekt360.com",
+      "userId": "bdb01f11-739d-4550-8f40-512264de62a5",
+      "emailId": "261c10e8-d966-4648-8a99-3f0f66da2da4",
+      "timestamp": "2025-11-26T13:12:15.667Z"
+    },
+    {
+      "email": "nwcarr@gmail.com",
+      "userId": "e41a7f1e-c0ea-4ffc-9a3c-9ba3804ae2d3",
+      "emailId": "4bd95a74-3f13-44fb-8861-2685f9c006de",
+      "timestamp": "2025-11-26T13:12:16.612Z"
+    },
+    {
+      "email": "vermaak.c@outlook.com",
+      "userId": "921e3462-e984-4eb1-a564-191355b02f0c",
+      "emailId": "6962c5e5-369b-4bfe-a656-26592f50d921",
+      "timestamp": "2025-11-26T13:12:17.613Z"
+    },
+    {
+      "email": "ptiley@gmail.com",
+      "userId": "a2a31095-de5e-4156-9554-d2f05047704e",
+      "emailId": "13fa0d48-01bb-49b2-aee4-033c49eb9e6e",
+      "timestamp": "2025-11-26T13:12:18.606Z"
+    },
+    {
+      "email": "pravesh.balaram@icloud.com",
+      "userId": "0b593bad-2705-437c-afdd-48e263823ac0",
+      "emailId": "23a274fa-1882-40ad-9fa8-2390d820eb98",
+      "timestamp": "2025-11-26T13:12:19.567Z"
+    },
+    {
+      "email": "katzscan@gmail.com",
+      "userId": "eb8ffe91-5f71-4586-9ec8-9fa40eadd11b",
+      "emailId": "83efdad9-836c-4ab9-ae47-d26d66e87aeb",
+      "timestamp": "2025-11-26T13:12:20.545Z"
+    },
+    {
+      "email": "lisa.e.ireland@gmail.com",
+      "userId": "2e770703-f2d2-41c2-8e79-1ef2e5880f47",
+      "emailId": "7d641df7-5fcb-4d75-8f05-c5b3ae5336de",
+      "timestamp": "2025-11-26T13:12:21.492Z"
+    },
+    {
+      "email": "birusah@yahoo.com",
+      "userId": "5bf97a75-3438-41d6-a053-80e27ee039d3",
+      "emailId": "d446c9f7-7022-47db-8d90-2d2eb79c2590",
+      "timestamp": "2025-11-26T13:12:22.461Z"
+    },
+    {
+      "email": "tonderai.kariwo@gmail.com",
+      "userId": "69086f05-cbca-4a9b-a6c4-dfa815f51a9d",
+      "emailId": "9c607d5f-0da7-4d7d-8e32-bf8aa99f151a",
+      "timestamp": "2025-11-26T13:12:23.430Z"
+    },
+    {
+      "email": "jason.husack@hotmail.com",
+      "userId": "bc3173a0-4090-43e5-bc7a-eee1440cb69f",
+      "emailId": "8a63fb28-be3c-4eb7-84dc-a9408a721dc8",
+      "timestamp": "2025-11-26T13:12:24.380Z"
+    },
+    {
+      "email": "dawn.christman@dimensionaltalentllc.com",
+      "userId": "cafc57db-72c4-4241-9b4c-137773c27761",
+      "emailId": "d292f1c7-89ec-4c22-a0c1-cc373e89e060",
+      "timestamp": "2025-11-26T13:12:25.337Z"
+    },
+    {
+      "email": "qs.karencloete@gmail.com",
+      "userId": "780fcb67-dbf7-4adf-a731-fabe9d389585",
+      "emailId": "8ebded99-1b40-4e6b-b40a-92b394269bb3",
+      "timestamp": "2025-11-26T13:12:26.344Z"
+    },
+    {
+      "email": "ruan@rvconsulting.co.za",
+      "userId": "229a85f0-85c5-480f-a7ec-957f34c6a3d9",
+      "emailId": "067cb8ca-39ed-442d-9bd9-8dad2b52bc7e",
+      "timestamp": "2025-11-26T13:12:27.314Z"
+    },
+    {
+      "email": "laurakotlinski@live.com",
+      "userId": "17ae7af1-6855-4a97-8318-88d5a9413037",
+      "emailId": "54e68c86-b8c4-49b6-921d-d83dc96d6ac3",
+      "timestamp": "2025-11-26T13:12:28.305Z"
+    },
+    {
+      "email": "jnaphan@charter.net",
+      "userId": "f77d8f3e-b274-4f55-8031-0bebbd8a1358",
+      "emailId": "17fb283a-c117-49bd-9f09-26505869c58c",
+      "timestamp": "2025-11-26T13:12:29.278Z"
+    },
+    {
+      "email": "ehlerspaul1@gmail.com",
+      "userId": "89030b17-6fce-4edf-a4cb-e39288c642d2",
+      "emailId": "417a9834-a2f9-4b79-a228-063f81044256",
+      "timestamp": "2025-11-26T13:12:30.251Z"
+    },
+    {
+      "email": "keif.gwinn@gmail.com",
+      "userId": "43b02d96-a18c-4ac9-a775-9cd415acc972",
+      "emailId": "039ea86e-2a47-448e-8ee0-b295e4d3ecfb",
+      "timestamp": "2025-11-26T13:12:31.230Z"
+    },
+    {
+      "email": "chris@seventynineit.com",
+      "userId": "678cb3f1-f1fc-4f57-aa1f-fbe0fff7c839",
+      "emailId": "c0784b92-df11-4849-b765-c4e73ecf11e7",
+      "timestamp": "2025-11-26T13:12:32.152Z"
+    },
+    {
+      "email": "danielvinnyluca@gmail.com",
+      "userId": "81f817f6-3604-4d6b-a40f-502376dfc608",
+      "emailId": "c160a646-a8f2-4316-a1eb-fd29dc134cbc",
+      "timestamp": "2025-11-26T13:12:33.119Z"
+    },
+    {
+      "email": "jdfuller1975@gmail.com",
+      "userId": "5eefd529-e800-4332-85b8-21e9fbe1ab93",
+      "emailId": "9e8acc03-d0be-46c4-b0eb-542a2f75a634",
+      "timestamp": "2025-11-26T13:12:34.098Z"
+    },
+    {
+      "email": "nicolasangster88@gmail.com",
+      "userId": "84994f64-3eb2-4c3c-804a-fe3a33f39ad4",
+      "emailId": "28af402c-aed1-477a-89c6-f6363488140b",
+      "timestamp": "2025-11-26T13:12:35.081Z"
+    },
+    {
+      "email": "corey@coreynelson.design",
+      "userId": "1e943cab-b4f8-4abe-9b0e-8d5ff84a1b69",
+      "emailId": "a562f30b-4c1c-4e1c-b6b6-87f048df1012",
+      "timestamp": "2025-11-26T13:12:36.027Z"
+    },
+    {
+      "email": "julia.ideasandwords@gmail.com",
+      "userId": "13dbdf0b-44b0-4755-b685-dcb167f15905",
+      "emailId": "4a6fdd4e-3dfe-45b6-a52e-41bf25948500",
+      "timestamp": "2025-11-26T13:12:36.977Z"
+    },
+    {
+      "email": "simon@blackpepperonline.co.za",
+      "userId": "dd5a5059-3f58-4be0-be25-f7fb48efecd1",
+      "emailId": "c719ed3d-ef01-4d83-aebb-3ac22ff2bb6b",
+      "timestamp": "2025-11-26T13:12:37.937Z"
+    },
+    {
+      "email": "riael.solomon@me.com",
+      "userId": "8854613b-a1b6-4a0d-a5f3-827f22b417e1",
+      "emailId": "793742d6-ed7b-40d8-b3ce-4fc3ab3faaec",
+      "timestamp": "2025-11-26T13:12:38.878Z"
+    },
+    {
+      "email": "rudolf@paladinconsult.co",
+      "userId": "ecdbde80-1e9c-4f6f-8a91-5ef570de849e",
+      "emailId": "a053e37e-aa6a-4db4-b92e-fbc00d5d6e2c",
+      "timestamp": "2025-11-26T13:12:39.819Z"
+    },
+    {
+      "email": "camayag@gmail.com",
+      "userId": "0bfa5124-d2a4-4827-aa73-df4edc4cb44f",
+      "emailId": "fc628341-f490-44ff-a77e-d27ded5a936e",
+      "timestamp": "2025-11-26T13:12:40.799Z"
+    },
+    {
+      "email": "peter.manoogian@arzresources.com",
+      "userId": "6e37672c-d387-4bba-a2c6-9cce216f03a5",
+      "emailId": "9b95192b-f79a-41a5-b40e-74103dbf146a",
+      "timestamp": "2025-11-26T13:12:41.762Z"
+    },
+    {
+      "email": "azim.engpetro@yahoo.com",
+      "userId": "d7cd1fd3-f935-4eef-9aa3-ca6fc1ec83a9",
+      "emailId": "a2993ab6-46d1-44f7-b79f-2cb145f1429a",
+      "timestamp": "2025-11-26T13:12:42.704Z"
+    },
+    {
+      "email": "anthony.gischen@gmail.com",
+      "userId": "71a60fe2-57c6-49d8-a687-228856861fef",
+      "emailId": "4ac3583a-4025-4e13-81ce-8a786d984d03",
+      "timestamp": "2025-11-26T13:12:43.741Z"
+    },
+    {
+      "email": "robertfein@acm.org",
+      "userId": "fec2d700-9a15-408a-a0a6-e5c1c36d25b1",
+      "emailId": "c4f75015-adf3-4a7b-b2fa-5df99ca4407a",
+      "timestamp": "2025-11-26T13:12:44.735Z"
+    },
+    {
+      "email": "mi@chae.la",
+      "userId": "b576e656-f0ee-4e19-bfb1-f891d61c8d2b",
+      "emailId": "5c8293b7-41a7-4a15-a33a-541be6f84ac8",
+      "timestamp": "2025-11-26T13:12:45.724Z"
+    },
+    {
+      "email": "kiritpatel99@yahoo.co.uk",
+      "userId": "5cef681f-83b3-4e0b-8340-77d2b820163c",
+      "emailId": "0a6c20f9-b5b5-46f2-8255-0a8feaa12f8b",
+      "timestamp": "2025-11-26T13:12:46.672Z"
+    },
+    {
+      "email": "nuno.rodrigues@gigexecs.com",
+      "userId": "5f79b090-c5d1-4bd7-b996-102ea64aca67",
+      "emailId": "e0db5317-5cf8-4858-a085-aadc2cb7beea",
+      "timestamp": "2025-11-26T13:12:47.764Z"
+    },
+    {
+      "email": "ptamagnini@gmail.com",
+      "userId": "75f4b3e8-dfcd-44cc-9779-4067c18f48f3",
+      "emailId": "963008a5-8013-4c9a-bb63-00d0816deb09",
+      "timestamp": "2025-11-26T13:12:48.707Z"
+    },
+    {
+      "email": "jgtaylor@minequest.co.za",
+      "userId": "0060a0f4-71fd-4d8d-a32e-45f5065998b8",
+      "emailId": "5ac4a7a0-5b0c-4273-a2c3-b808740288ab",
+      "timestamp": "2025-11-26T13:12:49.705Z"
+    },
+    {
+      "email": "tomjames@tomjames.email",
+      "userId": "1ced90ef-3425-4ee8-81fb-3e41d02f0b49",
+      "emailId": "0300a1d3-ce08-4e8e-9fd0-0d2e4a6c568a",
+      "timestamp": "2025-11-26T13:12:50.695Z"
+    },
+    {
+      "email": "shamrockspring@gmail.com",
+      "userId": "4bf136e0-718f-4bbd-8f9f-4960fb0bc4c3",
+      "emailId": "f323b3e2-e11d-4118-898d-d7410b928661",
+      "timestamp": "2025-11-26T13:12:51.674Z"
+    },
+    {
+      "email": "alan.stirling@gigexecs.com",
+      "userId": "49d9f69f-18e7-497b-a381-dd631ccd7623",
+      "emailId": "ec36bf16-91d2-4b72-81b3-29502dad192d",
+      "timestamp": "2025-11-26T13:12:52.699Z"
+    },
+    {
+      "email": "test.expert@test.com",
+      "userId": "2b5dc726-1c94-4795-9ecb-f398ec131b23",
+      "emailId": "54a9c711-13d4-41d8-b090-3fb3feaf2ca1",
+      "timestamp": "2025-11-26T13:12:53.676Z"
+    },
+    {
+      "email": "jaco.vandenheever@gigexecs.com",
+      "userId": "978aa8c2-7c6e-4669-951f-ace95d47d9ab",
+      "emailId": "420a50d8-e19c-4a9a-a570-e1b1f8648cc7",
+      "timestamp": "2025-11-26T13:12:54.634Z"
+    },
+    {
+      "email": "toddlucas7895@gmail.com",
+      "userId": "bb9079c4-54e9-4bbc-9070-aac1fdbbde25",
+      "emailId": "1d611775-cb91-4811-9da3-b6ad8e6a6bff",
+      "timestamp": "2025-11-26T13:12:55.607Z"
+    },
+    {
+      "email": "nuno.g.rodrigues01@gmail.com",
+      "userId": "9b6508b9-0dc1-4cb8-bd01-88760db32cb6",
+      "emailId": "1e461245-52bc-4a99-9534-5343c26edfc3",
+      "timestamp": "2025-11-26T13:12:56.641Z"
+    },
+    {
+      "email": "abdomedlej@gmail.com",
+      "userId": "c0adbdf0-412f-4217-aa15-5faf6e56da64",
+      "emailId": "9d990b2c-0acc-43bd-8056-aa1b3eb804b3",
+      "timestamp": "2025-11-26T13:50:42.512Z"
+    }
+  ],
+  "failed": [
+    {
+      "email": "...lvillaoq4@hotmail.com",
+      "userId": "99b59c0f-35b2-48d4-b3c3-ca1828f1c87a",
+      "error": "Invalid `to` field. The email address needs to follow the `email@example.com` or `Name <email@example.com>` format.",
+      "timestamp": "2025-11-26T13:10:42.395Z"
+    }
+  ],
+  "started": "2025-11-26T12:57:48.973Z",
+  "lastUpdate": "2025-11-26T13:50:42.520Z"
+}
