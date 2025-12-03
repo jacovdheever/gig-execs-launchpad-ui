@@ -19,50 +19,49 @@ function getProfileMapper() {
  * Main handler for publishing AI profile draft
  */
 const handler = async (event, context) => {
-  try {
-    // CORS validation
-    const origin = event.headers.origin || event.headers.Origin;
-    const allowedOrigins = [
-      'https://gigexecs.com',
-      'https://www.gigexecs.com',
-      'https://develop--gigexecs.netlify.app',
-      'https://gigexecs.netlify.app'
-    ];
-    
-    const corsHeaders = {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': allowedOrigins.includes(origin) ? origin : 'https://gigexecs.com',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      'Access-Control-Max-Age': '86400'
+  // CORS validation
+  const origin = event.headers.origin || event.headers.Origin;
+  const allowedOrigins = [
+    'https://gigexecs.com',
+    'https://www.gigexecs.com',
+    'https://develop--gigexecs.netlify.app',
+    'https://gigexecs.netlify.app'
+  ];
+  
+  const corsHeaders = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': allowedOrigins.includes(origin) ? origin : 'https://gigexecs.com',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Max-Age': '86400'
+  };
+
+  // Handle preflight requests
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: ''
     };
+  }
 
-    // Handle preflight requests
-    if (event.httpMethod === 'OPTIONS') {
-      return {
-        statusCode: 200,
-        headers: corsHeaders,
-        body: ''
-      };
-    }
+  // Validate HTTP method
+  if (event.httpMethod !== 'POST') {
+    return createErrorResponse(405, 'Method not allowed. Only POST requests are accepted.');
+  }
 
-    // Validate HTTP method
-    if (event.httpMethod !== 'POST') {
-      return createErrorResponse(405, 'Method not allowed. Only POST requests are accepted.');
-    }
+  const userId = event.user?.id;
+  if (!userId) {
+    return createErrorResponse(401, 'Unauthorized');
+  }
+  
+  console.log('Authenticated user:', userId);
 
-    const userId = event.user?.id;
-    if (!userId) {
-      return createErrorResponse(401, 'Unauthorized');
-    }
-    
-    console.log('Authenticated user:', userId);
-
-    // Initialize Supabase client with service role
-    const supabase = createClient(
-      process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY
-    );
+  // Initialize Supabase client with service role
+  const supabase = createClient(
+    process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
 
   try {
     // Parse the request body
