@@ -9,7 +9,15 @@ const { createClient } = require('@supabase/supabase-js');
 const { withAuth } = require('./auth');
 const { withRateLimit } = require('./rateLimiter');
 const { createErrorResponse } = require('./validation');
-const { startConversation } = require('./lib/openai-client');
+
+// Lazy load lib modules only when needed (to avoid bundling issues)
+function getOpenAIClient() {
+  return require('./lib/openai-client');
+}
+
+function getProfileMapper() {
+  return require('./lib/profile-mapper');
+}
 
 /**
  * Main handler for starting AI profile creation
@@ -199,6 +207,7 @@ const handler = async (event, context) => {
 
     // Start the AI conversation
     console.log('Starting new AI conversation...');
+    const { startConversation } = getOpenAIClient();
     const conversationResult = await startConversation(userId, {
       cvText,
       existingProfile

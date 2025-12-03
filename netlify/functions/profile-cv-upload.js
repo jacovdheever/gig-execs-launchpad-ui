@@ -10,6 +10,19 @@ const { withAuth } = require('./auth');
 const { withRateLimit } = require('./rateLimiter');
 const { createErrorResponse } = require('./validation');
 
+// Lazy load lib modules only when needed (to avoid bundling issues)
+function getTextExtraction() {
+  return require('./lib/text-extraction');
+}
+
+function getOpenAIClient() {
+  return require('./lib/openai-client');
+}
+
+function getProfileMapper() {
+  return require('./lib/profile-mapper');
+}
+
 // Allowed MIME types for CV uploads
 const ALLOWED_MIME_TYPES = [
   'application/pdf',

@@ -9,11 +9,11 @@ const { createClient } = require('@supabase/supabase-js');
 const { withAuth } = require('./auth');
 const { withRateLimit } = require('./rateLimiter');
 const { createErrorResponse } = require('./validation');
-const { 
-  mapToDatabase, 
-  recordProfileCreationEvent, 
-  updateProfileCompleteness 
-} = require('./lib/profile-mapper');
+
+// Lazy load lib modules only when needed (to avoid bundling issues)
+function getProfileMapper() {
+  return require('./lib/profile-mapper');
+}
 
 /**
  * Main handler for publishing AI profile draft
@@ -134,6 +134,7 @@ const handler = async (event, context) => {
 
     // Map the profile data to database tables
     console.log('Mapping profile data to database...');
+    const { mapToDatabase } = getProfileMapper();
     const mapResult = await mapToDatabase(profileToPublish, userId, userType);
 
     if (!mapResult.success) {
@@ -164,10 +165,12 @@ const handler = async (event, context) => {
       eligibility: draft.eligibility || null
     };
 
+    const { recordProfileCreationEvent } = getProfileMapper();
     await recordProfileCreationEvent(userId, 'ai_conversational', eventMetadata);
     console.log('Profile creation event recorded');
 
     // Update profile completeness
+    const { updateProfileCompleteness } = getProfileMapper();
     const completenessResult = await updateProfileCompleteness(userId, userType);
     console.log('Profile completeness updated:', completenessResult.percentage);
 

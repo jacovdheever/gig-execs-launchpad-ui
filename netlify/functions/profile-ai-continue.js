@@ -9,7 +9,11 @@ const { createClient } = require('@supabase/supabase-js');
 const { withAuth } = require('./auth');
 const { withRateLimit } = require('./rateLimiter');
 const { createErrorResponse } = require('./validation');
-const { continueConversation, assessEligibility } = require('./lib/openai-client');
+
+// Lazy load lib modules only when needed (to avoid bundling issues)
+function getOpenAIClient() {
+  return require('./lib/openai-client');
+}
 
 /**
  * Main handler for continuing AI profile creation
@@ -154,6 +158,7 @@ const handler = async (event, context) => {
 
     // Continue the conversation
     console.log('Continuing conversation...');
+    const { continueConversation } = getOpenAIClient();
     const conversationResult = await continueConversation(
       updatedHistory,
       currentProfile,
@@ -182,6 +187,7 @@ const handler = async (event, context) => {
     let eligibility = draft.eligibility;
     if (response.nextStep === 'eligibility_review' && !eligibility) {
       console.log('Assessing eligibility...');
+      const { assessEligibility } = getOpenAIClient();
       const eligibilityResult = await assessEligibility(response.draftProfile, userId, { draftId });
       if (eligibilityResult.success) {
         eligibility = eligibilityResult.eligibility;

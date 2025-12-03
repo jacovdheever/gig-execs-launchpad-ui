@@ -9,11 +9,11 @@ const { createClient } = require('@supabase/supabase-js');
 const { withAuth } = require('./auth');
 const { withRateLimit } = require('./rateLimiter');
 const { createErrorResponse } = require('./validation');
-const { 
-  mapToDatabase, 
-  recordProfileCreationEvent, 
-  updateProfileCompleteness 
-} = require('./lib/profile-mapper');
+
+// Lazy load lib modules only when needed (to avoid bundling issues)
+function getProfileMapper() {
+  return require('./lib/profile-mapper');
+}
 
 /**
  * Validates the parsed data structure
@@ -170,6 +170,7 @@ const handler = async (event, context) => {
 
     // Map parsed data to database
     console.log('Mapping parsed data to database...');
+    const { mapToDatabase } = getProfileMapper();
     const mapResult = await mapToDatabase(parsedData, userId, userType);
 
     if (!mapResult.success) {
@@ -193,10 +194,12 @@ const handler = async (event, context) => {
       eligibility: eligibility || null
     };
 
+    const { recordProfileCreationEvent } = getProfileMapper();
     await recordProfileCreationEvent(userId, 'cv_upload', eventMetadata);
     console.log('Profile creation event recorded');
 
     // Update profile completeness
+    const { updateProfileCompleteness } = getProfileMapper();
     const completenessResult = await updateProfileCompleteness(userId, userType);
     console.log('Profile completeness updated:', completenessResult.percentage);
 

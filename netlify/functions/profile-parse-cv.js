@@ -9,8 +9,15 @@ const { createClient } = require('@supabase/supabase-js');
 const { withAuth } = require('./auth');
 const { withRateLimit } = require('./rateLimiter');
 const { createErrorResponse } = require('./validation');
-const { extractText, validateExtractedContent, truncateToMaxTokens } = require('./lib/text-extraction');
-const { parseCVWithAI, assessEligibility } = require('./lib/openai-client');
+
+// Lazy load lib modules only when needed (to avoid bundling issues)
+function getTextExtraction() {
+  return require('./lib/text-extraction');
+}
+
+function getOpenAIClient() {
+  return require('./lib/openai-client');
+}
 
 // Maximum tokens to send to OpenAI (to control costs)
 const MAX_CV_TOKENS = 6000;
@@ -142,6 +149,7 @@ const handler = async (event, context) => {
       const buffer = Buffer.from(arrayBuffer);
 
       // Extract text based on MIME type
+      const { extractText } = getTextExtraction();
       const extractionResult = await extractText(buffer, sourceFile.mime_type);
 
       if (!extractionResult.success) {
@@ -161,6 +169,7 @@ const handler = async (event, context) => {
       extractedText = extractionResult.text;
 
       // Validate extracted content
+      const { validateExtractedContent } = getTextExtraction();
       const validation = validateExtractedContent(extractedText);
       if (!validation.isValid) {
         await supabase
@@ -195,6 +204,7 @@ const handler = async (event, context) => {
     }
 
     // Truncate text if too long (to control costs)
+    const { truncateToMaxTokens } = getTextExtraction();
     const truncatedText = truncateToMaxTokens(extractedText, MAX_CV_TOKENS);
 
     // Parse the CV with OpenAI
@@ -212,6 +222,7 @@ const handler = async (event, context) => {
 
     // Assess eligibility
     console.log('Assessing eligibility...');
+    const { assessEligibility } = getOpenAIClient();
     const eligibilityResult = await assessEligibility(parseResult.data, userId, {
       sourceFileId: sourceFileId
     });
