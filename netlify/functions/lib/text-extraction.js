@@ -44,7 +44,7 @@ async function extractTextFromPDF(buffer) {
         };
       }
 
-      // Clean up the extracted text
+      // Clean up the extracted text (handles encoding issues)
       const cleanedText = cleanExtractedText(data.text);
 
       return {
@@ -56,8 +56,43 @@ async function extractTextFromPDF(buffer) {
       // Handle specific PDF parsing errors
       const errorMessage = parseError.message || String(parseError);
       
-      // Check for common PDF parsing issues
-      if (errorMessage.includes('Illegal character') || errorMessage.includes('Invalid PDF')) {
+      // For encoding/character issues, try to extract text anyway
+      // pdf-parse might still return some text even with encoding errors
+      if (errorMessage.includes('Illegal character') || errorMessage.includes('character')) {
+        try {
+          // Try to extract text with a more lenient approach
+          // Sometimes pdf-parse can still extract text despite encoding warnings
+          const data = await pdfParse(buffer, {
+            max: 50
+          });
+          
+          if (data.text && data.text.trim().length > 0) {
+            // Clean up the text, removing problematic characters
+            const cleanedText = cleanExtractedText(data.text);
+            
+            if (cleanedText.trim().length > 0) {
+              console.log('PDF extracted with encoding issues, but text was recovered');
+              return {
+                success: true,
+                text: cleanedText,
+                pageCount: data.numpages
+              };
+            }
+          }
+        } catch (retryError) {
+          // If retry also fails, continue to return error below
+          console.log('Retry extraction failed:', retryError.message);
+        }
+        
+        // If we get here, extraction failed even with retry
+        return {
+          success: false,
+          error: 'PDF has encoding issues. Some characters may appear as blocks or be missing. Please try converting the PDF to a newer version or upload a DOCX file for better results.'
+        };
+      }
+      
+      // Check for other PDF parsing issues
+      if (errorMessage.includes('Invalid PDF')) {
         return {
           success: false,
           error: 'PDF parsing failed: The PDF file appears to be corrupted or in an unsupported format. Please try converting it to a newer PDF version or upload a DOCX file instead.'
@@ -207,6 +242,7 @@ async function extractText(buffer, mimeType) {
 
 /**
  * Cleans up extracted text by removing excessive whitespace and normalizing
+ * Also handles encoding issues like block characters from PDFs
  * @param {string} text - The raw extracted text
  * @returns {string} - Cleaned text
  */
@@ -214,6 +250,14 @@ function cleanExtractedText(text) {
   if (!text) return '';
 
   return text
+    // Remove or replace problematic encoding characters
+    // Remove replacement characters (often appear as or boxes)
+    .replace(/[\uFFFD\uFFFE\uFFFF]/g, '')
+    // Replace block characters (like those from PDF encoding issues) with hyphens
+    // These are often used to represent missing characters
+    .replace(/[\u2580-\u259F]/g, '-')
+    // Replace other non-printable control characters (except newlines, tabs, carriage returns)
+    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, ' ')
     // Replace multiple spaces with single space
     .replace(/[ \t]+/g, ' ')
     // Replace multiple newlines with double newline (paragraph break)
