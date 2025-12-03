@@ -235,6 +235,14 @@ const handler = async (event, context) => {
       console.log('Eligibility assessment failed, continuing without it');
     }
 
+    // Calculate total usage and cost
+    const totalUsage = {
+      promptTokens: parseResult.usage.promptTokens + (eligibilityResult.success ? eligibilityResult.usage.promptTokens : 0),
+      completionTokens: parseResult.usage.completionTokens + (eligibilityResult.success ? eligibilityResult.usage.completionTokens : 0),
+      totalTokens: parseResult.usage.totalTokens + (eligibilityResult.success ? eligibilityResult.usage.totalTokens : 0),
+      costEstimate: parseResult.usage.costEstimate + (eligibilityResult.success ? eligibilityResult.usage.costEstimate : 0)
+    };
+
     // Return the parsed data for review
     return {
       statusCode: 200,
@@ -242,12 +250,10 @@ const handler = async (event, context) => {
       body: JSON.stringify({
         success: true,
         sourceFileId: sourceFileId,
+        extractedText: extractedText, // Include extracted text for testing/debugging
         parsedData: parseResult.data,
         eligibility: eligibility,
-        usage: {
-          parsing: parseResult.usage,
-          eligibility: eligibilityResult.success ? eligibilityResult.usage : null
-        },
+        usage: totalUsage,
         warnings: []
       })
     };

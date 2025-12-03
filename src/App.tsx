@@ -97,6 +97,7 @@ import AuditLogPage from "./app/staff/audit-log";
 import StaffSettingsPage from "./app/staff/settings";
 import StaffExternalGigsPage from "./app/staff/external-gigs";
 import ExternalGigClicksPage from "./app/staff/external-gig-clicks";
+import CVParserTestPage from "./app/staff/cv-parser-test";
 
 const queryClient = new QueryClient();
 
@@ -208,6 +209,7 @@ const App = () => (
             <Route path="/staff/audit-log" element={<AuditLogPage />} />
             <Route path="/staff/external-gigs" element={<StaffExternalGigsPage />} />
             <Route path="/staff/external-gig-clicks" element={<ExternalGigClicksPage />} />
+            <Route path="/staff/cv-parser-test" element={<CVParserTestPage />} />
 
             {/* Secure Help Page */}
             <Route path="/help-secure" element={<HelpAndSupportSecure />} />
