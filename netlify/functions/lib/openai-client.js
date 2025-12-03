@@ -62,6 +62,7 @@ const PROFILE_EXTRACTION_SCHEMA = {
   properties: {
     basicInfo: {
       type: 'object',
+      additionalProperties: false,
       properties: {
         firstName: { type: 'string', description: 'First name extracted from CV' },
         lastName: { type: 'string', description: 'Last name extracted from CV' },
@@ -77,6 +78,7 @@ const PROFILE_EXTRACTION_SCHEMA = {
       type: 'array',
       items: {
         type: 'object',
+        additionalProperties: false,
         properties: {
           company: { type: 'string', description: 'Company name' },
           jobTitle: { type: 'string', description: 'Job title or role' },
@@ -96,6 +98,7 @@ const PROFILE_EXTRACTION_SCHEMA = {
       type: 'array',
       items: {
         type: 'object',
+        additionalProperties: false,
         properties: {
           institutionName: { type: 'string', description: 'University or institution name' },
           degreeLevel: { type: 'string', description: 'Degree type (e.g., Bachelor, Master, PhD)' },
@@ -117,6 +120,7 @@ const PROFILE_EXTRACTION_SCHEMA = {
       type: 'array',
       items: {
         type: 'object',
+        additionalProperties: false,
         properties: {
           name: { type: 'string', description: 'Certification name' },
           awardingBody: { type: 'string', description: 'Organization that issued the certification' },
@@ -131,6 +135,7 @@ const PROFILE_EXTRACTION_SCHEMA = {
       type: 'array',
       items: {
         type: 'object',
+        additionalProperties: false,
         properties: {
           language: { type: 'string', description: 'Language name' },
           proficiency: { type: 'string', description: 'Proficiency level (Native, Fluent, Professional, Basic)' }
