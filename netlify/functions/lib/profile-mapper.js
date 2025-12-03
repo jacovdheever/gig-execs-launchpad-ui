@@ -38,9 +38,6 @@ async function matchIndustriesToDatabase(industryNames, userId) {
       return { success: true, matched: 0, unmatched: [] };
     }
 
-    // Normalize industry names for matching
-    const normalizedIndustries = industryNames.map(i => i.toLowerCase().trim());
-
     // Fetch all industries from database
     const { data: allIndustries, error: fetchError } = await getSupabaseClient()
       .from('industries')
@@ -51,22 +48,21 @@ async function matchIndustriesToDatabase(industryNames, userId) {
       return { success: false, matched: 0, unmatched: industryNames, error: fetchError.message };
     }
 
-    // Create a map for case-insensitive matching
-    const industryMap = new Map();
-    allIndustries.forEach(industry => {
-      industryMap.set(industry.name.toLowerCase().trim(), industry.id);
-    });
-
-    // Match industries
+    // Match industries using fuzzy matching
     const matchedIndustryIds = [];
     const unmatchedIndustries = [];
+    const matchedSet = new Set(); // Prevent duplicates
 
-    normalizedIndustries.forEach((normalizedName, index) => {
-      const industryId = industryMap.get(normalizedName);
-      if (industryId) {
-        matchedIndustryIds.push(industryId);
+    industryNames.forEach((industryName) => {
+      const matchedId = findFuzzyMatch(industryName, allIndustries);
+      if (matchedId && !matchedSet.has(matchedId)) {
+        matchedIndustryIds.push(matchedId);
+        matchedSet.add(matchedId);
+        const matchedIndustry = allIndustries.find(i => i.id === matchedId);
+        console.log(`Matched industry: "${industryName}" -> "${matchedIndustry?.name}"`);
       } else {
-        unmatchedIndustries.push(industryNames[index]); // Keep original name
+        unmatchedIndustries.push(industryName);
+        console.log(`Unmatched industry: "${industryName}"`);
       }
     });
 
@@ -121,9 +117,6 @@ async function matchSkillsToDatabase(skillNames, userId) {
       return { success: true, matched: 0, unmatched: [] };
     }
 
-    // Normalize skill names for matching
-    const normalizedSkills = skillNames.map(s => s.toLowerCase().trim());
-
     // Fetch all skills from database
     const { data: allSkills, error: fetchError } = await getSupabaseClient()
       .from('skills')
@@ -134,22 +127,21 @@ async function matchSkillsToDatabase(skillNames, userId) {
       return { success: false, matched: 0, unmatched: skillNames, error: fetchError.message };
     }
 
-    // Create a map for case-insensitive matching
-    const skillMap = new Map();
-    allSkills.forEach(skill => {
-      skillMap.set(skill.name.toLowerCase().trim(), skill.id);
-    });
-
-    // Match skills
+    // Match skills using fuzzy matching
     const matchedSkillIds = [];
     const unmatchedSkills = [];
+    const matchedSet = new Set(); // Prevent duplicates
 
-    normalizedSkills.forEach((normalizedName, index) => {
-      const skillId = skillMap.get(normalizedName);
-      if (skillId) {
-        matchedSkillIds.push(skillId);
+    skillNames.forEach((skillName) => {
+      const matchedId = findFuzzyMatch(skillName, allSkills);
+      if (matchedId && !matchedSet.has(matchedId)) {
+        matchedSkillIds.push(matchedId);
+        matchedSet.add(matchedId);
+        const matchedSkill = allSkills.find(s => s.id === matchedId);
+        console.log(`Matched skill: "${skillName}" -> "${matchedSkill?.name}"`);
       } else {
-        unmatchedSkills.push(skillNames[index]); // Keep original name
+        unmatchedSkills.push(skillName);
+        console.log(`Unmatched skill: "${skillName}"`);
       }
     });
 
@@ -295,6 +287,109 @@ function normalizeProficiency(proficiency) {
   }
   
   return 'intermediate'; // Default
+}
+
+/**
+ * Parses a location string to extract city and country
+ * Handles formats like "Cape Town, South Africa", "London, UK", etc.
+ * @param {string} location - Location string
+ * @param {Map} countryMap - Map of country names to IDs
+ * @returns {{city: string|null, countryId: number|null}} - Parsed city and country ID
+ */
+function parseLocation(location, countryMap) {
+  if (!location) {
+    return { city: null, countryId: null };
+  }
+
+  const locationStr = location.trim();
+  
+  // Try to split by comma
+  const parts = locationStr.split(',').map(p => p.trim());
+  
+  if (parts.length >= 2) {
+    // Last part is likely the country
+    const countryPart = parts[parts.length - 1];
+    const cityPart = parts.slice(0, -1).join(', '); // Everything before last comma is city
+    
+    // Try to match country
+    let countryId = countryMap.get(countryPart.toLowerCase());
+    
+    // If not found, try common country variations
+    if (!countryId) {
+      const countryVariations = {
+        'uk': 'United Kingdom',
+        'usa': 'United States',
+        'us': 'United States',
+        'uae': 'United Arab Emirates',
+        'sa': 'South Africa',
+        'za': 'South Africa'
+      };
+      
+      const normalizedCountry = countryPart.toLowerCase();
+      const fullCountryName = countryVariations[normalizedCountry];
+      if (fullCountryName) {
+        countryId = countryMap.get(fullCountryName.toLowerCase());
+      }
+    }
+    
+    return {
+      city: cityPart || null,
+      countryId: countryId || null
+    };
+  }
+  
+  // If no comma, try to match the whole string as a country
+  const countryId = countryMap.get(locationStr.toLowerCase());
+  if (countryId) {
+    return { city: null, countryId };
+  }
+  
+  // Otherwise, treat as city
+  return { city: locationStr, countryId: null };
+}
+
+/**
+ * Finds the best fuzzy match for a name in a list of options
+ * Tries exact match first, then partial match (contains), then reverse partial match
+ * @param {string} searchName - Name to search for
+ * @param {Array<{id: number, name: string}>} options - Array of options with id and name
+ * @returns {number|null} - Matched option ID or null
+ */
+function findFuzzyMatch(searchName, options) {
+  if (!searchName || !options || options.length === 0) {
+    return null;
+  }
+
+  const normalizedSearch = searchName.toLowerCase().trim();
+  
+  // Create a map for exact matches
+  const exactMap = new Map();
+  options.forEach(option => {
+    exactMap.set(option.name.toLowerCase().trim(), option.id);
+  });
+  
+  // Try exact match first
+  const exactMatch = exactMap.get(normalizedSearch);
+  if (exactMatch) {
+    return exactMatch;
+  }
+  
+  // Try partial matches (search name contained in option name or vice versa)
+  for (const option of options) {
+    const normalizedOption = option.name.toLowerCase().trim();
+    
+    // Check if search name is contained in option name
+    if (normalizedOption.includes(normalizedSearch) && normalizedSearch.length >= 3) {
+      return option.id;
+    }
+    
+    // Check if option name is contained in search name
+    if (normalizedSearch.includes(normalizedOption) && normalizedOption.length >= 3) {
+      return option.id;
+    }
+  }
+  
+  return null;
 }
 
 /**
@@ -624,10 +719,41 @@ async function mapToDatabase(parsedData, userId, userType) {
 
       if (basicInfo.phone) profileUpdate.phone = basicInfo.phone;
       if (basicInfo.linkedinUrl) profileUpdate.linkedin_url = basicInfo.linkedinUrl;
+      
+      // Parse location to extract city and country
       if (basicInfo.location) {
-        // Try to parse location into address fields
-        profileUpdate.address1 = basicInfo.location;
+        // Fetch countries for location parsing
+        const { data: countries } = await getSupabaseClient()
+          .from('countries')
+          .select('id, name');
+        
+        const countryMap = new Map();
+        if (countries) {
+          countries.forEach(c => {
+            countryMap.set(c.name.toLowerCase().trim(), c.id);
+          });
+        }
+        
+        const { city, countryId } = parseLocation(basicInfo.location, countryMap);
+        
+        if (city) {
+          profileUpdate.address1 = city;
+        } else {
+          // If no city extracted, use full location as address
+          profileUpdate.address1 = basicInfo.location;
+        }
+        
+        // Set both country (text) and country_id (integer) if we found a match
+        if (countryId) {
+          // Find the country name from the ID
+          const matchedCountry = countries.find(c => c.id === countryId);
+          if (matchedCountry) {
+            profileUpdate.country = matchedCountry.name; // Set country name for form compatibility
+            profileUpdate.country_id = countryId; // Set country_id for proper normalization
+          }
+        }
       }
+      
       if (parsedData.summary) profileUpdate.bio = parsedData.summary;
 
       const { error: profileError } = await getSupabaseClient()
