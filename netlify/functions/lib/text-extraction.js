@@ -56,38 +56,16 @@ async function extractTextFromPDF(buffer) {
       // Handle specific PDF parsing errors
       const errorMessage = parseError.message || String(parseError);
       
-      // For encoding/character issues, try to extract text anyway
-      // pdf-parse might still return some text even with encoding errors
+      // For encoding/character issues, provide helpful guidance
+      // Note: pdf-parse throws errors on encoding issues and doesn't support partial extraction
       if (errorMessage.includes('Illegal character') || errorMessage.includes('character')) {
-        try {
-          // Try to extract text with a more lenient approach
-          // Sometimes pdf-parse can still extract text despite encoding warnings
-          const data = await pdfParse(buffer, {
-            max: 50
-          });
-          
-          if (data.text && data.text.trim().length > 0) {
-            // Clean up the text, removing problematic characters
-            const cleanedText = cleanExtractedText(data.text);
-            
-            if (cleanedText.trim().length > 0) {
-              console.log('PDF extracted with encoding issues, but text was recovered');
-              return {
-                success: true,
-                text: cleanedText,
-                pageCount: data.numpages
-              };
-            }
-          }
-        } catch (retryError) {
-          // If retry also fails, continue to return error below
-          console.log('Retry extraction failed:', retryError.message);
-        }
+        console.log('PDF encoding error detected:', errorMessage);
         
-        // If we get here, extraction failed even with retry
+        // pdf-parse doesn't support partial extraction when encoding errors occur
+        // The PDF needs to be converted or re-saved to fix the encoding issues
         return {
           success: false,
-          error: 'PDF has encoding issues. Some characters may appear as blocks or be missing. Please try converting the PDF to a newer version or upload a DOCX file for better results.'
+          error: 'PDF has encoding issues that prevent text extraction. The PDF contains characters that cannot be parsed by our system. Solutions: 1) Re-save the PDF with "Create Tagged PDF" or "PDF/A" format enabled in Adobe Acrobat or another PDF editor, 2) Convert the PDF to a newer version, or 3) Upload a DOCX file instead for more reliable extraction.'
         };
       }
       
