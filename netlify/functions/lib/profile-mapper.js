@@ -26,6 +26,89 @@ function getSupabaseClient() {
 // ============================================================================
 
 /**
+ * Matches industry names to existing industries in the database
+ * Creates user_industries relationships
+ * @param {string[]} industryNames - Array of industry names from parsed data
+ * @param {string} userId - The user ID
+ * @returns {Promise<{success: boolean, matched: number, unmatched: string[], error?: string}>}
+ */
+async function matchIndustriesToDatabase(industryNames, userId) {
+  try {
+    if (!industryNames || industryNames.length === 0) {
+      return { success: true, matched: 0, unmatched: [] };
+    }
+
+    // Normalize industry names for matching
+    const normalizedIndustries = industryNames.map(i => i.toLowerCase().trim());
+
+    // Fetch all industries from database
+    const { data: allIndustries, error: fetchError } = await getSupabaseClient()
+      .from('industries')
+      .select('id, name');
+
+    if (fetchError) {
+      console.error('Error fetching industries:', fetchError);
+      return { success: false, matched: 0, unmatched: industryNames, error: fetchError.message };
+    }
+
+    // Create a map for case-insensitive matching
+    const industryMap = new Map();
+    allIndustries.forEach(industry => {
+      industryMap.set(industry.name.toLowerCase().trim(), industry.id);
+    });
+
+    // Match industries
+    const matchedIndustryIds = [];
+    const unmatchedIndustries = [];
+
+    normalizedIndustries.forEach((normalizedName, index) => {
+      const industryId = industryMap.get(normalizedName);
+      if (industryId) {
+        matchedIndustryIds.push(industryId);
+      } else {
+        unmatchedIndustries.push(industryNames[index]); // Keep original name
+      }
+    });
+
+    // Delete existing user_industries for this user
+    const { error: deleteError } = await getSupabaseClient()
+      .from('user_industries')
+      .delete()
+      .eq('user_id', userId);
+
+    if (deleteError) {
+      console.error('Error deleting existing user industries:', deleteError);
+    }
+
+    // Insert matched industries
+    if (matchedIndustryIds.length > 0) {
+      const userIndustriesData = matchedIndustryIds.map(industryId => ({
+        user_id: userId,
+        industry_id: industryId
+      }));
+
+      const { error: insertError } = await getSupabaseClient()
+        .from('user_industries')
+        .insert(userIndustriesData);
+
+      if (insertError) {
+        console.error('Error inserting user industries:', insertError);
+        return { success: false, matched: 0, unmatched: industryNames, error: insertError.message };
+      }
+    }
+
+    return {
+      success: true,
+      matched: matchedIndustryIds.length,
+      unmatched: unmatchedIndustries
+    };
+  } catch (error) {
+    console.error('Industry matching error:', error);
+    return { success: false, matched: 0, unmatched: industryNames, error: error.message };
+  }
+}
+
+/**
  * Matches skill names to existing skills in the database
  * Creates user_skills relationships
  * @param {string[]} skillNames - Array of skill names from parsed data
@@ -188,20 +271,30 @@ async function matchLanguagesToDatabase(languages, userId) {
 
 /**
  * Normalizes proficiency level to expected values
+ * Matches the frontend proficiency levels: 'beginner', 'intermediate', 'fluent', 'native'
  * @param {string} proficiency - Raw proficiency string
- * @returns {string} - Normalized proficiency
+ * @returns {string} - Normalized proficiency (lowercase to match frontend)
  */
 function normalizeProficiency(proficiency) {
-  if (!proficiency) return 'Professional';
+  if (!proficiency) return 'intermediate'; // Default to intermediate
   
   const lower = proficiency.toLowerCase();
   
-  if (lower.includes('native') || lower.includes('mother')) return 'Native';
-  if (lower.includes('fluent') || lower.includes('bilingual')) return 'Fluent';
-  if (lower.includes('professional') || lower.includes('working')) return 'Professional';
-  if (lower.includes('basic') || lower.includes('elementary') || lower.includes('beginner')) return 'Basic';
+  // Map to frontend values: 'beginner', 'intermediate', 'fluent', 'native'
+  if (lower.includes('native') || lower.includes('mother') || lower.includes('bilingual')) {
+    return 'native';
+  }
+  if (lower.includes('fluent')) {
+    return 'fluent';
+  }
+  if (lower.includes('professional') || lower.includes('working') || lower.includes('proficient')) {
+    return 'intermediate'; // Map professional/working to intermediate
+  }
+  if (lower.includes('basic') || lower.includes('elementary') || lower.includes('beginner')) {
+    return 'beginner';
+  }
   
-  return 'Professional'; // Default
+  return 'intermediate'; // Default
 }
 
 // ============================================================================
@@ -415,6 +508,7 @@ async function mapToDatabase(parsedData, userId, userType) {
     education: { success: false, count: 0 },
     certifications: { success: false, count: 0 },
     skills: { success: false, matched: 0, unmatched: [] },
+    industries: { success: false, matched: 0, unmatched: [] },
     languages: { success: false, matched: 0 }
   };
 
@@ -541,6 +635,19 @@ async function mapToDatabase(parsedData, userId, userType) {
     } else {
       console.log('No skills to save (array is null or empty)');
       results.skills = { success: true, matched: 0, unmatched: [] };
+    }
+
+    // 6.5. Match and save industries
+    // Filter out null/empty values and ensure it's an array
+    const industries = Array.isArray(parsedData.industries)
+      ? parsedData.industries.filter(industry => industry && typeof industry === 'string' && industry.trim().length > 0)
+      : [];
+    if (industries.length > 0) {
+      console.log(`Matching ${industries.length} industries`);
+      results.industries = await matchIndustriesToDatabase(industries, userId);
+    } else {
+      console.log('No industries to save (array is null or empty)');
+      results.industries = { success: true, matched: 0, unmatched: [] };
     }
 
     // 7. Match and save languages
@@ -705,6 +812,7 @@ async function updateProfileCompleteness(userId, userType) {
 module.exports = {
   mapToDatabase,
   matchSkillsToDatabase,
+  matchIndustriesToDatabase,
   matchLanguagesToDatabase,
   saveWorkExperience,
   saveEducation,

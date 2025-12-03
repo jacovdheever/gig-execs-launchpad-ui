@@ -266,10 +266,11 @@ export default function CVParserTestPage() {
     const data = parsedResult.parsedData;
     return {
       workExperience: data.workExperience?.length || 0,
-      education: data.education?.length || 0,
-      skills: data.skills?.length || 0,
-      certifications: data.certifications?.length || 0,
-      languages: data.languages?.length || 0,
+                      education: data.education?.length || 0,
+                      skills: data.skills?.length || 0,
+                      certifications: data.certifications?.length || 0,
+                      languages: data.languages?.length || 0,
+                      industries: data.industries?.length || 0,
     };
   };
 
@@ -431,7 +432,7 @@ export default function CVParserTestPage() {
                     <CardTitle>Parsing Summary</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
                       {(() => {
                         const counts = getDataCounts();
                         if (!counts) return null;
@@ -456,6 +457,10 @@ export default function CVParserTestPage() {
                             <div className="text-center">
                               <div className="text-2xl font-bold text-primary">{counts.languages}</div>
                               <div className="text-sm text-muted-foreground">Languages</div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-2xl font-bold text-primary">{counts.industries}</div>
+                              <div className="text-sm text-muted-foreground">Industries</div>
                             </div>
                           </>
                         );
@@ -651,7 +656,10 @@ export default function CVParserTestPage() {
                             <div className="space-y-2">
                               {parsedResult.parsedData.education.map((edu: any, idx: number) => (
                                 <div key={idx} className="border-l-2 border-primary pl-3 py-2">
-                                  <div className="font-medium">{edu.degreeLevel} in {edu.fieldOfStudy}</div>
+                                  <div className="font-medium">
+                                    {edu.degreeLevel}
+                                    {edu.fieldOfStudy && ` - ${edu.fieldOfStudy}`}
+                                  </div>
                                   <div className="text-sm text-muted-foreground">{edu.institutionName}</div>
                                   {edu.grade && (
                                     <div className="text-sm text-muted-foreground">Grade: {edu.grade}</div>
@@ -670,6 +678,20 @@ export default function CVParserTestPage() {
                               {parsedResult.parsedData.skills.map((skill: string, idx: number) => (
                                 <span key={idx} className="px-2 py-1 bg-primary/10 text-primary rounded text-sm">
                                   {skill}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Industries */}
+                        {parsedResult.parsedData.industries && parsedResult.parsedData.industries.length > 0 && (
+                          <div>
+                            <h3 className="font-semibold mb-2">Industries ({parsedResult.parsedData.industries.length})</h3>
+                            <div className="flex flex-wrap gap-2">
+                              {parsedResult.parsedData.industries.map((industry: string, idx: number) => (
+                                <span key={idx} className="px-2 py-1 bg-green-100 text-green-800 rounded text-sm">
+                                  {industry}
                                 </span>
                               ))}
                             </div>

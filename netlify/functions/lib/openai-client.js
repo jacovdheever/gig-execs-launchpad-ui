@@ -100,9 +100,9 @@ const PROFILE_EXTRACTION_SCHEMA = {
         type: 'object',
         additionalProperties: false,
         properties: {
-          institutionName: { type: 'string', description: 'University or institution name' },
-          degreeLevel: { type: 'string', description: 'Degree type (e.g., Bachelor, Master, PhD)' },
-          fieldOfStudy: { type: ['string', 'null'], description: 'Field or major' },
+          institutionName: { type: 'string', description: 'University or institution name only (e.g., "Wits Business School", "University of Pretoria")' },
+          degreeLevel: { type: 'string', description: 'Degree type only (e.g., "Bachelor", "Master of Business Administration", "PhD", "B.Com") - do NOT include field of study or "in" here' },
+          fieldOfStudy: { type: ['string', 'null'], description: 'Field or major of study only (e.g., "Information Systems", "Business Administration") - separate from degree level' },
           startDate: { type: ['string', 'null'], description: 'Start date in YYYY-MM-DD format' },
           endDate: { type: ['string', 'null'], description: 'End date in YYYY-MM-DD format' },
           grade: { type: ['string', 'null'], description: 'Grade or GPA if mentioned' },
@@ -110,6 +110,11 @@ const PROFILE_EXTRACTION_SCHEMA = {
         },
         required: ['institutionName', 'degreeLevel', 'fieldOfStudy', 'startDate', 'endDate', 'grade', 'description']
       }
+    },
+    industries: {
+      type: 'array',
+      items: { type: ['string', 'null'] },
+      description: 'List of industries the professional has worked in, inferred from work experience, company names, job titles, and skills. Examples: "Technology", "Financial Services", "Healthcare", "Consulting", "Telecommunications", "Design", "E-commerce". Can be empty array if no industries can be inferred.'
     },
     skills: {
       type: 'array',
@@ -138,7 +143,7 @@ const PROFILE_EXTRACTION_SCHEMA = {
         additionalProperties: false,
         properties: {
           language: { type: 'string', description: 'Language name' },
-          proficiency: { type: ['string', 'null'], description: 'Proficiency level (Native, Fluent, Professional, Basic)' }
+          proficiency: { type: ['string', 'null'], description: 'Proficiency level. Use one of: "native" (native/bilingual), "fluent" (fluent), "intermediate" (professional/working proficiency), or "beginner" (basic/elementary). Extract from CV if mentioned, otherwise infer from context.' }
         },
         required: ['language', 'proficiency']
       }
@@ -152,7 +157,7 @@ const PROFILE_EXTRACTION_SCHEMA = {
       description: 'Estimated total years of professional experience'
     }
   },
-  required: ['basicInfo', 'workExperience', 'education', 'skills', 'certifications', 'languages', 'summary', 'estimatedYearsExperience']
+  required: ['basicInfo', 'workExperience', 'education', 'skills', 'certifications', 'languages', 'summary', 'estimatedYearsExperience', 'industries']
 };
 
 /**
@@ -321,6 +326,11 @@ Guidelines:
 - For dates, use YYYY-MM-DD format where possible
 - Normalize job titles and company names for consistency
 - Extract a professional summary if present, or generate a brief one from the content
+- IMPORTANT for education: Keep degreeLevel and fieldOfStudy SEPARATE. Do NOT combine them or add "in" between them.
+  * degreeLevel should be just the degree type (e.g., "Master of Business Administration", "Bachelor", "PhD")
+  * fieldOfStudy should be just the field/major (e.g., "Information Systems", "Business Administration")
+  * institutionName should be just the institution name (e.g., "Wits Business School", "University of Pretoria")
+- Infer industries from work experience, company names, job titles, and skills. Even if not explicitly stated, identify the industries the professional has worked in based on context.
 
 The user is applying to a platform for senior professionals, so pay attention to seniority indicators.`;
 
@@ -370,6 +380,9 @@ The user is applying to a platform for senior professionals, so pay attention to
     if (!parsedData.languages || !Array.isArray(parsedData.languages)) {
       parsedData.languages = [];
     }
+    if (!parsedData.industries || !Array.isArray(parsedData.industries)) {
+      parsedData.industries = [];
+    }
 
     // Filter out null entries from arrays
     parsedData.workExperience = parsedData.workExperience.filter(exp => exp !== null);
@@ -377,8 +390,9 @@ The user is applying to a platform for senior professionals, so pay attention to
     parsedData.skills = parsedData.skills.filter(skill => skill !== null);
     parsedData.certifications = parsedData.certifications.filter(cert => cert !== null);
     parsedData.languages = parsedData.languages.filter(lang => lang !== null);
+    parsedData.industries = parsedData.industries.filter(industry => industry !== null);
 
-    console.log(`Parsed data summary: ${parsedData.workExperience.length} work exp, ${parsedData.education.length} education, ${parsedData.skills.length} skills, ${parsedData.languages.length} languages`);
+    console.log(`Parsed data summary: ${parsedData.workExperience.length} work exp, ${parsedData.education.length} education, ${parsedData.skills.length} skills, ${parsedData.languages.length} languages, ${parsedData.industries.length} industries`);
 
     return {
       success: true,
