@@ -299,8 +299,9 @@ export function ProfileCVUpload({ onParseComplete, onCancel }: ProfileCVUploadPr
               onDragLeave={handleDragLeave}
               onClick={() => fileInputRef.current?.click()}
               className={`
-                border-2 border-dashed rounded-lg p-8 text-center cursor-pointer
-                transition-colors duration-200
+                border-2 border-dashed rounded-lg p-4 sm:p-8 text-center cursor-pointer
+                transition-colors duration-200 min-h-[120px] sm:min-h-[160px]
+                flex items-center justify-center
                 ${isDragging 
                   ? 'border-primary bg-primary/5' 
                   : 'border-muted-foreground/25 hover:border-primary/50 hover:bg-muted/50'
@@ -317,13 +318,15 @@ export function ProfileCVUpload({ onParseComplete, onCancel }: ProfileCVUploadPr
               />
               
               {selectedFile ? (
-                <div className="flex flex-col items-center gap-3">
+                <div className="flex flex-col items-center gap-3 w-full">
                   <div className="p-3 rounded-full bg-primary/10">
                     <FileText className="h-8 w-8 text-primary" />
                   </div>
-                  <div>
-                    <p className="font-medium">{selectedFile.name}</p>
-                    <p className="text-sm text-muted-foreground">
+                  <div className="w-full px-2">
+                    <p className="font-medium truncate text-center break-words max-w-full">
+                      {selectedFile.name}
+                    </p>
+                    <p className="text-sm text-muted-foreground text-center mt-1">
                       {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
                     </p>
                   </div>
@@ -334,6 +337,7 @@ export function ProfileCVUpload({ onParseComplete, onCancel }: ProfileCVUploadPr
                       e.stopPropagation();
                       resetUpload();
                     }}
+                    className="mt-2"
                   >
                     <X className="h-4 w-4 mr-1" />
                     Remove
