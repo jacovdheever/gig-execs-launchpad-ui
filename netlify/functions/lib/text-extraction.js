@@ -22,31 +22,66 @@ async function extractTextFromPDF(buffer) {
       };
     }
 
-    const data = await pdfParse(buffer, {
-      // Limit max pages to prevent DoS with huge PDFs
-      max: 50
-    });
-
-    if (!data.text || data.text.trim().length === 0) {
+    // Validate PDF header (should start with %PDF)
+    const header = buffer.slice(0, 4).toString();
+    if (!header.startsWith('%PDF')) {
       return {
         success: false,
-        error: 'No text content found in PDF. The file may be image-based or empty.'
+        error: 'Invalid PDF file format. The file may be corrupted or not a valid PDF.'
       };
     }
 
-    // Clean up the extracted text
-    const cleanedText = cleanExtractedText(data.text);
+    try {
+      const data = await pdfParse(buffer, {
+        // Limit max pages to prevent DoS with huge PDFs
+        max: 50
+      });
 
-    return {
-      success: true,
-      text: cleanedText,
-      pageCount: data.numpages
-    };
+      if (!data.text || data.text.trim().length === 0) {
+        return {
+          success: false,
+          error: 'No text content found in PDF. The file may be image-based or empty. Please try a PDF with selectable text.'
+        };
+      }
+
+      // Clean up the extracted text
+      const cleanedText = cleanExtractedText(data.text);
+
+      return {
+        success: true,
+        text: cleanedText,
+        pageCount: data.numpages
+      };
+    } catch (parseError) {
+      // Handle specific PDF parsing errors
+      const errorMessage = parseError.message || String(parseError);
+      
+      // Check for common PDF parsing issues
+      if (errorMessage.includes('Illegal character') || errorMessage.includes('Invalid PDF')) {
+        return {
+          success: false,
+          error: 'PDF parsing failed: The PDF file appears to be corrupted or in an unsupported format. Please try converting it to a newer PDF version or upload a DOCX file instead.'
+        };
+      }
+      
+      if (errorMessage.includes('password') || errorMessage.includes('encrypted')) {
+        return {
+          success: false,
+          error: 'PDF is password-protected or encrypted. Please remove the password and try again.'
+        };
+      }
+      
+      // Generic error
+      return {
+        success: false,
+        error: `PDF extraction failed: ${errorMessage}. The file may be corrupted or in an unsupported format.`
+      };
+    }
   } catch (error) {
     console.error('PDF extraction error:', error);
     return {
       success: false,
-      error: `PDF extraction failed: ${error.message}`
+      error: `PDF extraction failed: ${error.message}. Please try converting the PDF to DOCX format or ensure the PDF is not corrupted.`
     };
   }
 }

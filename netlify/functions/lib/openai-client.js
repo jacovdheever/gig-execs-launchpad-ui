@@ -58,6 +58,7 @@ const DEFAULT_MODEL = 'gpt-4o-mini';
  */
 const PROFILE_EXTRACTION_SCHEMA = {
   type: 'object',
+  additionalProperties: false,
   properties: {
     basicInfo: {
       type: 'object',
@@ -154,6 +155,7 @@ const PROFILE_EXTRACTION_SCHEMA = {
  */
 const ELIGIBILITY_SCHEMA = {
   type: 'object',
+  additionalProperties: false,
   properties: {
     yearsOfExperienceEstimate: {
       type: 'number',
@@ -187,6 +189,7 @@ const ELIGIBILITY_SCHEMA = {
  */
 const CONVERSATION_RESPONSE_SCHEMA = {
   type: 'object',
+  additionalProperties: false,
   properties: {
     assistantMessage: {
       type: 'string',
