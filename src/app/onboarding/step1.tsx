@@ -60,7 +60,6 @@ export default function OnboardingStep1() {
             <button
               onClick={handleBack}
               className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
-              disabled={isProcessing}
             >
               <ArrowLeft className="w-5 h-5 text-slate-600" />
             </button>
