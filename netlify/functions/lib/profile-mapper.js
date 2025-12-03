@@ -297,6 +297,60 @@ function normalizeProficiency(proficiency) {
   return 'intermediate'; // Default
 }
 
+/**
+ * Normalizes month names to abbreviated format (Jan, Feb, Mar, etc.)
+ * Handles full month names, abbreviations, and numeric months
+ * @param {string} month - Month name or number
+ * @returns {string|null} - Abbreviated month name or null
+ */
+function normalizeMonth(month) {
+  if (!month) return null;
+  
+  const monthStr = String(month).trim();
+  
+  // If already in abbreviated format, return as-is (case-insensitive)
+  const abbreviations = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const lowerAbbr = abbreviations.map(m => m.toLowerCase());
+  const lowerMonth = monthStr.toLowerCase();
+  
+  // Check if it's already an abbreviation
+  const abbrIndex = lowerAbbr.indexOf(lowerMonth);
+  if (abbrIndex !== -1) {
+    return abbreviations[abbrIndex]; // Return with proper case
+  }
+  
+  // Map full month names to abbreviations
+  const monthMap = {
+    'january': 'Jan',
+    'february': 'Feb',
+    'march': 'Mar',
+    'april': 'Apr',
+    'may': 'May',
+    'june': 'Jun',
+    'july': 'Jul',
+    'august': 'Aug',
+    'september': 'Sep',
+    'october': 'Oct',
+    'november': 'Nov',
+    'december': 'Dec'
+  };
+  
+  const normalized = monthMap[lowerMonth];
+  if (normalized) {
+    return normalized;
+  }
+  
+  // Try numeric months (1-12)
+  const monthNum = parseInt(monthStr, 10);
+  if (!isNaN(monthNum) && monthNum >= 1 && monthNum <= 12) {
+    return abbreviations[monthNum - 1];
+  }
+  
+  // If we can't normalize it, log a warning and return null
+  console.warn(`Could not normalize month: "${monthStr}"`);
+  return null;
+}
+
 // ============================================================================
 // Work Experience Mapping
 // ============================================================================
@@ -326,22 +380,46 @@ async function saveWorkExperience(workExperience, userId) {
     }
 
     // Map work experience entries
-    const mappedExperience = workExperience.map(exp => ({
-      user_id: userId,
-      company: exp.company || 'Unknown Company',
-      job_title: exp.jobTitle || 'Unknown Role',
-      description: exp.description || null,
-      city: exp.city || null,
-      country_id: exp.country ? countryMap.get(exp.country.toLowerCase().trim()) : null,
-      start_date_month: exp.startDateMonth || null,
-      start_date_year: exp.startDateYear || null,
-      end_date_month: exp.currentlyWorking ? null : (exp.endDateMonth || null),
-      end_date_year: exp.currentlyWorking ? null : (exp.endDateYear || null),
-      currently_working: exp.currentlyWorking || false,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    }));
-
+    const mappedExperience = workExperience.map(exp => {
+      // Normalize month names to abbreviations (Jan, Feb, etc.)
+      const startMonth = normalizeMonth(exp.startDateMonth);
+      const endMonth = exp.currentlyWorking ? null : normalizeMonth(exp.endDateMonth);
+      
+      return {
+        user_id: userId,
+        company: exp.company || 'Unknown Company',
+        job_title: exp.jobTitle || 'Unknown Role',
+        description: exp.description || null,
+        city: exp.city || null,
+        country_id: exp.country ? countryMap.get(exp.country.toLowerCase().trim()) : null,
+        start_date_month: startMonth,
+        start_date_year: exp.startDateYear || null,
+        end_date_month: endMonth,
+        end_date_year: exp.currentlyWorking ? null : (exp.endDateYear || null),
+        currently_working: exp.currentlyWorking || false,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+    });
+    
+    // Filter out entries that don't have required fields after normalization
+    const validExperience = mappedExperience.filter(exp => 
+      exp.company && 
+      exp.job_title && 
+      exp.start_date_month && 
+      exp.start_date_year
+    );
+    
+    if (validExperience.length === 0) {
+      console.warn('No valid work experience entries after normalization');
+      return { success: true, count: 0 };
+    }
+    
+    console.log(`Saving ${validExperience.length} work experience entries (filtered from ${mappedExperience.length})`);
+    if (validExperience.length < mappedExperience.length) {
+      console.warn(`Filtered out ${mappedExperience.length - validExperience.length} invalid work experience entries`);
+    }
+    
     // Delete existing work experience for this user
     const { error: deleteError } = await getSupabaseClient()
       .from('work_experience')
@@ -355,7 +433,7 @@ async function saveWorkExperience(workExperience, userId) {
     // Insert new work experience
     const { data, error: insertError } = await getSupabaseClient()
       .from('work_experience')
-      .insert(mappedExperience)
+      .insert(validExperience)
       .select();
 
     if (insertError) {
@@ -365,7 +443,7 @@ async function saveWorkExperience(workExperience, userId) {
 
     return {
       success: true,
-      count: data?.length || mappedExperience.length
+      count: data?.length || validExperience.length
     };
   } catch (error) {
     console.error('Work experience save error:', error);
@@ -630,8 +708,9 @@ async function mapToDatabase(parsedData, userId, userType) {
       ? parsedData.skills.filter(skill => skill && typeof skill === 'string' && skill.trim().length > 0)
       : [];
     if (skills.length > 0) {
-      console.log(`Matching ${skills.length} skills`);
+      console.log(`Matching ${skills.length} skills:`, skills.slice(0, 5)); // Log first 5 for debugging
       results.skills = await matchSkillsToDatabase(skills, userId);
+      console.log(`Skills matching result: ${results.skills.matched} matched, ${results.skills.unmatched?.length || 0} unmatched`);
     } else {
       console.log('No skills to save (array is null or empty)');
       results.skills = { success: true, matched: 0, unmatched: [] };
@@ -643,8 +722,9 @@ async function mapToDatabase(parsedData, userId, userType) {
       ? parsedData.industries.filter(industry => industry && typeof industry === 'string' && industry.trim().length > 0)
       : [];
     if (industries.length > 0) {
-      console.log(`Matching ${industries.length} industries`);
+      console.log(`Matching ${industries.length} industries:`, industries.slice(0, 5)); // Log first 5 for debugging
       results.industries = await matchIndustriesToDatabase(industries, userId);
+      console.log(`Industries matching result: ${results.industries.matched} matched, ${results.industries.unmatched?.length || 0} unmatched`);
     } else {
       console.log('No industries to save (array is null or empty)');
       results.industries = { success: true, matched: 0, unmatched: [] };

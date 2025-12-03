@@ -323,7 +323,9 @@ Guidelines:
 - Look for certifications, education, and languages
 - Estimate total years of professional experience based on work history
 - If information is unclear or missing, use null or empty values
-- For dates, use YYYY-MM-DD format where possible
+- For work experience dates:
+  * startDateMonth and endDateMonth must use abbreviated month names: "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  * startDateYear and endDateYear must be integers (e.g., 2020, 2015)
 - Normalize job titles and company names for consistency
 - Extract a professional summary if present, or generate a brief one from the content
 - IMPORTANT for education: Keep degreeLevel and fieldOfStudy SEPARATE. Do NOT combine them or add "in" between them.
