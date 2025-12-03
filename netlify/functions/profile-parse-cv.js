@@ -209,6 +209,7 @@ const handler = async (event, context) => {
 
     // Parse the CV with OpenAI
     console.log('Parsing CV with OpenAI...');
+    const { parseCVWithAI } = getOpenAIClient();
     const parseResult = await parseCVWithAI(truncatedText, userId, {
       sourceFileId: sourceFileId
     });
