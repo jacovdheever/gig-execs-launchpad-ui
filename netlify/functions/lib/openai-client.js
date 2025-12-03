@@ -66,13 +66,13 @@ const PROFILE_EXTRACTION_SCHEMA = {
       properties: {
         firstName: { type: 'string', description: 'First name extracted from CV' },
         lastName: { type: 'string', description: 'Last name extracted from CV' },
-        email: { type: 'string', description: 'Email address if found' },
-        phone: { type: 'string', description: 'Phone number if found' },
-        linkedinUrl: { type: 'string', description: 'LinkedIn profile URL if found' },
-        location: { type: 'string', description: 'City, country or general location' },
-        headline: { type: 'string', description: 'Professional headline or summary title' }
+        email: { type: ['string', 'null'], description: 'Email address if found' },
+        phone: { type: ['string', 'null'], description: 'Phone number if found' },
+        linkedinUrl: { type: ['string', 'null'], description: 'LinkedIn profile URL if found' },
+        location: { type: ['string', 'null'], description: 'City, country or general location' },
+        headline: { type: ['string', 'null'], description: 'Professional headline or summary title' }
       },
-      required: ['firstName', 'lastName']
+      required: ['firstName', 'lastName', 'email', 'phone', 'linkedinUrl', 'location', 'headline']
     },
     workExperience: {
       type: 'array',
@@ -82,16 +82,16 @@ const PROFILE_EXTRACTION_SCHEMA = {
         properties: {
           company: { type: 'string', description: 'Company name' },
           jobTitle: { type: 'string', description: 'Job title or role' },
-          startDateMonth: { type: 'string', description: 'Start month (e.g., "January")' },
-          startDateYear: { type: 'integer', description: 'Start year (e.g., 2020)' },
-          endDateMonth: { type: 'string', description: 'End month or null if current' },
-          endDateYear: { type: 'integer', description: 'End year or null if current' },
-          currentlyWorking: { type: 'boolean', description: 'True if this is current position' },
-          description: { type: 'string', description: 'Role description and achievements' },
-          city: { type: 'string', description: 'City where role was based' },
-          country: { type: 'string', description: 'Country where role was based' }
+          startDateMonth: { type: ['string', 'null'], description: 'Start month (e.g., "January")' },
+          startDateYear: { type: ['integer', 'null'], description: 'Start year (e.g., 2020)' },
+          endDateMonth: { type: ['string', 'null'], description: 'End month or null if current' },
+          endDateYear: { type: ['integer', 'null'], description: 'End year or null if current' },
+          currentlyWorking: { type: ['boolean', 'null'], description: 'True if this is current position' },
+          description: { type: ['string', 'null'], description: 'Role description and achievements' },
+          city: { type: ['string', 'null'], description: 'City where role was based' },
+          country: { type: ['string', 'null'], description: 'Country where role was based' }
         },
-        required: ['company', 'jobTitle']
+        required: ['company', 'jobTitle', 'startDateMonth', 'startDateYear', 'endDateMonth', 'endDateYear', 'currentlyWorking', 'description', 'city', 'country']
       }
     },
     education: {
@@ -102,13 +102,13 @@ const PROFILE_EXTRACTION_SCHEMA = {
         properties: {
           institutionName: { type: 'string', description: 'University or institution name' },
           degreeLevel: { type: 'string', description: 'Degree type (e.g., Bachelor, Master, PhD)' },
-          fieldOfStudy: { type: 'string', description: 'Field or major' },
-          startDate: { type: 'string', description: 'Start date in YYYY-MM-DD format' },
-          endDate: { type: 'string', description: 'End date in YYYY-MM-DD format' },
-          grade: { type: 'string', description: 'Grade or GPA if mentioned' },
-          description: { type: 'string', description: 'Additional details about education' }
+          fieldOfStudy: { type: ['string', 'null'], description: 'Field or major' },
+          startDate: { type: ['string', 'null'], description: 'Start date in YYYY-MM-DD format' },
+          endDate: { type: ['string', 'null'], description: 'End date in YYYY-MM-DD format' },
+          grade: { type: ['string', 'null'], description: 'Grade or GPA if mentioned' },
+          description: { type: ['string', 'null'], description: 'Additional details about education' }
         },
-        required: ['institutionName', 'degreeLevel']
+        required: ['institutionName', 'degreeLevel', 'fieldOfStudy', 'startDate', 'endDate', 'grade', 'description']
       }
     },
     skills: {
@@ -123,12 +123,12 @@ const PROFILE_EXTRACTION_SCHEMA = {
         additionalProperties: false,
         properties: {
           name: { type: 'string', description: 'Certification name' },
-          awardingBody: { type: 'string', description: 'Organization that issued the certification' },
-          issueDate: { type: 'string', description: 'Issue date in YYYY-MM-DD format' },
-          expiryDate: { type: 'string', description: 'Expiry date if applicable' },
-          credentialId: { type: 'string', description: 'Credential ID if mentioned' }
+          awardingBody: { type: ['string', 'null'], description: 'Organization that issued the certification' },
+          issueDate: { type: ['string', 'null'], description: 'Issue date in YYYY-MM-DD format' },
+          expiryDate: { type: ['string', 'null'], description: 'Expiry date if applicable' },
+          credentialId: { type: ['string', 'null'], description: 'Credential ID if mentioned' }
         },
-        required: ['name']
+        required: ['name', 'awardingBody', 'issueDate', 'expiryDate', 'credentialId']
       }
     },
     languages: {
@@ -138,21 +138,21 @@ const PROFILE_EXTRACTION_SCHEMA = {
         additionalProperties: false,
         properties: {
           language: { type: 'string', description: 'Language name' },
-          proficiency: { type: 'string', description: 'Proficiency level (Native, Fluent, Professional, Basic)' }
+          proficiency: { type: ['string', 'null'], description: 'Proficiency level (Native, Fluent, Professional, Basic)' }
         },
-        required: ['language']
+        required: ['language', 'proficiency']
       }
     },
     summary: {
-      type: 'string',
+      type: ['string', 'null'],
       description: 'Professional summary or bio extracted or generated from CV content'
     },
     estimatedYearsExperience: {
-      type: 'number',
+      type: ['number', 'null'],
       description: 'Estimated total years of professional experience'
     }
   },
-  required: ['basicInfo', 'workExperience', 'education', 'skills']
+  required: ['basicInfo', 'workExperience', 'education', 'skills', 'certifications', 'languages', 'summary', 'estimatedYearsExperience']
 };
 
 /**
