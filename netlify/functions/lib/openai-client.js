@@ -351,7 +351,34 @@ The user is applying to a platform for senior professionals, so pay attention to
     });
 
     // Parse the response
-    const parsedData = JSON.parse(response.choices[0].message.content);
+    let parsedData = JSON.parse(response.choices[0].message.content);
+
+    // Normalize arrays - ensure they're always arrays, not null
+    // OpenAI's structured output with nullable fields can return null for arrays
+    if (!parsedData.workExperience || !Array.isArray(parsedData.workExperience)) {
+      parsedData.workExperience = [];
+    }
+    if (!parsedData.education || !Array.isArray(parsedData.education)) {
+      parsedData.education = [];
+    }
+    if (!parsedData.skills || !Array.isArray(parsedData.skills)) {
+      parsedData.skills = [];
+    }
+    if (!parsedData.certifications || !Array.isArray(parsedData.certifications)) {
+      parsedData.certifications = [];
+    }
+    if (!parsedData.languages || !Array.isArray(parsedData.languages)) {
+      parsedData.languages = [];
+    }
+
+    // Filter out null entries from arrays
+    parsedData.workExperience = parsedData.workExperience.filter(exp => exp !== null);
+    parsedData.education = parsedData.education.filter(edu => edu !== null);
+    parsedData.skills = parsedData.skills.filter(skill => skill !== null);
+    parsedData.certifications = parsedData.certifications.filter(cert => cert !== null);
+    parsedData.languages = parsedData.languages.filter(lang => lang !== null);
+
+    console.log(`Parsed data summary: ${parsedData.workExperience.length} work exp, ${parsedData.education.length} education, ${parsedData.skills.length} skills, ${parsedData.languages.length} languages`);
 
     return {
       success: true,

@@ -492,28 +492,68 @@ async function mapToDatabase(parsedData, userId, userType) {
     }
 
     // 3. Save work experience
-    if (parsedData.workExperience) {
-      results.workExperience = await saveWorkExperience(parsedData.workExperience, userId);
+    // Filter out null entries and ensure it's an array
+    const workExperience = Array.isArray(parsedData.workExperience) 
+      ? parsedData.workExperience.filter(exp => exp && exp.company && exp.jobTitle)
+      : [];
+    if (workExperience.length > 0) {
+      console.log(`Saving ${workExperience.length} work experience entries`);
+      results.workExperience = await saveWorkExperience(workExperience, userId);
+    } else {
+      console.log('No work experience to save (array is null or empty)');
+      results.workExperience = { success: true, count: 0 };
     }
 
     // 4. Save education
-    if (parsedData.education) {
-      results.education = await saveEducation(parsedData.education, userId);
+    // Filter out null entries and ensure it's an array
+    const education = Array.isArray(parsedData.education)
+      ? parsedData.education.filter(edu => edu && edu.institutionName && edu.degreeLevel)
+      : [];
+    if (education.length > 0) {
+      console.log(`Saving ${education.length} education entries`);
+      results.education = await saveEducation(education, userId);
+    } else {
+      console.log('No education to save (array is null or empty)');
+      results.education = { success: true, count: 0 };
     }
 
     // 5. Save certifications
-    if (parsedData.certifications) {
-      results.certifications = await saveCertifications(parsedData.certifications, userId);
+    // Filter out null entries and ensure it's an array
+    const certifications = Array.isArray(parsedData.certifications)
+      ? parsedData.certifications.filter(cert => cert && cert.name)
+      : [];
+    if (certifications.length > 0) {
+      console.log(`Saving ${certifications.length} certifications`);
+      results.certifications = await saveCertifications(certifications, userId);
+    } else {
+      console.log('No certifications to save (array is null or empty)');
+      results.certifications = { success: true, count: 0 };
     }
 
     // 6. Match and save skills
-    if (parsedData.skills) {
-      results.skills = await matchSkillsToDatabase(parsedData.skills, userId);
+    // Filter out null/empty values and ensure it's an array
+    const skills = Array.isArray(parsedData.skills)
+      ? parsedData.skills.filter(skill => skill && typeof skill === 'string' && skill.trim().length > 0)
+      : [];
+    if (skills.length > 0) {
+      console.log(`Matching ${skills.length} skills`);
+      results.skills = await matchSkillsToDatabase(skills, userId);
+    } else {
+      console.log('No skills to save (array is null or empty)');
+      results.skills = { success: true, matched: 0, unmatched: [] };
     }
 
     // 7. Match and save languages
-    if (parsedData.languages) {
-      results.languages = await matchLanguagesToDatabase(parsedData.languages, userId);
+    // Filter out null entries and ensure it's an array
+    const languages = Array.isArray(parsedData.languages)
+      ? parsedData.languages.filter(lang => lang && lang.language && typeof lang.language === 'string' && lang.language.trim().length > 0)
+      : [];
+    if (languages.length > 0) {
+      console.log(`Matching ${languages.length} languages`);
+      results.languages = await matchLanguagesToDatabase(languages, userId);
+    } else {
+      console.log('No languages to save (array is null or empty)');
+      results.languages = { success: true, matched: 0 };
     }
 
     // Calculate overall success
