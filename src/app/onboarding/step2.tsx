@@ -93,7 +93,24 @@ export default function OnboardingStep2() {
   useEffect(() => {
     const loadUserData = async () => {
       try {
-        // Check for CV parsed data from step 1
+        // Check if CV was imported (from ProfileImportFlow)
+        const cvImported = sessionStorage.getItem('cvImported');
+        if (cvImported === 'true') {
+          setShowCvBanner(true);
+          // Create a placeholder cvData object for the banner
+          // The actual data is already saved to the database by ProfileReviewParsed
+          setCvData({
+            sourceFileId: '',
+            parsedData: {
+              basicInfo: {},
+              workExperience: [],
+              education: [],
+              skills: []
+            }
+          });
+        }
+        
+        // Also check for legacy cvParsedData (from old inline flow)
         const cvDataString = sessionStorage.getItem('cvParsedData');
         if (cvDataString) {
           try {
