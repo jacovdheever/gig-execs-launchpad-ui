@@ -2,7 +2,8 @@
  * Profile CV Upload Function
  * 
  * Handles CV file uploads for the AI Profile Creation System.
- * Stores files in Supabase Storage and creates profile_source_files records.
+ * Stores files in Supabase Storage, creates profile_source_files records,
+ * and extracts text immediately to speed up subsequent parsing.
  */
 
 const { createClient } = require('@supabase/supabase-js');
@@ -13,14 +14,6 @@ const { createErrorResponse } = require('./validation');
 // Lazy load lib modules only when needed (to avoid bundling issues)
 function getTextExtraction() {
   return require('./lib/text-extraction');
-}
-
-function getOpenAIClient() {
-  return require('./lib/openai-client');
-}
-
-function getProfileMapper() {
-  return require('./lib/profile-mapper');
 }
 
 // Allowed MIME types for CV uploads
@@ -158,7 +151,41 @@ const handler = async (event, context) => {
 
     console.log('File uploaded to storage:', uploadData.path);
 
-    // Create profile_source_files record
+    // Extract text immediately to speed up parsing
+    // This is done during upload so the parse function only needs to call OpenAI
+    console.log('Extracting text from uploaded file...');
+    const { extractText, validateExtractedContent } = getTextExtraction();
+    const extractionResult = await extractText(fileBuffer, mimeType);
+
+    let extractedText = null;
+    let extractionStatus = 'pending';
+    let extractionError = null;
+
+    if (extractionResult.success) {
+      // Validate the extracted content
+      const validation = validateExtractedContent(extractionResult.text);
+      
+      if (validation.isValid) {
+        extractedText = extractionResult.text;
+        extractionStatus = 'completed';
+        console.log(`Text extracted successfully: ${extractedText.length} characters`);
+        
+        // Log warning if content might not be a CV
+        if (validation.reason) {
+          console.log('Content warning:', validation.reason);
+        }
+      } else {
+        extractionStatus = 'failed';
+        extractionError = validation.reason;
+        console.log('Content validation failed:', validation.reason);
+      }
+    } else {
+      extractionStatus = 'failed';
+      extractionError = extractionResult.error;
+      console.log('Text extraction failed:', extractionResult.error);
+    }
+
+    // Create profile_source_files record with extraction results
     const { data: sourceFile, error: dbError } = await supabase
       .from('profile_source_files')
       .insert({
@@ -168,7 +195,9 @@ const handler = async (event, context) => {
         file_name: fileName,
         file_size: fileBuffer.length,
         mime_type: mimeType,
-        extraction_status: 'pending'
+        extraction_status: extractionStatus,
+        extracted_text: extractedText,
+        extraction_error: extractionError
       })
       .select()
       .single();
@@ -184,6 +213,23 @@ const handler = async (event, context) => {
 
     console.log('Source file record created:', sourceFile.id);
 
+    // If extraction failed, return error with details
+    // The file is still saved so they can try again or use a different file
+    if (extractionStatus === 'failed') {
+      return {
+        statusCode: 400,
+        headers: corsHeaders,
+        body: JSON.stringify({
+          success: false,
+          error: extractionError,
+          sourceFileId: sourceFile.id,
+          filePath: sourceFile.file_path,
+          fileName: sourceFile.file_name,
+          extractionStatus: extractionStatus
+        })
+      };
+    }
+
     // Return success response
     return {
       statusCode: 200,
@@ -196,7 +242,8 @@ const handler = async (event, context) => {
         fileSize: sourceFile.file_size,
         mimeType: sourceFile.mime_type,
         fileType: sourceFile.file_type,
-        extractionStatus: sourceFile.extraction_status
+        extractionStatus: sourceFile.extraction_status,
+        textLength: extractedText ? extractedText.length : 0
       })
     };
 
