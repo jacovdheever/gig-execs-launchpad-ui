@@ -23,8 +23,11 @@ import {
   ChevronDown,
   ChevronUp,
   Copy,
-  RefreshCw
+  RefreshCw,
+  ClipboardPaste,
+  Sparkles
 } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 
 const ALLOWED_TYPES = [
@@ -35,7 +38,7 @@ const ALLOWED_TYPES = [
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
-type UploadStatus = 'idle' | 'uploading' | 'parsing' | 'polling' | 'complete' | 'error';
+type UploadStatus = 'idle' | 'uploading' | 'parsing' | 'polling' | 'complete' | 'error' | 'paste_fallback';
 
 interface ParsedResult {
   sourceFileId: string;
@@ -59,6 +62,8 @@ export default function CVParserTestPage() {
   const [parsedResult, setParsedResult] = useState<ParsedResult | null>(null);
   const [showExtractedText, setShowExtractedText] = useState(false);
   const [showRawJson, setShowRawJson] = useState(false);
+  const [pastedText, setPastedText] = useState('');
+  const [extractionError, setExtractionError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { staff } = useStaffUser();
   const navigate = useNavigate();
@@ -206,7 +211,23 @@ export default function CVParserTestPage() {
 
       if (!uploadResponse.ok) {
         const errorData = await uploadResponse.json();
-        throw new Error(errorData.error || errorData.message || 'Failed to upload file');
+        const errorMessage = errorData.error || errorData.message || 'Failed to upload file';
+        
+        // Check if this is an extraction error that warrants the paste fallback
+        const isExtractionError = errorMessage.includes('extraction failed') || 
+                                  errorMessage.includes('bad XRef') ||
+                                  errorMessage.includes('corrupted') ||
+                                  errorMessage.includes('encoding issues') ||
+                                  errorMessage.includes('Illegal character') ||
+                                  errorMessage.includes('unsupported format');
+        
+        if (isExtractionError) {
+          setExtractionError(errorMessage);
+          setStatus('paste_fallback');
+          return;
+        }
+        
+        throw new Error(errorMessage);
       }
 
       const uploadResult = await uploadResponse.json();
@@ -317,8 +338,79 @@ export default function CVParserTestPage() {
     setParsedResult(null);
     setShowExtractedText(false);
     setShowRawJson(false);
+    setPastedText('');
+    setExtractionError(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
+    }
+  };
+
+  // Parse pasted text directly (fallback for failed PDF extraction)
+  const parsePastedText = async () => {
+    if (!pastedText.trim() || pastedText.trim().length < 100) {
+      toast({
+        title: 'Text too short',
+        description: 'Please paste at least 100 characters of CV content.',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    setStatus('parsing');
+    setProgress(30);
+    setError(null);
+
+    try {
+      const token = await getAuthToken();
+      if (!token) {
+        throw new Error('Please log in to parse your CV');
+      }
+
+      // Call the parse text endpoint
+      const parseResponse = await fetch('/.netlify/functions/profile-parse-text', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          text: pastedText.trim()
+        })
+      });
+
+      setProgress(60);
+
+      if (!parseResponse.ok) {
+        const errorData = await parseResponse.json();
+        throw new Error(errorData.error || errorData.message || 'Failed to parse CV text');
+      }
+
+      const parseResult = await parseResponse.json();
+      setProgress(100);
+      setStatus('complete');
+
+      toast({
+        title: 'CV parsed successfully!',
+        description: 'Review the extracted information below.',
+      });
+
+      setParsedResult({
+        sourceFileId: 'pasted-text',
+        extractedText: pastedText,
+        parsedData: parseResult.parsedData,
+        eligibility: parseResult.eligibility,
+        usage: parseResult.usage
+      });
+
+    } catch (err) {
+      console.error('Parse text error:', err);
+      setStatus('error');
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+      toast({
+        title: 'Error',
+        description: err instanceof Error ? err.message : 'Failed to parse CV text',
+        variant: 'destructive'
+      });
     }
   };
 
@@ -497,6 +589,64 @@ export default function CVParserTestPage() {
                     <AlertCircle className="h-4 w-4" />
                     <AlertDescription>{error}</AlertDescription>
                   </Alert>
+                )}
+
+                {/* Paste Fallback for extraction errors */}
+                {status === 'paste_fallback' && (
+                  <div className="space-y-4">
+                    <Alert variant="default" className="bg-amber-50 border-amber-200">
+                      <AlertCircle className="h-4 w-4 text-amber-600" />
+                      <AlertDescription className="text-amber-800">
+                        <span className="font-medium">Our AI is struggling to read your CV.</span>
+                        <br />
+                        This could be due to an unconventional format, special characters, or file corruption.
+                        <br />
+                        <span className="text-sm text-amber-700 mt-1 block">
+                          Technical details: {extractionError}
+                        </span>
+                      </AlertDescription>
+                    </Alert>
+
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <ClipboardPaste className="h-5 w-5 text-primary" />
+                        <h3 className="font-medium">Paste your CV content instead</h3>
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        Open your CV document, copy all the text content (Ctrl+A then Ctrl+C), and paste it below. 
+                        Our AI will extract your professional information from the text.
+                      </p>
+                    </div>
+
+                    <Textarea
+                      value={pastedText}
+                      onChange={(e) => setPastedText(e.target.value)}
+                      placeholder="Paste your CV content here...&#10;&#10;Example:&#10;John Doe&#10;Senior Software Engineer&#10;john.doe@email.com&#10;&#10;Experience:&#10;Company ABC - Senior Developer (2020-Present)&#10;- Built scalable applications&#10;- Led team of 5 developers&#10;..."
+                      className="min-h-[300px] font-mono text-sm"
+                      maxLength={30000}
+                    />
+                    
+                    <div className="flex items-center justify-between text-sm text-muted-foreground">
+                      <span>{pastedText.length.toLocaleString()} / 30,000 characters</span>
+                      <span className={pastedText.length >= 100 ? 'text-green-600' : 'text-amber-600'}>
+                        {pastedText.length >= 100 ? '✓ Minimum met' : 'Minimum 100 characters required'}
+                      </span>
+                    </div>
+
+                    <div className="flex gap-3 justify-end">
+                      <Button variant="outline" onClick={resetTest}>
+                        <X className="h-4 w-4 mr-2" />
+                        Cancel
+                      </Button>
+                      <Button 
+                        onClick={parsePastedText}
+                        disabled={pastedText.trim().length < 100}
+                      >
+                        <Sparkles className="h-4 w-4 mr-2" />
+                        Extract with AI
+                      </Button>
+                    </div>
+                  </div>
                 )}
 
                 {status === 'complete' && (
