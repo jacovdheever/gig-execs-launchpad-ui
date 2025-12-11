@@ -35,7 +35,7 @@ const ALLOWED_TYPES = [
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
-type UploadStatus = 'idle' | 'uploading' | 'parsing' | 'complete' | 'error';
+type UploadStatus = 'idle' | 'uploading' | 'parsing' | 'polling' | 'complete' | 'error';
 
 interface ParsedResult {
   sourceFileId: string;
@@ -123,6 +123,44 @@ export default function CVParserTestPage() {
     return session?.access_token || null;
   };
 
+  // Poll for parsing completion
+  const pollForCompletion = async (sourceFileId: string, userId: string, token: string): Promise<any> => {
+    const maxAttempts = 60; // 60 attempts * 2 seconds = 2 minutes max
+    const pollInterval = 2000; // 2 seconds
+    
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      // Update progress during polling
+      setProgress(60 + Math.min(35, attempt)); // 60-95%
+      
+      const statusResponse = await fetch(`/.netlify/functions/profile-parse-cv-status?sourceFileId=${sourceFileId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!statusResponse.ok) {
+        throw new Error('Failed to check parsing status');
+      }
+
+      const statusResult = await statusResponse.json();
+      console.log(`Polling attempt ${attempt + 1}:`, statusResult.parsingStatus);
+
+      if (statusResult.parsingStatus === 'completed') {
+        return statusResult;
+      }
+
+      if (statusResult.parsingStatus === 'failed') {
+        throw new Error(statusResult.parsingError || 'CV parsing failed');
+      }
+
+      // Wait before next poll
+      await new Promise(resolve => setTimeout(resolve, pollInterval));
+    }
+
+    throw new Error('Parsing timed out. Please try again.');
+  };
+
   const uploadAndParse = async () => {
     if (!selectedFile) return;
 
@@ -151,7 +189,7 @@ export default function CVParserTestPage() {
 
       setProgress(30);
 
-      // Upload the file
+      // Upload the file (this now also extracts text)
       const uploadResponse = await fetch('/.netlify/functions/profile-cv-upload', {
         method: 'POST',
         headers: {
@@ -172,10 +210,11 @@ export default function CVParserTestPage() {
       }
 
       const uploadResult = await uploadResponse.json();
+      console.log('Upload result:', uploadResult);
       setProgress(50);
       setStatus('parsing');
 
-      // Parse the CV
+      // Trigger the parsing (returns immediately)
       const parseResponse = await fetch('/.netlify/functions/profile-parse-cv', {
         method: 'POST',
         headers: {
@@ -187,30 +226,76 @@ export default function CVParserTestPage() {
         })
       });
 
-      setProgress(80);
+      const parseResult = await parseResponse.json();
+      console.log('Parse trigger result:', parseResult);
 
-      if (!parseResponse.ok) {
-        const errorData = await parseResponse.json();
-        throw new Error(errorData.error || errorData.message || 'Failed to parse CV');
+      // If already completed (cached), use the result directly
+      if (parseResult.status === 'completed' && parseResult.parsedData) {
+        setProgress(100);
+        setStatus('complete');
+
+        toast({
+          title: 'CV parsed successfully!',
+          description: 'Review the extracted information below.',
+        });
+
+        setParsedResult({
+          sourceFileId: uploadResult.sourceFileId,
+          extractedText: parseResult.extractedText,
+          parsedData: parseResult.parsedData,
+          eligibility: parseResult.eligibility,
+          usage: parseResult.usage
+        });
+        return;
       }
 
-      const parseResult = await parseResponse.json();
-      setProgress(100);
-      setStatus('complete');
+      // If processing started, trigger background function and poll
+      if (parseResult.status === 'processing' || parseResponse.status === 202) {
+        setStatus('polling');
+        
+        // Trigger the background function (fire and forget)
+        fetch('/.netlify/functions/profile-parse-cv-background', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            sourceFileId: uploadResult.sourceFileId,
+            userId: parseResult.userId
+          })
+        }).catch(err => {
+          console.log('Background function triggered (may return 202):', err);
+        });
 
-      toast({
-        title: 'CV parsed successfully!',
-        description: 'Review the extracted information below.',
-      });
+        // Poll for completion
+        const completedResult = await pollForCompletion(
+          uploadResult.sourceFileId, 
+          parseResult.userId, 
+          token
+        );
 
-      // Store the parsed result
-      setParsedResult({
-        sourceFileId: uploadResult.sourceFileId,
-        extractedText: parseResult.extractedText,
-        parsedData: parseResult.parsedData,
-        eligibility: parseResult.eligibility,
-        usage: parseResult.usage
-      });
+        setProgress(100);
+        setStatus('complete');
+
+        toast({
+          title: 'CV parsed successfully!',
+          description: 'Review the extracted information below.',
+        });
+
+        setParsedResult({
+          sourceFileId: uploadResult.sourceFileId,
+          extractedText: completedResult.extractedText,
+          parsedData: completedResult.parsedData,
+          eligibility: null,
+          usage: undefined
+        });
+        return;
+      }
+
+      // Handle error responses
+      if (!parseResponse.ok) {
+        throw new Error(parseResult.error || parseResult.message || 'Failed to parse CV');
+      }
 
     } catch (err) {
       console.error('Upload/parse error:', err);
@@ -250,7 +335,9 @@ export default function CVParserTestPage() {
       case 'uploading':
         return 'Uploading CV...';
       case 'parsing':
-        return 'Analyzing CV with AI...';
+        return 'Starting AI analysis...';
+      case 'polling':
+        return 'Analyzing CV with AI (this may take up to 60 seconds)...';
       case 'complete':
         return 'CV processed successfully!';
       case 'error':
@@ -391,7 +478,7 @@ export default function CVParserTestPage() {
                   </>
                 )}
 
-                {(status === 'uploading' || status === 'parsing') && (
+                {(status === 'uploading' || status === 'parsing' || status === 'polling') && (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-sm">
                       <span>{getStatusMessage()}</span>
@@ -400,7 +487,7 @@ export default function CVParserTestPage() {
                     <Progress value={progress} />
                     <div className="flex items-center justify-center gap-2 text-muted-foreground">
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      <span>Processing...</span>
+                      <span>{status === 'polling' ? 'AI is processing your CV...' : 'Processing...'}</span>
                     </div>
                   </div>
                 )}

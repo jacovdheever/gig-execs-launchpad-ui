@@ -1,12 +1,15 @@
 /**
- * Profile Parse CV Function
+ * Profile Parse CV Function (Trigger)
  * 
- * Parses previously extracted CV text using OpenAI.
- * Text extraction is now done during upload (profile-cv-upload.js) to reduce timeout risk.
- * Returns structured profile data for user review.
+ * This is a TRIGGER function that:
+ * 1. Validates authentication and ownership
+ * 2. Sets parsing_status to 'processing'
+ * 3. Returns immediately with instructions to poll
  * 
- * Note: Eligibility assessment is now a separate function (profile-assess-eligibility.js)
- * to further reduce processing time.
+ * The actual parsing happens in profile-parse-cv-background.js
+ * Frontend should poll profile-parse-cv-status.js for results.
+ * 
+ * This pattern avoids timeout issues for long-running AI operations.
  */
 
 const { createClient } = require('@supabase/supabase-js');
@@ -14,21 +17,8 @@ const { withAuth } = require('./auth');
 const { withRateLimit } = require('./rateLimiter');
 const { createErrorResponse } = require('./validation');
 
-// Lazy load lib modules only when needed (to avoid bundling issues)
-function getTextExtraction() {
-  return require('./lib/text-extraction');
-}
-
-function getOpenAIClient() {
-  return require('./lib/openai-client');
-}
-
-// Maximum tokens to send to OpenAI (to control costs)
-// Reduced from 6000 to 4500 to improve response time
-const MAX_CV_TOKENS = 4500;
-
 /**
- * Main handler for CV parsing
+ * Main handler - validates and triggers background parsing
  */
 const handler = async (event, context) => {
   // CORS validation
@@ -116,63 +106,84 @@ const handler = async (event, context) => {
 
     console.log('Processing source file:', sourceFile.id, sourceFile.file_name);
 
-    // Text should already be extracted during upload
-    // This significantly reduces processing time for this function
-    const extractedText = sourceFile.extracted_text;
-
     // Check if text was extracted during upload
-    if (!extractedText || sourceFile.extraction_status !== 'completed') {
+    if (!sourceFile.extracted_text || sourceFile.extraction_status !== 'completed') {
       console.log('Text not yet extracted. Status:', sourceFile.extraction_status);
       
-      // If extraction failed during upload, return the error
       if (sourceFile.extraction_status === 'failed') {
         return createErrorResponse(400, sourceFile.extraction_error || 'Text extraction failed during upload. Please try uploading a different file.');
       }
       
-      // If still pending, the upload might not have completed properly
       return createErrorResponse(400, 'File text not yet extracted. Please wait for upload to complete or re-upload the file.');
     }
 
-    console.log(`Using pre-extracted text: ${extractedText.length} characters`);
-
-    // Truncate text if too long (to control costs)
-    const { truncateToMaxTokens } = getTextExtraction();
-    const truncatedText = truncateToMaxTokens(extractedText, MAX_CV_TOKENS);
-
-    // Parse the CV with OpenAI
-    console.log('Parsing CV with OpenAI...');
-    const { parseCVWithAI } = getOpenAIClient();
-    const parseResult = await parseCVWithAI(truncatedText, userId, {
-      sourceFileId: sourceFileId
-    });
-
-    if (!parseResult.success) {
-      console.error('CV parsing failed:', parseResult.error);
-      return createErrorResponse(500, parseResult.error);
+    // Check if already being processed or completed
+    if (sourceFile.parsing_status === 'processing') {
+      return {
+        statusCode: 200,
+        headers: corsHeaders,
+        body: JSON.stringify({
+          success: true,
+          status: 'processing',
+          message: 'CV is already being parsed. Please poll for status.',
+          sourceFileId: sourceFileId,
+          userId: userId
+        })
+      };
     }
 
-    console.log('CV parsed successfully');
+    // If already completed, return the cached result
+    if (sourceFile.parsing_status === 'completed' && sourceFile.parsed_data) {
+      console.log('Returning cached parsed data');
+      return {
+        statusCode: 200,
+        headers: corsHeaders,
+        body: JSON.stringify({
+          success: true,
+          status: 'completed',
+          sourceFileId: sourceFileId,
+          extractedText: sourceFile.extracted_text,
+          parsedData: sourceFile.parsed_data,
+          eligibility: null,
+          warnings: []
+        })
+      };
+    }
 
-    // Note: Eligibility assessment is now done separately via profile-assess-eligibility.js
-    // This reduces the processing time for this function by ~40%
+    // Set status to 'processing' - this authorizes the background function
+    const { error: updateError } = await supabase
+      .from('profile_source_files')
+      .update({ 
+        parsing_status: 'processing',
+        parsing_error: null,
+        parsed_data: null
+      })
+      .eq('id', sourceFileId);
 
-    // Return the parsed data for review
+    if (updateError) {
+      console.error('Failed to update parsing status:', updateError);
+      return createErrorResponse(500, 'Failed to initiate parsing');
+    }
+
+    console.log('Parsing status set to processing. Client should call background function and poll for results.');
+
+    // Return immediately - client should now trigger background function
     return {
-      statusCode: 200,
+      statusCode: 202, // Accepted
       headers: corsHeaders,
       body: JSON.stringify({
         success: true,
+        status: 'processing',
+        message: 'CV parsing initiated. Please call the background function and poll for status.',
         sourceFileId: sourceFileId,
-        extractedText: extractedText, // Include extracted text for testing/debugging
-        parsedData: parseResult.data,
-        eligibility: null, // Eligibility assessed separately now
-        usage: parseResult.usage,
-        warnings: []
+        userId: userId, // Needed for background function
+        pollEndpoint: '/.netlify/functions/profile-parse-cv-status',
+        backgroundEndpoint: '/.netlify/functions/profile-parse-cv-background'
       })
     };
 
   } catch (error) {
-    console.error('CV parsing error:', error);
+    console.error('CV parsing trigger error:', error);
     return createErrorResponse(500, `Unexpected error: ${error.message}`);
   }
 };
