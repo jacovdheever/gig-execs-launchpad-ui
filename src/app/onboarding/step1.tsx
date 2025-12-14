@@ -144,8 +144,8 @@ export default function OnboardingStep1() {
                     </CardContent>
                   </Card>
 
-                  {/* AI Assistant Option */}
-                  <Card 
+                  {/* AI Assistant Option - HIDDEN FOR PRODUCTION (will continue in develop branch) */}
+                  {/* <Card 
                     className={`cursor-pointer transition-all hover:shadow-lg ${
                       selectedMethod === 'ai' 
                         ? 'ring-2 ring-yellow-500 border-green-700' 
@@ -155,12 +155,9 @@ export default function OnboardingStep1() {
                   >
                     <CardContent className="p-4 sm:p-6">
                       <div className="flex items-start gap-3 sm:gap-4">
-                        {/* AI Icon */}
                         <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
                           <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                         </div>
-                        
-                        {/* Text Content */}
                         <div className="flex-1 text-left">
                           <h3 className="text-xl font-semibold text-[#012E46] mb-1">
                             Create with AI Assistant
@@ -171,7 +168,7 @@ export default function OnboardingStep1() {
                         </div>
                       </div>
                     </CardContent>
-                  </Card>
+                  </Card> */}
 
                   {/* Manual Input Option */}
                   <Card 
@@ -210,7 +207,7 @@ export default function OnboardingStep1() {
                     disabled={!selectedMethod}
                     className="px-8 py-3 text-lg bg-gradient-to-r from-[#012E46] to-[#4885AA] hover:from-[#011E36] hover:to-[#3A7A9A] text-white border-0 disabled:opacity-50"
                   >
-                    {selectedMethod === 'ai' ? 'Start AI Conversation' : 'Continue'}
+                    Continue
                   </Button>
                 </div>
               </CardContent>
