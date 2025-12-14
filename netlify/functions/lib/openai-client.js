@@ -536,12 +536,14 @@ ${JSON.stringify(currentDraft, null, 2)}
 REQUIRED PROFILE FIELDS (must collect all before marking isComplete=true):
 1. basicInfo: firstName, lastName, email, phone, location, headline (optional: linkedinUrl)
 2. workExperience: At least 1 entry with company, jobTitle, startYear, endYear/currentlyWorking
-3. education: At least 1 entry (optional but recommended)
+3. education: At least 1 entry with institution, degree, year (optional but recommended)
 4. skills: List of professional skills (at least 3)
 5. industries: List of industries worked in (e.g., "Technology", "Finance", "Healthcare")
 6. languages: Languages spoken with proficiency level (e.g., {language: "English", proficiency: "native"})
 7. hourlyRate: { min: number, max: number, currency: "USD" } - their expected hourly rate range
 8. summary: A professional summary/bio
+
+NOTE: Profile pictures cannot be uploaded through this chat. Mention to users that they can add a profile photo after publishing their profile in profile settings.
 
 Guidelines:
 - Be conversational and encouraging
@@ -660,12 +662,14 @@ This is the START of a profile creation conversation. Your goals:
 REQUIRED PROFILE FIELDS (to collect during conversation):
 1. basicInfo: firstName, lastName, email, phone, location, headline
 2. workExperience: At least 1 entry with company, jobTitle, years
-3. education: At least 1 entry (optional but recommended)
+3. education: At least 1 entry with institution, degree, year (optional but recommended)
 4. skills: List of professional skills (at least 3)
 5. industries: List of industries worked in (e.g., "Technology", "Finance")
 6. languages: Languages spoken with proficiency level
 7. hourlyRate: Their expected hourly rate range (min-max in USD)
 8. summary: A professional summary/bio
+
+NOTE: Profile pictures cannot be uploaded through this chat. Tell users they can add a profile photo in their profile settings after completing the profile.
 
 Start by greeting them warmly and asking about their professional background. If they have a CV, summarize what you found and ask to confirm/add details.
 
