@@ -196,10 +196,12 @@ const ELIGIBILITY_SCHEMA = {
 
 /**
  * Schema for conversational profile assistant response
+ * Note: Using a simpler schema structure for conversation responses since 
+ * the draftProfile can have varying structure during the conversation flow.
+ * We use strict: false to allow flexibility in responses.
  */
 const CONVERSATION_RESPONSE_SCHEMA = {
   type: 'object',
-  additionalProperties: false,
   properties: {
     assistantMessage: {
       type: 'string',
@@ -207,7 +209,8 @@ const CONVERSATION_RESPONSE_SCHEMA = {
     },
     draftProfile: {
       type: 'object',
-      description: 'Updated draft profile data (same structure as PROFILE_EXTRACTION_SCHEMA)'
+      description: 'Updated draft profile data with basicInfo, workExperience, education, skills, etc.',
+      additionalProperties: true
     },
     nextStep: {
       type: 'string',
@@ -540,7 +543,22 @@ Guidelines:
 - When the profile is reasonably complete, move to eligibility_review
 - Always be respectful - even if they don't meet the experience threshold, be supportive
 
-Respond with the next step in the flow and an updated draft profile.`;
+IMPORTANT: You must respond with valid JSON in this exact format:
+{
+  "assistantMessage": "Your friendly message to the user",
+  "draftProfile": {
+    "basicInfo": { "firstName": "...", "lastName": "...", etc },
+    "workExperience": [...],
+    "education": [...],
+    "skills": [...],
+    "summary": "..."
+  },
+  "nextStep": "basic_info",
+  "isComplete": false,
+  "questionsAsked": ["question1", "question2"]
+}
+
+Valid nextStep values: basic_info, experience, education, skills, certifications, languages, summary, eligibility_review, complete`;
 
     // Build messages array
     const messages = [
@@ -552,14 +570,7 @@ Respond with the next step in the flow and an updated draft profile.`;
     const response = await getOpenAIClient().chat.completions.create({
       model,
       messages,
-      response_format: {
-        type: 'json_schema',
-        json_schema: {
-          name: 'conversation_response',
-          strict: true,
-          schema: CONVERSATION_RESPONSE_SCHEMA
-        }
-      },
+      response_format: { type: 'json_object' },
       temperature: 0.7, // Higher temperature for more natural conversation
       max_tokens: 2000
     });
@@ -567,12 +578,21 @@ Respond with the next step in the flow and an updated draft profile.`;
     const usage = response.usage;
     const parsedResponse = JSON.parse(response.choices[0].message.content);
 
+    // Validate required fields
+    if (!parsedResponse.assistantMessage) {
+      throw new Error('Missing assistantMessage in response');
+    }
+
     // Log the usage
-    await logAIUsage(userId, 'profile_ai_conversation', model, usage, {
-      draft_id: options.draftId,
-      conversation_turn: conversationHistory.length + 1,
-      next_step: parsedResponse.nextStep
-    });
+    try {
+      await logAIUsage(userId, 'profile_ai_conversation', model, usage, {
+        draft_id: options.draftId,
+        conversation_turn: conversationHistory.length + 1,
+        next_step: parsedResponse.nextStep
+      });
+    } catch (logError) {
+      console.error('Failed to log AI usage (non-fatal):', logError);
+    }
 
     return {
       success: true,
@@ -625,7 +645,24 @@ This is the START of a profile creation conversation. Your goals:
 3. Ask about any missing key information
 4. Set expectations for the profile creation process
 
-Start by greeting them and asking about their professional background if no CV was provided, or confirming/clarifying information from their CV if one was provided.`;
+Start by greeting them and asking about their professional background if no CV was provided, or confirming/clarifying information from their CV if one was provided.
+
+IMPORTANT: You must respond with valid JSON in this exact format:
+{
+  "assistantMessage": "Your friendly message to the user",
+  "draftProfile": {
+    "basicInfo": { "firstName": "...", "lastName": "...", etc },
+    "workExperience": [...],
+    "education": [...],
+    "skills": [...],
+    "summary": "..."
+  },
+  "nextStep": "basic_info",
+  "isComplete": false,
+  "questionsAsked": ["question1", "question2"]
+}
+
+Valid nextStep values: basic_info, experience, education, skills, certifications, languages, summary, eligibility_review, complete`;
 
     const response = await getOpenAIClient().chat.completions.create({
       model,
@@ -633,14 +670,7 @@ Start by greeting them and asking about their professional background if no CV w
         { role: 'system', content: systemPrompt },
         { role: 'user', content: contextMessage }
       ],
-      response_format: {
-        type: 'json_schema',
-        json_schema: {
-          name: 'conversation_response',
-          strict: true,
-          schema: CONVERSATION_RESPONSE_SCHEMA
-        }
-      },
+      response_format: { type: 'json_object' },
       temperature: 0.7,
       max_tokens: 2000
     });
@@ -648,13 +678,22 @@ Start by greeting them and asking about their professional background if no CV w
     const usage = response.usage;
     const parsedResponse = JSON.parse(response.choices[0].message.content);
 
+    // Validate required fields
+    if (!parsedResponse.assistantMessage) {
+      throw new Error('Missing assistantMessage in response');
+    }
+
     // Log the usage
-    await logAIUsage(userId, 'profile_ai_conversation', model, usage, {
-      draft_id: options.draftId,
-      conversation_turn: 0,
-      is_start: true,
-      has_cv: !!options.cvText
-    });
+    try {
+      await logAIUsage(userId, 'profile_ai_conversation', model, usage, {
+        draft_id: options.draftId,
+        conversation_turn: 0,
+        is_start: true,
+        has_cv: !!options.cvText
+      });
+    } catch (logError) {
+      console.error('Failed to log AI usage (non-fatal):', logError);
+    }
 
     return {
       success: true,
