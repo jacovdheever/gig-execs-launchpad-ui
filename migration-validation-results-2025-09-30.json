@@ -1,0 +1,5456 @@
+{
+  "timestamp": "2025-09-30T12:47:34.301Z",
+  "summary": {
+    "totalCsvUsers": 866,
+    "completeMigrations": 441,
+    "incompleteMigrations": 363,
+    "usersNotFound": 1,
+    "usersWithNoData": 7,
+    "usersWithNoProfileData": 54,
+    "duplicates": {
+      "workExperience": 0,
+      "education": 0,
+      "skills": 0,
+      "languages": 0,
+      "industries": 0
+    }
+  },
+  "validationResults": [
+    {
+      "email": "mmotawea@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "gomajoaquim31@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "emmanuelowusu38@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=1, DB=4",
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (6 found in CSV)"
+      ]
+    },
+    {
+      "email": "david@digidistiller.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "todd@tecamplify.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "marianne.ulloa1@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "pramirez1030@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "nitisha.singh@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "oren@pineventures.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=8, DB=24",
+        "Skills count mismatch: CSV=13, DB=28",
+        "Industries count mismatch: CSV=4, DB=1",
+        "Certifications not migrated (3 found in CSV)"
+      ]
+    },
+    {
+      "email": "e.p.hunzeker@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jeff.quantrill67@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=4, DB=8",
+        "Missing education",
+        "Missing languages",
+        "Industries count mismatch: CSV=3, DB=2"
+      ]
+    },
+    {
+      "email": "jason.butler.17@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "garyralphmr@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mel@metisenergyconsultants.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "verlier.quan-vie@ngc.co.tt",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "suzemcb@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "tzvidzie@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=7, DB=14",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "ricardorodil@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "yonas11130@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "moxieakarasek@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "hs.wahab12345@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=4, DB=8",
+        "Languages count mismatch: CSV=3, DB=2",
+        "Missing industries",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "alq1235r@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "maxjallad@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "naomi.esfahani@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mattdcarstens@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=4, DB=8"
+      ]
+    },
+    {
+      "email": "bmohamadieh@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "tnhines@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "amybkennedy@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=10, DB=20",
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    },
+    {
+      "email": "kathleen@thekmmgroup.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "brucemillard00@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "isabel.pett@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "joe@weinlickworks.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=9, DB=18",
+        "Industries count mismatch: CSV=5, DB=4"
+      ]
+    },
+    {
+      "email": "carmenmarianavarro@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=6, DB=12",
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "prado_marcelo@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "dkondak@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Languages count mismatch: CSV=3, DB=2",
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    },
+    {
+      "email": "rishi_dhar@rediffmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=4, DB=8"
+      ]
+    },
+    {
+      "email": "gtovar.h@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "luchen1212@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "bh@brucejhershey.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=7, DB=14",
+        "Industries count mismatch: CSV=5, DB=2"
+      ]
+    },
+    {
+      "email": "nvisconti@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "barnes.kourtney@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "charlene.coleman@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=12, DB=24",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "rosarioisabelverasgranados@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "r_smith3412@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "nliu@threedify.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "amahepath@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=1, DB=2",
+        "Industries count mismatch: CSV=3, DB=2"
+      ]
+    },
+    {
+      "email": "jjeades63@lilrok.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "joshua.larson10@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=11, DB=22",
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    },
+    {
+      "email": "phillip.leung@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "vvgary@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=5, DB=10",
+        "Industries count mismatch: CSV=3, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "marcus.herbert2017@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "christina@cmaraconsulting.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "hervasmpatricia@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "tvacapereira@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ashish.sanghavi@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "fionayangliyun89@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "nickdiana@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "s@eastpac.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mbratowski@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "lj-morris@hotmail.co.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "geologistbaskar@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "kavilazez@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=1, DB=2"
+      ]
+    },
+    {
+      "email": "ryanking1013@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "rickcardoso4040@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "bhockett@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "andrewogilvie@live.co.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mikedaviesis@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=2"
+      ]
+    },
+    {
+      "email": "chris_reid11@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "david@rhinecapital.co.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jim.kilpatrick@manufacturingis.co.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "martin.bruce1@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "roma.frisby@outlook.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing education",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "rekha.thade@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=6, DB=12",
+        "Industries count mismatch: CSV=5, DB=4",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "karitoga06@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=1"
+      ]
+    },
+    {
+      "email": "mensahkwabena0@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "patrickraney@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "gis.vignesh@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ripudaman.sarna@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "devan.gopal@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "james-smyth@live.co.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "shabah.209@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing education"
+      ]
+    },
+    {
+      "email": "hellsbellsthomas@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "rajamohan247@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "erikadiboe@aol.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "simplylevy@aol.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "marinos@mweb.co.za",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=3",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "h.u.ahmed@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "paul.holliday3@googlemail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "richardjwebb@live.co.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "javidghani@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "denniswilson4@me.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "howard@apym.co.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "danharpham@me.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "gil2256@hotmail.co.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "allaire.virginie@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "lin.curtis@me.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "descartebase@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "apope1@live.co.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "modiba_masilo@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "louisemilne1979@live.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "luke@wildmindlearning.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "thom.noakes@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=2, DB=4",
+        "Missing education"
+      ]
+    },
+    {
+      "email": "richard.jones@aegisdm.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=4, DB=8",
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "esleosbrown@comcast.net",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=10, DB=20",
+        "Missing industries",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "eschinsi@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "stevec@minex.org",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "carteroj24@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "arsamal@geoglobal.co",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "tiagoesferreira16@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "patriciamartinezn@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jbmitchell1@icloud.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=3, DB=6"
+      ]
+    },
+    {
+      "email": "lance.sissing@me.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "scott.e.crooks@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=8, DB=16",
+        "Education count mismatch: CSV=3, DB=2",
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "tesbee2001@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "nitesh6684@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "edarwish067@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "byronfry68@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "william.wen.li@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "christopher.muracco@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=13, DB=26",
+        "Education count mismatch: CSV=4, DB=3",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "hera.mpondo@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=5, DB=4",
+        "Industries count mismatch: CSV=2, DB=1"
+      ]
+    },
+    {
+      "email": "nadine.resha@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "sohailawan743@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "filipemocambique@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "carol@pepperinternational.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "akaracsonyi@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing work experience",
+        "Missing education",
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "kerkhof.sacha@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "charles.deutsch@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "petermackey0@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "alexandrebarbosa.souza@yahoo.co.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "rontr8@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "sam@mahocapitalpartners.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "dhiraj_bhandary@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "auscro8256@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "kellythooft@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "herbmaz@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "wassemalward@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=1"
+      ]
+    },
+    {
+      "email": "hammed.bakare@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "devscoconsulting@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=4"
+      ]
+    },
+    {
+      "email": "mark.wigham780@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ahmad1975syr@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "nigel@nigelwalls.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mehdi.kiani.t@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    },
+    {
+      "email": "pucj001@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2"
+      ]
+    },
+    {
+      "email": "aqdavila@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "sandy1crack@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "deven.agra@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "lonnyb@icloud.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "amin.m.raja@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "phillip.julian@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "willem.kruger@wlkservices.co.za",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "les.hirsch@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "emipasat+1@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "afouquet1@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "tonnymhondiwa@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "megabula@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "junaid.limbada@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "segodic@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "boakye1804@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "bhungs25@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "chuma.shadreck@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Languages count mismatch: CSV=2, DB=1",
+        "Industries count mismatch: CSV=3, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "drcoldren63@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages",
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "carl.scholtz24@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jlmudau@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "kyra.rautenbach@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing education",
+        "Industries count mismatch: CSV=2, DB=1"
+      ]
+    },
+    {
+      "email": "jimmy.tsatsire@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "gayle.marillier@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "phumie.mtande@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "dkkabongo@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jk1ng@pm.me",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "rakeshsinch@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "brenny.seima@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "abustech@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "lunga.tungu@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    },
+    {
+      "email": "desheng@mweb.co.za",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "kevmoodley@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "sbukunene@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mfleckson@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "nhamodhlamini@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "ronaldzembe@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "nadine.magrath@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "lucas.micheletto.sobral@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "nerubenkoanton@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "jolanta.i.doroz@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "dinshvinayagam@outlook.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1"
+      ]
+    },
+    {
+      "email": "melissamckerrow@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing education",
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "rafael.cabello@sbcglobal.net",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "frederic.j.washburn@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "brodrig561@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "donovanbhardin@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "omonigho28@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=4",
+        "Certifications not migrated (4 found in CSV)"
+      ]
+    },
+    {
+      "email": "ashraf@toojan.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "seanchapman718@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "lvillaoq@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "lou.ogaard@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "robin.borley@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=4, DB=3",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "erwinbayu@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "layeeq588@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jafrizameer@yahoo.com",
+      "status": "NO_DATA",
+      "issues": [
+        "No PublicData found in CSV"
+      ]
+    },
+    {
+      "email": "sshantz1717@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing education",
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (7 found in CSV)"
+      ]
+    },
+    {
+      "email": "tmchigbo@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "karinab27@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "moh_meh_2025@hotmail.com",
+      "status": "NO_DATA",
+      "issues": [
+        "No PublicData found in CSV"
+      ]
+    },
+    {
+      "email": "craigrlane@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jhosick@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1"
+      ]
+    },
+    {
+      "email": "shtoppazzini@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "p.medina.angulo@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "adegbemiroa@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "yokwembulelo@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "kcnaresh@mail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "prashant_pnd67@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "yagneshjshukla@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "andersonhamish31@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=3"
+      ]
+    },
+    {
+      "email": "cristian.borcescu@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "kamgonzales@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1"
+      ]
+    },
+    {
+      "email": "rehal_zineddine@yahoo.fr",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=2"
+      ]
+    },
+    {
+      "email": "stamatios.chondrogiannis@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1"
+      ]
+    },
+    {
+      "email": "ajadhav22@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "maryam_haider@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "macjohngeraldo@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "dineshvinayagam@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "anita.le.909@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mohamed.elbashir@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Languages count mismatch: CSV=3, DB=2",
+        "Industries count mismatch: CSV=2, DB=1"
+      ]
+    },
+    {
+      "email": "veenalpraamraj@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "rikky.keane@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "talentschaft.md@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "taha.abulaynin@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "geoff_hamilton@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "khdick@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "jaco.vandenheever+2@gigexecs.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "iisidorenko.ru@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "jiivan.k@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Languages count mismatch: CSV=3, DB=2",
+        "Industries count mismatch: CSV=4, DB=2"
+      ]
+    },
+    {
+      "email": "ahmedk174@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "thomas.schultz22@yahoo.de",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "john.hager.2018@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "odinaka.onwurah@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "kennethkirkwood38@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "andrewjohnhaley@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jwg@jwg99.plus.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=2, DB=1",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "manuel.rey.guijarro@walkia.es",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mblethen@blethenminingassociates.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "soran76v@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mr.jtgutierrez@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "krumaneb@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "sdienes@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "azikeogo@outlook.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "nloughlin4@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=3, DB=2",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "abframe@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "tossho@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "lynthomasuk@aol.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "dem@atherion.co.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mattdvh@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "augeo653@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "shende.takshak@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "bawa.nidhi@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "gargibose123@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "markoldfield007@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "jrodlw@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "tcb2217@usa.net",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "dmminer@outlook.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "d.e.dunn89@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "chris.nichols@dimesy.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "david_radley@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=8, DB=7",
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "venu.babla@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "albjonkola@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=1",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "jim@agileexecsearch.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "brunomeirelesdesousa@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=11, DB=10",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "ilircuka1984@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "lok2011@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "nidalk6@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "rejid@emirates.net.ae",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jinan.bnassif@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "rhcooper@btopenworld.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "vs.research@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "saufeerali@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "rodney@technologistkiwi.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "acarahulgoyal@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jacson.jack10@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ayush.0012@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "kuhle.zondo@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "ahat0001@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "cabraangelica1827@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "haitham.meslemani@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "lewis.kilroe@eastemblem.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "ushevanatalie@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mhmd.tharwatt@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "mohamedghandour@outlook.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "sohailraza.acca@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mardibernardino@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "zareefa.nifam@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "rekhajoseph82@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jojiav@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "noronhamercy59@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "gopakumar78@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "milosz.mateja@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "kolayisandeep@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "khizar27ali@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "peer.shaikh@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "yebiliye@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "khasimb78@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "basar.munsif5@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jafirkhanniazi@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jagetia.neelam@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "rizwanamjad0557@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mariglo.lagdamat@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "sujith2525@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "atikram2009@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "rizalyubaraj@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "alqudaha@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "shwetusurve2011@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "nahidmammadov@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "3alya.adel0@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "hsp.sajidh@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "almalikmalik51@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "sohail_qadirpk@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "thomasuae@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "magdysameh25800@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "johncyullas@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=3, DB=2",
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "canavjotsinghkheda@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "remi.varghese@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "abdullahssaeed94@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jjyithi63@yahoo.in",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "aayishaniz332@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "prodeepakjain@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "aejazpatel@yahoo.co.in",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Languages count mismatch: CSV=5, DB=4",
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    },
+    {
+      "email": "farristrey@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "jimmyat86@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "esnyderbd@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "sff1712@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "parsonsgeo@comcast.net",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "joeydean01@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "troy.carrothers@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "anpgsilva@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "gc_blaze@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries",
+        "Certifications not migrated (4 found in CSV)"
+      ]
+    },
+    {
+      "email": "mayntrazi@ee-capital.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jodeyreis@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "lwei0411@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "bryanbarnes165@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "emily618@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=3"
+      ]
+    },
+    {
+      "email": "sinyc3866@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "george.dames@att.net",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "leetrevor6@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "kristinmd1984@live.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "thattenbach@mail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2"
+      ]
+    },
+    {
+      "email": "jmdickey314@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "newmail2020@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "bill@wfgleason.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "katesawesomelife@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "tmflitter@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "billbailer@verizon.net",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "cj.christianjohnson97@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "mcgee.jl@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "eunice@wybenam.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "wochanda02@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "vcoviello1@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "j.chegin@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=3, DB=2",
+        "Industries count mismatch: CSV=3, DB=1"
+      ]
+    },
+    {
+      "email": "jsordoni1@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "martintpick@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=6, DB=5",
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "werhammond@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=5, DB=3",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "rodzava266@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "esantana0165@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "javaidislam@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "armandonavarro@msn.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "kylepoplos@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "steven_draper@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "imack@idapmack.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "kennyhocpa@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "gorodisky@mail.ru",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "twinkler3@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "saileshjha@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "husni@khuffash.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1"
+      ]
+    },
+    {
+      "email": "eeatman3@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "carlosferrari@hotmail.com.br",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jcgomez@acquavalor.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ishunter06483@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "markbouder1@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "michael@linkstreet.consulting",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "rakeshawesum0189@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "imanihorne@icloud.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing education",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "elisekm430@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    },
+    {
+      "email": "kmrichardson331@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "dana.t@me.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "wrightbruce80@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=1"
+      ]
+    },
+    {
+      "email": "jeff@jeffbosworth.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    },
+    {
+      "email": "stephaniegold76@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "bk147111@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "aghazzaoui@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1"
+      ]
+    },
+    {
+      "email": "dwarak.salpg@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ipelletier@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "drewbiemer@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "avi.purkayastha@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "scottm95@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ldsul@msn.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "nsachivichik@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "faulkner.liam@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "gscottmyers@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "borgi_drilling@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mmcallister@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Skills count mismatch: CSV=11, DB=26",
+        "Industries count mismatch: CSV=4, DB=2"
+      ]
+    },
+    {
+      "email": "molis.jp@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "josh@firstflatironea.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1"
+      ]
+    },
+    {
+      "email": "lkinney00@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "mmelnyk2000@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "chiedu.adigwe@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mark.alun.saunders@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "robasherwin@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "essam.salehm@icloud.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "rakeshawesum01892@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "a.tunoglu@btinternet.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "linatsang@cantab.net",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing work experience",
+        "Education count mismatch: CSV=4, DB=3",
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "daveferg@sky.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing work experience",
+        "Missing education",
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "lukin2002@yandex.ru",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jflynn@kennedywilson.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "coach.me.1two1@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "jmorgan1.mcm@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "ygorodiskiy@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "vindim@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "keith.matthews.one@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "k.odowd1@sky.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=2, DB=1",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "mohamed_sallam77@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "jason@baileystationcapital.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=3",
+        "Certifications not migrated (3 found in CSV)"
+      ]
+    },
+    {
+      "email": "tracey@tlj712.co.uk",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=2, DB=1",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "manoharsinghjpr@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "eran.benavi@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "jonxana@icloud.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jbaran@me.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "pedrobobiao@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2"
+      ]
+    },
+    {
+      "email": "turekul@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "lchinghk@yahoo.co.uk",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=2",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "tito_campos@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "devie@turya.co",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "williamrobertgerman@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "helenngada@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ockert.vanschalkwyk@outlook.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "onehitvirtualsoltuionsllc@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ophillips163@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "rtwaring1@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=2",
+        "Certifications not migrated (4 found in CSV)"
+      ]
+    },
+    {
+      "email": "mark@carnaby-west.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "nsylvester@sky.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=2, DB=1",
+        "Industries count mismatch: CSV=5, DB=2"
+      ]
+    },
+    {
+      "email": "benjaminhalfacre@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "in_nasim@yahoo.co.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "malcolmtowlson@mail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "shubhanga59@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "michael.okwusogu@valuexadvisory.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=1",
+        "Certifications not migrated (3 found in CSV)"
+      ]
+    },
+    {
+      "email": "mehmetatillatopcu@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "jcmiffy@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "alicenker@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=4, DB=3",
+        "Languages count mismatch: CSV=3, DB=2",
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "sunishnambiar@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "luisa.migheli@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "viatcheslav@sky.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1"
+      ]
+    },
+    {
+      "email": "mah1973@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "victor.garraboutrotha@vt-capital.eu",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    },
+    {
+      "email": "rishabmahade@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jose.ac.guimaraes@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "sa.freeman@icloud.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "billjp@icloud.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "tonychidwick@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing education",
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "naveed_nasar@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "kdbhachu@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ryno.e87@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "nadeem.askari@equostech.co.za",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "me@jamesmcgovern.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "fjohnson@mail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=3",
+        "Certifications not migrated (4 found in CSV)"
+      ]
+    },
+    {
+      "email": "brandon@netsmith.net",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "marius.burger@m-konsult.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=4"
+      ]
+    },
+    {
+      "email": "laura@sicuromail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "joe.talik@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=3",
+        "Certifications not migrated (5 found in CSV)"
+      ]
+    },
+    {
+      "email": "todd@toddscot.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=3, DB=2",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "g_s_vprasad@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "nchisley@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "jeremyrks@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (3 found in CSV)"
+      ]
+    },
+    {
+      "email": "eric.poston@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "alinescoo@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "lorenroetman@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "natieignatius@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "steven.southwell.99@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=1",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "louise.dorney@prosource.it",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "kiewatt50@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "victor.cao@att.net",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "avazarrabi47@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "hiremeganmoran@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "pearsj1@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "joe.classen05@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "nwcurtis76@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "chan18131855@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "tashimia@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jmp0543@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=3"
+      ]
+    },
+    {
+      "email": "maaz.khalid@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "chris.boucher@outlook.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "dhportis@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "gary.t.long@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "stephanieheath1@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "sparish66@charter.net",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "pbhamornsiri@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jrivera.cardona@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "mikedotanderson@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "danytheriault@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "craigabroder@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "krendee@aol.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "alonzo.dority@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "velkins@bellsouth.net",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=3"
+      ]
+    },
+    {
+      "email": "fjcm572@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "tenilaw@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "melanie717@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "nikki.burnett31@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "gortonsm@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "omar.bermudez@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "thomasdbowman@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=1",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "stanarabie@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "anaderib@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "johnwhittington@comcast.net",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "awelshhans@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "tsperduti@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "bennett@aclarar-group.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=3, DB=2",
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "stuarth405@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "alexandercbaron@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "hsharmandeep@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "sscott.mifpt2025@london.edu",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "shirin.patwa@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "angela.akinyi@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "t.amiesimaka@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ssaxena.lbs@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "celarsaveta@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jps@meridia-solutions.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "steveschechter88@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=1"
+      ]
+    },
+    {
+      "email": "ravi.rakesh@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "sue012012@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "ted@takindustrialminerals.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Languages count mismatch: CSV=2, DB=1",
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "hassanumar@hotmail.co.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ross.s.hunter@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "michaud_stephane@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (12 found in CSV)"
+      ]
+    },
+    {
+      "email": "stefano.next@eggcelerate.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "nicksallon@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "robin@robincarswell.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "lynnlyyap@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "dpacheson@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "amr@diabs.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "pvenugopal@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=4, DB=3",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "jackson@carroll.global",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "nitin_srv@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "p.sharf@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "g.karyotakis@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "amine.tazi@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "abdomedlej@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "karangupta100@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1"
+      ]
+    },
+    {
+      "email": "shah.kunj@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=1"
+      ]
+    },
+    {
+      "email": "sainiprashant81@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "neel@inmarserv.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "vladimir@humaninterfaces.co",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=5, DB=4",
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "alvaro.aguilar.lopez@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "bonitacio@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=3, DB=2",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "chaturvedi.akshay@gmail.com",
+      "status": "NO_DATA",
+      "issues": [
+        "No PublicData found in CSV"
+      ]
+    },
+    {
+      "email": "mehakagarwal6@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=5, DB=3",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "gianna.palyvou@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "can.ergelmis@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Languages count mismatch: CSV=2, DB=1",
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    },
+    {
+      "email": "fsardas@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "kbitopoulos@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=2"
+      ]
+    },
+    {
+      "email": "theodore.chartier@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ekat.freuchet@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "juste.zabarskaite@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "mzabalet@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "suzette.loubser@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "robertgmwilliams@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "contact@metavallo.co.uk",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=3, DB=2",
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    },
+    {
+      "email": "ronkus32@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "michaelpduffy1@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "fred.p.santos@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    },
+    {
+      "email": "lori.murray1012@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "melvin.steals@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "adzh@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "richard@citadeladvantage.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "martin.haschka1@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "apanayotopoulos@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "falizaga@dons.usfca.edu",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "aegorovacpa@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "lynae.addy@qfdaccounting.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "thegeehen@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ericpglass@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "covenant2@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "nobearmarket27@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "austinambrose1@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "steve@slaminallc.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "michael.m.baudo@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jbharvey811@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "hubert.willam@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "shaferm2@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "michael.corcoran@grcerm.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "josefschaible224@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "wilks.laurenm@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "darvin.hooey@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "eileen.sivaguru@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jfkarle@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "simonmacleod@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "landrywanmeni@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "arun.nahal@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "lucasjoel1@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=2"
+      ]
+    },
+    {
+      "email": "gavinmurphy1976@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "adam.sketchley@reybridgecapital.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=3, DB=2",
+        "Industries count mismatch: CSV=3, DB=2"
+      ]
+    },
+    {
+      "email": "s.aiyngkaran@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "adamr@arcequities.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "extracfc@aol.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "aorbetsova@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "jrdalla@outlook.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=2",
+        "Certifications not migrated (3 found in CSV)"
+      ]
+    },
+    {
+      "email": "ceejloujohns@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "leon@futurumin.digital",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=1"
+      ]
+    },
+    {
+      "email": "ecisnerosvg@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (4 found in CSV)"
+      ]
+    },
+    {
+      "email": "keith.welham1@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "purdueann@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "david.edwards4873@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "tahuja411@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Languages count mismatch: CSV=3, DB=2"
+      ]
+    },
+    {
+      "email": "george.jalil@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "virginiaharitaki@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "rpkalman42@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "karenahurley360@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "johnb@ariestexas.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "lac51311@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "georgestringer513@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "rainbowindow1@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=1"
+      ]
+    },
+    {
+      "email": "sanjay_mody@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "kreethanb@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Languages count mismatch: CSV=2, DB=1",
+        "Industries count mismatch: CSV=5, DB=3",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "kevinkay1@comcast.net",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2"
+      ]
+    },
+    {
+      "email": "cary.cannon@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "goodtimetobe@live.co.uk",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "2ndseasonconsult@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=3",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "louise@revop.io",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "walker.jennifergb@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "willworsdell@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "thoughtleader.uk@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=3",
+        "Certifications not migrated (3 found in CSV)"
+      ]
+    },
+    {
+      "email": "janine.morrisonpitt@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "matthewmorel@me.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=3, DB=2",
+        "Industries count mismatch: CSV=5, DB=2"
+      ]
+    },
+    {
+      "email": "michael@paytonmarketing.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=4",
+        "Certifications not migrated (9 found in CSV)"
+      ]
+    },
+    {
+      "email": "cometti.marcelo@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=2"
+      ]
+    },
+    {
+      "email": "jo@add10.co.uk",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "tom@lrd-thebigidea.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=3",
+        "Certifications not migrated (6 found in CSV)"
+      ]
+    },
+    {
+      "email": "scott.mcgougan@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "andrew@conjunction.tv",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=3"
+      ]
+    },
+    {
+      "email": "charmcmullan@hotmail.co.uk",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "karoo@theoptimisergroup.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "gustavospanholi@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=13, DB=12",
+        "Education count mismatch: CSV=3, DB=2",
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "emma@emmaclayton.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "emma@bebrilliant.org.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mehnaznazia@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "pattibalbas@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "veemoe@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1"
+      ]
+    },
+    {
+      "email": "mcarey1333@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jonna.kivipelto@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "colmsocodu@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "nievey@hotmail.co.uk",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "jodie@jodieo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=3",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "lindataylor2109@outlook.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=2"
+      ]
+    },
+    {
+      "email": "lee@cloudsphere.co.uk",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "cokpala@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=2"
+      ]
+    },
+    {
+      "email": "mehrina@mehrina.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "duwayne2406@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "themuz@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "imwats78@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "christabeljames@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "kalpsdahiya@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "mpersichini17@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "vignesh.naidu@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ssquireesquire@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "brennanjterry@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "roywwaltersiv@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "amyschweitzer623@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "catherine.heckler@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "jeffcremens10@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "eldon@intheblacq.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=2"
+      ]
+    },
+    {
+      "email": "mohsenhajhassan@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "aws7660@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "cdk138@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "lewispjessica@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "floyd.robsr23@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "calvin.scott.marshall@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "emiliafbarreto@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "rubiofernando@mac.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "pcxt10002@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "w.eian@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "rparthas98@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "matthewgranish@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "myuseph@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=4, DB=3",
+        "Industries count mismatch: CSV=3, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "jess.jakubas@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "unidmarty@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "khoganjr@icloud.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing education",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "rmdowdy31@bellsouth.net",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "christinesdeaver@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "croweannie4@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=2, DB=1"
+      ]
+    },
+    {
+      "email": "rockylongworth@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "marneharding17@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "kellstclair@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "cstclair1@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "bemdel23@comcast.net",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "geobajek@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "yurubchen@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=10, DB=9",
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "diana_carolinac@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "guillaumemoog@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "robertc.reinbold@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mo_mccollum@fastmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "mariselyurdaneta@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "arcadie.angelo@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "lmc3401@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ahmed_djidda@yahoo.fr",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "sergioestradaf@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "kumarakkp@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "barbra.hargreaves@tiscali.co.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "anjan.tamuli@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "sos2004.midde@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "dgafiyatullin@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "akeemadio@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "sanjeevacharya7@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "dnargelx59@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "chichi.nwosu@c-rowland.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Languages count mismatch: CSV=2, DB=1",
+        "Industries count mismatch: CSV=5, DB=3",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "tunde.salami@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "kmark28@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "hadaniels@compuserve.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=2, DB=1",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "micuonzo79@msn.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=4, DB=3",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "iansmoo@yahoo.co.uk",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "mno22@cornell.edu",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "inter@dublin.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "rosswick1@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=3, DB=2",
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "michael.booyens@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=6, DB=1",
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "sherilyns@shawconsulting1857900.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "eirik.hooper@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=5, DB=4",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "randy.herrmann@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing education",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "mike_flewelling@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "paulobiora@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "jackselin.mathew@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "poalospinelli@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "khanfarrukhali98@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=3, DB=2",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "samulsun@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "...lvillaoq4@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "cjrai2010@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "laird1510@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "nkono_anyang@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "freddy.corredor@geostrap.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "tom@teamlambda.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "aymen.chagour@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "anahitaram@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "mchan6288@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=2"
+      ]
+    },
+    {
+      "email": "cnhachi27@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "salazarichard@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "clive.dcruz@epic.com.au",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ralf.oppermann@opptimal.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "santanumishra444@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "samrinder@hotmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Languages count mismatch: CSV=2, DB=1",
+        "Industries count mismatch: CSV=4, DB=2"
+      ]
+    },
+    {
+      "email": "hasnainadl@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Skills count mismatch: CSV=10, DB=25",
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "adejager@executioninfo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "saituysal@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "pillay.h@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing education",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "stacey@shakemktg.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "antonvdb84@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jkelley.rockwise@att.net",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "apycal.solutions@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    },
+    {
+      "email": "rachael+testing@sanddollardesign.co.za",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "scgillespie@flatlanderinvestments.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "james@zenithog.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=3, DB=2",
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "jamesnevin1980@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    },
+    {
+      "email": "ptc1178@icloud.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=3"
+      ]
+    },
+    {
+      "email": "brenxl@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ike@iiigallica.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Languages count mismatch: CSV=2, DB=1",
+        "Missing industries",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "dblack@mindspring.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "lisa2.boodoo@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries",
+        "Certifications not migrated (4 found in CSV)"
+      ]
+    },
+    {
+      "email": "agclems@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "dansalazarct@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=1"
+      ]
+    },
+    {
+      "email": "daniel@coelho.org",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=1",
+        "Certifications not migrated (8 found in CSV)"
+      ]
+    },
+    {
+      "email": "sacheen.ss@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=4, DB=2",
+        "Industries count mismatch: CSV=4, DB=1"
+      ]
+    },
+    {
+      "email": "rscassell@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "nirvikar@alumni.gsb.stanford.edu",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1",
+        "Certifications not migrated (3 found in CSV)"
+      ]
+    },
+    {
+      "email": "khurram_tufail@live.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "venkataramanasr.office@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "steveb@bciee.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "p.alex.clayton@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "35dabra@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "william.zee@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "juarez.lenin@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "rubyshernandez@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1"
+      ]
+    },
+    {
+      "email": "ravivaithi@aol.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "chris@collieresources.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "ted@dsoilgas.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "vineeta.saini@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "grantlowey@ymail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "alanajo81@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "sebasduarte2@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jay.miller@utexas.edu",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "dohstrom@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "carloscalandra@yahoo.com.ar",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ashish.galav@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "ruslanchaplygin@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "achantav9@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2"
+      ]
+    },
+    {
+      "email": "jwtracy@outlook.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "bakersamson@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "p.venkataraman@ymail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "g.a.bacchus@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "brucekagan18@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=2",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "wyman@growthcapital.pro",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "werner@ten10.group",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "sehgal.geetika@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "r_walla@msn.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing education",
+        "Industries count mismatch: CSV=3, DB=2"
+      ]
+    },
+    {
+      "email": "escapitalventures@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "davbrtlng@aol.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "jim_stephens@attglobal.net",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing education",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "byamponsah@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2"
+      ]
+    },
+    {
+      "email": "nuella.anasoh@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "rbristow@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "pradaconsultantsindia@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "davdon@shaw.ca",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "fletcherrj2k@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "andythompson0011@yahoo.co.uk",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "leo@hcr.digital",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=3, DB=1",
+        "Industries count mismatch: CSV=5, DB=2"
+      ]
+    },
+    {
+      "email": "pavalerio@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "daniellecardile@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=2, DB=1",
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "lsm5611@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "david.frederick.ouellette@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jennifermcazares@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "sliscomb@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing education",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "davidjperrett2014@gmail.com",
+      "status": "NO_DATA",
+      "issues": [
+        "No PublicData found in CSV"
+      ]
+    },
+    {
+      "email": "moxiekarasek@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "wnaomik@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "donnavallario@gmail.com",
+      "status": "NO_DATA",
+      "issues": [
+        "No PublicData found in CSV"
+      ]
+    },
+    {
+      "email": "abdulazizladan@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=3, DB=2",
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "yacinedjillali@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "judyalyceking@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "bethel24juwobor@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "lorenroetman@cloudburst-technology.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "mygreatlife2020@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "marketing@konnekt360.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "nwcarr@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing education",
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "vermaak.c@outlook.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=3",
+        "Certifications not migrated (8 found in CSV)"
+      ]
+    },
+    {
+      "email": "ptiley@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "pravesh.balaram@icloud.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "katzscan@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (3 found in CSV)"
+      ]
+    },
+    {
+      "email": "lisa.e.ireland@gmail.com",
+      "status": "NO_DATA",
+      "issues": [
+        "No PublicData found in CSV"
+      ]
+    },
+    {
+      "email": "birusah@yahoo.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "tonderai.kariwo@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=3",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "jason.husack@hotmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "dawn.christman@dimensionaltalentllc.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    },
+    {
+      "email": "qs.karencloete@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ruan@rvconsulting.co.za",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Languages count mismatch: CSV=2, DB=1",
+        "Industries count mismatch: CSV=5, DB=3",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "laurakotlinski@live.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=4, DB=3",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "jnaphan@charter.net",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "ehlerspaul1@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=3, DB=2",
+        "Languages count mismatch: CSV=2, DB=1",
+        "Missing industries"
+      ]
+    },
+    {
+      "email": "keif.gwinn@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "chris@seventynineit.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing education",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "danielvinnyluca@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "jdfuller1975@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=3",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "nicolasangster88@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "corey@coreynelson.design",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "julia.ideasandwords@gmail.com",
+      "status": "NO_PROFILE_DATA",
+      "issues": [
+        "No profile data found in PublicData"
+      ]
+    },
+    {
+      "email": "simon@blackpepperonline.co.za",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "riael.solomon@me.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (4 found in CSV)"
+      ]
+    },
+    {
+      "email": "rudolf@paladinconsult.co",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=3, DB=1",
+        "Certifications not migrated (4 found in CSV)"
+      ]
+    },
+    {
+      "email": "camayag@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2"
+      ]
+    },
+    {
+      "email": "peter.manoogian@arzresources.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "azim.engpetro@yahoo.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=2, DB=1",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "anthony.gischen@gmail.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "robertfein@acm.org",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2"
+      ]
+    },
+    {
+      "email": "mi@chae.la",
+      "status": "NO_DATA",
+      "issues": [
+        "No PublicData found in CSV"
+      ]
+    },
+    {
+      "email": "kiritpatel99@yahoo.co.uk",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Work experience count mismatch: CSV=22, DB=21",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "denkipngetich@gmail.com",
+      "status": "NOT_FOUND",
+      "issues": [
+        "User not found in Supabase"
+      ]
+    },
+    {
+      "email": "nuno.rodrigues@gigexecs.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "ptamagnini@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=4, DB=2"
+      ]
+    },
+    {
+      "email": "jgtaylor@minequest.co.za",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing industries",
+        "Certifications not migrated (1 found in CSV)"
+      ]
+    },
+    {
+      "email": "tomjames@tomjames.email",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Education count mismatch: CSV=9, DB=8",
+        "Languages count mismatch: CSV=2, DB=1",
+        "Industries count mismatch: CSV=3, DB=1"
+      ]
+    },
+    {
+      "email": "shamrockspring@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=2",
+        "Certifications not migrated (5 found in CSV)"
+      ]
+    },
+    {
+      "email": "alan.stirling@gigexecs.com",
+      "status": "COMPLETE",
+      "issues": []
+    },
+    {
+      "email": "test.expert@test.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Missing skills",
+        "Missing languages"
+      ]
+    },
+    {
+      "email": "jaco.vandenheever@gigexecs.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=3",
+        "Certifications not migrated (2 found in CSV)"
+      ]
+    },
+    {
+      "email": "toddlucas7895@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Industries count mismatch: CSV=5, DB=4"
+      ]
+    },
+    {
+      "email": "nuno.g.rodrigues01@gmail.com",
+      "status": "INCOMPLETE",
+      "issues": [
+        "Languages count mismatch: CSV=4, DB=8",
+        "Industries count mismatch: CSV=5, DB=1"
+      ]
+    }
+  ]
+}

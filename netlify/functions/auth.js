@@ -121,6 +121,13 @@ function verifyJWTToken(authHeader) {
  * @returns {Object} - Authentication result
  */
 function authenticateRequest(headers) {
+  if (!headers || typeof headers !== 'object') {
+    return {
+      isValid: false,
+      error: 'Invalid request headers',
+      user: null
+    };
+  }
   const authHeader = headers.authorization || headers.Authorization;
   return verifyJWTToken(authHeader);
 }
@@ -154,24 +161,40 @@ function createAuthErrorResponse(message, code = 'UNAUTHORIZED') {
  */
 function withAuth(handler) {
   return async (event, context) => {
-    // Skip authentication for OPTIONS requests (CORS preflight)
-    if (event.httpMethod === 'OPTIONS') {
-      return handler(event, context);
-    }
+    try {
+      // Skip authentication for OPTIONS requests (CORS preflight)
+      if (event.httpMethod === 'OPTIONS') {
+        return handler(event, context);
+      }
 
-    // Authenticate the request
-    const authResult = authenticateRequest(event.headers);
-    
-    if (!authResult.isValid) {
-      console.log('Authentication failed:', authResult.error);
-      return createAuthErrorResponse(authResult.error);
-    }
+      // Authenticate the request
+      const authResult = authenticateRequest(event.headers);
+      
+      if (!authResult.isValid) {
+        console.log('Authentication failed:', authResult.error);
+        return createAuthErrorResponse(authResult.error);
+      }
 
-    // Add user info to the event object for use in the handler
-    event.user = authResult.user;
-    
-    // Call the original handler with the authenticated event
-    return handler(event, context);
+      // Add user info to the event object for use in the handler
+      event.user = authResult.user;
+      
+      // Call the original handler with the authenticated event
+      return await handler(event, context);
+    } catch (error) {
+      console.error('withAuth wrapper error:', error);
+      return {
+        statusCode: 500,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({
+          error: 'Internal server error',
+          message: error.message,
+          timestamp: new Date().toISOString()
+        })
+      };
+    }
   };
 }
 

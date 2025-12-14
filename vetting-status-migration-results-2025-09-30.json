@@ -1,0 +1,1155 @@
+{
+  "timestamp": "2025-09-30T09:16:01.718Z",
+  "dryRun": false,
+  "totalProcessed": 226,
+  "totalSkipped": 640,
+  "successCount": 226,
+  "errorCount": 0,
+  "errors": [],
+  "statusMapping": {
+    "pendingVerification": "pending",
+    "Vetted": "vetted",
+    "vetted": "vetted",
+    "verified": "verified",
+    "approved": "approved",
+    "rejected": "rejected",
+    "under_review": "under_review"
+  },
+  "statusDistribution": {
+    "pendingVerification": 97,
+    "Vetted": 15,
+    "vetted": 114
+  },
+  "updates": [
+    {
+      "email": "emmanuelowusu38@yahoo.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "oren@pineventures.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "mel@metisenergyconsultants.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "hs.wahab12345@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "amybkennedy@gmail.com",
+      "csvStatus": "Vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "joe@weinlickworks.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "carmenmarianavarro@yahoo.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "dkondak@gmail.com",
+      "csvStatus": "Vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "bh@brucejhershey.com",
+      "csvStatus": "Vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "amahepath@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "joshua.larson10@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "vvgary@hotmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "marcus.herbert2017@gmail.com",
+      "csvStatus": "Vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "ryanking1013@yahoo.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "mikedaviesis@hotmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "rekha.thade@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "karitoga06@hotmail.com",
+      "csvStatus": "Vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "simplylevy@aol.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "marinos@mweb.co.za",
+      "csvStatus": "Vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "thom.noakes@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "esleosbrown@comcast.net",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "eschinsi@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "tesbee2001@gmail.com",
+      "csvStatus": "Vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "hera.mpondo@gmail.com",
+      "csvStatus": "Vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "herbmaz@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "wassemalward@hotmail.com",
+      "csvStatus": "Vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "devscoconsulting@gmail.com",
+      "csvStatus": "Vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "pucj001@yahoo.com",
+      "csvStatus": "Vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "chuma.shadreck@gmail.com",
+      "csvStatus": "Vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "kyra.rautenbach@gmail.com",
+      "csvStatus": "Vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "jimmy.tsatsire@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "lunga.tungu@yahoo.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "nhamodhlamini@hotmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "dinshvinayagam@outlook.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "omonigho28@yahoo.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "sshantz1717@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "moh_meh_2025@hotmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "jhosick@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "yagneshjshukla@hotmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "andersonhamish31@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "rehal_zineddine@yahoo.fr",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "stamatios.chondrogiannis@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "mohamed.elbashir@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "veenalpraamraj@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "jiivan.k@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "thomas.schultz22@yahoo.de",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "john.hager.2018@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "azikeogo@outlook.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "jrodlw@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "dmminer@outlook.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "david_radley@yahoo.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "lewis.kilroe@eastemblem.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "yebiliye@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "sohail_qadirpk@hotmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "aejazpatel@yahoo.co.in",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "esnyderbd@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "gc_blaze@hotmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "george.dames@att.net",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "thattenbach@mail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "jmdickey314@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "newmail2020@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "mcgee.jl@hotmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "j.chegin@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "javaidislam@hotmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "kennyhocpa@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "husni@khuffash.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "markbouder1@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "elisekm430@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "wrightbruce80@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "aghazzaoui@hotmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "avi.purkayastha@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "scottm95@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "ldsul@msn.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "josh@firstflatironea.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "mmelnyk2000@yahoo.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "mohamed_sallam77@yahoo.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "jason@baileystationcapital.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "manoharsinghjpr@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "eran.benavi@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "pedrobobiao@hotmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "lchinghk@yahoo.co.uk",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "ockert.vanschalkwyk@outlook.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "rtwaring1@hotmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "benjaminhalfacre@hotmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "michael.okwusogu@valuexadvisory.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "alicenker@yahoo.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "sunishnambiar@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "viatcheslav@sky.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "victor.garraboutrotha@vt-capital.eu",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "jose.ac.guimaraes@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "fjohnson@mail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "marius.burger@m-konsult.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "laura@sicuromail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "joe.talik@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "todd@toddscot.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "jeremyrks@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "steven.southwell.99@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "jmp0543@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "maaz.khalid@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "dhportis@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "gary.t.long@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "sparish66@charter.net",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "jrivera.cardona@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "velkins@bellsouth.net",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "nikki.burnett31@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "thomasdbowman@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "bennett@aclarar-group.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "steveschechter88@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "ted@takindustrialminerals.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "michaud_stephane@yahoo.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "stefano.next@eggcelerate.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "robin@robincarswell.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "abdomedlej@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "karangupta100@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "shah.kunj@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "sainiprashant81@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "bonitacio@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "gianna.palyvou@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "can.ergelmis@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "fsardas@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "kbitopoulos@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "contact@metavallo.co.uk",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "fred.p.santos@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "lori.murray1012@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "richard@citadeladvantage.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "michael.corcoran@grcerm.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "wilks.laurenm@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "arun.nahal@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "lucasjoel1@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "adam.sketchley@reybridgecapital.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "adamr@arcequities.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "aorbetsova@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "jrdalla@outlook.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "leon@futurumin.digital",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "ecisnerosvg@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "tahuja411@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "rainbowindow1@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "sanjay_mody@hotmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "kreethanb@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "kevinkay1@comcast.net",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "2ndseasonconsult@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "thoughtleader.uk@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "matthewmorel@me.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "michael@paytonmarketing.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "cometti.marcelo@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "tom@lrd-thebigidea.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "andrew@conjunction.tv",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "veemoe@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "nievey@hotmail.co.uk",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "jodie@jodieo.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "lindataylor2109@outlook.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "lee@cloudsphere.co.uk",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "cokpala@yahoo.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "duwayne2406@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "ssquireesquire@hotmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "roywwaltersiv@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "catherine.heckler@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "eldon@intheblacq.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "cdk138@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "matthewgranish@yahoo.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "myuseph@hotmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "unidmarty@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "khoganjr@icloud.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "croweannie4@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "rockylongworth@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "yurubchen@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "diana_carolinac@hotmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "guillaumemoog@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "mo_mccollum@fastmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "sos2004.midde@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "chichi.nwosu@c-rowland.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "hadaniels@compuserve.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "iansmoo@yahoo.co.uk",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "mno22@cornell.edu",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "sherilyns@shawconsulting1857900.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "eirik.hooper@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "paulobiora@yahoo.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "anahitaram@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "mchan6288@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "samrinder@hotmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "hasnainadl@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "apycal.solutions@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "rachael+testing@sanddollardesign.co.za",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "jamesnevin1980@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "ptc1178@icloud.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "ike@iiigallica.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "dblack@mindspring.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "lisa2.boodoo@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "dansalazarct@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "daniel@coelho.org",
+      "csvStatus": "Vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "sacheen.ss@gmail.com",
+      "csvStatus": "Vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "nirvikar@alumni.gsb.stanford.edu",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "venkataramanasr.office@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "steveb@bciee.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "rubyshernandez@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "chris@collieresources.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "grantlowey@ymail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "alanajo81@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "dohstrom@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "carloscalandra@yahoo.com.ar",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "ruslanchaplygin@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "achantav9@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "brucekagan18@yahoo.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "sehgal.geetika@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "r_walla@msn.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "byamponsah@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "davdon@shaw.ca",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "leo@hcr.digital",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "mygreatlife2020@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "vermaak.c@outlook.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "katzscan@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "tonderai.kariwo@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "dawn.christman@dimensionaltalentllc.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "ruan@rvconsulting.co.za",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "jnaphan@charter.net",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "jdfuller1975@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "camayag@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "azim.engpetro@yahoo.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "robertfein@acm.org",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "nuno.rodrigues@gigexecs.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "ptamagnini@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "tomjames@tomjames.email",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "shamrockspring@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "jaco.vandenheever@gigexecs.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    },
+    {
+      "email": "toddlucas7895@gmail.com",
+      "csvStatus": "pendingVerification",
+      "mappedStatus": "pending"
+    },
+    {
+      "email": "nuno.g.rodrigues01@gmail.com",
+      "csvStatus": "vetted",
+      "mappedStatus": "vetted"
+    }
+  ]
+}

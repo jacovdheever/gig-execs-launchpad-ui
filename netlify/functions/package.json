@@ -1,0 +1,14 @@
+{
+  "name": "gigexecs-netlify-functions",
+  "version": "1.0.0",
+  "description": "Netlify Functions for GigExecs platform",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.4",
+    "jsonwebtoken": "^9.0.2",
+    "openai": "^4.73.0",
+    "pdf-parse": "^1.1.1",
+    "mammoth": "^1.8.0",
+    "zod": "^3.23.0"
+  }
+}
+

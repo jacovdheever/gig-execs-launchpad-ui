@@ -20,7 +20,8 @@ import {
   LogOut,
   Settings,
   Calendar,
-  ExternalLink
+  ExternalLink,
+  Sparkles
 } from 'lucide-react';
 
 interface DashboardStats {
@@ -281,6 +282,18 @@ export default function StaffDashboardPage() {
               <div className="text-left min-w-0 flex-1 overflow-hidden">
                 <div className="font-semibold text-sm sm:text-base truncate">External Gig Clicks</div>
                 <div className="text-xs text-gray-600 truncate">View click analytics</div>
+              </div>
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              className="h-auto py-3 sm:py-4 justify-start w-full max-w-full"
+              onClick={() => navigate('/staff/cv-parser-test')}
+            >
+              <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-purple-600 flex-shrink-0" />
+              <div className="text-left min-w-0 flex-1 overflow-hidden">
+                <div className="font-semibold text-sm sm:text-base truncate">CV Parser Test</div>
+                <div className="text-xs text-gray-600 truncate">Test CV parsing</div>
               </div>
             </Button>
             

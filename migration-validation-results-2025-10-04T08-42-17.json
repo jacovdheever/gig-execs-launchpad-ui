@@ -1,0 +1,44 @@
+{
+  "total": 5,
+  "processed": 5,
+  "issuesFound": 5,
+  "usersWithIssues": [
+    {
+      "userId": "6887bae3-ff41-43a2-a5a8-16a1848c3876",
+      "email": "mmotawea@outlook.com",
+      "issues": [
+        "User not found in Supabase"
+      ]
+    },
+    {
+      "userId": "6887a5a8-8dfb-4fe0-a88b-b35cd2f6a7c9",
+      "email": "gomajoaquim31@gmail.com",
+      "issues": [
+        "User not found in Supabase"
+      ]
+    },
+    {
+      "userId": "68878e6f-9efe-4213-806c-230bf5d849b4",
+      "email": "emmanuelowusu38@yahoo.com",
+      "issues": [
+        "User not found in Supabase"
+      ]
+    },
+    {
+      "userId": "687f4c26-f74e-4080-9bda-6f5a2dad68aa",
+      "email": "david@digidistiller.com",
+      "issues": [
+        "User not found in Supabase"
+      ]
+    },
+    {
+      "userId": "686d8a20-dcd6-4d0c-af7f-482d3b59b52c",
+      "email": "todd@tecamplify.com",
+      "issues": [
+        "User not found in Supabase"
+      ]
+    }
+  ],
+  "fixesApplied": 5,
+  "errors": []
+}

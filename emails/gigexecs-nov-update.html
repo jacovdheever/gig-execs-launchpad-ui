@@ -1,0 +1,410 @@
+<!--
+Subject: We've Been Building — Your New GigExecs Experience Is Live!
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>We've Been Building — Your New GigExecs Experience Is Live!</title>
+  <!--[if mso]>
+  <style type="text/css">
+    body, table, td {font-family: Arial, sans-serif !important;}
+  </style>
+  <![endif]-->
+  <style>
+    /* Reset styles */
+    body, table, td, p, a, li, blockquote {
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    table, td {
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+    img {
+      -ms-interpolation-mode: bicubic;
+      border: 0;
+      outline: none;
+      text-decoration: none;
+    }
+    
+    /* Base styles */
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100% !important;
+      height: 100% !important;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background-color: #f9fafb;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* Container */
+    .email-wrapper {
+      width: 100%;
+      background-color: #f9fafb;
+      padding: 20px 0;
+    }
+    
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+      color: white;
+      padding: 40px 30px;
+      text-align: center;
+    }
+    
+    .logo {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+      color: white;
+    }
+    
+    .tagline {
+      font-size: 16px;
+      opacity: 0.9;
+      font-weight: 400;
+      color: white;
+    }
+    
+    /* Content */
+    .content {
+      padding: 40px 30px;
+    }
+    
+    .greeting {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 24px;
+    }
+    
+    .paragraph {
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #374151;
+      line-height: 1.7;
+    }
+    
+    /* Headings */
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1f2937;
+      margin: 32px 0 20px 0;
+      line-height: 1.3;
+    }
+    
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1f2937;
+      margin: 32px 0 16px 0;
+      line-height: 1.4;
+    }
+    
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #0284C7;
+      margin: 24px 0 12px 0;
+      line-height: 1.4;
+    }
+    
+    /* Lists */
+    ul {
+      margin: 16px 0;
+      padding-left: 24px;
+    }
+    
+    li {
+      margin-bottom: 12px;
+      font-size: 16px;
+      color: #374151;
+      line-height: 1.7;
+    }
+    
+    /* CTA Button */
+    .cta-container {
+      margin: 40px 0;
+      text-align: center;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      padding: 16px 32px;
+      background-color: #0284C7;
+      color: white !important;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.5;
+      text-align: center;
+      max-width: 100%;
+      width: auto;
+      min-width: 200px;
+    }
+    
+    .cta-button:hover {
+      background-color: #0369A1;
+    }
+    
+    /* Signature */
+    .signature-section {
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 1px solid #e5e7eb;
+    }
+    
+    .signature-name {
+      font-weight: 700;
+      font-size: 18px;
+      color: #1f2937;
+      margin-bottom: 4px;
+    }
+    
+    .signature-title {
+      font-size: 16px;
+      color: #0284C7;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    /* Footer */
+    .footer {
+      background: #f8fafc;
+      padding: 30px;
+      text-align: center;
+      font-size: 14px;
+      color: #6b7280;
+      border-top: 1px solid #e5e7eb;
+    }
+    
+    .footer-logo {
+      font-weight: 800;
+      color: #0284C7;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    
+    .footer-tagline {
+      margin-bottom: 15px;
+      font-style: italic;
+    }
+    
+    .footer-email {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 15px;
+    }
+    
+    .footer-link {
+      color: #0284C7;
+      text-decoration: none;
+    }
+    
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+    
+    /* Mobile responsive */
+    @media only screen and (max-width: 600px) {
+      .email-container {
+        border-radius: 0;
+        margin: 0;
+      }
+      
+      .header {
+        padding: 30px 20px;
+      }
+      
+      .content {
+        padding: 30px 20px;
+      }
+      
+      .logo {
+        font-size: 28px;
+      }
+      
+      h1 {
+        font-size: 24px;
+      }
+      
+      h2 {
+        font-size: 20px;
+      }
+      
+      .cta-button {
+        display: block;
+        width: 100%;
+        padding: 14px 24px;
+      }
+      
+      .footer {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="email-wrapper">
+    <div class="email-container">
+      <!-- Header -->
+      <div class="header">
+        <div class="logo">GigExecs</div>
+        <div class="tagline">Flexible work for senior professionals</div>
+      </div>
+      
+      <!-- Content -->
+      <div class="content">
+        <div class="greeting">Dear GigExecs community,</div>
+        
+        <div class="paragraph">
+          It's been a while… and for good reason.
+        </div>
+        
+        <div class="paragraph">
+          We've been building.
+        </div>
+        
+        <div class="paragraph">
+          As an early-stage startup, we hit the usual bumps: some things worked, others didn't. But your feedback pushed us to rethink, rebuild, and sharpen our focus. The result is a cleaner, simpler and stronger version of the GigExecs platform — designed with you at the centre.
+        </div>
+        
+        <div class="paragraph">
+          Today, we're excited to share a series of meaningful improvements that make finding and managing flexible work easier, faster, and more transparent for both professionals and clients.
+        </div>
+        
+        <!-- What's New for Professionals -->
+        <h2>What's New for Professionals?</h2>
+        
+        <h3>Smarter Gig Discovery</h3>
+        <div class="paragraph">
+          Every gig now shows whether it's Remote, Hybrid, or In-person, plus the exact location. No more guessing — just faster decisions.
+        </div>
+        
+        <h3>Track Where You've Applied</h3>
+        <div class="paragraph">
+          You'll now see a clear badge for gigs you've already bid on, plus a handy filter to show only your submitted bids.
+        </div>
+        
+        <h3>More Powerful Applications</h3>
+        <div class="paragraph">
+          You can now:
+        </div>
+        <ul>
+          <li>Answer screening questions set by clients</li>
+          <li>Attach proposals, supporting documents, or past work</li>
+          <li>View and edit your submitted bids anytime</li>
+        </ul>
+        <div class="paragraph">
+          These changes help you submit higher-quality applications and stand out instantly.
+        </div>
+        
+        <!-- What's New for Clients -->
+        <h2>What's New for Clients</h2>
+        
+        <h3>Richer Gig Listings</h3>
+        <div class="paragraph">
+          You can now specify role type and location, and even set budget to "To be confirmed" when you're still scoping the role.
+        </div>
+        
+        <h3>Faster, Clearer Bid Review</h3>
+        <div class="paragraph">
+          You'll see how many bids each gig has received at a glance, and can open each bid to review:
+        </div>
+        <ul>
+          <li>Full proposal text</li>
+          <li>Answers to screening questions</li>
+          <li>All attached documents</li>
+        </ul>
+        <div class="paragraph">
+          All neatly organised for quicker, more informed decisions.
+        </div>
+        
+        <!-- CTA Button -->
+        <div class="cta-container">
+          <a href="https://www.gigexecs.com" class="cta-button" style="color: white; text-decoration: none;">Explore the new GigExecs experience</a>
+        </div>
+        
+        <!-- A New Addition: External Gigs -->
+        <h2>A New Addition: External Gigs</h2>
+        <div class="paragraph">
+          We're now listing high-quality gigs from outside the GigExecs network.<br>
+          These are hand-picked opportunities — and we earn nothing from them.
+        </div>
+        <div class="paragraph">
+          The goal is simple:
+        </div>
+        <ul>
+          <li>More real opportunities.</li>
+          <li>More flexibility.</li>
+          <li>More global access for senior professionals.</li>
+        </ul>
+        
+        <!-- Better community engagement -->
+        <h2>Better community engagement</h2>
+        <div class="paragraph">
+          We've added a new Community tab inside our platform where you can engage with fellow GigExecs, network, find interesting news and content from your fellow professionals and clients. We believe that being part of this community matters and we would like to create a space for all of us to connect and engage.
+        </div>
+        
+        <!-- Thank You -->
+        <h2>Thank You</h2>
+        <div class="paragraph">
+          Our mission remains bold:<br>
+          To become the global home for senior talent and for companies embracing flexible, high-quality work.
+        </div>
+        
+        <div class="paragraph">
+          We believe this model is a win-win — faster access to exceptional experience, without red tape or traditional hiring costs.
+        </div>
+        
+        <div class="paragraph">
+          We'd love your feedback on the new platform.<br>
+          What works for you? What can be better?<br>
+          Every improvement we make begins with your voice.
+        </div>
+        
+        <!-- Signature -->
+        <div class="signature-section">
+          <div class="signature-name">Best wishes,</div>
+          <div class="signature-name">Nuno and Jaco</div>
+          <div class="signature-title">Co-Founders, GigExecs</div>
+        </div>
+      </div>
+      
+      <!-- Footer -->
+      <div class="footer">
+        <div class="footer-logo">GigExecs</div>
+        <div class="footer-tagline">The Premier Hub for Highly Experienced Professionals</div>
+        <div style="margin-top: 15px;">
+          <a href="https://www.gigexecs.com" class="footer-link" style="color: #0284C7; text-decoration: none;">www.gigexecs.com</a>
+        </div>
+        <div class="footer-email">
+          You're receiving this because you're part of the GigExecs community.<br>
+          <a href="#" class="footer-link" style="color: #0284C7; text-decoration: none;">Update preferences</a> | 
+          <a href="#" class="footer-link" style="color: #0284C7; text-decoration: none;">Unsubscribe</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+

@@ -1,0 +1,29 @@
+{
+  "total": 5,
+  "processed": 5,
+  "issuesFound": 4,
+  "usersWithIssues": [
+    {
+      "issues": [
+        "User not found in Supabase"
+      ]
+    },
+    {
+      "issues": [
+        "User not found in Supabase"
+      ]
+    },
+    {
+      "issues": [
+        "User not found in Supabase"
+      ]
+    },
+    {
+      "issues": [
+        "User not found in Supabase"
+      ]
+    }
+  ],
+  "fixesApplied": 4,
+  "errors": []
+}

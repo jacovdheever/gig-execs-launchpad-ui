@@ -1,0 +1,20 @@
+{
+  "timestamp": "2025-09-30T08:52:19.360Z",
+  "summary": {
+    "totalUsers": 869,
+    "consultants": 867,
+    "clients": 2,
+    "consultantProfiles": 867,
+    "clientProfiles": 2,
+    "missingConsultantProfiles": 0,
+    "missingClientProfiles": 0,
+    "orphanedConsultantProfiles": 0,
+    "orphanedClientProfiles": 0,
+    "consultantCompletionRate": 100,
+    "clientCompletionRate": 100
+  },
+  "missingConsultantProfiles": [],
+  "missingClientProfiles": [],
+  "orphanedConsultantProfiles": [],
+  "orphanedClientProfiles": []
+}

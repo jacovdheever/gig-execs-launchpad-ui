@@ -6,6 +6,14 @@
   NODE_VERSION = "18"
   SECRETS_SCAN_ENABLED = "false"
 
+# Functions configuration
+[functions]
+  directory = "netlify/functions"
+
+# Plugin to install dependencies from netlify/functions/package.json
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
+
 # Build plugins for optimization
 # Note: Compression is handled by Netlify automatically
 

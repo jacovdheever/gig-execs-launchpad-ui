@@ -1,0 +1,16 @@
+{
+  "timestamp": "2025-09-30T08:52:09.379Z",
+  "dryRun": false,
+  "totalProcessed": 1,
+  "successCount": 1,
+  "errorCount": 0,
+  "errors": [],
+  "clients": [
+    {
+      "id": "5f79b090-c5d1-4bd7-b996-102ea64aca67",
+      "email": "nuno.rodrigues@gigexecs.com",
+      "name": "Nuno Rodrigues",
+      "created_at": "2024-05-19T11:25:12+00:00"
+    }
+  ]
+}
