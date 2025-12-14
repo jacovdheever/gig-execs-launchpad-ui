@@ -164,17 +164,25 @@ const handler = async (event, context) => {
     }
 
     // Load existing profile data
-    const { data: user } = await supabase
+    const { data: user, error: userError } = await supabase
       .from('users')
       .select('first_name, last_name, email, headline')
       .eq('id', userId)
-      .single();
+      .maybeSingle();
 
-    const { data: profile } = await supabase
+    const { data: profile, error: profileError } = await supabase
       .from('consultant_profiles')
       .select('job_title, bio, phone, linkedin_url, address1')
       .eq('user_id', userId)
-      .single();
+      .maybeSingle();
+    
+    // Log errors but don't fail - it's OK if profile doesn't exist yet
+    if (userError) {
+      console.log('Error loading user data (non-fatal):', userError);
+    }
+    if (profileError) {
+      console.log('Error loading profile data (non-fatal):', profileError);
+    }
 
     const { data: workExperience } = await supabase
       .from('work_experience')
