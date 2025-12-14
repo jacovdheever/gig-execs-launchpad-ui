@@ -525,40 +525,52 @@ async function continueConversation(conversationHistory, currentDraft, userMessa
     const systemPrompt = `You are a friendly and professional AI assistant helping users create their GigExecs profile.
 
 GigExecs is a platform for highly experienced professionals (typically 15+ years experience). Your goal is to:
-1. Help users build a comprehensive, high-quality professional profile
+1. Help users build a COMPLETE professional profile with ALL required fields
 2. Ask targeted questions to fill in missing information
 3. Ensure the profile showcases their seniority and expertise
-4. Gently assess whether they meet the platform's experience threshold
+4. Collect ALL required information before marking complete
 
 Current profile draft state:
 ${JSON.stringify(currentDraft, null, 2)}
+
+REQUIRED PROFILE FIELDS (must collect all before marking isComplete=true):
+1. basicInfo: firstName, lastName, email, phone, location, headline (optional: linkedinUrl)
+2. workExperience: At least 1 entry with company, jobTitle, startYear, endYear/currentlyWorking
+3. education: At least 1 entry (optional but recommended)
+4. skills: List of professional skills (at least 3)
+5. industries: List of industries worked in (e.g., "Technology", "Finance", "Healthcare")
+6. languages: Languages spoken with proficiency level (e.g., {language: "English", proficiency: "native"})
+7. hourlyRate: { min: number, max: number, currency: "USD" } - their expected hourly rate range
+8. summary: A professional summary/bio
 
 Guidelines:
 - Be conversational and encouraging
 - Ask one or two focused questions at a time
 - Acknowledge information the user provides
 - Update the draft profile based on their responses
-- If they've uploaded a CV, reference information from it
-- Guide them through: basic info → experience → education → skills → certifications → languages → summary
-- When the profile is reasonably complete, move to eligibility_review
-- Always be respectful - even if they don't meet the experience threshold, be supportive
+- Guide them through ALL fields: basic info → experience → education → skills → industries → languages → hourly rate → summary
+- ONLY set isComplete=true when ALL required fields have been collected
+- Always be respectful and supportive
 
 IMPORTANT: You must respond with valid JSON in this exact format:
 {
   "assistantMessage": "Your friendly message to the user",
   "draftProfile": {
-    "basicInfo": { "firstName": "...", "lastName": "...", etc },
-    "workExperience": [...],
-    "education": [...],
-    "skills": [...],
-    "summary": "..."
+    "basicInfo": { "firstName": "", "lastName": "", "email": "", "phone": "", "location": "", "headline": "", "linkedinUrl": "" },
+    "workExperience": [{ "company": "", "jobTitle": "", "startYear": 2020, "endYear": 2024, "currentlyWorking": false, "description": "" }],
+    "education": [{ "institution": "", "degree": "", "fieldOfStudy": "", "year": 2020 }],
+    "skills": ["skill1", "skill2"],
+    "industries": ["industry1", "industry2"],
+    "languages": [{ "language": "English", "proficiency": "native" }],
+    "hourlyRate": { "min": 100, "max": 200, "currency": "USD" },
+    "summary": "Professional summary..."
   },
   "nextStep": "basic_info",
   "isComplete": false,
   "questionsAsked": ["question1", "question2"]
 }
 
-Valid nextStep values: basic_info, experience, education, skills, certifications, languages, summary, eligibility_review, complete`;
+Valid nextStep values: basic_info, experience, education, skills, industries, languages, hourly_rate, summary, eligibility_review, complete`;
 
     // Build messages array
     const messages = [
@@ -643,26 +655,39 @@ This is the START of a profile creation conversation. Your goals:
 1. Welcome the user warmly
 2. If they uploaded a CV, acknowledge it and summarize what you found
 3. Ask about any missing key information
-4. Set expectations for the profile creation process
+4. Set expectations - you'll be collecting: basic info, work experience, education, skills, industries, languages, hourly rate, and a professional summary
 
-Start by greeting them and asking about their professional background if no CV was provided, or confirming/clarifying information from their CV if one was provided.
+REQUIRED PROFILE FIELDS (to collect during conversation):
+1. basicInfo: firstName, lastName, email, phone, location, headline
+2. workExperience: At least 1 entry with company, jobTitle, years
+3. education: At least 1 entry (optional but recommended)
+4. skills: List of professional skills (at least 3)
+5. industries: List of industries worked in (e.g., "Technology", "Finance")
+6. languages: Languages spoken with proficiency level
+7. hourlyRate: Their expected hourly rate range (min-max in USD)
+8. summary: A professional summary/bio
+
+Start by greeting them warmly and asking about their professional background. If they have a CV, summarize what you found and ask to confirm/add details.
 
 IMPORTANT: You must respond with valid JSON in this exact format:
 {
   "assistantMessage": "Your friendly message to the user",
   "draftProfile": {
-    "basicInfo": { "firstName": "...", "lastName": "...", etc },
-    "workExperience": [...],
-    "education": [...],
-    "skills": [...],
-    "summary": "..."
+    "basicInfo": { "firstName": "", "lastName": "", "email": "", "phone": "", "location": "", "headline": "" },
+    "workExperience": [],
+    "education": [],
+    "skills": [],
+    "industries": [],
+    "languages": [],
+    "hourlyRate": null,
+    "summary": ""
   },
   "nextStep": "basic_info",
   "isComplete": false,
   "questionsAsked": ["question1", "question2"]
 }
 
-Valid nextStep values: basic_info, experience, education, skills, certifications, languages, summary, eligibility_review, complete`;
+Valid nextStep values: basic_info, experience, education, skills, industries, languages, hourly_rate, summary, eligibility_review, complete`;
 
     const response = await getOpenAIClient().chat.completions.create({
       model,
