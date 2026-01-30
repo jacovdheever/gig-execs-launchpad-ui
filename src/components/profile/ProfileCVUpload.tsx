@@ -310,6 +310,9 @@ export function ProfileCVUpload({ onParseComplete, onCancel }: ProfileCVUploadPr
           description: 'Please review the extracted information.',
         });
 
+        if (uploadResult.sourceFileId && uploadResult.sourceFileId !== 'pasted-text') {
+          sessionStorage.setItem('cvSourceFileId', uploadResult.sourceFileId);
+        }
         onParseComplete({
           sourceFileId: uploadResult.sourceFileId,
           parsedData: parseResult.parsedData,
@@ -351,6 +354,9 @@ export function ProfileCVUpload({ onParseComplete, onCancel }: ProfileCVUploadPr
           description: 'Please review the extracted information.',
         });
 
+        if (uploadResult.sourceFileId && uploadResult.sourceFileId !== 'pasted-text') {
+          sessionStorage.setItem('cvSourceFileId', uploadResult.sourceFileId);
+        }
         onParseComplete({
           sourceFileId: uploadResult.sourceFileId,
           parsedData: completedResult.parsedData,

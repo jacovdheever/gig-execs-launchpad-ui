@@ -141,13 +141,25 @@ export function ProfileAIChat({ onComplete, onCancel }: ProfileAIChatProps) {
           return;
         }
 
+        // Pass any recently parsed CV so the AI can use it (e.g. user uploaded CV then chose "Create with AI")
+        const cvSourceFileId = sessionStorage.getItem('cvSourceFileId');
+        const sourceFileIds =
+          cvSourceFileId &&
+          cvSourceFileId !== 'pasted-text' &&
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cvSourceFileId)
+            ? [cvSourceFileId]
+            : undefined;
+        if (sourceFileIds) {
+          sessionStorage.removeItem('cvSourceFileId');
+        }
+
         const response = await fetch('/.netlify/functions/profile-ai-start', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify({})
+          body: JSON.stringify(sourceFileIds ? { sourceFileIds } : {})
         });
 
         if (!response.ok) {
@@ -186,7 +198,7 @@ export function ProfileAIChat({ onComplete, onCancel }: ProfileAIChatProps) {
     initConversation();
   }, [toast]);
 
-  const sendMessage = async (message: string) => {
+  const sendMessage = async (message: string, options?: { sourceFileIds?: string[] }) => {
     if (!message.trim() || !draftId || isLoading) return;
 
     setIsLoading(true);
@@ -204,16 +216,21 @@ export function ProfileAIChat({ onComplete, onCancel }: ProfileAIChatProps) {
         throw new Error('Please log in to continue');
       }
 
+      const body: { draftId: string; userMessage: string; sourceFileIds?: string[] } = {
+        draftId,
+        userMessage: message
+      };
+      if (options?.sourceFileIds?.length) {
+        body.sourceFileIds = options.sourceFileIds;
+      }
+
       const response = await fetch('/.netlify/functions/profile-ai-continue', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({
-          draftId,
-          userMessage: message
-        })
+        body: JSON.stringify(body)
       });
 
       if (!response.ok) {
@@ -266,9 +283,16 @@ export function ProfileAIChat({ onComplete, onCancel }: ProfileAIChatProps) {
 
   const handleCVUploadComplete = async (data: any) => {
     setShowUpload(false);
-    
-    // Send a message about the uploaded CV
-    await sendMessage(`I've just uploaded my CV. Please use it to help build my profile.`);
+    // Pass sourceFileId so the backend can load the CV text and the AI can use it
+    const sourceFileIds =
+      data?.sourceFileId &&
+      data.sourceFileId !== 'pasted-text' &&
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(data.sourceFileId)
+        ? [data.sourceFileId]
+        : undefined;
+    await sendMessage(`I've just uploaded my CV. Please use it to help build my profile.`, {
+      sourceFileIds
+    });
   };
 
   const handleReviewAndPublish = () => {
