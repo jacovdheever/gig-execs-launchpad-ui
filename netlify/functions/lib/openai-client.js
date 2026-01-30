@@ -510,6 +510,35 @@ Be fair but thorough. Consider:
 // ============================================================================
 
 /**
+ * Returns a list of required profile field keys that are missing or empty in the draft.
+ * Used to steer the AI to ask only about missing fields.
+ */
+function getMissingProfileFields(draft) {
+  const missing = [];
+  const basic = draft?.basicInfo || {};
+  if (!basic.firstName?.trim()) missing.push('basicInfo.firstName');
+  if (!basic.lastName?.trim()) missing.push('basicInfo.lastName');
+  if (!basic.email?.trim()) missing.push('basicInfo.email');
+  if (!basic.phone?.trim()) missing.push('basicInfo.phone');
+  if (!basic.location?.trim()) missing.push('basicInfo.location');
+  if (!basic.headline?.trim()) missing.push('basicInfo.headline');
+  const work = draft?.workExperience;
+  if (!work?.length) missing.push('workExperience');
+  const edu = draft?.education;
+  if (!edu?.length) missing.push('education');
+  const skills = draft?.skills;
+  if (!skills?.length || skills.length < 3) missing.push('skills');
+  const industries = draft?.industries;
+  if (!industries?.length) missing.push('industries');
+  const languages = draft?.languages;
+  if (!languages?.length) missing.push('languages');
+  const rate = draft?.hourlyRate;
+  if (!rate || (rate.min == null && rate.max == null)) missing.push('hourlyRate');
+  if (!draft?.summary?.trim()) missing.push('summary');
+  return missing;
+}
+
+/**
  * Continues a conversational profile creation session
  * @param {Array} conversationHistory - Previous messages in the conversation
  * @param {Object} currentDraft - Current draft profile state
@@ -520,18 +549,26 @@ Be fair but thorough. Consider:
  */
 async function continueConversation(conversationHistory, currentDraft, userMessage, userId, options = {}) {
   const model = options.model || DEFAULT_MODEL;
-  
+  const missingFields = options.missingFields != null ? options.missingFields : getMissingProfileFields(currentDraft);
+  const questionsAsked = options.questionsAsked || [];
+
   try {
     const systemPrompt = `You are a friendly and professional AI assistant helping users create their GigExecs profile.
 
 GigExecs is a platform for highly experienced professionals (typically 15+ years experience). Your goal is to:
 1. Help users build a COMPLETE professional profile with ALL required fields
-2. Ask targeted questions to fill in missing information
+2. Ask targeted questions to fill in missing information only
 3. Ensure the profile showcases their seniority and expertise
 4. Collect ALL required information before marking complete
 
 Current profile draft state:
 ${JSON.stringify(currentDraft, null, 2)}
+
+MISSING FIELDS (ask only about these; do not ask about fields already present):
+${JSON.stringify(missingFields)}
+
+Questions you have already asked in this session (do NOT ask these again):
+${JSON.stringify(questionsAsked)}
 
 REQUIRED PROFILE FIELDS (must collect all before marking isComplete=true):
 1. basicInfo: firstName, lastName, email, phone, location, headline (optional: linkedinUrl)
@@ -545,13 +582,19 @@ REQUIRED PROFILE FIELDS (must collect all before marking isComplete=true):
 
 NOTE: Profile pictures cannot be uploaded through this chat. Mention to users that they can add a profile photo after publishing their profile in profile settings.
 
+STRICT RULES:
+- Do NOT ask for any field that is already present in the draft. If a field is present but ambiguous, ask a single short confirmation (yes/no or brief).
+- Only ask about fields listed in MISSING FIELDS. Ask at most 1–2 questions at a time.
+- Never repeat a question from "Questions you have already asked". If the next logical question was already asked, ask about a different missing field.
+- Never say you cannot access uploaded files. If the user uploaded a CV, use the content that was provided in context; otherwise proceed without mentioning it.
+- You MUST update draftProfile with every value the user provides. Do not leave provided fields empty.
+- If workExperience already has entries, do not ask "add work experience"; ask for missing details (e.g. dates, description) only if needed.
+- ONLY set isComplete=true when ALL required fields have been collected.
+
 Guidelines:
 - Be conversational and encouraging
-- Ask one or two focused questions at a time
 - Acknowledge information the user provides
-- Update the draft profile based on their responses
-- Guide them through ALL fields: basic info → experience → education → skills → industries → languages → hourly rate → summary
-- ONLY set isComplete=true when ALL required fields have been collected
+- Guide through missing fields only: basic info → experience → education → skills → industries → languages → hourly rate → summary
 - Always be respectful and supportive
 
 IMPORTANT: You must respond with valid JSON in this exact format:
@@ -655,9 +698,15 @@ GigExecs is a platform for highly experienced professionals (typically 15+ years
 
 This is the START of a profile creation conversation. Your goals:
 1. Welcome the user warmly
-2. If they uploaded a CV, acknowledge it and summarize what you found
-3. Ask about any missing key information
-4. Set expectations - you'll be collecting: basic info, work experience, education, skills, industries, languages, hourly rate, and a professional summary
+2. If cvText/CV content was provided: briefly summarize what you found and ask to confirm or fill only missing details. Do NOT ask for information already present in the CV.
+3. If no CV was provided: do NOT mention file access or "I can't access uploaded files". Simply proceed with asking for basic info (e.g. phone, location, headline).
+4. Ask at most 1–2 focused questions at a time. Only ask about fields that are missing.
+
+RULES:
+- Never say you cannot access uploaded files. If no CV is provided, proceed with questions without mentioning it.
+- Do not ask for any field that is already present in the draft or in the context. If a field is present but ambiguous, ask a single short confirmation (yes/no or brief).
+- Before asking, mentally check which required fields are missing; only ask for 1–2 of those.
+- You must update draftProfile with every answer; do not leave provided fields empty.
 
 REQUIRED PROFILE FIELDS (to collect during conversation):
 1. basicInfo: firstName, lastName, email, phone, location, headline
@@ -671,7 +720,7 @@ REQUIRED PROFILE FIELDS (to collect during conversation):
 
 NOTE: Profile pictures cannot be uploaded through this chat. Tell users they can add a profile photo in their profile settings after completing the profile.
 
-Start by greeting them warmly and asking about their professional background. If they have a CV, summarize what you found and ask to confirm/add details.
+Start by greeting them warmly. If they have a CV (context provided), summarize what you found and ask to confirm or add only missing details. If no CV context, ask for basic info (phone, location, headline).
 
 IMPORTANT: You must respond with valid JSON in this exact format:
 {
