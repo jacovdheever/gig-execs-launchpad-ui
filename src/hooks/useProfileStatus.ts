@@ -128,12 +128,12 @@ export function useProfileStatus(
           .eq('id', userId)
           .single(),
         
-        // Consultant profile
+        // Consultant profile (use maybeSingle to handle case where profile doesn't exist yet)
         supabase
           .from('consultant_profiles')
           .select('user_id, job_title, bio, address1, country, country_id, hourly_rate_min, hourly_rate_max, id_doc_url')
           .eq('user_id', userId)
-          .single(),
+          .maybeSingle(),
         
         // Work experience count
         supabase
@@ -373,7 +373,7 @@ export async function fetchProfileStatusServerSide(
     certificationsResult,
   ] = await Promise.all([
     supabaseClient.from('users').select('id, first_name, last_name, email, vetting_status').eq('id', userId).single(),
-    supabaseClient.from('consultant_profiles').select('user_id, job_title, bio, address1, country, country_id, hourly_rate_min, hourly_rate_max, id_doc_url').eq('user_id', userId).single(),
+    supabaseClient.from('consultant_profiles').select('user_id, job_title, bio, address1, country, country_id, hourly_rate_min, hourly_rate_max, id_doc_url').eq('user_id', userId).maybeSingle(),
     supabaseClient.from('work_experience').select('id', { count: 'exact', head: true }).eq('user_id', userId),
     supabaseClient.from('user_skills').select('skill_id', { count: 'exact', head: true }).eq('user_id', userId),
     supabaseClient.from('user_languages').select('language_id', { count: 'exact', head: true }).eq('user_id', userId),

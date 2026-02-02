@@ -812,13 +812,14 @@ async function mapToDatabase(parsedData, userId, userType) {
         console.log('No hourly rate data found in parsed data');
       }
 
+      // Use upsert to create the profile if it doesn't exist yet
+      profileUpdate.user_id = userId;
       const { error: profileError } = await getSupabaseClient()
         .from('consultant_profiles')
-        .update(profileUpdate)
-        .eq('user_id', userId);
+        .upsert(profileUpdate, { onConflict: 'user_id' });
 
       if (profileError) {
-        console.error('Error updating consultant profile:', profileError);
+        console.error('Error upserting consultant profile:', profileError);
         results.profile = { success: false, error: profileError.message };
       } else {
         results.profile = { success: true };
