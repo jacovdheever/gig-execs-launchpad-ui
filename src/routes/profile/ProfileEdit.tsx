@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { User, FileText, Award, Briefcase, Upload, GraduationCap, Briefcase as WorkIcon } from 'lucide-react';
 import { SectionCard } from '@/components/profile/SectionCard';
-import { CompletenessMeter } from '@/components/profile/CompletenessMeter';
-import { StatusBadge } from '@/components/profile/StatusBadge';
+import { ProfileStatusCard } from '@/components/profile/ProfileStatusCard';
 import { BasicInfoForm } from '@/components/profile/BasicInfoForm';
 import { ReferencesForm } from '@/components/profile/ReferencesForm';
 import { QualificationsForm } from '@/components/profile/QualificationsForm';
@@ -10,8 +9,7 @@ import { CertificationsForm } from '@/components/profile/CertificationsForm';
 import { PortfolioForm } from '@/components/profile/PortfolioForm';
 import { WorkExperienceForm } from '@/components/profile/WorkExperienceForm';
 import { IdDocumentUploader } from '@/components/profile/IdDocumentUploader';
-import { VettingStatus } from '@/components/profile/VettingStatus';
-import { computeCompleteness, computeProfileStatus, type CompletenessData } from '@/lib/profile';
+import { useProfileStatus } from '@/hooks/useProfileStatus';
 import { supabase } from '@/lib/supabase';
 import { uploadProfileDocument, uploadPortfolioFile } from '@/lib/storage';
 import { useToast } from '@/hooks/use-toast';
@@ -129,8 +127,6 @@ interface ProfileEditProps {
 }
 
 export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
-  console.log('🔍 ProfileEdit: Testing with CompletenessMeter component');
-  
   const { 
     user, 
     profile, 
@@ -143,6 +139,14 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   const [activeTab, setActiveTab] = useState('basic');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  
+  // Use the new profile status hook
+  const { 
+    status: profileStatus, 
+    isLoading: statusLoading, 
+    error: statusError,
+    refresh: refreshStatus 
+  } = useProfileStatus(user.id);
 
   // Helper function to sort work experience by latest first
   const sortWorkExperience = (experiences: WorkExperience[]) => {
@@ -168,27 +172,10 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     { id: 'documents', name: 'Documents', icon: Upload },
   ];
   
-  // Calculate completeness for CompletenessMeter
-  const completenessData: CompletenessData = {
-    basic: {
-      hasCore: !!(user.first_name && user.last_name && user.email && profile?.job_title),
-    },
-    full: {
-      referencesCount: references.length,
-      hasIdDocument: !!profile?.id_doc_url,
-      qualificationsCount: education.length,
-      certificationsCount: certifications.length,
-    },
-    allstar: {
-      portfolioCount: portfolio.length,
-    },
+  // Refresh status when profile data changes (e.g., after saving)
+  const handleProfileSaved = () => {
+    refreshStatus();
   };
-
-  const completeness = computeCompleteness(user.id, completenessData);
-  const status = computeProfileStatus({
-    tier: completeness.tier,
-    vettingStatus: user.vetting_status as any,
-  });
 
   // Handle profile updates
   const handleProfileUpdate = (updatedData: any) => {
@@ -229,24 +216,13 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   
   return (
     <div className="max-w-4xl mx-auto p-6">
-      {/* Profile Header */}
-      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-8 gap-6">
-        <div className="flex-1">
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Edit Profile</h1>
-          <p className="text-slate-600 mt-2">Manage your professional profile and settings</p>
-        </div>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <CompletenessMeter
-            segments={completeness.segments}
-            percent={completeness.percent}
-            missing={completeness.missing}
-          />
-          <VettingStatus 
-            status={status}
-            tier={completeness.tier}
-            vettingStatus={user.vetting_status || 'pending'}
-          />
-        </div>
+      {/* Profile Status Card */}
+      <div className="mb-8">
+        <ProfileStatusCard
+          status={profileStatus}
+          isLoading={statusLoading}
+          error={statusError}
+        />
       </div>
 
       {/* Navigation Tabs */}
