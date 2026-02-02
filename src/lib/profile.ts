@@ -1,6 +1,12 @@
 /**
  * Profile completeness and status calculation utilities
  * Handles the 3-tier profile system: Basic, Full, All-Star
+ * 
+ * @deprecated This module is deprecated. Use `src/lib/profileStatus.ts` instead.
+ * The new 4-level status system (Registered → Basic → Full → Vetted) replaces
+ * the percentage/tier system. This file is kept for backward compatibility.
+ * 
+ * @see src/lib/profileStatus.ts for the new implementation
  */
 
 export type CompletenessTier = 'BASIC' | 'FULL' | 'ALL_STAR';
@@ -63,6 +69,7 @@ export interface CompletenessResult {
 
 /**
  * Calculate profile completeness based on data provided
+ * @deprecated Use `computeProfessionalProfileStatus()` from `src/lib/profileStatus.ts` instead
  */
 export function computeCompleteness(
   userId: string, 
@@ -145,6 +152,7 @@ export function computeCompleteness(
 
 /**
  * Map completeness tier and vetting status to profile status
+ * @deprecated Use `computeProfessionalProfileStatus()` from `src/lib/profileStatus.ts` instead
  */
 export function computeProfileStatus({
   tier,
