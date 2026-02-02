@@ -222,11 +222,18 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
           status={profileStatus}
           isLoading={statusLoading}
           error={statusError}
+          onCtaClick={() => {
+            // Scroll to the tabs section when CTA is clicked
+            const tabsElement = document.getElementById('profile-tabs');
+            if (tabsElement) {
+              tabsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }}
         />
       </div>
 
       {/* Navigation Tabs */}
-      <div className="border-b border-slate-200 mb-8">
+      <div id="profile-tabs" className="border-b border-slate-200 mb-8 scroll-mt-4">
         <nav className="-mb-px flex space-x-8 overflow-x-auto scrollbar-hide">
           {tabs.map((tab) => (
             <button
