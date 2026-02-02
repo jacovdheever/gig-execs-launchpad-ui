@@ -252,6 +252,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
             user={user}
             profile={profile}
             onUpdate={handleProfileUpdate}
+            onSaved={handleProfileSaved}
             isLoading={isLoading}
           />
         )}
@@ -283,6 +284,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   references: [...references, newReference]
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error adding reference:', error);
                 throw error;
@@ -313,6 +315,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   references: updatedReferences
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error updating reference:', error);
                 throw error;
@@ -334,6 +337,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   references: filteredReferences
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error deleting reference:', error);
                 throw error;
@@ -369,6 +373,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   education: [...education, data]
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error adding qualification:', error);
                 throw error;
@@ -400,6 +405,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   education: updatedEducation
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error updating qualification:', error);
                 throw error;
@@ -421,6 +427,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   education: filteredEducation
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error deleting qualification:', error);
                 throw error;
@@ -468,6 +475,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   certifications: [...certifications, data]
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error adding certification:', error);
                 throw error;
@@ -499,6 +507,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   certifications: updatedCertifications
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error updating certification:', error);
                 throw error;
@@ -520,6 +529,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   certifications: filteredCertifications
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error deleting certification:', error);
                 throw error;
@@ -571,6 +581,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   workExperience: updatedWorkExperience
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error adding work experience:', error);
                 throw error;
@@ -606,6 +617,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   workExperience: sortedWorkExperience
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error updating work experience:', error);
                 throw error;
@@ -627,6 +639,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   workExperience: filteredWorkExperience
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error deleting work experience:', error);
                 throw error;
@@ -668,6 +681,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   portfolio: [...portfolio, data]
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error adding portfolio project:', error);
                 throw error;
@@ -704,6 +718,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   portfolio: updatedPortfolio
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error updating portfolio project:', error);
                 throw error;
@@ -725,6 +740,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   portfolio: filteredPortfolio
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error deleting portfolio project:', error);
                 throw error;
@@ -776,8 +792,9 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                 
                 console.log('🔍 ID Document Upload: Database updated successfully, refreshing data');
                 
-                // Refresh profile data
+                // Refresh profile data and status
                 await refetchData();
+                handleProfileSaved();
                 
                 return result.url;
               } catch (error) {
@@ -795,8 +812,9 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                 
                 if (error) throw error;
                 
-                // Refresh profile data
+                // Refresh profile data and status
                 await refetchData();
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error removing ID document:', error);
                 throw error;

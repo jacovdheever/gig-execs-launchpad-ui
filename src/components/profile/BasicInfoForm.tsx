@@ -59,10 +59,11 @@ interface BasicInfoFormProps {
     industries?: string[];
   };
   onUpdate: (updatedData: any) => void;
+  onSaved?: () => void;
   isLoading?: boolean;
 }
 
-export function BasicInfoForm({ user, profile, onUpdate, isLoading = false }: BasicInfoFormProps) {
+export function BasicInfoForm({ user, profile, onUpdate, onSaved, isLoading = false }: BasicInfoFormProps) {
   const [formData, setFormData] = useState({
     firstName: user.first_name || '',
     lastName: user.last_name || '',
@@ -352,6 +353,9 @@ export function BasicInfoForm({ user, profile, onUpdate, isLoading = false }: Ba
           industries: selectedIndustries.map(i => i.name),
         }
       });
+
+      // Trigger profile status refresh
+      onSaved?.();
 
     } catch (error) {
       console.error('Error updating profile:', error);
