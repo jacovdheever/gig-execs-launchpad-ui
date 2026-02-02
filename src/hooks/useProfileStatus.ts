@@ -70,7 +70,8 @@ export function useProfileStatus(
   userId: string | null | undefined,
   options: UseProfileStatusOptions = {}
 ): ProfileStatusState & { refresh: () => Promise<void> } {
-  const { autoRefresh = true, onVettingSubmitted } = options;
+  // Default autoRefresh to false - opt-in only to avoid flicker on screenshots/tab switches
+  const { autoRefresh = false, onVettingSubmitted } = options;
 
   const [state, setState] = useState<ProfileStatusState>({
     status: null,
@@ -285,17 +286,28 @@ export function useProfileStatus(
     }
   }, [state.shouldSubmitForVetting, userId, submitForVetting]);
 
-  // Auto-refresh on focus/visibility change
+  // Auto-refresh on focus/visibility change (with debounce to prevent flicker)
+  const lastRefreshRef = useRef(0);
+  const REFRESH_DEBOUNCE_MS = 10000; // 10 second minimum between auto-refreshes
+
   useEffect(() => {
     if (!autoRefresh || !userId) return;
 
+    const debouncedRefresh = () => {
+      const now = Date.now();
+      if (now - lastRefreshRef.current > REFRESH_DEBOUNCE_MS) {
+        lastRefreshRef.current = now;
+        fetchStatusData();
+      }
+    };
+
     const handleFocus = () => {
-      fetchStatusData();
+      debouncedRefresh();
     };
 
     const handleVisibilityChange = () => {
       if (!document.hidden) {
-        fetchStatusData();
+        debouncedRefresh();
       }
     };
 

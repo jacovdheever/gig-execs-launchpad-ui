@@ -150,7 +150,8 @@ export default function DashboardPage() {
   } = useProfileStatus(
     user?.role === 'consultant' ? user?.id : null,
     {
-      autoRefresh: true,
+      // autoRefresh disabled to prevent flicker on screenshots/tab switches
+      autoRefresh: false,
       onVettingSubmitted: () => {
         // Show notification when profile is auto-submitted for vetting
         toast.success(
