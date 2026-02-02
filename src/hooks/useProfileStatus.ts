@@ -5,7 +5,7 @@
  * This is the recommended way to get profile status in React components.
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/lib/supabase';
 import {
   computeProfessionalProfileStatus,
@@ -81,6 +81,12 @@ export function useProfileStatus(
     counts: null,
     shouldSubmitForVetting: false,
   });
+
+  // Track if we've already attempted to submit for vetting to prevent infinite loops
+  const hasAttemptedVettingSubmit = useRef(false);
+  // Store callback in ref to avoid dependency issues
+  const onVettingSubmittedRef = useRef(onVettingSubmitted);
+  onVettingSubmittedRef.current = onVettingSubmitted;
 
   /**
    * Fetch all data needed for status computation
@@ -206,11 +212,6 @@ export function useProfileStatus(
         counts,
         shouldSubmitForVetting: shouldSubmit,
       });
-
-      // Trigger callback if submitted for vetting
-      if (shouldSubmit && onVettingSubmitted) {
-        onVettingSubmitted();
-      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load profile status';
       console.error('useProfileStatus error:', err);
@@ -220,7 +221,7 @@ export function useProfileStatus(
         error: errorMessage,
       }));
     }
-  }, [userId, onVettingSubmitted]);
+  }, [userId]);
 
   /**
    * Submit profile for vetting (set vetting_status to 'pending')
@@ -252,21 +253,37 @@ export function useProfileStatus(
     fetchStatusData();
   }, [fetchStatusData]);
 
-  // Auto-submit for vetting when profile becomes complete
+  // Auto-submit for vetting when profile becomes complete (only once per session)
   useEffect(() => {
-    if (state.shouldSubmitForVetting && userId) {
+    // Only attempt once and only if conditions are met
+    if (state.shouldSubmitForVetting && userId && !hasAttemptedVettingSubmit.current) {
+      hasAttemptedVettingSubmit.current = true;
+      
       submitForVetting().then((success) => {
         if (success) {
           // Notify via callback
-          if (onVettingSubmitted) {
-            onVettingSubmitted();
+          if (onVettingSubmittedRef.current) {
+            onVettingSubmittedRef.current();
           }
-          // Refresh status to reflect the change
-          fetchStatusData();
+          // Update local state to reflect the change without refetching
+          setState((prev) => ({
+            ...prev,
+            shouldSubmitForVetting: false,
+            userData: prev.userData ? { ...prev.userData, vetting_status: 'pending' } : null,
+            status: prev.status ? { 
+              ...prev.status, 
+              statusKey: 'pending_vetting',
+              completedSteps: 3,
+              title: 'Full Profile – Pending Vetting',
+              body: "Your profile is complete and currently under review. We'll notify you as soon as vetting is complete.",
+              ctaText: 'Vetting in progress',
+              ctaDisabled: true,
+            } : null,
+          }));
         }
       });
     }
-  }, [state.shouldSubmitForVetting, userId, submitForVetting, onVettingSubmitted, fetchStatusData]);
+  }, [state.shouldSubmitForVetting, userId, submitForVetting]);
 
   // Auto-refresh on focus/visibility change
   useEffect(() => {
