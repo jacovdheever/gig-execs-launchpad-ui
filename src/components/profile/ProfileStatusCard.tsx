@@ -50,6 +50,117 @@ export interface ProfileStatusCardProps {
 }
 
 // =============================================================================
+// Helper Functions
+// =============================================================================
+
+/**
+ * Formats missing requirements into a readable sentence
+ * @param missingRequirements - Array of missing requirement strings
+ * @param statusKey - Current profile status to determine context
+ * @returns Formatted string describing what's needed
+ */
+function formatMissingRequirementsMessage(
+  missingRequirements: string[],
+  statusKey: ProfessionalStatus
+): string {
+  if (missingRequirements.length === 0) return '';
+
+  // Map requirement strings to more action-oriented phrases
+  const formatRequirement = (req: string): string => {
+    // Handle reference counts like "2 more references"
+    const refMatch = req.match(/^(\d+) more reference/);
+    if (refMatch) {
+      const count = parseInt(refMatch[1], 10);
+      return `add ${count} reference${count > 1 ? 's' : ''}`;
+    }
+
+    // Handle ID document
+    if (req.toLowerCase().includes('id document')) {
+      return 'upload an ID document';
+    }
+
+    // Handle qualification/certification
+    if (req.toLowerCase().includes('qualification or certification')) {
+      return 'add a qualification or certification';
+    }
+
+    // Handle work experience
+    if (req.toLowerCase().includes('work experience')) {
+      return 'add work experience';
+    }
+
+    // Handle skill
+    if (req.toLowerCase().includes('skill')) {
+      return 'add at least 1 skill';
+    }
+
+    // Handle language
+    if (req.toLowerCase().includes('language')) {
+      return 'add at least 1 language';
+    }
+
+    // Handle industry
+    if (req.toLowerCase().includes('industry')) {
+      return 'add at least 1 industry';
+    }
+
+    // Handle rates
+    if (req.toLowerCase().includes('hourly rate')) {
+      return 'set your hourly rate';
+    }
+
+    // Handle basic fields (First name, Last name, Job title, etc.)
+    if (req === 'First name' || req === 'Last name') {
+      return `add your ${req.toLowerCase()}`;
+    }
+
+    if (req === 'Job title') {
+      return 'add your job title';
+    }
+
+    if (req === 'Address') {
+      return 'add your address';
+    }
+
+    if (req === 'Country') {
+      return 'select your country';
+    }
+
+    // Default: lowercase and prefix with "add"
+    return `add ${req.toLowerCase()}`;
+  };
+
+  const formattedItems = missingRequirements.map(formatRequirement);
+
+  // Determine the goal based on status
+  const goalText = statusKey === 'registered' 
+    ? 'to complete your Basic Profile'
+    : 'to complete your Full Profile';
+
+  // Build the sentence
+  if (formattedItems.length === 1) {
+    return `Next: ${capitalizeFirst(formattedItems[0])} ${goalText}.`;
+  }
+
+  if (formattedItems.length === 2) {
+    return `Next: ${capitalizeFirst(formattedItems[0])} and ${formattedItems[1]} ${goalText}.`;
+  }
+
+  // 3+ items: "A, B, and C"
+  const lastItem = formattedItems[formattedItems.length - 1];
+  const otherItems = formattedItems.slice(0, -1);
+  return `Next: ${capitalizeFirst(otherItems.join(', '))}, and ${lastItem} ${goalText}.`;
+}
+
+/**
+ * Capitalizes the first letter of a string
+ */
+function capitalizeFirst(str: string): string {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// =============================================================================
 // Sub-Components
 // =============================================================================
 
@@ -332,12 +443,11 @@ export function ProfileStatusCard({
           </div>
         </div>
 
-        {/* Missing requirements hint (for debugging/advanced users) */}
+        {/* Missing requirements hint - shows what's needed for next step */}
         {status.missingRequirements.length > 0 && status.statusKey !== 'vetted_approved' && status.statusKey !== 'pending_vetting' && (
           <div className="mt-4 pt-4 border-t border-slate-100">
-            <p className="text-xs text-slate-400">
-              Next: {status.missingRequirements.slice(0, 2).join(', ')}
-              {status.missingRequirements.length > 2 && ` +${status.missingRequirements.length - 2} more`}
+            <p className="text-sm text-slate-500">
+              {formatMissingRequirementsMessage(status.missingRequirements, status.statusKey)}
             </p>
           </div>
         )}
