@@ -408,6 +408,6 @@ describe('getCtaRoute', () => {
       createProfile(),
       createCounts()
     );
-    expect(getCtaRoute(vettedStatus)).toBe('/gigs');
+    expect(getCtaRoute(vettedStatus)).toBe('/find-gigs');
   });
 });

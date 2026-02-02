@@ -419,7 +419,7 @@ export function getCtaRoute(status: StatusResult): string {
     case 'view_profile':
       return '/profile';
     case 'find_gigs':
-      return '/gigs';
+      return '/find-gigs';
     case 'review_profile':
       return '/profile';
     default:
