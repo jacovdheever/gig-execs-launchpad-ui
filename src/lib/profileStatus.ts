@@ -133,8 +133,8 @@ export const FULL_PROFILE_FIELDS = {
   // All basic fields plus:
   minReferences: 2,
   idDocumentRequired: true,
-  // At least 1 education OR 1 certification
-  minEducationOrCertifications: 1,
+  // Education and certifications are optional (nice-to-have, not required)
+  minEducationOrCertifications: 0,
 };
 
 // =============================================================================

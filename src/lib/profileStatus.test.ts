@@ -311,21 +311,20 @@ describe('checkFullProfileComplete', () => {
     expect(result.missing).toContain('1 more reference');
   });
 
-  it('should accept education or certification', () => {
+  it('should not require education or certification (optional)', () => {
     const profile = createProfile({ id_doc_url: 'https://example.com/id.pdf' });
     
-    // Only education
+    // With education
     const result1 = checkFullProfileComplete(profile, createCounts({ referencesCount: 2, educationCount: 1, certificationsCount: 0 }), true);
     expect(result1.complete).toBe(true);
 
-    // Only certification
+    // With certification
     const result2 = checkFullProfileComplete(profile, createCounts({ referencesCount: 2, educationCount: 0, certificationsCount: 1 }), true);
     expect(result2.complete).toBe(true);
 
-    // Neither
+    // Neither - should still be complete (education/certification is optional)
     const result3 = checkFullProfileComplete(profile, createCounts({ referencesCount: 2, educationCount: 0, certificationsCount: 0 }), true);
-    expect(result3.complete).toBe(false);
-    expect(result3.missing).toContain('At least 1 qualification or certification');
+    expect(result3.complete).toBe(true);
   });
 });
 
