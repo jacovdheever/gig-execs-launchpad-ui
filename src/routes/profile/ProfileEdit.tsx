@@ -284,9 +284,9 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
           ))}
         </nav>
         
-        {/* Mobile scroll indicator - gradient fade with arrow */}
+        {/* Scroll indicator - gradient fade with arrow (shown when tabs overflow) */}
         {showScrollIndicator && (
-          <div className="absolute right-0 top-0 bottom-0 flex items-center pointer-events-none lg:hidden">
+          <div className="absolute right-0 top-0 bottom-0 flex items-center pointer-events-none">
             {/* Gradient fade */}
             <div className="w-12 h-full bg-gradient-to-l from-white via-white/80 to-transparent" />
             {/* Arrow indicator */}
