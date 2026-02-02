@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { User, FileText, Award, Briefcase, Upload, GraduationCap, Briefcase as WorkIcon } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { User, FileText, Award, Briefcase, Upload, GraduationCap, Briefcase as WorkIcon, ChevronRight } from 'lucide-react';
 import { SectionCard } from '@/components/profile/SectionCard';
 import { ProfileStatusCard } from '@/components/profile/ProfileStatusCard';
 import { BasicInfoForm } from '@/components/profile/BasicInfoForm';
@@ -138,8 +138,38 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   } = profileData;
   const [activeTab, setActiveTab] = useState('basic');
   const [isLoading, setIsLoading] = useState(false);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
+  const tabsNavRef = useRef<HTMLElement>(null);
   const { toast } = useToast();
   
+  // Check if tabs can scroll (for mobile scroll indicator)
+  useEffect(() => {
+    const checkScrollable = () => {
+      const nav = tabsNavRef.current;
+      if (nav) {
+        // Show indicator if there's more content to scroll
+        const canScroll = nav.scrollWidth > nav.clientWidth;
+        const notAtEnd = nav.scrollLeft < nav.scrollWidth - nav.clientWidth - 10;
+        setShowScrollIndicator(canScroll && notAtEnd);
+      }
+    };
+
+    checkScrollable();
+    window.addEventListener('resize', checkScrollable);
+    
+    const nav = tabsNavRef.current;
+    if (nav) {
+      nav.addEventListener('scroll', checkScrollable);
+    }
+
+    return () => {
+      window.removeEventListener('resize', checkScrollable);
+      if (nav) {
+        nav.removeEventListener('scroll', checkScrollable);
+      }
+    };
+  }, []);
+
   // Use the new profile status hook
   const { 
     status: profileStatus, 
@@ -161,15 +191,15 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     });
   };
 
-  // Define navigation tabs
+  // Define navigation tabs (ordered by importance/flow)
   const tabs = [
     { id: 'basic', name: 'Basic Info', icon: User },
+    { id: 'work-experience', name: 'Work Experience', icon: WorkIcon },
     { id: 'references', name: 'References', icon: FileText },
+    { id: 'documents', name: 'Documents', icon: Upload },
     { id: 'qualifications', name: 'Qualifications', icon: GraduationCap },
     { id: 'certifications', name: 'Certifications', icon: Award },
-    { id: 'work-experience', name: 'Work Experience', icon: WorkIcon },
     { id: 'portfolio', name: 'Portfolio', icon: Briefcase },
-    { id: 'documents', name: 'Documents', icon: Upload },
   ];
   
   // Refresh status when profile data changes (e.g., after saving)
@@ -233,8 +263,11 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
       </div>
 
       {/* Navigation Tabs */}
-      <div id="profile-tabs" className="border-b border-slate-200 mb-8 scroll-mt-4">
-        <nav className="-mb-px flex space-x-8 overflow-x-auto scrollbar-hide">
+      <div id="profile-tabs" className="relative border-b border-slate-200 mb-8 scroll-mt-4">
+        <nav 
+          ref={tabsNavRef}
+          className="-mb-px flex space-x-8 overflow-x-auto scrollbar-hide pr-8"
+        >
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -250,6 +283,18 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
             </button>
           ))}
         </nav>
+        
+        {/* Mobile scroll indicator - gradient fade with arrow */}
+        {showScrollIndicator && (
+          <div className="absolute right-0 top-0 bottom-0 flex items-center pointer-events-none lg:hidden">
+            {/* Gradient fade */}
+            <div className="w-12 h-full bg-gradient-to-l from-white via-white/80 to-transparent" />
+            {/* Arrow indicator */}
+            <div className="absolute right-1 flex items-center justify-center w-6 h-6 bg-slate-100 rounded-full shadow-sm animate-pulse">
+              <ChevronRight className="w-4 h-4 text-slate-500" />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Tab Content */}
