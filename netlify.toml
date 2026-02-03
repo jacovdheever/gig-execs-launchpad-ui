@@ -10,6 +10,10 @@
 [functions]
   directory = "netlify/functions"
 
+# Scheduled function for email reminders (runs daily at 9:00 AM UTC)
+[functions."email-reminders"]
+  schedule = "0 9 * * *"
+
 # Plugin to install dependencies from netlify/functions/package.json
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"

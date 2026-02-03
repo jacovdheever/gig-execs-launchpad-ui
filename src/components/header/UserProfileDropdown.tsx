@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { User, Settings, LogOut } from 'lucide-react';
+import { User, Settings, MessageSquare, LogOut } from 'lucide-react';
 // import { Bell, MessageSquare } from 'lucide-react'; // Temporarily hidden
 import { supabase } from '@/lib/supabase';
 import { useNavigate } from 'react-router-dom';
@@ -116,6 +116,17 @@ export function UserProfileDropdown({ user }: Props) {
               >
                 <Settings className="w-4 h-4" />
                 Settings
+              </button>
+              
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  navigate('/feedback');
+                }}
+                className="w-full px-4 py-2 text-left text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors"
+              >
+                <MessageSquare className="w-4 h-4" />
+                Feedback
               </button>
               
               <button

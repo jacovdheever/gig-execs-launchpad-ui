@@ -18,6 +18,49 @@ import {
 } from '@/lib/profileStatus';
 
 // =============================================================================
+// Email Trigger Helper
+// =============================================================================
+
+/**
+ * Trigger vetting started email notification
+ * This is fire-and-forget - we don't wait for it or fail if it errors
+ */
+async function triggerVettingEmail(userId: string): Promise<void> {
+  try {
+    // Get current session for auth token
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.access_token) {
+      console.warn('No session available for vetting email trigger');
+      return;
+    }
+
+    const response = await fetch('/.netlify/functions/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`
+      },
+      body: JSON.stringify({
+        action: 'trigger',
+        trigger: 'profile_complete',
+        userId
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.warn('Vetting email trigger response not OK:', response.status, errorData);
+    } else {
+      const result = await response.json();
+      console.log('Vetting started email triggered:', result);
+    }
+  } catch (error) {
+    // Don't fail the vetting submission if email sending fails
+    console.error('Failed to trigger vetting email:', error);
+  }
+}
+
+// =============================================================================
 // Types
 // =============================================================================
 
@@ -226,6 +269,7 @@ export function useProfileStatus(
 
   /**
    * Submit profile for vetting (set vetting_status to 'pending')
+   * Also triggers the "vetting started" email notification
    */
   const submitForVetting = useCallback(async () => {
     if (!userId) return false;
@@ -242,6 +286,10 @@ export function useProfileStatus(
       }
 
       console.log('Profile submitted for vetting');
+
+      // Trigger vetting started email (fire-and-forget)
+      triggerVettingEmail(userId);
+
       return true;
     } catch (err) {
       console.error('Error submitting for vetting:', err);

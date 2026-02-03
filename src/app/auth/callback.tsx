@@ -5,6 +5,39 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Loader2, CheckCircle, XCircle } from 'lucide-react'
 
+/**
+ * Send welcome/verification emails after email confirmation
+ * This triggers the email_verified flow which sends:
+ * - email_verified template (all users)
+ * - welcome_professional OR welcome_client (based on user_type)
+ */
+async function sendVerificationEmails(accessToken: string): Promise<void> {
+  try {
+    const response = await fetch('/.netlify/functions/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+      body: JSON.stringify({
+        action: 'trigger',
+        trigger: 'email_verified'
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.warn('Email trigger response not OK:', response.status, errorData);
+    } else {
+      const result = await response.json();
+      console.log('Welcome emails triggered:', result);
+    }
+  } catch (error) {
+    // Don't fail the verification flow if email sending fails
+    console.error('Failed to trigger welcome emails:', error);
+  }
+}
+
 export default function AuthCallback() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -36,7 +69,10 @@ export default function AuthCallback() {
             return
           }
 
-          // Email verification successful
+          // Email verification successful - send welcome emails
+          // This is fire-and-forget; we don't wait for it or fail if it errors
+          sendVerificationEmails(accessToken);
+
           setStatus('success')
           setMessage('Your email has been verified successfully! You can now sign in to your account.')
           

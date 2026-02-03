@@ -36,6 +36,7 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import HelpAndSupport from "./pages/HelpAndSupport";
 import HelpAndSupportSecure from "./pages/HelpAndSupportSecure";
 import HowItWorks from "./pages/HowItWorks";
+import Feedback from "./pages/Feedback";
 import NotFound from "./pages/NotFound";
 
 // Functional App Components
@@ -213,6 +214,9 @@ const App = () => (
 
             {/* Secure Help Page */}
             <Route path="/help-secure" element={<HelpAndSupportSecure />} />
+
+            {/* Feedback Page (requires login) */}
+            <Route path="/feedback" element={<Feedback />} />
 
             {/* Maintenance Page */}
             <Route path="/maintenance" element={<Maintenance />} />

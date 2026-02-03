@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, ChevronDown, HelpCircle, User, LogOut, Settings } from 'lucide-react';
+import { Menu, ChevronDown, HelpCircle, User, LogOut, Settings, MessageSquare } from 'lucide-react';
 import { SearchBar } from './SearchBar';
 import type { CurrentUser } from '@/lib/getCurrentUser';
 import { Link, useNavigate } from 'react-router-dom';
@@ -75,6 +75,11 @@ export function MobileMenu({ user }: Props) {
           {/* Settings */}
           <Link to="/settings" onClick={() => setOpen(false)} className="flex items-center gap-2">
             <Settings className="w-5 h-5" /> Settings
+          </Link>
+          
+          {/* Feedback */}
+          <Link to="/feedback" onClick={() => setOpen(false)} className="flex items-center gap-2">
+            <MessageSquare className="w-5 h-5" /> Feedback
           </Link>
           
           {/* Help & Support */}
