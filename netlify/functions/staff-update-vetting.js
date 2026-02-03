@@ -8,7 +8,9 @@
  * Body: {
  *   userId: string,
  *   vettingStatus: 'pending' | 'in_progress' | 'verified' | 'vetted' | 'rejected' | 'needs_info',
- *   note?: string (for needs_info - describes what's missing)
+ *   note?: string (legacy, for needs_info),
+ *   notes?: string (internal vetting notes),
+ *   requestedInfoText?: string (free text for needs_info email)
  * }
  */
 
@@ -39,6 +41,14 @@ const STATUS_TO_EMAIL_TRIGGER = {
   'vetted': 'approved',
   'rejected': 'declined',
   'needs_info': 'needs_info'
+};
+
+// Map vetting status to vetting_decisions.action
+const STATUS_TO_ACTION = {
+  'verified': 'approve',
+  'vetted': 'approve',
+  'rejected': 'decline',
+  'needs_info': 'request_info'
 };
 
 exports.handler = async (event, context) => {
@@ -85,7 +95,8 @@ exports.handler = async (event, context) => {
       };
     }
 
-    const { userId, vettingStatus, note } = body;
+    const { userId, vettingStatus, note, notes, requestedInfoText } = body;
+    const missingItemForEmail = requestedInfoText?.trim() || note?.trim() || undefined;
 
     // Validate required fields
     if (!userId) {
@@ -162,12 +173,33 @@ exports.handler = async (event, context) => {
         details: {
           previous_status: previousStatus,
           new_status: vettingStatus,
-          note: note || null
+          note: note || null,
+          notes: notes || null,
+          requested_info_text: requestedInfoText || null
         }
       });
     } catch (auditError) {
       console.error('[staff-update-vetting] Audit log error:', auditError);
       // Don't fail if audit logging fails
+    }
+
+    // Insert vetting_decisions record (staff name + timestamp)
+    const staffName = [staffAuth.staff.first_name, staffAuth.staff.last_name].filter(Boolean).join(' ') || 'Staff';
+    const action = STATUS_TO_ACTION[vettingStatus];
+    if (action) {
+      try {
+        await supabase.from('vetting_decisions').insert({
+          user_id: userId,
+          staff_id: staffAuth.staff.id,
+          staff_name: staffName,
+          action,
+          notes: notes?.trim() || null,
+          requested_info_text: vettingStatus === 'needs_info' ? (requestedInfoText?.trim() || note?.trim() || null) : null
+        });
+      } catch (vdError) {
+        console.error('[staff-update-vetting] vetting_decisions insert error:', vdError);
+        // Don't fail the request
+      }
     }
 
     // Send email notification if applicable
@@ -184,7 +216,7 @@ exports.handler = async (event, context) => {
         userType: userData.user_type,
         firstName: userData.first_name,
         extraVariables: {
-          missing_item: note || undefined
+          missing_item: missingItemForEmail
         }
       });
     }
