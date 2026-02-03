@@ -155,7 +155,7 @@ const handler = async (event, context) => {
       });
     }
 
-    // Continue the conversation
+    // Continue the conversation (pass questionsAsked so AI doesn't repeat)
     console.log('Continuing conversation...');
     const { continueConversation } = getOpenAIClient();
     const conversationResult = await continueConversation(
@@ -163,7 +163,10 @@ const handler = async (event, context) => {
       currentProfile,
       userMessage,
       userId,
-      { draftId }
+      {
+        draftId,
+        questionsAsked: draftJson.questionsAsked || []
+      }
     );
 
     if (!conversationResult.success) {

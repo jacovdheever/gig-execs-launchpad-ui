@@ -224,6 +224,17 @@ export function ProfileCVUpload({ onParseComplete, onCancel }: ProfileCVUploadPr
 
       setProgress(30);
 
+      // Some browsers (e.g. Safari) send empty file.type for PDFs; infer from file name
+      const inferMimeType = (file: File): string => {
+        if (file.type && file.type.trim()) return file.type;
+        const name = (file.name || '').toLowerCase();
+        if (name.endsWith('.pdf')) return 'application/pdf';
+        if (name.endsWith('.doc')) return 'application/msword';
+        if (name.endsWith('.docx')) return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+        return file.type || 'application/octet-stream';
+      };
+      const mimeType = inferMimeType(selectedFile);
+
       // Upload the file (this now also extracts text)
       const uploadResponse = await fetch('/.netlify/functions/profile-cv-upload', {
         method: 'POST',
@@ -234,22 +245,31 @@ export function ProfileCVUpload({ onParseComplete, onCancel }: ProfileCVUploadPr
         body: JSON.stringify({
           fileData: base64Data,
           fileName: selectedFile.name,
-          mimeType: selectedFile.type,
+          mimeType,
           fileType: 'cv'
         })
       });
 
       if (!uploadResponse.ok) {
-        const errorData = await uploadResponse.json();
-        const errorMessage = errorData.error || errorData.message || 'Failed to upload file';
+        let errorMessage = 'Failed to upload file';
+        try {
+          const errorData = await uploadResponse.json();
+          errorMessage = errorData.error || errorData.message || errorMessage;
+        } catch {
+          errorMessage = `${errorMessage} (${uploadResponse.status})`;
+        }
         
         // Check if this is an extraction error that warrants the paste fallback
-        const isExtractionError = errorMessage.includes('extraction failed') || 
+        const isExtractionError = errorMessage.includes('extraction failed') ||
+                                  errorMessage.includes('Text extraction failed') ||
                                   errorMessage.includes('bad XRef') ||
                                   errorMessage.includes('corrupted') ||
                                   errorMessage.includes('encoding issues') ||
                                   errorMessage.includes('Illegal character') ||
-                                  errorMessage.includes('unsupported format');
+                                  errorMessage.includes('unsupported format') ||
+                                  errorMessage.includes('No text content found') ||
+                                  errorMessage.includes('image-based') ||
+                                  errorMessage.includes('Content validation failed');
         
         if (isExtractionError) {
           setExtractionError(errorMessage);
@@ -290,6 +310,9 @@ export function ProfileCVUpload({ onParseComplete, onCancel }: ProfileCVUploadPr
           description: 'Please review the extracted information.',
         });
 
+        if (uploadResult.sourceFileId && uploadResult.sourceFileId !== 'pasted-text') {
+          sessionStorage.setItem('cvSourceFileId', uploadResult.sourceFileId);
+        }
         onParseComplete({
           sourceFileId: uploadResult.sourceFileId,
           parsedData: parseResult.parsedData,
@@ -331,6 +354,9 @@ export function ProfileCVUpload({ onParseComplete, onCancel }: ProfileCVUploadPr
           description: 'Please review the extracted information.',
         });
 
+        if (uploadResult.sourceFileId && uploadResult.sourceFileId !== 'pasted-text') {
+          sessionStorage.setItem('cvSourceFileId', uploadResult.sourceFileId);
+        }
         onParseComplete({
           sourceFileId: uploadResult.sourceFileId,
           parsedData: completedResult.parsedData,

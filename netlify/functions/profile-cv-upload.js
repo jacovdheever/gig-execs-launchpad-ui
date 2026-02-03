@@ -80,30 +80,46 @@ const handler = async (event, context) => {
     try {
       requestData = JSON.parse(event.body);
     } catch (parseError) {
+      console.log('[profile-cv-upload] 400: Invalid JSON:', parseError.message);
       return createErrorResponse(400, 'Invalid JSON in request body');
     }
 
-    const { fileData, fileName, mimeType, fileType = 'cv' } = requestData;
+    const { fileData, fileName, mimeType: rawMimeType, fileType = 'cv' } = requestData;
 
     // Validate required fields
     if (!fileData) {
+      console.log('[profile-cv-upload] 400: Missing fileData');
       return createErrorResponse(400, 'Missing required field: fileData (base64 encoded file)');
     }
     if (!fileName) {
+      console.log('[profile-cv-upload] 400: Missing fileName');
       return createErrorResponse(400, 'Missing required field: fileName');
     }
+
+    // Normalize MIME type: some browsers (e.g. Safari) send empty file.type for PDFs
+    const mimeFromExtension = (name) => {
+      const lower = (name || '').toLowerCase();
+      if (lower.endsWith('.pdf')) return 'application/pdf';
+      if (lower.endsWith('.doc')) return 'application/msword';
+      if (lower.endsWith('.docx')) return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      return null;
+    };
+    const mimeType = (rawMimeType && rawMimeType.trim()) || mimeFromExtension(fileName);
     if (!mimeType) {
-      return createErrorResponse(400, 'Missing required field: mimeType');
+      console.log('[profile-cv-upload] 400: Missing mimeType and could not infer from fileName:', fileName);
+      return createErrorResponse(400, 'Missing required field: mimeType. Please use a file with extension .pdf, .doc, or .docx');
     }
 
     // Validate MIME type
     if (!ALLOWED_MIME_TYPES.includes(mimeType)) {
+      console.log('[profile-cv-upload] 400: Invalid mimeType:', mimeType, 'fileName:', fileName);
       return createErrorResponse(400, `Invalid file type: ${mimeType}. Allowed types: PDF, DOC, DOCX`);
     }
 
     // Validate file type parameter
     const validFileTypes = ['cv', 'portfolio', 'certification', 'other'];
     if (!validFileTypes.includes(fileType)) {
+      console.log('[profile-cv-upload] 400: Invalid fileType:', fileType);
       return createErrorResponse(400, `Invalid fileType. Allowed: ${validFileTypes.join(', ')}`);
     }
 
@@ -114,11 +130,13 @@ const handler = async (event, context) => {
       const base64Data = fileData.replace(/^data:[^;]+;base64,/, '');
       fileBuffer = Buffer.from(base64Data, 'base64');
     } catch (decodeError) {
+      console.log('[profile-cv-upload] 400: Invalid base64 decode:', decodeError.message);
       return createErrorResponse(400, 'Invalid base64 file data');
     }
 
     // Validate file size
     if (fileBuffer.length > MAX_FILE_SIZE) {
+      console.log('[profile-cv-upload] 400: File too large:', fileBuffer.length);
       return createErrorResponse(400, `File too large. Maximum size is ${MAX_FILE_SIZE / 1024 / 1024}MB`);
     }
 
@@ -216,6 +234,7 @@ const handler = async (event, context) => {
     // If extraction failed, return error with details
     // The file is still saved so they can try again or use a different file
     if (extractionStatus === 'failed') {
+      console.log('[profile-cv-upload] 400: Extraction failed:', extractionError);
       return {
         statusCode: 400,
         headers: corsHeaders,

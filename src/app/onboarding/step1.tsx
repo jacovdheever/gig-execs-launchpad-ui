@@ -38,9 +38,10 @@ export default function OnboardingStep1() {
       // Clear any stored CV data
       sessionStorage.removeItem('cvParsedData');
       sessionStorage.removeItem('cvImported');
+      sessionStorage.removeItem('cvSourceFileId');
       navigate('/onboarding/step2');
     } else if (selectedMethod === 'ai') {
-      // Navigate to AI profile creation flow
+      // Navigate to AI profile creation flow (keep cvSourceFileId so AI can use recently parsed CV)
       sessionStorage.removeItem('cvParsedData');
       sessionStorage.removeItem('cvImported');
       navigate('/onboarding/ai-profile');

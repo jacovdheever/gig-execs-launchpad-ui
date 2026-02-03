@@ -39,26 +39,33 @@ interface DraftProfile {
   };
   workExperience?: Array<{
     company: string;
-    jobTitle: string;
+    jobTitle?: string;
+    title?: string; // Alternative field name from AI
     startDateMonth?: string;
     startDateYear?: number;
+    startYear?: number; // Alternative field name from AI
     endDateMonth?: string;
     endDateYear?: number;
+    endYear?: number; // Alternative field name from AI
     currentlyWorking?: boolean;
     description?: string;
     city?: string;
     country?: string;
   }>;
   education?: Array<{
-    institutionName: string;
-    degreeLevel: string;
+    institutionName?: string;
+    institution?: string; // Alternative field name from AI
+    degreeLevel?: string;
+    degree?: string; // Alternative field name from AI
     fieldOfStudy?: string;
     startDate?: string;
     endDate?: string;
+    year?: number; // Alternative field name from AI
     grade?: string;
     description?: string;
   }>;
   skills?: string[];
+  industries?: string[];
   certifications?: Array<{
     name: string;
     awardingBody?: string;
@@ -68,10 +75,36 @@ interface DraftProfile {
   }>;
   languages?: Array<{
     language: string;
-    proficiency: string;
+    proficiency?: string;
   }>;
+  hourlyRate?: {
+    min?: number;
+    max?: number;
+    currency?: string;
+  };
   summary?: string;
   estimatedYearsExperience?: number;
+}
+
+// Helper functions to get values from different field names
+function getEducationInstitution(edu: DraftProfile['education'][0]): string {
+  return edu.institutionName || edu.institution || '';
+}
+
+function getEducationDegree(edu: DraftProfile['education'][0]): string {
+  return edu.degreeLevel || edu.degree || '';
+}
+
+function getWorkExperienceTitle(exp: DraftProfile['workExperience'][0]): string {
+  return exp.jobTitle || exp.title || '';
+}
+
+function getWorkExperienceStartYear(exp: DraftProfile['workExperience'][0]): number | undefined {
+  return exp.startDateYear || exp.startYear;
+}
+
+function getWorkExperienceEndYear(exp: DraftProfile['workExperience'][0]): number | undefined {
+  return exp.endDateYear || exp.endYear;
 }
 
 interface ProfileDraftReviewProps {
@@ -330,9 +363,9 @@ export function ProfileDraftReview({ draftId, draftProfile, onPublish, onBack }:
                   <AccordionTrigger className="hover:no-underline">
                     <div className="flex items-center justify-between w-full pr-4">
                       <div className="text-left">
-                        <p className="font-medium">{exp.jobTitle}</p>
+                        <p className="font-medium">{getWorkExperienceTitle(exp)}</p>
                         <p className="text-sm text-muted-foreground">
-                          {exp.company} • {exp.startDateYear}{exp.currentlyWorking ? ' - Present' : exp.endDateYear ? ` - ${exp.endDateYear}` : ''}
+                          {exp.company} • {getWorkExperienceStartYear(exp)}{exp.currentlyWorking ? ' - Present' : getWorkExperienceEndYear(exp) ? ` - ${getWorkExperienceEndYear(exp)}` : ''}
                         </p>
                       </div>
                       <Button
@@ -352,7 +385,7 @@ export function ProfileDraftReview({ draftId, draftProfile, onPublish, onBack }:
                       <div className="space-y-2">
                         <Label>Job Title</Label>
                         <Input
-                          value={exp.jobTitle}
+                          value={getWorkExperienceTitle(exp)}
                           onChange={(e) => updateWorkExperience(index, 'jobTitle', e.target.value)}
                         />
                       </div>
@@ -367,7 +400,7 @@ export function ProfileDraftReview({ draftId, draftProfile, onPublish, onBack }:
                         <Label>Start Year</Label>
                         <Input
                           type="number"
-                          value={exp.startDateYear || ''}
+                          value={getWorkExperienceStartYear(exp) || ''}
                           onChange={(e) => updateWorkExperience(index, 'startDateYear', parseInt(e.target.value))}
                         />
                       </div>
@@ -375,7 +408,7 @@ export function ProfileDraftReview({ draftId, draftProfile, onPublish, onBack }:
                         <Label>End Year</Label>
                         <Input
                           type="number"
-                          value={exp.endDateYear || ''}
+                          value={getWorkExperienceEndYear(exp) || ''}
                           onChange={(e) => updateWorkExperience(index, 'endDateYear', parseInt(e.target.value))}
                           disabled={exp.currentlyWorking}
                           placeholder={exp.currentlyWorking ? 'Present' : ''}
@@ -415,8 +448,11 @@ export function ProfileDraftReview({ draftId, draftProfile, onPublish, onBack }:
                   <AccordionTrigger className="hover:no-underline">
                     <div className="flex items-center justify-between w-full pr-4">
                       <div className="text-left">
-                        <p className="font-medium">{edu.degreeLevel}</p>
-                        <p className="text-sm text-muted-foreground">{edu.institutionName}</p>
+                        <p className="font-medium">{getEducationDegree(edu)}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {getEducationInstitution(edu)}
+                          {edu.year ? ` (${edu.year})` : ''}
+                        </p>
                       </div>
                       <Button
                         variant="ghost"
@@ -435,14 +471,14 @@ export function ProfileDraftReview({ draftId, draftProfile, onPublish, onBack }:
                       <div className="space-y-2">
                         <Label>Institution</Label>
                         <Input
-                          value={edu.institutionName}
+                          value={getEducationInstitution(edu)}
                           onChange={(e) => updateEducation(index, 'institutionName', e.target.value)}
                         />
                       </div>
                       <div className="space-y-2">
                         <Label>Degree Level</Label>
                         <Input
-                          value={edu.degreeLevel}
+                          value={getEducationDegree(edu)}
                           onChange={(e) => updateEducation(index, 'degreeLevel', e.target.value)}
                         />
                       </div>
@@ -454,10 +490,11 @@ export function ProfileDraftReview({ draftId, draftProfile, onPublish, onBack }:
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label>Grade</Label>
+                        <Label>Year</Label>
                         <Input
-                          value={edu.grade || ''}
-                          onChange={(e) => updateEducation(index, 'grade', e.target.value)}
+                          type="number"
+                          value={edu.year || ''}
+                          onChange={(e) => updateEducation(index, 'year', e.target.value)}
                         />
                       </div>
                     </div>
@@ -534,6 +571,42 @@ export function ProfileDraftReview({ draftId, draftProfile, onPublish, onBack }:
         </Card>
       )}
 
+      {/* Industries */}
+      {profile.industries && profile.industries.length > 0 && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Briefcase className="h-5 w-5" />
+              <CardTitle className="text-lg">Industries</CardTitle>
+              <Badge variant="secondary">{profile.industries.length}</Badge>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-2">
+              {profile.industries.map((industry, index) => (
+                <Badge key={index} variant="outline" className="pr-1">
+                  {industry}
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-4 w-4 ml-1"
+                    onClick={() => setProfile(prev => ({
+                      ...prev,
+                      industries: prev.industries?.filter((_, i) => i !== index)
+                    }))}
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </Badge>
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground mt-4">
+              Industries will be matched to our database when published.
+            </p>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Languages */}
       {profile.languages && profile.languages.length > 0 && (
         <Card>
@@ -548,7 +621,7 @@ export function ProfileDraftReview({ draftId, draftProfile, onPublish, onBack }:
             <div className="flex flex-wrap gap-2">
               {profile.languages.map((lang, index) => (
                 <Badge key={index} variant="outline" className="pr-1">
-                  {lang.language} ({lang.proficiency})
+                  {lang.language} {lang.proficiency ? `(${lang.proficiency})` : ''}
                   <Button
                     variant="ghost"
                     size="icon"
@@ -563,6 +636,64 @@ export function ProfileDraftReview({ draftId, draftProfile, onPublish, onBack }:
           </CardContent>
         </Card>
       )}
+
+      {/* Hourly Rate */}
+      {profile.hourlyRate && (profile.hourlyRate.min || profile.hourlyRate.max) && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Award className="h-5 w-5" />
+              <CardTitle className="text-lg">Hourly Rate</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 md:grid-cols-3">
+              <div className="space-y-2">
+                <Label>Minimum Rate</Label>
+                <Input
+                  type="number"
+                  value={profile.hourlyRate.min || ''}
+                  onChange={(e) => setProfile(prev => ({
+                    ...prev,
+                    hourlyRate: { ...prev.hourlyRate, min: parseInt(e.target.value) }
+                  }))}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Maximum Rate</Label>
+                <Input
+                  type="number"
+                  value={profile.hourlyRate.max || ''}
+                  onChange={(e) => setProfile(prev => ({
+                    ...prev,
+                    hourlyRate: { ...prev.hourlyRate, max: parseInt(e.target.value) }
+                  }))}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Currency</Label>
+                <Input
+                  value={profile.hourlyRate.currency || 'USD'}
+                  onChange={(e) => setProfile(prev => ({
+                    ...prev,
+                    hourlyRate: { ...prev.hourlyRate, currency: e.target.value }
+                  }))}
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Profile Photo Note */}
+      <Alert>
+        <User className="h-4 w-4" />
+        <AlertTitle>Profile Photo</AlertTitle>
+        <AlertDescription>
+          You can add a profile photo after publishing your profile. 
+          Go to your profile settings to upload a professional photo.
+        </AlertDescription>
+      </Alert>
 
       {/* Publish Result */}
       {publishResult && publishResult.success && (

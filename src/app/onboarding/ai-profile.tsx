@@ -37,6 +37,7 @@ interface DraftProfile {
     description?: string;
   }>;
   skills?: string[];
+  industries?: string[];
   certifications?: Array<{
     name: string;
     awardingBody?: string;

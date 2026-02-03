@@ -196,10 +196,12 @@ const ELIGIBILITY_SCHEMA = {
 
 /**
  * Schema for conversational profile assistant response
+ * Note: Using a simpler schema structure for conversation responses since 
+ * the draftProfile can have varying structure during the conversation flow.
+ * We use strict: false to allow flexibility in responses.
  */
 const CONVERSATION_RESPONSE_SCHEMA = {
   type: 'object',
-  additionalProperties: false,
   properties: {
     assistantMessage: {
       type: 'string',
@@ -207,7 +209,8 @@ const CONVERSATION_RESPONSE_SCHEMA = {
     },
     draftProfile: {
       type: 'object',
-      description: 'Updated draft profile data (same structure as PROFILE_EXTRACTION_SCHEMA)'
+      description: 'Updated draft profile data with basicInfo, workExperience, education, skills, etc.',
+      additionalProperties: true
     },
     nextStep: {
       type: 'string',
@@ -507,6 +510,35 @@ Be fair but thorough. Consider:
 // ============================================================================
 
 /**
+ * Returns a list of required profile field keys that are missing or empty in the draft.
+ * Used to steer the AI to ask only about missing fields.
+ */
+function getMissingProfileFields(draft) {
+  const missing = [];
+  const basic = draft?.basicInfo || {};
+  if (!basic.firstName?.trim()) missing.push('basicInfo.firstName');
+  if (!basic.lastName?.trim()) missing.push('basicInfo.lastName');
+  if (!basic.email?.trim()) missing.push('basicInfo.email');
+  if (!basic.phone?.trim()) missing.push('basicInfo.phone');
+  if (!basic.location?.trim()) missing.push('basicInfo.location');
+  if (!basic.headline?.trim()) missing.push('basicInfo.headline');
+  const work = draft?.workExperience;
+  if (!work?.length) missing.push('workExperience');
+  const edu = draft?.education;
+  if (!edu?.length) missing.push('education');
+  const skills = draft?.skills;
+  if (!skills?.length || skills.length < 3) missing.push('skills');
+  const industries = draft?.industries;
+  if (!industries?.length) missing.push('industries');
+  const languages = draft?.languages;
+  if (!languages?.length) missing.push('languages');
+  const rate = draft?.hourlyRate;
+  if (!rate || (rate.min == null && rate.max == null)) missing.push('hourlyRate');
+  if (!draft?.summary?.trim()) missing.push('summary');
+  return missing;
+}
+
+/**
  * Continues a conversational profile creation session
  * @param {Array} conversationHistory - Previous messages in the conversation
  * @param {Object} currentDraft - Current draft profile state
@@ -517,30 +549,73 @@ Be fair but thorough. Consider:
  */
 async function continueConversation(conversationHistory, currentDraft, userMessage, userId, options = {}) {
   const model = options.model || DEFAULT_MODEL;
-  
+  const missingFields = options.missingFields != null ? options.missingFields : getMissingProfileFields(currentDraft);
+  const questionsAsked = options.questionsAsked || [];
+
   try {
     const systemPrompt = `You are a friendly and professional AI assistant helping users create their GigExecs profile.
 
 GigExecs is a platform for highly experienced professionals (typically 15+ years experience). Your goal is to:
-1. Help users build a comprehensive, high-quality professional profile
-2. Ask targeted questions to fill in missing information
+1. Help users build a COMPLETE professional profile with ALL required fields
+2. Ask targeted questions to fill in missing information only
 3. Ensure the profile showcases their seniority and expertise
-4. Gently assess whether they meet the platform's experience threshold
+4. Collect ALL required information before marking complete
 
 Current profile draft state:
 ${JSON.stringify(currentDraft, null, 2)}
 
+MISSING FIELDS (ask only about these; do not ask about fields already present):
+${JSON.stringify(missingFields)}
+
+Questions you have already asked in this session (do NOT ask these again):
+${JSON.stringify(questionsAsked)}
+
+REQUIRED PROFILE FIELDS (must collect all before marking isComplete=true):
+1. basicInfo: firstName, lastName, email, phone, location, headline (optional: linkedinUrl)
+2. workExperience: At least 1 entry with company, jobTitle, startYear, endYear/currentlyWorking
+3. education: At least 1 entry with institution, degree, year (optional but recommended)
+4. skills: List of professional skills (at least 3)
+5. industries: List of industries worked in (e.g., "Technology", "Finance", "Healthcare")
+6. languages: Languages spoken with proficiency level (e.g., {language: "English", proficiency: "native"})
+7. hourlyRate: { min: number, max: number, currency: "USD" } - their expected hourly rate range
+8. summary: A professional summary/bio
+
+NOTE: Profile pictures cannot be uploaded through this chat. Mention to users that they can add a profile photo after publishing their profile in profile settings.
+
+STRICT RULES:
+- Do NOT ask for any field that is already present in the draft. If a field is present but ambiguous, ask a single short confirmation (yes/no or brief).
+- Only ask about fields listed in MISSING FIELDS. Ask at most 1–2 questions at a time.
+- Never repeat a question from "Questions you have already asked". If the next logical question was already asked, ask about a different missing field.
+- Never say you cannot access uploaded files. If the user uploaded a CV, use the content that was provided in context; otherwise proceed without mentioning it.
+- You MUST update draftProfile with every value the user provides. Do not leave provided fields empty.
+- If workExperience already has entries, do not ask "add work experience"; ask for missing details (e.g. dates, description) only if needed.
+- ONLY set isComplete=true when ALL required fields have been collected.
+
 Guidelines:
 - Be conversational and encouraging
-- Ask one or two focused questions at a time
 - Acknowledge information the user provides
-- Update the draft profile based on their responses
-- If they've uploaded a CV, reference information from it
-- Guide them through: basic info → experience → education → skills → certifications → languages → summary
-- When the profile is reasonably complete, move to eligibility_review
-- Always be respectful - even if they don't meet the experience threshold, be supportive
+- Guide through missing fields only: basic info → experience → education → skills → industries → languages → hourly rate → summary
+- Always be respectful and supportive
 
-Respond with the next step in the flow and an updated draft profile.`;
+IMPORTANT: You must respond with valid JSON in this exact format:
+{
+  "assistantMessage": "Your friendly message to the user",
+  "draftProfile": {
+    "basicInfo": { "firstName": "", "lastName": "", "email": "", "phone": "", "location": "", "headline": "", "linkedinUrl": "" },
+    "workExperience": [{ "company": "", "jobTitle": "", "startYear": 2020, "endYear": 2024, "currentlyWorking": false, "description": "" }],
+    "education": [{ "institution": "", "degree": "", "fieldOfStudy": "", "year": 2020 }],
+    "skills": ["skill1", "skill2"],
+    "industries": ["industry1", "industry2"],
+    "languages": [{ "language": "English", "proficiency": "native" }],
+    "hourlyRate": { "min": 100, "max": 200, "currency": "USD" },
+    "summary": "Professional summary..."
+  },
+  "nextStep": "basic_info",
+  "isComplete": false,
+  "questionsAsked": ["question1", "question2"]
+}
+
+Valid nextStep values: basic_info, experience, education, skills, industries, languages, hourly_rate, summary, eligibility_review, complete`;
 
     // Build messages array
     const messages = [
@@ -552,14 +627,7 @@ Respond with the next step in the flow and an updated draft profile.`;
     const response = await getOpenAIClient().chat.completions.create({
       model,
       messages,
-      response_format: {
-        type: 'json_schema',
-        json_schema: {
-          name: 'conversation_response',
-          strict: true,
-          schema: CONVERSATION_RESPONSE_SCHEMA
-        }
-      },
+      response_format: { type: 'json_object' },
       temperature: 0.7, // Higher temperature for more natural conversation
       max_tokens: 2000
     });
@@ -567,12 +635,21 @@ Respond with the next step in the flow and an updated draft profile.`;
     const usage = response.usage;
     const parsedResponse = JSON.parse(response.choices[0].message.content);
 
+    // Validate required fields
+    if (!parsedResponse.assistantMessage) {
+      throw new Error('Missing assistantMessage in response');
+    }
+
     // Log the usage
-    await logAIUsage(userId, 'profile_ai_conversation', model, usage, {
-      draft_id: options.draftId,
-      conversation_turn: conversationHistory.length + 1,
-      next_step: parsedResponse.nextStep
-    });
+    try {
+      await logAIUsage(userId, 'profile_ai_conversation', model, usage, {
+        draft_id: options.draftId,
+        conversation_turn: conversationHistory.length + 1,
+        next_step: parsedResponse.nextStep
+      });
+    } catch (logError) {
+      console.error('Failed to log AI usage (non-fatal):', logError);
+    }
 
     return {
       success: true,
@@ -621,11 +698,49 @@ GigExecs is a platform for highly experienced professionals (typically 15+ years
 
 This is the START of a profile creation conversation. Your goals:
 1. Welcome the user warmly
-2. If they uploaded a CV, acknowledge it and summarize what you found
-3. Ask about any missing key information
-4. Set expectations for the profile creation process
+2. If cvText/CV content was provided: briefly summarize what you found and ask to confirm or fill only missing details. Do NOT ask for information already present in the CV.
+3. If no CV was provided: do NOT mention file access or "I can't access uploaded files". Simply proceed with asking for basic info (e.g. phone, location, headline).
+4. Ask at most 1–2 focused questions at a time. Only ask about fields that are missing.
 
-Start by greeting them and asking about their professional background if no CV was provided, or confirming/clarifying information from their CV if one was provided.`;
+RULES:
+- Never say you cannot access uploaded files. If no CV is provided, proceed with questions without mentioning it.
+- Do not ask for any field that is already present in the draft or in the context. If a field is present but ambiguous, ask a single short confirmation (yes/no or brief).
+- Before asking, mentally check which required fields are missing; only ask for 1–2 of those.
+- You must update draftProfile with every answer; do not leave provided fields empty.
+
+REQUIRED PROFILE FIELDS (to collect during conversation):
+1. basicInfo: firstName, lastName, email, phone, location, headline
+2. workExperience: At least 1 entry with company, jobTitle, years
+3. education: At least 1 entry with institution, degree, year (optional but recommended)
+4. skills: List of professional skills (at least 3)
+5. industries: List of industries worked in (e.g., "Technology", "Finance")
+6. languages: Languages spoken with proficiency level
+7. hourlyRate: Their expected hourly rate range (min-max in USD)
+8. summary: A professional summary/bio
+
+NOTE: Profile pictures cannot be uploaded through this chat. Tell users they can add a profile photo in their profile settings after completing the profile.
+
+Start by greeting them warmly. If they have a CV (context provided), summarize what you found and ask to confirm or add only missing details. If no CV context, ask for basic info (phone, location, headline).
+
+IMPORTANT: You must respond with valid JSON in this exact format:
+{
+  "assistantMessage": "Your friendly message to the user",
+  "draftProfile": {
+    "basicInfo": { "firstName": "", "lastName": "", "email": "", "phone": "", "location": "", "headline": "" },
+    "workExperience": [],
+    "education": [],
+    "skills": [],
+    "industries": [],
+    "languages": [],
+    "hourlyRate": null,
+    "summary": ""
+  },
+  "nextStep": "basic_info",
+  "isComplete": false,
+  "questionsAsked": ["question1", "question2"]
+}
+
+Valid nextStep values: basic_info, experience, education, skills, industries, languages, hourly_rate, summary, eligibility_review, complete`;
 
     const response = await getOpenAIClient().chat.completions.create({
       model,
@@ -633,14 +748,7 @@ Start by greeting them and asking about their professional background if no CV w
         { role: 'system', content: systemPrompt },
         { role: 'user', content: contextMessage }
       ],
-      response_format: {
-        type: 'json_schema',
-        json_schema: {
-          name: 'conversation_response',
-          strict: true,
-          schema: CONVERSATION_RESPONSE_SCHEMA
-        }
-      },
+      response_format: { type: 'json_object' },
       temperature: 0.7,
       max_tokens: 2000
     });
@@ -648,13 +756,22 @@ Start by greeting them and asking about their professional background if no CV w
     const usage = response.usage;
     const parsedResponse = JSON.parse(response.choices[0].message.content);
 
+    // Validate required fields
+    if (!parsedResponse.assistantMessage) {
+      throw new Error('Missing assistantMessage in response');
+    }
+
     // Log the usage
-    await logAIUsage(userId, 'profile_ai_conversation', model, usage, {
-      draft_id: options.draftId,
-      conversation_turn: 0,
-      is_start: true,
-      has_cv: !!options.cvText
-    });
+    try {
+      await logAIUsage(userId, 'profile_ai_conversation', model, usage, {
+        draft_id: options.draftId,
+        conversation_turn: 0,
+        is_start: true,
+        has_cv: !!options.cvText
+      });
+    } catch (logError) {
+      console.error('Failed to log AI usage (non-fatal):', logError);
+    }
 
     return {
       success: true,

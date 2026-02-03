@@ -1,21 +1,17 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { 
   Briefcase, 
   FileText, 
-  CheckCircle,
-  User
 } from 'lucide-react'
-import { CompletenessMeter } from '@/components/profile/CompletenessMeter'
-import { StatusBadge } from '@/components/profile/StatusBadge'
-import { computeCompleteness, computeProfileStatus, type CompletenessData } from '@/lib/profile'
+import { ProfileStatusCard } from '@/components/profile/ProfileStatusCard'
+import { useProfileStatus } from '@/hooks/useProfileStatus'
 import { usePosts } from '@/lib/community.hooks'
 import type { ForumPost } from '@/lib/community.types'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser'
-import { supabase } from '@/lib/supabase'
+import { toast } from 'sonner'
 
 // Community Posts Grid Component
 function CommunityPostsGrid() {
@@ -130,6 +126,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // Load current user
   useEffect(() => {
     getCurrentUser()
       .then((userData) => {
@@ -144,320 +141,29 @@ export default function DashboardPage() {
       });
   }, []);
 
-  // Calculate accurate profile completeness based on completed mandatory fields
-  const calculateProfileCompleteness = async (userId: string, userRole: string) => {
-    try {
-      console.log('=== PROFILE COMPLETENESS DEBUG ===');
-      console.log('Calculating for user:', userId, 'role:', userRole);
-      console.log('Timestamp:', new Date().toISOString());
-      
-      if (userRole === 'consultant') {
-        // Consultant mandatory fields across all 6 steps
-        const { data: consultantProfile } = await supabase
-          .from('consultant_profiles')
-          .select('job_title, bio, address1, country, hourly_rate_min, hourly_rate_max')
-          .eq('user_id', userId)
-          .single();
-
-        const { data: userSkills } = await supabase
-          .from('user_skills')
-          .select('skill_id')
-          .eq('user_id', userId);
-
-        const { data: userIndustries } = await supabase
-          .from('user_industries')
-          .select('industry_id')
-          .eq('user_id', userId);
-
-        const { data: userLanguages } = await supabase
-          .from('user_languages')
-          .select('language_id')
-          .eq('user_id', userId);
-
-        const { data: workExperience, error: workExpError } = await supabase
-          .from('work_experience')
-          .select('id, company, job_title, user_id')
-          .eq('user_id', userId);
-
-        if (workExpError) {
-          console.error('Error loading work experience:', workExpError);
-        }
-
-        // Calculate completion based on TRULY mandatory fields across 6 steps
-        let completedFields = 0;
-        const totalFields = 9; // 9 mandatory fields: job_title, address1, country, work_exp, skills, industries, languages, hourly_rate_min, hourly_rate_max
-
-        // Step 2: Personal & Location (3 mandatory fields + 1 optional)
-        const jobTitleComplete = !!consultantProfile?.job_title;
-        const addressComplete = !!consultantProfile?.address1;
-        const countryComplete = !!consultantProfile?.country;
-        // Note: bio is optional, not counted in mandatory fields
-
-        if (jobTitleComplete) completedFields++;
-        if (addressComplete) completedFields++;
-        if (countryComplete) completedFields++;
-
-        // Step 3: Work Experience (at least 1 entry required)
-        const workExpComplete = workExperience && workExperience.length > 0;
-        if (workExpComplete) completedFields++;
-
-        // Step 4: Skills & Industries (2 fields)
-        const skillsComplete = userSkills && userSkills.length > 0;
-        const industriesComplete = userIndustries && userIndustries.length > 0;
-        
-        if (skillsComplete) completedFields++;
-        if (industriesComplete) completedFields++;
-
-        // Step 5: Languages (at least 1 language required)
-        const languagesComplete = userLanguages && userLanguages.length > 0;
-        if (languagesComplete) completedFields++;
-
-        // Step 6: Hourly Rate (2 separate fields)
-        const hourlyRateMinComplete = !!consultantProfile?.hourly_rate_min;
-        const hourlyRateMaxComplete = !!consultantProfile?.hourly_rate_max;
-        
-        if (hourlyRateMinComplete) completedFields++;
-        if (hourlyRateMaxComplete) completedFields++;
-
-        console.log('=== DETAILED FIELD COMPLETION STATUS ===');
-        console.log('Step 2 - Personal & Location (3 mandatory + 1 optional):');
-        console.log('  - job_title (mandatory):', jobTitleComplete, 'value:', consultantProfile?.job_title);
-        console.log('  - bio (optional):', !!consultantProfile?.bio, 'value:', consultantProfile?.bio);
-        console.log('  - address1 (mandatory):', addressComplete, 'value:', consultantProfile?.address1);
-        console.log('  - country (mandatory):', countryComplete, 'value:', consultantProfile?.country);
-        console.log('Step 3 - Work Experience (mandatory):', workExpComplete, 'entries:', workExperience?.length);
-        console.log('Work experience data loaded:', workExperience);
-        if (workExpError) {
-          console.log('Work experience error:', workExpError);
-        }
-        console.log('Step 4 - Skills & Industries (both mandatory):');
-        console.log('  - skills:', skillsComplete, 'count:', userSkills?.length);
-        console.log('  - industries:', industriesComplete, 'count:', userIndustries?.length);
-        console.log('Step 5 - Languages (mandatory):', languagesComplete, 'count:', userLanguages?.length);
-        console.log('Step 6 - Hourly Rate (2 separate mandatory fields):');
-        console.log('  - hourly_rate_min:', hourlyRateMinComplete, 'value:', consultantProfile?.hourly_rate_min);
-        console.log('  - hourly_rate_max:', hourlyRateMaxComplete, 'value:', consultantProfile?.hourly_rate_max);
-        console.log('=== END FIELD COMPLETION STATUS ===');
-
-        console.log('Consultant profile data:', consultantProfile);
-        console.log('User skills:', userSkills);
-        console.log('User industries:', userIndustries);
-        console.log('User languages:', userLanguages);
-        console.log('Work experience:', workExperience);
-        console.log('=== FIELD COUNTING BREAKDOWN ===');
-        console.log('Step 2 - Personal & Location: +', (jobTitleComplete ? 1 : 0) + (addressComplete ? 1 : 0) + (countryComplete ? 1 : 0), 'fields');
-        console.log('Step 3 - Work Experience: +', (workExpComplete ? 1 : 0), 'fields');
-        console.log('Step 4 - Skills & Industries: +', (skillsComplete ? 1 : 0) + (industriesComplete ? 1 : 0), 'fields');
-        console.log('Step 5 - Languages: +', (languagesComplete ? 1 : 0), 'fields');
-        console.log('Step 6 - Hourly Rate: +', (hourlyRateMinComplete ? 1 : 0) + (hourlyRateMaxComplete ? 1 : 0), 'fields');
-        console.log('Total completed fields:', completedFields, 'of', totalFields);
-        console.log('Consultant completion percentage:', Math.round((completedFields / totalFields) * 100));
-        console.log('=== END FIELD COUNTING BREAKDOWN ===');
-
-        return Math.round((completedFields / totalFields) * 100);
-      } else {
-        // Client mandatory fields
-        console.log('Loading client profile data...');
-        const { data: clientProfile, error: clientError } = await supabase
-          .from('client_profiles')
-          .select('job_title, company_name, organisation_type, industry, address1, country_id')
-          .eq('user_id', userId)
-          .single();
-
-        if (clientError) {
-          console.error('Error loading client profile:', clientError);
-        }
-
-        console.log('Client profile data loaded:', clientProfile);
-
-        // Calculate completion based on mandatory fields
-        let completedFields = 0;
-        const totalFields = 6; // job_title, company_name, organisation_type, industry, address1, country_id
-
-        // Check each field individually
-        const jobTitleComplete = !!clientProfile?.job_title;
-        const companyNameComplete = !!clientProfile?.company_name;
-        const orgTypeComplete = !!clientProfile?.organisation_type;
-        const industryComplete = !!clientProfile?.industry;
-        const addressComplete = !!clientProfile?.address1;
-        const countryComplete = !!clientProfile?.country_id;
-
-        if (jobTitleComplete) completedFields++;
-        if (companyNameComplete) completedFields++;
-        if (orgTypeComplete) completedFields++;
-        if (industryComplete) completedFields++;
-        if (addressComplete) completedFields++;
-        if (countryComplete) completedFields++;
-
-        console.log('Field completion status:');
-        console.log('- job_title:', jobTitleComplete, 'value:', clientProfile?.job_title);
-        console.log('- company_name:', companyNameComplete, 'value:', clientProfile?.company_name);
-        console.log('- organisation_type:', orgTypeComplete, 'value:', clientProfile?.organisation_type);
-        console.log('- industry:', industryComplete, 'value:', clientProfile?.industry);
-        console.log('- address1:', addressComplete, 'value:', clientProfile?.address1);
-        console.log('- country_id:', countryComplete, 'value:', clientProfile?.country_id);
-        console.log('Completed fields:', completedFields, 'of', totalFields);
-        console.log('Client completion percentage:', Math.round((completedFields / totalFields) * 100));
-        console.log('=== END PROFILE COMPLETENESS DEBUG ===');
-
-        return Math.round((completedFields / totalFields) * 100);
+  // Use the new profile status hook for consultants
+  const { 
+    status: profileStatus, 
+    isLoading: statusLoading, 
+    error: statusError,
+    shouldSubmitForVetting 
+  } = useProfileStatus(
+    user?.role === 'consultant' ? user?.id : null,
+    {
+      // autoRefresh disabled to prevent flicker on screenshots/tab switches
+      autoRefresh: false,
+      onVettingSubmitted: () => {
+        // Show notification when profile is auto-submitted for vetting
+        toast.success(
+          'Profile submitted for vetting!',
+          { description: 'Our team will review your profile and get back to you soon.' }
+        );
       }
-    } catch (error) {
-      console.error('Error calculating profile completeness:', error);
-      console.error('Full error object:', error);
-      return 0;
     }
-  };
+  );
 
-  // State for profile completeness
-  const [profileCompleteness, setProfileCompleteness] = useState(0);
-  const [completenessData, setCompletenessData] = useState<CompletenessData | null>(null);
-  const [computedCompleteness, setComputedCompleteness] = useState<{ percent: number; segments: { basic: number; full: number; allStar: number }; missing: string[] } | null>(null);
-  const [profileTier, setProfileTier] = useState<'BASIC' | 'FULL' | 'ALL_STAR'>('BASIC');
-  const [vettingStatus, setVettingStatus] = useState<string | null>(null);
-  
-  // Load profile completeness on component mount and when user changes
-  useEffect(() => {
-    if (user) {
-      console.log('User changed or component mounted, calculating profile completeness...');
-      calculateProfileCompleteness(user.id, user.role).then(async (percentage) => {
-        setProfileCompleteness(percentage);
-        
-        // Also calculate detailed completeness data for Profile Strength component
-        if (user.role === 'consultant') {
-          try {
-            // Load all necessary data for completeness calculation
-            const [profileResult, referencesResult, educationResult, certificationsResult, portfolioResult] = await Promise.all([
-              supabase.from('consultant_profiles').select('*').eq('user_id', user.id).single(),
-              supabase.from('reference_contacts').select('id').eq('user_id', user.id),
-              supabase.from('education').select('id').eq('user_id', user.id),
-              supabase.from('certifications').select('id').eq('user_id', user.id),
-              supabase.from('portfolio').select('id').eq('user_id', user.id)
-            ]);
-
-            const profile = profileResult.data;
-            const references = referencesResult.data || [];
-            const education = educationResult.data || [];
-            const certifications = certificationsResult.data || [];
-            const portfolio = portfolioResult.data || [];
-
-            const completenessData: CompletenessData = {
-              basic: {
-                hasCore: !!(user.firstName && user.lastName && user.email && profile?.job_title),
-              },
-              full: {
-                referencesCount: references.length,
-                hasIdDocument: !!profile?.id_doc_url,
-                qualificationsCount: education.length,
-                certificationsCount: certifications.length,
-              },
-              allstar: {
-                portfolioCount: portfolio.length,
-              },
-            };
-
-            const computedCompleteness = computeCompleteness(user.id, completenessData);
-            const computedStatus = computeProfileStatus({
-              tier: computedCompleteness.tier,
-              vettingStatus: profile?.vetting_status || 'pending'
-            });
-
-            console.log('🔍 Setting profile completeness:', computedCompleteness.percent);
-            
-            setCompletenessData(completenessData);
-            setComputedCompleteness(computedCompleteness);
-            setProfileTier(computedCompleteness.tier);
-            setVettingStatus(profile?.vetting_status || 'pending');
-            setProfileCompleteness(computedCompleteness.percent);
-          } catch (error) {
-            console.error('Error calculating detailed completeness:', error);
-          }
-        }
-      });
-    }
-  }, [user]);
-  
-  // Additional refresh when component is focused or becomes visible
-  useEffect(() => {
-    if (user) {
-      const handleFocus = () => {
-        console.log('Component focused, refreshing profile completeness...');
-        calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
-      };
-      
-      const handleVisibilityChange = () => {
-        if (!document.hidden) {
-          console.log('Component became visible, refreshing profile completeness...');
-          calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
-        }
-      };
-      
-      // Add listeners
-      window.addEventListener('focus', handleFocus);
-      document.addEventListener('visibilitychange', handleVisibilityChange);
-      
-      // Cleanup
-      return () => {
-        window.removeEventListener('focus', handleFocus);
-        document.removeEventListener('visibilitychange', handleVisibilityChange);
-      };
-    }
-  }, [user]);
-  
-  // Refresh profile completeness when component becomes visible (user returns from onboarding)
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (!document.hidden && user) {
-        console.log('Dashboard became visible, refreshing profile completeness...');
-        calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
-      }
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    
-    // Also refresh when the component gains focus (user navigates back)
-    const handleFocus = () => {
-      if (user) {
-        console.log('Dashboard gained focus, refreshing profile completeness...');
-        calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
-      }
-    };
-
-    window.addEventListener('focus', handleFocus);
-    
-    // Refresh when user navigates back to dashboard (using navigation events)
-    const handlePopState = () => {
-      if (user) {
-        console.log('Navigation detected, refreshing profile completeness...');
-        // Small delay to ensure data is saved
-        setTimeout(() => {
-          calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
-        }, 500);
-      }
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    
-    // Refresh when the page becomes active (user switches back to tab)
-    const handlePageShow = () => {
-      if (user) {
-        console.log('Page became active, refreshing profile completeness...');
-        // Small delay to ensure data is saved
-        setTimeout(() => {
-          calculateProfileCompleteness(user.id, user.role).then(setProfileCompleteness);
-        }, 500);
-      }
-    };
-
-    window.addEventListener('pageshow', handlePageShow);
-    
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('focus', handleFocus);
-      window.removeEventListener('popstate', handlePopState);
-      window.removeEventListener('pageshow', handlePageShow);
-    };
-  }, [user]);
+  // Note: Old profile completeness calculation removed. 
+  // Using useProfileStatus hook instead (see above).
   
 
   if (loading) {
@@ -488,57 +194,14 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {/* Profile Strength Section - Only for consultants */}
-      {user.role === 'consultant' && completenessData && (
-        <div className="w-full lg:w-1/2">
-          <Card 
-            className="cursor-pointer hover:shadow-md transition-shadow" 
-            onClick={() => {
-              // If basic profile is incomplete, go to onboarding
-              if (profileTier === 'BASIC' && !completenessData.basic.hasCore) {
-                navigate('/onboarding/step1');
-              } else {
-                // Otherwise go to profile page
-                navigate('/profile');
-              }
-            }}
-          >
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <User className="h-5 w-5" />
-              Profile Strength
-            </CardTitle>
-            <CardDescription>
-              {profileTier === 'BASIC' && !completenessData.basic.hasCore 
-                ? 'Complete your basic profile to get started'
-                : 'Manage your professional profile and visibility'
-              }
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center gap-4">
-              <div className="flex-1">
-                <CompletenessMeter 
-                  segments={computedCompleteness?.segments || { basic: 0, full: 0, allStar: 0 }}
-                  percent={profileCompleteness}
-                  missing={computedCompleteness?.missing || { basic: [], full: [], allStar: [] }}
-                />
-              </div>
-              <StatusBadge status={profileTier} />
-            </div>
-            <div className="flex justify-center">
-              <Button 
-                variant={profileTier === 'BASIC' && !completenessData.basic.hasCore ? "default" : "outline"}
-                className="w-auto px-8"
-              >
-                {profileTier === 'BASIC' && !completenessData.basic.hasCore 
-                  ? 'Complete Profile' 
-                  : 'View Profile'
-                }
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Profile Status Card - Only for consultants */}
+      {user.role === 'consultant' && (
+        <div className="w-full lg:w-2/3">
+          <ProfileStatusCard
+            status={profileStatus}
+            isLoading={statusLoading}
+            error={statusError}
+          />
         </div>
       )}
 

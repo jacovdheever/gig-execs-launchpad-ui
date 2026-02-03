@@ -164,17 +164,25 @@ const handler = async (event, context) => {
     }
 
     // Load existing profile data
-    const { data: user } = await supabase
+    const { data: user, error: userError } = await supabase
       .from('users')
       .select('first_name, last_name, email, headline')
       .eq('id', userId)
-      .single();
+      .maybeSingle();
 
-    const { data: profile } = await supabase
+    const { data: profile, error: profileError } = await supabase
       .from('consultant_profiles')
       .select('job_title, bio, phone, linkedin_url, address1')
       .eq('user_id', userId)
-      .single();
+      .maybeSingle();
+    
+    // Log errors but don't fail - it's OK if profile doesn't exist yet
+    if (userError) {
+      console.log('Error loading user data (non-fatal):', userError);
+    }
+    if (profileError) {
+      console.log('Error loading profile data (non-fatal):', profileError);
+    }
 
     const { data: workExperience } = await supabase
       .from('work_experience')
@@ -206,18 +214,42 @@ const handler = async (event, context) => {
 
     // Start the AI conversation
     console.log('Starting new AI conversation...');
-    const { startConversation } = getOpenAIClient();
-    const conversationResult = await startConversation(userId, {
-      cvText,
-      existingProfile
-    });
+    let conversationResult;
+    try {
+      const { startConversation } = getOpenAIClient();
+      conversationResult = await startConversation(userId, {
+        cvText,
+        existingProfile
+      });
+      console.log('OpenAI conversation result:', JSON.stringify(conversationResult, null, 2));
+    } catch (openaiError) {
+      console.error('OpenAI error:', openaiError);
+      return {
+        statusCode: 500,
+        headers: corsHeaders,
+        body: JSON.stringify({
+          success: false,
+          error: `OpenAI error: ${openaiError.message}`,
+          message: `OpenAI error: ${openaiError.message}`
+        })
+      };
+    }
 
     if (!conversationResult.success) {
       console.error('Failed to start conversation:', conversationResult.error);
-      return createErrorResponse(500, conversationResult.error);
+      return {
+        statusCode: 500,
+        headers: corsHeaders,
+        body: JSON.stringify({
+          success: false,
+          error: conversationResult.error,
+          message: conversationResult.error
+        })
+      };
     }
 
     // Create a new draft
+    console.log('Creating profile draft...');
     const initialDraftJson = {
       profile: conversationResult.response.draftProfile || {},
       conversationHistory: [
@@ -226,21 +258,44 @@ const handler = async (event, context) => {
       lastAssistantMessage: conversationResult.response.assistantMessage
     };
 
-    const { data: newDraft, error: createError } = await supabase
-      .from('profile_drafts')
-      .insert({
-        user_id: userId,
-        draft_json: initialDraftJson,
-        status: 'in_progress',
-        last_step: conversationResult.response.nextStep || 'basic_info',
-        source_file_ids: sourceFileIds || []
-      })
-      .select()
-      .single();
+    let newDraft;
+    try {
+      const { data, error: createError } = await supabase
+        .from('profile_drafts')
+        .insert({
+          user_id: userId,
+          draft_json: initialDraftJson,
+          status: 'in_progress',
+          last_step: conversationResult.response.nextStep || 'basic_info',
+          source_file_ids: sourceFileIds || []
+        })
+        .select()
+        .single();
 
-    if (createError) {
-      console.error('Failed to create draft:', createError);
-      return createErrorResponse(500, 'Failed to create profile draft');
+      if (createError) {
+        console.error('Failed to create draft:', createError);
+        return {
+          statusCode: 500,
+          headers: corsHeaders,
+          body: JSON.stringify({
+            success: false,
+            error: `Database error: ${createError.message}`,
+            message: `Failed to create profile draft: ${createError.message}`
+          })
+        };
+      }
+      newDraft = data;
+    } catch (dbError) {
+      console.error('Database exception:', dbError);
+      return {
+        statusCode: 500,
+        headers: corsHeaders,
+        body: JSON.stringify({
+          success: false,
+          error: `Database exception: ${dbError.message}`,
+          message: `Database exception: ${dbError.message}`
+        })
+      };
     }
 
     console.log('Created new draft:', newDraft.id);
@@ -262,7 +317,16 @@ const handler = async (event, context) => {
 
   } catch (error) {
     console.error('AI start error:', error);
-    return createErrorResponse(500, `Unexpected error: ${error.message}`);
+    console.error('Error stack:', error.stack);
+    return {
+      statusCode: 500,
+      headers: corsHeaders,
+      body: JSON.stringify({
+        success: false,
+        error: `Unexpected error: ${error.message}`,
+        message: `Unexpected error: ${error.message}`
+      })
+    };
   }
 };
 

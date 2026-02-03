@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { User, FileText, Award, Briefcase, Upload, GraduationCap, Briefcase as WorkIcon } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { User, FileText, Award, Briefcase, Upload, GraduationCap, Briefcase as WorkIcon, ChevronRight } from 'lucide-react';
 import { SectionCard } from '@/components/profile/SectionCard';
-import { CompletenessMeter } from '@/components/profile/CompletenessMeter';
-import { StatusBadge } from '@/components/profile/StatusBadge';
+import { ProfileStatusCard } from '@/components/profile/ProfileStatusCard';
 import { BasicInfoForm } from '@/components/profile/BasicInfoForm';
 import { ReferencesForm } from '@/components/profile/ReferencesForm';
 import { QualificationsForm } from '@/components/profile/QualificationsForm';
@@ -10,8 +9,7 @@ import { CertificationsForm } from '@/components/profile/CertificationsForm';
 import { PortfolioForm } from '@/components/profile/PortfolioForm';
 import { WorkExperienceForm } from '@/components/profile/WorkExperienceForm';
 import { IdDocumentUploader } from '@/components/profile/IdDocumentUploader';
-import { VettingStatus } from '@/components/profile/VettingStatus';
-import { computeCompleteness, computeProfileStatus, type CompletenessData } from '@/lib/profile';
+import { useProfileStatus } from '@/hooks/useProfileStatus';
 import { supabase } from '@/lib/supabase';
 import { uploadProfileDocument, uploadPortfolioFile } from '@/lib/storage';
 import { useToast } from '@/hooks/use-toast';
@@ -129,8 +127,6 @@ interface ProfileEditProps {
 }
 
 export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
-  console.log('🔍 ProfileEdit: Testing with CompletenessMeter component');
-  
   const { 
     user, 
     profile, 
@@ -142,7 +138,45 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   } = profileData;
   const [activeTab, setActiveTab] = useState('basic');
   const [isLoading, setIsLoading] = useState(false);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
+  const tabsNavRef = useRef<HTMLElement>(null);
   const { toast } = useToast();
+  
+  // Check if tabs can scroll (for mobile scroll indicator)
+  useEffect(() => {
+    const checkScrollable = () => {
+      const nav = tabsNavRef.current;
+      if (nav) {
+        // Show indicator if there's more content to scroll
+        const canScroll = nav.scrollWidth > nav.clientWidth;
+        const notAtEnd = nav.scrollLeft < nav.scrollWidth - nav.clientWidth - 10;
+        setShowScrollIndicator(canScroll && notAtEnd);
+      }
+    };
+
+    checkScrollable();
+    window.addEventListener('resize', checkScrollable);
+    
+    const nav = tabsNavRef.current;
+    if (nav) {
+      nav.addEventListener('scroll', checkScrollable);
+    }
+
+    return () => {
+      window.removeEventListener('resize', checkScrollable);
+      if (nav) {
+        nav.removeEventListener('scroll', checkScrollable);
+      }
+    };
+  }, []);
+
+  // Use the new profile status hook
+  const { 
+    status: profileStatus, 
+    isLoading: statusLoading, 
+    error: statusError,
+    refresh: refreshStatus 
+  } = useProfileStatus(user.id);
 
   // Helper function to sort work experience by latest first
   const sortWorkExperience = (experiences: WorkExperience[]) => {
@@ -157,38 +191,21 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
     });
   };
 
-  // Define navigation tabs
+  // Define navigation tabs (ordered by importance/flow)
   const tabs = [
     { id: 'basic', name: 'Basic Info', icon: User },
+    { id: 'work-experience', name: 'Work Experience', icon: WorkIcon },
     { id: 'references', name: 'References', icon: FileText },
+    { id: 'documents', name: 'Documents', icon: Upload },
     { id: 'qualifications', name: 'Qualifications', icon: GraduationCap },
     { id: 'certifications', name: 'Certifications', icon: Award },
-    { id: 'work-experience', name: 'Work Experience', icon: WorkIcon },
     { id: 'portfolio', name: 'Portfolio', icon: Briefcase },
-    { id: 'documents', name: 'Documents', icon: Upload },
   ];
   
-  // Calculate completeness for CompletenessMeter
-  const completenessData: CompletenessData = {
-    basic: {
-      hasCore: !!(user.first_name && user.last_name && user.email && profile?.job_title),
-    },
-    full: {
-      referencesCount: references.length,
-      hasIdDocument: !!profile?.id_doc_url,
-      qualificationsCount: education.length,
-      certificationsCount: certifications.length,
-    },
-    allstar: {
-      portfolioCount: portfolio.length,
-    },
+  // Refresh status when profile data changes (e.g., after saving)
+  const handleProfileSaved = () => {
+    refreshStatus();
   };
-
-  const completeness = computeCompleteness(user.id, completenessData);
-  const status = computeProfileStatus({
-    tier: completeness.tier,
-    vettingStatus: user.vetting_status as any,
-  });
 
   // Handle profile updates
   const handleProfileUpdate = (updatedData: any) => {
@@ -229,29 +246,28 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
   
   return (
     <div className="max-w-4xl mx-auto p-6">
-      {/* Profile Header */}
-      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-8 gap-6">
-        <div className="flex-1">
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Edit Profile</h1>
-          <p className="text-slate-600 mt-2">Manage your professional profile and settings</p>
-        </div>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <CompletenessMeter
-            segments={completeness.segments}
-            percent={completeness.percent}
-            missing={completeness.missing}
-          />
-          <VettingStatus 
-            status={status}
-            tier={completeness.tier}
-            vettingStatus={user.vetting_status || 'pending'}
-          />
-        </div>
+      {/* Profile Status Card */}
+      <div className="mb-8">
+        <ProfileStatusCard
+          status={profileStatus}
+          isLoading={statusLoading}
+          error={statusError}
+          onCtaClick={() => {
+            // Scroll to the tabs section when CTA is clicked
+            const tabsElement = document.getElementById('profile-tabs');
+            if (tabsElement) {
+              tabsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }}
+        />
       </div>
 
       {/* Navigation Tabs */}
-      <div className="border-b border-slate-200 mb-8">
-        <nav className="-mb-px flex space-x-8 overflow-x-auto scrollbar-hide">
+      <div id="profile-tabs" className="relative border-b border-slate-200 mb-8 scroll-mt-4">
+        <nav 
+          ref={tabsNavRef}
+          className="-mb-px flex space-x-8 overflow-x-auto scrollbar-hide pr-8"
+        >
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -267,6 +283,18 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
             </button>
           ))}
         </nav>
+        
+        {/* Scroll indicator - gradient fade with arrow (shown when tabs overflow) */}
+        {showScrollIndicator && (
+          <div className="absolute right-0 top-0 bottom-0 flex items-center pointer-events-none">
+            {/* Gradient fade */}
+            <div className="w-12 h-full bg-gradient-to-l from-white via-white/80 to-transparent" />
+            {/* Arrow indicator */}
+            <div className="absolute right-1 flex items-center justify-center w-6 h-6 bg-slate-100 rounded-full shadow-sm animate-pulse">
+              <ChevronRight className="w-4 h-4 text-slate-500" />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Tab Content */}
@@ -276,6 +304,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
             user={user}
             profile={profile}
             onUpdate={handleProfileUpdate}
+            onSaved={handleProfileSaved}
             isLoading={isLoading}
           />
         )}
@@ -307,6 +336,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   references: [...references, newReference]
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error adding reference:', error);
                 throw error;
@@ -337,6 +367,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   references: updatedReferences
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error updating reference:', error);
                 throw error;
@@ -358,6 +389,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   references: filteredReferences
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error deleting reference:', error);
                 throw error;
@@ -393,6 +425,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   education: [...education, data]
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error adding qualification:', error);
                 throw error;
@@ -424,6 +457,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   education: updatedEducation
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error updating qualification:', error);
                 throw error;
@@ -445,6 +479,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   education: filteredEducation
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error deleting qualification:', error);
                 throw error;
@@ -492,6 +527,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   certifications: [...certifications, data]
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error adding certification:', error);
                 throw error;
@@ -523,6 +559,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   certifications: updatedCertifications
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error updating certification:', error);
                 throw error;
@@ -544,6 +581,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   certifications: filteredCertifications
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error deleting certification:', error);
                 throw error;
@@ -595,6 +633,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   workExperience: updatedWorkExperience
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error adding work experience:', error);
                 throw error;
@@ -630,6 +669,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   workExperience: sortedWorkExperience
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error updating work experience:', error);
                 throw error;
@@ -651,6 +691,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   workExperience: filteredWorkExperience
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error deleting work experience:', error);
                 throw error;
@@ -692,6 +733,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   portfolio: [...portfolio, data]
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error adding portfolio project:', error);
                 throw error;
@@ -728,6 +770,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   portfolio: updatedPortfolio
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error updating portfolio project:', error);
                 throw error;
@@ -749,6 +792,7 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                   ...profileData,
                   portfolio: filteredPortfolio
                 });
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error deleting portfolio project:', error);
                 throw error;
@@ -800,8 +844,9 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                 
                 console.log('🔍 ID Document Upload: Database updated successfully, refreshing data');
                 
-                // Refresh profile data
+                // Refresh profile data and status
                 await refetchData();
+                handleProfileSaved();
                 
                 return result.url;
               } catch (error) {
@@ -819,8 +864,9 @@ export function ProfileEdit({ profileData, onUpdate }: ProfileEditProps) {
                 
                 if (error) throw error;
                 
-                // Refresh profile data
+                // Refresh profile data and status
                 await refetchData();
+                handleProfileSaved();
               } catch (error) {
                 console.error('Error removing ID document:', error);
                 throw error;

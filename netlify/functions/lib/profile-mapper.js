@@ -474,24 +474,32 @@ async function saveWorkExperience(workExperience, userId) {
       });
     }
 
-    // Map work experience entries
+    // Map work experience entries - handle multiple field name formats from AI
     const mappedExperience = workExperience.map(exp => {
+      // Handle alternative field names from AI
+      const jobTitle = exp.jobTitle || exp.title || 'Unknown Role';
+      const startYear = exp.startDateYear || exp.startYear || null;
+      const endYear = exp.endDateYear || exp.endYear || null;
+      const isCurrentlyWorking = exp.currentlyWorking || false;
+      
       // Normalize month names to abbreviations (Jan, Feb, etc.)
       const startMonth = normalizeMonth(exp.startDateMonth);
-      const endMonth = exp.currentlyWorking ? null : normalizeMonth(exp.endDateMonth);
+      const endMonth = isCurrentlyWorking ? null : normalizeMonth(exp.endDateMonth);
+      
+      console.log(`Mapping work experience: ${jobTitle} at ${exp.company}, ${startYear}-${isCurrentlyWorking ? 'Present' : endYear}`);
       
       return {
         user_id: userId,
         company: exp.company || 'Unknown Company',
-        job_title: exp.jobTitle || 'Unknown Role',
+        job_title: jobTitle,
         description: exp.description || null,
         city: exp.city || null,
         country_id: exp.country ? countryMap.get(exp.country.toLowerCase().trim()) : null,
         start_date_month: startMonth,
-        start_date_year: exp.startDateYear || null,
+        start_date_year: startYear,
         end_date_month: endMonth,
-        end_date_year: exp.currentlyWorking ? null : (exp.endDateYear || null),
-        currently_working: exp.currentlyWorking || false,
+        end_date_year: isCurrentlyWorking ? null : endYear,
+        currently_working: isCurrentlyWorking,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       };
@@ -575,16 +583,33 @@ async function saveEducation(education, userId) {
       return { success: true, count: 0 };
     }
 
-    // Map education entries
-    const mappedEducation = education.map(edu => ({
-      user_id: userId,
-      institution_name: edu.institutionName || 'Unknown Institution',
-      degree_level: edu.degreeLevel || 'Unknown',
-      grade: edu.grade || null,
-      start_date: edu.startDate || null,
-      end_date: edu.endDate || null,
-      description: edu.description || edu.fieldOfStudy || null
-    }));
+    // Map education entries - handle alternative field names from AI
+    const mappedEducation = education.map(edu => {
+      // Handle alternative field names
+      const institutionName = edu.institutionName || edu.institution || 'Unknown Institution';
+      const degreeLevel = edu.degreeLevel || edu.degree || 'Unknown';
+      
+      // Handle year field - can be year, startDate, endDate
+      let startDate = edu.startDate || null;
+      let endDate = edu.endDate || null;
+      
+      // If we have a single year field, use it as end_date
+      if (edu.year && !endDate) {
+        endDate = `${edu.year}-01-01`;
+      }
+      
+      console.log(`Mapping education: ${degreeLevel} from ${institutionName}`);
+      
+      return {
+        user_id: userId,
+        institution_name: institutionName,
+        degree_level: degreeLevel,
+        grade: edu.grade || null,
+        start_date: startDate,
+        end_date: endDate,
+        description: edu.description || edu.fieldOfStudy || null
+      };
+    });
 
     // Delete existing education for this user
     const { error: deleteError } = await getSupabaseClient()
@@ -763,19 +788,38 @@ async function mapToDatabase(parsedData, userId, userType) {
           if (matchedCountry) {
             profileUpdate.country = matchedCountry.name; // Set country name for form compatibility
             profileUpdate.country_id = countryId; // Set country_id for proper normalization
+            console.log(`Mapped location "${basicInfo.location}" to country: ${matchedCountry.name} (ID: ${countryId})`);
           }
+        } else {
+          console.log(`Could not match country from location: "${basicInfo.location}"`);
         }
       }
       
       if (parsedData.summary) profileUpdate.bio = parsedData.summary;
+      
+      // Handle hourly rate - check multiple field name formats
+      const hourlyRate = parsedData.hourlyRate || parsedData.hourly_rate;
+      if (hourlyRate) {
+        if (hourlyRate.min !== undefined && hourlyRate.min !== null && hourlyRate.min > 0) {
+          profileUpdate.hourly_rate_min = hourlyRate.min;
+          console.log(`Setting hourly_rate_min: ${hourlyRate.min}`);
+        }
+        if (hourlyRate.max !== undefined && hourlyRate.max !== null && hourlyRate.max > 0) {
+          profileUpdate.hourly_rate_max = hourlyRate.max;
+          console.log(`Setting hourly_rate_max: ${hourlyRate.max}`);
+        }
+      } else {
+        console.log('No hourly rate data found in parsed data');
+      }
 
+      // Use upsert to create the profile if it doesn't exist yet
+      profileUpdate.user_id = userId;
       const { error: profileError } = await getSupabaseClient()
         .from('consultant_profiles')
-        .update(profileUpdate)
-        .eq('user_id', userId);
+        .upsert(profileUpdate, { onConflict: 'user_id' });
 
       if (profileError) {
-        console.error('Error updating consultant profile:', profileError);
+        console.error('Error upserting consultant profile:', profileError);
         results.profile = { success: false, error: profileError.message };
       } else {
         results.profile = { success: true };
@@ -803,28 +847,32 @@ async function mapToDatabase(parsedData, userId, userType) {
     }
 
     // 3. Save work experience
-    // Filter out null entries and ensure it's an array
+    // Filter out null entries and ensure it's an array - accept both jobTitle and title
     const workExperience = Array.isArray(parsedData.workExperience) 
-      ? parsedData.workExperience.filter(exp => exp && exp.company && exp.jobTitle)
+      ? parsedData.workExperience.filter(exp => exp && exp.company && (exp.jobTitle || exp.title))
       : [];
     if (workExperience.length > 0) {
       console.log(`Saving ${workExperience.length} work experience entries`);
+      console.log('Work experience sample:', JSON.stringify(workExperience[0], null, 2));
       results.workExperience = await saveWorkExperience(workExperience, userId);
     } else {
       console.log('No work experience to save (array is null or empty)');
+      console.log('Raw parsedData.workExperience:', JSON.stringify(parsedData.workExperience, null, 2));
       results.workExperience = { success: true, count: 0 };
     }
 
     // 4. Save education
-    // Filter out null entries and ensure it's an array
+    // Filter out null entries and ensure it's an array - accept alternative field names
     const education = Array.isArray(parsedData.education)
-      ? parsedData.education.filter(edu => edu && edu.institutionName && edu.degreeLevel)
+      ? parsedData.education.filter(edu => edu && (edu.institutionName || edu.institution) && (edu.degreeLevel || edu.degree))
       : [];
     if (education.length > 0) {
       console.log(`Saving ${education.length} education entries`);
+      console.log('Education sample:', JSON.stringify(education[0], null, 2));
       results.education = await saveEducation(education, userId);
     } else {
       console.log('No education to save (array is null or empty)');
+      console.log('Raw parsedData.education:', JSON.stringify(parsedData.education, null, 2));
       results.education = { success: true, count: 0 };
     }
 
@@ -871,14 +919,32 @@ async function mapToDatabase(parsedData, userId, userType) {
 
     // 7. Match and save languages
     // Filter out null entries and ensure it's an array
-    const languages = Array.isArray(parsedData.languages)
-      ? parsedData.languages.filter(lang => lang && lang.language && typeof lang.language === 'string' && lang.language.trim().length > 0)
-      : [];
+    // Handle both {language: "English", proficiency: "native"} and string formats
+    let languages = [];
+    if (Array.isArray(parsedData.languages)) {
+      languages = parsedData.languages
+        .filter(lang => lang)
+        .map(lang => {
+          // If it's a string, convert to object format
+          if (typeof lang === 'string') {
+            return { language: lang, proficiency: 'intermediate' };
+          }
+          // Handle {name: "English"} format
+          if (lang.name && !lang.language) {
+            return { language: lang.name, proficiency: lang.proficiency || 'intermediate' };
+          }
+          return lang;
+        })
+        .filter(lang => lang.language && typeof lang.language === 'string' && lang.language.trim().length > 0);
+    }
+    
     if (languages.length > 0) {
-      console.log(`Matching ${languages.length} languages`);
+      console.log(`Matching ${languages.length} languages:`, JSON.stringify(languages, null, 2));
       results.languages = await matchLanguagesToDatabase(languages, userId);
+      console.log(`Languages matching result: ${results.languages.matched} matched`);
     } else {
       console.log('No languages to save (array is null or empty)');
+      console.log('Raw parsedData.languages:', JSON.stringify(parsedData.languages, null, 2));
       results.languages = { success: true, matched: 0 };
     }
 
