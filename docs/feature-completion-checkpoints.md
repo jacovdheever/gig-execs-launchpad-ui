@@ -1,5 +1,203 @@
 # Feature Completion Checkpoints
 
+---
+
+## 🎯 Professional Profile Status System (4-Level) - COMPLETED ✅
+
+**Completion Date**: January 23, 2026  
+**Status**: FULLY IMPLEMENTED, TESTED, AND DEPLOYED TO PRODUCTION  
+**Branch**: `develop` → `main` (production)
+
+---
+
+### 📋 Feature Overview
+
+Replaced the old 3-tier percentage-based profile completeness system with a new, clearer 4-level status system for professional users:
+
+1. **Registered** - Account created, basic profile incomplete
+2. **Basic Profile Complete** - Core fields filled, ready to explore
+3. **Full Profile Submitted (Pending Vetting)** - All required fields complete, awaiting review
+4. **Vetted** - Profile approved (or declined) by GigExecs team
+
+---
+
+### 🚀 What Was Delivered
+
+#### 1. Core Status Logic (`src/lib/profileStatus.ts`)
+- `computeProfessionalProfileStatus()` - Main status computation function
+- `checkBasicFieldsComplete()` - Validates basic profile requirements
+- `checkFullProfileComplete()` - Validates full profile requirements
+- `shouldAutoSubmitForVetting()` - Auto-submission logic
+- Zod schema validation for type safety
+- Configurable mandatory field requirements
+
+#### 2. Data Fetching Hook (`src/hooks/useProfileStatus.ts`)
+- Fetches all user/profile data in parallel for efficiency
+- Handles auto-submission for vetting when full profile complete
+- Includes manual refresh capability
+- Debounced auto-refresh to prevent flicker
+- Server-side rendering compatible
+
+#### 3. UI Component (`src/components/profile/ProfileStatusCard.tsx`)
+- 4-step progress indicator (Registered → Basic → Full → Vetted)
+- Status badge with appropriate icon/color
+- Dynamic CTA button based on current status
+- Actionable "Next steps" message showing what's missing
+- Responsive design (mobile vertical, desktop two-column)
+
+#### 4. Profile Page Improvements (`src/routes/profile/ProfileEdit.tsx`)
+- Tab reordering: Basic Info → Work Experience → References → Documents → Qualifications → Certifications → Portfolio
+- Scroll indicator for tabs (gradient fade + pulsing chevron)
+- CTA button scrolls to tabs section
+- Profile status auto-refreshes after any save operation
+
+---
+
+### 📊 Profile Requirements
+
+#### Basic Profile (Required fields)
+| Field | Source |
+|-------|--------|
+| First name | users.first_name |
+| Last name | users.last_name |
+| Job title | consultant_profiles.job_title |
+| Address | consultant_profiles.address1 |
+| Country | consultant_profiles.country or country_id |
+| Hourly rate (min/max) | consultant_profiles.hourly_rate_* |
+| 1+ Work experience | work_experience table |
+| 1+ Skill | user_skills table |
+| 1+ Language | user_languages table |
+| 1+ Industry | user_industries table |
+
+#### Full Profile (Additional requirements)
+| Field | Required |
+|-------|----------|
+| 2 References | Yes |
+| ID Document | Yes |
+| Education/Certification | No (optional) |
+
+---
+
+### 🐛 Issues Resolved
+
+1. **406 Error on Profile Page**
+   - Problem: `.single()` query failed when consultant_profiles didn't exist
+   - Solution: Changed to `.maybeSingle()` in useProfileStatus hook
+
+2. **500 Error on AI Profile Publish**
+   - Problem: `.update()` failed for new users without consultant_profiles row
+   - Solution: Changed to `.upsert()` in profile-mapper.js
+
+3. **Industries Not Saved During AI Publish**
+   - Problem: `DraftProfile` TypeScript interface missing `industries` field
+   - Solution: Added `industries?: string[]` to interface
+
+4. **Profile Status Not Refreshing After Save**
+   - Problem: `handleProfileSaved()` never called after save operations
+   - Solution: Added `onSaved` callback to forms and call after all save operations
+
+5. **Infinite Loop on Dashboard/Profile Pages**
+   - Problem: Unstable references in useEffect dependency arrays
+   - Solution: Used useRef for callbacks, added loading flags, documented in coding-standards-hooks.md
+
+6. **Profile Card Flickering on Screenshots**
+   - Problem: autoRefresh triggered by browser focus/visibility events
+   - Solution: Changed autoRefresh default to false, added 10-second debounce
+
+---
+
+### 🔧 Technical Implementation
+
+#### Status State Machine
+```
+registered → basic_complete → pending_vetting → vetted_approved
+                                             ↘ vetted_declined
+```
+
+#### Vetting Status Mapping
+| Database Value | UI Status |
+|---------------|-----------|
+| null | registered or basic_complete |
+| pending | pending_vetting |
+| in_progress | pending_vetting |
+| verified | vetted_approved |
+| rejected | vetted_declined |
+
+---
+
+### 📁 Files Created/Modified
+
+#### New Files
+- `src/lib/profileStatus.ts` - Core status logic
+- `src/lib/profileStatus.test.ts` - Unit tests (26 tests)
+- `src/hooks/useProfileStatus.ts` - Data fetching hook
+- `src/components/profile/ProfileStatusCard.tsx` - UI component
+- `src/test/setup.ts` - Vitest test setup
+- `vitest.config.ts` - Vitest configuration
+- `docs/coding-standards-hooks.md` - React hooks best practices
+
+#### Modified Files
+- `src/app/dashboard/index.tsx` - Integrated new ProfileStatusCard
+- `src/routes/profile/ProfileEdit.tsx` - Tab reorder, scroll indicator, status refresh
+- `src/routes/profile/ProfilePage.tsx` - Fixed infinite loop
+- `src/app/onboarding/ai-profile.tsx` - Added industries to DraftProfile
+- `src/components/profile/BasicInfoForm.tsx` - Added onSaved callback
+- `netlify/functions/lib/profile-mapper.js` - Changed update to upsert
+- `src/lib/profile.ts` - Marked old functions as @deprecated
+- `package.json` - Added vitest, testing-library, zod dependencies
+
+---
+
+### 🧪 Testing
+
+#### Unit Tests (Vitest)
+- 26 tests passing for profileStatus.ts
+- Tests cover: status computation, field validation, auto-submit logic, progress steps, CTA routing
+
+#### Manual Testing
+- All 4 status states verified
+- Status transitions working correctly
+- Auto-vetting submission confirmed
+- Profile refresh after save working
+- Mobile and desktop layouts verified
+
+---
+
+### 🚀 Deployment
+
+- **Develop**: Deployed to https://develop--gigexecs.netlify.app
+- **Production**: Deployed to https://gigexecs.netlify.app (main branch)
+- **Database**: No schema changes required (uses existing tables)
+
+---
+
+### 📝 Configuration Notes
+
+To change profile requirements, edit constants in `src/lib/profileStatus.ts`:
+
+```typescript
+export const BASIC_MANDATORY_FIELDS = {
+  minWorkExperience: 1,
+  minSkills: 1,
+  minLanguages: 1,
+  minIndustries: 1,
+};
+
+export const FULL_PROFILE_FIELDS = {
+  minReferences: 2,
+  idDocumentRequired: true,
+  minEducationOrCertifications: 0, // Currently optional
+};
+```
+
+---
+
+**Checkpoint Created**: January 23, 2026  
+**Status**: ✅ COMPLETE AND DEPLOYED TO PRODUCTION
+
+---
+---
+
 ## 🎯 Client Onboarding & Profile Completeness System - COMPLETED ✅
 
 **Completion Date**: August 27, 2025  
