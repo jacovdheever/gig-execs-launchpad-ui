@@ -32,8 +32,8 @@ const corsHeaders = {
   'Content-Type': 'application/json'
 };
 
-// Valid vetting status values
-const VALID_STATUSES = ['pending', 'in_progress', 'verified', 'vetted', 'rejected', 'needs_info'];
+// Valid vetting status values ('incomplete' sets vetting_status to NULL)
+const VALID_STATUSES = ['pending', 'in_progress', 'verified', 'vetted', 'rejected', 'needs_info', 'incomplete'];
 
 // Map vetting status to email trigger
 const STATUS_TO_EMAIL_TRIGGER = {
@@ -48,7 +48,8 @@ const STATUS_TO_ACTION = {
   'verified': 'approve',
   'vetted': 'approve',
   'rejected': 'decline',
-  'needs_info': 'request_info'
+  'needs_info': 'request_info',
+  'incomplete': 'mark_incomplete'
 };
 
 exports.handler = async (event, context) => {
@@ -143,11 +144,14 @@ exports.handler = async (event, context) => {
 
     const previousStatus = userData.vetting_status;
 
+    // 'incomplete' means set vetting_status to NULL (remove from pending queue)
+    const statusToWrite = vettingStatus === 'incomplete' ? null : vettingStatus;
+
     // Update vetting status
     const { error: updateError } = await supabase
       .from('users')
       .update({ 
-        vetting_status: vettingStatus,
+        vetting_status: statusToWrite,
         updated_at: new Date().toISOString()
       })
       .eq('id', userId);

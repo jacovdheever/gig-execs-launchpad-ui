@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { supabase } from '@/lib/supabase';
 import { ProfileView } from '@/routes/profile/ProfileView';
-import { ArrowLeft, Loader2, CheckCircle, XCircle, MessageSquare } from 'lucide-react';
+import { ArrowLeft, Loader2, CheckCircle, XCircle, MessageSquare, AlertTriangle, RotateCcw } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -59,7 +59,7 @@ export default function StaffVerificationReviewPage() {
   const [submitting, setSubmitting] = useState(false);
   const [notes, setNotes] = useState('');
   const [requestedInfoText, setRequestedInfoText] = useState('');
-  const [confirmAction, setConfirmAction] = useState<'approve' | 'decline' | null>(null);
+  const [confirmAction, setConfirmAction] = useState<'approve' | 'decline' | 'incomplete' | null>(null);
 
   useEffect(() => {
     if (userId) loadProfile();
@@ -108,7 +108,11 @@ export default function StaffVerificationReviewPage() {
       if (!resp.ok) throw new Error(result.error || 'Request failed');
       setConfirmAction(null);
       setRequestedInfoText('');
-      await loadProfile();
+      if (vettingStatus === 'incomplete') {
+        navigate('/staff/verifications');
+      } else {
+        await loadProfile();
+      }
     } catch (e) {
       console.error(e);
       alert(e instanceof Error ? e.message : 'Request failed');
@@ -119,6 +123,17 @@ export default function StaffVerificationReviewPage() {
 
   const lastDecision = data?.vettingDecisions?.[0];
   const name = data?.user ? [data.user.first_name, data.user.last_name].filter(Boolean).join(' ') || data.user.email : '';
+
+  // Completeness check (consultants only): 2 references + ID document required
+  const isConsultant = data?.user?.user_type === 'consultant';
+  const refCount = data?.references?.length ?? 0;
+  const hasIdDoc = !!(data?.profile as { id_doc_url?: string } | null)?.id_doc_url;
+  const meetsMinimums = !isConsultant || (refCount >= 2 && hasIdDoc);
+  const missingReqs: string[] = [];
+  if (isConsultant) {
+    if (refCount < 2) missingReqs.push(`${2 - refCount} more reference${refCount === 0 ? 's' : ''} needed`);
+    if (!hasIdDoc) missingReqs.push('ID document');
+  }
 
   if (loading) {
     return (
@@ -159,6 +174,18 @@ export default function StaffVerificationReviewPage() {
           <Button variant="ghost" className="mb-4" onClick={() => navigate('/staff/verifications')}>
             <ArrowLeft className="h-4 w-4 mr-2" /> Back to list
           </Button>
+
+          {!meetsMinimums && (
+            <div className="mb-6 rounded-lg border border-amber-200 bg-amber-50 p-4 flex items-start gap-3">
+              <AlertTriangle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+              <div>
+                <p className="font-medium text-amber-800">Profile does not meet minimum requirements</p>
+                <p className="text-sm text-amber-700 mt-1">
+                  Missing: {missingReqs.join(', ')}. Consider marking as incomplete so the user can finish their profile.
+                </p>
+              </div>
+            </div>
+          )}
 
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Profile column */}
@@ -233,6 +260,15 @@ export default function StaffVerificationReviewPage() {
                   </div>
                   <div className="pt-2 border-t flex flex-col gap-2">
                     <Button
+                      variant="outline"
+                      className="w-full"
+                      disabled={submitting}
+                      onClick={() => setConfirmAction('incomplete')}
+                    >
+                      <RotateCcw className="h-4 w-4 mr-2" />
+                      Mark as incomplete
+                    </Button>
+                    <Button
                       className="w-full bg-green-600 hover:bg-green-700"
                       disabled={submitting}
                       onClick={() => setConfirmAction('approve')}
@@ -257,20 +293,28 @@ export default function StaffVerificationReviewPage() {
 
       <AlertDialog open={!!confirmAction} onOpenChange={() => !submitting && setConfirmAction(null)}>
         <AlertDialogContent>
-          <AlertDialogTitle>{confirmAction === 'approve' ? 'Approve profile?' : 'Decline profile?'}</AlertDialogTitle>
+          <AlertDialogTitle>
+            {confirmAction === 'approve' && 'Approve profile?'}
+            {confirmAction === 'decline' && 'Decline profile?'}
+            {confirmAction === 'incomplete' && 'Mark as incomplete?'}
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            {confirmAction === 'approve'
-              ? 'The user will receive an approval email and gain full access.'
-              : 'The user will receive a decline email. You can add notes above before confirming.'}
+            {confirmAction === 'approve' && 'The user will receive an approval email and gain full access.'}
+            {confirmAction === 'decline' && 'The user will receive a decline email. You can add notes above before confirming.'}
+            {confirmAction === 'incomplete' && 'The profile will be removed from the vetting queue. The user can continue editing and will need to re-submit when their profile meets the minimum requirements.'}
           </AlertDialogDescription>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={submitting}>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => confirmAction && submitVetting(confirmAction === 'approve' ? 'verified' : 'rejected')}
+              onClick={() => {
+                if (!confirmAction) return;
+                if (confirmAction === 'incomplete') submitVetting('incomplete');
+                else submitVetting(confirmAction === 'approve' ? 'verified' : 'rejected');
+              }}
               disabled={submitting}
               className={confirmAction === 'decline' ? 'bg-red-600 hover:bg-red-700' : ''}
             >
-              {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : confirmAction === 'approve' ? 'Approve' : 'Decline'}
+              {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : confirmAction === 'approve' ? 'Approve' : confirmAction === 'decline' ? 'Decline' : 'Mark incomplete'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
