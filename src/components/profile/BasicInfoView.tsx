@@ -20,10 +20,16 @@ interface BasicInfoViewProps {
     postal_code?: string;
     phone?: string;
     linkedin_url?: string;
+    /** Consultant: hourly rate range */
+    hourly_rate_min?: number | string;
+    hourly_rate_max?: number | string;
+    availability?: string;
   };
+  /** When true, show consultant-specific fields (hourly rate, availability) */
+  showConsultantFields?: boolean;
 }
 
-export function BasicInfoView({ user, profile }: BasicInfoViewProps) {
+export function BasicInfoView({ user, profile, showConsultantFields = false }: BasicInfoViewProps) {
   const fullName = `${user.first_name} ${user.last_name}`;
   const location = [profile?.address1, profile?.address2, profile?.country]
     .filter(Boolean)
@@ -108,6 +114,21 @@ export function BasicInfoView({ user, profile }: BasicInfoViewProps) {
         <div className="space-y-3">
           <h3 className="font-semibold text-slate-900">About</h3>
           <p className="text-slate-700 leading-relaxed">{profile.bio}</p>
+        </div>
+      )}
+
+      {/* Consultant: Hourly rate & availability */}
+      {showConsultantFields && profile && (profile.hourly_rate_min != null || profile.hourly_rate_max != null || profile.availability) && (
+        <div className="space-y-3">
+          <h3 className="font-semibold text-slate-900">Rates & Availability</h3>
+          <div className="text-slate-700 space-y-1">
+            {(profile.hourly_rate_min != null || profile.hourly_rate_max != null) && (
+              <p>
+                Hourly rate: ${profile.hourly_rate_min ?? '—'} – ${profile.hourly_rate_max ?? '—'} USD
+              </p>
+            )}
+            {profile.availability && <p>Availability: {profile.availability}</p>}
+          </div>
         </div>
       )}
 

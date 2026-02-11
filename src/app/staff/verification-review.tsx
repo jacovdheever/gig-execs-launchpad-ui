@@ -13,10 +13,12 @@ import { supabase } from '@/lib/supabase';
 import { ProfileStatusCard } from '@/components/profile/ProfileStatusCard';
 import { SectionCard } from '@/components/profile/SectionCard';
 import { BasicInfoView } from '@/components/profile/BasicInfoView';
+import { WorkExperienceView } from '@/components/profile/WorkExperienceView';
 import { ReferencesView } from '@/components/profile/ReferencesView';
 import { QualificationsView } from '@/components/profile/QualificationsView';
 import { CertificationsView } from '@/components/profile/CertificationsView';
 import { PortfolioView } from '@/components/profile/PortfolioView';
+import { SkillsLanguagesIndustriesView } from '@/components/profile/SkillsLanguagesIndustriesView';
 import { computeProfessionalProfileStatus } from '@/lib/profileStatus';
 import { ArrowLeft, Loader2, CheckCircle, XCircle, MessageSquare, AlertTriangle, RotateCcw, Eye, FileText } from 'lucide-react';
 import {
@@ -55,6 +57,9 @@ interface ProfilePayload {
   certifications: unknown[];
   workExperience: unknown[];
   portfolio: unknown[];
+  skills?: { id: number; name: string }[];
+  languages?: { id: number; name: string }[];
+  industries?: { id: number; name: string }[];
   vettingDecisions: VettingDecision[];
   counts?: {
     workExperienceCount: number;
@@ -310,7 +315,28 @@ export default function StaffVerificationReviewPage() {
 
                   {/* Profile sections */}
                   <SectionCard title="Basic Information">
-                    <BasicInfoView user={data.user} profile={data.profile as Record<string, unknown>} />
+                    <BasicInfoView user={data.user} profile={data.profile as Record<string, unknown>} showConsultantFields />
+                  </SectionCard>
+                  <SectionCard title="Work Experience">
+                    <WorkExperienceView experiences={(data.workExperience || []) as import('@/components/profile/WorkExperienceView').WorkExperienceItem[]} />
+                  </SectionCard>
+                  <SectionCard title="Skills">
+                    <SkillsLanguagesIndustriesView
+                      items={(data.skills || []).map(s => s.name)}
+                      emptyMessage="No skills added yet (at least 1 required)"
+                    />
+                  </SectionCard>
+                  <SectionCard title="Languages">
+                    <SkillsLanguagesIndustriesView
+                      items={(data.languages || []).map(l => l.name)}
+                      emptyMessage="No languages added yet (at least 1 required)"
+                    />
+                  </SectionCard>
+                  <SectionCard title="Industries">
+                    <SkillsLanguagesIndustriesView
+                      items={(data.industries || []).map(i => i.name)}
+                      emptyMessage="No industries added yet (at least 1 required)"
+                    />
                   </SectionCard>
                   <SectionCard title="Professional References">
                     <ReferencesView references={profileDataForView.references} />
