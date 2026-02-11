@@ -10,8 +10,15 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { supabase } from '@/lib/supabase';
-import { ProfileView } from '@/routes/profile/ProfileView';
-import { ArrowLeft, Loader2, CheckCircle, XCircle, MessageSquare, AlertTriangle, RotateCcw } from 'lucide-react';
+import { ProfileStatusCard } from '@/components/profile/ProfileStatusCard';
+import { SectionCard } from '@/components/profile/SectionCard';
+import { BasicInfoView } from '@/components/profile/BasicInfoView';
+import { ReferencesView } from '@/components/profile/ReferencesView';
+import { QualificationsView } from '@/components/profile/QualificationsView';
+import { CertificationsView } from '@/components/profile/CertificationsView';
+import { PortfolioView } from '@/components/profile/PortfolioView';
+import { computeProfessionalProfileStatus } from '@/lib/profileStatus';
+import { ArrowLeft, Loader2, CheckCircle, XCircle, MessageSquare, AlertTriangle, RotateCcw, Eye, FileText } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -49,6 +56,15 @@ interface ProfilePayload {
   workExperience: unknown[];
   portfolio: unknown[];
   vettingDecisions: VettingDecision[];
+  counts?: {
+    workExperienceCount: number;
+    skillsCount: number;
+    languagesCount: number;
+    industriesCount: number;
+    referencesCount: number;
+    educationCount: number;
+    certificationsCount: number;
+  };
 }
 
 export default function StaffVerificationReviewPage() {
@@ -60,6 +76,7 @@ export default function StaffVerificationReviewPage() {
   const [notes, setNotes] = useState('');
   const [requestedInfoText, setRequestedInfoText] = useState('');
   const [confirmAction, setConfirmAction] = useState<'approve' | 'decline' | 'incomplete' | null>(null);
+  const [loadingDoc, setLoadingDoc] = useState(false);
 
   useEffect(() => {
     if (userId) loadProfile();
@@ -124,6 +141,61 @@ export default function StaffVerificationReviewPage() {
   const lastDecision = data?.vettingDecisions?.[0];
   const name = data?.user ? [data.user.first_name, data.user.last_name].filter(Boolean).join(' ') || data.user.email : '';
 
+  // Compute profile status using new 4-level system (for ProfileStatusCard)
+  const counts = data?.counts ?? {
+    workExperienceCount: data?.workExperience?.length ?? 0,
+    skillsCount: 0,
+    languagesCount: 0,
+    industriesCount: 0,
+    referencesCount: data?.references?.length ?? 0,
+    educationCount: data?.education?.length ?? 0,
+    certificationsCount: data?.certifications?.length ?? 0,
+  };
+  const profileStatus = data?.user && data?.profile
+    ? computeProfessionalProfileStatus(
+        {
+          id: data.user.id,
+          first_name: data.user.first_name,
+          last_name: data.user.last_name,
+          email: data.user.email,
+          vetting_status: data.user.vetting_status as 'pending' | 'in_progress' | 'verified' | 'vetted' | 'rejected' | null,
+        },
+        {
+          user_id: data.user.id,
+          job_title: (data.profile as { job_title?: string }).job_title,
+          address1: (data.profile as { address1?: string }).address1,
+          country: (data.profile as { country?: string }).country,
+          country_id: (data.profile as { country_id?: number }).country_id,
+          hourly_rate_min: (data.profile as { hourly_rate_min?: number }).hourly_rate_min as number | null,
+          hourly_rate_max: (data.profile as { hourly_rate_max?: number }).hourly_rate_max as number | null,
+          id_doc_url: (data.profile as { id_doc_url?: string }).id_doc_url,
+        },
+        counts
+      )
+    : null;
+  const statusForCard = profileStatus ? { ...profileStatus, ctaDisabled: true } : null;
+
+  async function handleViewDocument(filePath: string) {
+    setLoadingDoc(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+      const resp = await fetch('/.netlify/functions/staff-get-document-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
+        body: JSON.stringify({ filePath }),
+      });
+      const json = await resp.json();
+      if (!resp.ok) throw new Error(json.error || 'Failed to get document link');
+      if (json.signedUrl) window.open(json.signedUrl, '_blank');
+    } catch (e) {
+      console.error(e);
+      alert(e instanceof Error ? e.message : 'Could not open document');
+    } finally {
+      setLoadingDoc(false);
+    }
+  }
+
   // Completeness check (consultants only): 2 references + ID document required
   const isConsultant = data?.user?.user_type === 'consultant';
   const refCount = data?.references?.length ?? 0;
@@ -161,11 +233,12 @@ export default function StaffVerificationReviewPage() {
   const profileDataForView = {
     user: data.user,
     profile: data.profile,
-    references: data.references,
-    education: data.education,
-    certifications: data.certifications,
-    portfolio: data.portfolio
+    references: data.references as { id: number; first_name: string; last_name: string; email: string; company_name?: string; description?: string }[],
+    education: data.education as { id: number; institution_name: string; degree_level: string; description?: string }[],
+    certifications: data.certifications as { id: number; name: string; awarding_body: string; credential_url?: string }[],
+    portfolio: data.portfolio as { id: number; project_name: string; project_role?: string; description?: string }[]
   };
+  const idDocUrl = (data.profile as { id_doc_url?: string } | null)?.id_doc_url;
 
   return (
     <StaffRoute>
@@ -197,7 +270,61 @@ export default function StaffVerificationReviewPage() {
                 </CardHeader>
               </Card>
               {data.user.user_type === 'consultant' ? (
-                <ProfileView profileData={profileDataForView} isOwner={false} />
+                <>
+                  {/* Profile completeness - new 4-level ProfileStatusCard */}
+                  <ProfileStatusCard status={statusForCard} onCtaClick={() => {}} />
+
+                  {/* Uploaded documents - ID proof */}
+                  <SectionCard title="Uploaded Documents">
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between py-2">
+                        <div className="flex items-center gap-3">
+                          <FileText className="h-8 w-8 text-slate-500" />
+                          <div>
+                            <p className="font-medium text-slate-900">Proof of Identity</p>
+                            <p className="text-sm text-slate-500">
+                              {idDocUrl ? 'Document uploaded' : 'No document uploaded'}
+                            </p>
+                          </div>
+                        </div>
+                        {idDocUrl && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleViewDocument(idDocUrl)}
+                            disabled={loadingDoc}
+                          >
+                            {loadingDoc ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <>
+                                <Eye className="h-4 w-4 mr-2" />
+                                View
+                              </>
+                            )}
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </SectionCard>
+
+                  {/* Profile sections */}
+                  <SectionCard title="Basic Information">
+                    <BasicInfoView user={data.user} profile={data.profile as Record<string, unknown>} />
+                  </SectionCard>
+                  <SectionCard title="Professional References">
+                    <ReferencesView references={profileDataForView.references} />
+                  </SectionCard>
+                  <SectionCard title="Educational Qualifications">
+                    <QualificationsView qualifications={profileDataForView.education} />
+                  </SectionCard>
+                  <SectionCard title="Professional Certifications">
+                    <CertificationsView certifications={profileDataForView.certifications} />
+                  </SectionCard>
+                  <SectionCard title="Portfolio Projects">
+                    <PortfolioView portfolio={profileDataForView.portfolio} />
+                  </SectionCard>
+                </>
               ) : (
                 <Card>
                   <CardHeader>

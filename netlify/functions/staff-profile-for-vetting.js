@@ -64,7 +64,10 @@ exports.handler = async (event) => {
       certificationsResult,
       workExpResult,
       portfolioResult,
-      decisionsResult
+      decisionsResult,
+      skillsCountResult,
+      languagesCountResult,
+      industriesCountResult
     ] = await Promise.all([
       supabase.from('users').select('*').eq('id', userId).single(),
       supabase.from('consultant_profiles').select('*').eq('user_id', userId).maybeSingle(),
@@ -74,7 +77,10 @@ exports.handler = async (event) => {
       supabase.from('certifications').select('*').eq('user_id', userId).order('issue_date', { ascending: false }),
       supabase.from('work_experience').select('*').eq('user_id', userId).order('start_date_year', { ascending: false }).order('start_date_month', { ascending: false }),
       supabase.from('portfolio').select('*').eq('user_id', userId).order('start_date', { ascending: false }),
-      supabase.from('vetting_decisions').select('*').eq('user_id', userId).order('created_at', { ascending: false })
+      supabase.from('vetting_decisions').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
+      supabase.from('user_skills').select('skill_id', { count: 'exact', head: true }).eq('user_id', userId),
+      supabase.from('user_languages').select('language_id', { count: 'exact', head: true }).eq('user_id', userId),
+      supabase.from('user_industries').select('industry_id', { count: 'exact', head: true }).eq('user_id', userId)
     ]);
 
     if (userResult.error || !userResult.data) {
@@ -88,6 +94,16 @@ exports.handler = async (event) => {
     const user = userResult.data;
     const profile = user.user_type === 'consultant' ? consultantResult.data : clientResult.data;
 
+    const counts = {
+      workExperienceCount: workExpResult.data?.length ?? 0,
+      skillsCount: skillsCountResult.count ?? 0,
+      languagesCount: languagesCountResult.count ?? 0,
+      industriesCount: industriesCountResult.count ?? 0,
+      referencesCount: referencesResult.data?.length ?? 0,
+      educationCount: educationResult.data?.length ?? 0,
+      certificationsCount: certificationsResult.data?.length ?? 0
+    };
+
     return {
       statusCode: 200,
       headers: corsHeaders,
@@ -100,7 +116,8 @@ exports.handler = async (event) => {
         certifications: certificationsResult.data || [],
         workExperience: workExpResult.data || [],
         portfolio: portfolioResult.data || [],
-        vettingDecisions: decisionsResult.data || []
+        vettingDecisions: decisionsResult.data || [],
+        counts
       })
     };
   } catch (err) {
