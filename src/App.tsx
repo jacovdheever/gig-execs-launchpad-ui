@@ -36,6 +36,7 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import HelpAndSupport from "./pages/HelpAndSupport";
 import HelpAndSupportSecure from "./pages/HelpAndSupportSecure";
 import HowItWorks from "./pages/HowItWorks";
+import Feedback from "./pages/Feedback";
 import NotFound from "./pages/NotFound";
 
 // Functional App Components
@@ -98,6 +99,8 @@ import StaffSettingsPage from "./app/staff/settings";
 import StaffExternalGigsPage from "./app/staff/external-gigs";
 import ExternalGigClicksPage from "./app/staff/external-gig-clicks";
 import CVParserTestPage from "./app/staff/cv-parser-test";
+import StaffVerificationsPage from "./app/staff/verifications";
+import StaffVerificationReviewPage from "./app/staff/verification-review";
 
 const queryClient = new QueryClient();
 
@@ -210,9 +213,14 @@ const App = () => (
             <Route path="/staff/external-gigs" element={<StaffExternalGigsPage />} />
             <Route path="/staff/external-gig-clicks" element={<ExternalGigClicksPage />} />
             <Route path="/staff/cv-parser-test" element={<CVParserTestPage />} />
+            <Route path="/staff/verifications" element={<StaffVerificationsPage />} />
+            <Route path="/staff/verifications/:userId" element={<StaffVerificationReviewPage />} />
 
             {/* Secure Help Page */}
             <Route path="/help-secure" element={<HelpAndSupportSecure />} />
+
+            {/* Feedback Page (requires login) */}
+            <Route path="/feedback" element={<Feedback />} />
 
             {/* Maintenance Page */}
             <Route path="/maintenance" element={<Maintenance />} />

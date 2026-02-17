@@ -21,4 +21,6 @@ export { SectionCard } from './SectionCard';
 export { StatusBadge } from './StatusBadge';
 export { VettingStatus } from './VettingStatus';
 export { WorkExperienceForm } from './WorkExperienceForm';
+export { WorkExperienceView } from './WorkExperienceView';
+export { SkillsLanguagesIndustriesView } from './SkillsLanguagesIndustriesView';
 
