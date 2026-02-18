@@ -31,6 +31,10 @@ const MAX_REMINDER_MONTHS = 24; // Stop after 24 months
 const MAX_REMINDER_DAYS = MAX_REMINDER_MONTHS * 30; // ~730 days
 const ACTIVATION_NUDGE_DAYS = 3; // Days after approval before nudge
 const BATCH_SIZE = 50; // Process users in batches
+/** Minimum profile_complete_pct to receive activation nudges; below this, user gets profile-completion reminders */
+const PROFILE_COMPLETE_PCT_MIN = 80;
+/** Delay between activation nudge sends (ms) to respect Resend rate limits (2 req/sec) */
+const ACTIVATION_NUDGE_DELAY_MS = 550;
 
 // Helper: Calculate days since date
 function daysSince(dateString) {
@@ -95,14 +99,14 @@ async function processReminders() {
   };
 
   try {
-    // Fetch users with incomplete profiles
-    // - vetting_status is null (registered but not submitted)
-    // - OR profile_complete_pct < 100
-    // - email verified (email_confirmed_at is not null in auth.users, but we check via users table created_at)
+    // Fetch users with incomplete profiles (profile_complete_pct < threshold or null)
+    // Include: not-yet-submitted (vetting_status null/pending) OR vetted but still incomplete (verified/vetted with profile_complete_pct < PROFILE_COMPLETE_PCT_MIN)
+    // So vetted users with incomplete profiles get profile-completion reminders instead of activation nudges
     const { data: users, error } = await supabase
       .from('users')
       .select('id, email, first_name, user_type, created_at, vetting_status')
-      .or('vetting_status.is.null,vetting_status.eq.pending')
+      .or('vetting_status.is.null,vetting_status.eq.pending,vetting_status.eq.verified,vetting_status.eq.vetted')
+      .or('profile_complete_pct.lt.' + PROFILE_COMPLETE_PCT_MIN + ',profile_complete_pct.is.null')
       .not('email', 'is', null)
       .order('created_at', { ascending: true })
       .limit(500); // Process max 500 users per run
@@ -206,8 +210,9 @@ async function processActivationNudges() {
 
     const { data: approvedUsers, error } = await supabase
       .from('users')
-      .select('id, email, first_name, user_type, updated_at')
+      .select('id, email, first_name, user_type, updated_at, profile_complete_pct')
       .in('vetting_status', ['verified', 'vetted'])
+      .gte('profile_complete_pct', PROFILE_COMPLETE_PCT_MIN)
       .lte('updated_at', cutoffDate.toISOString())
       .not('email', 'is', null)
       .limit(200);
@@ -231,11 +236,11 @@ async function processActivationNudges() {
       let hasActivity = false;
 
       if (user.user_type === 'consultant') {
-        // Check for gig applications
+        // Check for gig applications (bids.consultant_id = user id for consultants)
         const { count } = await supabase
           .from('bids')
           .select('id', { count: 'exact', head: true })
-          .eq('user_id', user.id);
+          .eq('consultant_id', user.id);
         
         hasActivity = (count || 0) > 0;
       } else {
@@ -283,6 +288,9 @@ async function processActivationNudges() {
         console.error(`[email-reminders] Error sending nudge to user ${user.id}:`, err);
         results.errors++;
       }
+
+      // Rate limit: delay between activation nudge sends (Resend ~2 req/sec)
+      await new Promise(resolve => setTimeout(resolve, ACTIVATION_NUDGE_DELAY_MS));
     }
   } catch (error) {
     console.error('[email-reminders] Error in processActivationNudges:', error);
