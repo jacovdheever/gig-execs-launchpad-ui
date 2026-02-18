@@ -158,7 +158,7 @@ function Homepage() {
               {/* Right side - content */}
               <div className="text-center lg:text-left">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-2xl animate-fade-in-up">
-                  GigExecs: A Premium Network of Vetted Independent Consultants
+                  GigExecs: A Premium Network of Independent Senior Professionals
                 </h1>
                 <p className="text-lg sm:text-xl text-white/95 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed drop-shadow-lg animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                   Join a vetted community of senior independent consultants and highly experienced professionals. Discover high-quality flexible work—advisory, interim leadership, fractional roles, contracts, and project engagements.
