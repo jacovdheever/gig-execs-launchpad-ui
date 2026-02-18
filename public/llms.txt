@@ -1,0 +1,19 @@
+# GigExecs
+
+GigExecs is a premium network connecting organizations with vetted senior professionals for advisory, fractional, interim, and project-based engagements.
+
+## Key terms
+
+- Fractional executive: A senior leader engaged part-time for strategic or operational leadership.
+- Interim leadership: Temporary executive placement during transitions.
+- Independent consultant: A senior professional engaged for specific projects or advisory work.
+
+## Key public URLs
+
+- Home: https://gigexecs.com/
+- Clients: https://gigexecs.com/clients
+- Professionals: https://gigexecs.com/professionals
+- How it works: https://gigexecs.com/how-it-works
+- About: https://gigexecs.com/about
+- Help: https://gigexecs.com/help
+- Blog: https://gigexecs.com/blog

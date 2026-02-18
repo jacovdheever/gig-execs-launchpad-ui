@@ -6,7 +6,6 @@ const footerLinks = [
     heading: "How it works",
     links: [
       "How it works",
-      "Pricing",
     ],
   },
   {

@@ -1,7 +1,16 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { MessageSquare } from 'lucide-react'
+import { Briefcase, CalendarDays, Shuffle, Users } from 'lucide-react'
+import { PageMeta } from '@/components/PageMeta'
+import { JsonLd } from '@/components/JsonLd'
+import { TrustBlocks } from '@/components/TrustBlocks'
+import {
+  organizationSchema,
+  websiteSchema,
+  breadcrumbSchema,
+} from '@/lib/schema'
 
 function Homepage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -12,6 +21,18 @@ function Homepage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F5F5F5] via-[#F5F5F5] to-[#FFFFFF]">
+      <PageMeta
+        title="Premium Network of Vetted Independent Consultants"
+        description="A premium community of vetted independent consultants and senior professionals. Explore flexible work: advisory, interim leadership, fractional roles, contracts, and projects."
+        path="/"
+      />
+      <JsonLd
+        schema={[
+          organizationSchema(),
+          websiteSchema(),
+          breadcrumbSchema([{ name: "Home", path: "/" }]),
+        ]}
+      />
       {/* Navigation */}
       <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -137,10 +158,10 @@ function Homepage() {
               {/* Right side - content */}
               <div className="text-center lg:text-left">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-2xl animate-fade-in-up">
-                  GigExecs: The Premier Hub for Highly Experienced Professionals
+                  GigExecs: A Premium Network of Vetted Independent Consultants
                 </h1>
                 <p className="text-lg sm:text-xl text-white/95 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed drop-shadow-lg animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                  Join a growing network of experienced talent and innovative companies. GigExecs connects senior professionals with companies and projects that need their expertise.
+                  Join a vetted community of senior independent consultants and highly experienced professionals. Discover high-quality flexible work—advisory, interim leadership, fractional roles, contracts, and project engagements.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
                   <Button size="lg" className="bg-white hover:bg-gray-100 text-[#012E46] px-8 py-3 drop-shadow-lg transition-all duration-300 hover:scale-105 font-semibold">
@@ -171,7 +192,7 @@ function Homepage() {
               Why Choose GigExecs?
             </h2>
             <p className="text-lg text-[#9CA3AF] max-w-2xl mx-auto">
-              We make it easier to hire, manage and pay senior professionals in a trusted freelance ecosystem.
+              A modern platform and community built for senior independent professionals in the future of work.
             </p>
           </div>
           
@@ -179,15 +200,13 @@ function Homepage() {
             <Card className="text-center hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
                 <div className="w-16 h-16 bg-[#F5F5F5] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-[#0284C7]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                  </svg>
+                  <Briefcase className="w-8 h-8 text-[#FACC15]" />
                 </div>
-                <CardTitle className="text-xl text-[#0284C7]">Transparent and Easy Pricing</CardTitle>
+                <CardTitle className="text-xl text-[#0284C7]">Built for Senior Independent Professionals</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-[#9CA3AF]">
-                  All pricing is upfront and visible to both professionals and clients.
+                  A digital platform designed for senior and highly experienced professionals—whether you&apos;re already independent or transitioning from corporate life.
                 </CardDescription>
               </CardContent>
             </Card>
@@ -195,15 +214,13 @@ function Homepage() {
             <Card className="text-center hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
                 <div className="w-16 h-16 bg-[#F5F5F5] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-[#16A34A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                  </svg>
+                  <CalendarDays className="w-8 h-8 text-[#FACC15]" />
                 </div>
-                <CardTitle className="text-xl text-[#0284C7]">Give and Receive Feedback and Ratings</CardTitle>
+                <CardTitle className="text-xl text-[#0284C7]">High-Quality Opportunities, Updated Daily</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-[#9CA3AF]">
-                  Track your performance and build your credibility in the community.
+                  We publish senior-level flexible opportunities every day—focused on meaningful work, fair rates, and roles where experience matters.
                 </CardDescription>
               </CardContent>
             </Card>
@@ -211,13 +228,13 @@ function Homepage() {
             <Card className="text-center hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
                 <div className="w-16 h-16 bg-[#F5F5F5] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <MessageSquare className="w-8 h-8 text-[#FACC15]" />
+                  <Shuffle className="w-8 h-8 text-[#FACC15]" />
                 </div>
-                <CardTitle className="text-xl text-[#0284C7]">Direct Communication</CardTitle>
+                <CardTitle className="text-xl text-[#0284C7]">Flexible Work, Matched to Senior Expertise</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-[#9CA3AF]">
-                  Engage directly with clients or professionals using our built-in chat.
+                  Find advisory work, interim leadership, fractional roles, fixed-term contracts, and project engagements—matched to your expertise.
                 </CardDescription>
               </CardContent>
             </Card>
@@ -225,19 +242,84 @@ function Homepage() {
             <Card className="text-center hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
                 <div className="w-16 h-16 bg-[#F5F5F5] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-[#0284C7]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
+                  <Users className="w-8 h-8 text-[#FACC15]" />
                 </div>
-                <CardTitle className="text-xl text-[#0284C7]">Verified Profiles</CardTitle>
+                <CardTitle className="text-xl text-[#0284C7]">Community First. Premium Network Always.</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-[#9CA3AF]">
-                  All users go through a vetting process to maintain a trusted space.
+                  GigExecs is a vetted community and global network—built on credibility, trust, and shared standards, not bidding and noise.
                 </CardDescription>
               </CardContent>
             </Card>
           </div>
+
+          {/* Two-path CTA strip */}
+          <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <Link
+              to="/clients"
+              className="group block rounded-lg border border-border/50 bg-muted/30 px-6 py-5 transition-colors hover:bg-muted/50 hover:border-[#0284C7]/40 focus:outline-none focus:ring-2 focus:ring-[#0284C7] focus:ring-offset-2"
+            >
+              <p className="text-xs font-medium text-muted-foreground mb-1">Hiring senior expertise?</p>
+              <p className="text-base text-[#1F2937] mb-3 leading-snug">
+                Access vetted independent consultants for advisory, interim leadership, fractional roles, and project engagements.
+              </p>
+              <span className="inline-flex items-center text-sm font-semibold text-[#0284C7] group-hover:underline">
+                Explore Clients →
+              </span>
+            </Link>
+            <Link
+              to="/professionals"
+              className="group block rounded-lg border border-border/50 bg-muted/30 px-6 py-5 transition-colors hover:bg-muted/50 hover:border-[#0284C7]/40 focus:outline-none focus:ring-2 focus:ring-[#0284C7] focus:ring-offset-2"
+            >
+              <p className="text-xs font-medium text-muted-foreground mb-1">Are you a senior professional?</p>
+              <p className="text-base text-[#1F2937] mb-3 leading-snug">
+                Join a premium network built on credibility and meaningful flexible work.
+              </p>
+              <span className="inline-flex items-center text-sm font-semibold text-[#0284C7] group-hover:underline">
+                Explore Professionals →
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Future of Work & Longevity Economy */}
+      <section className="py-20 bg-[#F5F5F5]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#1F2937] mb-12 text-center">
+            The Future of Work and the Longevity Economy
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-xl font-semibold text-[#1F2937] mb-4">
+                Access Experience Faster—Without Full-Time Red Tape
+              </h3>
+              <p className="text-lg text-[#9CA3AF] leading-relaxed">
+                Companies increasingly rely on flexible senior expertise to move faster—without long hiring cycles, headcount constraints, or complex full-time employment processes.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-[#1F2937] mb-4">
+                Stay Professionally and Financially Active for Longer
+              </h3>
+              <p className="text-lg text-[#9CA3AF] leading-relaxed">
+                People are living longer and healthier lives. GigExecs helps highly experienced professionals stay engaged through flexible work that fits this new reality.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Bridge statement - high-converting hero copy */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <blockquote className="relative">
+            <div className="absolute left-0 top-0 bottom-0 w-1 sm:w-1.5 bg-[#FACC15] rounded-full" aria-hidden />
+            <p className="pl-6 sm:pl-8 text-xl sm:text-2xl lg:text-3xl font-semibold text-[#012E46] leading-snug tracking-tight">
+              GigExecs bridges modern hiring needs with a premium network of senior independent consultants.
+            </p>
+          </blockquote>
         </div>
       </section>
 
@@ -250,25 +332,24 @@ function Homepage() {
                 Built for Professionals
               </h2>
               <p className="text-lg text-[#9CA3AF] mb-6 leading-relaxed">
-                GigExecs is a premium network and trusted digital platform that connects experienced professionals with innovative companies. 
-                Start your freelance and independent journey with confidence.
+                GigExecs is a premium community and global network built for vetted independent consultants and highly experienced professionals. Build a credible profile, connect with meaningful opportunities, and thrive in flexible work—without the noise of crowded platforms.
               </p>
               <div className="space-y-4">
                 <div className="flex items-center">
                   <div className="w-2 h-2 bg-[#0284C7] rounded-full mr-3"></div>
-                  <span className="text-[#1F2937]">Verified professional profiles and credentials</span>
+                  <span className="text-[#1F2937]">Vetted profiles that highlight outcomes, leadership, and measurable impact</span>
                 </div>
                 <div className="flex items-center">
                   <div className="w-2 h-2 bg-[#0284C7] rounded-full mr-3"></div>
-                  <span className="text-[#1F2937]">Secure payment processing</span>
+                  <span className="text-[#1F2937]">A community-driven standard of quality, trust, and professionalism</span>
                 </div>
                 <div className="flex items-center">
                   <div className="w-2 h-2 bg-[#0284C7] rounded-full mr-3"></div>
-                  <span className="text-[#1F2937]">Built-in project management and communication tools</span>
+                  <span className="text-[#1F2937]">Flexible engagements across advisory, interim leadership, fractional roles, contracts, and project work</span>
                 </div>
                 <div className="flex items-center">
                   <div className="w-2 h-2 bg-[#0284C7] rounded-full mr-3"></div>
-                  <span className="text-[#1F2937]">Comprehensive feedback and rating system</span>
+                  <span className="text-[#1F2937]">Secure platform tools for introductions, communication, and (where applicable) payments</span>
                 </div>
               </div>
             </div>
@@ -299,6 +380,12 @@ function Homepage() {
         </div>
       </section>
 
+      {/* TrustBlocks - subtle trust strip for SEO/LLM visibility */}
+      <section aria-label="Vetting and quality standards" className="py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <TrustBlocks variant="default" />
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="bg-[#012E46] text-white py-12">
@@ -314,7 +401,6 @@ function Homepage() {
               <h3 className="text-lg font-semibold mb-4">How it works</h3>
               <ul className="space-y-2 text-[#9CA3AF]">
                 <li><a href="/how-it-works" className="hover:text-white transition-colors">How it works</a></li>
-                <li><a href="/pricing" className="hover:text-white transition-colors">Pricing</a></li>
               </ul>
             </div>
             <div>
