@@ -133,8 +133,8 @@ function HowItWorks() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg max-w-none">
             {/* For Senior Professionals Section (FIRST) */}
-            <div id="for-professionals" className="mb-16 scroll-mt-8">
-              <h2 className="text-3xl font-bold text-[#012E46] mb-8">For Senior Professionals</h2>
+            <div className="mb-16">
+              <h2 id="for-professionals" className="text-3xl font-bold text-[#012E46] mb-8 scroll-mt-24">For Senior Professionals</h2>
 
               <div className="space-y-6">
                 <Card className={`${stepCardClass} border-l-4 border-l-[#FACC15]`}>
@@ -185,15 +185,15 @@ function HowItWorks() {
                   </CardContent>
                 </Card>
 
-                <p className="text-gray-600 text-sm mt-4 pl-4 border-l-2 border-[#FACC15]/50">
-                  <strong>Community:</strong> Share resources, tools, and insights with peers.
+                <p className="text-gray-700 text-base font-bold mt-4 pl-4 border-l-2 border-[#FACC15]/50">
+                  Engage the GigExecs Community: Share resources, tools, and insights with peers.
                 </p>
               </div>
             </div>
 
             {/* For Clients & Partners Section (SECOND) */}
-            <div id="for-clients" className="mb-16 scroll-mt-8">
-              <h2 className="text-3xl font-bold text-[#012E46] mb-8">For Clients & Partners</h2>
+            <div className="mb-16">
+              <h2 id="for-clients" className="text-3xl font-bold text-[#012E46] mb-8 scroll-mt-24">For Clients & Partners</h2>
 
               <div className="space-y-6">
                 <Card className={`${stepCardClass} border-l-4 border-l-[#0284C7]`}>
