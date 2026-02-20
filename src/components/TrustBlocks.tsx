@@ -3,7 +3,7 @@
  * Compact trust strip—subtle container, icon heading, badge rows.
  */
 
-import { ShieldCheck, FileCheck, Target, Briefcase } from "lucide-react"
+import { ShieldCheck, FileCheck, Target, Briefcase, Sparkles } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const DEFINITION =
@@ -21,8 +21,19 @@ const VETTING_LINE =
 
 const ENGAGEMENT_TYPES = "Advisory • Fractional • Interim • Project-based"
 
+const HOW_IT_WORKS = {
+  heading: "Vetting, matching & AI-assisted onboarding",
+  subline: "A premium network built on credibility—supported by fast, guided onboarding.",
+  definition: "GigExecs connects organizations with vetted independent consultants and highly experienced professionals for flexible engagements.",
+  rows: [
+    { icon: Sparkles, label: "AI profile setup:", text: "Upload a CV or chat with our AI to create a strong, outcome-focused profile in minutes." },
+    { icon: FileCheck, label: "Vetting:", text: "Credential checks • experience review • references where applicable." },
+    { icon: Briefcase, label: "Engagements:", text: "Advisory • Fractional • Interim • Contract • Project-based." },
+  ],
+} as const
+
 interface TrustBlocksProps {
-  variant?: "default" | "clients" | "professionals"
+  variant?: "default" | "clients" | "professionals" | "howItWorks"
   className?: string
 }
 
@@ -50,6 +61,42 @@ function BadgeRow({
 }
 
 export function TrustBlocks({ variant = "default", className }: TrustBlocksProps) {
+  if (variant === "howItWorks") {
+    return (
+      <div
+        className={cn(
+          "rounded-lg border border-border/60 bg-muted/30 px-6 py-6 max-w-7xl mx-auto space-y-5",
+          className
+        )}
+      >
+        <div>
+          <div className="flex items-center gap-3">
+            <ShieldCheck className="h-6 w-6 sm:h-7 sm:w-7 text-foreground/80 shrink-0" />
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
+              {HOW_IT_WORKS.heading}
+            </h2>
+          </div>
+          <p className="mt-1.5 text-base text-muted-foreground">
+            {HOW_IT_WORKS.subline}
+          </p>
+        </div>
+
+        <p className="text-base text-muted-foreground">{HOW_IT_WORKS.definition}</p>
+
+        <div className="space-y-3 pt-0.5">
+          {HOW_IT_WORKS.rows.map((row) => (
+            <BadgeRow
+              key={row.label}
+              icon={row.icon}
+              label={row.label}
+              text={row.text}
+            />
+          ))}
+        </div>
+      </div>
+    )
+  }
+
   const bestFor = BEST_FOR[variant]
 
   return (

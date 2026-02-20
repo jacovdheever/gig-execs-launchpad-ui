@@ -1,6 +1,18 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { PageMeta } from '@/components/PageMeta'
+import { JsonLd } from '@/components/JsonLd'
+import { TrustBlocks } from '@/components/TrustBlocks'
+import { breadcrumbSchema } from '@/lib/schema'
+import {
+  FileText,
+  ShieldCheck,
+  Briefcase,
+  Users,
+  Target,
+  CheckCircle,
+} from 'lucide-react'
 
 function HowItWorks() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -9,20 +21,35 @@ function HowItWorks() {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
 
+  const stepCardClass = "rounded-lg border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow"
+  const iconWrapperClass = "w-12 h-12 bg-[#F5F5F5] rounded-full flex items-center justify-center shrink-0"
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F5F5F5] via-[#F5F5F5] to-[#FFFFFF]">
+      <PageMeta
+        title="How a Vetted Network Works"
+        description="Learn how GigExecs connects a premium community of vetted independent consultants and senior professionals with flexible engagements—advisory, interim, fractional, contract, and project-based."
+        path="/how-it-works"
+      />
+      <JsonLd
+        schema={[
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "How it works", path: "/how-it-works" },
+          ]),
+        ]}
+      />
+
       {/* Navigation */}
       <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            {/* Left side - Logo */}
             <div className="flex items-center">
               <a href="/" className="text-2xl font-extrabold text-slate-900 hover:text-[#0284C7] transition-colors cursor-pointer">
                 GigExecs
               </a>
             </div>
 
-            {/* Center - Navigation Links */}
             <div className="hidden lg:flex items-center space-x-12">
               <a href="/" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
               <a href="/clients" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
@@ -30,7 +57,6 @@ function HowItWorks() {
               <a href="/blog" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
             </div>
 
-            {/* Right side - Action Buttons */}
             <div className="flex items-center">
               <Button variant="outline" className="border-[#012E46] text-[#012E46] hover:bg-[#F5F5F5] rounded-r-none border-r-0">
                 <a href="/auth/login" className="w-full h-full flex items-center justify-center">
@@ -44,9 +70,8 @@ function HowItWorks() {
               </Button>
             </div>
 
-            {/* Mobile Menu Button */}
             <div className="lg:hidden">
-              <button 
+              <button
                 onClick={toggleMobileMenu}
                 className="text-[#1F2937] hover:text-[#0284C7] transition-colors"
                 aria-label="Toggle mobile menu"
@@ -64,7 +89,6 @@ function HowItWorks() {
             </div>
           </div>
 
-          {/* Mobile Navigation Menu */}
           <div className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
             isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
           }`}>
@@ -84,9 +108,23 @@ function HowItWorks() {
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
             How it Works
           </h1>
-          <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-            Discover how GigExecs connects businesses with experienced executives and senior professionals for fractional, freelance, and project-based roles.
+          <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed mb-8">
+            Discover how GigExecs connects a premium community of vetted independent consultants and senior professionals with high-quality flexible work worldwide—advisory, interim leadership, fractional roles, contracts, and project engagements.
           </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a
+              href="#for-professionals"
+              className="inline-flex items-center px-5 py-2.5 rounded-lg border border-white/60 text-white hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#0284C7]"
+            >
+              For Senior Professionals
+            </a>
+            <a
+              href="#for-clients"
+              className="inline-flex items-center px-5 py-2.5 rounded-lg border border-white/60 text-white hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#0284C7]"
+            >
+              For Clients & Partners
+            </a>
+          </div>
         </div>
       </section>
 
@@ -94,98 +132,147 @@ function HowItWorks() {
       <section className="py-16 lg:py-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg max-w-none">
-            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              At <strong className="text-[#012E46]">GigExecs</strong>, we make it simple for businesses to connect with experienced executives and senior professionals — without the cost and commitment of traditional hiring.
-            </p>
-            
-            <p className="text-lg text-gray-700 mb-12 leading-relaxed">
-              Whether you're a company looking for flexible expertise or a professional offering your skills, here's how it works:
-            </p>
+            {/* For Senior Professionals Section (FIRST) */}
+            <div id="for-professionals" className="mb-16 scroll-mt-8">
+              <h2 className="text-3xl font-bold text-[#012E46] mb-8">For Senior Professionals</h2>
 
-            {/* For Clients Section */}
-            <div className="mb-16">
-              <h2 className="text-3xl font-bold text-[#012E46] mb-8">For Clients</h2>
-              
-              <div className="space-y-8">
-                <Card className="border-l-4 border-l-[#0284C7]">
-                  <CardHeader>
-                    <CardTitle className="text-xl text-[#012E46]">1. Tell us what you need</CardTitle>
+              <div className="space-y-6">
+                <Card className={`${stepCardClass} border-l-4 border-l-[#FACC15]`}>
+                  <CardHeader className="flex flex-row items-start gap-4 pb-2">
+                    <div className={iconWrapperClass}>
+                      <FileText className="w-6 h-6 text-[#FACC15]" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl text-[#012E46]">1. Create a credible profile (AI-assisted)</CardTitle>
+                    </div>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="pt-0">
                     <p className="text-gray-700 leading-relaxed">
-                      Post your project, role, or requirement. Define the skills, experience, and availability you're looking for.
+                      Upload your CV or chat with our AI to build an outcome-focused profile in minutes.
                     </p>
                   </CardContent>
                 </Card>
 
-                <Card className="border-l-4 border-l-[#0284C7]">
-                  <CardHeader>
-                    <CardTitle className="text-xl text-[#012E46]">2. Get matched with senior professionals</CardTitle>
+                <Card className={`${stepCardClass} border-l-4 border-l-[#FACC15]`}>
+                  <CardHeader className="flex flex-row items-start gap-4 pb-2">
+                    <div className={iconWrapperClass}>
+                      <ShieldCheck className="w-6 h-6 text-[#FACC15]" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl text-[#012E46]">2. Get vetted for quality</CardTitle>
+                    </div>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="pt-0">
                     <p className="text-gray-700 leading-relaxed">
-                      Our network includes <strong className="text-[#012E46]">leaders with decades of experience</strong> across industries — available for <strong className="text-[#012E46]">fractional, freelance, or project-based work</strong>.
+                      Our team reviews experience and credentials, with references where applicable.
                     </p>
                   </CardContent>
                 </Card>
 
-                <Card className="border-l-4 border-l-[#0284C7]">
-                  <CardHeader>
-                    <CardTitle className="text-xl text-[#012E46]">3. Hire with confidence</CardTitle>
+                <Card className={`${stepCardClass} border-l-4 border-l-[#FACC15]`}>
+                  <CardHeader className="flex flex-row items-start gap-4 pb-2">
+                    <div className={iconWrapperClass}>
+                      <Briefcase className="w-6 h-6 text-[#FACC15]" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl text-[#012E46]">3. Access high-quality engagements</CardTitle>
+                    </div>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="pt-0">
                     <p className="text-gray-700 leading-relaxed">
-                      Connect directly, agree on terms, and start working quickly. Enjoy flexibility, cost savings, and access to top-tier talent on demand.
+                      Browse and apply for opportunities aligned with your expertise and preferences—advisory, interim leadership, fractional roles, contracts, and projects.
                     </p>
                   </CardContent>
                 </Card>
+
+                <p className="text-gray-600 text-sm mt-4 pl-4 border-l-2 border-[#FACC15]/50">
+                  <strong>Community:</strong> Share resources, tools, and insights with peers.
+                </p>
               </div>
             </div>
 
-            {/* For Professionals Section */}
-            <div className="mb-16">
-              <h2 className="text-3xl font-bold text-[#012E46] mb-8">For Professionals</h2>
-              
-              <div className="space-y-8">
-                <Card className="border-l-4 border-l-[#FACC15]">
-                  <CardHeader>
-                    <CardTitle className="text-xl text-[#012E46]">1. Create your profile</CardTitle>
+            {/* For Clients & Partners Section (SECOND) */}
+            <div id="for-clients" className="mb-16 scroll-mt-8">
+              <h2 className="text-3xl font-bold text-[#012E46] mb-8">For Clients & Partners</h2>
+
+              <div className="space-y-6">
+                <Card className={`${stepCardClass} border-l-4 border-l-[#0284C7]`}>
+                  <CardHeader className="flex flex-row items-start gap-4 pb-2">
+                    <div className={iconWrapperClass}>
+                      <Target className="w-6 h-6 text-[#0284C7]" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl text-[#012E46]">1. Define your need</CardTitle>
+                    </div>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="pt-0">
                     <p className="text-gray-700 leading-relaxed">
-                      Showcase your skills, industry expertise, and track record.
+                      Advisory support, interim leadership, fractional roles, fixed-term contracts, or project engagements.
                     </p>
                   </CardContent>
                 </Card>
 
-                <Card className="border-l-4 border-l-[#FACC15]">
-                  <CardHeader>
-                    <CardTitle className="text-xl text-[#012E46]">2. Discover opportunities</CardTitle>
+                <Card className={`${stepCardClass} border-l-4 border-l-[#0284C7]`}>
+                  <CardHeader className="flex flex-row items-start gap-4 pb-2">
+                    <div className={iconWrapperClass}>
+                      <Users className="w-6 h-6 text-[#0284C7]" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl text-[#012E46]">2. Reach our vetted network</CardTitle>
+                    </div>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="pt-0">
                     <p className="text-gray-700 leading-relaxed">
-                      Get matched with projects and roles that align with your experience and availability.
+                      Publish an engagement to our premium community or request curated introductions.
                     </p>
                   </CardContent>
                 </Card>
 
-                <Card className="border-l-4 border-l-[#FACC15]">
-                  <CardHeader>
-                    <CardTitle className="text-xl text-[#012E46]">3. Work on your terms</CardTitle>
+                <Card className={`${stepCardClass} border-l-4 border-l-[#0284C7]`}>
+                  <CardHeader className="flex flex-row items-start gap-4 pb-2">
+                    <div className={iconWrapperClass}>
+                      <CheckCircle className="w-6 h-6 text-[#0284C7]" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl text-[#012E46]">3. Engage with confidence</CardTitle>
+                    </div>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="pt-0">
                     <p className="text-gray-700 leading-relaxed">
-                      Choose fractional roles, freelance contracts, or project-based work that fits your lifestyle and goals.
+                      Work directly with senior professionals under clear expectations and a quality-first standard.
                     </p>
                   </CardContent>
                 </Card>
+
+                <div className="mt-6">
+                  <p className="text-sm font-medium text-gray-600 mb-3">Who uses GigExecs</p>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      "Startups & scale-ups",
+                      "SMEs",
+                      "Nonprofits & NGOs",
+                      "PE/VC-backed teams",
+                      "Consulting & advisory firms",
+                      "Executive search & talent partners",
+                      "Corporate transformation teams",
+                      "Academia & research programs",
+                    ].map((chip) => (
+                      <span
+                        key={chip}
+                        className="inline-flex px-3 py-1 rounded-full text-sm bg-slate-100 text-slate-700 border border-slate-200"
+                      >
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Why GigExecs Section */}
             <div className="mb-16">
               <h2 className="text-3xl font-bold text-[#012E46] mb-8">Why GigExecs?</h2>
-              
+
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="flex items-start space-x-3">
                   <div className="flex-shrink-0 w-6 h-6 bg-[#0284C7] rounded-full flex items-center justify-center mt-1">
@@ -194,8 +281,8 @@ function HowItWorks() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[#012E46] mb-2">Proven expertise</h3>
-                    <p className="text-gray-700">Only experienced professionals and executives.</p>
+                    <h3 className="font-semibold text-[#012E46] mb-2">Premium network, not a marketplace</h3>
+                    <p className="text-gray-700">Built for credibility and senior expertise—not bidding wars.</p>
                   </div>
                 </div>
 
@@ -206,8 +293,8 @@ function HowItWorks() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[#012E46] mb-2">Flexible engagements</h3>
-                    <p className="text-gray-700">Fractional, freelance, and project-based roles.</p>
+                    <h3 className="font-semibold text-[#012E46] mb-2">Vetted profiles and quality standards</h3>
+                    <p className="text-gray-700">Clear signals of experience, outcomes, and professionalism.</p>
                   </div>
                 </div>
 
@@ -218,8 +305,8 @@ function HowItWorks() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[#012E46] mb-2">Faster hiring</h3>
-                    <p className="text-gray-700">Skip lengthy recruitment cycles — get started quickly.</p>
+                    <h3 className="font-semibold text-[#012E46] mb-2">Flexible engagement models</h3>
+                    <p className="text-gray-700">Advisory • Interim • Fractional • Contract • Project-based</p>
                   </div>
                 </div>
 
@@ -230,8 +317,8 @@ function HowItWorks() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[#012E46] mb-2">Cost-effective</h3>
-                    <p className="text-gray-700">Access high-level skills without full-time overhead.</p>
+                    <h3 className="font-semibold text-[#012E46] mb-2">Faster access to experience</h3>
+                    <p className="text-gray-700">Move quickly without long full-time hiring cycles.</p>
                   </div>
                 </div>
               </div>
@@ -240,30 +327,37 @@ function HowItWorks() {
             {/* Get Started Section */}
             <div className="bg-gradient-to-r from-[#012E46] to-[#0284C7] rounded-2xl p-8 text-white text-center">
               <h2 className="text-3xl font-bold mb-6">Get Started Today</h2>
-              
+
               <div className="grid md:grid-cols-2 gap-6 mb-8">
                 <div>
                   <h3 className="text-xl font-semibold mb-3">Clients</h3>
-                  <p className="mb-4">Post a project and find the right expertise.</p>
+                  <p className="mb-4">Publish an engagement or request introductions.</p>
                   <Button asChild className="bg-white text-[#012E46] hover:bg-gray-100">
-                    <a href="/clients">Post a Project</a>
+                    <a href="/clients">Create an Engagement</a>
                   </Button>
                 </div>
-                
+
                 <div>
                   <h3 className="text-xl font-semibold mb-3">Professionals</h3>
-                  <p className="mb-4">Create your profile and showcase your experience.</p>
+                  <p className="mb-4">Create a profile and apply to join the network.</p>
                   <Button asChild className="bg-[#FACC15] text-[#012E46] hover:bg-[#EAB308]">
                     <a href="/auth/register">Create Profile</a>
                   </Button>
                 </div>
               </div>
-              
+
               <p className="text-xl font-semibold">
                 GigExecs is where <span className="text-[#FACC15]">opportunity meets experience</span>.
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* TrustBlocks - above footer */}
+      <section aria-label="Vetting and quality standards" className="py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <TrustBlocks variant="howItWorks" />
         </div>
       </section>
 
