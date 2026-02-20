@@ -1,94 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Linkedin, Twitter } from 'lucide-react'
+import { PageMeta } from '@/components/PageMeta'
+import { JsonLd } from '@/components/JsonLd'
+import { TrustBlocks } from '@/components/TrustBlocks'
+import { breadcrumbSchema } from '@/lib/schema'
 
 const AboutUs = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-
-  useEffect(() => {
-    document.title = 'About GigExecs | Senior Professionals & Fractional Executives Marketplace'
-    
-    // Update meta description
-    const metaDescription = document.querySelector('meta[name="description"]')
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'GigExecs connects innovative companies with seasoned professionals for fractional, freelance, and project-based roles. Learn about our mission, team, and vision for the future of work.')
-    }
-
-    // Add meta keywords
-    let metaKeywords = document.querySelector('meta[name="keywords"]')
-    if (!metaKeywords) {
-      metaKeywords = document.createElement('meta')
-      metaKeywords.setAttribute('name', 'keywords')
-      document.head.appendChild(metaKeywords)
-    }
-    metaKeywords.setAttribute('content', 'GigExecs, fractional executives, senior professionals, freelance executives, project-based consultants, gig economy leadership, hire senior talent, executive marketplace')
-
-    // Add Open Graph meta tags
-    const ogTitle = document.querySelector('meta[property="og:title"]')
-    if (!ogTitle) {
-      const ogTitleEl = document.createElement('meta')
-      ogTitleEl.setAttribute('property', 'og:title')
-      document.head.appendChild(ogTitleEl)
-    }
-    document.querySelector('meta[property="og:title"]')?.setAttribute('content', 'About GigExecs | Senior Professionals & Fractional Executives Marketplace')
-
-    const ogDescription = document.querySelector('meta[property="og:description"]')
-    if (!ogDescription) {
-      const ogDescriptionEl = document.createElement('meta')
-      ogDescriptionEl.setAttribute('property', 'og:description')
-      document.head.appendChild(ogDescriptionEl)
-    }
-    document.querySelector('meta[property="og:description"]')?.setAttribute('content', 'Discover GigExecs\' mission to revolutionize the gig economy by connecting innovative companies with seasoned professionals. Meet the team driving the future of work.')
-
-    const ogType = document.querySelector('meta[property="og:type"]')
-    if (!ogType) {
-      const ogTypeEl = document.createElement('meta')
-      ogTypeEl.setAttribute('property', 'og:type')
-      document.head.appendChild(ogTypeEl)
-    }
-    document.querySelector('meta[property="og:type"]')?.setAttribute('content', 'website')
-
-    const ogUrl = document.querySelector('meta[property="og:url"]')
-    if (!ogUrl) {
-      const ogUrlEl = document.createElement('meta')
-      ogUrlEl.setAttribute('property', 'og:url')
-      document.head.appendChild(ogUrlEl)
-    }
-    document.querySelector('meta[property="og:url"]')?.setAttribute('content', 'https://www.gigexecs.com/about')
-
-    const ogImage = document.querySelector('meta[property="og:image"]')
-    if (!ogImage) {
-      const ogImageEl = document.createElement('meta')
-      ogImageEl.setAttribute('property', 'og:image')
-      document.head.appendChild(ogImageEl)
-    }
-    document.querySelector('meta[property="og:image"]')?.setAttribute('content', 'https://www.gigexecs.com/images/og-about.jpg')
-
-    // Add Twitter meta tags
-    const twitterCard = document.querySelector('meta[name="twitter:card"]')
-    if (!twitterCard) {
-      const twitterCardEl = document.createElement('meta')
-      twitterCardEl.setAttribute('name', 'twitter:card')
-      document.head.appendChild(twitterCardEl)
-    }
-    document.querySelector('meta[name="twitter:card"]')?.setAttribute('content', 'summary_large_image')
-
-    const twitterTitle = document.querySelector('meta[name="twitter:title"]')
-    if (!twitterTitle) {
-      const twitterTitleEl = document.createElement('meta')
-      twitterTitleEl.setAttribute('name', 'twitter:title')
-      document.head.appendChild(twitterTitleEl)
-    }
-    document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', 'About GigExecs | Senior Professionals & Fractional Executives Marketplace')
-
-    const twitterDescription = document.querySelector('meta[name="twitter:description"]')
-    if (!twitterDescription) {
-      const twitterDescriptionEl = document.createElement('meta')
-      twitterDescriptionEl.setAttribute('name', 'twitter:description')
-      document.head.appendChild(twitterDescriptionEl)
-    }
-    document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', 'GigExecs connects companies with senior professionals and executives for fractional, freelance, and project-based roles.')
-  }, [])
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
@@ -96,6 +15,19 @@ const AboutUs = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <PageMeta
+        title="About GigExecs | Premium Network of Vetted Independent Consultants"
+        description="Learn why GigExecs was created: a premium community connecting vetted independent consultants and senior professionals with high-quality flexible engagements worldwide."
+        path="/about"
+      />
+      <JsonLd
+        schema={[
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "About", path: "/about" },
+          ]),
+        ]}
+      />
       {/* Navigation */}
       <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -149,7 +81,7 @@ const AboutUs = () => {
             isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
           }`}>
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-[#F5F5F5]">
-              <a href="/marketing" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
+              <a href="/" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
               <a href="/clients" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
               <a href="/professionals" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
               <a href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
@@ -168,8 +100,11 @@ const AboutUs = () => {
                 GigExecs
               </span>
             </h1>
+            <p className="text-lg sm:text-xl text-[#9CA3AF] mb-4 max-w-3xl mx-auto leading-relaxed">
+              A premium network and vetted community connecting independent consultants and senior professionals with high-quality flexible engagements worldwide.
+            </p>
             <p className="text-lg sm:text-xl text-[#9CA3AF] mb-8 max-w-3xl mx-auto leading-relaxed">
-              Learn about our mission to revolutionize the gig economy by connecting senior professionals with innovative companies.
+              Built for credibility, outcomes, and flexible work—without the noise of marketplaces.
             </p>
           </div>
         </div>
@@ -182,9 +117,35 @@ const AboutUs = () => {
             <h2 className="text-3xl sm:text-4xl font-bold text-[#1F2937] mb-4">
               Our Mission
             </h2>
-            <p className="text-lg text-[#9CA3AF] max-w-3xl mx-auto">
-              We believe that experience and expertise should never be wasted. Our platform connects seasoned professionals with companies that value their knowledge, creating meaningful partnerships that drive innovation and growth.
+            <p className="text-lg text-[#9CA3AF] max-w-3xl mx-auto leading-relaxed">
+              To empower experienced professionals to build independent careers on their own terms—while helping organizations access senior expertise through flexible engagement models.
+              <span className="block mt-4">GigExecs is more than a platform: it&apos;s a trusted community where experience meets opportunity, beyond the constraints of full-time employment.</span>
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Why we built GigExecs Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1F2937] mb-8">
+              Why we built GigExecs
+            </h2>
+            <div className="max-w-3xl mx-auto space-y-6 text-left">
+              <p className="text-lg text-[#6B7280] leading-relaxed">
+                We built GigExecs after seeing a growing gap in the market: senior expertise is in demand, but most platforms are designed for commodity freelance work or traditional hiring.
+              </p>
+              <p className="text-lg text-[#6B7280] leading-relaxed">
+                Experienced professionals want meaningful, flexible engagements—and organizations want faster access to proven capability without full-time complexity.
+              </p>
+              <p className="text-lg text-[#6B7280] leading-relaxed">
+                GigExecs brings this together through a premium network with quality standards, credible profiles, and flexible work models—advisory, interim leadership, fractional roles, contracts, and project engagements—all in one place.
+              </p>
+              <p className="text-lg text-[#6B7280] leading-relaxed italic">
+                The future of work is flexible, and the longevity economy is reshaping careers—GigExecs helps professionals stay professionally and financially active for longer.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -211,9 +172,9 @@ const AboutUs = () => {
                 />
               </div>
               <h3 className="text-xl font-bold text-[#0284C7] mb-2">Nuno G. Rodrigues</h3>
-              <p className="text-[#9CA3AF] mb-4">Founder & CEO</p>
+              <p className="text-[#9CA3AF] mb-4">Founder</p>
               <p className="text-sm text-[#6B7280] mb-4">
-                Senior Executive, Entrepreneur and dealmaker leading GigExecs to reshape how companies and senior talent work together. Advised on $30B+ in transactions, delivered $2B+ in value creation.
+                Senior executive and entrepreneur with a global career spanning multiple countries. Passionate about building businesses that help experienced professionals thrive in flexible work.
               </p>
               <div className="flex justify-center space-x-4">
                 <a 
@@ -246,7 +207,7 @@ const AboutUs = () => {
               <h3 className="text-xl font-bold text-[#0284C7] mb-2">Jaco van den Heever</h3>
               <p className="text-[#9CA3AF] mb-4">Co-Founder & CXO</p>
               <p className="text-sm text-[#6B7280] mb-4">
-                Award-winning product and design leader with 20+ years of experience shaping digital platforms across fintech, healthcare, and enterprise domains. He drives the platform vision, user experience, and technology implementation, building GigExecs into a category-defining company.
+                Product and design leader with experience building digital platforms across fintech, healthcare, and enterprise. Driven by human-centered design and a strong commitment to community upliftment.
               </p>
               <div className="flex justify-center space-x-4">
                 <a 
@@ -274,23 +235,68 @@ const AboutUs = () => {
       {/* Why GigExecs Section */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#1F2937] mb-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1F2937] mb-6">
               Why GigExecs?
             </h2>
-            <p className="text-lg text-[#9CA3AF] max-w-4xl mx-auto leading-relaxed">
-              Traditional hiring is slow, costly, and rigid. GigExecs offers companies flexible access to senior executives, advisors, and specialists — on a fractional, freelance, or project basis. Our vetted community brings decades of leadership experience across industries, giving organizations immediate expertise without long-term overheads.
+            <p className="text-lg text-[#9CA3AF] max-w-3xl mx-auto leading-relaxed mb-12">
+              GigExecs exists to make senior independent work credible, accessible, and global. We&apos;re built for experienced professionals and organizations who value outcomes—not volume.
             </p>
           </div>
-          
-          <div className="text-center">
-            <h3 className="text-2xl font-bold text-[#0284C7] mb-4">
-              Shaping the Future of Work
-            </h3>
-            <p className="text-lg text-[#6B7280] max-w-3xl mx-auto leading-relaxed">
-              As businesses face tighter budgets and talent shortages, fractional and project-based work has become a critical strategy. GigExecs is at the forefront of this shift, building a platform where experience meets opportunity, helping both professionals and companies thrive.
-            </p>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="flex items-start space-x-3">
+              <div className="flex-shrink-0 w-6 h-6 bg-[#0284C7] rounded-full flex items-center justify-center mt-1">
+                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-semibold text-[#012E46] mb-2">Premium network, not a marketplace</h3>
+                <p className="text-gray-700">Credibility-first profiles and quality standards (not bidding wars).</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="flex-shrink-0 w-6 h-6 bg-[#0284C7] rounded-full flex items-center justify-center mt-1">
+                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-semibold text-[#012E46] mb-2">Flexible engagement models</h3>
+                <p className="text-gray-700">Advisory • Interim • Fractional • Contract • Project-based.</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="flex-shrink-0 w-6 h-6 bg-[#0284C7] rounded-full flex items-center justify-center mt-1">
+                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-semibold text-[#012E46] mb-2">Senior expertise, faster</h3>
+                <p className="text-gray-700">Access proven capability without lengthy full-time hiring cycles.</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="flex-shrink-0 w-6 h-6 bg-[#0284C7] rounded-full flex items-center justify-center mt-1">
+                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-semibold text-[#012E46] mb-2">Community-driven trust</h3>
+                <p className="text-gray-700">A network where professionalism and standards matter.</p>
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* TrustBlocks */}
+      <section aria-label="Trust and standards" className="py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <TrustBlocks variant="about" />
         </div>
       </section>
 
