@@ -91,22 +91,34 @@ const AboutUs = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
-          <div className="relative z-10">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1F2937] mb-6 leading-tight">
-              About{' '}
-              <span className="bg-gradient-to-r from-[#0284C7] to-[#FACC15] bg-clip-text text-transparent">
-                GigExecs
-              </span>
-            </h1>
-            <p className="text-lg sm:text-xl text-[#9CA3AF] mb-4 max-w-3xl mx-auto leading-relaxed">
-              A premium network and vetted community connecting independent consultants and senior professionals with high-quality flexible engagements worldwide.
-            </p>
-            <p className="text-lg sm:text-xl text-[#9CA3AF] mb-8 max-w-3xl mx-auto leading-relaxed">
-              Built for credibility, outcomes, and flexible work—without the noise of marketplaces.
-            </p>
-          </div>
+      <section className="relative overflow-hidden min-h-[320px] flex items-center">
+        {/* Background image - cropped to fit */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/AboutUs/thisisengineering-TXxiFuQLBKQ-unsplash.jpg"
+            alt=""
+            className="w-full h-full object-cover"
+            aria-hidden
+          />
+          {/* Gradient overlay for readability */}
+          <div
+            className="absolute inset-0 bg-gradient-to-b from-[#012E46]/80 via-[#012E46]/70 to-[#012E46]/90"
+            aria-hidden
+          />
+        </div>
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+            About{' '}
+            <span className="text-white">
+              GigExecs
+            </span>
+          </h1>
+          <p className="text-lg sm:text-xl text-white/95 mb-4 max-w-3xl mx-auto leading-relaxed">
+            A premium network and vetted community connecting independent consultants and senior professionals with high-quality flexible engagements worldwide.
+          </p>
+          <p className="text-lg sm:text-xl text-white/95 mb-8 max-w-3xl mx-auto leading-relaxed">
+            Built for credibility, outcomes, and flexible work—without the noise of marketplaces.
+          </p>
         </div>
       </section>
 
@@ -174,7 +186,7 @@ const AboutUs = () => {
               <h3 className="text-xl font-bold text-[#0284C7] mb-2">Nuno G. Rodrigues</h3>
               <p className="text-[#9CA3AF] mb-4">Founder</p>
               <p className="text-sm text-[#6B7280] mb-4">
-                Senior executive and entrepreneur with a global career spanning multiple countries. Passionate about building businesses that help experienced professionals thrive in flexible work.
+                Senior executive and entrepreneur with a global career spanning multiple countries. Married with 4 kids. Passionate about building businesses that help experienced professionals thrive in flexible work.
               </p>
               <div className="flex justify-center space-x-4">
                 <a 
@@ -207,7 +219,7 @@ const AboutUs = () => {
               <h3 className="text-xl font-bold text-[#0284C7] mb-2">Jaco van den Heever</h3>
               <p className="text-[#9CA3AF] mb-4">Co-Founder & CXO</p>
               <p className="text-sm text-[#6B7280] mb-4">
-                Product and design leader with experience building digital platforms across fintech, healthcare, and enterprise. Driven by human-centered design and a strong commitment to community upliftment.
+                Product and design leader with experience building digital platforms across fintech, healthcare, and enterprise. Father of 4 and husband. Driven by human-centered design and a strong commitment to community upliftment.
               </p>
               <div className="flex justify-center space-x-4">
                 <a 
