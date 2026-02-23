@@ -43,8 +43,19 @@ const ABOUT = {
   ],
 } as const
 
+const BLOG = {
+  heading: "Editorial standards",
+  subline: "Practical insights grounded in real-world experience.",
+  definition: "GigExecs publishes guidance for independent consultants, senior professionals, and organizations adopting flexible engagement models.",
+  rows: [
+    { icon: FileCheck, label: "Topics:", text: "Independent consulting • Senior careers • Interim & fractional work • Future of work" },
+    { icon: Target, label: "Audience:", text: "Experienced professionals & forward-thinking organizations" },
+    { icon: ShieldCheck, label: "Approach:", text: "Credibility-first, practical, and outcome-focused" },
+  ],
+} as const
+
 interface TrustBlocksProps {
-  variant?: "default" | "clients" | "professionals" | "howItWorks" | "about"
+  variant?: "default" | "clients" | "professionals" | "howItWorks" | "about" | "blog"
   className?: string
 }
 
@@ -132,6 +143,42 @@ export function TrustBlocks({ variant = "default", className }: TrustBlocksProps
 
         <div className="space-y-3 pt-0.5">
           {ABOUT.rows.map((row) => (
+            <BadgeRow
+              key={row.label}
+              icon={row.icon}
+              label={row.label}
+              text={row.text}
+            />
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  if (variant === "blog") {
+    return (
+      <div
+        className={cn(
+          "rounded-lg border border-border/60 bg-muted/30 px-6 py-6 max-w-7xl mx-auto space-y-5",
+          className
+        )}
+      >
+        <div>
+          <div className="flex items-center gap-3">
+            <FileCheck className="h-6 w-6 sm:h-7 sm:w-7 text-foreground/80 shrink-0" />
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
+              {BLOG.heading}
+            </h2>
+          </div>
+          <p className="mt-1.5 text-base text-muted-foreground">
+            {BLOG.subline}
+          </p>
+        </div>
+
+        <p className="text-base text-muted-foreground">{BLOG.definition}</p>
+
+        <div className="space-y-3 pt-0.5">
+          {BLOG.rows.map((row) => (
             <BadgeRow
               key={row.label}
               icon={row.icon}
