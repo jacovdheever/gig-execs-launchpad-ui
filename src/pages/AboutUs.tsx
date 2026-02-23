@@ -98,6 +98,7 @@ const AboutUs = () => {
             src="/images/AboutUs/thisisengineering-TXxiFuQLBKQ-unsplash.jpg"
             alt=""
             className="w-full h-full object-cover"
+            style={{ objectPosition: '85% top' }}
             aria-hidden
           />
           {/* Gradient overlay - light enough to show image, dark enough for text */}
