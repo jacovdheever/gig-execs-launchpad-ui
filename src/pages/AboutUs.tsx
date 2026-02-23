@@ -100,9 +100,9 @@ const AboutUs = () => {
             className="w-full h-full object-cover"
             aria-hidden
           />
-          {/* Gradient overlay for readability */}
+          {/* Gradient overlay - light enough to show image, dark enough for text */}
           <div
-            className="absolute inset-0 bg-gradient-to-b from-[#012E46]/80 via-[#012E46]/70 to-[#012E46]/90"
+            className="absolute inset-0 bg-gradient-to-b from-[#012E46]/55 via-[#012E46]/45 to-[#012E46]/65"
             aria-hidden
           />
         </div>
