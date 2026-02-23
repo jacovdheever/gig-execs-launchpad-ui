@@ -97,8 +97,7 @@ const AboutUs = () => {
           <img
             src="/images/AboutUs/thisisengineering-TXxiFuQLBKQ-unsplash.jpg"
             alt=""
-            className="w-full h-full object-cover"
-            style={{ objectPosition: '85% top' }}
+            className="w-full h-full object-cover object-[85%_top] md:object-[85%_30%]"
             aria-hidden
           />
           {/* Gradient overlay - light enough to show image, dark enough for text */}
