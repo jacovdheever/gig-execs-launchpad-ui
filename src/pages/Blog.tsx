@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import BlogCard from '@/components/BlogCard'
@@ -6,11 +6,21 @@ import { PageMeta } from '@/components/PageMeta'
 import { JsonLd } from '@/components/JsonLd'
 import { TrustBlocks } from '@/components/TrustBlocks'
 import { breadcrumbSchema, blogIndexSchema } from '@/lib/schema'
-import { getBlogPostsNewestFirst } from '@/lib/blogPosts'
+import { getBlogPostsNewestFirst, BLOG_CATEGORIES } from '@/lib/blogPosts'
+import type { BlogCategory } from '@/lib/blogPosts'
 
 const Blog = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const posts = getBlogPostsNewestFirst()
+  const [selectedCategory, setSelectedCategory] = useState<BlogCategory | null>(null)
+
+  const allPosts = useMemo(() => getBlogPostsNewestFirst(), [])
+  const posts = useMemo(
+    () =>
+      selectedCategory
+        ? allPosts.filter((p) => p.category === selectedCategory)
+        : allPosts,
+    [allPosts, selectedCategory]
+  )
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
@@ -119,6 +129,41 @@ const Blog = () => {
       {/* Blog Posts Grid */}
       <section className="py-16 lg:py-24 bg-gray-50">
         <div className="container mx-auto px-4 lg:px-8">
+          <div className="mt-4 mb-8">
+            <h2 className="text-2xl sm:text-3xl font-semibold text-[#1F2937] mb-2">
+              Latest insights
+            </h2>
+            <p className="text-sm text-[#6B7280] mb-6">
+              Practical guidance on independent consulting, senior careers, and flexible work models.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setSelectedCategory(null)}
+                className={`text-xs font-medium px-2.5 py-1.5 rounded-full transition-colors ${
+                  selectedCategory === null
+                    ? 'bg-[#0284C7] text-white'
+                    : 'bg-muted/60 text-muted-foreground hover:bg-muted'
+                }`}
+              >
+                All
+              </button>
+              {BLOG_CATEGORIES.map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => setSelectedCategory(category)}
+                  className={`text-xs font-medium px-2.5 py-1.5 rounded-full transition-colors ${
+                    selectedCategory === category
+                      ? 'bg-[#0284C7] text-white'
+                      : 'bg-muted/60 text-muted-foreground hover:bg-muted'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => (
               <BlogCard key={post.link} post={post} />
