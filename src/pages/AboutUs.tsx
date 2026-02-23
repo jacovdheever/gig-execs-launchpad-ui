@@ -154,9 +154,14 @@ const AboutUs = () => {
               <p className="text-lg text-[#6B7280] leading-relaxed">
                 GigExecs brings this together through a premium network with quality standards, credible profiles, and flexible work models—advisory, interim leadership, fractional roles, contracts, and project engagements—all in one place.
               </p>
-              <p className="text-lg text-[#6B7280] leading-relaxed italic">
-                The future of work is flexible, and the longevity economy is reshaping careers—GigExecs helps professionals stay professionally and financially active for longer.
-              </p>
+            </div>
+            <div className="max-w-4xl mx-auto mt-12">
+              <blockquote className="relative">
+                <div className="absolute left-0 top-0 bottom-0 w-1 sm:w-1.5 bg-[#FACC15] rounded-full" aria-hidden />
+                <p className="pl-6 sm:pl-8 text-xl sm:text-2xl lg:text-3xl font-semibold text-[#012E46] leading-snug tracking-tight">
+                  The future of work is flexible, and the longevity economy is reshaping careers—GigExecs helps professionals stay professionally and financially active for longer.
+                </p>
+              </blockquote>
             </div>
           </div>
         </div>
