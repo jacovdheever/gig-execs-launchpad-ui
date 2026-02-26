@@ -65,6 +65,17 @@ const CLIENTS = {
   ],
 } as const
 
+const PROFESSIONALS = {
+  heading: "Vetting, matching & AI-assisted onboarding",
+  subline: "Built for credibility and meaningful flexible work.",
+  definition: "GigExecs connects vetted independent consultants and senior professionals with organizations seeking proven expertise.",
+  rows: [
+    { icon: Sparkles, label: "AI profile setup:", text: "Upload a CV or chat with our AI to create an outcome-focused profile in minutes." },
+    { icon: FileCheck, label: "Vetting:", text: "Credential checks • experience review • references where applicable." },
+    { icon: Briefcase, label: "Engagements:", text: "Advisory • Fractional • Interim • Contract • Project-based." },
+  ],
+} as const
+
 interface TrustBlocksProps {
   variant?: "default" | "clients" | "professionals" | "howItWorks" | "about" | "blog"
   className?: string
@@ -190,6 +201,42 @@ export function TrustBlocks({ variant = "default", className }: TrustBlocksProps
 
         <div className="space-y-3 pt-0.5">
           {CLIENTS.rows.map((row) => (
+            <BadgeRow
+              key={row.label}
+              icon={row.icon}
+              label={row.label}
+              text={row.text}
+            />
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  if (variant === "professionals") {
+    return (
+      <div
+        className={cn(
+          "rounded-lg border border-border/60 bg-muted/30 px-6 py-6 max-w-7xl mx-auto space-y-5",
+          className
+        )}
+      >
+        <div>
+          <div className="flex items-center gap-3">
+            <ShieldCheck className="h-6 w-6 sm:h-7 sm:w-7 text-foreground/80 shrink-0" />
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
+              {PROFESSIONALS.heading}
+            </h2>
+          </div>
+          <p className="mt-1.5 text-base text-muted-foreground">
+            {PROFESSIONALS.subline}
+          </p>
+        </div>
+
+        <p className="text-base text-muted-foreground">{PROFESSIONALS.definition}</p>
+
+        <div className="space-y-3 pt-0.5">
+          {PROFESSIONALS.rows.map((row) => (
             <BadgeRow
               key={row.label}
               icon={row.icon}
