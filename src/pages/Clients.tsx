@@ -491,11 +491,11 @@ const Clients = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-white text-white hover:bg-white/10 px-8 py-3 text-lg font-semibold"
+                className="border-white bg-white text-[#012E46] hover:bg-white/90 px-8 py-3 text-lg font-semibold"
               >
                 <a
                   href="mailto:help@gigexecs.com?subject=Client%20enquiry%3A%20Need%20help%20structuring%20an%20engagement"
-                  className="w-full h-full flex items-center justify-center text-white"
+                  className="w-full h-full flex items-center justify-center text-[#012E46]"
                 >
                   Email us
                 </a>
