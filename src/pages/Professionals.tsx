@@ -447,7 +447,7 @@ const Professionals = () => {
                 Access vetted independent consultants for advisory, interim leadership, fractional roles, and project engagements.
               </p>
               <span className="inline-flex items-center text-sm font-semibold text-[#0284C7] group-hover:underline">
-                Explore our offering for Clients
+                Explore our offering for Clients →
               </span>
             </Link>
             <Link
