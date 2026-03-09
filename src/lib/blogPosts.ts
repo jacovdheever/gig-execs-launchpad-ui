@@ -27,9 +27,14 @@ export interface BlogPost {
   category: BlogCategory
 }
 
-/** Look up post by legacy blogNumber (1–10) for backward compatibility */
+/** Look up post by legacy blogNumber (1–19) for backward compatibility */
 export function getPostByNumber(n: number): BlogPost | undefined {
   return blogPosts.find((p) => p.number === n)
+}
+
+/** Look up post by link path (e.g. "/blog/your-network-needs-a-system-not-just-contacts") */
+export function getPostByLink(link: string): BlogPost | undefined {
+  return blogPosts.find((p) => p.link === link)
 }
 
 export const blogPosts: BlogPost[] = [
@@ -152,6 +157,114 @@ export const blogPosts: BlogPost[] = [
     date: "2024-03-25",
     link: "/blog/master-mental-clarity-stress-management-high-performers",
     category: "Career Decisions & Workstyle",
+  },
+  {
+    number: 11,
+    image: "/images/blog/Blog2.png",
+    alt: "Senior professionals building a credible network system for independent consulting",
+    title: "Your Network Needs a System (Not Just Old Contacts)",
+    description:
+      "Relationships still matter—but networks decay. Here's how senior professionals build repeatable deal flow using modern, credible systems.",
+    author: "Nuno G. Rodrigues",
+    date: "2026-01-01",
+    link: "/blog/your-network-needs-a-system-not-just-contacts",
+    category: "Independent Consulting",
+  },
+  {
+    number: 12,
+    image: "/images/blog/Blog3.png",
+    alt: "Senior professionals adapting to AI and flexible work models",
+    title: "Work Is Changing Fast: How Senior Professionals Stay Relevant",
+    description:
+      "AI and flexible work are reshaping careers. A practical playbook for senior professionals to stay relevant, credible, and in demand.",
+    author: "Nuno G. Rodrigues",
+    date: "2026-01-08",
+    link: "/blog/work-is-changing-fast-how-senior-professionals-stay-relevant",
+    category: "Future of Work & AI",
+  },
+  {
+    number: 13,
+    image: "/images/blog/Blog4.png",
+    alt: "Experienced professionals navigating outdated hiring systems",
+    title: "You're Not the Problem. The Hiring System Is Outdated.",
+    description:
+      "Age bias and rigid hiring cycles are real. Here's how experienced professionals can reframe value and find meaningful flexible engagements.",
+    author: "Nuno G. Rodrigues",
+    date: "2026-01-15",
+    link: "/blog/youre-not-the-problem-the-hiring-system-is-outdated",
+    category: "Senior Careers & Longevity",
+  },
+  {
+    number: 14,
+    image: "/images/blog/Blog5.png",
+    alt: "The age of experience: senior professionals and flexible work",
+    title: "The Age of Experience Is Here (If We Change the Rules)",
+    description:
+      "Experience isn't a liability—it's leverage. Two shifts unlock the future: how companies engage talent and how seniors position themselves.",
+    author: "Nuno G. Rodrigues",
+    date: "2026-01-22",
+    link: "/blog/the-age-of-experience-is-here",
+    category: "Senior Careers & Longevity",
+  },
+  {
+    number: 15,
+    image: "/images/blog/Blog6.png",
+    alt: "Interim and fractional leadership for senior talent",
+    title: "From Corner Office to On-Demand: The New Shape of Senior Talent",
+    description:
+      "Interim and fractional leadership are becoming mainstream. Why companies win, why senior professionals win, and how to engage credibly.",
+    author: "Nuno G. Rodrigues",
+    date: "2026-01-29",
+    link: "/blog/from-corner-office-to-on-demand-the-new-shape-of-senior-talent",
+    category: "Flexible Work Models",
+  },
+  {
+    number: 16,
+    image: "/images/blog/Blog7.png",
+    alt: "Longer careers and flexible engagement models for senior professionals",
+    title: "Work Until 70 (or 80)? Maybe. But Not the Old Way.",
+    description:
+      "Longer careers are becoming reality. The solution isn't 'more work'—it's better models: advisory, interim, fractional, and projects.",
+    author: "Nuno G. Rodrigues",
+    date: "2026-02-05",
+    link: "/blog/work-until-70-or-80-maybe-but-not-the-old-way",
+    category: "Senior Careers & Longevity",
+  },
+  {
+    number: 17,
+    image: "/images/blog/Blog8.png",
+    alt: "GigExecs founder story: premium network for senior professionals",
+    title: "Why We Built GigExecs (and Why the Timing Is Right)",
+    description:
+      "We built GigExecs to make senior independent work credible and accessible. Here's the story—and why flexible talent models are accelerating.",
+    author: "Nuno G. Rodrigues",
+    date: "2026-02-12",
+    link: "/blog/why-we-built-gigexecs-and-why-the-timing-is-right",
+    category: "Independent Consulting",
+  },
+  {
+    number: 18,
+    image: "/images/blog/Blog9.png",
+    alt: "Future of work: senior professionals and AI-driven change",
+    title: "The Future of Work Is Already Here: What Senior Professionals Do Next",
+    description:
+      "AI is reshaping teams and careers. Here's what changes—and a practical pathway into credible, flexible independent work.",
+    author: "Nuno G. Rodrigues",
+    date: "2026-02-26",
+    link: "/blog/the-future-of-work-is-already-here-what-senior-professionals-do-next",
+    category: "Future of Work & AI",
+  },
+  {
+    number: 19,
+    image: "/images/blog/Blog10.png",
+    alt: "Pre-flight checklist for senior independent professionals",
+    title: "A \"Pre-Flight\" Checklist for Senior Independent Professionals",
+    description:
+      "Thinking about going independent? A practical 6-step checklist to clarify your niche, build runway, package outcomes, and launch credibly.",
+    author: "Nuno G. Rodrigues",
+    date: "2026-03-08",
+    link: "/blog/pre-flight-checklist-for-senior-independent-professionals",
+    category: "Independent Consulting",
   },
 ]
 

@@ -20,6 +20,15 @@ import BlogArticle7 from "./pages/BlogArticle7";
 import BlogArticle8 from "./pages/BlogArticle8";
 import BlogArticle9 from "./pages/BlogArticle9";
 import BlogArticle10 from "./pages/BlogArticle10";
+import BlogArticle11 from "./pages/BlogArticle11";
+import BlogArticle12 from "./pages/BlogArticle12";
+import BlogArticle13 from "./pages/BlogArticle13";
+import BlogArticle14 from "./pages/BlogArticle14";
+import BlogArticle15 from "./pages/BlogArticle15";
+import BlogArticle16 from "./pages/BlogArticle16";
+import BlogArticle17 from "./pages/BlogArticle17";
+import BlogArticle18 from "./pages/BlogArticle18";
+import BlogArticle19 from "./pages/BlogArticle19";
 import ExecutiveFreelancePlatform from "./pages/ExecutiveFreelancePlatform";
 import NavigatingAI from "./pages/NavigatingAI";
 import BigAnomaly from "./pages/BigAnomaly";
@@ -132,6 +141,15 @@ const App = () => (
             <Route path="/blog/future-senior-work-flexibility-freelance" element={<BlogArticle8 />} />
             <Route path="/blog/20-percent-challenge-flexible-work-2025" element={<BlogArticle9 />} />
             <Route path="/blog/master-mental-clarity-stress-management-high-performers" element={<BlogArticle10 />} />
+            <Route path="/blog/your-network-needs-a-system-not-just-contacts" element={<BlogArticle11 />} />
+            <Route path="/blog/work-is-changing-fast-how-senior-professionals-stay-relevant" element={<BlogArticle12 />} />
+            <Route path="/blog/youre-not-the-problem-the-hiring-system-is-outdated" element={<BlogArticle13 />} />
+            <Route path="/blog/the-age-of-experience-is-here" element={<BlogArticle14 />} />
+            <Route path="/blog/from-corner-office-to-on-demand-the-new-shape-of-senior-talent" element={<BlogArticle15 />} />
+            <Route path="/blog/work-until-70-or-80-maybe-but-not-the-old-way" element={<BlogArticle16 />} />
+            <Route path="/blog/why-we-built-gigexecs-and-why-the-timing-is-right" element={<BlogArticle17 />} />
+            <Route path="/blog/the-future-of-work-is-already-here-what-senior-professionals-do-next" element={<BlogArticle18 />} />
+            <Route path="/blog/pre-flight-checklist-for-senior-independent-professionals" element={<BlogArticle19 />} />
             <Route path="/blog/executive-freelance-platform" element={<ExecutiveFreelancePlatform />} />
             <Route path="/blog/navigating-ai" element={<NavigatingAI />} />
             <Route path="/blog/big-anomaly" element={<BigAnomaly />} />

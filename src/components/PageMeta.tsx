@@ -21,6 +21,8 @@ export interface PageMetaProps {
   ogImage?: string
   /** Override canonical URL entirely (rare). */
   canonicalUrl?: string
+  /** OG type (e.g. "article" for blog posts). Defaults to "website". */
+  ogType?: string
 }
 
 export function PageMeta({
@@ -29,6 +31,7 @@ export function PageMeta({
   path,
   ogImage = DEFAULT_OG_IMAGE,
   canonicalUrl,
+  ogType = "website",
 }: PageMetaProps) {
   const canonicalLink = canonicalUrl ?? (path ? canonical(path) : undefined)
   const ogImageUrl = ogImage.startsWith("http") ? ogImage : absoluteUrl(ogImage)
@@ -42,7 +45,7 @@ export function PageMeta({
       <meta property="og:title" content={makeTitle(title)} />
       {description && <meta property="og:description" content={description} />}
       <meta property="og:image" content={ogImageUrl} />
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content={ogType} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={makeTitle(title)} />
       {description && <meta name="twitter:description" content={description} />}

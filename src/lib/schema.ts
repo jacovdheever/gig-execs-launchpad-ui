@@ -30,6 +30,16 @@ export interface BlogIndexSchemaInput {
   itemListElement?: Array<{ name: string; url: string }>
 }
 
+export interface BlogPostingSchemaInput {
+  headline: string
+  description: string
+  datePublished: string
+  dateModified: string
+  author: string
+  url: string
+  image: string
+}
+
 /**
  * Organization schema (company/brand).
  */
@@ -137,5 +147,33 @@ export function blogIndexSchema(input: BlogIndexSchemaInput) {
           },
         }
       : {}),
+  }
+}
+
+/**
+ * BlogPosting schema for individual blog articles.
+ */
+export function blogPostingSchema(input: BlogPostingSchemaInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: input.headline,
+    description: input.description,
+    datePublished: input.datePublished,
+    dateModified: input.dateModified,
+    author: {
+      "@type": "Person",
+      name: input.author,
+    },
+    url: input.url.startsWith("http") ? input.url : absoluteUrl(input.url),
+    image: input.image.startsWith("http") ? input.image : absoluteUrl(input.image),
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      logo: {
+        "@type": "ImageObject",
+        url: absoluteUrl("/favicon-32x32.png"),
+      },
+    },
   }
 }
