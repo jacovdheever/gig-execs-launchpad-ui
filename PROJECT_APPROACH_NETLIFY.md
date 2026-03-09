@@ -3458,3 +3458,49 @@ This checkpoint demonstrates significant improvements to the core gig and bid ma
 4. **Cost Optimization**: Further optimize token usage and API calls
 
 This checkpoint demonstrates significant improvements to the CV parsing system's reliability, user experience, and data quality, making it production-ready for all user scenarios.
+
+---
+
+## Checkpoint: Blog, SEO & Content (March 2026)
+
+**Status**: ✅ **LIVE ON MAIN**
+
+### **What Was Delivered**
+
+- **Newsletter-based blog posts 11–19**: Rewritten from `Blog images/Newsletters GigExecs Insider for Website .pdf` with SEO-friendly structure (TL;DR, H2/H3, internal/external links).
+- **Single source of truth**: `src/lib/blogPosts.ts` defines all post metadata (title, description, date, link, category, image, alt). Blog index and article pages both use it.
+- **Reusable article layout**: `src/components/BlogPostTemplate.tsx` handles PageMeta, JsonLd (breadcrumb + BlogPosting), nav, breadcrumbs, TL;DR, main content, and the shared “Next step” CTA (Clients / Professionals).
+- **Schema**: `src/lib/schema.ts` includes `blogPostingSchema()`; each article page passes it to `<JsonLd>` along with `breadcrumbSchema`.
+- **Static sitemap**: `public/sitemap.xml` lists core marketing URLs and all blog post URLs (with `lastmod` for posts 11–19). Updated manually when new posts or key pages are added.
+- **Dedicated blog images**: Posts 11–19 use images from `Blog images/` copied into `public/images/blog/` (e.g. `1741536170587.png`). Paths are set in `blogPosts.ts` only; article pages inherit via `getPostByLink()`.
+- **Deploy flow**: Work on `develop` → merge to `main` → push to GitHub; production (Netlify) deploys from `main`.
+
+### **Key Learnings Applied**
+
+- **Content from a single source**: New blog content was rewritten from the newsletter PDF, not invented, to keep voice and facts consistent.
+- **SEO in one place**: PageMeta (title, description, path, ogType) and JsonLd (breadcrumbs, BlogPosting) are set per page; blog articles get data from `blogPosts.ts` so meta and schema stay in sync.
+- **Positioning language**: Site and blog use “premium network”, “vetted independent consultants”, “senior professionals”, “flexible engagements” (advisory, interim, fractional, contract, project). Avoid leading with “gig economy”, “freelance marketplace”, “bidding”, “gigs” in titles/H1s.
+- **Internal links**: Each post includes early link to `/professionals` or `/clients`, mid-post link to `/how-it-works` or `/blog` where relevant, and the template’s “Next step” CTA with both `/clients` and `/professionals`.
+- **External links**: Use 2–3 reputable sources per post (e.g. OECD, WEF Future of Jobs, MBO Partners, Upwork Research, Robert Walters); links are in-context, not a separate “Sources” list.
+- **Images**: Final assets live in `public/images/blog/` so they are served at `/images/blog/<filename>`. Add new images there and reference them in `blogPosts.ts`; no need to change article components.
+
+### **Standards Going Forward**
+
+#### **Blog & content**
+
+1. **New posts**: Add an entry to `blogPosts` in `src/lib/blogPosts.ts` (number, image, alt, title, description, author, date ISO, link, category). Create a page component (e.g. `BlogArticle20.tsx`) that uses `getPostByLink(LINK)` and `<BlogPostTemplate>`, and add the route in `App.tsx`.
+2. **Categories**: Use only the defined taxonomy in `BLOG_CATEGORIES`: Independent Consulting, Flexible Work Models, Future of Work & AI, Senior Careers & Longevity, Career Decisions & Workstyle.
+3. **Copy**: Prefer “independent consultants”, “senior professionals”, “flexible engagements”; avoid “gig economy” / “freelance marketplace” in titles and hero copy.
+4. **Article structure**: Include TL;DR (3 bullets), clear H2/H3 sections, and let the template render the shared CTA block.
+
+#### **SEO & technical**
+
+5. **PageMeta**: Every public page should render `<PageMeta title={...} description={...} path={...} />`; blog articles use `ogType="article"` and pass `post.image` for `ogImage`.
+6. **JsonLd**: Blog index uses `breadcrumbSchema` + `blogIndexSchema`; each article uses `breadcrumbSchema` + `blogPostingSchema` with data from the same post object.
+7. **Sitemap**: When adding a new blog post or a new public marketing page, add a corresponding `<url>` (and optional `<lastmod>`) to `public/sitemap.xml`. Base URL: `https://gigexecs.com`.
+
+#### **Deploy & branches**
+
+8. **develop**: Preview and QA; push blog/SEO/content changes here first.
+9. **main**: Production; merge from develop when ready, then push. Netlify deploys from `main`.
+10. **Checkpoint**: After a significant milestone, update this doc (checkpoint + learnings/standards) and optionally tag in git (e.g. `git tag checkpoint-blog-seo-march-2026`).
