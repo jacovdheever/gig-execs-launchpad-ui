@@ -160,7 +160,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     number: 11,
-    image: "/images/blog/Blog2.png",
+    image: "/images/blog/1741536170587.png",
     alt: "Senior professionals building a credible network system for independent consulting",
     title: "Your Network Needs a System (Not Just Old Contacts)",
     description:
@@ -172,7 +172,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     number: 12,
-    image: "/images/blog/Blog3.png",
+    image: "/images/blog/1756796368364.png",
     alt: "Senior professionals adapting to AI and flexible work models",
     title: "Work Is Changing Fast: How Senior Professionals Stay Relevant",
     description:
@@ -184,7 +184,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     number: 13,
-    image: "/images/blog/Blog4.png",
+    image: "/images/blog/1746449160182.png",
     alt: "Experienced professionals navigating outdated hiring systems",
     title: "You're Not the Problem. The Hiring System Is Outdated.",
     description:
@@ -208,7 +208,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     number: 15,
-    image: "/images/blog/Blog6.png",
+    image: "/images/blog/1746448473098.png",
     alt: "Interim and fractional leadership for senior talent",
     title: "From Corner Office to On-Demand: The New Shape of Senior Talent",
     description:
@@ -220,7 +220,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     number: 16,
-    image: "/images/blog/Blog7.png",
+    image: "/images/blog/1756796368364.png",
     alt: "Longer careers and flexible engagement models for senior professionals",
     title: "Work Until 70 (or 80)? Maybe. But Not the Old Way.",
     description:
@@ -232,7 +232,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     number: 17,
-    image: "/images/blog/Blog8.png",
+    image: "/images/blog/1762428718567.png",
     alt: "GigExecs founder story: premium network for senior professionals",
     title: "Why We Built GigExecs (and Why the Timing Is Right)",
     description:
@@ -244,7 +244,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     number: 18,
-    image: "/images/blog/Blog9.png",
+    image: "/images/blog/1767345197729.png",
     alt: "Future of work: senior professionals and AI-driven change",
     title: "The Future of Work Is Already Here: What Senior Professionals Do Next",
     description:
@@ -256,7 +256,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     number: 19,
-    image: "/images/blog/Blog10.png",
+    image: "/images/blog/1770294953463.png",
     alt: "Pre-flight checklist for senior independent professionals",
     title: "A \"Pre-Flight\" Checklist for Senior Independent Professionals",
     description:
