@@ -29,6 +29,7 @@ import BlogArticle16 from "./pages/BlogArticle16";
 import BlogArticle17 from "./pages/BlogArticle17";
 import BlogArticle18 from "./pages/BlogArticle18";
 import BlogArticle19 from "./pages/BlogArticle19";
+import BlogArticle20 from "./pages/BlogArticle20";
 import ExecutiveFreelancePlatform from "./pages/ExecutiveFreelancePlatform";
 import NavigatingAI from "./pages/NavigatingAI";
 import BigAnomaly from "./pages/BigAnomaly";
@@ -150,6 +151,7 @@ const App = () => (
             <Route path="/blog/why-we-built-gigexecs-and-why-the-timing-is-right" element={<BlogArticle17 />} />
             <Route path="/blog/the-future-of-work-is-already-here-what-senior-professionals-do-next" element={<BlogArticle18 />} />
             <Route path="/blog/pre-flight-checklist-for-senior-independent-professionals" element={<BlogArticle19 />} />
+            <Route path="/blog/are-layoffs-quietly-redesigning-the-corporate-workforce" element={<BlogArticle20 />} />
             <Route path="/blog/executive-freelance-platform" element={<ExecutiveFreelancePlatform />} />
             <Route path="/blog/navigating-ai" element={<NavigatingAI />} />
             <Route path="/blog/big-anomaly" element={<BigAnomaly />} />

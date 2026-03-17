@@ -27,7 +27,7 @@ export interface BlogPost {
   category: BlogCategory
 }
 
-/** Look up post by legacy blogNumber (1–19) for backward compatibility */
+/** Look up post by legacy blogNumber (1–20) for backward compatibility */
 export function getPostByNumber(n: number): BlogPost | undefined {
   return blogPosts.find((p) => p.number === n)
 }
@@ -265,6 +265,18 @@ export const blogPosts: BlogPost[] = [
     date: "2026-03-08",
     link: "/blog/pre-flight-checklist-for-senior-independent-professionals",
     category: "Independent Consulting",
+  },
+  {
+    number: 20,
+    image: "/images/blog/layoffs-workforce-cover.png",
+    alt: "Boardroom meeting with in-person executives and remote participants on a virtual conference screen discussing workforce strategy",
+    title: "Are Layoffs Quietly Redesigning the Corporate Workforce?",
+    description:
+      "Layoffs may be doing more than cutting costs. Why AI, leaner teams, and flexible expertise are reshaping how companies build the modern workforce.",
+    author: "Nuno G. Rodrigues",
+    date: "2026-03-12",
+    link: "/blog/are-layoffs-quietly-redesigning-the-corporate-workforce",
+    category: "Future of Work & AI",
   },
 ]
 
