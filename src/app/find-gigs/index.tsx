@@ -88,6 +88,8 @@ export default function FindGigsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
   const [industries, setIndustries] = useState<Industry[]>([]);
+  /** Industries that appear on at least one loaded gig (filter list only; full list kept for lookups) */
+  const [projectIndustries, setProjectIndustries] = useState<Industry[]>([]);
   const [projectSkills, setProjectSkills] = useState<Skill[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -404,6 +406,17 @@ export default function FindGigsPage() {
         skillsData: skillsData.length,
         projectSkillsData: projectSkillsData
       });
+
+      const allProjectIndustryIds = new Set<number>();
+      processedProjects.forEach((project) => {
+        if (project.industries?.length) {
+          project.industries.forEach((id) => allProjectIndustryIds.add(id));
+        }
+      });
+      const projectIndustriesData = industriesData.filter((i) =>
+        allProjectIndustryIds.has(i.id)
+      );
+      setProjectIndustries(projectIndustriesData);
     } catch (error) {
       console.error('Error loading data:', error);
     } finally {
@@ -731,11 +744,13 @@ export default function FindGigsPage() {
   };
 
   const visibleSkillRows = skillsListExpanded ? projectSkills : projectSkills.slice(0, 8);
-  const visibleIndustryRows = industriesListExpanded ? industries : industries.slice(0, 8);
+  const visibleIndustryRows = industriesListExpanded
+    ? projectIndustries
+    : projectIndustries.slice(0, 8);
 
   const handleSelectAllIndustries = (checked: boolean) => {
     if (checked) {
-      setSelectedIndustries(industries.map(i => i.id));
+      setSelectedIndustries(projectIndustries.map((i) => i.id));
     } else {
       setSelectedIndustries([]);
     }
@@ -868,11 +883,12 @@ export default function FindGigsPage() {
                             className="h-7 px-2 text-xs"
                             onClick={() =>
                               handleSelectAllIndustries(
-                                selectedIndustries.length !== industries.length
+                                selectedIndustries.length !== projectIndustries.length
                               )
                             }
                           >
-                            {selectedIndustries.length === industries.length
+                            {selectedIndustries.length === projectIndustries.length &&
+                            projectIndustries.length > 0
                               ? 'Deselect all'
                               : 'Select all'}
                           </Button>
@@ -902,7 +918,7 @@ export default function FindGigsPage() {
                             </div>
                           ))}
                         </div>
-                        {industries.length > 8 && (
+                        {projectIndustries.length > 8 && (
                           <Button
                             type="button"
                             variant="ghost"
