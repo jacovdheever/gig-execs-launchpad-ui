@@ -484,58 +484,41 @@ export default function FindGigsPage() {
     return industry ? industry.name : `Industry ${industryId}`;
   };
 
-  const calculateMatchQuality = (project: Project) => {
+  /**
+   * Points: +1 per skill on the gig that matches the consultant’s profile, +1 per matching industry.
+   * 1–3 pts → Possible Match · 4–5 → Good Match · 6+ → Strong Match. 0 pts → no badge.
+   */
+  const calculateMatchQuality = (
+    project: Project
+  ): { tier: 'strong' | 'good' | 'possible'; points: number; color: 'green' | 'blue' | 'yellow' } | null => {
     if (!user || user.role !== 'consultant') {
-      console.log('🔍 No match calculation - user not consultant:', { user, role: user?.role });
-      return null; // No match calculation for non-consultants
-    }
-
-    if (userSkills.length === 0 && userIndustries.length === 0) {
-      console.log('🔍 No match calculation - user skills/industries not loaded yet');
       return null;
     }
 
-    const projectSkills = project.skills_required || [];
-    const projectIndustries = project.industries || [];
-    
-    console.log('🔍 Match calculation for project', project.id, ':');
-    console.log('  - userSkillsCount:', userSkills.length);
-    console.log('  - userIndustriesCount:', userIndustries.length);
-    console.log('  - projectSkillsCount:', projectSkills.length);
-    console.log('  - projectIndustriesCount:', projectIndustries.length);
-    console.log('  - userSkills:', userSkills);
-    console.log('  - userIndustries:', userIndustries);
-    console.log('  - projectSkills:', projectSkills);
-    console.log('  - projectIndustries:', projectIndustries);
-    console.log('  - userType:', user?.userType);
-    console.log('  - hasUser:', !!user);
-    console.log('  - userSkillsLoaded:', userSkills.length > 0);
-    console.log('  - userIndustriesLoaded:', userIndustries.length > 0);
-    
-    // Calculate skill match percentage
-    const skillMatches = projectSkills.filter(skillId => userSkills.includes(skillId)).length;
-    const skillMatchPercentage = projectSkills.length > 0 ? (skillMatches / projectSkills.length) * 100 : 0;
-    
-    // Calculate industry match percentage
-    const industryMatches = projectIndustries.filter(industryId => userIndustries.includes(industryId)).length;
-    const industryMatchPercentage = projectIndustries.length > 0 ? (industryMatches / projectIndustries.length) * 100 : 0;
-    
-    // Calculate overall match (weighted: 70% skills, 30% industries)
-    const overallMatch = (skillMatchPercentage * 0.7) + (industryMatchPercentage * 0.3);
-    
-    console.log('🔍 Match calculation result:', {
-      skillMatches: skillMatches,
-      skillMatchPercentage: skillMatchPercentage,
-      industryMatches: industryMatches,
-      industryMatchPercentage: industryMatchPercentage,
-      overallMatch: overallMatch
-    });
-    
-    // Determine match quality
-    if (overallMatch >= 80) return { level: 'excellent', percentage: Math.round(overallMatch), color: 'green' };
-    if (overallMatch >= 60) return { level: 'good', percentage: Math.round(overallMatch), color: 'blue' };
-    if (overallMatch >= 30) return { level: 'partial', percentage: Math.round(overallMatch), color: 'yellow' };
-    return { level: 'low', percentage: Math.round(overallMatch), color: 'gray' };
+    if (userSkills.length === 0 && userIndustries.length === 0) {
+      return null;
+    }
+
+    const projSkills = project.skills_required || [];
+    const projIndustries = project.industries || [];
+
+    const skillPoints = projSkills.filter((skillId) => userSkills.includes(skillId)).length;
+    const industryPoints = projIndustries.filter((industryId) =>
+      userIndustries.includes(industryId)
+    ).length;
+    const points = skillPoints + industryPoints;
+
+    if (points === 0) {
+      return null;
+    }
+
+    if (points >= 6) {
+      return { tier: 'strong', points, color: 'green' };
+    }
+    if (points >= 4) {
+      return { tier: 'good', points, color: 'blue' };
+    }
+    return { tier: 'possible', points, color: 'yellow' };
   };
 
   const renderStars = (rating: number) => {
@@ -695,15 +678,15 @@ export default function FindGigsPage() {
       if (!matchA) return 1;
       if (!matchB) return -1;
 
-      const qualityOrder = { excellent: 0, good: 1, partial: 2, low: 3 };
-      const orderA = qualityOrder[matchA.level as keyof typeof qualityOrder];
-      const orderB = qualityOrder[matchB.level as keyof typeof qualityOrder];
+      const tierOrder = { strong: 0, good: 1, possible: 2 };
+      const orderA = tierOrder[matchA.tier];
+      const orderB = tierOrder[matchB.tier];
 
       if (orderA !== orderB) {
         return orderA - orderB;
       }
 
-      return matchB.percentage - matchA.percentage;
+      return matchB.points - matchA.points;
     });
   }, [filteredProjects, sortMode, user, userSkills, userIndustries]);
 
@@ -1420,28 +1403,23 @@ export default function FindGigsPage() {
                         <CardTitle className="flex-1 text-lg line-clamp-2">{project.title}</CardTitle>
                       {user?.role === 'consultant' && (() => {
                         const match = calculateMatchQuality(project);
-                        console.log('🔍 Match badge for project', project.id, ':', match);
                         return match ? (
                           <Badge 
                             variant="outline" 
-                            className={`ml-2 text-xs ${
+                            className={`ml-2 shrink-0 text-xs ${
                                 match.color === 'green'
                                   ? 'bg-green-50 text-green-700 border-green-200'
                                   : match.color === 'blue'
                                     ? 'bg-blue-50 text-blue-700 border-blue-200'
-                                    : match.color === 'yellow'
-                                      ? 'bg-yellow-50 text-yellow-700 border-yellow-200'
-                                      : 'bg-gray-50 text-gray-700 border-gray-200'
+                                    : 'bg-yellow-50 text-yellow-700 border-yellow-200'
                               }`}
                             >
-                              {match.level === 'excellent'
-                                ? 'Excellent Match'
-                                : match.level === 'good'
+                              {match.tier === 'strong'
+                                ? 'Strong Match'
+                                : match.tier === 'good'
                                   ? 'Good Match'
-                                  : match.level === 'partial'
-                                    ? 'Partial Match'
-                                    : 'Low Match'}{' '}
-                              ({match.percentage}%)
+                                  : 'Possible Match'}{' '}
+                              ({match.points} {match.points === 1 ? 'pt' : 'pts'})
                           </Badge>
                         ) : null;
                       })()}
