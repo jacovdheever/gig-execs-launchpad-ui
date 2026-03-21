@@ -17,6 +17,7 @@ import {
   Calendar,
   Briefcase,
   ExternalLink,
+  Info,
   User,
   X
 } from 'lucide-react';
@@ -35,6 +36,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 interface Project {
   id: number;
@@ -93,9 +95,8 @@ export default function FindGigsPage() {
   const [selectedIndustries, setSelectedIndustries] = useState<number[]>([]);
   /** Default ON: show only open, non-expired engagements */
   const [showActiveOnly, setShowActiveOnly] = useState<boolean>(true);
+  /** Slider range: default always $0 → max from loaded gigs (user narrows from there) */
   const [hourlyRateRange, setHourlyRateRange] = useState<[number, number]>([0, 0]);
-  /** Full budget span from loaded projects — used for reset and “narrowed” detection */
-  const [budgetRangeDefaults, setBudgetRangeDefaults] = useState<[number, number]>([0, 0]);
   const [maxBudget, setMaxBudget] = useState<number>(1000000);
   const [showFilters, setShowFilters] = useState(false);
   const [originFilter, setOriginFilter] = useState<'all' | 'internal' | 'external'>('all');
@@ -366,26 +367,25 @@ export default function FindGigsPage() {
         }
       }
 
-      // Calculate dynamic budget range based on loaded projects
+      // Slider max from gigs; default selection is always $0 through max (no min-from-data default)
       if (processedProjects.length > 0) {
         const budgetValues = processedProjects
           .flatMap((p) => [p.budget_min, p.budget_max])
           .filter((value): value is number => typeof value === 'number' && !Number.isNaN(value));
 
         if (budgetValues.length > 0) {
-          const minBudget = Math.min(...budgetValues);
           const maxBudgetValue = Math.max(...budgetValues);
           setMaxBudget(maxBudgetValue);
-          const fullRange: [number, number] = [minBudget, maxBudgetValue];
-          setBudgetRangeDefaults(fullRange);
-          setHourlyRateRange(fullRange);
-          console.log('🔍 Dynamic budget range set:', { min: minBudget, max: maxBudgetValue });
+          setHourlyRateRange([0, maxBudgetValue]);
+          console.log('🔍 Budget slider max:', { max: maxBudgetValue, defaultRange: [0, maxBudgetValue] });
         } else {
           setMaxBudget(0);
-          setBudgetRangeDefaults([0, 0]);
           setHourlyRateRange([0, 0]);
-          console.log('🔍 Dynamic budget range set to defaults (no numeric budgets found).');
+          console.log('🔍 No numeric budgets — slider at 0–0.');
         }
+      } else {
+        setMaxBudget(0);
+        setHourlyRateRange([0, 0]);
       }
 
       // Extract skills from projects for filtering
@@ -553,14 +553,11 @@ export default function FindGigsPage() {
     );
   };
 
-  /** True when slider is narrower than the full loaded budget span */
+  /** True when user has moved the slider away from full $0–max span */
   const isBudgetNarrowed = useMemo(() => {
-    if (maxBudget <= 0 || budgetRangeDefaults[1] <= 0) return false;
-    return (
-      hourlyRateRange[0] > budgetRangeDefaults[0] ||
-      hourlyRateRange[1] < budgetRangeDefaults[1]
-    );
-  }, [hourlyRateRange, budgetRangeDefaults, maxBudget]);
+    if (maxBudget <= 0) return false;
+    return hourlyRateRange[0] > 0 || hourlyRateRange[1] < maxBudget;
+  }, [hourlyRateRange, maxBudget]);
 
   /** Count of active refinements (chips + summary) — excludes default “active only”; skills/industries count per selection */
   const optionalFilterCount = useMemo(() => {
@@ -726,7 +723,7 @@ export default function FindGigsPage() {
     setSearchTerm('');
     setSelectedSkills([]);
     setSelectedIndustries([]);
-    setHourlyRateRange([budgetRangeDefaults[0], budgetRangeDefaults[1]]);
+    setHourlyRateRange([0, maxBudget]);
     setOriginFilter('all');
     setShowActiveOnly(true);
     setShowBidsOnly(false);
@@ -811,196 +808,6 @@ export default function FindGigsPage() {
                     {' · '}
                     <span className="text-slate-600">Interim COO</span>
                   </p>
-                </div>
-
-                {/* Active filter chips + summary */}
-                <div className="space-y-2 rounded-lg border border-slate-200/80 bg-slate-50/60 p-3">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="text-xs font-medium text-slate-600">
-                      {optionalFilterCount === 0
-                        ? 'Default filters'
-                        : `${optionalFilterCount} filter${optionalFilterCount === 1 ? '' : 's'} active`}
-                    </p>
-                    <div className="flex flex-wrap items-center gap-2">
-                      {optionalFilterCount > 0 && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          className="h-7 px-2 text-xs text-slate-600"
-                          onClick={resetToDefaults}
-                        >
-                          Clear all
-                        </Button>
-                      )}
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        className="h-7 text-xs"
-                        onClick={resetToDefaults}
-                      >
-                        Reset filters
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {searchTerm.trim().length > 0 && (
-                      <Badge
-                        variant="secondary"
-                        className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
-                      >
-                        <span className="truncate">
-                          Search: {searchTerm.trim()}
-                        </span>
-                        <button
-                          type="button"
-                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
-                          aria-label="Clear search"
-                          onClick={() => setSearchTerm('')}
-                        >
-                          <X className="h-3.5 w-3.5" />
-                        </button>
-                      </Badge>
-                    )}
-                    {showActiveOnly ? (
-                      <Badge
-                        variant="secondary"
-                        className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
-                      >
-                        Active only
-                        <button
-                          type="button"
-                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
-                          aria-label="Include inactive engagements"
-                          onClick={() => setShowActiveOnly(false)}
-                        >
-                          <X className="h-3.5 w-3.5" />
-                        </button>
-                      </Badge>
-                    ) : (
-                      <Badge
-                        variant="secondary"
-                        className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
-                      >
-                        Including inactive
-                        <button
-                          type="button"
-                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
-                          aria-label="Show active engagements only"
-                          onClick={() => setShowActiveOnly(true)}
-                        >
-                          <X className="h-3.5 w-3.5" />
-                        </button>
-                      </Badge>
-                    )}
-                    {isBudgetNarrowed && (
-                      <Badge
-                        variant="secondary"
-                        className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
-                      >
-                        <span className="truncate">
-                          Budget: {formatCurrency(hourlyRateRange[0], 'USD')}–{formatCurrency(hourlyRateRange[1], 'USD')}
-                        </span>
-                        <button
-                          type="button"
-                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
-                          aria-label="Clear budget filter"
-                          onClick={() =>
-                            setHourlyRateRange([budgetRangeDefaults[0], budgetRangeDefaults[1]])
-                          }
-                        >
-                          <X className="h-3.5 w-3.5" />
-                        </button>
-                      </Badge>
-                    )}
-                    {originFilter === 'internal' && (
-                      <Badge
-                        variant="secondary"
-                        className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
-                      >
-                        Internal gigs
-                        <button
-                          type="button"
-                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
-                          aria-label="Clear origin filter"
-                          onClick={() => setOriginFilter('all')}
-                        >
-                          <X className="h-3.5 w-3.5" />
-                        </button>
-                      </Badge>
-                    )}
-                    {originFilter === 'external' && (
-                      <Badge
-                        variant="secondary"
-                        className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
-                      >
-                        External gigs
-                        <button
-                          type="button"
-                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
-                          aria-label="Clear origin filter"
-                          onClick={() => setOriginFilter('all')}
-                        >
-                          <X className="h-3.5 w-3.5" />
-                        </button>
-                      </Badge>
-                    )}
-                    {selectedSkills.map((skillId) => (
-                      <Badge
-                        key={`skill-chip-${skillId}`}
-                        variant="secondary"
-                        className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
-                      >
-                        <span className="truncate">{getSkillName(skillId)}</span>
-                        <button
-                          type="button"
-                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
-                          aria-label={`Remove skill ${getSkillName(skillId)}`}
-                          onClick={() =>
-                            setSelectedSkills((prev) => prev.filter((id) => id !== skillId))
-                          }
-                        >
-                          <X className="h-3.5 w-3.5" />
-                        </button>
-                      </Badge>
-                    ))}
-                    {selectedIndustries.map((industryId) => (
-                      <Badge
-                        key={`industry-chip-${industryId}`}
-                        variant="secondary"
-                        className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
-                      >
-                        <span className="truncate">{getIndustryName(industryId)}</span>
-                        <button
-                          type="button"
-                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
-                          aria-label={`Remove industry ${getIndustryName(industryId)}`}
-                          onClick={() =>
-                            setSelectedIndustries((prev) => prev.filter((id) => id !== industryId))
-                          }
-                        >
-                          <X className="h-3.5 w-3.5" />
-                        </button>
-                      </Badge>
-                    ))}
-                    {showBidsOnly && (
-                      <Badge
-                        variant="secondary"
-                        className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
-                      >
-                        My bids
-                        <button
-                          type="button"
-                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
-                          aria-label="Clear my bids filter"
-                          onClick={() => setShowBidsOnly(false)}
-                        >
-                          <X className="h-3.5 w-3.5" />
-                        </button>
-                      </Badge>
-                    )}
-                  </div>
                 </div>
 
                 {/* Filters panel */}
@@ -1157,15 +964,65 @@ export default function FindGigsPage() {
                               </div>
                               <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="internal" id="origin-internal" />
-                                <Label htmlFor="origin-internal" className="text-sm">
-                                  Internal gigs
-                                </Label>
+                                <div className="flex min-w-0 flex-1 items-center gap-1.5">
+                                  <Label htmlFor="origin-internal" className="text-sm">
+                                    Internal gigs
+                                  </Label>
+                                  <Popover>
+                                    <PopoverTrigger asChild>
+                                      <button
+                                        type="button"
+                                        className="inline-flex shrink-0 touch-manipulation rounded-full text-slate-400 outline-none ring-offset-2 hover:text-slate-600 focus-visible:ring-2 focus-visible:ring-slate-400"
+                                        aria-label="What is an internal gig?"
+                                        onClick={(e) => e.stopPropagation()}
+                                      >
+                                        <Info className="h-3.5 w-3.5" strokeWidth={2} />
+                                      </button>
+                                    </PopoverTrigger>
+                                    <PopoverContent
+                                      className="max-w-[min(20rem,calc(100vw-2rem))] space-y-1 border-slate-200 p-3 text-sm shadow-md"
+                                      side="top"
+                                      align="start"
+                                    >
+                                      <p className="font-semibold text-slate-900">Internal gig</p>
+                                      <p className="text-slate-600 leading-snug">
+                                        A role posted directly on GigExecs by a client using the
+                                        platform.
+                                      </p>
+                                    </PopoverContent>
+                                  </Popover>
+                                </div>
                               </div>
                               <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="external" id="origin-external" />
-                                <Label htmlFor="origin-external" className="text-sm">
-                                  External gigs
-                                </Label>
+                                <div className="flex min-w-0 flex-1 items-center gap-1.5">
+                                  <Label htmlFor="origin-external" className="text-sm">
+                                    External gigs
+                                  </Label>
+                                  <Popover>
+                                    <PopoverTrigger asChild>
+                                      <button
+                                        type="button"
+                                        className="inline-flex shrink-0 touch-manipulation rounded-full text-slate-400 outline-none ring-offset-2 hover:text-slate-600 focus-visible:ring-2 focus-visible:ring-slate-400"
+                                        aria-label="What is an external gig?"
+                                        onClick={(e) => e.stopPropagation()}
+                                      >
+                                        <Info className="h-3.5 w-3.5" strokeWidth={2} />
+                                      </button>
+                                    </PopoverTrigger>
+                                    <PopoverContent
+                                      className="max-w-[min(20rem,calc(100vw-2rem))] space-y-1 border-slate-200 p-3 text-sm shadow-md"
+                                      side="top"
+                                      align="start"
+                                    >
+                                      <p className="font-semibold text-slate-900">External gig</p>
+                                      <p className="text-slate-600 leading-snug">
+                                        A role sourced from outside GigExecs and curated for our
+                                        community.
+                                      </p>
+                                    </PopoverContent>
+                                  </Popover>
+                                </div>
                               </div>
                             </RadioGroup>
                           </div>
@@ -1221,25 +1078,206 @@ export default function FindGigsPage() {
             </CardContent>
           </Card>
 
-          {/* Results header */}
-          <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-slate-700">{resultsSummaryText}</p>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
-                Sort
-              </span>
-              <Select
-                value={sortMode}
-                onValueChange={(v) => setSortMode(v as 'best_match' | 'most_recent')}
-              >
-                <SelectTrigger className="h-9 w-[180px] border-slate-200 bg-white text-sm">
-                  <SelectValue placeholder="Sort" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="best_match">Best match</SelectItem>
-                  <SelectItem value="most_recent">Most recent</SelectItem>
-                </SelectContent>
-              </Select>
+          {/* Results summary + sort + active chips (outside filter card) */}
+          <div className="mb-6 space-y-3">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-slate-700">{resultsSummaryText}</p>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                  Sort
+                </span>
+                <Select
+                  value={sortMode}
+                  onValueChange={(v) => setSortMode(v as 'best_match' | 'most_recent')}
+                >
+                  <SelectTrigger className="h-9 w-[180px] border-slate-200 bg-white text-sm">
+                    <SelectValue placeholder="Sort" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="best_match">Best match</SelectItem>
+                    <SelectItem value="most_recent">Most recent</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
+              <div className="flex min-w-0 flex-1 flex-wrap gap-2">
+                {searchTerm.trim().length > 0 && (
+                  <Badge
+                    variant="secondary"
+                    className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800 shadow-sm"
+                  >
+                    <span className="truncate">Search: {searchTerm.trim()}</span>
+                    <button
+                      type="button"
+                      className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                      aria-label="Clear search"
+                      onClick={() => setSearchTerm('')}
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </Badge>
+                )}
+                {showActiveOnly ? (
+                  <Badge
+                    variant="secondary"
+                    className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800 shadow-sm"
+                  >
+                    Active only
+                    <button
+                      type="button"
+                      className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                      aria-label="Include inactive engagements"
+                      onClick={() => setShowActiveOnly(false)}
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </Badge>
+                ) : (
+                  <Badge
+                    variant="secondary"
+                    className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800 shadow-sm"
+                  >
+                    Including inactive
+                    <button
+                      type="button"
+                      className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                      aria-label="Show active engagements only"
+                      onClick={() => setShowActiveOnly(true)}
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </Badge>
+                )}
+                {isBudgetNarrowed && (
+                  <Badge
+                    variant="secondary"
+                    className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800 shadow-sm"
+                  >
+                    <span className="truncate">
+                      Budget: {formatCurrency(hourlyRateRange[0], 'USD')}–
+                      {formatCurrency(hourlyRateRange[1], 'USD')}
+                    </span>
+                    <button
+                      type="button"
+                      className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                      aria-label="Clear budget filter"
+                      onClick={() => setHourlyRateRange([0, maxBudget])}
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </Badge>
+                )}
+                {originFilter === 'internal' && (
+                  <Badge
+                    variant="secondary"
+                    className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800 shadow-sm"
+                  >
+                    Internal gigs
+                    <button
+                      type="button"
+                      className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                      aria-label="Clear origin filter"
+                      onClick={() => setOriginFilter('all')}
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </Badge>
+                )}
+                {originFilter === 'external' && (
+                  <Badge
+                    variant="secondary"
+                    className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800 shadow-sm"
+                  >
+                    External gigs
+                    <button
+                      type="button"
+                      className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                      aria-label="Clear origin filter"
+                      onClick={() => setOriginFilter('all')}
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </Badge>
+                )}
+                {selectedSkills.map((skillId) => (
+                  <Badge
+                    key={`skill-chip-${skillId}`}
+                    variant="secondary"
+                    className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800 shadow-sm"
+                  >
+                    <span className="truncate">{getSkillName(skillId)}</span>
+                    <button
+                      type="button"
+                      className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                      aria-label={`Remove skill ${getSkillName(skillId)}`}
+                      onClick={() =>
+                        setSelectedSkills((prev) => prev.filter((id) => id !== skillId))
+                      }
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </Badge>
+                ))}
+                {selectedIndustries.map((industryId) => (
+                  <Badge
+                    key={`industry-chip-${industryId}`}
+                    variant="secondary"
+                    className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800 shadow-sm"
+                  >
+                    <span className="truncate">{getIndustryName(industryId)}</span>
+                    <button
+                      type="button"
+                      className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                      aria-label={`Remove industry ${getIndustryName(industryId)}`}
+                      onClick={() =>
+                        setSelectedIndustries((prev) => prev.filter((id) => id !== industryId))
+                      }
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </Badge>
+                ))}
+                {showBidsOnly && (
+                  <Badge
+                    variant="secondary"
+                    className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800 shadow-sm"
+                  >
+                    My bids
+                    <button
+                      type="button"
+                      className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                      aria-label="Clear my bids filter"
+                      onClick={() => setShowBidsOnly(false)}
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </Badge>
+                )}
+              </div>
+              <div className="flex shrink-0 flex-wrap items-center gap-2 sm:justify-end">
+                {optionalFilterCount > 0 && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 px-2 text-xs text-slate-600"
+                    onClick={resetToDefaults}
+                  >
+                    Clear all
+                  </Button>
+                )}
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="h-8 text-xs"
+                  onClick={resetToDefaults}
+                >
+                  Reset filters
+                </Button>
+              </div>
             </div>
           </div>
 
