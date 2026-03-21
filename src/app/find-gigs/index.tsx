@@ -17,7 +17,8 @@ import {
   Calendar,
   Briefcase,
   ExternalLink,
-  User
+  User,
+  X
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser';
@@ -27,6 +28,13 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { canApplyExternally } from '@/lib/utils';
 import { trackExternalGigClick } from '@/lib/trackExternalGigClick';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface Project {
   id: number;
@@ -83,8 +91,11 @@ export default function FindGigsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSkills, setSelectedSkills] = useState<number[]>([]);
   const [selectedIndustries, setSelectedIndustries] = useState<number[]>([]);
-  const [showActiveOnly, setShowActiveOnly] = useState<boolean>(false);
+  /** Default ON: show only open, non-expired engagements */
+  const [showActiveOnly, setShowActiveOnly] = useState<boolean>(true);
   const [hourlyRateRange, setHourlyRateRange] = useState<[number, number]>([0, 0]);
+  /** Full budget span from loaded projects — used for reset and “narrowed” detection */
+  const [budgetRangeDefaults, setBudgetRangeDefaults] = useState<[number, number]>([0, 0]);
   const [maxBudget, setMaxBudget] = useState<number>(1000000);
   const [showFilters, setShowFilters] = useState(false);
   const [originFilter, setOriginFilter] = useState<'all' | 'internal' | 'external'>('all');
@@ -92,6 +103,9 @@ export default function FindGigsPage() {
   const [userIndustries, setUserIndustries] = useState<number[]>([]);
   const [userBids, setUserBids] = useState<Set<number>>(new Set());
   const [showBidsOnly, setShowBidsOnly] = useState<boolean>(false);
+  const [sortMode, setSortMode] = useState<'best_match' | 'most_recent'>('best_match');
+  const [skillsListExpanded, setSkillsListExpanded] = useState(false);
+  const [industriesListExpanded, setIndustriesListExpanded] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -362,10 +376,13 @@ export default function FindGigsPage() {
           const minBudget = Math.min(...budgetValues);
           const maxBudgetValue = Math.max(...budgetValues);
           setMaxBudget(maxBudgetValue);
-          setHourlyRateRange([minBudget, maxBudgetValue]);
+          const fullRange: [number, number] = [minBudget, maxBudgetValue];
+          setBudgetRangeDefaults(fullRange);
+          setHourlyRateRange(fullRange);
           console.log('🔍 Dynamic budget range set:', { min: minBudget, max: maxBudgetValue });
         } else {
           setMaxBudget(0);
+          setBudgetRangeDefaults([0, 0]);
           setHourlyRateRange([0, 0]);
           console.log('🔍 Dynamic budget range set to defaults (no numeric budgets found).');
         }
@@ -536,205 +553,188 @@ export default function FindGigsPage() {
     );
   };
 
-  // Check if any filters are actively applied (not default values)
-  const hasActiveFilters = useMemo(() => {
-    const hasSearch = searchTerm.length > 0;
-    const hasSkills = selectedSkills.length > 0;
-    const hasIndustries = selectedIndustries.length > 0;
-    const hasBudgetFilter = hourlyRateRange[0] > 0 || hourlyRateRange[1] < maxBudget;
-    const hasOriginFilter = originFilter !== 'all';
-    const hasActiveToggle = showActiveOnly;
-    const hasBidsFilter = showBidsOnly;
-    
-    console.log('🔍 Filter check:');
-    console.log('  - hasSearch:', hasSearch);
-    console.log('  - hasSkills:', hasSkills);
-    console.log('  - hasIndustries:', hasIndustries);
-    console.log('  - hasBudgetFilter:', hasBudgetFilter);
-    console.log('  - hasOriginFilter:', hasOriginFilter);
-    console.log('  - showActiveOnly:', showActiveOnly);
-    console.log('  - showBidsOnly:', showBidsOnly);
-    console.log('  - searchTerm:', searchTerm);
-    console.log('  - selectedSkills:', selectedSkills);
-    console.log('  - selectedIndustries:', selectedIndustries);
-    console.log('  - hourlyRateRange:', hourlyRateRange);
-    console.log('  - maxBudget:', maxBudget);
-    console.log('  - hourlyRateRange[0] !== 0:', hourlyRateRange[0] !== 0);
-    console.log('  - hourlyRateRange[1] !== maxBudget:', hourlyRateRange[1] !== maxBudget);
-    
+  /** True when slider is narrower than the full loaded budget span */
+  const isBudgetNarrowed = useMemo(() => {
+    if (maxBudget <= 0 || budgetRangeDefaults[1] <= 0) return false;
     return (
-      hasSearch ||
-      hasSkills ||
-      hasIndustries ||
-      hasBudgetFilter ||
-      hasOriginFilter ||
-      hasActiveToggle ||
-      hasBidsFilter
+      hourlyRateRange[0] > budgetRangeDefaults[0] ||
+      hourlyRateRange[1] < budgetRangeDefaults[1]
     );
+  }, [hourlyRateRange, budgetRangeDefaults, maxBudget]);
+
+  /** Count of active refinements (chips + summary) — excludes default “active only”; skills/industries count per selection */
+  const optionalFilterCount = useMemo(() => {
+    let n = 0;
+    if (searchTerm.trim().length > 0) n += 1;
+    n += selectedSkills.length;
+    n += selectedIndustries.length;
+    if (isBudgetNarrowed) n += 1;
+    if (originFilter !== 'all') n += 1;
+    if (showBidsOnly) n += 1;
+    if (!showActiveOnly) n += 1; // user turned off default active-only
+    return n;
   }, [
     searchTerm,
     selectedSkills,
     selectedIndustries,
-    hourlyRateRange,
-    maxBudget,
+    isBudgetNarrowed,
     originFilter,
+    showBidsOnly,
     showActiveOnly,
-    showBidsOnly
   ]);
 
   const filteredProjects = useMemo(() => {
-    console.log('🔍 Starting filtering with:');
-    console.log('  - totalProjects:', projects.length);
-    console.log('  - hasActiveFilters:', hasActiveFilters);
-    console.log('  - searchTerm:', searchTerm);
-    console.log('  - selectedSkills:', selectedSkills);
-    console.log('  - selectedIndustries:', selectedIndustries);
-    console.log('  - hourlyRateRange:', hourlyRateRange);
+    const q = searchTerm.trim().toLowerCase();
 
-    return projects.filter(project => {
+    return projects.filter((project) => {
       const projectOrigin = project.project_origin === 'external' ? 'external' : 'internal';
       const matchesOrigin =
         originFilter === 'all' ||
         (originFilter === 'external' && projectOrigin === 'external') ||
         (originFilter === 'internal' && projectOrigin === 'internal');
-
-      if (!matchesOrigin) {
-        console.log('🔍 Excluding project due to origin filter:', {
-          id: project.id,
-          originFilter,
-          projectOrigin
-        });
-        return false;
-      }
+      if (!matchesOrigin) return false;
 
       const isActive = project.is_active ?? (project.status === 'open' && !project.is_expired);
-      if (showActiveOnly && !isActive) {
-        console.log('🔍 Excluding project due to active-only toggle:', {
-          id: project.id,
-          status: project.status,
-          isExpired: project.is_expired,
-          computedActive: isActive
-        });
-        return false;
+      if (showActiveOnly && !isActive) return false;
+
+      if (showBidsOnly && !project.hasBidSubmitted) return false;
+
+      if (q.length > 0) {
+        const skillBlob = (project.skills_required || [])
+          .map((id) => getSkillName(id).toLowerCase())
+          .join(' ');
+        const industryBlob = (project.industries || [])
+          .map((id) => getIndustryName(id).toLowerCase())
+          .join(' ');
+        const roleText = project.role_type ? String(project.role_type).toLowerCase() : '';
+        const matchesSearch =
+          project.title.toLowerCase().includes(q) ||
+          project.description.toLowerCase().includes(q) ||
+          (project.client?.company_name?.toLowerCase().includes(q) ?? false) ||
+          skillBlob.includes(q) ||
+          industryBlob.includes(q) ||
+          (roleText.length > 0 && roleText.includes(q));
+        if (!matchesSearch) return false;
       }
 
-      // Filter by bid status
-      if (showBidsOnly && !project.hasBidSubmitted) {
-        console.log('🔍 Excluding project due to bids-only filter:', {
-          id: project.id,
-          hasBidSubmitted: project.hasBidSubmitted
-        });
-        return false;
-      }
- 
-      // If no active filters, show all projects
-      if (!hasActiveFilters) {
-        console.log('🔍 No active filters, showing project', project.id);
-        return true;
+      if (selectedSkills.length > 0) {
+        const matchesSkills = selectedSkills.some((skillId) =>
+          project.skills_required.includes(skillId)
+        );
+        if (!matchesSkills) return false;
       }
 
-    const matchesSearch = searchTerm.length === 0 || 
-                         project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.client?.company_name?.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesSkills = selectedSkills.length === 0 || 
-                         selectedSkills.some(skillId => project.skills_required.includes(skillId));
-    
-    const matchesIndustries = selectedIndustries.length === 0 || 
-                             (project.industries && selectedIndustries.some(industryId => project.industries.includes(industryId)));
-    
-    // Budget matching - project budget should overlap with filter range
-    const hasBudget =
-      typeof project.budget_min === 'number' && !Number.isNaN(project.budget_min) &&
-      typeof project.budget_max === 'number' && !Number.isNaN(project.budget_max);
-    const matchesRate = !hasBudget
-      ? true
-      : project.budget_min <= hourlyRateRange[1] && project.budget_max >= hourlyRateRange[0];
-    
-    // Additional debug for rate matching
-    console.log('🔍 Rate matching for project', project.id, ':', {
-      projectBudget: { min: project.budget_min, max: project.budget_max },
-      filterRange: hourlyRateRange,
-      matchesRate,
-      condition1: project.budget_min <= hourlyRateRange[1],
-      condition2: project.budget_max >= hourlyRateRange[0]
-    });
-    
-    // Debug logging
-    console.log('🔍 Filtering project:', {
-      id: project.id,
-      title: project.title,
-      projectOrigin,
-      matchesOrigin,
-      matchesSearch,
-      matchesSkills,
-      matchesIndustries,
-      matchesRate,
-      showActiveOnly,
-      isActive,
-      selectedSkills: selectedSkills,
-      projectSkills: project.skills_required,
-      selectedIndustries: selectedIndustries,
-      projectIndustries: project.industries,
-      hourlyRateRange: hourlyRateRange,
-      projectBudget: { min: project.budget_min, max: project.budget_max },
-      searchTerm: searchTerm,
-      finalResult: matchesSearch && matchesSkills && matchesIndustries && matchesRate
-    });
-    
-    return matchesSearch && matchesSkills && matchesIndustries && matchesRate;
-    });
-  }, [projects, hasActiveFilters, searchTerm, selectedSkills, selectedIndustries, hourlyRateRange, user, userSkills, userIndustries, originFilter, showActiveOnly, showBidsOnly]);
+      if (selectedIndustries.length > 0) {
+        const matchesIndustries =
+          project.industries &&
+          selectedIndustries.some((industryId) => project.industries!.includes(industryId));
+        if (!matchesIndustries) return false;
+      }
 
-  const sortedProjects = useMemo(() => [...filteredProjects].sort((a, b) => {
-    // Sort by match quality: Excellent → Good → Partial → Low
+      if (isBudgetNarrowed) {
+        const hasBudget =
+          typeof project.budget_min === 'number' &&
+          !Number.isNaN(project.budget_min) &&
+          typeof project.budget_max === 'number' &&
+          !Number.isNaN(project.budget_max);
+        const matchesRate = !hasBudget
+          ? true
+          : project.budget_min <= hourlyRateRange[1] && project.budget_max >= hourlyRateRange[0];
+        if (!matchesRate) return false;
+      }
+
+      return true;
+    });
+  }, [
+    projects,
+    searchTerm,
+    selectedSkills,
+    selectedIndustries,
+    hourlyRateRange,
+    originFilter,
+    showActiveOnly,
+    showBidsOnly,
+    isBudgetNarrowed,
+    skills,
+    industries,
+  ]);
+
+  const sortedProjects = useMemo(() => {
+    const list = [...filteredProjects];
+    if (sortMode === 'most_recent') {
+      return list.sort((a, b) => {
+        const ta = a.created_at ? new Date(a.created_at).getTime() : 0;
+        const tb = b.created_at ? new Date(b.created_at).getTime() : 0;
+        return tb - ta;
+      });
+    }
+    // Best match (default)
     if (user?.role !== 'consultant') {
-      return 0; // No sorting for non-consultants
+      return list.sort((a, b) => {
+        const ta = a.created_at ? new Date(a.created_at).getTime() : 0;
+        const tb = b.created_at ? new Date(b.created_at).getTime() : 0;
+        return tb - ta;
+      });
     }
 
-    const matchA = calculateMatchQuality(a);
-    const matchB = calculateMatchQuality(b);
+    return list.sort((a, b) => {
+      const matchA = calculateMatchQuality(a);
+      const matchB = calculateMatchQuality(b);
 
-    if (!matchA && !matchB) return 0;
-    if (!matchA) return 1;
-    if (!matchB) return -1;
+      if (!matchA && !matchB) return 0;
+      if (!matchA) return 1;
+      if (!matchB) return -1;
 
-    const qualityOrder = { excellent: 0, good: 1, partial: 2, low: 3 };
-    const orderA = qualityOrder[matchA.level as keyof typeof qualityOrder];
-    const orderB = qualityOrder[matchB.level as keyof typeof qualityOrder];
+      const qualityOrder = { excellent: 0, good: 1, partial: 2, low: 3 };
+      const orderA = qualityOrder[matchA.level as keyof typeof qualityOrder];
+      const orderB = qualityOrder[matchB.level as keyof typeof qualityOrder];
 
-    if (orderA !== orderB) {
-      return orderA - orderB;
+      if (orderA !== orderB) {
+        return orderA - orderB;
+      }
+
+      return matchB.percentage - matchA.percentage;
+    });
+  }, [filteredProjects, sortMode, user, userSkills, userIndustries]);
+
+  /** Refinements beyond search (for “with N filters applied” copy) */
+  const nonSearchFilterCount = useMemo(() => {
+    let n = optionalFilterCount;
+    if (searchTerm.trim().length > 0) n -= 1;
+    return Math.max(0, n);
+  }, [optionalFilterCount, searchTerm]);
+
+  const resultsSummaryText = useMemo(() => {
+    const n = sortedProjects.length;
+    const q = searchTerm.trim();
+    if (q && nonSearchFilterCount > 0) {
+      return `Showing ${n} result${n === 1 ? '' : 's'} for "${q}" with ${nonSearchFilterCount} filter${nonSearchFilterCount === 1 ? '' : 's'} applied`;
     }
+    if (q) {
+      return `Showing ${n} result${n === 1 ? '' : 's'} for "${q}"`;
+    }
+    if (nonSearchFilterCount > 0) {
+      return `Showing ${n} result${n === 1 ? '' : 's'} with ${nonSearchFilterCount} filter${nonSearchFilterCount === 1 ? '' : 's'} applied`;
+    }
+    if (showActiveOnly) {
+      return `Showing ${n} active gig${n === 1 ? '' : 's'}`;
+    }
+    return `Showing ${n} gig${n === 1 ? '' : 's'}`;
+  }, [sortedProjects.length, searchTerm, nonSearchFilterCount, showActiveOnly]);
 
-    // If same quality level, sort by percentage (higher first)
-    return matchB.percentage - matchA.percentage;
-  }), [filteredProjects, user, userSkills, userIndustries]);
+  const resetToDefaults = () => {
+    setSearchTerm('');
+    setSelectedSkills([]);
+    setSelectedIndustries([]);
+    setHourlyRateRange([budgetRangeDefaults[0], budgetRangeDefaults[1]]);
+    setOriginFilter('all');
+    setShowActiveOnly(true);
+    setShowBidsOnly(false);
+    setSortMode('best_match');
+  };
 
-  // Debug summary
-  console.log('🔍 Filtering summary:');
-  console.log('  - totalProjects:', projects.length);
-  console.log('  - filteredProjects:', filteredProjects.length);
-  console.log('  - sortedProjects:', sortedProjects.length);
-  console.log('  - hasActiveFilters:', hasActiveFilters);
-  console.log('  - selectedSkills:', selectedSkills.length);
-  console.log('  - selectedIndustries:', selectedIndustries.length);
-  console.log('  - searchTerm:', searchTerm);
-  console.log('  - hourlyRateRange:', hourlyRateRange);
-  console.log('  - maxBudget:', maxBudget);
-  console.log('  - userType:', user?.userType);
-  
-  // Log each project's data structure
-  console.log('🔍 All projects data:', projects.map(p => ({
-    id: p.id,
-    title: p.title,
-    status: p.status,
-    budget_min: p.budget_min,
-    budget_max: p.budget_max,
-    skills_required: p.skills_required,
-    industries: p.industries
-  })));
+  const visibleSkillRows = skillsListExpanded ? projectSkills : projectSkills.slice(0, 8);
+  const visibleIndustryRows = industriesListExpanded ? industries : industries.slice(0, 8);
 
   const handleSelectAllIndustries = (checked: boolean) => {
     if (checked) {
@@ -776,7 +776,12 @@ export default function FindGigsPage() {
                 className="flex items-center gap-2"
               >
                 <Filter className="w-4 h-4" />
-                {showFilters ? 'Hide Filters' : 'Show Filters'}
+                {showFilters ? 'Hide filters' : 'Show filters'}
+                {optionalFilterCount > 0 && (
+                  <Badge variant="secondary" className="ml-1 rounded-full px-2 py-0 text-xs font-medium">
+                    {optionalFilterCount}
+                  </Badge>
+                )}
               </Button>
             </div>
           </div>
@@ -784,200 +789,458 @@ export default function FindGigsPage() {
           {/* Search and Filters */}
           <Card className="mb-6">
             <CardContent className="p-6">
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {/* Search Bar */}
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <Input
-                    placeholder="Search gigs by title, description, or company..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
+                <div className="space-y-2">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <Input
+                      placeholder="Search by role, skill, company, or keyword"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-10"
+                      aria-label="Search engagements"
+                    />
+                  </div>
+                  <p className="text-xs text-slate-500">
+                    Examples: <span className="text-slate-600">Fractional CMO</span>
+                    {' · '}
+                    <span className="text-slate-600">Marketing</span>
+                    {' · '}
+                    <span className="text-slate-600">Fintech</span>
+                    {' · '}
+                    <span className="text-slate-600">Interim COO</span>
+                  </p>
                 </div>
 
-                {/* Filters */}
-                {showFilters && (
-                  <div className="grid gap-6 md:grid-cols-4">
-                    {/* Skills Filter */}
-                    <div>
-                      <h3 className="font-semibold text-slate-900 mb-3">Skills Required</h3>
-                      <div className="space-y-2 max-h-40 overflow-y-auto">
-                        {projectSkills.map((skill) => (
-                          <div key={skill.id} className="flex items-center space-x-2">
-                            <Checkbox
-                              id={`skill-${skill.id}`}
-                              checked={selectedSkills.includes(skill.id)}
-                              onCheckedChange={(checked) => {
-                                if (checked) {
-                                  setSelectedSkills([...selectedSkills, skill.id]);
-                                } else {
-                                  setSelectedSkills(selectedSkills.filter(id => id !== skill.id));
-                                }
-                              }}
-                            />
-                            <label
-                              htmlFor={`skill-${skill.id}`}
-                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                            >
-                              {skill.name}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Industries Filter */}
-                    <div>
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="font-semibold text-slate-900">Industries</h3>
+                {/* Active filter chips + summary */}
+                <div className="space-y-2 rounded-lg border border-slate-200/80 bg-slate-50/60 p-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <p className="text-xs font-medium text-slate-600">
+                      {optionalFilterCount === 0
+                        ? 'Default filters'
+                        : `${optionalFilterCount} filter${optionalFilterCount === 1 ? '' : 's'} active`}
+                    </p>
+                    <div className="flex flex-wrap items-center gap-2">
+                      {optionalFilterCount > 0 && (
                         <Button
+                          type="button"
                           variant="ghost"
                           size="sm"
-                          onClick={() => handleSelectAllIndustries(selectedIndustries.length !== industries.length)}
+                          className="h-7 px-2 text-xs text-slate-600"
+                          onClick={resetToDefaults}
                         >
-                          {selectedIndustries.length === industries.length ? 'Deselect All' : 'Select All'}
+                          Clear all
                         </Button>
-                      </div>
-                      <div className="space-y-2 max-h-40 overflow-y-auto">
-                        {industries.map((industry) => (
-                          <div key={industry.id} className="flex items-center space-x-2">
-                            <Checkbox
-                              id={`industry-${industry.id}`}
-                              checked={selectedIndustries.includes(industry.id)}
-                              onCheckedChange={(checked) => {
-                                if (checked) {
-                                  setSelectedIndustries([...selectedIndustries, industry.id]);
-                                } else {
-                                  setSelectedIndustries(selectedIndustries.filter(id => id !== industry.id));
-                                }
-                              }}
-                            />
-                            <label
-                              htmlFor={`industry-${industry.id}`}
-                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                            >
-                              {industry.name}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Hourly Rate Filter */}
-                    <div>
-                      <h3 className="font-semibold text-slate-900 mb-3">
-                        Budget Range: {formatCurrency(hourlyRateRange[0], 'USD')} - {formatCurrency(hourlyRateRange[1], 'USD')}
-                      </h3>
-                      <Slider
-                        value={hourlyRateRange}
-                        onValueChange={setHourlyRateRange}
-                        max={maxBudget}
-                        min={0}
-                        step={Math.max(100, Math.floor(maxBudget / 100))}
-                        className="w-full"
-                        minStepsBetweenThumbs={1}
-                      />
-                      <div className="flex justify-between text-xs text-slate-500 mt-2">
-                        <span>$0</span>
-                        <span>{formatCurrency(maxBudget, 'USD')}</span>
-                      </div>
-                    </div>
-
-                    {/* Origin Filter */}
-                    <div>
-                      <h3 className="font-semibold text-slate-900 mb-3">Origin</h3>
-                      <RadioGroup
-                        value={originFilter}
-                        onValueChange={(value) =>
-                          setOriginFilter(value as 'all' | 'internal' | 'external')
-                        }
-                        className="space-y-2"
-                      >
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="all" id="origin-all" />
-                          <Label htmlFor="origin-all" className="text-sm">
-                            All gigs
-                          </Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="internal" id="origin-internal" />
-                          <Label htmlFor="origin-internal" className="text-sm">
-                            Internal gigs
-                          </Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="external" id="origin-external" />
-                          <Label htmlFor="origin-external" className="text-sm">
-                            External gigs
-                          </Label>
-                        </div>
-                      </RadioGroup>
-                    </div>
-
-                    <div className="pt-4 border-t border-slate-200 space-y-3">
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="active-only-toggle"
-                          checked={showActiveOnly}
-                          onCheckedChange={(checked) => setShowActiveOnly(Boolean(checked))}
-                        />
-                        <Label htmlFor="active-only-toggle" className="text-sm">
-                          Show active gigs only
-                        </Label>
-                      </div>
-                      <p className="text-xs text-slate-500">
-                        Hide gigs that are already filled, cancelled, or past their expiry date.
-                      </p>
-                      {user?.role === 'consultant' && (
-                        <>
-                          <div className="flex items-center space-x-2">
-                            <Checkbox
-                              id="bids-only-toggle"
-                              checked={showBidsOnly}
-                              onCheckedChange={(checked) => setShowBidsOnly(Boolean(checked))}
-                            />
-                            <Label htmlFor="bids-only-toggle" className="text-sm">
-                              Show gigs I've bid on
-                            </Label>
-                          </div>
-                          <p className="text-xs text-slate-500">
-                            Only show gigs where you have submitted a bid.
-                          </p>
-                        </>
                       )}
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        className="h-7 text-xs"
+                        onClick={resetToDefaults}
+                      >
+                        Reset filters
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {searchTerm.trim().length > 0 && (
+                      <Badge
+                        variant="secondary"
+                        className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
+                      >
+                        <span className="truncate">
+                          Search: {searchTerm.trim()}
+                        </span>
+                        <button
+                          type="button"
+                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                          aria-label="Clear search"
+                          onClick={() => setSearchTerm('')}
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </Badge>
+                    )}
+                    {showActiveOnly ? (
+                      <Badge
+                        variant="secondary"
+                        className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
+                      >
+                        Active only
+                        <button
+                          type="button"
+                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                          aria-label="Include inactive engagements"
+                          onClick={() => setShowActiveOnly(false)}
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </Badge>
+                    ) : (
+                      <Badge
+                        variant="secondary"
+                        className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
+                      >
+                        Including inactive
+                        <button
+                          type="button"
+                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                          aria-label="Show active engagements only"
+                          onClick={() => setShowActiveOnly(true)}
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </Badge>
+                    )}
+                    {isBudgetNarrowed && (
+                      <Badge
+                        variant="secondary"
+                        className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
+                      >
+                        <span className="truncate">
+                          Budget: {formatCurrency(hourlyRateRange[0], 'USD')}–{formatCurrency(hourlyRateRange[1], 'USD')}
+                        </span>
+                        <button
+                          type="button"
+                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                          aria-label="Clear budget filter"
+                          onClick={() =>
+                            setHourlyRateRange([budgetRangeDefaults[0], budgetRangeDefaults[1]])
+                          }
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </Badge>
+                    )}
+                    {originFilter === 'internal' && (
+                      <Badge
+                        variant="secondary"
+                        className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
+                      >
+                        Internal gigs
+                        <button
+                          type="button"
+                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                          aria-label="Clear origin filter"
+                          onClick={() => setOriginFilter('all')}
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </Badge>
+                    )}
+                    {originFilter === 'external' && (
+                      <Badge
+                        variant="secondary"
+                        className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
+                      >
+                        External gigs
+                        <button
+                          type="button"
+                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                          aria-label="Clear origin filter"
+                          onClick={() => setOriginFilter('all')}
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </Badge>
+                    )}
+                    {selectedSkills.map((skillId) => (
+                      <Badge
+                        key={`skill-chip-${skillId}`}
+                        variant="secondary"
+                        className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
+                      >
+                        <span className="truncate">{getSkillName(skillId)}</span>
+                        <button
+                          type="button"
+                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                          aria-label={`Remove skill ${getSkillName(skillId)}`}
+                          onClick={() =>
+                            setSelectedSkills((prev) => prev.filter((id) => id !== skillId))
+                          }
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </Badge>
+                    ))}
+                    {selectedIndustries.map((industryId) => (
+                      <Badge
+                        key={`industry-chip-${industryId}`}
+                        variant="secondary"
+                        className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
+                      >
+                        <span className="truncate">{getIndustryName(industryId)}</span>
+                        <button
+                          type="button"
+                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                          aria-label={`Remove industry ${getIndustryName(industryId)}`}
+                          onClick={() =>
+                            setSelectedIndustries((prev) => prev.filter((id) => id !== industryId))
+                          }
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </Badge>
+                    ))}
+                    {showBidsOnly && (
+                      <Badge
+                        variant="secondary"
+                        className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800"
+                      >
+                        My bids
+                        <button
+                          type="button"
+                          className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                          aria-label="Clear my bids filter"
+                          onClick={() => setShowBidsOnly(false)}
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+
+                {/* Filters panel */}
+                {showFilters && (
+                  <div className="space-y-5 border-t border-slate-200 pt-5">
+                    <div className="grid gap-5 lg:grid-cols-2">
+                      {/* 1. Skills */}
+                      <div className="space-y-2">
+                        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                          Skills
+                        </h3>
+                        <div className="max-h-48 space-y-2 overflow-y-auto rounded-md border border-slate-100 bg-white p-2">
+                          {visibleSkillRows.map((skill) => (
+                            <div key={skill.id} className="flex items-center space-x-2">
+                              <Checkbox
+                                id={`skill-${skill.id}`}
+                                checked={selectedSkills.includes(skill.id)}
+                                onCheckedChange={(checked) => {
+                                  if (checked) {
+                                    setSelectedSkills([...selectedSkills, skill.id]);
+                                  } else {
+                                    setSelectedSkills(selectedSkills.filter((id) => id !== skill.id));
+                                  }
+                                }}
+                              />
+                              <label
+                                htmlFor={`skill-${skill.id}`}
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                {skill.name}
+                              </label>
+                            </div>
+                          ))}
+                        </div>
+                        {projectSkills.length > 8 && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 px-2 text-xs text-slate-600"
+                            onClick={() => setSkillsListExpanded((v) => !v)}
+                          >
+                            {skillsListExpanded ? 'Show less' : 'Show more'}
+                          </Button>
+                        )}
+                      </div>
+
+                      {/* 2. Industry */}
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between gap-2">
+                          <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                            Industry
+                          </h3>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 px-2 text-xs"
+                            onClick={() =>
+                              handleSelectAllIndustries(
+                                selectedIndustries.length !== industries.length
+                              )
+                            }
+                          >
+                            {selectedIndustries.length === industries.length
+                              ? 'Deselect all'
+                              : 'Select all'}
+                          </Button>
+                        </div>
+                        <div className="max-h-48 space-y-2 overflow-y-auto rounded-md border border-slate-100 bg-white p-2">
+                          {visibleIndustryRows.map((industry) => (
+                            <div key={industry.id} className="flex items-center space-x-2">
+                              <Checkbox
+                                id={`industry-${industry.id}`}
+                                checked={selectedIndustries.includes(industry.id)}
+                                onCheckedChange={(checked) => {
+                                  if (checked) {
+                                    setSelectedIndustries([...selectedIndustries, industry.id]);
+                                  } else {
+                                    setSelectedIndustries(
+                                      selectedIndustries.filter((id) => id !== industry.id)
+                                    );
+                                  }
+                                }}
+                              />
+                              <label
+                                htmlFor={`industry-${industry.id}`}
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                {industry.name}
+                              </label>
+                            </div>
+                          ))}
+                        </div>
+                        {industries.length > 8 && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 px-2 text-xs text-slate-600"
+                            onClick={() => setIndustriesListExpanded((v) => !v)}
+                          >
+                            {industriesListExpanded ? 'Show less' : 'Show more'}
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="grid gap-5 lg:grid-cols-2">
+                      {/* 3. Engagement details */}
+                      <div className="space-y-3">
+                        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                          Engagement details
+                        </h3>
+                        <div className="space-y-3 rounded-md border border-slate-100 bg-white p-3">
+                          <div>
+                            <p className="mb-2 text-sm font-medium text-slate-800">Budget</p>
+                            <p className="mb-2 text-xs text-slate-600">
+                              {formatCurrency(hourlyRateRange[0], 'USD')} –{' '}
+                              {formatCurrency(hourlyRateRange[1], 'USD')}
+                            </p>
+                            <Slider
+                              value={hourlyRateRange}
+                              onValueChange={setHourlyRateRange}
+                              max={maxBudget}
+                              min={0}
+                              step={
+                                maxBudget > 0
+                                  ? Math.max(100, Math.floor(maxBudget / 100))
+                                  : 1
+                              }
+                              className="w-full"
+                              minStepsBetweenThumbs={1}
+                            />
+                            <div className="mt-2 flex justify-between text-xs text-slate-500">
+                              <span>$0</span>
+                              <span>{formatCurrency(maxBudget, 'USD')}</span>
+                            </div>
+                          </div>
+                          <div className="border-t border-slate-100 pt-3">
+                            <p className="mb-2 text-sm font-medium text-slate-800">Origin</p>
+                            <RadioGroup
+                              value={originFilter}
+                              onValueChange={(value) =>
+                                setOriginFilter(value as 'all' | 'internal' | 'external')
+                              }
+                              className="space-y-2"
+                            >
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="all" id="origin-all" />
+                                <Label htmlFor="origin-all" className="text-sm">
+                                  All gigs
+                                </Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="internal" id="origin-internal" />
+                                <Label htmlFor="origin-internal" className="text-sm">
+                                  Internal gigs
+                                </Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="external" id="origin-external" />
+                                <Label htmlFor="origin-external" className="text-sm">
+                                  External gigs
+                                </Label>
+                              </div>
+                            </RadioGroup>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 4. Status / personal activity */}
+                      <div className="space-y-3">
+                        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                          Status &amp; personal activity
+                        </h3>
+                        <div className="space-y-3 rounded-md border border-slate-100 bg-white p-3">
+                          <div className="flex items-start space-x-2">
+                            <Checkbox
+                              id="active-only-toggle"
+                              checked={showActiveOnly}
+                              onCheckedChange={(checked) => setShowActiveOnly(Boolean(checked))}
+                              className="mt-0.5"
+                            />
+                            <div>
+                              <Label htmlFor="active-only-toggle" className="text-sm">
+                                Show active gigs only
+                              </Label>
+                              <p className="mt-1 text-xs text-slate-500">
+                                Hide engagements that are filled, cancelled, or past their expiry.
+                              </p>
+                            </div>
+                          </div>
+                          {user?.role === 'consultant' && (
+                            <div className="flex items-start space-x-2 border-t border-slate-100 pt-3">
+                              <Checkbox
+                                id="bids-only-toggle"
+                                checked={showBidsOnly}
+                                onCheckedChange={(checked) => setShowBidsOnly(Boolean(checked))}
+                                className="mt-0.5"
+                              />
+                              <div>
+                                <Label htmlFor="bids-only-toggle" className="text-sm">
+                                  Show my bids
+                                </Label>
+                                <p className="mt-1 text-xs text-slate-500">
+                                  Limit to engagements you&apos;ve already responded to.
+                                </p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
-                
-                {/* Reset Filters Button */}
-                <div className="flex justify-end pt-4 border-t border-slate-200">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setSearchTerm('');
-                      setSelectedSkills([]);
-                      setSelectedIndustries([]);
-                      setHourlyRateRange([0, maxBudget]);
-                      setOriginFilter('all');
-                      setShowActiveOnly(false);
-                      setShowBidsOnly(false);
-                    }}
-                    className="text-sm"
-                  >
-                    Reset Filters
-                  </Button>
-                </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Results Count */}
-          <div className="mb-6">
-            <p className="text-slate-600">
-              Showing {sortedProjects.length} of {projects.length} available gigs
-            </p>
+          {/* Results header */}
+          <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-slate-700">{resultsSummaryText}</p>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                Sort
+              </span>
+              <Select
+                value={sortMode}
+                onValueChange={(v) => setSortMode(v as 'best_match' | 'most_recent')}
+              >
+                <SelectTrigger className="h-9 w-[180px] border-slate-200 bg-white text-sm">
+                  <SelectValue placeholder="Sort" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="best_match">Best match</SelectItem>
+                  <SelectItem value="most_recent">Most recent</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           {/* Gigs Grid */}
@@ -986,25 +1249,16 @@ export default function FindGigsPage() {
               <CardContent className="p-12 text-center">
                 <Briefcase className="w-16 h-16 text-slate-300 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                  {projects.length === 0 ? 'No gigs available' : 'No gigs match your filters'}
+                  {projects.length === 0 ? 'No engagements available yet' : 'No engagements match this view'}
                 </h3>
                 <p className="text-slate-600 mb-6">
-                  {projects.length === 0 
-                    ? 'Check back later for new opportunities.'
-                    : 'Try adjusting your search terms or filters to find what you\'re looking for.'
-                  }
+                  {projects.length === 0
+                    ? 'Check back soon for curated opportunities.'
+                    : 'Try broadening your search or resetting to the default view.'}
                 </p>
                 {projects.length > 0 && (
-                  <Button variant="outline" onClick={() => {
-                    setSearchTerm('');
-                    setSelectedSkills([]);
-                    setSelectedIndustries([]);
-                    setHourlyRateRange([0, maxBudget]);
-                    setOriginFilter('all');
-                    setShowActiveOnly(false);
-                    setShowBidsOnly(false);
-                  }}>
-                    Clear All Filters
+                  <Button variant="outline" onClick={resetToDefaults}>
+                    Reset to default view
                   </Button>
                 )}
               </CardContent>
@@ -1102,7 +1356,7 @@ export default function FindGigsPage() {
                           )}
                           {project.hasBidSubmitted && (
                             <Badge className="text-xs border-green-200 bg-green-50 text-green-700">
-                              Bid Submitted
+                              Response submitted
                             </Badge>
                           )}
                         </div>

@@ -11,8 +11,8 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === 'development' &&
-    componentTagger(),
+    // componentTagger disabled in dev - can cause blank page
+    mode === 'development' && false && componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {
