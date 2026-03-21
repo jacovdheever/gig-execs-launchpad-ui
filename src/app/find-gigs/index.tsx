@@ -485,6 +485,42 @@ export default function FindGigsPage() {
   };
 
   /**
+   * Consultant profile stores `user_skills.skill_id` (numeric) but `consultant_profiles.industries`
+   * is saved as industry *names* (see BasicInfoForm). Gigs use numeric industry IDs. Normalize
+   * profile industries to IDs via the loaded catalog so matching works.
+   */
+  const matchUserSkillIdSet = useMemo(() => {
+    const ids = userSkills
+      .map((id) => Number(id))
+      .filter((n) => !Number.isNaN(n));
+    return new Set(ids);
+  }, [userSkills]);
+
+  const matchUserIndustryIdSet = useMemo(() => {
+    const ids: number[] = [];
+    for (const ref of userIndustries) {
+      if (typeof ref === 'number' && !Number.isNaN(ref)) {
+        ids.push(ref);
+        continue;
+      }
+      if (typeof ref === 'string') {
+        const t = ref.trim();
+        if (!t) continue;
+        const asNum = Number(t);
+        if (!Number.isNaN(asNum) && String(asNum) === t) {
+          ids.push(asNum);
+          continue;
+        }
+        if (industries.length > 0) {
+          const found = industries.find((i) => i.name.toLowerCase() === t.toLowerCase());
+          if (found) ids.push(found.id);
+        }
+      }
+    }
+    return new Set(ids);
+  }, [userIndustries, industries]);
+
+  /**
    * Points: +1 per skill on the gig that matches the consultant’s profile, +1 per matching industry.
    * 1–3 pts → Possible Match · 4–5 → Good Match · 6+ → Strong Match. 0 pts → no badge.
    */
@@ -495,16 +531,18 @@ export default function FindGigsPage() {
       return null;
     }
 
-    if (userSkills.length === 0 && userIndustries.length === 0) {
+    if (matchUserSkillIdSet.size === 0 && matchUserIndustryIdSet.size === 0) {
       return null;
     }
 
     const projSkills = project.skills_required || [];
     const projIndustries = project.industries || [];
 
-    const skillPoints = projSkills.filter((skillId) => userSkills.includes(skillId)).length;
+    const skillPoints = projSkills.filter((skillId) =>
+      matchUserSkillIdSet.has(Number(skillId))
+    ).length;
     const industryPoints = projIndustries.filter((industryId) =>
-      userIndustries.includes(industryId)
+      matchUserIndustryIdSet.has(Number(industryId))
     ).length;
     const points = skillPoints + industryPoints;
 
@@ -688,7 +726,16 @@ export default function FindGigsPage() {
 
       return matchB.points - matchA.points;
     });
-  }, [filteredProjects, sortMode, user, userSkills, userIndustries]);
+  }, [
+    filteredProjects,
+    sortMode,
+    user,
+    userSkills,
+    userIndustries,
+    industries,
+    matchUserSkillIdSet,
+    matchUserIndustryIdSet,
+  ]);
 
   /** Refinements beyond search (for “with N filters applied” copy) */
   const nonSearchFilterCount = useMemo(() => {
@@ -1418,8 +1465,7 @@ export default function FindGigsPage() {
                                 ? 'Strong Match'
                                 : match.tier === 'good'
                                   ? 'Good Match'
-                                  : 'Possible Match'}{' '}
-                              ({match.points} {match.points === 1 ? 'pt' : 'pts'})
+                                  : 'Possible Match'}
                           </Badge>
                         ) : null;
                       })()}
