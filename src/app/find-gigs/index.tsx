@@ -801,8 +801,8 @@ export default function FindGigsPage() {
 
   return (
     <AppShell>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <div className="min-h-screen w-full min-w-0 overflow-x-hidden bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="mx-auto w-full min-w-0 max-w-7xl px-4 sm:px-6 py-8">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
             <div>
@@ -829,22 +829,22 @@ export default function FindGigsPage() {
           </div>
 
           {/* Search and Filters */}
-          <Card className="mb-6">
-            <CardContent className="p-6">
-              <div className="space-y-4">
+          <Card className="mb-6 w-full min-w-0 max-w-full overflow-hidden">
+            <CardContent className="p-4 sm:p-6">
+              <div className="min-w-0 space-y-4">
                 {/* Search Bar */}
-                <div className="space-y-2">
-                  <div className="relative">
+                <div className="min-w-0 space-y-2">
+                  <div className="relative w-full min-w-0">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <Input
                       placeholder="Search by role, skill, company, or keyword"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10"
+                      className="w-full min-w-0 max-w-full pl-10"
                       aria-label="Search engagements"
                     />
                   </div>
-                  <p className="text-xs text-slate-500">
+                  <p className="break-words text-xs text-slate-500">
                     Examples: <span className="text-slate-600">Fractional CMO</span>
                     {' · '}
                     <span className="text-slate-600">Marketing</span>
@@ -1125,10 +1125,10 @@ export default function FindGigsPage() {
           </Card>
 
           {/* Results summary + sort + active chips (outside filter card) */}
-          <div className="mb-6 space-y-3">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-slate-700">{resultsSummaryText}</p>
-              <div className="flex items-center gap-2">
+          <div className="mb-6 min-w-0 space-y-3">
+            <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <p className="min-w-0 break-words text-slate-700">{resultsSummaryText}</p>
+              <div className="flex min-w-0 shrink-0 items-center gap-2">
                 <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
                   Sort
                 </span>
@@ -1136,7 +1136,7 @@ export default function FindGigsPage() {
                   value={sortMode}
                   onValueChange={(v) => setSortMode(v as 'best_match' | 'most_recent')}
                 >
-                  <SelectTrigger className="h-9 w-[180px] border-slate-200 bg-white text-sm">
+                  <SelectTrigger className="h-9 w-full min-w-0 max-w-[180px] border-slate-200 bg-white text-sm sm:w-[180px]">
                     <SelectValue placeholder="Sort" />
                   </SelectTrigger>
                   <SelectContent>
@@ -1147,8 +1147,8 @@ export default function FindGigsPage() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
-              <div className="flex min-w-0 flex-1 flex-wrap gap-2">
+            <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
+              <div className="flex min-w-0 flex-1 flex-wrap gap-2 break-words">
                 {searchTerm.trim().length > 0 && (
                   <Badge
                     variant="secondary"
@@ -1329,7 +1329,7 @@ export default function FindGigsPage() {
 
           {/* Gigs Grid */}
           {sortedProjects.length === 0 ? (
-            <Card>
+            <Card className="w-full min-w-0 max-w-full overflow-hidden">
               <CardContent className="p-12 text-center">
                 <Briefcase className="w-16 h-16 text-slate-300 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-slate-900 mb-2">
@@ -1348,7 +1348,7 @@ export default function FindGigsPage() {
               </CardContent>
             </Card>
           ) : (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid min-w-0 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {sortedProjects.map((project) => {
                 const isExternal = project.project_origin === 'external';
                 const isExpired =
@@ -1386,11 +1386,11 @@ export default function FindGigsPage() {
                 );
 
                 return (
-                <Card key={project.id} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-start gap-3">
-                          <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg bg-slate-100">
+                <Card key={project.id} className="w-full min-w-0 max-w-full overflow-hidden hover:shadow-lg transition-shadow">
+                  <CardHeader className="min-w-0 overflow-hidden">
+                    <div className="mb-4 flex min-w-0 items-start justify-between gap-2">
+                        <div className="flex min-w-0 flex-1 items-start gap-3">
+                          <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-slate-100">
                             {!isExternal && project.client?.logo_url ? (
                             <img
                               src={project.client.logo_url}
@@ -1401,8 +1401,8 @@ export default function FindGigsPage() {
                               <Building2 className="h-6 w-6 text-slate-500" />
                           )}
                         </div>
-                        <div>
-                          <h3 className="font-semibold text-slate-900">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="break-words font-semibold text-slate-900">
                               {displayClientName}
                           </h3>
                             {!isExternal ? (
@@ -1429,7 +1429,7 @@ export default function FindGigsPage() {
                             )}
                         </div>
                       </div>
-                        <div className="flex items-center gap-2 flex-wrap">
+                        <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
                       <Badge variant="outline" className="text-xs">
                             {createdAtLabel}
                       </Badge>
@@ -1446,8 +1446,8 @@ export default function FindGigsPage() {
                         </div>
                     </div>
                     
-                      <div className="mb-2 flex items-start justify-between">
-                        <CardTitle className="flex-1 text-lg line-clamp-2">{project.title}</CardTitle>
+                      <div className="mb-2 flex min-w-0 items-start justify-between gap-2">
+                        <CardTitle className="min-w-0 flex-1 pr-1 text-lg leading-snug line-clamp-2">{project.title}</CardTitle>
                       {user?.role === 'consultant' && (() => {
                         const match = calculateMatchQuality(project);
                         return match ? (
@@ -1477,8 +1477,8 @@ export default function FindGigsPage() {
                     </CardDescription>
                   </CardHeader>
                   
-                  <CardContent>
-                    <div className="space-y-4">
+                  <CardContent className="min-w-0 overflow-hidden">
+                    <div className="min-w-0 space-y-4">
                       {/* About Gig */}
                       <div className="space-y-2">
                         <h4 className="font-semibold text-slate-900 text-sm">About Gig:</h4>
