@@ -465,11 +465,11 @@ export default function RegisterPage() {
                 />
                 <Label htmlFor="acceptTerms" className="text-sm text-slate-600 cursor-pointer">
                   I accept the{' '}
-                  <Link to="/terms" className="text-[#4885AA] hover:text-[#012E46] underline">
+                  <Link to="/terms-and-conditions" className="text-[#4885AA] hover:text-[#012E46] underline">
                     Terms and Conditions
                   </Link>
                   {' '}and{' '}
-                  <Link to="/privacy" className="text-[#4885AA] hover:text-[#012E46] underline">
+                  <Link to="/data-privacy-policy" className="text-[#4885AA] hover:text-[#012E46] underline">
                     Privacy Policy
                   </Link>
                 </Label>

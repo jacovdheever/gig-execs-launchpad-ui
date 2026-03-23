@@ -3,6 +3,29 @@ import { useLocation } from "react-router-dom";
 import { Button } from '@/components/ui/button'
 import { Home, ArrowLeft, Search } from 'lucide-react'
 
+/** GA4 gtag loaded globally from index.html */
+type GtagFn = (...args: unknown[]) => void;
+
+/** @returns true if the event was sent, false if gtag was not ready */
+function sendGa4NotFoundEvent(pathname: string, search: string): boolean {
+  if (typeof window === 'undefined') return true;
+  const gtag = (window as unknown as { gtag?: GtagFn }).gtag;
+  if (typeof gtag !== 'function') return false;
+
+  const params: Record<string, string> = {
+    requested_path: pathname,
+  };
+  if (search && search.length > 1) {
+    params.query_string = search.startsWith('?') ? search.slice(1) : search;
+  }
+  if (document.referrer) {
+    params.referrer = document.referrer;
+  }
+
+  gtag('event', 'not_found', params);
+  return true;
+}
+
 const NotFound = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -13,7 +36,16 @@ const NotFound = () => {
       location.pathname
     );
     document.title = '404 - Page Not Found | GigExecs'
-  }, [location.pathname]);
+
+    if (sendGa4NotFoundEvent(location.pathname, location.search)) {
+      return;
+    }
+    // gtag can load after first paint; retry once so the event isn't dropped
+    const timer = window.setTimeout(() => {
+      sendGa4NotFoundEvent(location.pathname, location.search);
+    }, 800);
+    return () => window.clearTimeout(timer);
+  }, [location.pathname, location.search]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
