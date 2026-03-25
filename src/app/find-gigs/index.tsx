@@ -83,6 +83,15 @@ interface Industry {
   category: string;
 }
 
+function projectHasNumericBudget(project: Project) {
+  return (
+    typeof project.budget_min === 'number' &&
+    !Number.isNaN(project.budget_min) &&
+    typeof project.budget_max === 'number' &&
+    !Number.isNaN(project.budget_max)
+  );
+}
+
 export default function FindGigsPage() {
   const [user, setUser] = useState<CurrentUser | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -90,11 +99,13 @@ export default function FindGigsPage() {
   const [industries, setIndustries] = useState<Industry[]>([]);
   /** Industries that appear on at least one loaded gig (filter list only; full list kept for lookups) */
   const [projectIndustries, setProjectIndustries] = useState<Industry[]>([]);
-  const [projectSkills, setProjectSkills] = useState<Skill[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSkills, setSelectedSkills] = useState<number[]>([]);
   const [selectedIndustries, setSelectedIndustries] = useState<number[]>([]);
+  /** Distinct `gig_location` values from loaded gigs (exact DB strings) */
+  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
+  /** Distinct `role_type` values from loaded gigs (exact DB strings) */
+  const [selectedRoleTypes, setSelectedRoleTypes] = useState<string[]>([]);
   /** Default ON: show only open, non-expired engagements */
   const [showActiveOnly, setShowActiveOnly] = useState<boolean>(true);
   /** Slider range: default always $0 → max from loaded gigs (user narrows from there) */
@@ -107,8 +118,11 @@ export default function FindGigsPage() {
   const [userBids, setUserBids] = useState<Set<number>>(new Set());
   const [showBidsOnly, setShowBidsOnly] = useState<boolean>(false);
   const [sortMode, setSortMode] = useState<'best_match' | 'most_recent'>('best_match');
-  const [skillsListExpanded, setSkillsListExpanded] = useState(false);
+  /** Default ON: when budget slider is narrowed, still show gigs with no numeric budget */
+  const [includeTbcBudgets, setIncludeTbcBudgets] = useState(true);
+  const [locationsListExpanded, setLocationsListExpanded] = useState(false);
   const [industriesListExpanded, setIndustriesListExpanded] = useState(false);
+  const [roleTypesListExpanded, setRoleTypesListExpanded] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -390,23 +404,6 @@ export default function FindGigsPage() {
         setHourlyRateRange([0, 0]);
       }
 
-      // Extract skills from projects for filtering
-      const allProjectSkills = new Set<number>();
-      processedProjects.forEach(project => {
-        if (project.skills_required) {
-          project.skills_required.forEach(skillId => allProjectSkills.add(skillId));
-        }
-      });
-
-      // Get skill details for project skills only
-      const projectSkillsData = skillsData.filter(skill => allProjectSkills.has(skill.id));
-      setProjectSkills(projectSkillsData);
-      console.log('🔍 Project skills extracted:', {
-        allProjectSkills: Array.from(allProjectSkills),
-        skillsData: skillsData.length,
-        projectSkillsData: projectSkillsData
-      });
-
       const allProjectIndustryIds = new Set<number>();
       processedProjects.forEach((project) => {
         if (project.industries?.length) {
@@ -483,6 +480,41 @@ export default function FindGigsPage() {
     const industry = industries.find(i => i.id === industryId);
     return industry ? industry.name : `Industry ${industryId}`;
   };
+
+  /** Display label for a DB `role_type` value; option lists are always derived from loaded gigs */
+  const formatRoleTypeLabel = (value: string) => {
+    const key = value.trim().toLowerCase().replace(/[\s_]+/g, '-');
+    const map: Record<string, string> = {
+      'in-person': 'In-person',
+      inperson: 'In-person',
+      'in_person': 'In-person',
+      hybrid: 'Hybrid',
+      remote: 'Remote',
+    };
+    if (map[key]) return map[key];
+    const t = value.trim();
+    return t || value;
+  };
+
+  /** Distinct non-empty Gig Location strings from loaded projects (sorted) */
+  const distinctGigLocations = useMemo(() => {
+    const set = new Set<string>();
+    for (const p of projects) {
+      const loc = p.gig_location != null ? String(p.gig_location).trim() : '';
+      if (loc) set.add(loc);
+    }
+    return [...set].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+  }, [projects]);
+
+  /** Distinct non-empty role_type values from loaded projects (sorted) */
+  const distinctRoleTypes = useMemo(() => {
+    const set = new Set<string>();
+    for (const p of projects) {
+      const rt = p.role_type != null ? String(p.role_type).trim() : '';
+      if (rt) set.add(rt);
+    }
+    return [...set].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+  }, [projects]);
 
   /**
    * Consultant profile stores `user_skills.skill_id` (numeric) but `consultant_profiles.industries`
@@ -593,22 +625,26 @@ export default function FindGigsPage() {
     return hourlyRateRange[0] > 0 || hourlyRateRange[1] < maxBudget;
   }, [hourlyRateRange, maxBudget]);
 
-  /** Count of active refinements (chips + summary) — excludes default “active only”; skills/industries count per selection */
+  /** Count of active refinements (chips + summary) — excludes default “active only”; locations/roles/industries count per selection */
   const optionalFilterCount = useMemo(() => {
     let n = 0;
     if (searchTerm.trim().length > 0) n += 1;
-    n += selectedSkills.length;
+    n += selectedLocations.length;
+    n += selectedRoleTypes.length;
     n += selectedIndustries.length;
     if (isBudgetNarrowed) n += 1;
+    if (isBudgetNarrowed && !includeTbcBudgets) n += 1;
     if (originFilter !== 'all') n += 1;
     if (showBidsOnly) n += 1;
     if (!showActiveOnly) n += 1; // user turned off default active-only
     return n;
   }, [
     searchTerm,
-    selectedSkills,
+    selectedLocations,
+    selectedRoleTypes,
     selectedIndustries,
     isBudgetNarrowed,
+    includeTbcBudgets,
     originFilter,
     showBidsOnly,
     showActiveOnly,
@@ -648,11 +684,15 @@ export default function FindGigsPage() {
         if (!matchesSearch) return false;
       }
 
-      if (selectedSkills.length > 0) {
-        const matchesSkills = selectedSkills.some((skillId) =>
-          project.skills_required.includes(skillId)
-        );
-        if (!matchesSkills) return false;
+      if (selectedLocations.length > 0) {
+        const loc =
+          project.gig_location != null ? String(project.gig_location).trim() : '';
+        if (!loc || !selectedLocations.includes(loc)) return false;
+      }
+
+      if (selectedRoleTypes.length > 0) {
+        const rt = project.role_type != null ? String(project.role_type).trim() : '';
+        if (!rt || !selectedRoleTypes.includes(rt)) return false;
       }
 
       if (selectedIndustries.length > 0) {
@@ -663,15 +703,14 @@ export default function FindGigsPage() {
       }
 
       if (isBudgetNarrowed) {
-        const hasBudget =
-          typeof project.budget_min === 'number' &&
-          !Number.isNaN(project.budget_min) &&
-          typeof project.budget_max === 'number' &&
-          !Number.isNaN(project.budget_max);
-        const matchesRate = !hasBudget
-          ? true
-          : project.budget_min <= hourlyRateRange[1] && project.budget_max >= hourlyRateRange[0];
-        if (!matchesRate) return false;
+        const hasBudget = projectHasNumericBudget(project);
+        if (!hasBudget) {
+          if (!includeTbcBudgets) return false;
+        } else {
+          const overlaps =
+            project.budget_min <= hourlyRateRange[1] && project.budget_max >= hourlyRateRange[0];
+          if (!overlaps) return false;
+        }
       }
 
       return true;
@@ -679,13 +718,15 @@ export default function FindGigsPage() {
   }, [
     projects,
     searchTerm,
-    selectedSkills,
+    selectedLocations,
+    selectedRoleTypes,
     selectedIndustries,
     hourlyRateRange,
     originFilter,
     showActiveOnly,
     showBidsOnly,
     isBudgetNarrowed,
+    includeTbcBudgets,
     skills,
     industries,
   ]);
@@ -764,8 +805,10 @@ export default function FindGigsPage() {
 
   const resetToDefaults = () => {
     setSearchTerm('');
-    setSelectedSkills([]);
+    setSelectedLocations([]);
+    setSelectedRoleTypes([]);
     setSelectedIndustries([]);
+    setIncludeTbcBudgets(true);
     setHourlyRateRange([0, maxBudget]);
     setOriginFilter('all');
     setShowActiveOnly(true);
@@ -773,16 +816,37 @@ export default function FindGigsPage() {
     setSortMode('best_match');
   };
 
-  const visibleSkillRows = skillsListExpanded ? projectSkills : projectSkills.slice(0, 8);
+  const visibleLocationRows = locationsListExpanded
+    ? distinctGigLocations
+    : distinctGigLocations.slice(0, 8);
   const visibleIndustryRows = industriesListExpanded
     ? projectIndustries
     : projectIndustries.slice(0, 8);
+  const visibleRoleTypeRows = roleTypesListExpanded
+    ? distinctRoleTypes
+    : distinctRoleTypes.slice(0, 8);
 
   const handleSelectAllIndustries = (checked: boolean) => {
     if (checked) {
       setSelectedIndustries(projectIndustries.map((i) => i.id));
     } else {
       setSelectedIndustries([]);
+    }
+  };
+
+  const handleSelectAllLocations = (checked: boolean) => {
+    if (checked) {
+      setSelectedLocations([...distinctGigLocations]);
+    } else {
+      setSelectedLocations([]);
+    }
+  };
+
+  const handleSelectAllRoleTypes = (checked: boolean) => {
+    if (checked) {
+      setSelectedRoleTypes([...distinctRoleTypes]);
+    } else {
+      setSelectedRoleTypes([]);
     }
   };
 
@@ -859,43 +923,69 @@ export default function FindGigsPage() {
                 {showFilters && (
                   <div className="space-y-5 border-t border-slate-200 pt-5">
                     <div className="grid gap-5 lg:grid-cols-2">
-                      {/* 1. Skills */}
+                      {/* 1. Location (from Gig Location on loaded gigs) */}
                       <div className="space-y-2">
-                        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                          Skills
-                        </h3>
-                        <div className="max-h-48 space-y-2 overflow-y-auto rounded-md border border-slate-100 bg-white p-2">
-                          {visibleSkillRows.map((skill) => (
-                            <div key={skill.id} className="flex items-center space-x-2">
-                              <Checkbox
-                                id={`skill-${skill.id}`}
-                                checked={selectedSkills.includes(skill.id)}
-                                onCheckedChange={(checked) => {
-                                  if (checked) {
-                                    setSelectedSkills([...selectedSkills, skill.id]);
-                                  } else {
-                                    setSelectedSkills(selectedSkills.filter((id) => id !== skill.id));
-                                  }
-                                }}
-                              />
-                              <label
-                                htmlFor={`skill-${skill.id}`}
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                {skill.name}
-                              </label>
-                            </div>
-                          ))}
+                        <div className="flex items-center justify-between gap-2">
+                          <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                            Location
+                          </h3>
+                          {distinctGigLocations.length > 0 && (
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 px-2 text-xs"
+                              onClick={() =>
+                                handleSelectAllLocations(
+                                  selectedLocations.length !== distinctGigLocations.length
+                                )
+                              }
+                            >
+                              {selectedLocations.length === distinctGigLocations.length &&
+                              distinctGigLocations.length > 0
+                                ? 'Deselect all'
+                                : 'Select all'}
+                            </Button>
+                          )}
                         </div>
-                        {projectSkills.length > 8 && (
+                        <div className="max-h-48 space-y-2 overflow-y-auto rounded-md border border-slate-100 bg-white p-2">
+                          {distinctGigLocations.length === 0 ? (
+                            <p className="text-sm text-slate-500">No locations on loaded gigs yet.</p>
+                          ) : (
+                            visibleLocationRows.map((loc) => (
+                              <div key={`loc-${loc}`} className="flex items-center space-x-2">
+                                <Checkbox
+                                  id={`gig-location-${distinctGigLocations.indexOf(loc)}`}
+                                  checked={selectedLocations.includes(loc)}
+                                  onCheckedChange={(checked) => {
+                                    if (checked) {
+                                      setSelectedLocations([...selectedLocations, loc]);
+                                    } else {
+                                      setSelectedLocations(
+                                        selectedLocations.filter((s) => s !== loc)
+                                      );
+                                    }
+                                  }}
+                                />
+                                <label
+                                  htmlFor={`gig-location-${distinctGigLocations.indexOf(loc)}`}
+                                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                  {loc}
+                                </label>
+                              </div>
+                            ))
+                          )}
+                        </div>
+                        {distinctGigLocations.length > 8 && (
                           <Button
                             type="button"
                             variant="ghost"
                             size="sm"
                             className="h-7 px-2 text-xs text-slate-600"
-                            onClick={() => setSkillsListExpanded((v) => !v)}
+                            onClick={() => setLocationsListExpanded((v) => !v)}
                           >
-                            {skillsListExpanded ? 'Show less' : 'Show more'}
+                            {locationsListExpanded ? 'Show less' : 'Show more'}
                           </Button>
                         )}
                       </div>
@@ -962,6 +1052,73 @@ export default function FindGigsPage() {
                       </div>
                     </div>
 
+                    {/* Role type (distinct role_type values from loaded gigs) */}
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                          Role type
+                        </h3>
+                        {distinctRoleTypes.length > 0 && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 px-2 text-xs"
+                            onClick={() =>
+                              handleSelectAllRoleTypes(
+                                selectedRoleTypes.length !== distinctRoleTypes.length
+                              )
+                            }
+                          >
+                            {selectedRoleTypes.length === distinctRoleTypes.length &&
+                            distinctRoleTypes.length > 0
+                              ? 'Deselect all'
+                              : 'Select all'}
+                          </Button>
+                        )}
+                      </div>
+                      <div className="max-h-48 space-y-2 overflow-y-auto rounded-md border border-slate-100 bg-white p-2">
+                        {distinctRoleTypes.length === 0 ? (
+                          <p className="text-sm text-slate-500">No role types on loaded gigs yet.</p>
+                        ) : (
+                          visibleRoleTypeRows.map((rt) => (
+                            <div key={`rt-${rt}`} className="flex items-center space-x-2">
+                              <Checkbox
+                                id={`role-type-${distinctRoleTypes.indexOf(rt)}`}
+                                checked={selectedRoleTypes.includes(rt)}
+                                onCheckedChange={(checked) => {
+                                  if (checked) {
+                                    setSelectedRoleTypes([...selectedRoleTypes, rt]);
+                                  } else {
+                                    setSelectedRoleTypes(
+                                      selectedRoleTypes.filter((s) => s !== rt)
+                                    );
+                                  }
+                                }}
+                              />
+                              <label
+                                htmlFor={`role-type-${distinctRoleTypes.indexOf(rt)}`}
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                {formatRoleTypeLabel(rt)}
+                              </label>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                      {distinctRoleTypes.length > 8 && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="h-7 px-2 text-xs text-slate-600"
+                          onClick={() => setRoleTypesListExpanded((v) => !v)}
+                        >
+                          {roleTypesListExpanded ? 'Show less' : 'Show more'}
+                        </Button>
+                      )}
+                    </div>
+
                     <div className="grid gap-5 lg:grid-cols-2">
                       {/* 3. Engagement details */}
                       <div className="space-y-3">
@@ -970,7 +1127,28 @@ export default function FindGigsPage() {
                         </h3>
                         <div className="space-y-3 rounded-md border border-slate-100 bg-white p-3">
                           <div>
-                            <p className="mb-2 text-sm font-medium text-slate-800">Budget</p>
+                            <div className="mb-2 flex items-center gap-1.5">
+                              <p className="text-sm font-medium text-slate-800">Budget</p>
+                              <Popover>
+                                <PopoverTrigger asChild>
+                                  <button
+                                    type="button"
+                                    className="inline-flex shrink-0 touch-manipulation rounded-full text-slate-400 outline-none ring-offset-2 hover:text-slate-600 focus-visible:ring-2 focus-visible:ring-slate-400"
+                                    aria-label="What does budget mean?"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    <Info className="h-3.5 w-3.5" strokeWidth={2} />
+                                  </button>
+                                </PopoverTrigger>
+                                <PopoverContent
+                                  className="max-w-[min(20rem,calc(100vw-2rem))] space-y-1 border-slate-200 p-3 text-sm shadow-md"
+                                  side="top"
+                                  align="start"
+                                >
+                                  <p className="text-slate-600 leading-snug">Total Gig Budget</p>
+                                </PopoverContent>
+                              </Popover>
+                            </div>
                             <p className="mb-2 text-xs text-slate-600">
                               {formatCurrency(hourlyRateRange[0], 'USD')} –{' '}
                               {formatCurrency(hourlyRateRange[1], 'USD')}
@@ -991,6 +1169,25 @@ export default function FindGigsPage() {
                             <div className="mt-2 flex justify-between text-xs text-slate-500">
                               <span>$0</span>
                               <span>{formatCurrency(maxBudget, 'USD')}</span>
+                            </div>
+                            <div className="mt-3 flex items-start space-x-2 border-t border-slate-100 pt-3">
+                              <Checkbox
+                                id="include-tbc-budgets"
+                                checked={includeTbcBudgets}
+                                onCheckedChange={(checked) =>
+                                  setIncludeTbcBudgets(Boolean(checked))
+                                }
+                                className="mt-0.5"
+                              />
+                              <div>
+                                <Label htmlFor="include-tbc-budgets" className="text-sm">
+                                  Include Unspecified / TBC budgets
+                                </Label>
+                                <p className="mt-1 text-xs text-slate-500">
+                                  When off and the budget range is narrowed, engagements without a
+                                  numeric budget are hidden.
+                                </p>
+                              </div>
                             </div>
                           </div>
                           <div className="border-t border-slate-100 pt-3">
@@ -1209,7 +1406,26 @@ export default function FindGigsPage() {
                       type="button"
                       className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
                       aria-label="Clear budget filter"
-                      onClick={() => setHourlyRateRange([0, maxBudget])}
+                      onClick={() => {
+                        setHourlyRateRange([0, maxBudget]);
+                        setIncludeTbcBudgets(true);
+                      }}
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </Badge>
+                )}
+                {isBudgetNarrowed && !includeTbcBudgets && (
+                  <Badge
+                    variant="secondary"
+                    className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800 shadow-sm"
+                  >
+                    <span className="truncate">TBC / unspecified budgets excluded</span>
+                    <button
+                      type="button"
+                      className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                      aria-label="Include TBC and unspecified budgets again"
+                      onClick={() => setIncludeTbcBudgets(true)}
                     >
                       <X className="h-3.5 w-3.5" />
                     </button>
@@ -1247,19 +1463,38 @@ export default function FindGigsPage() {
                     </button>
                   </Badge>
                 )}
-                {selectedSkills.map((skillId) => (
+                {selectedLocations.map((loc) => (
                   <Badge
-                    key={`skill-chip-${skillId}`}
+                    key={`loc-chip-${loc}`}
                     variant="secondary"
                     className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800 shadow-sm"
                   >
-                    <span className="truncate">{getSkillName(skillId)}</span>
+                    <span className="truncate">Location: {loc}</span>
                     <button
                       type="button"
                       className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
-                      aria-label={`Remove skill ${getSkillName(skillId)}`}
+                      aria-label={`Remove location ${loc}`}
                       onClick={() =>
-                        setSelectedSkills((prev) => prev.filter((id) => id !== skillId))
+                        setSelectedLocations((prev) => prev.filter((s) => s !== loc))
+                      }
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </Badge>
+                ))}
+                {selectedRoleTypes.map((rt) => (
+                  <Badge
+                    key={`rt-chip-${rt}`}
+                    variant="secondary"
+                    className="flex max-w-full items-center gap-1.5 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-1 text-xs font-normal text-slate-800 shadow-sm"
+                  >
+                    <span className="truncate">Role: {formatRoleTypeLabel(rt)}</span>
+                    <button
+                      type="button"
+                      className="rounded-full p-0.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                      aria-label={`Remove role type ${formatRoleTypeLabel(rt)}`}
+                      onClick={() =>
+                        setSelectedRoleTypes((prev) => prev.filter((s) => s !== rt))
                       }
                     >
                       <X className="h-3.5 w-3.5" />
