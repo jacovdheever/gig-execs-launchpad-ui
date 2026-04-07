@@ -107,6 +107,7 @@ import StaffUsersPage from "./app/staff/users";
 import AuditLogPage from "./app/staff/audit-log";
 import StaffSettingsPage from "./app/staff/settings";
 import StaffExternalGigsPage from "./app/staff/external-gigs";
+import StaffExternalGigsBulkPage from "./app/staff/external-gigs-bulk";
 import ExternalGigClicksPage from "./app/staff/external-gig-clicks";
 import CVParserTestPage from "./app/staff/cv-parser-test";
 import StaffVerificationsPage from "./app/staff/verifications";
@@ -231,6 +232,7 @@ const App = () => (
             <Route path="/staff/users" element={<StaffUsersPage />} />
             <Route path="/staff/audit-log" element={<AuditLogPage />} />
             <Route path="/staff/external-gigs" element={<StaffExternalGigsPage />} />
+            <Route path="/staff/external-gigs/bulk" element={<StaffExternalGigsBulkPage />} />
             <Route path="/staff/external-gig-clicks" element={<ExternalGigClicksPage />} />
             <Route path="/staff/cv-parser-test" element={<CVParserTestPage />} />
             <Route path="/staff/verifications" element={<StaffVerificationsPage />} />
