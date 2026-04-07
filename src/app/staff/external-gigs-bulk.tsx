@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Loader2, Upload } from 'lucide-react';
+import { ArrowLeft, Loader2, Upload, X } from 'lucide-react';
 
 import { supabase } from '@/lib/supabase';
 import { StaffRoute } from '@/components/staff/StaffRoute';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -30,7 +30,9 @@ import {
   MAX_BULK_ROWS,
   PROJECT_STATUSES,
   TIMELINE_OPTIONS,
+  formatIdList,
   parseBulkFile,
+  parseIdList,
   rowToApiPayload,
   validateBulkRow,
   type BulkGigRow
@@ -314,8 +316,11 @@ export default function StaffExternalGigsBulkPage() {
               <CardTitle>Instructions</CardTitle>
               <CardDescription>
                 Use the <strong>gigs</strong> sheet from the template (or the first sheet in CSV exports).
-                Required columns: title, description, status, external_url. Semicolons separate skill and
-                industry IDs. After upload, edit cells directly; errors appear in the second column.
+                Required columns: title, description, status, external_url. In the spreadsheet, skill and
+                industry columns use comma-separated numeric IDs (see the skills and industries sheets).
+                After upload, you can edit skills and industries by name in the table. Delivery timing uses
+                the timeline field only (same as manual external gig create). Errors appear in the second
+                column.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -350,14 +355,12 @@ export default function StaffExternalGigsBulkPage() {
                         <TableHead className="min-w-[100px]">Status</TableHead>
                         <TableHead className="min-w-[200px]">External URL</TableHead>
                         <TableHead className="min-w-[160px]">Expires</TableHead>
-                        <TableHead className="min-w-[120px]">Source</TableHead>
+                        <TableHead className="min-w-[140px]">External Client Name</TableHead>
+                        <TableHead className="min-w-[100px]">Budget TBC</TableHead>
                         <TableHead className="min-w-[100px]">Budget USD</TableHead>
-                        <TableHead className="min-w-[90px]">TBC</TableHead>
                         <TableHead className="min-w-[120px]">Timeline</TableHead>
-                        <TableHead className="min-w-[80px]">Del. min</TableHead>
-                        <TableHead className="min-w-[80px]">Del. max</TableHead>
-                        <TableHead className="min-w-[140px]">Skills (ids)</TableHead>
-                        <TableHead className="min-w-[140px]">Industries (ids)</TableHead>
+                        <TableHead className="min-w-[220px]">Skills</TableHead>
+                        <TableHead className="min-w-[220px]">Industries</TableHead>
                         <TableHead className="min-w-[100px]">Role type</TableHead>
                         <TableHead className="min-w-[140px]">Location</TableHead>
                       </TableRow>
@@ -438,29 +441,32 @@ export default function StaffExternalGigsBulkPage() {
                             />
                           </TableCell>
                           <TableCell className="align-top">
+                            <div className="flex items-center justify-center pt-1">
+                              <Checkbox
+                                checked={isTruthyString(row.budget_to_be_confirmed)}
+                                onCheckedChange={(c) => {
+                                  const on = c === true;
+                                  patchRow(i, {
+                                    budget_to_be_confirmed: on ? 'true' : 'false',
+                                    budget_amount: on ? '' : row.budget_amount
+                                  });
+                                }}
+                                aria-label="Budget to be confirmed"
+                              />
+                            </div>
+                          </TableCell>
+                          <TableCell className="align-top">
                             <Input
                               type="number"
                               min={0}
                               step={100}
                               disabled={isTruthyString(row.budget_to_be_confirmed)}
-                              value={row.budget_amount}
+                              value={
+                                isTruthyString(row.budget_to_be_confirmed) ? '' : row.budget_amount
+                              }
                               onChange={(e) => patchRow(i, { budget_amount: e.target.value })}
                               className="text-xs h-8"
                             />
-                          </TableCell>
-                          <TableCell className="align-top">
-                            <div className="flex items-center gap-2 pt-1">
-                              <Checkbox
-                                checked={isTruthyString(row.budget_to_be_confirmed)}
-                                onCheckedChange={(c) =>
-                                  patchRow(i, {
-                                    budget_to_be_confirmed: c ? 'true' : 'false',
-                                    budget_amount: c ? '' : row.budget_amount
-                                  })
-                                }
-                              />
-                              <Label className="text-xs">TBC</Label>
-                            </div>
                           </TableCell>
                           <TableCell className="align-top">
                             <Select
@@ -483,31 +489,21 @@ export default function StaffExternalGigsBulkPage() {
                             </Select>
                           </TableCell>
                           <TableCell className="align-top">
-                            <Input
-                              value={row.delivery_time_min}
-                              onChange={(e) => patchRow(i, { delivery_time_min: e.target.value })}
-                              className="text-xs h-8 w-16"
-                            />
-                          </TableCell>
-                          <TableCell className="align-top">
-                            <Input
-                              value={row.delivery_time_max}
-                              onChange={(e) => patchRow(i, { delivery_time_max: e.target.value })}
-                              className="text-xs h-8 w-16"
-                            />
-                          </TableCell>
-                          <TableCell className="align-top">
-                            <Input
+                            <IdMultiSelectCell
                               value={row.skills_required}
-                              onChange={(e) => patchRow(i, { skills_required: e.target.value })}
-                              className="text-xs h-8 min-w-[120px]"
+                              onChange={(next) => patchRow(i, { skills_required: next })}
+                              options={skills}
+                              maxItems={15}
+                              placeholder="Search skills…"
                             />
                           </TableCell>
                           <TableCell className="align-top">
-                            <Input
+                            <IdMultiSelectCell
                               value={row.industries}
-                              onChange={(e) => patchRow(i, { industries: e.target.value })}
-                              className="text-xs h-8 min-w-[120px]"
+                              onChange={(next) => patchRow(i, { industries: next })}
+                              options={industries}
+                              maxItems={10}
+                              placeholder="Search industries…"
                             />
                           </TableCell>
                           <TableCell className="align-top">
@@ -547,6 +543,120 @@ export default function StaffExternalGigsBulkPage() {
         </div>
       </div>
     </StaffRoute>
+  );
+}
+
+function IdMultiSelectCell({
+  value,
+  onChange,
+  options,
+  maxItems,
+  placeholder
+}: {
+  value: string;
+  onChange: (next: string) => void;
+  options: { id: number; name: string }[];
+  maxItems: number;
+  placeholder: string;
+}) {
+  const selectedIds = useMemo(() => parseIdList(value), [value]);
+  const [query, setQuery] = useState('');
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const nameById = useMemo(
+    () => new Map(options.map((o) => [o.id, o.name])),
+    [options]
+  );
+
+  const addId = (id: number) => {
+    if (selectedIds.includes(id) || selectedIds.length >= maxItems) return;
+    onChange(formatIdList([...selectedIds, id]));
+    setQuery('');
+    setOpen(false);
+  };
+
+  const removeId = (id: number) => {
+    onChange(formatIdList(selectedIds.filter((x) => x !== id)));
+  };
+
+  const filtered = useMemo(() => {
+    const pool = options.filter((o) => !selectedIds.includes(o.id));
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    return pool.filter((o) => o.name.toLowerCase().includes(q)).slice(0, 50);
+  }, [options, selectedIds, query]);
+
+  const atCap = selectedIds.length >= maxItems;
+
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', onDoc);
+    return () => document.removeEventListener('mousedown', onDoc);
+  }, [open]);
+
+  return (
+    <div ref={containerRef} className="relative min-w-[180px] max-w-[280px] py-1">
+      <div className="flex flex-wrap gap-1 mb-1.5">
+        {selectedIds.map((id) => (
+          <Badge
+            key={id}
+            variant="secondary"
+            className="text-xs font-normal gap-0.5 pr-0.5 max-w-full"
+          >
+            <span className="truncate" title={nameById.get(id) ?? `ID ${id}`}>
+              {nameById.get(id) ?? `ID ${id}`}
+            </span>
+            <button
+              type="button"
+              className="rounded-sm p-0.5 hover:bg-muted shrink-0"
+              onClick={() => removeId(id)}
+              aria-label={`Remove ${nameById.get(id) ?? id}`}
+            >
+              <X className="h-3 w-3" />
+            </button>
+          </Badge>
+        ))}
+      </div>
+      <Input
+        value={query}
+        onChange={(e) => {
+          setQuery(e.target.value);
+          setOpen(true);
+        }}
+        onFocus={() => setOpen(true)}
+        placeholder={atCap ? 'Maximum selected' : placeholder}
+        disabled={atCap}
+        className="h-8 text-xs"
+        autoComplete="off"
+      />
+      {open && !atCap && (
+        <div className="absolute left-0 right-0 z-50 mt-1 max-h-48 overflow-y-auto rounded-md border bg-popover text-popover-foreground shadow-md">
+          {!query.trim() ? (
+            <div className="px-2 py-2 text-xs text-muted-foreground">Type to search and add</div>
+          ) : filtered.length === 0 ? (
+            <div className="px-2 py-2 text-xs text-muted-foreground">No matches</div>
+          ) : (
+            filtered.map((o) => (
+              <button
+                key={o.id}
+                type="button"
+                className="w-full px-2 py-1.5 text-left text-xs hover:bg-accent hover:text-accent-foreground"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => addId(o.id)}
+              >
+                {o.name}
+              </button>
+            ))
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 

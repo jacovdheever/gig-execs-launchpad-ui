@@ -32,8 +32,6 @@ export const BULK_TEMPLATE_COLUMNS = [
   'budget_amount',
   'budget_to_be_confirmed',
   'timeline',
-  'delivery_time_min',
-  'delivery_time_max',
   'skills_required',
   'industries',
   'role_type',
@@ -53,8 +51,6 @@ export interface BulkGigRow {
   budget_amount: string;
   budget_to_be_confirmed: string;
   timeline: string;
-  delivery_time_min: string;
-  delivery_time_max: string;
   skills_required: string;
   industries: string;
   role_type: string;
@@ -90,8 +86,6 @@ export function emptyBulkRow(): BulkGigRow {
     budget_amount: '',
     budget_to_be_confirmed: 'false',
     timeline: '',
-    delivery_time_min: '',
-    delivery_time_max: '',
     skills_required: '',
     industries: '',
     role_type: '',
@@ -138,11 +132,16 @@ function mapTimelineToRange(value: string): { min: number | null; max: number | 
   return { min: option.min, max: option.max };
 }
 
-function parseIdList(raw: string): number[] {
+export function parseIdList(raw: string): number[] {
   if (!raw.trim()) return [];
   const parts = raw.split(/[;,]/).map((s) => s.trim()).filter(Boolean);
   const nums = parts.map((p) => Number(p)).filter((n) => !Number.isNaN(n));
   return nums;
+}
+
+/** Stable comma-separated id string for row storage (matches spreadsheet convention). */
+export function formatIdList(ids: number[]): string {
+  return ids.join(',');
 }
 
 function parseBool(raw: string): boolean {
@@ -163,11 +162,6 @@ export function rowToApiPayload(row: BulkGigRow): ExternalGigCreatePayload {
     const r = mapTimelineToRange(row.timeline.trim());
     deliveryMin = r.min;
     deliveryMax = r.max;
-  } else {
-    const dm = row.delivery_time_min.trim() ? Number(row.delivery_time_min) : null;
-    const dx = row.delivery_time_max.trim() ? Number(row.delivery_time_max) : null;
-    deliveryMin = dm !== null && !Number.isNaN(dm) ? dm : null;
-    deliveryMax = dx !== null && !Number.isNaN(dx) ? dx : null;
   }
 
   const externalUrl = normalizeExternalUrl(row.external_url);

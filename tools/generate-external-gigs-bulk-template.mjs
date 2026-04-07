@@ -20,8 +20,6 @@ const GIG_HEADERS = [
   'budget_amount',
   'budget_to_be_confirmed',
   'timeline',
-  'delivery_time_min',
-  'delivery_time_max',
   'skills_required',
   'industries',
   'role_type',
@@ -36,7 +34,7 @@ const REFERENCE_ROWS = [
   ],
   [
     'timeline',
-    '1-7-days | 1-2-weeks | 2-4-weeks | 1-2-months | 2-6-months | 6-12-months | 1-2-years'
+    'Optional. Sets delivery range like manual create: 1-7-days | 1-2-weeks | … | 1-2-years. Leave empty if unknown.'
   ],
   [
     'skills_required',
