@@ -98,19 +98,25 @@ exports.handler = async (event) => {
       return res;
     }
 
-    const auditRows = projects.map((project, idx) => ({
-      staff_id: verification.staff.id,
-      action_type: 'external_project_created',
-      target_table: 'projects',
-      target_id: project.id,
-      details: {
-        bulk: true,
-        bulk_index: idx,
-        status: body.gigs[idx].status,
-        expires_at: body.gigs[idx].expires_at,
-        source_name: body.gigs[idx].source_name
-      }
-    }));
+    const auditRows = projects.map((project, idx) => {
+      const g = body.gigs[idx] || {};
+      return {
+        staff_id: verification.staff.id,
+        action_type: 'external_project_created',
+        target_table: 'projects',
+        target_id: project.id,
+        details: {
+          bulk: true,
+          bulk_index: idx,
+          title: g.title,
+          status: g.status,
+          expires_at: g.expires_at,
+          source_name: g.source_name,
+          role_type: g.role_type ?? null,
+          gig_location: g.gig_location ?? null
+        }
+      };
+    });
 
     const { error: auditError } = await supabase.from('audit_logs').insert(auditRows);
 

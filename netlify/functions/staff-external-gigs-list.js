@@ -97,6 +97,9 @@ exports.handler = async (event) => {
         delivery_time_max,
         skills_required,
         industries,
+        role_type,
+        gig_location,
+        project_origin,
         deleted_at,
         creator_id
       `)

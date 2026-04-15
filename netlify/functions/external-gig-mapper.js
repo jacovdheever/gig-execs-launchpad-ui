@@ -18,6 +18,19 @@ function normaliseIndustries(industries) {
   return industries.map((industry) => Number(industry));
 }
 
+function normaliseRoleType(value) {
+  if (value === undefined || value === null) return null;
+  const s = String(value).trim();
+  if (!s) return null;
+  return s;
+}
+
+function normaliseGigLocation(value) {
+  if (value === undefined || value === null) return null;
+  const s = String(value).trim();
+  return s || null;
+}
+
 /**
  * @param {Object} payload - validated create payload
  * @param {string} nowIso
@@ -56,8 +69,8 @@ function mapPayloadToProjectInsert(payload, nowIso) {
         : null,
     skills_required: normaliseSkills(payload.skills_required),
     industries: normaliseIndustries(payload.industries),
-    role_type: payload.role_type || null,
-    gig_location: payload.gig_location ? String(payload.gig_location).trim() : null,
+    role_type: normaliseRoleType(payload.role_type),
+    gig_location: normaliseGigLocation(payload.gig_location),
     project_origin: 'external',
     creator_id: null,
     updated_at: nowIso
