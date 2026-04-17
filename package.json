@@ -19,7 +19,8 @@
     "security:quick": "npm audit --omit=dev && npm run lint",
     "generate:external-gigs-template": "node tools/generate-external-gigs-bulk-template.mjs",
     "email:preview:community-reengagement": "node tools/render-community-reengagement-preview.cjs",
-    "email:dry-run:community-reengagement": "node tools/run-community-reengagement-dry-run.cjs"
+    "email:dry-run:community-reengagement": "node tools/run-community-reengagement-dry-run.cjs",
+    "email:send:community-reengagement-full": "node tools/run-community-reengagement-full-send.cjs --confirm"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "1.2.12",
