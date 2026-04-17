@@ -579,6 +579,229 @@ Unsubscribe: ${BASE_URL}/unsubscribe`;
 }
 
 // =============================================================================
+// Community re-engagement (broadcast-style, Resend / manual merge)
+// =============================================================================
+
+const COMMUNITY_REENGAGEMENT_SUBJECT =
+  "A quick note from us (and what's new on GigExecs)";
+const COMMUNITY_REENGAGEMENT_PREHEADER =
+  "We've grown, new gigs are live, and we'd love to welcome you back.";
+
+function escapeHtmlForEmail(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+/**
+ * Full HTML + plain text for the community re-engagement campaign.
+ * Uses the same outer shell as transactional mail (header, preheader, footer).
+ * Variables: first_name, login_url; optional browse_gigs_url (defaults to /find-gigs).
+ *
+ * For Resend with merge tags, substitute values before send or use Resend audiences.
+ */
+function buildCommunityReengagementEmail(variables = {}) {
+  const firstName = escapeHtmlForEmail(variables.first_name || 'there');
+  const loginUrl = escapeHtmlForEmail(
+    variables.login_url || `${BASE_URL}/auth`
+  );
+  const browseGigsUrl = escapeHtmlForEmail(
+    variables.browse_gigs_url || `${BASE_URL}/find-gigs`
+  );
+
+  const subject = COMMUNITY_REENGAGEMENT_SUBJECT;
+  const preheader = COMMUNITY_REENGAGEMENT_PREHEADER;
+
+  const innerHtml = `
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td style="padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 16px; line-height: 1.7; color: #374151;">
+            <p style="margin: 0 0 16px 0; color: #1f2937;">Dear ${firstName},</p>
+
+            <p style="margin: 0 0 16px 0;">
+              When you registered on <strong style="color: #1f2937;">GigExecs</strong>, we were just getting started.
+            </p>
+
+            <p style="margin: 0 0 16px 0;">
+              You took a chance on something early, and I want you to know that hasn't gone unnoticed.
+            </p>
+
+            <p style="margin: 0 0 16px 0;">
+              We're still bootstrapping and building this from the ground up, but we've made meaningful progress.
+              Our vision is simple: <strong style="color: #1f2937;">make it easier for highly experienced professionals to access flexible, high-quality work.</strong>
+            </p>
+
+            <p style="margin: 0 0 12px 0;">
+              Over the past few months:
+            </p>
+
+            <ul style="margin: 0 0 20px 20px; padding: 0; color: #374151;">
+              <li style="margin: 0 0 10px 0;">We've started onboarding <strong style="color: #1f2937;">active gigs across multiple industries</strong></li>
+              <li style="margin: 0 0 10px 0;">New opportunities are being added <strong style="color: #1f2937;">every week</strong></li>
+              <li style="margin: 0 0 10px 0;">Our community has grown to <strong style="color: #1f2937;">1,000+ senior professionals</strong></li>
+            </ul>
+
+            <p style="margin: 0 0 16px 0;">
+              This means the network you're part of is becoming increasingly valuable to the companies we work with.
+            </p>
+
+            <p style="margin: 0 0 20px 0;">
+              If you haven't logged in for a while, now is a great time to update your profile and browse the latest opportunities.
+            </p>
+
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 0 0 20px 0;">
+              <tr>
+                <td align="center" bgcolor="#0284C7" style="border-radius: 8px;">
+                  <a
+                    href="${loginUrl}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style="display: inline-block; padding: 14px 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 15px; font-weight: 600; color: #ffffff !important; text-decoration: none; border-radius: 8px;"
+                  >Log in to GigExecs</a>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin: 0 0 16px 0; text-align: center;">
+              <a href="${browseGigsUrl}" style="color: #0284C7; font-size: 14px; text-decoration: none; font-weight: 500;">Browse latest opportunities</a>
+            </p>
+
+            <p style="margin: 0 0 16px 0;">
+              If you're open to it, I'd really value your help with three quick things:
+            </p>
+
+            <p style="margin: 0 0 10px 0;">
+              <strong style="color: #1f2937;">1. Take a look at the current gigs</strong><br />
+              Let me know if anything fits, or what <em>would</em> be a better fit for you.
+            </p>
+
+            <p style="margin: 0 0 10px 0;">
+              <strong style="color: #1f2937;">2. Refer one person in your network</strong><br />
+              Someone with 15+ years of experience who might benefit from flexible, project-based work.
+            </p>
+
+            <p style="margin: 0 0 20px 0;">
+              <strong style="color: #1f2937;">3. Give us honest feedback</strong><br />
+              If something is holding you back from using the platform, just reply to this email. I read every response personally.
+            </p>
+
+            <p style="margin: 0 0 16px 0;">
+              You're one of our early members, and that genuinely matters to us.
+              We're building this <strong style="color: #1f2937;">with you</strong>, not just for you.
+            </p>
+
+            <p style="margin: 0 0 16px 0;">
+              Thank you again for being part of the journey.
+            </p>
+
+            <p style="margin: 0;">
+              Warm regards,<br />
+              <strong style="color: #1f2937;">Nuno Rodrigues</strong><br />
+              Co-Founder, GigExecs
+            </p>
+          </td>
+        </tr>
+      </table>`;
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>${escapeHtmlForEmail(subject)}</title>
+  <!--[if mso]>
+  <style type="text/css">
+    body, table, td {font-family: Arial, sans-serif !important;}
+  </style>
+  <![endif]-->
+  ${getBaseStyles()}
+</head>
+<body>
+  <div style="display: none; max-height: 0px; overflow: hidden;">
+    ${preheader}
+  </div>
+
+  <div class="email-wrapper">
+    <div class="email-container">
+      <div class="header">
+        <div class="logo">GigExecs</div>
+        <div class="tagline">Flexible work for senior professionals</div>
+      </div>
+
+      <div class="content">
+        ${innerHtml}
+      </div>
+
+      <div class="footer">
+        <div class="footer-logo">GigExecs</div>
+        <div class="footer-tagline">The Premier Hub for Highly Experienced Professionals</div>
+        <div style="margin-top: 15px;">
+          <a href="${BASE_URL}" class="footer-link" style="color: #0284C7; text-decoration: none;">www.gigexecs.com</a>
+        </div>
+        <div class="footer-links">
+          You're receiving this because you're part of the GigExecs community.<br>
+          <a href="${BASE_URL}/settings/notifications" class="footer-link" style="color: #0284C7; text-decoration: none;">Update preferences</a> |
+          <a href="${BASE_URL}/unsubscribe" class="footer-link" style="color: #0284C7; text-decoration: none;">Unsubscribe</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
+
+  const loginPlain = variables.login_url || `${BASE_URL}/auth`;
+  const browsePlain = variables.browse_gigs_url || `${BASE_URL}/find-gigs`;
+  const text = `Dear ${variables.first_name || 'there'},
+
+When you registered on GigExecs, we were just getting started.
+
+You took a chance on something early, and I want you to know that hasn't gone unnoticed.
+
+We're still bootstrapping and building this from the ground up, but we've made meaningful progress. Our vision is simple: make it easier for highly experienced professionals to access flexible, high-quality work.
+
+Over the past few months:
+- We've started onboarding active gigs across multiple industries
+- New opportunities are being added every week
+- Our community has grown to 1,000+ senior professionals
+
+This means the network you're part of is becoming increasingly valuable to the companies we work with.
+
+If you haven't logged in for a while, now is a great time to update your profile and browse the latest opportunities.
+
+Log in to GigExecs: ${loginPlain}
+
+Browse latest opportunities: ${browsePlain}
+
+If you're open to it, I'd really value your help with three quick things:
+
+1. Take a look at the current gigs — let me know if anything fits, or what would be a better fit for you.
+
+2. Refer one person in your network — someone with 15+ years of experience who might benefit from flexible, project-based work.
+
+3. Give us honest feedback — if something is holding you back from using the platform, just reply to this email. I read every response personally.
+
+You're one of our early members, and that genuinely matters to us. We're building this with you, not just for you.
+
+Thank you again for being part of the journey.
+
+Warm regards,
+Nuno Rodrigues
+Co-Founder, GigExecs
+
+---
+GigExecs - The Premier Hub for Highly Experienced Professionals
+${BASE_URL}
+
+Update preferences: ${BASE_URL}/settings/notifications
+Unsubscribe: ${BASE_URL}/unsubscribe`;
+
+  return { subject, preheader, html, text };
+}
+
+// =============================================================================
 // Public API
 // =============================================================================
 
@@ -689,6 +912,9 @@ module.exports = {
   renderTemplate,
   getTemplateMetadata,
   getTemplatesForTrigger,
+  buildCommunityReengagementEmail,
+  COMMUNITY_REENGAGEMENT_SUBJECT,
+  COMMUNITY_REENGAGEMENT_PREHEADER,
   TEMPLATES,
   BASE_URL
 };
