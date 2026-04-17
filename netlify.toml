@@ -14,6 +14,10 @@
 [functions."email-reminders"]
   schedule = "0 9 * * *"
 
+# Community re-engagement batch sends (delay between Resend calls; allow larger batches)
+[functions."community-reengagement-send"]
+  timeout = 300
+
 # Plugin to install dependencies from netlify/functions/package.json
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"

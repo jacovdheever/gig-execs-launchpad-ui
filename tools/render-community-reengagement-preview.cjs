@@ -20,12 +20,8 @@ const {
   COMMUNITY_REENGAGEMENT_PREHEADER
 } = require('../netlify/functions/lib/email-templates.js');
 
-const SITE = process.env.SITE_URL || 'https://gigexecs.com';
-
 const { html, text, subject, preheader } = buildCommunityReengagementEmail({
-  first_name: 'Jordan',
-  login_url: `${SITE}/auth`,
-  browse_gigs_url: `${SITE}/find-gigs`
+  first_name: 'Jordan'
 });
 
 const outDir = path.join(__dirname, '..', 'public', 'email-previews');
@@ -48,6 +44,6 @@ console.log('  subject:', subject || COMMUNITY_REENGAGEMENT_SUBJECT);
 // eslint-disable-next-line no-console
 console.log('  preview / preheader:', preheader || COMMUNITY_REENGAGEMENT_PREHEADER);
 // eslint-disable-next-line no-console
-console.log('\nMerge placeholders for broadcasts (substitute before send or use Resend variables):');
+console.log('\nProgrammatic send: users.first_name from Supabase; login link is always https://gigexecs.com/auth/login');
 // eslint-disable-next-line no-console
-console.log('  {{first_name}}  {{login_url}}  optional: {{browse_gigs_url}}');
+console.log('Netlify: POST /.netlify/functions/community-reengagement-send with {"dry_run":true}');

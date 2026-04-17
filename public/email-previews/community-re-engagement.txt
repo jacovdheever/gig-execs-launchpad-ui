@@ -15,7 +15,7 @@ This means the network you're part of is becoming increasingly valuable to the c
 
 If you haven't logged in for a while, now is a great time to update your profile and browse the latest opportunities.
 
-Log in to GigExecs: https://gigexecs.com/auth
+Log in to GigExecs: https://gigexecs.com/auth/login
 
 Browse latest opportunities: https://gigexecs.com/find-gigs
 

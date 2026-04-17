@@ -587,6 +587,10 @@ const COMMUNITY_REENGAGEMENT_SUBJECT =
 const COMMUNITY_REENGAGEMENT_PREHEADER =
   "We've grown, new gigs are live, and we'd love to welcome you back.";
 
+/** Fixed CTAs for this campaign (same for every recipient). */
+const COMMUNITY_REENGAGEMENT_LOGIN_URL = 'https://gigexecs.com/auth/login';
+const COMMUNITY_REENGAGEMENT_BROWSE_URL = 'https://gigexecs.com/find-gigs';
+
 function escapeHtmlForEmail(value) {
   return String(value ?? '')
     .replace(/&/g, '&amp;')
@@ -598,18 +602,14 @@ function escapeHtmlForEmail(value) {
 /**
  * Full HTML + plain text for the community re-engagement campaign.
  * Uses the same outer shell as transactional mail (header, preheader, footer).
- * Variables: first_name, login_url; optional browse_gigs_url (defaults to /find-gigs).
+ * Variables: first_name only (from Supabase users.first_name when sending).
  *
- * For Resend with merge tags, substitute values before send or use Resend audiences.
+ * Login and browse links are fixed production URLs for every recipient.
  */
 function buildCommunityReengagementEmail(variables = {}) {
   const firstName = escapeHtmlForEmail(variables.first_name || 'there');
-  const loginUrl = escapeHtmlForEmail(
-    variables.login_url || `${BASE_URL}/auth`
-  );
-  const browseGigsUrl = escapeHtmlForEmail(
-    variables.browse_gigs_url || `${BASE_URL}/find-gigs`
-  );
+  const loginUrl = escapeHtmlForEmail(COMMUNITY_REENGAGEMENT_LOGIN_URL);
+  const browseGigsUrl = escapeHtmlForEmail(COMMUNITY_REENGAGEMENT_BROWSE_URL);
 
   const subject = COMMUNITY_REENGAGEMENT_SUBJECT;
   const preheader = COMMUNITY_REENGAGEMENT_PREHEADER;
@@ -752,8 +752,8 @@ function buildCommunityReengagementEmail(variables = {}) {
 </body>
 </html>`;
 
-  const loginPlain = variables.login_url || `${BASE_URL}/auth`;
-  const browsePlain = variables.browse_gigs_url || `${BASE_URL}/find-gigs`;
+  const loginPlain = COMMUNITY_REENGAGEMENT_LOGIN_URL;
+  const browsePlain = COMMUNITY_REENGAGEMENT_BROWSE_URL;
   const text = `Dear ${variables.first_name || 'there'},
 
 When you registered on GigExecs, we were just getting started.
@@ -915,6 +915,8 @@ module.exports = {
   buildCommunityReengagementEmail,
   COMMUNITY_REENGAGEMENT_SUBJECT,
   COMMUNITY_REENGAGEMENT_PREHEADER,
+  COMMUNITY_REENGAGEMENT_LOGIN_URL,
+  COMMUNITY_REENGAGEMENT_BROWSE_URL,
   TEMPLATES,
   BASE_URL
 };

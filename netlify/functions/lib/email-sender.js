@@ -9,7 +9,11 @@
  */
 
 const { Resend } = require('resend');
-const { renderTemplate, templateExists } = require('./email-templates');
+const {
+  renderTemplate,
+  templateExists,
+  buildCommunityReengagementEmail
+} = require('./email-templates');
 
 // Initialize Resend client
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -223,6 +227,125 @@ async function sendMultipleTemplates(supabase, {
 }
 
 // =============================================================================
+// Community re-engagement campaign (tracked in email_delivery_log)
+// =============================================================================
+
+/** Production campaign idempotency (one send per user per lifecycle key). */
+const COMMUNITY_REENGAGEMENT_TEMPLATE_ID = 'community_reengagement';
+const COMMUNITY_REENGAGEMENT_LIFECYCLE_KEY =
+  process.env.COMMUNITY_REENGAGEMENT_LIFECYCLE_KEY || '2026_04';
+/** Dry-run / test send — separate log key so the real campaign can still reach the same inbox. */
+const COMMUNITY_REENGAGEMENT_DRY_TEMPLATE_ID = 'community_reengagement_dry_run';
+const COMMUNITY_REENGAGEMENT_DRY_LIFECYCLE_KEY = 'default';
+
+/** Delay between Resend calls (~2 req/sec); align with email-reminders activation nudges. */
+const COMMUNITY_REENGAGEMENT_DELAY_MS = 550;
+
+/**
+ * True if we already logged a successful send for this campaign key (status = sent).
+ * Failed attempts do not count, so operators can retry after Resend errors.
+ */
+async function checkCommunityCampaignAlreadySucceeded(
+  supabase,
+  userId,
+  templateId,
+  lifecycleKey
+) {
+  const { data, error } = await supabase
+    .from('email_delivery_log')
+    .select('id')
+    .eq('user_id', userId)
+    .eq('template_id', templateId)
+    .eq('metadata->>lifecycle_key', lifecycleKey)
+    .eq('status', 'sent')
+    .maybeSingle();
+
+  if (error) {
+    console.error('[email-sender] Campaign idempotency check error:', error);
+    return false;
+  }
+  return !!data;
+}
+
+/**
+ * Send the community re-engagement HTML email with idempotency + delivery log.
+ * Does not use TEMPLATES.* — uses buildCommunityReengagementEmail().
+ *
+ * @param {Object} supabase
+ * @param {Object} options
+ * @param {string} options.userId - users.id (required for email_delivery_log FK)
+ * @param {string} options.email
+ * @param {string} [options.firstName] - from users.first_name
+ * @param {boolean} [options.dryRun] - if true, logs under community_reengagement_dry_run template
+ * @param {boolean} [options.skipIdempotency] - force send even if already logged (dry-run retests)
+ */
+async function sendCommunityReengagementCampaignEmail(supabase, options) {
+  const {
+    userId,
+    email,
+    firstName,
+    dryRun = false,
+    skipIdempotency = false
+  } = options;
+
+  const templateId = dryRun
+    ? COMMUNITY_REENGAGEMENT_DRY_TEMPLATE_ID
+    : COMMUNITY_REENGAGEMENT_TEMPLATE_ID;
+  const lifecycleKey = dryRun
+    ? COMMUNITY_REENGAGEMENT_DRY_LIFECYCLE_KEY
+    : COMMUNITY_REENGAGEMENT_LIFECYCLE_KEY;
+
+  if (!skipIdempotency) {
+    const alreadySent = await checkCommunityCampaignAlreadySucceeded(
+      supabase,
+      userId,
+      templateId,
+      lifecycleKey
+    );
+    if (alreadySent) {
+      console.log(
+        `[email-sender] Skipping duplicate community re-engagement (${dryRun ? 'dry' : 'campaign'}) for user ${userId}`
+      );
+      return { success: true, skipped: true };
+    }
+  }
+
+  const rendered = buildCommunityReengagementEmail({
+    first_name: firstName || 'there'
+  });
+
+  const result = await sendEmail({
+    to: email,
+    subject: rendered.subject,
+    html: rendered.html,
+    text: rendered.text
+  });
+
+  if (result.success) {
+    await logEmailDelivery(supabase, {
+      userId,
+      templateId,
+      emailTo: email,
+      subject: rendered.subject,
+      resendMessageId: result.messageId || null,
+      status: 'sent',
+      lifecycleKey,
+      metadata: {
+        campaign: 'community_reengagement',
+        dry_run: dryRun
+      }
+    });
+  } else {
+    console.warn(
+      `[email-sender] Community re-engagement send failed for ${userId}; not logging success row (retry allowed).`,
+      result.error
+    );
+  }
+
+  return result;
+}
+
+// =============================================================================
 // Trigger-based Sending
 // =============================================================================
 
@@ -287,12 +410,19 @@ module.exports = {
   sendTemplatedEmail,
   sendMultipleTemplates,
   sendTriggerEmails,
-  
+  sendCommunityReengagementCampaignEmail,
+
   // Helpers
   checkAlreadySent,
   logEmailDelivery,
-  
+
   // Config
   FROM_EMAIL,
-  REPLY_TO
+  REPLY_TO,
+
+  // Community re-engagement constants (for operators / Netlify function)
+  COMMUNITY_REENGAGEMENT_TEMPLATE_ID,
+  COMMUNITY_REENGAGEMENT_LIFECYCLE_KEY,
+  COMMUNITY_REENGAGEMENT_DRY_TEMPLATE_ID,
+  COMMUNITY_REENGAGEMENT_DELAY_MS
 };
