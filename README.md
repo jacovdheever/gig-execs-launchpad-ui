@@ -33,6 +33,8 @@ npm run dev
 
 **Keep code as simple as possible** - prioritize readability and maintainability over complexity. Use clear, descriptive names and avoid over-engineering solutions.
 
+**Git branches:** Do day-to-day work and pushes on **`develop`**; merge to **`main`** after testing. See **[docs/git-branch-workflow.md](docs/git-branch-workflow.md)**.
+
 ### Development Setup
 
 Clone the repository and work locally using your preferred IDE (we recommend Cursor):

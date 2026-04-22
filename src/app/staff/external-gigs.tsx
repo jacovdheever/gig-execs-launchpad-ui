@@ -1391,10 +1391,18 @@ export default function StaffExternalGigsPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   {canManage ? (
-                    <Button onClick={openCreateDialog} className="bg-blue-600 hover:bg-blue-700">
-                      <Plus className="h-4 w-4 mr-2" />
-                      New External Gig
-                    </Button>
+                    <>
+                      <Button
+                        variant="outline"
+                        onClick={() => navigate('/staff/external-gigs/bulk')}
+                      >
+                        Bulk Gig Creation
+                      </Button>
+                      <Button onClick={openCreateDialog} className="bg-blue-600 hover:bg-blue-700">
+                        <Plus className="h-4 w-4 mr-2" />
+                        New External Gig
+                      </Button>
+                    </>
                   ) : (
                     <Tooltip>
                       <TooltipTrigger asChild>
