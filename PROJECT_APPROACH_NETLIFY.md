@@ -2,6 +2,8 @@
 
 > Use this file as a north star while vibecoding the functional app in Cursor. It distills our agreed stack, priorities, flows, and implementation details (incl. Resend for emails). Save as `/docs/PROJECT_APPROACH.md` in your repo.
 
+**Shorter index + operational learnings:** [docs/PROJECT_APPROACH.md](docs/PROJECT_APPROACH.md)
+
 ---
 
 ## 0) Tech Stack & Principles
