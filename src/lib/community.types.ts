@@ -8,6 +8,8 @@ export interface ForumCategory {
   name: string;
   description?: string;
   created_at: string;
+  /** When false, category is hidden from listings and must not receive new posts (see RLS). */
+  is_active?: boolean;
 }
 
 export interface ForumPost {

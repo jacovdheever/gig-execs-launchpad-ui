@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS forum_categories (
   slug TEXT UNIQUE NOT NULL,
   name TEXT NOT NULL,
   description TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  is_active BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 -- Posts
@@ -74,8 +75,28 @@ CREATE POLICY "cat_read" ON forum_categories FOR SELECT USING (auth.uid() IS NOT
 
 -- Posts: read by all authenticated; write by author
 CREATE POLICY "post_read" ON forum_posts FOR SELECT USING (auth.uid() IS NOT NULL);
-CREATE POLICY "post_insert" ON forum_posts FOR INSERT WITH CHECK (author_id = auth.uid());
-CREATE POLICY "post_update_by_author" ON forum_posts FOR UPDATE USING (author_id = auth.uid());
+CREATE POLICY "post_insert" ON forum_posts FOR INSERT WITH CHECK (
+  author_id = auth.uid()
+  AND (
+    category_id IS NULL
+    OR EXISTS (
+      SELECT 1 FROM forum_categories c
+      WHERE c.id = category_id AND c.is_active = TRUE
+    )
+  )
+);
+CREATE POLICY "post_update_by_author" ON forum_posts FOR UPDATE
+  USING (author_id = auth.uid())
+  WITH CHECK (
+    author_id = auth.uid()
+    AND (
+      category_id IS NULL
+      OR EXISTS (
+        SELECT 1 FROM forum_categories c
+        WHERE c.id = category_id AND c.is_active = TRUE
+      )
+    )
+  );
 
 -- Comments: read by all; write by author
 CREATE POLICY "comment_read" ON forum_comments FOR SELECT USING (auth.uid() IS NOT NULL);
@@ -89,12 +110,10 @@ CREATE POLICY "react_mutate" ON forum_post_reactions FOR ALL USING (user_id = au
 CREATE POLICY "reads_select" ON forum_post_reads FOR SELECT USING (user_id = auth.uid());
 CREATE POLICY "reads_upsert" ON forum_post_reads FOR ALL USING (user_id = auth.uid());
 
--- Insert default categories
-INSERT INTO forum_categories (slug, name, description) VALUES
-  ('general-discussion', 'General discussion', 'General topics and discussions'),
-  ('jobs', 'Jobs', 'Job opportunities and career discussions'),
-  ('courses-discussions', 'Courses Discussions', 'Course-related discussions and questions'),
-  ('resources', 'Resources', 'Helpful resources and tools')
+-- Insert default categories (Community uses two active topics; see supabase/migrations for prod data fixes)
+INSERT INTO forum_categories (slug, name, description, is_active) VALUES
+  ('opportunities', 'Opportunities', 'Opportunities and gig-related discussion', TRUE),
+  ('insights', 'Insights', 'News, analysis, and community insights', TRUE)
 ON CONFLICT (slug) DO NOTHING;
 
 -- Create triggers for denormalization (optional, can be added later)
