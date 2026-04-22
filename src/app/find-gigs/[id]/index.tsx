@@ -606,7 +606,7 @@ export default function GigDetailsPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Building2 className="w-5 h-5" />
-                    About the Client
+                    {isExternal ? 'About the Opportunity' : 'About the Client'}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
