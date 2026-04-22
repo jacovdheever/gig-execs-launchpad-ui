@@ -1659,9 +1659,6 @@ export default function FindGigsPage() {
                                 External opportunity curated by GigExecs
                               </p>
                             )}
-                            {isExternal && project.source_name && (
-                              <p className="mt-1 text-xs text-blue-600">Client: {project.source_name}</p>
-                            )}
                         </div>
                       </div>
                         <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
