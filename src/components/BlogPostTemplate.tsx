@@ -1,6 +1,6 @@
 /**
  * Reusable template for blog article pages.
- * Renders nav, PageMeta, JsonLd (breadcrumb + BlogPosting), H1, TL;DR, main content, CTA block, footer.
+ * Renders nav, PageMeta, JsonLd (breadcrumb + BlogPosting), H1, Key takeaways, main content, CTA block, footer.
  */
 
 import { useState } from "react"
@@ -14,7 +14,7 @@ export interface BlogPostTemplatePost {
   title: string
   slug: string
   metaDescription: string
-  /** TL;DR: string for paragraph, or string[] for 3 bullets */
+  /** Key takeaways: string for paragraph, or string[] for bullets */
   tldr: string | string[]
   author: string
   datePublished: string
@@ -232,11 +232,11 @@ export function BlogPostTemplate({ post, children }: BlogPostTemplateProps) {
         </div>
       </section>
 
-      {/* TL;DR Section */}
+      {/* Key takeaways */}
       <section className="py-6 bg-[#F5F5F5]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white p-6 rounded-lg border border-slate-200">
-            <h2 className="text-xl font-semibold text-[#1F2937] mb-3">TL;DR</h2>
+            <h2 className="text-xl font-semibold text-[#1F2937] mb-3">Key takeaways</h2>
             {Array.isArray(post.tldr) ? (
               <ul className="text-[#6B7280] leading-relaxed space-y-2 list-disc list-inside">
                 {post.tldr.map((item, i) => (

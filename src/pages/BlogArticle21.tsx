@@ -190,21 +190,22 @@ export default function BlogArticle21() {
         Founder, GigExecs
       </p>
 
-      <h2 className="text-2xl font-bold text-[#1F2937] mt-10 mb-4">Final CTA</h2>
+      <h2 className="text-2xl font-bold text-[#1F2937] mt-10 mb-4">Take the next step</h2>
       <p className="text-[#6B7280] leading-relaxed mb-6">
-        Hiring senior expertise? Explore how GigExecs helps organizations connect with vetted independent
-        consultants and senior professionals at{" "}
+        <span className="font-semibold text-[#1F2937]">Hiring senior expertise?</span>{" "}
         <a href="/clients" className="text-[#0284C7] hover:underline">
-          /clients
+          Explore GigExecs for clients
         </a>
-        .
+        {" "}
+        — how GigExecs connects organizations with vetted independent consultants and senior professionals.
       </p>
       <p className="text-[#6B7280] leading-relaxed mb-6">
-        Building an independent path? Join the premium network at{" "}
+        <span className="font-semibold text-[#1F2937]">Building an independent path?</span>{" "}
         <a href="/professionals" className="text-[#0284C7] hover:underline">
-          /professionals
+          Join the network
         </a>
-        .
+        {" "}
+        — the premium network for senior professionals.
       </p>
     </BlogPostTemplate>
   )
