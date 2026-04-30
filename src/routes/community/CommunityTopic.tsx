@@ -6,6 +6,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import CategoryChips from './CategoryChips';
 import SortMenu from './SortMenu';
 import PostCard from './PostCard';
 import NewPostComposer from './NewPostComposer';
@@ -25,7 +26,9 @@ export default function CommunityTopic() {
   const { data: categories } = useCategories();
   const currentCategory = categories?.find(cat => cat.slug === slug);
   
-  const { filters, updateSort, nextPage, prevPage } = useFeedFilters(currentCategory?.id);
+  const { filters, updateSort, nextPage, prevPage } = useFeedFilters(
+    currentCategory?.id
+  );
   
   const { data: feedData, isLoading, error } = usePosts(filters);
 
@@ -43,6 +46,17 @@ export default function CommunityTopic() {
   const handlePostModalClose = () => {
     setIsPostModalOpen(false);
     setSelectedPost(null);
+  };
+
+  const handleCategoryChange = (categoryId: number | undefined) => {
+    if (categoryId) {
+      const category = categories?.find((cat) => cat.id === categoryId);
+      if (category) {
+        navigate(`/community/topic/${category.slug}`);
+      }
+    } else {
+      navigate('/community');
+    }
   };
 
   if (!currentCategory) {
@@ -85,8 +99,11 @@ export default function CommunityTopic() {
         </Button>
       </div>
 
-      {/* Sort controls (category filter chips hidden) */}
-      <div className="flex items-center justify-end">
+      <div className="flex items-center justify-between">
+        <CategoryChips
+          selectedCategoryId={filters.categoryId}
+          onCategoryChange={handleCategoryChange}
+        />
         <SortMenu currentSort={filters.sort} onSortChange={updateSort} />
       </div>
 

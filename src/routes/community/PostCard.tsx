@@ -127,6 +127,11 @@ export default function PostCard({ post, onCommentClick, onPostClick }: PostCard
           </div>
           
           <div className="flex items-center gap-2">
+            {post.category && (
+              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                {post.category.name}
+              </span>
+            )}
             {post.pinned && (
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">
                 <Pin className="w-3 h-3" />

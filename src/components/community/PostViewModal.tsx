@@ -466,7 +466,7 @@ export default function PostViewModal({ post, isOpen, onClose, onPostUpdated }: 
                     {post.author ? `${post.author.first_name} ${post.author.last_name}` : 'Unknown User'}
                   </div>
                   <div className="text-xs md:text-sm text-slate-500 truncate">
-                    {new Date(post.created_at).toLocaleDateString()}
+                    {new Date(post.created_at).toLocaleDateString()} • {post.category?.name || 'General'}
                   </div>
                 </div>
               </div>
