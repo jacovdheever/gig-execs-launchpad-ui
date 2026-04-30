@@ -27,7 +27,7 @@ export interface BlogPost {
   category: BlogCategory
 }
 
-/** Look up post by legacy blogNumber (1–20) for backward compatibility */
+/** Look up post by legacy blogNumber (1–21) for backward compatibility */
 export function getPostByNumber(n: number): BlogPost | undefined {
   return blogPosts.find((p) => p.number === n)
 }
@@ -277,6 +277,18 @@ export const blogPosts: BlogPost[] = [
     date: "2026-03-12",
     link: "/blog/are-layoffs-quietly-redesigning-the-corporate-workforce",
     category: "Future of Work & AI",
+  },
+  {
+    number: 21,
+    image: "/images/blog/fractional-economy-senior-talent-costs-cover.png",
+    alt: "Fractional economy: senior talent, flexible expertise, and real-world cost benchmarks",
+    title: "The Fractional Economy: What Senior Talent Really Costs",
+    description:
+      "What do fractional leaders cost today? A practical look at senior talent rates in the US and Europe, and why companies pay for flexible expertise.",
+    author: "Nuno G. Rodrigues",
+    date: "2026-04-17",
+    link: "/blog/fractional-economy-what-senior-talent-really-costs",
+    category: "Flexible Work Models",
   },
 ]
 

@@ -17,13 +17,29 @@ import type {
   SortOption
 } from './community.types';
 
+/** Category IDs that are active (visible + postable). Cached per request batch via callers. */
+export async function fetchActiveCategoryIds(): Promise<number[]> {
+  const { data, error } = await supabase
+    .from('forum_categories')
+    .select('id')
+    .eq('is_active', true);
+
+  if (error) {
+    console.error('Error fetching active forum categories:', error);
+    throw new Error('Failed to fetch categories');
+  }
+
+  return (data ?? []).map((row) => row.id);
+}
+
 /**
- * Fetch all forum categories
+ * Fetch forum categories shown in the Community UI (active only).
  */
 export async function fetchCategories(): Promise<ForumCategory[]> {
   const { data, error } = await supabase
     .from('forum_categories')
     .select('*')
+    .eq('is_active', true)
     .order('name');
 
   if (error) {
@@ -41,17 +57,30 @@ export async function fetchPosts(filters: FeedFilters): Promise<FeedResponse> {
   const { categoryId, sort, page, limit } = filters;
   const offset = page * limit;
 
+  const activeCategoryIds = await fetchActiveCategoryIds();
+  if (categoryId != null && !activeCategoryIds.includes(categoryId)) {
+    return { posts: [], total: 0, hasMore: false };
+  }
+  if (categoryId == null && activeCategoryIds.length === 0) {
+    return { posts: [], total: 0, hasMore: false };
+  }
+
   let query = supabase
     .from('forum_posts')
-    .select(`
+    .select(
+      `
       *,
       forum_categories(id, name, slug),
       users!author_id(first_name, last_name, profile_photo_url)
-    `);
+    `,
+      { count: 'exact' }
+    );
 
-  // Apply category filter
-  if (categoryId) {
+  if (categoryId != null) {
     query = query.eq('category_id', categoryId);
+  } else {
+    const inList = activeCategoryIds.join(',');
+    query = query.or(`category_id.is.null,category_id.in.(${inList})`);
   }
 
   // Apply sorting
@@ -127,7 +156,15 @@ export async function fetchUnreadPosts(userId: string, filters: Omit<FeedFilters
   const { categoryId, page, limit } = filters;
   const offset = page * limit;
 
-  // First, get all posts
+  const activeCategoryIds = await fetchActiveCategoryIds();
+  if (categoryId != null && !activeCategoryIds.includes(categoryId)) {
+    return { posts: [], total: 0, hasMore: false };
+  }
+  if (categoryId == null && activeCategoryIds.length === 0) {
+    return { posts: [], total: 0, hasMore: false };
+  }
+
+  // First, get all posts (same category scope as fetchPosts; unread is filtered client-side)
   let query = supabase
     .from('forum_posts')
     .select(`
@@ -136,14 +173,17 @@ export async function fetchUnreadPosts(userId: string, filters: Omit<FeedFilters
       users!author_id(first_name, last_name, profile_photo_url)
     `);
 
-  if (categoryId) {
+  if (categoryId != null) {
     query = query.eq('category_id', categoryId);
+  } else {
+    const inList = activeCategoryIds.join(',');
+    query = query.or(`category_id.is.null,category_id.in.(${inList})`);
   }
 
   query = query.order('pinned', { ascending: false })
                .order('last_activity_at', { ascending: false });
 
-  const { data: allPosts, error, count } = await query;
+  const { data: allPosts, error } = await query;
 
   if (error) {
     console.error('Error fetching posts for unread filter:', error);
@@ -195,6 +235,17 @@ export async function createPost(postData: CreatePostData, authorId: string): Pr
   }
   
   console.log('✅ User exists in users table, proceeding with post creation');
+
+  const { data: activeCat, error: catErr } = await supabase
+    .from('forum_categories')
+    .select('id')
+    .eq('id', postData.category_id)
+    .eq('is_active', true)
+    .maybeSingle();
+
+  if (catErr || !activeCat) {
+    throw new Error('That category is not available. Please choose Opportunities or Insights.');
+  }
   
   const { data, error } = await supabase
     .from('forum_posts')
