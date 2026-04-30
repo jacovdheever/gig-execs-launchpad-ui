@@ -8,7 +8,6 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
-import CategoryChips from './CategoryChips';
 import SortMenu from './SortMenu';
 import PostCard from './PostCard';
 import NewPostComposer from './NewPostComposer';
@@ -24,7 +23,7 @@ export default function CommunityLanding() {
   const [selectedPost, setSelectedPost] = useState<ForumPost | null>(null);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState<any>(null);
-  const { filters, updateCategory, updateSort, nextPage, prevPage } = useFeedFilters();
+  const { filters, updateSort, nextPage, prevPage } = useFeedFilters();
   const { data: feedData, isLoading, error } = usePosts(filters);
 
   useEffect(() => {
@@ -85,16 +84,9 @@ export default function CommunityLanding() {
         </div>
       </div>
 
-      {/* Category and Sort Controls */}
-      <div className="flex items-center justify-between">
-        <CategoryChips
-          selectedCategoryId={filters.categoryId}
-          onCategoryChange={updateCategory}
-        />
-        <SortMenu
-          currentSort={filters.sort}
-          onSortChange={updateSort}
-        />
+      {/* Sort controls (category filter chips hidden) */}
+      <div className="flex items-center justify-end">
+        <SortMenu currentSort={filters.sort} onSortChange={updateSort} />
       </div>
 
       {/* Posts Feed */}
