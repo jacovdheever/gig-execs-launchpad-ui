@@ -539,13 +539,19 @@ function Pricing() {
           <div className="hidden md:block rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow className="bg-[#012E46]/95 hover:bg-[#012E46]/95 border-none">
-                  <TableHead className="text-white font-semibold min-w-[180px]">Feature</TableHead>
-                  <TableHead className="text-white font-semibold text-center">7-Day Access Pass</TableHead>
-                  <TableHead className="text-white font-semibold text-center bg-[#CC9B0A]/25 text-[#012E46]">
+                <TableRow className="border-none bg-transparent hover:bg-transparent">
+                  <TableHead className="bg-[#012E46] text-white font-semibold min-w-[180px] py-4">
+                    Feature
+                  </TableHead>
+                  <TableHead className="bg-[#012E46] text-white font-semibold text-center py-4">
+                    7-Day Access Pass
+                  </TableHead>
+                  <TableHead className="bg-[#CC9B0A] text-[#012E46] font-semibold text-center py-4 shadow-inner">
                     Monthly Access
                   </TableHead>
-                  <TableHead className="text-white font-semibold text-center">Annual Access</TableHead>
+                  <TableHead className="bg-[#012E46] text-white font-semibold text-center py-4">
+                    Annual Access
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -553,7 +559,7 @@ function Pricing() {
                   <TableRow key={row.feature} className="border-slate-100">
                     <TableCell className="font-medium text-[#1F2937]">{row.feature}</TableCell>
                     <TableCell className="text-center text-[#4B5563]">{row.pass}</TableCell>
-                    <TableCell className="text-center text-[#1F2937] bg-[#CC9B0A]/5">{row.monthly}</TableCell>
+                    <TableCell className="text-center text-[#1F2937] bg-[#CC9B0A]/12">{row.monthly}</TableCell>
                     <TableCell className="text-center text-[#4B5563]">{row.annual}</TableCell>
                   </TableRow>
                 ))}
@@ -568,9 +574,9 @@ function Pricing() {
               { label: '7-Day Access Pass', key: 'pass' as const, emphasize: false },
               { label: 'Annual Access', key: 'annual' as const, emphasize: false },
             ].map((col) => (
-              <Card key={col.key} className={`rounded-2xl shadow-md ${col.emphasize ? 'border-2 border-[#CC9B0A]' : ''}`}>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg text-[#012E46]">
+              <Card key={col.key} className={`rounded-2xl shadow-md overflow-hidden ${col.emphasize ? 'border-2 border-[#CC9B0A]' : ''}`}>
+                <CardHeader className={`pb-2 ${col.emphasize ? 'bg-[#CC9B0A] py-4' : ''}`}>
+                  <CardTitle className="text-lg font-semibold text-[#012E46]">
                     {col.label}
                   </CardTitle>
                 </CardHeader>
@@ -677,7 +683,7 @@ function Pricing() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 bg-[#012E46]">
+      <section className="py-20 pb-16 bg-[#012E46] border-b-4 border-[#CC9B0A]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Sparkles className="w-10 h-10 text-[#CC9B0A] mx-auto mb-6" aria-hidden />
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
@@ -708,7 +714,7 @@ function Pricing() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#012E46] text-white py-12">
+      <footer className="bg-[#012E46] text-white pt-10 pb-12 border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             <div>
