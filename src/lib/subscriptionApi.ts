@@ -36,13 +36,14 @@ export async function fetchSubscriptionsMe(): Promise<SubscriptionsMeResponse | 
 export async function createCheckoutSession(planKey: PlanKey): Promise<{ url?: string; error?: string }> {
   const { data: { session } } = await supabase.auth.getSession()
   if (!session?.access_token) return { error: 'not_authenticated' }
+  const siteOrigin = typeof window !== 'undefined' ? window.location.origin : undefined
   const res = await fetch('/.netlify/functions/create-checkout-session', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${session.access_token}`,
     },
-    body: JSON.stringify({ planKey }),
+    body: JSON.stringify({ planKey, ...(siteOrigin ? { siteOrigin } : {}) }),
   })
   const body = await res.json().catch(() => ({}))
   if (!res.ok) {
@@ -55,11 +56,14 @@ export async function createCheckoutSession(planKey: PlanKey): Promise<{ url?: s
 export async function createPortalSession(): Promise<{ url?: string; error?: string }> {
   const { data: { session } } = await supabase.auth.getSession()
   if (!session?.access_token) return { error: 'not_authenticated' }
+  const siteOrigin = typeof window !== 'undefined' ? window.location.origin : undefined
   const res = await fetch('/.netlify/functions/create-portal-session', {
     method: 'POST',
     headers: {
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${session.access_token}`,
     },
+    body: JSON.stringify({ ...(siteOrigin ? { siteOrigin } : {}) }),
   })
   const body = await res.json().catch(() => ({}))
   if (!res.ok) {

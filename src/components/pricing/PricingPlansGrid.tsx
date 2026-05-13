@@ -43,7 +43,7 @@ export function PricingPlansGrid({
   return (
     <div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6 items-stretch">
-        <Card className="relative flex flex-col border-slate-200 shadow-md rounded-2xl order-2 lg:order-1">
+        <Card className="relative flex flex-col border-slate-200 shadow-md rounded-2xl">
           <CardHeader className="text-center pb-2 pt-8">
             <Badge variant="outline" className="mx-auto mb-3 border-[#0284C7]/40 text-[#0284C7] bg-[#0284C7]/5">
               Easy trial
@@ -103,7 +103,7 @@ export function PricingPlansGrid({
           </CardFooter>
         </Card>
 
-        <Card className="relative flex flex-col rounded-2xl border-2 border-[#CC9B0A] shadow-xl lg:scale-[1.03] z-[1] bg-white order-1 lg:order-2 ring-1 ring-[#CC9B0A]/20">
+        <Card className="relative flex flex-col rounded-2xl border-2 border-[#CC9B0A] shadow-xl lg:scale-[1.03] z-[1] bg-white ring-1 ring-[#CC9B0A]/20">
           <div className="absolute -top-3 left-1/2 -translate-x-1/2">
             <Badge className="bg-[#CC9B0A] hover:bg-[#CC9B0A] text-white border-0 px-4 py-1 shadow-sm">Most popular</Badge>
           </div>
@@ -161,7 +161,7 @@ export function PricingPlansGrid({
           </CardFooter>
         </Card>
 
-        <Card className="relative flex flex-col border-slate-200 shadow-md rounded-2xl order-3">
+        <Card className="relative flex flex-col border-slate-200 shadow-md rounded-2xl">
           <CardHeader className="text-center pb-2 pt-8">
             <Badge variant="outline" className="mx-auto mb-3 border-[#012E46]/30 text-[#012E46] bg-[#012E46]/5">
               Best value

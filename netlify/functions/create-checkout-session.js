@@ -4,17 +4,9 @@ const { withRateLimit } = require('./rateLimiter');
 const { createSupabaseAdmin } = require('./lib/supabase-admin');
 const { getProfessionalAccessState } = require('./lib/professional-access');
 const { getCorsHeaders, handleOptions } = require('./lib/cors');
+const { resolveCheckoutBaseUrl } = require('./lib/checkout-site');
 
 const PLAN_KEYS = new Set(['weekly', 'monthly', 'yearly']);
-
-function siteUrl() {
-  return (
-    process.env.URL ||
-    process.env.DEPLOY_PRIME_URL ||
-    process.env.SITE_URL ||
-    'https://gigexecs.com'
-  ).replace(/\/$/, '');
-}
 
 function priceIdForPlan(planKey) {
   const map = {
@@ -118,8 +110,9 @@ const handler = async (event) => {
         .eq('user_id', userId);
     }
 
-    const successUrl = `${siteUrl()}/settings?subscription=success`;
-    const cancelUrl = `${siteUrl()}/pricing?subscription=cancel`;
+    const siteBase = resolveCheckoutBaseUrl(event, body);
+    const successUrl = `${siteBase}/settings?subscription=success`;
+    const cancelUrl = `${siteBase}/pricing?subscription=cancel`;
 
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',

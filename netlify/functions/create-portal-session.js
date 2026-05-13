@@ -4,15 +4,7 @@ const { withRateLimit } = require('./rateLimiter');
 const { createSupabaseAdmin } = require('./lib/supabase-admin');
 const { getProfessionalAccessState } = require('./lib/professional-access');
 const { getCorsHeaders, handleOptions } = require('./lib/cors');
-
-function siteUrl() {
-  return (
-    process.env.URL ||
-    process.env.DEPLOY_PRIME_URL ||
-    process.env.SITE_URL ||
-    'https://gigexecs.com'
-  ).replace(/\/$/, '');
-}
+const { resolveCheckoutBaseUrl } = require('./lib/checkout-site');
 
 const handler = async (event) => {
   const opt = handleOptions(event);
@@ -31,6 +23,13 @@ const handler = async (event) => {
   const userId = event.user?.id;
   if (!userId) {
     return { statusCode: 401, headers: corsHeaders, body: JSON.stringify({ error: 'Unauthorized' }) };
+  }
+
+  let portalBody = {};
+  try {
+    portalBody = JSON.parse(event.body || '{}');
+  } catch {
+    portalBody = {};
   }
 
   try {
@@ -55,7 +54,8 @@ const handler = async (event) => {
     }
 
     const stripe = new Stripe(secret);
-    const returnUrl = `${siteUrl()}/settings`;
+    const siteBase = resolveCheckoutBaseUrl(event, portalBody);
+    const returnUrl = `${siteBase}/settings`;
 
     const portal = await stripe.billingPortal.sessions.create({
       customer: customerId,

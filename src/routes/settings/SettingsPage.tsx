@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AppShell } from '@/components/AppShell';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -27,6 +27,7 @@ import { useToast } from '@/hooks/use-toast';
 
 export function SettingsPage() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [email, setEmail] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -81,6 +82,45 @@ export function SettingsPage() {
       cancelled = true;
     };
   }, []);
+
+  React.useEffect(() => {
+    if (searchParams.get('subscription') !== 'success') return;
+    let cancelled = false;
+    (async () => {
+      await new Promise((r) => setTimeout(r, 1200));
+      if (cancelled) return;
+      const user = await getCurrentUser();
+      if (!user || user.role !== 'consultant') {
+        if (!cancelled) {
+          const next = new URLSearchParams(searchParams);
+          next.delete('subscription');
+          setSearchParams(next, { replace: true });
+        }
+        return;
+      }
+      try {
+        const data = await fetchSubscriptionsMe();
+        if (cancelled) return;
+        if (data) setSubscription(data);
+        if (data?.subscription_status || data?.plan_key) {
+          toast({
+            title: 'Subscription updated',
+            description: 'Your current plan is shown below.',
+          });
+        }
+      } catch {
+        /* ignore */
+      } finally {
+        if (cancelled) return;
+        const next = new URLSearchParams(searchParams);
+        next.delete('subscription');
+        setSearchParams(next, { replace: true });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [searchParams, setSearchParams, toast]);
 
   const handleEmailChange = async (e: React.FormEvent) => {
     e.preventDefault();
