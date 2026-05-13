@@ -24,7 +24,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Invalid JSON' }) };
   }
 
-  const { action, userId, note, paymentId, reason } = body;
+  const { action, userId, note, paymentId, reason, userSubscriptionId, cancelAtPeriodEnd, immediate } = body;
   if (!userId || !action) {
     return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'userId and action required' }) };
   }
@@ -136,6 +136,128 @@ exports.handler = async (event) => {
         statusCode: 200,
         headers: cors,
         body: JSON.stringify({ ok: true, stripe_refund_id: refund.id, subscription_refund_id: refundRow?.id }),
+      };
+    }
+
+    if (action === 'stripe_cancel_subscription') {
+      const v = await requireStaffRole(auth, 'admin');
+      if (!v.isValid) {
+        return { statusCode: 403, headers: cors, body: JSON.stringify({ error: v.error || 'Forbidden' }) };
+      }
+      if (!userSubscriptionId) {
+        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'userSubscriptionId required' }) };
+      }
+
+      const { data: subRow, error: subErr } = await supabase
+        .from('user_subscriptions')
+        .select('id, user_id, stripe_subscription_id, cancel_at_period_end, status')
+        .eq('id', userSubscriptionId)
+        .maybeSingle();
+
+      if (subErr || !subRow?.stripe_subscription_id) {
+        return { statusCode: 404, headers: cors, body: JSON.stringify({ error: 'Subscription row not found' }) };
+      }
+      if (subRow.user_id !== userId) {
+        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Subscription does not belong to userId' }) };
+      }
+
+      const apiKey = process.env.STRIPE_SECRET_KEY;
+      if (!apiKey) {
+        return { statusCode: 503, headers: cors, body: JSON.stringify({ error: 'Stripe not configured' }) };
+      }
+
+      const stripe = new Stripe(apiKey);
+      let stripeSub;
+      if (immediate) {
+        stripeSub = await stripe.subscriptions.cancel(subRow.stripe_subscription_id);
+      } else {
+        stripeSub = await stripe.subscriptions.update(subRow.stripe_subscription_id, {
+          cancel_at_period_end: true,
+        });
+      }
+
+      await supabase
+        .from('user_subscriptions')
+        .update({
+          cancel_at_period_end: !!stripeSub.cancel_at_period_end,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', subRow.id);
+
+      await writeAudit(v.staff.id, 'subscription_stripe_cancel', {
+        user_subscription_id: subRow.id,
+        stripe_subscription_id: subRow.stripe_subscription_id,
+        cancel_at_period_end: !!stripeSub.cancel_at_period_end,
+        immediate: !!immediate,
+        stripe_status: stripeSub.status,
+        source: 'staff-subscription-action',
+      });
+
+      return {
+        statusCode: 200,
+        headers: cors,
+        body: JSON.stringify({
+          ok: true,
+          cancel_at_period_end: !!stripeSub.cancel_at_period_end,
+          stripe_status: stripeSub.status,
+        }),
+      };
+    }
+
+    if (action === 'stripe_resume_subscription') {
+      const v = await requireStaffRole(auth, 'admin');
+      if (!v.isValid) {
+        return { statusCode: 403, headers: cors, body: JSON.stringify({ error: v.error || 'Forbidden' }) };
+      }
+      if (!userSubscriptionId) {
+        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'userSubscriptionId required' }) };
+      }
+
+      const { data: subRow, error: subErr } = await supabase
+        .from('user_subscriptions')
+        .select('id, user_id, stripe_subscription_id')
+        .eq('id', userSubscriptionId)
+        .maybeSingle();
+
+      if (subErr || !subRow?.stripe_subscription_id) {
+        return { statusCode: 404, headers: cors, body: JSON.stringify({ error: 'Subscription row not found' }) };
+      }
+      if (subRow.user_id !== userId) {
+        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Subscription does not belong to userId' }) };
+      }
+
+      const apiKey = process.env.STRIPE_SECRET_KEY;
+      if (!apiKey) {
+        return { statusCode: 503, headers: cors, body: JSON.stringify({ error: 'Stripe not configured' }) };
+      }
+
+      const stripe = new Stripe(apiKey);
+      const stripeSub = await stripe.subscriptions.update(subRow.stripe_subscription_id, {
+        cancel_at_period_end: false,
+      });
+
+      await supabase
+        .from('user_subscriptions')
+        .update({
+          cancel_at_period_end: false,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', subRow.id);
+
+      await writeAudit(v.staff.id, 'subscription_stripe_resume', {
+        user_subscription_id: subRow.id,
+        stripe_subscription_id: subRow.stripe_subscription_id,
+        source: 'staff-subscription-action',
+      });
+
+      return {
+        statusCode: 200,
+        headers: cors,
+        body: JSON.stringify({
+          ok: true,
+          cancel_at_period_end: !!stripeSub.cancel_at_period_end,
+          stripe_status: stripeSub.status,
+        }),
       };
     }
 

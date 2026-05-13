@@ -114,6 +114,8 @@ import ExternalGigClicksPage from "./app/staff/external-gig-clicks";
 import CVParserTestPage from "./app/staff/cv-parser-test";
 import StaffVerificationsPage from "./app/staff/verifications";
 import StaffVerificationReviewPage from "./app/staff/verification-review";
+import StaffManageUsersPage from "./app/staff/manage-users";
+import StaffManageUserDetailPage from "./app/staff/manage-user-detail";
 
 const queryClient = new QueryClient();
 
@@ -241,6 +243,8 @@ const App = () => (
             <Route path="/staff/cv-parser-test" element={<CVParserTestPage />} />
             <Route path="/staff/verifications" element={<StaffVerificationsPage />} />
             <Route path="/staff/verifications/:userId" element={<StaffVerificationReviewPage />} />
+            <Route path="/staff/manage-users" element={<StaffManageUsersPage />} />
+            <Route path="/staff/manage-users/:userId" element={<StaffManageUserDetailPage />} />
 
             {/* Secure Help Page */}
             <Route path="/help-secure" element={<HelpAndSupportSecure />} />

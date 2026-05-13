@@ -252,6 +252,18 @@ export default function StaffDashboardPage() {
             <Button 
               variant="outline" 
               className="h-auto py-3 sm:py-4 justify-start w-full max-w-full"
+              onClick={() => navigate('/staff/manage-users')}
+            >
+              <Users className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-slate-800 flex-shrink-0" />
+              <div className="text-left min-w-0 flex-1 overflow-hidden">
+                <div className="font-semibold text-sm sm:text-base truncate">View &amp; manage users</div>
+                <div className="text-xs text-gray-600 truncate">Search, filters, profile &amp; billing</div>
+              </div>
+            </Button>
+
+            <Button 
+              variant="outline" 
+              className="h-auto py-3 sm:py-4 justify-start w-full max-w-full"
               onClick={() => navigate('/staff/verifications')}
             >
               <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-green-600 flex-shrink-0" />

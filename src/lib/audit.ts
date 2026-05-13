@@ -66,6 +66,8 @@ export async function fetchAuditLogs(filters?: {
   staffId?: string;
   actionType?: string;
   targetTable?: string;
+  /** Filter logs where target_id equals this user/entity UUID */
+  targetId?: string;
   startDate?: Date;
   endDate?: Date;
   limit?: number;
@@ -89,6 +91,10 @@ export async function fetchAuditLogs(filters?: {
 
     if (filters?.targetTable) {
       query = query.eq('target_table', filters.targetTable);
+    }
+
+    if (filters?.targetId) {
+      query = query.eq('target_id', filters.targetId);
     }
 
     if (filters?.startDate) {
