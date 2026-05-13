@@ -54,6 +54,9 @@ export function SettingsPage() {
       try {
         const data = await fetchSubscriptionsMe();
         if (!cancelled) setSubscription(data);
+      } catch (e) {
+        console.error('fetchSubscriptionsMe', e);
+        if (!cancelled) setSubscription(null);
       } finally {
         if (!cancelled) setSubscriptionLoading(false);
       }
@@ -205,24 +208,33 @@ export function SettingsPage() {
                   <p>Loading subscription…</p>
                 ) : (
                   <>
-                    <p>
-                      <span className="font-medium text-slate-900">Plan:</span>{' '}
-                      {subscription.plan_key || '—'}
-                    </p>
-                    <p>
-                      <span className="font-medium text-slate-900">Status:</span>{' '}
-                      {subscription.subscription_status || 'none'}
-                    </p>
-                    <p>
-                      <span className="font-medium text-slate-900">Current period ends:</span>{' '}
-                      {subscription.current_period_end
-                        ? new Date(subscription.current_period_end).toLocaleDateString()
-                        : '—'}
-                    </p>
-                    <p>
-                      <span className="font-medium text-slate-900">Auto-renewal:</span>{' '}
-                      {subscription.cancel_at_period_end ? 'Off (ends at period end)' : 'On'}
-                    </p>
+                    {subscription ? (
+                      <>
+                        <p>
+                          <span className="font-medium text-slate-900">Plan:</span>{' '}
+                          {subscription.plan_key || '—'}
+                        </p>
+                        <p>
+                          <span className="font-medium text-slate-900">Status:</span>{' '}
+                          {subscription.subscription_status || 'none'}
+                        </p>
+                        <p>
+                          <span className="font-medium text-slate-900">Current period ends:</span>{' '}
+                          {subscription.current_period_end
+                            ? new Date(subscription.current_period_end).toLocaleDateString()
+                            : '—'}
+                        </p>
+                        <p>
+                          <span className="font-medium text-slate-900">Auto-renewal:</span>{' '}
+                          {subscription.cancel_at_period_end ? 'Off (ends at period end)' : 'On'}
+                        </p>
+                      </>
+                    ) : (
+                      <p className="text-slate-600">
+                        Subscription details are unavailable right now. Try again later, or use the links below if you
+                        already have a plan.
+                      </p>
+                    )}
                     <div className="flex flex-wrap gap-2 pt-2">
                       <Button
                         type="button"
