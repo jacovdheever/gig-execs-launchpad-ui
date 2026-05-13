@@ -5,12 +5,12 @@
 
 const { verifyStaffUser } = require('./staff-auth');
 const { createSupabaseAdmin } = require('./lib/supabase-admin');
-const { getProfessionalAccessState } = require('./lib/professional-access');
+const { getConsultantProfileFlagsBatch } = require('./lib/professional-access');
 const { getCorsHeaders, handleOptions } = require('./lib/cors');
 
 const MAX_LIMIT = 100;
-const MAX_SCAN = 2500;
-const BATCH = 80;
+const MAX_SCAN = 8000;
+const BATCH = 120;
 
 function matchesProfileFilter(filter, userType, basic, full) {
   if (!filter || filter === 'any') return true;
@@ -20,15 +20,6 @@ function matchesProfileFilter(filter, userType, basic, full) {
   if (filter === 'full_complete') return full === true;
   if (filter === 'full_incomplete') return full === false;
   return true;
-}
-
-async function mapLimit(items, concurrency, fn) {
-  const out = [];
-  for (let i = 0; i < items.length; i += concurrency) {
-    const chunk = items.slice(i, i + concurrency);
-    out.push(...(await Promise.all(chunk.map(fn))));
-  }
-  return out;
 }
 
 exports.handler = async (event) => {
@@ -56,31 +47,50 @@ exports.handler = async (event) => {
   const limit = Math.min(Math.max(parseInt(q.limit || '50', 10) || 50, 1), MAX_LIMIT);
   const offset = Math.max(parseInt(q.offset || '0', 10) || 0, 0);
 
+  const needsProfilePass = profileCompletion && profileCompletion !== 'any';
+
+  if (needsProfilePass && userType === 'client') {
+    return {
+      statusCode: 200,
+      headers: cors,
+      body: JSON.stringify({
+        users: [],
+        total_matching: 0,
+        offset,
+        limit,
+        has_more: false,
+        note: 'Profile completion filters apply to professionals only.',
+      }),
+    };
+  }
+
   const supabase = createSupabaseAdmin();
 
   function applyFilters(qb) {
-    let q = qb;
-    if (userType === 'consultant' || userType === 'client') {
-      q = q.eq('user_type', userType);
+    let query = qb;
+    if (needsProfilePass) {
+      query = query.eq('user_type', 'consultant');
+    } else if (userType === 'consultant' || userType === 'client') {
+      query = query.eq('user_type', userType);
     }
     if (vettingStatus) {
       if (vettingStatus === 'null' || vettingStatus === 'empty') {
-        q = q.is('vetting_status', null);
+        query = query.is('vetting_status', null);
       } else {
-        q = q.eq('vetting_status', vettingStatus);
+        query = query.eq('vetting_status', vettingStatus);
       }
     }
     if (registeredFrom) {
-      q = q.gte('created_at', `${registeredFrom}T00:00:00.000Z`);
+      query = query.gte('created_at', `${registeredFrom}T00:00:00.000Z`);
     }
     if (registeredTo) {
-      q = q.lte('created_at', `${registeredTo}T23:59:59.999Z`);
+      query = query.lte('created_at', `${registeredTo}T23:59:59.999Z`);
     }
     if (search) {
       const esc = search.replace(/%/g, '\\%').replace(/,/g, '\\,');
-      q = q.or(`email.ilike.%${esc}%,first_name.ilike.%${esc}%,last_name.ilike.%${esc}%`);
+      query = query.or(`email.ilike.%${esc}%,first_name.ilike.%${esc}%,last_name.ilike.%${esc}%`);
     }
-    return q;
+    return query;
   }
 
   function buildBaseQuery() {
@@ -90,30 +100,28 @@ exports.handler = async (event) => {
   }
 
   try {
-    const needsProfilePass = profileCompletion && profileCompletion !== 'any';
-
     if (!needsProfilePass) {
-      const { count: totalPreProfile } = await applyFilters(
+      const { count: totalPreProfile, error: countErr } = await applyFilters(
         supabase.from('users').select('id', { count: 'exact', head: true })
       );
+      if (countErr) {
+        return { statusCode: 500, headers: cors, body: JSON.stringify({ error: countErr.message }) };
+      }
+
       const { data: rows, error } = await buildBaseQuery().range(offset, offset + limit - 1);
       if (error) {
         return { statusCode: 500, headers: cors, body: JSON.stringify({ error: error.message }) };
       }
 
       const consultantIds = (rows || []).filter((u) => u.user_type === 'consultant').map((u) => u.id);
-      const accessList = await mapLimit(consultantIds, 12, (id) => getProfessionalAccessState(supabase, id));
-      const accessById = {};
-      consultantIds.forEach((id, i) => {
-        accessById[id] = accessList[i];
-      });
+      const flags = await getConsultantProfileFlagsBatch(supabase, consultantIds);
 
       const users = (rows || []).map((u) => {
-        const acc = u.user_type === 'consultant' ? accessById[u.id] : null;
+        const f = u.user_type === 'consultant' ? flags.get(u.id) : null;
         return {
           ...u,
-          basic_profile_complete: acc ? acc.basicProfileComplete : null,
-          full_profile_complete: acc ? acc.fullProfileComplete : null,
+          basic_profile_complete: f ? f.basicProfileComplete : null,
+          full_profile_complete: f ? f.fullProfileComplete : null,
         };
       });
 
@@ -125,12 +133,12 @@ exports.handler = async (event) => {
           total_matching: totalPreProfile ?? users.length,
           offset,
           limit,
-          has_more: (totalPreProfile != null ? offset + users.length < totalPreProfile : false),
+          has_more: totalPreProfile != null ? offset + users.length < totalPreProfile : false,
         }),
       };
     }
 
-    /* Profile completion: scan DB in batches until we fill [offset, offset+limit) matches */
+    /* Profile completion: scan consultants in batches (cheap per batch via getConsultantProfileFlagsBatch) */
     let dbSkip = 0;
     let skipped = 0;
     const results = [];
@@ -145,17 +153,13 @@ exports.handler = async (event) => {
       scanned += batch.length;
       dbSkip += BATCH;
 
-      const consultantIds = batch.filter((u) => u.user_type === 'consultant').map((u) => u.id);
-      const accessList = await mapLimit(consultantIds, 12, (id) => getProfessionalAccessState(supabase, id));
-      const accessById = {};
-      consultantIds.forEach((id, i) => {
-        accessById[id] = accessList[i];
-      });
+      const consultantIds = batch.map((u) => u.id);
+      const flags = await getConsultantProfileFlagsBatch(supabase, consultantIds);
 
       for (const u of batch) {
-        const acc = u.user_type === 'consultant' ? accessById[u.id] : null;
-        const basic = acc ? acc.basicProfileComplete : null;
-        const full = acc ? acc.fullProfileComplete : null;
+        const f = flags.get(u.id);
+        const basic = f ? f.basicProfileComplete : false;
+        const full = f ? f.fullProfileComplete : false;
         if (!matchesProfileFilter(profileCompletion, u.user_type, basic, full)) continue;
         if (skipped < offset) {
           skipped++;
@@ -168,6 +172,7 @@ exports.handler = async (event) => {
           full_profile_complete: full,
         });
       }
+      if (results.length >= limit) break;
     }
 
     return {
@@ -178,9 +183,10 @@ exports.handler = async (event) => {
         total_matching: null,
         offset,
         limit,
-        has_more: scanned >= BATCH && results.length === limit,
+        has_more: results.length === limit,
         scanned_rows: scanned,
-        note: 'Profile completion filter uses sequential scan; totals are approximate.',
+        note:
+          'Profile completion filter scans consultants in order of registration. Full total is not precomputed; if you need more rows, use Load more or narrow filters.',
       }),
     };
   } catch (e) {

@@ -58,6 +58,84 @@ function subscriptionGrantsFullAccess(sub, nowMs) {
   return false;
 }
 
+/**
+ * Basic + full profile flags for many consultants in O(1) round-trips per table.
+ * Used by staff-directory-users (avoids N × getProfessionalAccessState timeouts).
+ */
+async function getConsultantProfileFlagsBatch(supabase, userIds) {
+  /** @type {Map<string, { basicProfileComplete: boolean, fullProfileComplete: boolean }>} */
+  const out = new Map();
+  if (!userIds || userIds.length === 0) return out;
+
+  const uniqueIds = [...new Set(userIds)];
+  const [
+    usersResult,
+    profilesResult,
+    wxResult,
+    skillsResult,
+    langResult,
+    indResult,
+    refResult,
+  ] = await Promise.all([
+    supabase
+      .from('users')
+      .select('id, first_name, last_name, vetting_status, user_type')
+      .in('id', uniqueIds),
+    supabase
+      .from('consultant_profiles')
+      .select(
+        'user_id, job_title, bio, address1, country, country_id, hourly_rate_min, hourly_rate_max, id_doc_url'
+      )
+      .in('user_id', uniqueIds),
+    supabase.from('work_experience').select('user_id').in('user_id', uniqueIds),
+    supabase.from('user_skills').select('user_id').in('user_id', uniqueIds),
+    supabase.from('user_languages').select('user_id').in('user_id', uniqueIds),
+    supabase.from('user_industries').select('user_id').in('user_id', uniqueIds),
+    supabase.from('reference_contacts').select('user_id').in('user_id', uniqueIds),
+  ]);
+
+  function countByUser(rows) {
+    const m = new Map();
+    for (const r of rows || []) {
+      const uid = r.user_id;
+      if (!uid) continue;
+      m.set(uid, (m.get(uid) || 0) + 1);
+    }
+    return m;
+  }
+
+  const wxM = countByUser(wxResult.data);
+  const skM = countByUser(skillsResult.data);
+  const langM = countByUser(langResult.data);
+  const indM = countByUser(indResult.data);
+  const refM = countByUser(refResult.data);
+
+  const profileByUser = new Map((profilesResult.data || []).map((p) => [p.user_id, p]));
+  const userById = new Map((usersResult.data || []).map((u) => [u.id, u]));
+
+  for (const uid of uniqueIds) {
+    const user = userById.get(uid);
+    const profile = profileByUser.get(uid) || null;
+    const counts = {
+      workExperienceCount: wxM.get(uid) || 0,
+      skillsCount: skM.get(uid) || 0,
+      languagesCount: langM.get(uid) || 0,
+      industriesCount: indM.get(uid) || 0,
+      referencesCount: refM.get(uid) || 0,
+      educationCount: 0,
+      certificationsCount: 0,
+    };
+    const basicCheck = checkBasicFieldsComplete(user, profile, counts);
+    const fullCheck = checkFullProfileComplete(profile, counts, basicCheck.complete);
+    out.set(uid, {
+      basicProfileComplete: basicCheck.complete,
+      fullProfileComplete: fullCheck.complete,
+    });
+  }
+
+  return out;
+}
+
 async function getProfessionalAccessState(supabase, userId) {
   const nowMs = Date.now();
 
@@ -145,6 +223,7 @@ async function getProfessionalAccessState(supabase, userId) {
 
 module.exports = {
   getProfessionalAccessState,
+  getConsultantProfileFlagsBatch,
   subscriptionGrantsFullAccess,
   checkBasicFieldsComplete,
   checkFullProfileComplete,
