@@ -1,18 +1,32 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AppShell } from '@/components/AppShell';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Mail, Lock, Eye, EyeOff, CreditCard } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { getCurrentUser } from '@/lib/getCurrentUser';
-import { fetchSubscriptionsMe, createPortalSession, type SubscriptionsMeResponse } from '@/lib/subscriptionApi';
+import {
+  fetchSubscriptionsMe,
+  createPortalSession,
+  createCheckoutSession,
+  type SubscriptionsMeResponse,
+  type PlanKey,
+} from '@/lib/subscriptionApi';
+import { PricingPlansGrid } from '@/components/pricing/PricingPlansGrid';
 import { useToast } from '@/hooks/use-toast';
 
 export function SettingsPage() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -27,6 +41,8 @@ export function SettingsPage() {
   const [subscriptionLoading, setSubscriptionLoading] = useState(false);
   const [portalLoading, setPortalLoading] = useState(false);
   const [userRole, setUserRole] = useState<'consultant' | 'client' | null>(null);
+  const [plansModalOpen, setPlansModalOpen] = useState(false);
+  const [checkoutPlan, setCheckoutPlan] = useState<PlanKey | null>(null);
   const { toast } = useToast();
 
   // Load current user email on component mount
@@ -172,7 +188,7 @@ export function SettingsPage() {
         toast({
           title: 'Unable to open billing portal',
           description: error === 'No billing customer on file. Subscribe first.'
-            ? 'Choose a plan on the pricing page to start a subscription first.'
+            ? 'Use View plans to start a subscription first.'
             : error || 'Please try again.',
           variant: 'destructive',
         });
@@ -181,6 +197,53 @@ export function SettingsPage() {
       window.location.href = url;
     } finally {
       setPortalLoading(false);
+    }
+  };
+
+  const handleSubscribeFromModal = async (plan: PlanKey) => {
+    setCheckoutPlan(plan);
+    try {
+      const { url, error } = await createCheckoutSession(plan);
+      if (error === 'not_authenticated') {
+        toast({
+          title: 'Session expired',
+          description: 'Sign in again to continue checkout.',
+          variant: 'destructive',
+        });
+        setPlansModalOpen(false);
+        navigate('/auth/login');
+        return;
+      }
+      if (error === 'basic_profile_required') {
+        toast({
+          title: 'Complete your profile first',
+          description:
+            'Finish your basic professional profile before subscribing. You can do this from your profile or dashboard.',
+          variant: 'destructive',
+        });
+        setPlansModalOpen(false);
+        navigate('/profile');
+        return;
+      }
+      if (error === 'already_subscribed') {
+        toast({
+          title: 'You already have an active subscription',
+          description: 'Use Open billing portal to change plans or payment method.',
+        });
+        setPlansModalOpen(false);
+        return;
+      }
+      if (!url) {
+        toast({
+          title: 'Unable to start checkout',
+          description: error || 'Please try again or contact support.',
+          variant: 'destructive',
+        });
+        return;
+      }
+      window.location.href = url;
+    } finally {
+      setCheckoutPlan(null);
     }
   };
 
@@ -244,8 +307,8 @@ export function SettingsPage() {
                       >
                         {portalLoading ? 'Opening…' : 'Open billing portal'}
                       </Button>
-                      <Button type="button" variant="outline" asChild>
-                        <Link to="/pricing">View plans</Link>
+                      <Button type="button" variant="outline" onClick={() => setPlansModalOpen(true)}>
+                        View plans
                       </Button>
                     </div>
                     <p className="text-xs text-slate-500">
@@ -392,6 +455,24 @@ export function SettingsPage() {
           </Card>
         </div>
       </div>
+
+      <Dialog open={plansModalOpen} onOpenChange={setPlansModalOpen}>
+        <DialogContent className="max-w-[min(1200px,calc(100vw-1.5rem))] max-h-[min(90vh,calc(100dvh-2rem))] overflow-y-auto p-4 sm:p-6 gap-4">
+          <DialogHeader>
+            <DialogTitle className="text-xl sm:text-2xl font-bold text-[#012E46]">
+              Choose your professional access plan
+            </DialogTitle>
+            <DialogDescription className="text-base text-slate-600">
+              Same plans as on our public pricing page. Subscribe below to pay securely with Stripe.
+            </DialogDescription>
+          </DialogHeader>
+          <PricingPlansGrid
+            mode="checkout"
+            checkoutLoadingPlan={checkoutPlan}
+            onSubscribe={handleSubscribeFromModal}
+          />
+        </DialogContent>
+      </Dialog>
     </AppShell>
   );
 }
