@@ -271,6 +271,86 @@ const TEMPLATES = {
       secondaryCtaText: 'Browse professionals',
       secondaryCtaUrl: `${BASE_URL}/professionals`
     })
+  },
+
+  subscription_weekly_upgrade_day5: {
+    subject: 'Get more from GigExecs with monthly access',
+    preheader: 'Better value than renewing week to week.',
+    getContent: ({ first_name }) => ({
+      greeting: `Hi ${first_name},`,
+      paragraphs: [
+        'If you are exploring flexible opportunities, monthly access is better value than renewing week to week.',
+        'Monthly access keeps full gig details, internal and external opportunities, and external apply links active without weekly renewals.'
+      ],
+      ctaText: 'Switch to monthly access',
+      ctaUrl: `${BASE_URL}/pricing`,
+      secondaryCtaText: 'Manage subscription',
+      secondaryCtaUrl: `${BASE_URL}/settings`
+    })
+  },
+
+  subscription_cancel_3d: {
+    subject: 'Your GigExecs access ends in 3 days',
+    preheader: 'Renew now to keep access to full gig details and applications.',
+    getContent: ({ first_name }) => ({
+      greeting: `Hi ${first_name},`,
+      paragraphs: [
+        'Your GigExecs subscription is set to end in 3 days.',
+        'Once it ends, you will lose access to full restricted gig details, client names, internal bidding, external apply links, and restricted gig actions.'
+      ],
+      ctaText: 'Keep my access',
+      ctaUrl: `${BASE_URL}/settings`,
+      secondaryCtaText: 'Manage subscription',
+      secondaryCtaUrl: `${BASE_URL}/settings`
+    })
+  },
+
+  subscription_cancel_1d: {
+    subject: 'Your full gig access ends tomorrow',
+    preheader: 'Keep access to opportunities before your subscription expires.',
+    getContent: ({ first_name }) => ({
+      greeting: `Hi ${first_name},`,
+      paragraphs: [
+        'Your GigExecs access ends tomorrow.',
+        'After that, you can still browse limited gig information, but you will not be able to view restricted details, bid on internal gigs, or apply externally.'
+      ],
+      ctaText: 'Renew access',
+      ctaUrl: `${BASE_URL}/settings`,
+      secondaryCtaText: 'Manage subscription',
+      secondaryCtaUrl: `${BASE_URL}/settings`
+    })
+  },
+
+  subscription_end: {
+    subject: 'Your GigExecs access has ended',
+    preheader: 'Renew anytime to unlock full gig access again.',
+    getContent: ({ first_name }) => ({
+      greeting: `Hi ${first_name},`,
+      paragraphs: [
+        'Your GigExecs subscription has ended.',
+        'You can still browse limited gig information, but full access is now paused until you renew.'
+      ],
+      ctaText: 'Renew my subscription',
+      ctaUrl: `${BASE_URL}/pricing`,
+      secondaryCtaText: 'Browse available plans',
+      secondaryCtaUrl: `${BASE_URL}/pricing`
+    })
+  },
+
+  subscription_payment_failed_grace: {
+    subject: 'Payment failed — update your details to keep access',
+    preheader: 'You have 72 hours to keep your full GigExecs access active.',
+    getContent: ({ first_name }) => ({
+      greeting: `Hi ${first_name},`,
+      paragraphs: [
+        'We could not process your latest GigExecs subscription payment. Your account is in a short grace period.',
+        'Update your payment method within 72 hours to keep full gig access active.'
+      ],
+      ctaText: 'Update payment method',
+      ctaUrl: `${BASE_URL}/settings`,
+      secondaryCtaText: 'Manage subscription',
+      secondaryCtaUrl: `${BASE_URL}/settings`
+    })
   }
 };
 

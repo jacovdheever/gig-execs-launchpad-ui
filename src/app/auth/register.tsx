@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useRef, useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
 
 import { Button } from '../../components/ui/button'
@@ -17,6 +17,7 @@ import RecaptchaWrapper, { RecaptchaWrapperRef } from '@/components/auth/Recaptc
 
 export default function RegisterPage() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const recaptchaRef = useRef<RecaptchaWrapperRef>(null)
   const [formData, setFormData] = useState({
     firstName: '',
@@ -34,6 +35,21 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    const ut = searchParams.get('userType')
+    if (ut === 'consultant' || ut === 'client') {
+      setFormData((prev) => ({ ...prev, userType: ut }))
+    }
+    const plan = searchParams.get('plan')
+    if (plan) {
+      try {
+        sessionStorage.setItem('gigexecs_checkout_plan', plan)
+      } catch {
+        /* ignore */
+      }
+    }
+  }, [searchParams])
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -217,7 +233,13 @@ export default function RegisterPage() {
       
       // Redirect to login page after 3 seconds so they can authenticate
       setTimeout(() => {
-        navigate('/auth/login', { replace: true })
+        const plan = searchParams.get('plan')
+        const redirect = searchParams.get('redirect')
+        const qs = new URLSearchParams()
+        if (plan) qs.set('plan', plan)
+        if (redirect) qs.set('redirect', redirect)
+        const suffix = qs.toString() ? `?${qs.toString()}` : ''
+        navigate(`/auth/login${suffix}`, { replace: true })
       }, 3000)
       
     } catch (err) {

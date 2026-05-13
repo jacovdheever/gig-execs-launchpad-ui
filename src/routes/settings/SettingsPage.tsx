@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AppShell } from '@/components/AppShell';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, CreditCard } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { getCurrentUser } from '@/lib/getCurrentUser';
+import { fetchSubscriptionsMe, createPortalSession, type SubscriptionsMeResponse } from '@/lib/subscriptionApi';
 import { useToast } from '@/hooks/use-toast';
 
 export function SettingsPage() {
@@ -21,6 +23,10 @@ export function SettingsPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailLoading, setIsEmailLoading] = useState(false);
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
+  const [subscription, setSubscription] = useState<SubscriptionsMeResponse | null>(null);
+  const [subscriptionLoading, setSubscriptionLoading] = useState(false);
+  const [portalLoading, setPortalLoading] = useState(false);
+  const [userRole, setUserRole] = useState<'consultant' | 'client' | null>(null);
   const { toast } = useToast();
 
   // Load current user email on component mount
@@ -30,12 +36,31 @@ export function SettingsPage() {
         const user = await getCurrentUser();
         if (user) {
           setEmail(user.email || '');
+          setUserRole(user.role);
         }
       } catch (error) {
         console.error('Error loading user email:', error);
       }
     };
     loadUserEmail();
+  }, []);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const user = await getCurrentUser();
+      if (!user || user.role !== 'consultant') return;
+      setSubscriptionLoading(true);
+      try {
+        const data = await fetchSubscriptionsMe();
+        if (!cancelled) setSubscription(data);
+      } finally {
+        if (!cancelled) setSubscriptionLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const handleEmailChange = async (e: React.FormEvent) => {
@@ -136,6 +161,26 @@ export function SettingsPage() {
     }
   };
 
+  const handleOpenBillingPortal = async () => {
+    setPortalLoading(true);
+    try {
+      const { url, error } = await createPortalSession();
+      if (error || !url) {
+        toast({
+          title: 'Unable to open billing portal',
+          description: error === 'No billing customer on file. Subscribe first.'
+            ? 'Choose a plan on the pricing page to start a subscription first.'
+            : error || 'Please try again.',
+          variant: 'destructive',
+        });
+        return;
+      }
+      window.location.href = url;
+    } finally {
+      setPortalLoading(false);
+    }
+  };
+
   return (
     <AppShell>
       <div className="min-h-screen bg-slate-50 py-8">
@@ -145,6 +190,61 @@ export function SettingsPage() {
             <h1 className="text-3xl font-bold text-slate-900">Settings</h1>
             <p className="text-slate-600 mt-2">Manage your account settings and preferences</p>
           </div>
+
+          {/* Professional subscription (consultants) */}
+          {userRole === 'consultant' && (
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <CreditCard className="w-5 h-5 text-slate-600" />
+                  Manage subscription
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 text-sm text-slate-700">
+                {subscriptionLoading ? (
+                  <p>Loading subscription…</p>
+                ) : (
+                  <>
+                    <p>
+                      <span className="font-medium text-slate-900">Plan:</span>{' '}
+                      {subscription.plan_key || '—'}
+                    </p>
+                    <p>
+                      <span className="font-medium text-slate-900">Status:</span>{' '}
+                      {subscription.subscription_status || 'none'}
+                    </p>
+                    <p>
+                      <span className="font-medium text-slate-900">Current period ends:</span>{' '}
+                      {subscription.current_period_end
+                        ? new Date(subscription.current_period_end).toLocaleDateString()
+                        : '—'}
+                    </p>
+                    <p>
+                      <span className="font-medium text-slate-900">Auto-renewal:</span>{' '}
+                      {subscription.cancel_at_period_end ? 'Off (ends at period end)' : 'On'}
+                    </p>
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      <Button
+                        type="button"
+                        onClick={handleOpenBillingPortal}
+                        disabled={portalLoading}
+                        className="bg-blue-600 hover:bg-blue-700"
+                      >
+                        {portalLoading ? 'Opening…' : 'Open billing portal'}
+                      </Button>
+                      <Button type="button" variant="outline" asChild>
+                        <Link to="/pricing">View plans</Link>
+                      </Button>
+                    </div>
+                    <p className="text-xs text-slate-500">
+                      Update payment method, invoices, cancel at period end, or change plans in the secure Stripe
+                      portal.
+                    </p>
+                  </>
+                )}
+              </CardContent>
+            </Card>
+          )}
 
           {/* Email Settings */}
           <Card className="mb-6">

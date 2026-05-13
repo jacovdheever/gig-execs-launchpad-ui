@@ -407,10 +407,16 @@ function Pricing() {
                   Most members switch to monthly after their first week.
                 </p>
               </CardContent>
-              <CardFooter className="px-6 pb-8 pt-2">
+              <CardFooter className="px-6 pb-8 pt-2 flex flex-col gap-2">
                 <Button variant="outline" className="w-full border-[#012E46] text-[#012E46] hover:bg-[#F5F5F5]" asChild>
-                  <Link to="/auth/register?plan=weekly">Start with 7 days</Link>
+                  <Link to="/auth/register?userType=consultant&plan=weekly&redirect=/subscribe/continue">Start with 7 days</Link>
                 </Button>
+                <Link
+                  to="/auth/login?plan=weekly&redirect=/subscribe/continue"
+                  className="text-center text-sm text-[#0284C7] hover:underline"
+                >
+                  Already have an account? Log in to subscribe
+                </Link>
               </CardFooter>
             </Card>
 
@@ -457,10 +463,16 @@ function Pricing() {
                   </li>
                 </ul>
               </CardContent>
-              <CardFooter className="px-6 pb-8 pt-2">
+              <CardFooter className="px-6 pb-8 pt-2 flex flex-col gap-2">
                 <Button className="w-full bg-[#CC9B0A] hover:bg-[#B88A09] text-white font-semibold" asChild>
-                  <Link to="/auth/register?plan=monthly">Choose monthly</Link>
+                  <Link to="/auth/register?userType=consultant&plan=monthly&redirect=/subscribe/continue">Choose monthly</Link>
                 </Button>
+                <Link
+                  to="/auth/login?plan=monthly&redirect=/subscribe/continue"
+                  className="text-center text-sm text-[#0284C7] hover:underline"
+                >
+                  Already have an account? Log in to subscribe
+                </Link>
               </CardFooter>
             </Card>
 
@@ -505,10 +517,16 @@ function Pricing() {
                   </li>
                 </ul>
               </CardContent>
-              <CardFooter className="px-6 pb-8 pt-2">
+              <CardFooter className="px-6 pb-8 pt-2 flex flex-col gap-2">
                 <Button variant="outline" className="w-full border-[#012E46] text-[#012E46] hover:bg-[#F5F5F5]" asChild>
-                  <Link to="/auth/register?plan=annual">Save with annual</Link>
+                  <Link to="/auth/register?userType=consultant&plan=annual&redirect=/subscribe/continue">Save with annual</Link>
                 </Button>
+                <Link
+                  to="/auth/login?plan=annual&redirect=/subscribe/continue"
+                  className="text-center text-sm text-[#0284C7] hover:underline"
+                >
+                  Already have an account? Log in to subscribe
+                </Link>
               </CardFooter>
             </Card>
           </div>

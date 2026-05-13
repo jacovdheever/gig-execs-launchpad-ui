@@ -95,6 +95,13 @@ function projectHasNumericBudget(project: Project) {
 export default function FindGigsPage() {
   const [user, setUser] = useState<CurrentUser | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
+  /** From professional-gigs-list — used to gate external apply for consultants (PRD §5.5). */
+  const [gigsListMeta, setGigsListMeta] = useState<{
+    subscription_content_access?: boolean;
+    basic_profile_complete?: boolean;
+    can_bid_internal?: boolean;
+    gig_access_enforcement?: boolean;
+  } | null>(null);
   const [skills, setSkills] = useState<Skill[]>([]);
   const [industries, setIndustries] = useState<Industry[]>([]);
   /** Industries that appear on at least one loaded gig (filter list only; full list kept for lookups) */
@@ -135,6 +142,8 @@ export default function FindGigsPage() {
       
       const userData = await getCurrentUser();
       if (!userData) {
+        setLoading(false);
+        setProjects([]);
         return;
       }
       console.log('🔍 User data from getCurrentUser:', userData);
@@ -178,79 +187,20 @@ export default function FindGigsPage() {
         }
       }
 
-      // Load projects, skills, and industries in parallel
-      const [projectsResult, skillsResult, industriesResult] = await Promise.all([
-        supabase
-          .from('projects')
-          .select('*')
-          .is('deleted_at', null)
-          .in('status', ['open', 'in_progress', 'completed', 'cancelled'])
-          .order('created_at', { ascending: false }),
-        supabase
-          .from('skills')
-          .select('id, name')
-          .order('name'),
-        supabase
-          .from('industries')
-          .select('id, name, category')
-          .order('name')
+      // Load gigs via Netlify aggregator (redacted DTOs); skills & industries from Supabase
+      const { data: { session: gigsSession } } = await supabase.auth.getSession();
+      const token = gigsSession?.access_token;
+
+      const [gigsListResponse, skillsResult, industriesResult] = await Promise.all([
+        fetch('/.netlify/functions/professional-gigs-list', {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }),
+        supabase.from('skills').select('id, name').order('name'),
+        supabase.from('industries').select('id, name, category').order('name'),
       ]);
-
-      if (projectsResult.error) {
-        console.error('Error loading projects:', projectsResult.error);
-        return;
-      }
-
-      console.log('🔍 Projects loaded:', projectsResult.data?.length || 0, 'projects');
-      console.log('🔍 Raw project data structure:', JSON.stringify(projectsResult.data, null, 2));
-
-      // Load client data with a simple approach
-      console.log('🔍 Loading client data with simple approach');
-      
-      // Get unique creator IDs
-      const rawCreatorIds = projectsResult.data?.map(p => p.creator_id) || [];
-      const creatorIds = [...new Set(rawCreatorIds.filter((id): id is string => typeof id === 'string' && id.trim().length > 0))];
-      console.log('🔍 Unique creator IDs:', creatorIds);
-      
-      // Load client data using Netlify function to bypass RLS
-      console.log('🔍 Loading client data via Netlify function for creator IDs:', creatorIds);
-      
-      // Get the current session to get the JWT token (reuse session from earlier if available)
-      const { data: { session: clientDataSession } } = await supabase.auth.getSession();
-      console.log('🔍 Client data session:', clientDataSession);
-      console.log('🔍 Client data access token:', clientDataSession?.access_token);
-      
-      let users: any[] = [];
-      let clientProfiles: any[] = [];
-
-      if (creatorIds.length > 0) {
-      const clientDataResponse = await fetch('/.netlify/functions/get-client-data', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${clientDataSession?.access_token}`
-        },
-        body: JSON.stringify({ creatorIds })
-      });
-      
-        if (!clientDataResponse.ok) {
-          const errorBody = await clientDataResponse.text();
-          console.error('❌ Failed to load client data:', clientDataResponse.status, errorBody);
-        } else {
-      const clientDataResult = await clientDataResponse.json();
-      console.log('🔍 Client data from Netlify function:', clientDataResult);
-          users = clientDataResult.users || [];
-          clientProfiles = clientDataResult.clientProfiles || [];
-        }
-      } else {
-        console.log('🔍 No valid creator IDs found, skipping client data fetch.');
-      }
-      
-      console.log('🔍 Users loaded from function:', users.length);
-      console.log('🔍 Client profiles loaded from function:', clientProfiles.length);
-      
-      console.log('🔍 Client profiles loaded:', clientProfiles.length);
-      console.log('🔍 Users loaded:', users.length);
 
       if (skillsResult.error) {
         console.error('Error loading skills:', skillsResult.error);
@@ -264,123 +214,35 @@ export default function FindGigsPage() {
 
       const skillsData = skillsResult.data || [];
       const industriesData = industriesResult.data || [];
-      
+
       setSkills(skillsData);
       setIndustries(industriesData);
 
-      // Process projects data
-      const processedProjects = (projectsResult.data || []).map(project => {
-        let skills_required: number[] = [];
-        try {
-          const parsed = project.skills_required ? JSON.parse(project.skills_required) : [];
-          skills_required = Array.isArray(parsed)
-            ? parsed
-                .map((skillId: number | string) => Number(skillId))
-                .filter((skillId) => !Number.isNaN(skillId))
-            : [];
-        } catch (error) {
-          console.error('Error parsing skills_required for project', project.id, error);
-          skills_required = [];
-        }
- 
-        let industriesArray: number[] = [];
-        if (Array.isArray(project.industries)) {
-          industriesArray = project.industries
-            .map((industryId: number | string) => Number(industryId))
-            .filter((industryId) => !Number.isNaN(industryId));
-        } else if (typeof project.industries === 'string') {
-          try {
-            const parsedIndustries = JSON.parse(project.industries);
-            if (Array.isArray(parsedIndustries)) {
-              industriesArray = parsedIndustries
-                .map((industryId: number | string) => Number(industryId))
-                .filter((industryId) => !Number.isNaN(industryId));
-            }
-          } catch (error) {
-            console.error('Error parsing industries for project', project.id, error);
-            industriesArray = [];
-          }
-        }
+      let processedProjects: Project[] = [];
 
-        const projectOrigin: 'internal' | 'external' =
-          project.project_origin === 'external' ? 'external' : 'internal';
-        const sourceName = project.source_name || null;
-        const expiresAt = project.expires_at || null;
-        const externalUrl = project.external_url || null;
-        const expiryTimestamp = expiresAt ? new Date(expiresAt).getTime() : NaN;
-        const isExpired = Number.isNaN(expiryTimestamp) ? false : expiryTimestamp <= Date.now();
-
-        const clientProfile = clientProfiles.find(cp => cp.user_id === project.creator_id) || {};
-        const clientData = users.find(u => u.id === project.creator_id) || {};
-        const clientFirstName = typeof clientData.first_name === 'string' ? clientData.first_name : '';
-        const clientLastName = typeof clientData.last_name === 'string' ? clientData.last_name : '';
-        const normalizedCompanyName =
-          clientProfile.company_name ||
-          (clientFirstName || clientLastName
-            ? `${clientFirstName} ${clientLastName}`.trim()
-            : null);
-
-        const clientInfo =
-          projectOrigin === 'external'
-            ? {
-                first_name: sourceName || 'External',
-                last_name: 'Opportunity',
-                company_name: sourceName || 'External Opportunity',
-                logo_url: null,
-            verified: false,
-            rating: null,
-            total_ratings: null
-          }
-            : {
-                first_name: clientFirstName,
-                last_name: clientLastName,
-                company_name: normalizedCompanyName,
-                logo_url: clientProfile.logo_url || null,
-                verified: false,
-                rating: null,
-                total_ratings: null
-              };
-
-        return {
-          ...project,
-          project_origin: projectOrigin,
-          external_url: externalUrl,
-          expires_at: expiresAt,
-          is_expired: isExpired,
-          skills_required,
-          industries: industriesArray,
-          is_active: project.status === 'open' && !isExpired,
-          hasBidSubmitted: false, // Will be set after userBids is loaded
-          client: clientInfo
-        };
-      });
-
-      // Update projects with bid status after userBids is loaded
-      // This will be done in a useEffect that watches userBids
-      setProjects(processedProjects);
-
-      // Load user's bids to check which gigs they've bid on (after projects are loaded)
-      if (userData.role === 'consultant') {
-        const { data: bidsData, error: bidsError } = await supabase
-          .from('bids')
-          .select('project_id')
-          .eq('consultant_id', userData.id);
-
-        if (!bidsError && bidsData) {
-          const bidProjectIds = new Set(bidsData.map(bid => parseInt(bid.project_id?.toString() || '0', 10)).filter(id => !isNaN(id) && id > 0));
-          console.log('🔍 User bids loaded:', Array.from(bidProjectIds));
-          setUserBids(bidProjectIds);
-          
-          // Update projects with bid status
-          setProjects(prevProjects => 
-            prevProjects.map(project => ({
-              ...project,
-              hasBidSubmitted: bidProjectIds.has(project.id)
-            }))
-          );
-        } else if (bidsError) {
-          console.error('Error loading user bids:', bidsError);
-        }
+      if (!gigsListResponse.ok) {
+        const errText = await gigsListResponse.text();
+        console.error('professional-gigs-list failed:', gigsListResponse.status, errText);
+        setProjects([]);
+        setUserBids(new Set());
+        setGigsListMeta(null);
+      } else {
+        const gigsPayload = await gigsListResponse.json();
+        setGigsListMeta(gigsPayload.meta ?? null);
+        processedProjects = (gigsPayload.gigs || []).map((g: Record<string, unknown>) => {
+          const p = g as unknown as Project;
+          return {
+            ...p,
+            screening_questions: Array.isArray(g.screening_questions)
+              ? (g.screening_questions as string[])
+              : [],
+          };
+        });
+        const bidIds = new Set(
+          processedProjects.filter((p) => p.hasBidSubmitted).map((p) => p.id)
+        );
+        setUserBids(bidIds);
+        setProjects(processedProjects);
       }
 
       // Slider max from gigs; default selection is always $0 through max (no min-from-data default)
@@ -1592,7 +1454,19 @@ export default function FindGigsPage() {
                     ? new Date(project.expires_at).getTime() <= Date.now()
                     : false);
                 const hasExternalLink = Boolean(project.external_url);
-                const applyEnabled = isExternal && hasExternalLink && canApplyExternally(project);
+                const consultantApplyGate =
+                  user?.role === 'consultant' && gigsListMeta
+                    ? {
+                        basicProfileComplete: !!gigsListMeta.basic_profile_complete,
+                        subscriptionAccess: !!gigsListMeta.subscription_content_access,
+                      }
+                    : user?.role === 'consultant'
+                      ? { basicProfileComplete: false, subscriptionAccess: false }
+                      : undefined;
+                const applyEnabled =
+                  isExternal &&
+                  hasExternalLink &&
+                  canApplyExternally(project, consultantApplyGate);
                 const createdAtLabel = project.created_at
                   ? new Date(project.created_at).toLocaleDateString()
                   : '—';

@@ -11,16 +11,31 @@ type ProjectLike = {
   expires_at?: string | null;
 };
 
+/** When set (e.g. consultants on find-gigs), external apply requires Basic profile + active subscription (PRD §5.5). */
+export type ExternalApplyAccessGate = {
+  basicProfileComplete: boolean;
+  subscriptionAccess: boolean;
+};
+
 export const isExternalProject = (project: ProjectLike) =>
   project?.project_origin === "external";
 
-export const canApplyExternally = (project: ProjectLike) => {
+export const canApplyExternally = (
+  project: ProjectLike,
+  access?: ExternalApplyAccessGate
+) => {
   if (!isExternalProject(project)) {
     return false;
   }
 
   if (project.status !== "open") {
     return false;
+  }
+
+  if (access) {
+    if (!access.basicProfileComplete || !access.subscriptionAccess) {
+      return false;
+    }
   }
 
   if (!project.expires_at) {

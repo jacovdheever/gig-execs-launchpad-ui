@@ -14,6 +14,9 @@
 [functions."email-reminders"]
   schedule = "0 9 * * *"
 
+[functions."subscription-email-reminders"]
+  schedule = "0 10 * * *"
+
 # Community re-engagement batch sends (delay between Resend calls; allow larger batches)
 [functions."community-reengagement-send"]
   timeout = 300

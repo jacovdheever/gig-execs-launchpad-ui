@@ -7,6 +7,7 @@
 
 const { createClient } = require('@supabase/supabase-js');
 const { verifyJWTToken } = require('./auth');
+const { getProfessionalAccessState } = require('./lib/professional-access');
 
 const supabase = createClient(
   process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL,
@@ -85,6 +86,11 @@ exports.handler = async (event) => {
 
     if (user.user_type !== 'consultant') {
       return createErrorResponse(403, 'Only professionals can track external gig clicks');
+    }
+
+    const access = await getProfessionalAccessState(supabase, userId);
+    if (!access.subscriptionAccess) {
+      return createErrorResponse(403, 'Active subscription required to apply to external gigs');
     }
 
     // Parse request body

@@ -41,6 +41,7 @@ import ChallengeFor2025 from "./pages/ChallengeFor2025";
 import FutureOfSeniorWork from "./pages/FutureOfSeniorWork";
 import MasterMentalClarity from "./pages/MasterMentalClarity";
 import Pricing from "./pages/Pricing";
+import SubscribeContinue from "./pages/SubscribeContinue";
 import AboutUs from "./pages/AboutUs";
 import DataPrivacyPolicy from "./pages/DataPrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
@@ -165,6 +166,7 @@ const App = () => (
             <Route path="/blog/future-of-senior-work" element={<FutureOfSeniorWork />} />
             <Route path="/blog/master-mental-clarity" element={<MasterMentalClarity />} />
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/subscribe/continue" element={<SubscribeContinue />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/data-privacy-policy" element={<DataPrivacyPolicy />} />
             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />

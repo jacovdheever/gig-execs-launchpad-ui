@@ -80,6 +80,42 @@ async function logEmailDelivery(supabase, logEntry) {
   }
 }
 
+/**
+ * PRD: subscription_email_events dedupe (parallel to email_delivery_log).
+ */
+async function subscriptionEmailEventAlreadySent(supabase, userId, eventType, scheduledFor) {
+  if (!scheduledFor) return false;
+  const { data, error } = await supabase
+    .from('subscription_email_events')
+    .select('id')
+    .eq('user_id', userId)
+    .eq('event_type', eventType)
+    .eq('scheduled_for', scheduledFor)
+    .eq('status', 'sent')
+    .maybeSingle();
+
+  if (error) {
+    console.error('[email-sender] subscription_email_events idempotency check', error);
+    return false;
+  }
+  return !!data;
+}
+
+async function logSubscriptionEmailEventSent(supabase, { userId, subscriptionId, eventType, scheduledFor, providerMessageId }) {
+  const { error } = await supabase.from('subscription_email_events').insert({
+    user_id: userId,
+    subscription_id: subscriptionId || null,
+    event_type: eventType,
+    scheduled_for: scheduledFor || null,
+    sent_at: new Date().toISOString(),
+    status: 'sent',
+    provider_message_id: providerMessageId || null,
+  });
+  if (error && error.code !== '23505') {
+    console.error('[email-sender] subscription_email_events insert', error);
+  }
+}
+
 // =============================================================================
 // Core Email Sending
 // =============================================================================
@@ -130,6 +166,7 @@ async function sendEmail({ to, subject, html, text, replyTo = REPLY_TO }) {
  * @param {string} [options.lifecycleKey] - Lifecycle key for idempotency (e.g., 'reminder_7d')
  * @param {boolean} [options.skipIdempotency] - Skip idempotency check (use with caution)
  * @param {Object} [options.metadata] - Additional metadata to log
+ * @param {Object} [options.subscriptionEmailDedupe] - { subscriptionId?, eventType, scheduledFor } for subscription_email_events
  * @returns {Promise<Object>} - { success, messageId, skipped, error }
  */
 async function sendTemplatedEmail(supabase, {
@@ -139,11 +176,27 @@ async function sendTemplatedEmail(supabase, {
   variables,
   lifecycleKey = 'default',
   skipIdempotency = false,
-  metadata = {}
+  metadata = {},
+  subscriptionEmailDedupe = null,
 }) {
   // Validate template exists
   if (!templateExists(templateId)) {
     return { success: false, error: `Template not found: ${templateId}` };
+  }
+
+  if (!skipIdempotency && subscriptionEmailDedupe?.eventType && subscriptionEmailDedupe?.scheduledFor) {
+    const subDup = await subscriptionEmailEventAlreadySent(
+      supabase,
+      userId,
+      subscriptionEmailDedupe.eventType,
+      subscriptionEmailDedupe.scheduledFor
+    );
+    if (subDup) {
+      console.log(
+        `[email-sender] Skipping duplicate (subscription_email_events): ${subscriptionEmailDedupe.eventType} for user ${userId}`
+      );
+      return { success: true, skipped: true };
+    }
   }
   
   // Check idempotency
@@ -187,6 +240,16 @@ async function sendTemplatedEmail(supabase, {
     }
   });
   
+  if (result.success && subscriptionEmailDedupe?.eventType && subscriptionEmailDedupe?.scheduledFor) {
+    await logSubscriptionEmailEventSent(supabase, {
+      userId,
+      subscriptionId: subscriptionEmailDedupe.subscriptionId,
+      eventType: subscriptionEmailDedupe.eventType,
+      scheduledFor: subscriptionEmailDedupe.scheduledFor,
+      providerMessageId: result.messageId || null,
+    });
+  }
+
   return result;
 }
 
@@ -415,6 +478,8 @@ module.exports = {
   // Helpers
   checkAlreadySent,
   logEmailDelivery,
+  subscriptionEmailEventAlreadySent,
+  logSubscriptionEmailEventSent,
 
   // Config
   FROM_EMAIL,

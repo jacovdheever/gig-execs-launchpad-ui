@@ -5,12 +5,13 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '@/lib/supabase'
 import RecaptchaWrapper, { RecaptchaWrapperRef } from '@/components/auth/RecaptchaWrapper'
 
 export default function LoginPage() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const recaptchaRef = useRef<RecaptchaWrapperRef>(null)
   const [formData, setFormData] = useState({
     email: '',
@@ -118,8 +119,18 @@ export default function LoginPage() {
 
       if (data.user) {
         console.log('Login successful:', data.user)
-        
-        // Redirect to dashboard
+
+        const redirect = searchParams.get('redirect')
+        const plan = searchParams.get('plan')
+        if (redirect === '/subscribe/continue' && plan) {
+          navigate(`/subscribe/continue?plan=${encodeURIComponent(plan)}`, { replace: true })
+          return
+        }
+        if (redirect) {
+          navigate(plan ? `${redirect}?plan=${encodeURIComponent(plan)}` : redirect, { replace: true })
+          return
+        }
+
         navigate('/dashboard', { replace: true })
       }
       

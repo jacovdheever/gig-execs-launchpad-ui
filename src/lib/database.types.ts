@@ -9,6 +9,7 @@ export interface Database {
           first_name: string | null
           last_name: string | null
           user_type: string
+          vetting_status: string | null
           created_at: string
           updated_at: string
         }
@@ -18,6 +19,7 @@ export interface Database {
           first_name?: string | null
           last_name?: string | null
           user_type: string
+          vetting_status?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -27,6 +29,7 @@ export interface Database {
           first_name?: string | null
           last_name?: string | null
           user_type?: string
+          vetting_status?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -48,6 +51,7 @@ export interface Database {
           id_doc_url: string | null
           video_intro_url: string | null
           stripe_account_id: string | null
+          stripe_billing_customer_id: string | null
           hourly_rate_min: string | null
           hourly_rate_max: string | null
           availability: string | null
@@ -68,6 +72,7 @@ export interface Database {
           id_doc_url?: string | null
           video_intro_url?: string | null
           stripe_account_id?: string | null
+          stripe_billing_customer_id?: string | null
           hourly_rate_min?: string | null
           hourly_rate_max?: string | null
           availability?: string | null
@@ -88,6 +93,7 @@ export interface Database {
           id_doc_url?: string | null
           video_intro_url?: string | null
           stripe_account_id?: string | null
+          stripe_billing_customer_id?: string | null
           hourly_rate_min?: string | null
           hourly_rate_max?: string | null
           availability?: string | null
@@ -866,6 +872,264 @@ export interface Database {
           answer?: string | null
           verified_by?: string | null
           created_at?: string | null
+        }
+      }
+
+      subscription_plans: {
+        Row: {
+          id: string
+          plan_key: string
+          name: string
+          price_amount: string
+          currency: string
+          interval: string
+          stripe_product_id: string | null
+          stripe_price_id: string | null
+          is_active: boolean
+          sort_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          plan_key: string
+          name: string
+          price_amount: string
+          currency?: string
+          interval: string
+          stripe_product_id?: string | null
+          stripe_price_id?: string | null
+          is_active?: boolean
+          sort_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          plan_key?: string
+          name?: string
+          price_amount?: string
+          currency?: string
+          interval?: string
+          stripe_product_id?: string | null
+          stripe_price_id?: string | null
+          is_active?: boolean
+          sort_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+      }
+
+      user_subscriptions: {
+        Row: {
+          id: string
+          user_id: string
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          stripe_price_id: string | null
+          plan_key: string | null
+          status: string
+          current_period_start: string | null
+          current_period_end: string | null
+          cancel_at_period_end: boolean
+          canceled_at: string | null
+          ended_at: string | null
+          grace_period_ends_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          stripe_price_id?: string | null
+          plan_key?: string | null
+          status?: string
+          current_period_start?: string | null
+          current_period_end?: string | null
+          cancel_at_period_end?: boolean
+          canceled_at?: string | null
+          ended_at?: string | null
+          grace_period_ends_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          stripe_price_id?: string | null
+          plan_key?: string | null
+          status?: string
+          current_period_start?: string | null
+          current_period_end?: string | null
+          cancel_at_period_end?: boolean
+          canceled_at?: string | null
+          ended_at?: string | null
+          grace_period_ends_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+
+      subscription_payments: {
+        Row: {
+          id: string
+          user_id: string
+          subscription_id: string | null
+          stripe_invoice_id: string | null
+          stripe_payment_intent_id: string | null
+          stripe_charge_id: string | null
+          amount: string | null
+          currency: string
+          status: string | null
+          paid_at: string | null
+          refunded_amount: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          subscription_id?: string | null
+          stripe_invoice_id?: string | null
+          stripe_payment_intent_id?: string | null
+          stripe_charge_id?: string | null
+          amount?: string | null
+          currency?: string
+          status?: string | null
+          paid_at?: string | null
+          refunded_amount?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          subscription_id?: string | null
+          stripe_invoice_id?: string | null
+          stripe_payment_intent_id?: string | null
+          stripe_charge_id?: string | null
+          amount?: string | null
+          currency?: string
+          status?: string | null
+          paid_at?: string | null
+          refunded_amount?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+
+      subscription_refunds: {
+        Row: {
+          id: string
+          user_id: string
+          payment_id: string | null
+          requested_by_user_id: string | null
+          requested_by_staff_id: string | null
+          stripe_refund_id: string | null
+          amount_requested: string | null
+          amount_refunded: string | null
+          currency: string
+          status: string
+          reason: string | null
+          staff_notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          payment_id?: string | null
+          requested_by_user_id?: string | null
+          requested_by_staff_id?: string | null
+          stripe_refund_id?: string | null
+          amount_requested?: string | null
+          amount_refunded?: string | null
+          currency?: string
+          status?: string
+          reason?: string | null
+          staff_notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          payment_id?: string | null
+          requested_by_user_id?: string | null
+          requested_by_staff_id?: string | null
+          stripe_refund_id?: string | null
+          amount_requested?: string | null
+          amount_refunded?: string | null
+          currency?: string
+          status?: string
+          reason?: string | null
+          staff_notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+
+      subscription_email_events: {
+        Row: {
+          id: string
+          user_id: string
+          subscription_id: string | null
+          event_type: string
+          scheduled_for: string | null
+          sent_at: string | null
+          status: string
+          provider_message_id: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          subscription_id?: string | null
+          event_type: string
+          scheduled_for?: string | null
+          sent_at?: string | null
+          status?: string
+          provider_message_id?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          subscription_id?: string | null
+          event_type?: string
+          scheduled_for?: string | null
+          sent_at?: string | null
+          status?: string
+          provider_message_id?: string | null
+          created_at?: string
+        }
+      }
+
+      stripe_webhook_events: {
+        Row: {
+          id: string
+          stripe_event_id: string
+          event_type: string
+          processed_at: string
+          livemode: boolean | null
+        }
+        Insert: {
+          id?: string
+          stripe_event_id: string
+          event_type: string
+          processed_at?: string
+          livemode?: boolean | null
+        }
+        Update: {
+          id?: string
+          stripe_event_id?: string
+          event_type?: string
+          processed_at?: string
+          livemode?: boolean | null
         }
       }
 

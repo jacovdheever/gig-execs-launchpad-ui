@@ -82,10 +82,86 @@ export default function StaffVerificationReviewPage() {
   const [requestedInfoText, setRequestedInfoText] = useState('');
   const [confirmAction, setConfirmAction] = useState<'approve' | 'decline' | 'incomplete' | null>(null);
   const [loadingDoc, setLoadingDoc] = useState(false);
+  const [staffSub, setStaffSub] = useState<{ subscriptions: Record<string, unknown>[]; payments: Record<string, unknown>[] } | null>(null);
+  const [staffSubNote, setStaffSubNote] = useState('');
+  const [savingSubNote, setSavingSubNote] = useState(false);
 
   useEffect(() => {
-    if (userId) loadProfile();
+    if (!userId) return;
+    void loadProfile();
   }, [userId]);
+
+  async function fetchStaffSubscriptionsForUser(targetUserId: string, accessToken: string) {
+    const r = await fetch(
+      `/.netlify/functions/staff-user-subscriptions?userId=${encodeURIComponent(targetUserId)}`,
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    );
+    const j = await r.json();
+    if (r.ok) {
+      setStaffSub({ subscriptions: j.subscriptions || [], payments: j.payments || [] });
+    } else {
+      setStaffSub(null);
+    }
+  }
+
+  async function saveStaffSubscriptionNote() {
+    if (!userId || !staffSubNote.trim()) return;
+    setSavingSubNote(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+      const resp = await fetch('/.netlify/functions/staff-subscription-action', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          action: 'add_note',
+          userId,
+          note: staffSubNote.trim(),
+        }),
+      });
+      const json = await resp.json();
+      if (!resp.ok) throw new Error(json.error || 'Failed to save note');
+      setStaffSubNote('');
+      alert('Note recorded in audit log.');
+    } catch (e) {
+      console.error(e);
+      alert(e instanceof Error ? e.message : 'Failed to save');
+    } finally {
+      setSavingSubNote(false);
+    }
+  }
+
+  async function requestStripeRefund(paymentId: string) {
+    if (!userId) return;
+    if (!window.confirm('Create a full Stripe refund for this payment? Admin only.')) return;
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+      const resp = await fetch('/.netlify/functions/staff-subscription-action', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          action: 'stripe_refund_payment',
+          userId,
+          paymentId,
+          reason: 'staff_refund',
+        }),
+      });
+      const json = await resp.json();
+      if (!resp.ok) throw new Error(json.error || 'Refund failed');
+      alert(`Refund initiated: ${json.stripe_refund_id || 'ok'}`);
+      await fetchStaffSubscriptionsForUser(userId, session.access_token);
+    } catch (e) {
+      console.error(e);
+      alert(e instanceof Error ? e.message : 'Refund failed');
+    }
+  }
 
   async function loadProfile() {
     if (!userId) return;
@@ -102,6 +178,11 @@ export default function StaffVerificationReviewPage() {
       const json = await resp.json();
       if (!resp.ok) throw new Error(json.error || 'Failed to load profile');
       setData(json);
+      if (json.user?.user_type === 'consultant') {
+        await fetchStaffSubscriptionsForUser(userId, session.access_token);
+      } else {
+        setStaffSub(null);
+      }
     } catch (e) {
       console.error(e);
       setData(null);
@@ -350,6 +431,84 @@ export default function StaffVerificationReviewPage() {
                   <SectionCard title="Portfolio Projects">
                     <PortfolioView portfolio={profileDataForView.portfolio} />
                   </SectionCard>
+
+                  {staffSub && (
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="text-base">Subscriptions &amp; Payments</CardTitle>
+                      </CardHeader>
+                      <CardContent className="text-sm text-slate-700 space-y-3">
+                        <div>
+                          <p className="font-medium text-slate-900 mb-1">Subscription records</p>
+                          {staffSub.subscriptions.length === 0 ? (
+                            <p className="text-slate-500">No subscription records.</p>
+                          ) : (
+                            <ul className="list-disc pl-5 space-y-1">
+                              {staffSub.subscriptions.map((s) => (
+                                <li key={String(s.id)}>
+                                  {(s.plan_key as string) || '—'} — {(s.status as string) || '—'} — period end{' '}
+                                  {s.current_period_end
+                                    ? new Date(String(s.current_period_end)).toLocaleDateString()
+                                    : '—'}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                        <div>
+                          <p className="font-medium text-slate-900 mb-1">Recent payments (up to 10 shown)</p>
+                          {staffSub.payments.length === 0 ? (
+                            <p className="text-slate-500">No payment records.</p>
+                          ) : (
+                            <ul className="list-disc pl-5 space-y-2">
+                              {staffSub.payments.slice(0, 10).map((p) => (
+                                <li key={String(p.id)} className="flex flex-wrap items-center gap-2 justify-between">
+                                  <span>
+                                    {(p.status as string) || '—'} — {(p.amount as string) || '—'}{' '}
+                                    {(p.currency as string) || ''}
+                                    {p.stripe_charge_id ? (
+                                      <span className="text-xs text-slate-500"> (charge)</span>
+                                    ) : null}
+                                  </span>
+                                  {p.stripe_charge_id ? (
+                                    <Button
+                                      type="button"
+                                      variant="outline"
+                                      size="sm"
+                                      className="shrink-0"
+                                      onClick={() => void requestStripeRefund(String(p.id))}
+                                    >
+                                      Stripe refund
+                                    </Button>
+                                  ) : null}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                        <div className="pt-2 border-t border-slate-200">
+                          <Label htmlFor="sub-staff-note">Staff note (audit log)</Label>
+                          <Textarea
+                            id="sub-staff-note"
+                            className="mt-1"
+                            rows={2}
+                            placeholder="Visible to staff in audit_logs…"
+                            value={staffSubNote}
+                            onChange={(e) => setStaffSubNote(e.target.value)}
+                          />
+                          <Button
+                            type="button"
+                            size="sm"
+                            className="mt-2"
+                            disabled={savingSubNote || !staffSubNote.trim()}
+                            onClick={() => void saveStaffSubscriptionNote()}
+                          >
+                            {savingSubNote ? 'Saving…' : 'Save note to audit'}
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
                 </>
               ) : (
                 <Card>

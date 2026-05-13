@@ -30,9 +30,28 @@ import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser';
 import { supabase } from '@/lib/supabase';
 import { AppShell } from '@/components/AppShell';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { canApplyExternally } from '@/lib/utils';
+import { canApplyExternally, type ExternalApplyAccessGate } from '@/lib/utils';
 import { uploadProjectAttachment, getSignedDocumentUrl } from '@/lib/storage';
 import { trackExternalGigClick } from '@/lib/trackExternalGigClick';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+
+type GigAccessMeta = {
+  subscription_content_access?: boolean;
+  basic_profile_complete?: boolean;
+  full_profile_complete?: boolean;
+  vetting_status?: string | null;
+  vetted_approved?: boolean;
+  can_bid_internal?: boolean;
+};
 
 interface Project {
   id: number;
@@ -100,6 +119,8 @@ export default function GigDetailsPage() {
   const [bidDocuments, setBidDocuments] = useState<Array<{ name: string; url: string }>>([]);
   const [uploadingDocument, setUploadingDocument] = useState(false);
   const [bidCardOpen, setBidCardOpen] = useState(false);
+  const [gigAccessMeta, setGigAccessMeta] = useState<GigAccessMeta | null>(null);
+  const [gateModal, setGateModal] = useState<'basic' | 'subscribe' | 'full_profile' | 'vetting' | null>(null);
 
   useEffect(() => {
     loadData();
@@ -116,37 +137,17 @@ export default function GigDetailsPage() {
       }
       setUser(userData);
 
-      // Load project, skills, and industries in parallel
-      const [projectResult, skillsResult, industriesResult] = await Promise.all([
-        supabase
-          .from('projects')
-          .select(`
-            *,
-            client:creator_id (
-              first_name,
-              last_name,
-              headline,
-              profile_photo_url
-            )
-          `)
-          .eq('id', id)
-          .is('deleted_at', null)
-          .single(),
-        supabase
-          .from('skills')
-          .select('id, name')
-          .order('name'),
-        supabase
-          .from('industries')
-          .select('id, name, category')
-          .order('name')
-      ]);
+      // Load gig detail via Netlify aggregator (redacted DTO); skills & industries from Supabase
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token;
 
-      if (projectResult.error) {
-        console.error('Error loading project:', projectResult.error);
-        navigate('/find-gigs');
-        return;
-      }
+      const [detailRes, skillsResult, industriesResult] = await Promise.all([
+        fetch(`/.netlify/functions/professional-gig-detail?id=${encodeURIComponent(id || '')}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+        supabase.from('skills').select('id, name').order('name'),
+        supabase.from('industries').select('id, name, category').order('name'),
+      ]);
 
       if (skillsResult.error) {
         console.error('Error loading skills:', skillsResult.error);
@@ -161,99 +162,26 @@ export default function GigDetailsPage() {
       setSkills(skillsResult.data || []);
       setIndustries(industriesResult.data || []);
 
-      // Process project data
-      const projectData = projectResult.data;
-      
-      // Load client profile data separately
-      let clientProfile = null;
-      if (projectData.creator_id) {
-        const { data: clientProfileData } = await supabase
-          .from('client_profiles')
-          .select('company_name, logo_url, country')
-          .eq('user_id', projectData.creator_id)
-          .single();
-        clientProfile = clientProfileData;
-      }
-      let skills_required: number[] = [];
-      try {
-        const parsedSkills = projectData.skills_required ? JSON.parse(projectData.skills_required) : [];
-        skills_required = Array.isArray(parsedSkills)
-          ? parsedSkills
-              .map((skillId: number | string) => Number(skillId))
-              .filter((skillId) => !Number.isNaN(skillId))
-          : [];
-      } catch (error) {
-        console.error('Error parsing skills_required:', error);
+      if (!detailRes.ok) {
+        console.error('professional-gig-detail failed', detailRes.status);
+        navigate('/find-gigs');
+        return;
       }
 
-      let screening_questions: string[] = [];
-      try {
-        const parsedQuestions = projectData.screening_questions
-          ? JSON.parse(projectData.screening_questions)
-          : [];
-        screening_questions = Array.isArray(parsedQuestions) ? parsedQuestions : [];
-      } catch (error) {
-        console.error('Error parsing screening_questions:', error);
+      const detailJson = await detailRes.json();
+      const gig = detailJson.gig as Project | null;
+      if (!gig) {
+        navigate('/find-gigs');
+        return;
       }
 
-      let industriesArray: number[] = [];
-      if (Array.isArray(projectData.industries)) {
-        industriesArray = projectData.industries
-          .map((industryId: number | string) => Number(industryId))
-          .filter((industryId) => !Number.isNaN(industryId));
-      } else if (typeof projectData.industries === 'string') {
-        try {
-          const parsedIndustries = JSON.parse(projectData.industries);
-          if (Array.isArray(parsedIndustries)) {
-            industriesArray = parsedIndustries
-              .map((industryId: number | string) => Number(industryId))
-              .filter((industryId) => !Number.isNaN(industryId));
-          }
-        } catch (error) {
-          console.error('Error parsing industries:', error);
-        }
-      }
+      setProject(gig);
+      setGigAccessMeta((detailJson.meta as GigAccessMeta) ?? null);
 
-      const projectOrigin: 'internal' | 'external' =
-        projectData.project_origin === 'external' ? 'external' : 'internal';
-      const externalUrl = projectData.external_url || null;
-      const expiresAt = projectData.expires_at || null;
-      const sourceName = projectData.source_name || null;
-      const isExpired = expiresAt ? new Date(expiresAt).getTime() <= Date.now() : false;
+      const isInternalProject = gig.project_origin !== 'external';
 
-      const clientInfo =
-        projectOrigin === 'external'
-          ? {
-              first_name: sourceName || 'External',
-              last_name: 'Opportunity',
-              company_name: sourceName || 'External Opportunity',
-              logo_url: null,
-              verified: false,
-              headline: null,
-              location: null
-            }
-          : {
-              ...projectData.client,
-              company_name: clientProfile?.company_name,
-              logo_url: clientProfile?.logo_url,
-              country: clientProfile?.country
-            };
-
-      setProject({
-        ...projectData,
-        project_origin: projectOrigin,
-        external_url: externalUrl,
-        expires_at: expiresAt,
-        source_name: sourceName,
-        is_expired: isExpired,
-        skills_required,
-        screening_questions,
-        industries: industriesArray,
-        client: clientInfo
-      });
-
-      // Load existing bid if user is a consultant
-      if (userData && !isExternal) {
+      // Load existing bid if user is a consultant on an internal gig
+      if (userData.role === 'consultant' && isInternalProject) {
         const projectIdNum = parseInt(id || '0', 10);
         if (!isNaN(projectIdNum)) {
           const { data: existingBidData, error: bidError } = await supabase
@@ -394,6 +322,33 @@ export default function GigDetailsPage() {
   };
 
   const scrollToBidCard = () => {
+    if (existingBid) {
+      const bidCardElement = document.getElementById('submit-bid-card');
+      if (bidCardElement) {
+        bidCardElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setBidCardOpen(true);
+      }
+      return;
+    }
+    const isInternal = project && project.project_origin !== 'external';
+    if (user?.role === 'consultant' && isInternal && gigAccessMeta) {
+      if (!gigAccessMeta.basic_profile_complete) {
+        setGateModal('basic');
+        return;
+      }
+      if (!gigAccessMeta.subscription_content_access) {
+        setGateModal('subscribe');
+        return;
+      }
+      if (!gigAccessMeta.full_profile_complete) {
+        setGateModal('full_profile');
+        return;
+      }
+      if (!gigAccessMeta.vetted_approved) {
+        setGateModal('vetting');
+        return;
+      }
+    }
     const bidCardElement = document.getElementById('submit-bid-card');
     if (bidCardElement) {
       bidCardElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -427,48 +382,41 @@ export default function GigDetailsPage() {
         return;
       }
 
-      const bidData: any = {
-        project_id: project.id,
-        consultant_id: user.id,
-        amount: parseFloat(bidAmount),
-        currency: project.currency,
-        status: existingBid?.status || 'pending',
-        message: bidMessage.trim(),
-        proposal: bidMessage.trim(), // Store in both fields for compatibility
-        screening_answers: JSON.stringify(screeningAnswers),
-        bid_documents: bidDocuments.map(doc => doc.url),
-        updated_at: new Date().toISOString()
-      };
-
-      let bidError;
-      if (existingBid) {
-        // Update existing bid
-        bidError = (await supabase
-          .from('bids')
-          .update(bidData)
-          .eq('id', existingBid.id)).error;
-      } else {
-        // Create new bid
-        bidData.created_at = new Date().toISOString();
-        bidError = (await supabase
-          .from('bids')
-          .insert(bidData)).error;
-      }
-
-      if (bidError) {
-        console.error('Error submitting bid:', bidError);
-        setError('Failed to submit bid. Please try again.');
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.access_token) {
+        setError('Please sign in again to submit a bid.');
         return;
       }
 
-      // Reload the bid to get updated data
-      const { data: updatedBid } = await supabase
-        .from('bids')
-        .select('*')
-        .eq('project_id', project.id)
-        .eq('consultant_id', user.id)
-        .maybeSingle();
+      const payload = {
+        project_id: project.id,
+        amount: parseFloat(bidAmount),
+        currency: project.currency,
+        message: bidMessage.trim(),
+        proposal: bidMessage.trim(),
+        screeningAnswers: screeningAnswers,
+        bid_documents: bidDocuments.map((doc) => doc.url),
+        existing_bid_id: existingBid?.id || undefined,
+        status: existingBid?.status || 'pending',
+      };
 
+      const bidRes = await fetch('/.netlify/functions/professional-bid-upsert', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const bidJson = await bidRes.json().catch(() => ({}));
+      if (!bidRes.ok) {
+        console.error('professional-bid-upsert', bidRes.status, bidJson);
+        setError(bidJson.message || bidJson.error || 'Failed to submit bid. Please try again.');
+        return;
+      }
+
+      const updatedBid = bidJson.bid;
       if (updatedBid) {
         setExistingBid(updatedBid);
       }
@@ -495,8 +443,20 @@ export default function GigDetailsPage() {
     isExternal &&
     (project.is_expired ??
       (project.expires_at ? new Date(project.expires_at).getTime() <= Date.now() : false));
+  const consultantExternalGate: ExternalApplyAccessGate | undefined =
+    user?.role === 'consultant' && gigAccessMeta
+      ? {
+          basicProfileComplete: !!gigAccessMeta.basic_profile_complete,
+          subscriptionAccess: !!gigAccessMeta.subscription_content_access,
+        }
+      : user?.role === 'consultant'
+        ? { basicProfileComplete: false, subscriptionAccess: false }
+        : undefined;
+
   const externalCanApply =
-    isExternal && !!project.external_url && canApplyExternally(project);
+    isExternal &&
+    !!project.external_url &&
+    canApplyExternally(project, consultantExternalGate);
 
   if (loading) {
     return (
@@ -1209,11 +1169,16 @@ export default function GigDetailsPage() {
                       className="w-full flex items-center justify-center gap-2"
                       disabled={!externalCanApply}
                       onClick={async () => {
-                        if (project.external_url && externalCanApply && project.id) {
-                          // Track the click before opening the external URL
-                          await trackExternalGigClick(project.id, 'detail');
-                          window.open(project.external_url, '_blank', 'noopener,noreferrer');
+                        if (!project.external_url || !project.id) return;
+                        if (!externalCanApply) {
+                          if (user?.role === 'consultant' && gigAccessMeta) {
+                            if (!gigAccessMeta.basic_profile_complete) setGateModal('basic');
+                            else if (!gigAccessMeta.subscription_content_access) setGateModal('subscribe');
+                          }
+                          return;
                         }
+                        await trackExternalGigClick(project.id, 'detail');
+                        window.open(project.external_url, '_blank', 'noopener,noreferrer');
                       }}
                     >
                       Apply Externally
@@ -1226,7 +1191,9 @@ export default function GigDetailsPage() {
                             ? 'You will be redirected to the external application page in a new tab.'
                             : externalIsExpired
                               ? 'This opportunity has expired.'
-                              : 'External applications are currently unavailable.'
+                              : user?.role === 'consultant'
+                                ? 'Complete your basic profile and active subscription to apply externally.'
+                                : 'External applications are currently unavailable.'
                           : 'No external application URL was provided.'}
                       </p>
                       {project.expires_at && (
@@ -1244,6 +1211,51 @@ export default function GigDetailsPage() {
           </div>
         </div>
       </div>
+
+      <AlertDialog open={gateModal !== null} onOpenChange={(open) => !open && setGateModal(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {gateModal === 'basic' && 'Complete your profile first'}
+              {gateModal === 'subscribe' && 'Subscription required'}
+              {gateModal === 'full_profile' && 'Complete your full profile'}
+              {gateModal === 'vetting' && 'Vetting required to bid'}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {gateModal === 'basic' &&
+                'Finish your basic consultant profile (job title, rates, experience, skills) before subscribing or bidding.'}
+              {gateModal === 'subscribe' &&
+                'An active professional subscription unlocks full gig details, external apply links, and bidding.'}
+              {gateModal === 'full_profile' &&
+                'Internal bids require references, ID verification, and related profile sections to be complete.'}
+              {gateModal === 'vetting' &&
+                'Your profile must be reviewed and approved by GigExecs before you can submit bids on internal engagements.'}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Close</AlertDialogCancel>
+            {gateModal === 'subscribe' ? (
+              <AlertDialogAction
+                onClick={() => {
+                  setGateModal(null);
+                  navigate('/pricing');
+                }}
+              >
+                View plans
+              </AlertDialogAction>
+            ) : (
+              <AlertDialogAction
+                onClick={() => {
+                  setGateModal(null);
+                  navigate('/profile');
+                }}
+              >
+                Go to profile
+              </AlertDialogAction>
+            )}
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AppShell>
   );
 }

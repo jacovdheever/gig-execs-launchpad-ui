@@ -33,6 +33,7 @@ interface Project {
   external_url?: string | null;
   expires_at?: string | null;
   source_name?: string | null;
+  hasBidSubmitted?: boolean;
 }
 
 export default function GigsPage() {
@@ -57,7 +58,29 @@ export default function GigsPage() {
       }
       setUser(userData);
 
-      // Load projects
+      if (userData.role === 'consultant') {
+        const { data: { session } } = await supabase.auth.getSession();
+        const token = session?.access_token;
+        if (!token) {
+          navigate('/auth/login');
+          return;
+        }
+        const res = await fetch('/.netlify/functions/professional-gigs-list', {
+          method: 'GET',
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) {
+          console.error('professional-gigs-list failed on My Gigs', res.status);
+          setProjects([]);
+          return;
+        }
+        const body = await res.json();
+        const gigs = (body.gigs || []) as Project[];
+        setProjects(gigs.filter((p) => p.hasBidSubmitted));
+        return;
+      }
+
+      // Clients: gigs they created
       const { data: projectsData, error } = await supabase
         .from('projects')
         .select('*')
@@ -145,22 +168,36 @@ export default function GigsPage() {
           <div>
             <h1 className="text-3xl font-bold text-slate-900">My Gigs</h1>
             <p className="text-slate-600 mt-2">
-              Manage your projects and track their progress
+              {user?.role === 'consultant'
+                ? 'Engagements you have bid on (via Find Gigs).'
+                : 'Manage your projects and track their progress'}
             </p>
           </div>
           <div className="flex gap-3 mt-4 sm:mt-0">
-            <Button asChild variant="outline">
-              <Link to="/projects">
-                <FolderOpen className="w-4 h-4 mr-2" />
-                Manage All Gigs
-              </Link>
-            </Button>
-            <Button asChild>
-              <Link to="/gig-creation/step1">
-                <Plus className="w-4 h-4 mr-2" />
-                Create New Gig
-              </Link>
-            </Button>
+            {user?.role !== 'consultant' && (
+              <>
+                <Button asChild variant="outline">
+                  <Link to="/projects">
+                    <FolderOpen className="w-4 h-4 mr-2" />
+                    Manage All Gigs
+                  </Link>
+                </Button>
+                <Button asChild>
+                  <Link to="/gig-creation/step1">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Create New Gig
+                  </Link>
+                </Button>
+              </>
+            )}
+            {user?.role === 'consultant' && (
+              <Button asChild>
+                <Link to="/find-gigs">
+                  <Briefcase className="w-4 h-4 mr-2" />
+                  Find Gigs
+                </Link>
+              </Button>
+            )}
           </div>
         </div>
 
@@ -240,17 +277,28 @@ export default function GigsPage() {
               <div className="text-center py-12">
                 <Briefcase className="w-16 h-16 text-slate-300 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                  No gigs yet
+                  {user?.role === 'consultant' ? 'No bids yet' : 'No gigs yet'}
                 </h3>
                 <p className="text-slate-600 mb-6">
-                  Create your first gig to get started and find the right professionals for your project.
+                  {user?.role === 'consultant'
+                    ? 'Browse Find Gigs and submit a bid to see your engagements here.'
+                    : 'Create your first gig to get started and find the right professionals for your project.'}
                 </p>
-                <Button asChild>
-                  <Link to="/gig-creation/step1">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Create Your First Gig
-                  </Link>
-                </Button>
+                {user?.role === 'consultant' ? (
+                  <Button asChild>
+                    <Link to="/find-gigs">
+                      <Briefcase className="w-4 h-4 mr-2" />
+                      Find Gigs
+                    </Link>
+                  </Button>
+                ) : (
+                  <Button asChild>
+                    <Link to="/gig-creation/step1">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Create Your First Gig
+                    </Link>
+                  </Button>
+                )}
               </div>
             ) : (
               <div className="space-y-4">
