@@ -50,11 +50,12 @@ function HowItWorks() {
               </a>
             </div>
 
-            <div className="hidden lg:flex items-center space-x-12">
-              <a href="/" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
-              <a href="/clients" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
-              <a href="/professionals" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
-              <a href="/blog" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
+            <div className="hidden lg:flex items-center gap-10 xl:gap-12 flex-wrap justify-center">
+              <a href="/" className="text-[#1F2937] hover:text-[#0284C7] transition-colors whitespace-nowrap">What is GigExecs</a>
+              <a href="/clients" className="text-[#1F2937] hover:text-[#0284C7] transition-colors whitespace-nowrap">Clients</a>
+              <a href="/professionals" className="text-[#1F2937] hover:text-[#0284C7] transition-colors whitespace-nowrap">Professionals</a>
+              <a href="/pricing" className="text-[#1F2937] hover:text-[#0284C7] transition-colors whitespace-nowrap">Pricing</a>
+              <a href="/blog" className="text-[#1F2937] hover:text-[#0284C7] transition-colors whitespace-nowrap">Blog</a>
             </div>
 
             <div className="flex items-center">
@@ -90,12 +91,13 @@ function HowItWorks() {
           </div>
 
           <div className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-            isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+            isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
           }`}>
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-[#F5F5F5]">
               <a href="/" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
               <a href="/clients" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
               <a href="/professionals" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
+              <a href="/pricing" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Pricing</a>
               <a href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
             </div>
           </div>
@@ -375,6 +377,7 @@ function HowItWorks() {
               <h3 className="text-lg font-semibold mb-4">How it works</h3>
               <ul className="space-y-2 text-[#9CA3AF]">
                 <li><a href="/how-it-works" className="hover:text-white transition-colors">How it works</a></li>
+                <li><a href="/pricing" className="hover:text-white transition-colors">Pricing</a></li>
               </ul>
             </div>
             <div>

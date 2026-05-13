@@ -9,9 +9,9 @@ const Header = () => {
   // Function to determine if a link is active
   const isActive = (path: string) => {
     if (path === "/") {
-      return location.pathname === "/" || location.pathname === "/pricing";
+      return location.pathname === "/";
     }
-    return location.pathname.startsWith(path);
+    return location.pathname === path || location.pathname.startsWith(`${path}/`);
   };
 
   // Function to get link styling based on active state
@@ -55,7 +55,7 @@ const Header = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex w-[572px] justify-between items-center">
+        <div className="hidden lg:flex w-[640px] xl:w-[720px] justify-between items-center">
           <Link to="/" className="text-decoration-none">
             <div style={getLinkStyle("/")} className="flex flex-col justify-center">
               What is GigExecs
@@ -69,6 +69,11 @@ const Header = () => {
           <Link to="/professionals" className="text-decoration-none">
             <div style={getLinkStyle("/professionals")} className="flex flex-col justify-center">
               Professionals
+            </div>
+          </Link>
+          <Link to="/pricing" className="text-decoration-none">
+            <div style={getLinkStyle("/pricing")} className="flex flex-col justify-center">
+              Pricing
             </div>
           </Link>
           <Link to="/blog" className="text-decoration-none">
@@ -134,6 +139,13 @@ const Header = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Professionals
+            </Link>
+            <Link 
+              to="/pricing" 
+              className="block text-white hover:text-[#CC9B0A] transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Pricing
             </Link>
             <Link 
               to="/blog" 

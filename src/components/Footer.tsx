@@ -4,9 +4,7 @@ import { Link } from "react-router-dom";
 const footerLinks = [
   {
     heading: "How it works",
-    links: [
-      "How it works",
-    ],
+    links: ["How it works", "Pricing"],
   },
   {
     heading: "About",
@@ -84,6 +82,12 @@ const Footer = () => {
                   {section.links.map((link, linkIndex) => {
                     const getLinkComponent = (linkText: string) => {
                       switch (linkText.toLowerCase()) {
+                        case "how it works":
+                          return (
+                            <Link to="/how-it-works" className="text-white hover:text-[#CC9B0A] transition-colors">
+                              {linkText}
+                            </Link>
+                          );
                         case "pricing":
                           return <Link to="/pricing" className="text-white hover:text-[#CC9B0A] transition-colors">{linkText}</Link>;
                         case "about us":

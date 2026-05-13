@@ -45,11 +45,12 @@ function Homepage() {
             </div>
 
             {/* Center - Navigation Links */}
-            <div className="hidden lg:flex items-center space-x-12">
-              <a href="/" className="text-[#0284C7] font-semibold">What is GigExecs</a>
-              <a href="/clients" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
-              <a href="/professionals" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
-              <a href="/blog" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
+            <div className="hidden lg:flex items-center gap-10 xl:gap-12 flex-wrap justify-center">
+              <a href="/" className="text-[#0284C7] font-semibold whitespace-nowrap">What is GigExecs</a>
+              <a href="/clients" className="text-[#1F2937] hover:text-[#0284C7] transition-colors whitespace-nowrap">Clients</a>
+              <a href="/professionals" className="text-[#1F2937] hover:text-[#0284C7] transition-colors whitespace-nowrap">Professionals</a>
+              <a href="/pricing" className="text-[#1F2937] hover:text-[#0284C7] transition-colors whitespace-nowrap">Pricing</a>
+              <a href="/blog" className="text-[#1F2937] hover:text-[#0284C7] transition-colors whitespace-nowrap">Blog</a>
             </div>
 
             {/* Right side - Action Buttons */}
@@ -88,12 +89,13 @@ function Homepage() {
 
           {/* Mobile Navigation Menu */}
           <div className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-            isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+            isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
           }`}>
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-[#F5F5F5]">
               <a href="/" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#0284C7] font-semibold">What is GigExecs</a>
               <a href="/clients" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
               <a href="/professionals" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
+              <a href="/pricing" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Pricing</a>
               <a href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
             </div>
           </div>
@@ -178,6 +180,14 @@ function Homepage() {
                     Learn More
                   </Button>
                 </div>
+                <p className="mt-6 text-center lg:text-left">
+                  <Link
+                    to="/pricing"
+                    className="text-sm sm:text-base font-semibold text-[#FACC15] hover:text-white underline-offset-4 hover:underline transition-colors"
+                  >
+                    View professional access plans
+                  </Link>
+                </p>
               </div>
             </div>
           </div>
@@ -280,6 +290,19 @@ function Homepage() {
                 Explore Professionals →
               </span>
             </Link>
+          </div>
+
+          <div className="mt-10 rounded-2xl border border-[#0284C7]/20 bg-[#F9FAFB] px-6 py-8 lg:px-10 lg:py-10 text-center max-w-4xl mx-auto">
+            <p className="text-xs font-semibold tracking-wide text-[#0284C7] uppercase mb-2">Professional access plans</p>
+            <p className="text-lg text-[#1F2937] font-medium mb-3 leading-snug">
+              Choose flexible access to curated internal and external gigs.
+            </p>
+            <p className="text-[#6B7280] mb-6 max-w-2xl mx-auto leading-relaxed">
+              Start with a 7-day pass, stay active monthly, or save with annual access — full GigExecs pricing details are a click away.
+            </p>
+            <Button size="lg" className="bg-[#012E46] hover:bg-[#0284C7] text-white px-8" asChild>
+              <Link to="/pricing">View pricing</Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -401,6 +424,7 @@ function Homepage() {
               <h3 className="text-lg font-semibold mb-4">How it works</h3>
               <ul className="space-y-2 text-[#9CA3AF]">
                 <li><a href="/how-it-works" className="hover:text-white transition-colors">How it works</a></li>
+                <li><a href="/pricing" className="hover:text-white transition-colors">Pricing</a></li>
               </ul>
             </div>
             <div>

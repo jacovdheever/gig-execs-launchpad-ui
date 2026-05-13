@@ -8,7 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { ShieldCheck, Award, Globe, Sparkles, FileCheck, Briefcase, Target } from 'lucide-react'
+import { ShieldCheck, Award, Globe, Sparkles, FileCheck, Briefcase, KeyRound } from 'lucide-react'
 import { PageMeta } from '@/components/PageMeta'
 import { JsonLd } from '@/components/JsonLd'
 import { TrustBlocks } from '@/components/TrustBlocks'
@@ -106,6 +106,21 @@ const PROFESSIONAL_FAQS: FaqItem[] = [
       'GigExecs is for highly experienced professionals and independent consultants looking for meaningful flexible engagements with organizations that value senior expertise.',
   },
   {
+    question: 'Do I need to pay to access gigs?',
+    answer:
+      'You can browse limited gig information for free. A subscription is required to access external application links, full gig access, and internal bidding once approved.',
+  },
+  {
+    question: 'When can I subscribe?',
+    answer:
+      'You can subscribe once your basic professional profile is complete.',
+  },
+  {
+    question: 'Do I need vetting?',
+    answer:
+      'Vetting is required to bid on internal GigExecs gigs. External gig access is available with an active subscription.',
+  },
+  {
     question: 'How does the AI profile builder work?',
     answer:
       'You can upload your CV or chat with our AI to generate a strong, outcome-focused profile quickly.',
@@ -169,17 +184,20 @@ const Professionals = () => {
               </a>
             </div>
 
-            <div className="hidden lg:flex items-center space-x-12">
-              <a href="/" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">
+            <div className="hidden lg:flex items-center gap-10 xl:gap-12 flex-wrap justify-center">
+              <a href="/" className="text-[#1F2937] hover:text-[#0284C7] transition-colors whitespace-nowrap">
                 What is GigExecs
               </a>
-              <a href="/clients" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">
+              <a href="/clients" className="text-[#1F2937] hover:text-[#0284C7] transition-colors whitespace-nowrap">
                 Clients
               </a>
-              <a href="/professionals" className="text-[#0284C7] font-semibold">
+              <a href="/professionals" className="text-[#0284C7] font-semibold whitespace-nowrap">
                 Professionals
               </a>
-              <a href="/blog" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">
+              <a href="/pricing" className="text-[#1F2937] hover:text-[#0284C7] transition-colors whitespace-nowrap">
+                Pricing
+              </a>
+              <a href="/blog" className="text-[#1F2937] hover:text-[#0284C7] transition-colors whitespace-nowrap">
                 Blog
               </a>
             </div>
@@ -221,7 +239,7 @@ const Professionals = () => {
 
           <div
             className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-              isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+              isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
             }`}
           >
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-[#F5F5F5]">
@@ -233,6 +251,9 @@ const Professionals = () => {
               </a>
               <a href="/professionals" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#0284C7] font-semibold">
                 Professionals
+              </a>
+              <a href="/pricing" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">
+                Pricing
               </a>
               <a href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">
                 Blog
@@ -342,30 +363,30 @@ const Professionals = () => {
                 {
                   step: '1',
                   icon: Sparkles,
-                  title: 'Create your profile (AI-assisted)',
+                  title: 'Create your profile',
                   description:
-                    'Upload your CV or chat with our AI to generate a strong, outcome-focused profile in minutes.',
+                    'Upload your CV or use AI to create a credible professional profile.',
                 },
                 {
                   step: '2',
-                  icon: FileCheck,
-                  title: 'Vetting & quality review',
+                  icon: KeyRound,
+                  title: 'Complete basic access setup',
                   description:
-                    'Experience and credentials are reviewed, with references where applicable.',
+                    'Once your basic profile is complete, choose an access plan to unlock full opportunity details.',
                 },
                 {
                   step: '3',
-                  icon: Target,
-                  title: 'Set your preferences',
+                  icon: FileCheck,
+                  title: 'Vetting & quality review',
                   description:
-                    'Choose engagement types, industries, availability, and remote/on-site preferences.',
+                    'For internal GigExecs gigs, your full profile is reviewed before bidding is enabled.',
                 },
                 {
                   step: '4',
                   icon: Briefcase,
                   title: 'Access and apply',
                   description:
-                    'Browse and apply to relevant engagements—or get notified when matches appear.',
+                    'View full gig details, apply externally, and bid on internal gigs once approved.',
                 },
               ].map((item, index) => (
                 <div key={index} className="text-center space-y-4">
@@ -376,6 +397,23 @@ const Professionals = () => {
                   <p className="text-[#9CA3AF] text-sm leading-relaxed">{item.description}</p>
                 </div>
               ))}
+            </div>
+          </div>
+
+          <div className="mt-12 max-w-4xl mx-auto rounded-2xl border border-[#0284C7]/25 bg-white shadow-md px-6 py-8 lg:px-10 lg:py-10 text-center">
+            <h3 className="text-xl lg:text-2xl font-bold text-[#012E46] mb-3">
+              Ready to access full gig opportunities?
+            </h3>
+            <p className="text-[#6B7280] mb-6 leading-relaxed max-w-2xl mx-auto">
+              Complete your profile, choose a professional access plan, and unlock full details for internal and external gigs — fractional roles, contracts, interim leadership, and project-based openings curated for senior professionals.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button size="lg" className="bg-[#012E46] hover:bg-[#0284C7] text-white px-8" asChild>
+                <Link to="/pricing">View pricing</Link>
+              </Button>
+              <Button size="lg" variant="outline" className="border-[#012E46] text-[#012E46] hover:bg-[#F5F5F5]" asChild>
+                <Link to="/how-it-works#for-professionals">How access works</Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -514,6 +552,11 @@ const Professionals = () => {
                 <li>
                   <a href="/how-it-works" className="hover:text-white transition-colors">
                     How it works
+                  </a>
+                </li>
+                <li>
+                  <a href="/pricing" className="hover:text-white transition-colors">
+                    Pricing
                   </a>
                 </li>
               </ul>

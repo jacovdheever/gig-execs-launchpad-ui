@@ -23,6 +23,19 @@ export interface PageMetaProps {
   canonicalUrl?: string
   /** OG type (e.g. "article" for blog posts). Defaults to "website". */
   ogType?: string
+  /**
+   * Use as the literal document &lt;title&gt; (no `makeTitle` / "| GigExecs" suffix).
+   * Use when marketing needs an exact browser title string.
+   */
+  exactDocumentTitle?: string
+  /** Overrides og:title and defaults twitter:title when twitterTitle is omitted. */
+  ogTitle?: string
+  /** Overrides twitter:title when different from og:title. */
+  twitterTitle?: string
+  /** Overrides og:description when different from meta description. */
+  ogDescription?: string
+  /** Overrides twitter:description. Falls back to ogDescription then description. */
+  twitterDescription?: string
 }
 
 export function PageMeta({
@@ -32,23 +45,38 @@ export function PageMeta({
   ogImage = DEFAULT_OG_IMAGE,
   canonicalUrl,
   ogType = "website",
+  exactDocumentTitle,
+  ogTitle,
+  twitterTitle,
+  ogDescription,
+  twitterDescription,
 }: PageMetaProps) {
   const canonicalLink = canonicalUrl ?? (path ? canonical(path) : undefined)
   const ogImageUrl = ogImage.startsWith("http") ? ogImage : absoluteUrl(ogImage)
+  const documentTitle = exactDocumentTitle ?? makeTitle(title)
+  const openGraphTitle = ogTitle ?? documentTitle
+  const twitterCardTitle = twitterTitle ?? openGraphTitle
+  const openGraphDescription = ogDescription ?? description
+  const twitterCardDescription =
+    twitterDescription ?? ogDescription ?? description
 
   return (
     <Helmet>
-      <title>{makeTitle(title)}</title>
+      <title>{documentTitle}</title>
       {description && <meta name="description" content={description} />}
       {canonicalLink && <link rel="canonical" href={canonicalLink} />}
       {canonicalLink && <meta property="og:url" content={canonicalLink} />}
-      <meta property="og:title" content={makeTitle(title)} />
-      {description && <meta property="og:description" content={description} />}
+      <meta property="og:title" content={openGraphTitle} />
+      {openGraphDescription && (
+        <meta property="og:description" content={openGraphDescription} />
+      )}
       <meta property="og:image" content={ogImageUrl} />
       <meta property="og:type" content={ogType} />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={makeTitle(title)} />
-      {description && <meta name="twitter:description" content={description} />}
+      <meta name="twitter:title" content={twitterCardTitle} />
+      {twitterCardDescription && (
+        <meta name="twitter:description" content={twitterCardDescription} />
+      )}
       <meta name="twitter:image" content={ogImageUrl} />
     </Helmet>
   )
