@@ -180,14 +180,6 @@ function Homepage() {
                     Learn More
                   </Button>
                 </div>
-                <p className="mt-6 text-center lg:text-left">
-                  <Link
-                    to="/pricing"
-                    className="text-sm sm:text-base font-semibold text-[#FACC15] hover:text-white underline-offset-4 hover:underline transition-colors"
-                  >
-                    View professional access plans
-                  </Link>
-                </p>
               </div>
             </div>
           </div>
