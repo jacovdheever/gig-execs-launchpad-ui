@@ -161,6 +161,10 @@ function mapProjectToListDto(project, clientsBundle, access, opts = {}) {
     dto.delivery_time_max = NaN;
     dto.screening_questions = [];
     dto.creator_id = null;
+    /* External opportunities: keep apply URL so the client can enable "Apply Externally" and gate opens on subscribe in the UI. */
+    if (projectOrigin === 'external') {
+      dto.external_url = project.external_url || null;
+    }
   }
 
   return dto;

@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -27,7 +28,7 @@ import { supabase } from '@/lib/supabase';
 import { AppShell } from '@/components/AppShell';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { canApplyExternally } from '@/lib/utils';
+import { canApplyExternally, canOfferExternalApplyControl } from '@/lib/utils';
 import { trackExternalGigClick } from '@/lib/trackExternalGigClick';
 import {
   Select,
@@ -36,7 +37,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 interface Project {
   id: number;
@@ -93,6 +105,7 @@ function projectHasNumericBudget(project: Project) {
 }
 
 export default function FindGigsPage() {
+  const navigate = useNavigate();
   const [user, setUser] = useState<CurrentUser | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   /** From professional-gigs-list — used to gate external apply for consultants (PRD §5.5). */
@@ -130,6 +143,7 @@ export default function FindGigsPage() {
   const [locationsListExpanded, setLocationsListExpanded] = useState(false);
   const [industriesListExpanded, setIndustriesListExpanded] = useState(false);
   const [roleTypesListExpanded, setRoleTypesListExpanded] = useState(false);
+  const [gateModal, setGateModal] = useState<'basic' | 'subscribe' | null>(null);
 
   useEffect(() => {
     loadData();
@@ -753,6 +767,22 @@ export default function FindGigsPage() {
               </Button>
             </div>
           </div>
+
+          {user?.role === 'consultant' &&
+            gigsListMeta?.gig_access_enforcement &&
+            !gigsListMeta.subscription_content_access && (
+              <Alert className="mb-6 border-amber-200 bg-amber-50">
+                <AlertTitle className="text-amber-900">See the full picture</AlertTitle>
+                <AlertDescription className="text-amber-900/90">
+                  <p className="mb-3">
+                    A professional subscription unlocks complete engagement details and one-click external applications.
+                  </p>
+                  <Button size="sm" className="bg-amber-900 hover:bg-amber-950 text-white" onClick={() => navigate('/pricing')}>
+                    View plans
+                  </Button>
+                </AlertDescription>
+              </Alert>
+            )}
 
           {/* Search and Filters */}
           <Card className="mb-6 w-full min-w-0 max-w-full overflow-hidden">
@@ -1463,9 +1493,12 @@ export default function FindGigsPage() {
                     : user?.role === 'consultant'
                       ? { basicProfileComplete: false, subscriptionAccess: false }
                       : undefined;
-                const applyEnabled =
+                const externalApplyOffered =
                   isExternal &&
                   hasExternalLink &&
+                  canOfferExternalApplyControl(project);
+                const mayOpenExternalApply =
+                  externalApplyOffered &&
                   canApplyExternally(project, consultantApplyGate);
                 const createdAtLabel = project.created_at
                   ? new Date(project.created_at).toLocaleDateString()
@@ -1666,17 +1699,27 @@ export default function FindGigsPage() {
                               type="button"
                               variant="secondary"
                               className="w-full flex items-center justify-center gap-2"
-                              disabled={!applyEnabled}
+                              disabled={!externalApplyOffered}
                               onClick={async () => {
-                                if (project.external_url && applyEnabled) {
-                                  // Track the click before opening the external URL
-                                  await trackExternalGigClick(project.id, 'listing');
-                                  window.open(
-                                    project.external_url,
-                                    '_blank',
-                                    'noopener,noreferrer'
-                                  );
+                                if (!project.external_url || !externalApplyOffered) return;
+                                if (user?.role === 'consultant') {
+                                  if (!gigsListMeta) return;
+                                  if (!gigsListMeta.basic_profile_complete) {
+                                    setGateModal('basic');
+                                    return;
+                                  }
+                                  if (!gigsListMeta.subscription_content_access) {
+                                    setGateModal('subscribe');
+                                    return;
+                                  }
                                 }
+                                if (!mayOpenExternalApply) return;
+                                await trackExternalGigClick(project.id, 'listing');
+                                window.open(
+                                  project.external_url,
+                                  '_blank',
+                                  'noopener,noreferrer'
+                                );
                               }}
                             >
                               Apply Externally
@@ -1702,6 +1745,45 @@ export default function FindGigsPage() {
           )}
         </div>
       </div>
+
+      <AlertDialog open={gateModal !== null} onOpenChange={(open) => !open && setGateModal(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {gateModal === 'basic' && 'Complete your profile first'}
+              {gateModal === 'subscribe' && 'Unlock external applications'}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {gateModal === 'basic' &&
+                'Finish your basic professional profile (job title, rates, experience, skills) before you can apply to external roles through GigExecs.'}
+              {gateModal === 'subscribe' &&
+                'An active professional subscription lets you apply on employer sites from GigExecs and access full engagement details.'}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Close</AlertDialogCancel>
+            {gateModal === 'subscribe' ? (
+              <AlertDialogAction
+                onClick={() => {
+                  setGateModal(null);
+                  navigate('/pricing');
+                }}
+              >
+                View plans
+              </AlertDialogAction>
+            ) : (
+              <AlertDialogAction
+                onClick={() => {
+                  setGateModal(null);
+                  navigate('/profile');
+                }}
+              >
+                Go to profile
+              </AlertDialogAction>
+            )}
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AppShell>
   );
 }

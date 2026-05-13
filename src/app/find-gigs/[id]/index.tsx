@@ -30,7 +30,7 @@ import { getCurrentUser, CurrentUser } from '@/lib/getCurrentUser';
 import { supabase } from '@/lib/supabase';
 import { AppShell } from '@/components/AppShell';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { canApplyExternally, type ExternalApplyAccessGate } from '@/lib/utils';
+import { canApplyExternally, canOfferExternalApplyControl, type ExternalApplyAccessGate } from '@/lib/utils';
 import { uploadProjectAttachment, getSignedDocumentUrl } from '@/lib/storage';
 import { trackExternalGigClick } from '@/lib/trackExternalGigClick';
 import {
@@ -51,6 +51,7 @@ type GigAccessMeta = {
   vetting_status?: string | null;
   vetted_approved?: boolean;
   can_bid_internal?: boolean;
+  gig_access_enforcement?: boolean;
 };
 
 interface Project {
@@ -453,9 +454,12 @@ export default function GigDetailsPage() {
         ? { basicProfileComplete: false, subscriptionAccess: false }
         : undefined;
 
-  const externalCanApply =
+  const externalApplyOffered =
     isExternal &&
     !!project.external_url &&
+    canOfferExternalApplyControl(project);
+  const mayOpenExternalApply =
+    externalApplyOffered &&
     canApplyExternally(project, consultantExternalGate);
 
   if (loading) {
@@ -546,6 +550,22 @@ export default function GigDetailsPage() {
               </div>
             </div>
           </div>
+          {user?.role === 'consultant' &&
+            gigAccessMeta?.gig_access_enforcement &&
+            !gigAccessMeta.subscription_content_access && (
+              <Alert className="mb-6 border-amber-200 bg-amber-50">
+                <AlertTitle className="text-amber-900">See the full picture</AlertTitle>
+                <AlertDescription className="text-amber-900/90">
+                  <p className="mb-3">
+                    A professional subscription unlocks complete engagement details and lets you apply to external
+                    roles without leaving GigExecs.
+                  </p>
+                  <Button size="sm" className="bg-amber-900 hover:bg-amber-950 text-white" onClick={() => navigate('/pricing')}>
+                    View plans
+                  </Button>
+                </AlertDescription>
+              </Alert>
+            )}
           {isExternal && (
             <Alert className="mb-6 border-blue-200 bg-blue-50 text-blue-800">
               <AlertTitle>External Opportunity</AlertTitle>
@@ -1167,16 +1187,21 @@ export default function GigDetailsPage() {
                   <CardContent className="space-y-4">
                     <Button
                       className="w-full flex items-center justify-center gap-2"
-                      disabled={!externalCanApply}
+                      disabled={!externalApplyOffered}
                       onClick={async () => {
-                        if (!project.external_url || !project.id) return;
-                        if (!externalCanApply) {
-                          if (user?.role === 'consultant' && gigAccessMeta) {
-                            if (!gigAccessMeta.basic_profile_complete) setGateModal('basic');
-                            else if (!gigAccessMeta.subscription_content_access) setGateModal('subscribe');
+                        if (!project.external_url || !project.id || !externalApplyOffered) return;
+                        if (user?.role === 'consultant') {
+                          if (!gigAccessMeta) return;
+                          if (!gigAccessMeta.basic_profile_complete) {
+                            setGateModal('basic');
+                            return;
                           }
-                          return;
+                          if (!gigAccessMeta.subscription_content_access) {
+                            setGateModal('subscribe');
+                            return;
+                          }
                         }
+                        if (!mayOpenExternalApply) return;
                         await trackExternalGigClick(project.id, 'detail');
                         window.open(project.external_url, '_blank', 'noopener,noreferrer');
                       }}
@@ -1186,15 +1211,21 @@ export default function GigDetailsPage() {
                     </Button>
                     <div className="text-sm text-slate-600 space-y-2">
                       <p>
-                        {project.external_url
-                          ? externalCanApply
-                            ? 'You will be redirected to the external application page in a new tab.'
-                            : externalIsExpired
-                              ? 'This opportunity has expired.'
-                              : user?.role === 'consultant'
-                                ? 'Complete your basic profile and active subscription to apply externally.'
-                                : 'External applications are currently unavailable.'
-                          : 'No external application URL was provided.'}
+                        {!project.external_url
+                          ? 'No external application URL was provided.'
+                          : externalIsExpired
+                            ? 'This opportunity has expired.'
+                            : mayOpenExternalApply
+                              ? 'You will be redirected to the external application page in a new tab.'
+                              : user?.role === 'consultant' && gigAccessMeta
+                                ? !gigAccessMeta.basic_profile_complete
+                                  ? 'Complete your basic professional profile, then subscribe to apply on the employer\'s site from here.'
+                                  : !gigAccessMeta.subscription_content_access
+                                    ? 'Subscribe to apply on the employer\'s site in one click from GigExecs.'
+                                    : 'External applications are currently unavailable.'
+                                : user?.role === 'consultant'
+                                  ? 'Loading your access status…'
+                                  : 'You can open the external application in a new tab.'}
                       </p>
                       {project.expires_at && (
                         <p className="text-xs text-slate-500">
@@ -1217,7 +1248,7 @@ export default function GigDetailsPage() {
           <AlertDialogHeader>
             <AlertDialogTitle>
               {gateModal === 'basic' && 'Complete your profile first'}
-              {gateModal === 'subscribe' && 'Subscription required'}
+              {gateModal === 'subscribe' && 'Unlock external applications'}
               {gateModal === 'full_profile' && 'Complete your full profile'}
               {gateModal === 'vetting' && 'Vetting required to bid'}
             </AlertDialogTitle>
@@ -1225,7 +1256,7 @@ export default function GigDetailsPage() {
               {gateModal === 'basic' &&
                 'Finish your basic consultant profile (job title, rates, experience, skills) before subscribing or bidding.'}
               {gateModal === 'subscribe' &&
-                'An active professional subscription unlocks full gig details, external apply links, and bidding.'}
+                'An active professional subscription unlocks full engagement details and one-click external applications from GigExecs.'}
               {gateModal === 'full_profile' &&
                 'Internal bids require references, ID verification, and related profile sections to be complete.'}
               {gateModal === 'vetting' &&

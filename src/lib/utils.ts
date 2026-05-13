@@ -11,7 +11,7 @@ type ProjectLike = {
   expires_at?: string | null;
 };
 
-/** When set (e.g. consultants on find-gigs), external apply requires Basic profile + active subscription (PRD §5.5). */
+/** When set (e.g. consultants on find-gigs), opening an external apply link requires Basic profile + active subscription. */
 export type ExternalApplyAccessGate = {
   basicProfileComplete: boolean;
   subscriptionAccess: boolean;
@@ -20,22 +20,10 @@ export type ExternalApplyAccessGate = {
 export const isExternalProject = (project: ProjectLike) =>
   project?.project_origin === "external";
 
-export const canApplyExternally = (
-  project: ProjectLike,
-  access?: ExternalApplyAccessGate
-) => {
-  if (!isExternalProject(project)) {
+/** External apply control is shown when the gig is open and not expired (URL checked at call sites). Subscription/basic are enforced on click. */
+export const canOfferExternalApplyControl = (project: ProjectLike) => {
+  if (!isExternalProject(project) || project.status !== "open") {
     return false;
-  }
-
-  if (project.status !== "open") {
-    return false;
-  }
-
-  if (access) {
-    if (!access.basicProfileComplete || !access.subscriptionAccess) {
-      return false;
-    }
   }
 
   if (!project.expires_at) {
@@ -50,4 +38,21 @@ export const canApplyExternally = (
   }
 
   return expiry.getTime() > now.getTime();
+};
+
+export const canApplyExternally = (
+  project: ProjectLike,
+  access?: ExternalApplyAccessGate
+) => {
+  if (!canOfferExternalApplyControl(project)) {
+    return false;
+  }
+
+  if (access) {
+    if (!access.basicProfileComplete || !access.subscriptionAccess) {
+      return false;
+    }
+  }
+
+  return true;
 };
