@@ -57,7 +57,8 @@ const BLOG = {
 const CLIENTS = {
   heading: "Vetting & quality standards",
   subline: "A premium network built on credibility—not bidding.",
-  definition: "GigExecs connects organizations with vetted independent consultants and senior professionals for flexible engagements.",
+  definition:
+    "GigExecs helps organizations connect with vetted senior professionals and independent consultants through a trusted network built around experience and credibility.",
   rows: [
     { icon: FileCheck, label: "Quality standard:", text: "Credential checks • experience review • references where applicable." },
     { icon: Briefcase, label: "Engagements:", text: "Advisory • Fractional • Interim • Contract • Project-based." },
@@ -66,13 +67,14 @@ const CLIENTS = {
 } as const
 
 const PROFESSIONALS = {
-  heading: "Vetting, matching & AI-assisted onboarding",
-  subline: "Built for credibility and meaningful flexible work.",
-  definition: "GigExecs connects vetted independent consultants and senior professionals with organizations seeking proven expertise.",
+  heading: "Vetting, credibility & profile support",
+  subline: "Membership built around experience, credibility, and meaningful flexible work.",
+  definition:
+    "GigExecs helps experienced professionals present their expertise clearly, complete a review process, and participate in a trusted professional network.",
   rows: [
-    { icon: Sparkles, label: "AI profile setup:", text: "Upload a CV or chat with our AI to create an outcome-focused profile in minutes." },
-    { icon: FileCheck, label: "Vetting:", text: "Credential checks • experience review • references where applicable." },
-    { icon: Briefcase, label: "Engagements:", text: "Advisory • Fractional • Interim • Contract • Project-based." },
+    { icon: Sparkles, label: "Profile support:", text: "CV upload or AI-assisted profile creation where available" },
+    { icon: FileCheck, label: "Vetting:", text: "Experience review • Professional background • References where applicable" },
+    { icon: Briefcase, label: "Opportunities:", text: "Advisory • Consulting • Fractional • Interim • Project-based" },
   ],
 } as const
 

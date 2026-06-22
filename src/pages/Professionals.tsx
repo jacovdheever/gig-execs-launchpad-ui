@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import {
@@ -7,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { ShieldCheck, Award, Globe, Sparkles, FileCheck, Briefcase, Target } from 'lucide-react'
+import { ShieldCheck, Award, Globe, Sparkles, FileCheck, Briefcase } from 'lucide-react'
 import { PageMeta } from '@/components/PageMeta'
 import { MarketingNav } from '@/components/MarketingNav'
 import { MarketingFooter } from '@/components/MarketingFooter'
@@ -102,34 +101,39 @@ const BlogCard = ({ blogNumber }: { blogNumber: number }) => {
 
 const PROFESSIONAL_FAQS: FaqItem[] = [
   {
-    question: 'Who is GigExecs for?',
+    question: 'Who joins GigExecs?',
     answer:
-      'GigExecs is for highly experienced professionals and independent consultants looking for meaningful flexible engagements with organizations that value senior expertise.',
+      'GigExecs is designed for experienced professionals navigating a changing world of work. Members bring deep expertise, professional credibility, and a desire to remain active, relevant, and connected through meaningful opportunities and professional relationships.',
   },
   {
-    question: 'How does the AI profile builder work?',
+    question: 'Is GigExecs a job board or freelance marketplace?',
     answer:
-      'You can upload your CV or chat with our AI to generate a strong, outcome-focused profile quickly.',
+      'No. GigExecs is a curated network of experienced professionals, not a job board, recruitment company, or bidding marketplace. We focus on expertise, credibility, and trusted professional relationships.',
   },
   {
-    question: 'How does vetting work?',
+    question: 'How does membership work?',
     answer:
-      'Vetting includes credential checks, experience review, and references where applicable.',
+      'Professionals create a profile, complete a review process, and become part of a trusted network built around experience, professional reputation, and meaningful engagement opportunities.',
   },
   {
-    question: 'What types of engagements are available?',
+    question: 'How does the profile creation process work?',
     answer:
-      'Common engagements include advisory work, interim leadership, fractional roles, fixed-term contracts, and project-based work.',
+      'Professionals can build a profile that showcases their experience, expertise, and professional achievements. Where available, AI-assisted tools can help turn a CV or guided profile input into a clearer professional profile.',
   },
   {
-    question: 'Is this a bidding marketplace?',
+    question: 'What opportunities are available through GigExecs?',
     answer:
-      'No. GigExecs is a premium network focused on credibility and quality standards—not bidding wars.',
+      'GigExecs focuses on advisory, consulting, fractional, interim, and project-based engagements. Broader professional opportunities may also be supported where experience and expertise are valued.',
   },
   {
-    question: 'How do I get notified about opportunities?',
+    question: 'What else does GigExecs offer beyond opportunities?',
     answer:
-      'Once your profile and preferences are set, you can browse opportunities and receive notifications when relevant engagements are posted.',
+      'GigExecs provides access to a trusted professional network, industry insights, practical resources, and conversations focused on the future of work, longevity, career transitions, and modern ways of working.',
+  },
+  {
+    question: 'Do I need to be actively looking for work to join?',
+    answer:
+      'No. GigExecs is also useful for experienced professionals who want to stay visible, build relationships, access insights, and explore future opportunities over time.',
   },
 ]
 
@@ -137,8 +141,8 @@ const Professionals = () => {
   return (
     <div className="min-h-screen bg-white">
       <PageMeta
-        title="Join a Premium Network for Senior Professionals"
-        description="Create an AI-assisted profile, get vetted, and access high-quality flexible engagements worldwide—advisory, interim leadership, fractional roles, contracts, and project work."
+        title="Join a Network for Experienced Professionals"
+        description="Build your profile and access advisory, consulting, fractional, interim, and project-based opportunities through a trusted professional network."
         path="/professionals"
       />
       <JsonLd
@@ -159,10 +163,10 @@ const Professionals = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
           <div className="relative z-10">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1F2937] mb-6 leading-tight">
-              Join a Premium Network for Senior Independent Professionals
+              Become Part of a Trusted Network of Experienced Professionals
             </h1>
             <p className="text-lg sm:text-xl text-[#9CA3AF] mb-8 max-w-3xl mx-auto leading-relaxed">
-              Build a credible profile, get vetted, and access high-quality flexible engagements—advisory, interim leadership, fractional roles, contracts, and project work.
+              Stay visible, relevant, and connected in a changing world of work. Build your profile, access advisory, consulting, fractional, interim, and project-based opportunities, and join a network designed for modern senior careers.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="bg-[#012E46] hover:bg-[#0284C7] text-white px-8 py-3">
@@ -176,7 +180,7 @@ const Professionals = () => {
                 className="border-[#012E46] text-[#012E46] hover:bg-[#F5F5F5] px-8 py-3"
                 asChild
               >
-                <a href="/how-it-works#for-professionals">How it works</a>
+                <a href="#how-joining-works">How It Works</a>
               </Button>
             </div>
           </div>
@@ -188,96 +192,96 @@ const Professionals = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#1F2937] mb-4">
-              Why Choose GigExecs?
+              Why Professionals Join GigExecs
             </h2>
             <p className="text-lg text-[#9CA3AF] max-w-2xl mx-auto">
-              A credibility-first network for experienced professionals seeking meaningful flexible engagements.
+              GigExecs helps experienced professionals stay visible, connected, and relevant in a changing world of work.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="text-center hover:shadow-lg transition-shadow duration-300">
-              <CardHeader>
-                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                  <ShieldCheck className="w-8 h-8 text-[#FACC15]" />
-                </div>
-                <CardTitle className="text-xl text-[#0284C7]">Vetted Premium Community</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-[#9CA3AF]">
-                  A credibility-first network for highly experienced professionals (typically 15+ years).
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center hover:shadow-lg transition-shadow duration-300">
-              <CardHeader>
-                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                  <Award className="w-8 h-8 text-[#FACC15]" />
-                </div>
-                <CardTitle className="text-xl text-[#0284C7]">High-Quality Opportunities, Updated Daily</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-[#9CA3AF]">
-                  We publish and circulate flexible engagements daily—focused on roles where experience and outcomes matter.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center hover:shadow-lg transition-shadow duration-300">
-              <CardHeader>
-                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                  <Globe className="w-8 h-8 text-[#FACC15]" />
-                </div>
-                <CardTitle className="text-xl text-[#0284C7]">Flexible Work Models</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-[#9CA3AF]">
-                  Advisory • Interim leadership • Fractional roles • Contract • Project-based work.
-                </CardDescription>
-              </CardContent>
-            </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              {
+                icon: Award,
+                title: 'Experience',
+                body:
+                  'Your experience remains valuable. Build a profile that reflects the depth of your expertise, leadership, and professional achievements.',
+              },
+              {
+                icon: Globe,
+                title: 'Connections',
+                body:
+                  'Join a trusted network of experienced professionals, organizations, talent partners, and industry leaders.',
+              },
+              {
+                icon: Briefcase,
+                title: 'Opportunities',
+                body:
+                  'Access advisory, consulting, fractional, interim, and project-based opportunities where experience matters.',
+              },
+              {
+                icon: ShieldCheck,
+                title: 'Insights & Resources',
+                body:
+                  'Stay informed through thought leadership, practical resources, and conversations shaping the future of work.',
+              },
+            ].map((card) => (
+              <Card key={card.title} className="text-center hover:shadow-lg transition-shadow duration-300">
+                <CardHeader>
+                  <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                    <card.icon className="w-8 h-8 text-[#FACC15]" />
+                  </div>
+                  <CardTitle className="text-xl text-[#0284C7]">{card.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-[#9CA3AF]">{card.body}</CardDescription>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
       {/* How joining works Section */}
-      <section className="py-20 bg-white">
+      <section id="how-joining-works" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-[#1F2937] text-center mb-16">
-            How joining works
+            Becoming Part of Our Network
           </h2>
+          <p className="text-lg text-[#6B7280] max-w-3xl mx-auto text-center mb-12">
+            A simple process designed to maintain quality, credibility, and trust.
+          </p>
 
           <div className="bg-gray-50 rounded-3xl p-8 lg:p-12">
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
                 {
                   step: '1',
-                  icon: Sparkles,
-                  title: 'Create your profile (AI-assisted)',
+                  icon: FileCheck,
+                  title: 'Apply',
                   description:
-                    'Upload your CV or chat with our AI to generate a strong, outcome-focused profile in minutes.',
+                    'Share your professional background, experience, and areas of expertise.',
                 },
                 {
                   step: '2',
-                  icon: FileCheck,
-                  title: 'Vetting & quality review',
+                  icon: ShieldCheck,
+                  title: 'Review',
                   description:
-                    'Experience and credentials are reviewed, with references where applicable.',
+                    'Applications are reviewed to help maintain the quality and integrity of the network.',
                 },
                 {
                   step: '3',
-                  icon: Target,
-                  title: 'Set your preferences',
+                  icon: Sparkles,
+                  title: 'Build Your Presence',
                   description:
-                    'Choose engagement types, industries, availability, and remote/on-site preferences.',
+                    'Create a profile that showcases your experience, expertise, and professional achievements. Where available, use AI-assisted tools to help build your profile faster.',
                 },
                 {
                   step: '4',
                   icon: Briefcase,
-                  title: 'Access and apply',
+                  title: 'Participate',
                   description:
-                    'Browse and apply to relevant engagements—or get notified when matches appear.',
+                    'Access opportunities, insights, resources, and connections within the GigExecs network.',
                 },
               ].map((item, index) => (
                 <div key={index} className="text-center space-y-4">
@@ -297,37 +301,40 @@ const Professionals = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-[#1F2937] text-center mb-8">
-            Why GigExecs exists
+            Why More Professionals Are Choosing Flexible Careers
           </h2>
           <p className="text-lg text-[#6B7280] max-w-3xl mx-auto text-center mb-12">
-            Senior expertise is in demand, but most platforms are built for commodity work or traditional hiring. GigExecs bridges the gap with a premium network and flexible engagement models.
+            The future of work is creating new opportunities for experienced senior professionals to remain active, relevant, and impactful for longer.
           </p>
-          <ul className="max-w-2xl mx-auto space-y-4">
-            <li className="flex items-start gap-3">
-              <span className="text-[#0284C7] mt-1">•</span>
-              <span className="text-[#1F2937]">
-                Experience is often undervalued in modern hiring cycles and noisy platforms.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#0284C7] mt-1">•</span>
-              <span className="text-[#1F2937]">
-                Senior professionals want flexibility and meaningful work in the longevity economy.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#0284C7] mt-1">•</span>
-              <span className="text-[#1F2937]">
-                Organizations need proven expertise fast—without full-time complexity.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#0284C7] mt-1">•</span>
-              <span className="text-[#1F2937]">
-                GigExecs supports credibility-first profiles, vetting, and high-quality flexible engagements.
-              </span>
-            </li>
-          </ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                title: 'Longer Careers',
+                body: 'People are living longer, working longer, and rethinking traditional career paths.',
+              },
+              {
+                title: 'New Ways of Working',
+                body: 'Advisory, consulting, fractional, interim, and project-based work are becoming established alternatives to full-time employment.',
+              },
+              {
+                title: 'Experience Matters',
+                body: 'Organizations continue to value leadership, judgment, and specialist expertise when the stakes are high.',
+              },
+              {
+                title: 'Stay Connected',
+                body: 'Professional networks, visibility, and trusted relationships matter more than ever in a changing world of work.',
+              },
+            ].map((card) => (
+              <Card key={card.title} className="bg-white border-0 shadow-sm hover:shadow-md transition-shadow">
+                <CardHeader>
+                  <CardTitle className="text-lg text-[#012E46]">{card.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-[#6B7280] leading-relaxed">{card.body}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -335,45 +342,55 @@ const Professionals = () => {
       <section className="py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4 lg:px-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-center text-gray-900 mb-12">
-            Join a Community of Successful Professionals and Businesses
+            Stay Informed. Stay Relevant.
           </h2>
+          <p className="text-lg text-[#6B7280] max-w-3xl mx-auto text-center mb-12">
+            Insights, trends, and conversations shaping the future of work for experienced professionals.
+          </p>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <BlogCard blogNumber={1} />
             <BlogCard blogNumber={2} />
             <BlogCard blogNumber={3} />
           </div>
+          <div className="mt-10 text-center">
+            <Button asChild variant="outline" className="border-[#012E46] text-[#012E46] hover:bg-[#F5F5F5]">
+              <a href="/blog">View all insights</a>
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* Two-path internal link strip */}
+      {/* Membership Built Around Four Pillars */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <Link
-              to="/clients"
-              className="group block rounded-lg border border-border/50 bg-muted/30 px-6 py-5 transition-colors hover:bg-muted/50 hover:border-[#0284C7]/40 focus:outline-none focus:ring-2 focus:ring-[#0284C7] focus:ring-offset-2"
-            >
-              <p className="text-xs font-medium text-muted-foreground mb-1">Hiring senior expertise?</p>
-              <p className="text-base text-[#1F2937] mb-3 leading-snug">
-                Access vetted independent consultants for advisory, interim leadership, fractional roles, and project engagements.
-              </p>
-              <span className="inline-flex items-center text-sm font-semibold text-[#0284C7] group-hover:underline">
-                Explore our offering for Clients →
-              </span>
-            </Link>
-            <Link
-              to="/how-it-works"
-              className="group block rounded-lg border border-border/50 bg-muted/30 px-6 py-5 transition-colors hover:bg-muted/50 hover:border-[#0284C7]/40 focus:outline-none focus:ring-2 focus:ring-[#0284C7] focus:ring-offset-2"
-            >
-              <p className="text-xs font-medium text-muted-foreground mb-1">Want to understand the model?</p>
-              <p className="text-base text-[#1F2937] mb-3 leading-snug">
-                See how vetting, matching, and flexible engagements work on GigExecs.
-              </p>
-              <span className="inline-flex items-center text-sm font-semibold text-[#0284C7] group-hover:underline">
-                How it works →
-              </span>
-            </Link>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#1F2937] mb-4">
+              Membership Built Around Four Pillars
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              { title: 'Opportunities', body: 'Meaningful ways to continue contributing.' },
+              { title: 'Network', body: 'Trusted relationships with experienced professionals and organizations.' },
+              { title: 'Insights', body: 'Perspectives shaping the future of work.', href: '/blog' },
+              { title: 'Resources', body: 'Practical tools and guidance for modern careers as the network evolves.' },
+            ].map((pillar) => (
+              <Card key={pillar.title} className="bg-white border-0 shadow-sm">
+                <CardHeader>
+                  <CardTitle className="text-lg text-[#012E46]">{pillar.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <p className="text-[#6B7280] leading-relaxed">{pillar.body}</p>
+                  {pillar.href ? (
+                    <a href={pillar.href} className="inline-flex items-center text-sm font-semibold text-[#0284C7] hover:underline">
+                      Explore insights →
+                    </a>
+                  ) : null}
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
