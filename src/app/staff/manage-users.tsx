@@ -10,7 +10,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { supabase } from '@/lib/supabase';
-import { ArrowLeft, Loader2, Search } from 'lucide-react';
+import { ArrowLeft, Download, Loader2, Search } from 'lucide-react';
+import { downloadStaffUserExportXlsx, type StaffUserExportRow } from '@/lib/staffUserExport';
 import {
   Select,
   SelectContent,
@@ -48,6 +49,8 @@ export default function StaffManageUsersPage() {
   const [profileCompletion, setProfileCompletion] = useState<string>('any');
   const [registeredFrom, setRegisteredFrom] = useState('');
   const [registeredTo, setRegisteredTo] = useState('');
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
 
   const load = useCallback(async (nextOffset: number, append: boolean) => {
     if (append) setLoadingMore(true);
@@ -99,6 +102,34 @@ export default function StaffManageUsersPage() {
 
   function applySearch() {
     setSearchApplied(search);
+  }
+
+  async function handleExportUserList() {
+    setExporting(true);
+    setExportError(null);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        navigate('/staff/login');
+        return;
+      }
+      const res = await fetch('/.netlify/functions/staff-export-users', {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Export failed');
+      const rows = (json.rows || []) as StaffUserExportRow[];
+      if (rows.length === 0) {
+        setExportError('No users to export.');
+        return;
+      }
+      downloadStaffUserExportXlsx(rows);
+    } catch (e) {
+      console.error(e);
+      setExportError(e instanceof Error ? e.message : 'Export failed');
+    } finally {
+      setExporting(false);
+    }
   }
 
   return (
@@ -204,13 +235,32 @@ export default function StaffManageUsersPage() {
           </Card>
 
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
+            <CardHeader className="flex flex-row items-center justify-between gap-4">
               <CardTitle className="text-base">
                 Users
                 {totalMatching != null && (
                   <span className="text-slate-500 font-normal text-sm ml-2">({totalMatching} matching)</span>
                 )}
               </CardTitle>
+              <div className="flex flex-col items-end gap-1">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  disabled={exporting}
+                  onClick={() => void handleExportUserList()}
+                >
+                  {exporting ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <Download className="h-4 w-4 mr-2" />
+                  )}
+                  Export User List
+                </Button>
+                {exportError && (
+                  <p className="text-xs text-red-600 max-w-xs text-right">{exportError}</p>
+                )}
+              </div>
             </CardHeader>
             <CardContent>
               {loading && users.length === 0 ? (
