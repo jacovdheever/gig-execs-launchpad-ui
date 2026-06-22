@@ -43,12 +43,16 @@ export interface BlogPostingSchemaInput {
 /**
  * Organization schema (company/brand).
  */
+const SITE_DESCRIPTION =
+  "GigExecs is a premium network of experienced professionals and independent consultants for advisory, consulting, fractional, interim, and project-based opportunities."
+
 export function organizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
+    description: SITE_DESCRIPTION,
     logo: absoluteUrl("/favicon-32x32.png"),
   }
 }
@@ -62,6 +66,7 @@ export function websiteSchema() {
     "@type": "WebSite",
     name: SITE_NAME,
     url: SITE_URL,
+    description: SITE_DESCRIPTION,
     potentialAction: {
       "@type": "SearchAction",
       target: {

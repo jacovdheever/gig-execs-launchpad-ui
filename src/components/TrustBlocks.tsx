@@ -7,19 +7,19 @@ import { ShieldCheck, FileCheck, Target, Briefcase, Sparkles } from "lucide-reac
 import { cn } from "@/lib/utils"
 
 const DEFINITION =
-  "GigExecs connects organizations with vetted independent consultants and highly experienced professionals."
+  "GigExecs connects experienced professionals and organizations through a trusted network built for meaningful flexible work."
 
 const BEST_FOR = {
-  default: "Senior expertise • Meaningful flexible engagements",
+  default: "Experienced professionals • Specialist expertise • Meaningful opportunities",
   clients:
     "Vetted senior professionals • Advisory, fractional, interim, project-based work",
   professionals: "Vetted engagements • Meaningful flexible work",
 } as const
 
 const VETTING_LINE =
-  "Credential checks • Experience review • References (where applicable)"
+  "Credential checks • Experience review • References where applicable"
 
-const ENGAGEMENT_TYPES = "Advisory • Fractional • Interim • Project-based"
+const ENGAGEMENT_TYPES = "Advisory • Consulting • Fractional • Interim • Project-based"
 
 const HOW_IT_WORKS = {
   heading: "Vetting, matching & AI-assisted onboarding",
@@ -298,11 +298,11 @@ export function TrustBlocks({ variant = "default", className }: TrustBlocksProps
         <div className="flex items-center gap-3">
           <ShieldCheck className="h-6 w-6 sm:h-7 sm:w-7 text-foreground/80 shrink-0" />
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
-            Vetting & quality standards
+            Vetted network, curated for quality, built for experience.
           </h2>
         </div>
         <p className="mt-1.5 text-base text-muted-foreground">
-          A premium network built on credibility—not bidding.
+          GigExecs membership is built around experience, credibility, and professional reputation.
         </p>
       </div>
 
@@ -311,17 +311,17 @@ export function TrustBlocks({ variant = "default", className }: TrustBlocksProps
       <div className="space-y-3 pt-0.5">
         <BadgeRow
           icon={FileCheck}
-          label="Vetting"
+          label="Vetting:"
           text={VETTING_LINE}
         />
         <BadgeRow
           icon={Target}
-          label="Best for"
+          label="Our focus:"
           text={bestFor}
         />
         <BadgeRow
           icon={Briefcase}
-          label="Engagements"
+          label="Ways of working:"
           text={ENGAGEMENT_TYPES}
         />
       </div>

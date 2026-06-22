@@ -1,14 +1,10 @@
+import { MarketingNav } from '@/components/MarketingNav'
+import { MarketingFooter } from '@/components/MarketingFooter'
 import React, { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function PrivacyPolicy() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
-  }
-
   // SEO Metadata
   useEffect(() => {
     document.title = "Privacy Policy | GigExecs"
@@ -37,71 +33,7 @@ export default function PrivacyPolicy() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Left side - Logo */}
-            <div className="flex items-center">
-              <a href="/" className="text-2xl font-extrabold text-slate-900 hover:text-[#0284C7] transition-colors cursor-pointer">
-                GigExecs
-              </a>
-            </div>
-
-            {/* Center - Navigation Links */}
-            <div className="hidden lg:flex items-center space-x-12">
-              <a href="/" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
-              <a href="/clients" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
-              <a href="/professionals" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
-              <a href="/blog" className="text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
-            </div>
-
-            {/* Right side - Action Buttons */}
-            <div className="flex items-center">
-              <Button variant="outline" className="border-[#012E46] text-[#012E46] hover:bg-[#F5F5F5] rounded-r-none border-r-0">
-                <a href="/auth/login" className="w-full h-full flex items-center justify-center">
-                  Sign in
-                </a>
-              </Button>
-              <Button className="bg-[#012E46] hover:bg-[#0284C7] text-white rounded-l-none">
-                <a href="/auth/register" className="w-full h-full flex items-center justify-center text-white">
-                  Join
-                </a>
-              </Button>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="lg:hidden">
-              <button 
-                onClick={toggleMobileMenu}
-                className="text-[#1F2937] hover:text-[#0284C7] transition-colors"
-                aria-label="Toggle mobile menu"
-              >
-                {isMobileMenuOpen ? (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                ) : (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                )}
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile Navigation Menu */}
-          <div className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-            isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
-          }`}>
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-[#F5F5F5]">
-              <a href="/" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">What is GigExecs</a>
-              <a href="/clients" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Clients</a>
-              <a href="/professionals" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Professionals</a>
-              <a href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-2 text-[#1F2937] hover:text-[#0284C7] transition-colors">Blog</a>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <MarketingNav />
 
       {/* Breadcrumbs */}
       <section className="py-8 bg-[#F5F5F5]">
@@ -269,58 +201,7 @@ export default function PrivacyPolicy() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#1F2937] text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-5 gap-8">
-            {/* GigExecs Brand */}
-            <div className="md:col-span-1">
-              <div className="text-2xl font-bold text-[#FACC15] mb-4">
-                <span className="font-bold">Gig</span>Execs
-              </div>
-              <p className="text-gray-300 mb-4">
-                The premier community connecting top professionals and innovative companies.
-              </p>
-            </div>
-
-            {/* How it works */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4">How it works</h3>
-              <ul className="space-y-2">
-                <li><a href="/how-it-works" className="hover:text-white transition-colors">How it works</a></li>
-              </ul>
-            </div>
-
-            {/* About */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4">About</h3>
-              <ul className="space-y-2">
-                <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
-              </ul>
-            </div>
-
-            {/* Help & Support */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Help & Support</h3>
-              <ul className="space-y-2">
-                <li><a href="/help" className="hover:text-white transition-colors">Help</a></li>
-              </ul>
-            </div>
-
-            {/* Legal */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Legal</h3>
-              <ul className="space-y-2">
-                <li><a href="/terms-and-conditions" className="hover:text-white transition-colors">Terms of Service</a></li>
-                <li><a href="/data-privacy-policy" className="text-[#FACC15] transition-colors">Privacy Policy</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
-            <p>&copy; {new Date().getFullYear()} GigExecs. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <MarketingFooter />
     </div>
   )
 }
